@@ -4,13 +4,9 @@ import java.util.List;
 
 abstract public class BaseModel {
 	private Vendor vendor;
-
 	private TransmitterType transmitterType;
-
 	private int appVersion;
-
 	private int memoryVersion;
-
 	private ModelType modelType;
 	private String modelName;
 	private String info;

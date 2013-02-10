@@ -6,6 +6,7 @@ public class WingedModel extends BaseModel {
 	private AileronFlapType aileronFlapType;
 	private int brakeOffset;
 	private int brakeInput;
+	private boolean channel8Delay;
 
 	public WingedModel() {
 		super(ModelType.Winged);
@@ -31,6 +32,10 @@ public class WingedModel extends BaseModel {
 		return tailType;
 	}
 
+	public boolean isChannel8Delay() {
+		return channel8Delay;
+	}
+
 	public void setAileronFlapType(final AileronFlapType aileronFlapType) {
 		this.aileronFlapType = aileronFlapType;
 	}
@@ -41,6 +46,10 @@ public class WingedModel extends BaseModel {
 
 	public void setBrakeOffset(final int brakeOffset) {
 		this.brakeOffset = brakeOffset;
+	}
+
+	public void setChannel8Delay(final boolean channel8Delay) {
+		this.channel8Delay = channel8Delay;
 	}
 
 	public void setMotorOnC1Type(final MoterOnC1Type motorOnC1Type) {
