@@ -1,8 +1,8 @@
 package gde.model;
 
 public class Channel {
-	private Function function;
 	private int center;
+	private Function function;
 	private int limitHigh;
 	private int limitLow;
 	private int outputChannel;
@@ -12,6 +12,10 @@ public class Channel {
 
 	public int getCenter() {
 		return center;
+	}
+
+	public Function getFunction() {
+		return function;
 	}
 
 	public int getLimitHigh() {
@@ -40,6 +44,10 @@ public class Channel {
 
 	public void setCenter(final int center) {
 		this.center = center;
+	}
+
+	public void setFunction(Function function) {
+		this.function = function;
 	}
 
 	public void setLimitHigh(final int limitHigh) {

@@ -1,6 +1,6 @@
 package gde.model;
 
-public class WingMixer {
+public class WingedMixer extends PhasedMixer {
 	private int diffAileron;
 	private int diffFlap;
 	private int diffReduction;
