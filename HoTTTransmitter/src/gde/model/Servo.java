@@ -1,13 +1,13 @@
 package gde.model;
 
 public class Servo {
-	private boolean reverse;
 	private int center;
-	private int travelLow;
-	private int travelHigh;
-	private int limitLow;
 	private int limitHigh;
+	private int limitLow;
 	private int outputChannel;
+	private boolean reverse;
+	private int travelHigh;
+	private int travelLow;
 
 	public int getCenter() {
 		return center;

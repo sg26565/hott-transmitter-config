@@ -1,5 +1,5 @@
 package gde.model;
 
 public enum MixerType {
-	Standard, Cross;
+	Cross, Standard;
 }

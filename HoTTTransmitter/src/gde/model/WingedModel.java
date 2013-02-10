@@ -1,12 +1,12 @@
 package gde.model;
 
 public class WingedModel extends BaseModel {
+	private AileronFlapType aileronFlapType;
+	private int brakeInput;
+	private int brakeOffset;
+	private boolean channel8Delay;
 	private MoterOnC1Type motorOnC1Type;
 	private TailType tailType;
-	private AileronFlapType aileronFlapType;
-	private int brakeOffset;
-	private int brakeInput;
-	private boolean channel8Delay;
 
 	public WingedModel() {
 		super(ModelType.Winged);

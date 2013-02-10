@@ -1,5 +1,5 @@
 package gde.model;
 
 public enum SwashplateType {
-	OneServo, TwoServo, ThreeServoRoll, ThreeServo140, ThreeServoNick, FourServo;
+	FourServo, OneServo, ThreeServo140, ThreeServoNick, ThreeServoRoll, TwoServo;
 }

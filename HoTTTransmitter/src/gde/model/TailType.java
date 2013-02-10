@@ -1,5 +1,5 @@
 package gde.model;
 
 public enum TailType {
-	Normal, VTail, Delta, TwoElevators;
+	Delta, Normal, TwoElevators, VTail;
 }

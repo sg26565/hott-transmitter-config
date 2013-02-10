@@ -1,5 +1,5 @@
 package gde.model;
 
 public enum PitchMin {
-	Rear, Front;
+	Front, Rear;
 }

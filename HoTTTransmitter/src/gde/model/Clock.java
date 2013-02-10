@@ -2,12 +2,20 @@ package gde.model;
 
 public class Clock {
 	private String name;
+	private Switch sw;
 	private ClockType type;
 	private int value;
-	private Switch sw;
+
+	public int getMinutes() {
+		return getValue() / 60;
+	}
 
 	public String getName() {
 		return name;
+	}
+
+	public int getSeconds() {
+		return getValue() % 60;
 	}
 
 	public Switch getSwitch() {
@@ -22,8 +30,16 @@ public class Clock {
 		return value;
 	}
 
+	public void setMinutes(final int minutes) {
+		setValue(minutes * 60 + getSeconds());
+	}
+
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setSeconds(final int seconds) {
+		setValue(getMinutes() * 60 + seconds);
 	}
 
 	public void setSwitch(final Switch sw) {
@@ -36,21 +52,5 @@ public class Clock {
 
 	public void setValue(final int value) {
 		this.value = value;
-	}
-
-	public int getMinutes() {
-		return getValue() / 60;
-	}
-
-	public int getSeconds() {
-		return getValue() % 60;
-	}
-
-	public void setMinutes(final int minutes) {
-		setValue(minutes * 60 + getSeconds());
-	}
-
-	public void setSeconds(final int seconds) {
-		setValue(getMinutes() * 60 + seconds);
 	}
 }

@@ -7,7 +7,7 @@ public class HFModule {
 		return type;
 	}
 
-	public void setType(HFModuleType type) {
+	public void setType(final HFModuleType type) {
 		this.type = type;
 	}
 }
