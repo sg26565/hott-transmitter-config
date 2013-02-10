@@ -21,7 +21,7 @@ abstract public class BaseModel {
 	private List<Phase> phases;
 	private Switch powerOnWarning;
 	private long receiverId;
-	private List<Servo> servos;
+	private List<Channel> channels;
 	private StickMode stickMode;
 	private List<Stick> sticks;
 	private List<Switch> switches;
@@ -98,8 +98,8 @@ abstract public class BaseModel {
 		return receiverId;
 	}
 
-	public List<Servo> getServos() {
-		return servos;
+	public List<Channel> getChannels() {
+		return channels;
 	}
 
 	public StickMode getStickMode() {
@@ -210,8 +210,8 @@ abstract public class BaseModel {
 		this.receiverId = receiverId;
 	}
 
-	public void setServos(final List<Servo> servos) {
-		this.servos = servos;
+	public void setChannels(final List<Channel> channels) {
+		this.channels = channels;
 	}
 
 	public void setStickMode(final StickMode stickMode) {

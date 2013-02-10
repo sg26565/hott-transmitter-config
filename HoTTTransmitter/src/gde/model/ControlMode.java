@@ -1,5 +1,5 @@
 package gde.model;
 
 public enum ControlMode {
-	Global, Phase;
+	Global, Phase, Unknown;
 }

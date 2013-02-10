@@ -1,6 +1,7 @@
 package gde.model;
 
-public class Servo {
+public class Channel {
+	private Function function;
 	private int center;
 	private int limitHigh;
 	private int limitLow;

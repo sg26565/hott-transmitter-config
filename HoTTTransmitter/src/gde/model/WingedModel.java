@@ -7,6 +7,7 @@ public class WingedModel extends BaseModel {
 	private boolean channel8Delay;
 	private MoterOnC1Type motorOnC1Type;
 	private TailType tailType;
+	private WingMixer wingMixer;
 
 	public WingedModel() {
 		super(ModelType.Winged);
