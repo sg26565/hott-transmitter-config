@@ -7,6 +7,7 @@ abstract public class BaseModel {
 	private boolean autoTimerReset;
 	private Switch autoTrimSwitch;
 	private boolean bound;
+	private List<Channel> channels;
 	private List<Clock> clocks;
 	private List<Control> controls;
 	private DSCOutputType dscOutput;
@@ -21,11 +22,12 @@ abstract public class BaseModel {
 	private List<Phase> phases;
 	private Switch powerOnWarning;
 	private long receiverId;
-	private List<Channel> channels;
 	private StickMode stickMode;
 	private List<Stick> sticks;
 	private List<Switch> switches;
 	private ThrottleCutOf throttleCutOf;
+	private int throttleLastIdlePosition;
+	private int throttleTrim;
 	private long transmitterId;
 	private TransmitterType transmitterType;
 	private Vendor vendor;
@@ -40,6 +42,10 @@ abstract public class BaseModel {
 
 	public Switch getAutoTrimSwitch() {
 		return autoTrimSwitch;
+	}
+
+	public List<Channel> getChannels() {
+		return channels;
 	}
 
 	public List<Clock> getClocks() {
@@ -98,10 +104,6 @@ abstract public class BaseModel {
 		return receiverId;
 	}
 
-	public List<Channel> getChannels() {
-		return channels;
-	}
-
 	public StickMode getStickMode() {
 		return stickMode;
 	}
@@ -116,6 +118,14 @@ abstract public class BaseModel {
 
 	public ThrottleCutOf getThrottleCutOf() {
 		return throttleCutOf;
+	}
+
+	public int getThrottleLastIdlePosition() {
+		return throttleLastIdlePosition;
+	}
+
+	public int getThrottleTrim() {
+		return throttleTrim;
 	}
 
 	public long getTransmitterId() {
@@ -152,6 +162,10 @@ abstract public class BaseModel {
 
 	public void setBound(final boolean bound) {
 		this.bound = bound;
+	}
+
+	public void setChannels(final List<Channel> channels) {
+		this.channels = channels;
 	}
 
 	public void setClocks(final List<Clock> clocks) {
@@ -210,10 +224,6 @@ abstract public class BaseModel {
 		this.receiverId = receiverId;
 	}
 
-	public void setChannels(final List<Channel> channels) {
-		this.channels = channels;
-	}
-
 	public void setStickMode(final StickMode stickMode) {
 		this.stickMode = stickMode;
 	}
@@ -228,6 +238,14 @@ abstract public class BaseModel {
 
 	public void setThrottleCutOf(final ThrottleCutOf throttleCutOf) {
 		this.throttleCutOf = throttleCutOf;
+	}
+
+	public void setThrottleLastIdlePosition(final int throttleLastPosition) {
+		this.throttleLastIdlePosition = throttleLastPosition;
+	}
+
+	public void setThrottleTrim(final int throttleTrim) {
+		this.throttleTrim = throttleTrim;
 	}
 
 	public void setTransmitterId(final long transmitterId) {

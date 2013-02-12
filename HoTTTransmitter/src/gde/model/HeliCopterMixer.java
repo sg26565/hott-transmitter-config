@@ -7,6 +7,9 @@ public class HeliCopterMixer extends PhasedMixer {
 	private int gyroGain;
 	private List<CurvePoint> pitchCurve;
 	private int swashplateLimit;
+	private int swashplateMixNick;
+	private int swashplateMixPitch;
+	private int swashplateMixRoll;
 	private List<CurvePoint> tailCurve;
 	private List<CurvePoint> throttleCurve;
 
@@ -24,6 +27,18 @@ public class HeliCopterMixer extends PhasedMixer {
 
 	public int getSwashplateLimit() {
 		return swashplateLimit;
+	}
+
+	public int getSwashplateMixNick() {
+		return swashplateMixNick;
+	}
+
+	public int getSwashplateMixPitch() {
+		return swashplateMixPitch;
+	}
+
+	public int getSwashplateMixRoll() {
+		return swashplateMixRoll;
 	}
 
 	public List<CurvePoint> getTailCurve() {
@@ -48,6 +63,18 @@ public class HeliCopterMixer extends PhasedMixer {
 
 	public void setSwashplateLimit(final int swashplateLimit) {
 		this.swashplateLimit = swashplateLimit;
+	}
+
+	public void setSwashplateMixNick(final int swashplateMixNick) {
+		this.swashplateMixNick = swashplateMixNick;
+	}
+
+	public void setSwashplateMixPitch(final int swashplateMixPitch) {
+		this.swashplateMixPitch = swashplateMixPitch;
+	}
+
+	public void setSwashplateMixRoll(final int swashplateMixRoll) {
+		this.swashplateMixRoll = swashplateMixRoll;
 	}
 
 	public void setTailCurve(final List<CurvePoint> tailCurve) {
