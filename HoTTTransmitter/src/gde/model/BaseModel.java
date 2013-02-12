@@ -12,6 +12,8 @@ abstract public class BaseModel {
 	private List<Control> controls;
 	private DSCOutputType dscOutput;
 	private ExtPPMType extPpmType;
+	private int failSafeDelay;
+	private boolean failSafeSettingCheck;
 	private String info;
 	private int memoryVersion;
 	private List<Mixer> mixers;
@@ -31,6 +33,9 @@ abstract public class BaseModel {
 	private long transmitterId;
 	private TransmitterType transmitterType;
 	private Vendor vendor;
+	private boolean wirelessTrainerMode;
+	private long trainerId;
+	private long pupilId;
 
 	public BaseModel(final ModelType modelType) {
 		setModelType(modelType);
@@ -62,6 +67,10 @@ abstract public class BaseModel {
 
 	public ExtPPMType getExtPpmType() {
 		return extPpmType;
+	}
+
+	public int getFailSafeDelay() {
+		return failSafeDelay;
 	}
 
 	public String getInfo() {
@@ -148,6 +157,10 @@ abstract public class BaseModel {
 		return bound;
 	}
 
+	public boolean isFailSafeSettingCheck() {
+		return failSafeSettingCheck;
+	}
+
 	public void setAppVersion(final int appVersion) {
 		this.appVersion = appVersion;
 	}
@@ -182,6 +195,14 @@ abstract public class BaseModel {
 
 	public void setExtPpmType(final ExtPPMType extPpmType) {
 		this.extPpmType = extPpmType;
+	}
+
+	public void setFailSafeDelay(final int failSafeDelay) {
+		this.failSafeDelay = failSafeDelay;
+	}
+
+	public void setFailSafeSettingCheck(final boolean failSafeSettingCheck) {
+		this.failSafeSettingCheck = failSafeSettingCheck;
 	}
 
 	public void setInfo(final String info) {
@@ -241,7 +262,7 @@ abstract public class BaseModel {
 	}
 
 	public void setThrottleLastIdlePosition(final int throttleLastPosition) {
-		this.throttleLastIdlePosition = throttleLastPosition;
+		throttleLastIdlePosition = throttleLastPosition;
 	}
 
 	public void setThrottleTrim(final int throttleTrim) {
@@ -258,5 +279,29 @@ abstract public class BaseModel {
 
 	public void setVendor(final Vendor vendor) {
 		this.vendor = vendor;
+	}
+
+	public boolean isWirelessTrainerMode() {
+		return wirelessTrainerMode;
+	}
+
+	public void setWirelessTrainerMode(final boolean wirelessTrainerMode) {
+		this.wirelessTrainerMode = wirelessTrainerMode;
+	}
+
+	public long getTrainerId() {
+		return trainerId;
+	}
+
+	public void setTrainerId(final long trainerId) {
+		this.trainerId = trainerId;
+	}
+
+	public long getPupilId() {
+		return pupilId;
+	}
+
+	public void setPupilId(final long pupilId) {
+		this.pupilId = pupilId;
 	}
 }

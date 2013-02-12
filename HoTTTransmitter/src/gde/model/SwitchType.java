@@ -1,5 +1,5 @@
 package gde.model;
 
 public enum SwitchType {
-	Control, Fixed, Logical, Standard;
+	Control, Fixed, Logical, Standard, Unknown;
 }

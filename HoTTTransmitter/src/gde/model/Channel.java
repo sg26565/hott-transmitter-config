@@ -2,6 +2,8 @@ package gde.model;
 
 public class Channel {
 	private int center;
+	private FailSafeMode failSafeMode;
+	private int failSafePosition;
 	private Function function;
 	private int limitHigh;
 	private int limitLow;
@@ -9,9 +11,18 @@ public class Channel {
 	private boolean reverse;
 	private int travelHigh;
 	private int travelLow;
+	private TrainerMode trainerMode;
 
 	public int getCenter() {
 		return center;
+	}
+
+	public FailSafeMode getFailSafeMode() {
+		return failSafeMode;
+	}
+
+	public int getFailSafePosition() {
+		return failSafePosition;
 	}
 
 	public Function getFunction() {
@@ -46,7 +57,15 @@ public class Channel {
 		this.center = center;
 	}
 
-	public void setFunction(Function function) {
+	public void setFailSafeMode(final FailSafeMode failSafeMode) {
+		this.failSafeMode = failSafeMode;
+	}
+
+	public void setFailSafePosition(final int failSafePosition) {
+		this.failSafePosition = failSafePosition;
+	}
+
+	public void setFunction(final Function function) {
 		this.function = function;
 	}
 
@@ -72,5 +91,13 @@ public class Channel {
 
 	public void setTravelLow(final int travelLow) {
 		this.travelLow = travelLow;
+	}
+
+	public TrainerMode getTrainerMode() {
+		return trainerMode;
+	}
+
+	public void setTrainerMode(final TrainerMode trainerMode) {
+		this.trainerMode = trainerMode;
 	}
 }
