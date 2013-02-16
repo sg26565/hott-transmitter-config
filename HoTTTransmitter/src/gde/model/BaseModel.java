@@ -36,6 +36,8 @@ abstract public class BaseModel {
 	private boolean wirelessTrainerMode;
 	private long trainerId;
 	private long pupilId;
+	private int voiceDelay;
+	private SensorType sensorType;
 
 	public BaseModel(final ModelType modelType) {
 		setModelType(modelType);
@@ -303,5 +305,21 @@ abstract public class BaseModel {
 
 	public void setPupilId(final long pupilId) {
 		this.pupilId = pupilId;
+	}
+
+	public int getVoiceDelay() {
+		return voiceDelay;
+	}
+
+	public void setVoiceDelay(final int voiceDelay) {
+		this.voiceDelay = voiceDelay;
+	}
+
+	public SensorType getSensorType() {
+		return sensorType;
+	}
+
+	public void setSensorType(final SensorType sensorType) {
+		this.sensorType = sensorType;
 	}
 }
