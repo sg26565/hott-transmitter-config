@@ -1,5 +1,8 @@
 package gde.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class WingedModel extends BaseModel {
 	private AileronFlapType aileronFlapType;
 	private int brakeInput;

@@ -1,5 +1,8 @@
 package gde.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class HelicopterModel extends BaseModel {
 	private int autorotationPosition;
 	private Switch autorotatonSwitch;

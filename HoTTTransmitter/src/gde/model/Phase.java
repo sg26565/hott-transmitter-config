@@ -2,12 +2,21 @@ package gde.model;
 
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 public class Phase {
+	@XmlAttribute
+	private final int number;
 	private Map<Function, DualRateExpo> dualRate;
 	private PhasedMixer mixer;
 	private String name;
 	private PhasedTrim trim;
 	private PhaseType type;
+	private Switch sw;
+
+	public Phase(final int number) {
+		this.number = number;
+	}
 
 	public Map<Function, DualRateExpo> getDualRate() {
 		return dualRate;
@@ -47,5 +56,17 @@ public class Phase {
 
 	public void setType(final PhaseType type) {
 		this.type = type;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public Switch getSwitch() {
+		return sw;
+	}
+
+	public void setSwitch(final Switch sw) {
+		this.sw = sw;
 	}
 }

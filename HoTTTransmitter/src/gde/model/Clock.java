@@ -1,10 +1,18 @@
 package gde.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 public class Clock {
 	private String name;
 	private Switch sw;
 	private ClockType type;
 	private int value;
+	@XmlAttribute
+	private final int number;
+
+	public Clock(final int number) {
+		this.number = number;
+	}
 
 	public int getMinutes() {
 		return getValue() / 60;
@@ -52,5 +60,9 @@ public class Clock {
 
 	public void setValue(final int value) {
 		this.value = value;
+	}
+
+	public int getNumber() {
+		return number;
 	}
 }

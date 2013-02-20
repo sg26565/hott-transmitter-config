@@ -1,12 +1,13 @@
 package gde.model;
 
+
 public class ThrottleCutOf {
-	private Switch cutOfSwitch;
+	private Switch sw;
 	private int position;
 	private int threshold;
 
-	public Switch getCutOfSwitch() {
-		return cutOfSwitch;
+	public Switch getSwitch() {
+		return sw;
 	}
 
 	public int getPosition() {
@@ -17,8 +18,8 @@ public class ThrottleCutOf {
 		return threshold;
 	}
 
-	public void setCutOfSwitch(final Switch cutOfSwitch) {
-		this.cutOfSwitch = cutOfSwitch;
+	public void setSwitch(final Switch sw) {
+		this.sw = sw;
 	}
 
 	public void setPosition(final int position) {

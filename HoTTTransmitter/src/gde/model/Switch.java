@@ -1,14 +1,10 @@
 package gde.model;
 
+
 public class Switch {
-	private final SwitchFunction function;
 	private SwitchType type;
 	private int assigment;
 	private int position;
-
-	public Switch(final SwitchFunction function) {
-		this.function = function;
-	}
 
 	public int getAssigment() {
 		return assigment;
@@ -24,10 +20,6 @@ public class Switch {
 
 	public void setPosition(final int position) {
 		this.position = position;
-	}
-
-	public SwitchFunction getFunction() {
-		return function;
 	}
 
 	public SwitchType getType() {

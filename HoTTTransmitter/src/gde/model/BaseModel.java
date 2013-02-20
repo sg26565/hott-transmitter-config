@@ -1,6 +1,7 @@
 package gde.model;
 
 import java.util.List;
+import java.util.Map;
 
 abstract public class BaseModel {
 	private int appVersion;
@@ -19,28 +20,30 @@ abstract public class BaseModel {
 	private List<Mixer> mixers;
 	private String modelName;
 	private int modelNumber;
-	private ModelType modelType;
+	private final ModelType modelType;
 	private HFModule module;
 	private List<Phase> phases;
-	private Switch powerOnWarning;
+	private Switch powerOnWarning; // TODO check type
 	private long receiverId;
 	private StickMode stickMode;
-	private List<Stick> sticks;
-	private List<Switch> switches;
+	private Map<SwitchFunction, Switch> switches;
 	private ThrottleCutOf throttleCutOf;
 	private int throttleLastIdlePosition;
 	private int throttleTrim;
 	private long transmitterId;
 	private TransmitterType transmitterType;
 	private Vendor vendor;
-	private boolean wirelessTrainerMode;
-	private long trainerId;
-	private long pupilId;
+	private TrainerConfig trainerConfig;
 	private int voiceDelay;
 	private SensorType sensorType;
 
+	public BaseModel() {
+		// required by JAXB
+		this(ModelType.Unknown);
+	}
+
 	public BaseModel(final ModelType modelType) {
-		setModelType(modelType);
+		this.modelType = modelType;
 	}
 
 	public int getAppVersion() {
@@ -119,11 +122,7 @@ abstract public class BaseModel {
 		return stickMode;
 	}
 
-	public List<Stick> getSticks() {
-		return sticks;
-	}
-
-	public List<Switch> getSwitches() {
+	public Map<SwitchFunction, Switch> getSwitches() {
 		return switches;
 	}
 
@@ -227,10 +226,6 @@ abstract public class BaseModel {
 		this.modelNumber = modelNumber;
 	}
 
-	public void setModelType(final ModelType modelType) {
-		this.modelType = modelType;
-	}
-
 	public void setModule(final HFModule module) {
 		this.module = module;
 	}
@@ -251,11 +246,7 @@ abstract public class BaseModel {
 		this.stickMode = stickMode;
 	}
 
-	public void setSticks(final List<Stick> sticks) {
-		this.sticks = sticks;
-	}
-
-	public void setSwitches(final List<Switch> switches) {
+	public void setSwitches(final Map<SwitchFunction, Switch> switches) {
 		this.switches = switches;
 	}
 
@@ -283,30 +274,6 @@ abstract public class BaseModel {
 		this.vendor = vendor;
 	}
 
-	public boolean isWirelessTrainerMode() {
-		return wirelessTrainerMode;
-	}
-
-	public void setWirelessTrainerMode(final boolean wirelessTrainerMode) {
-		this.wirelessTrainerMode = wirelessTrainerMode;
-	}
-
-	public long getTrainerId() {
-		return trainerId;
-	}
-
-	public void setTrainerId(final long trainerId) {
-		this.trainerId = trainerId;
-	}
-
-	public long getPupilId() {
-		return pupilId;
-	}
-
-	public void setPupilId(final long pupilId) {
-		this.pupilId = pupilId;
-	}
-
 	public int getVoiceDelay() {
 		return voiceDelay;
 	}
@@ -321,5 +288,21 @@ abstract public class BaseModel {
 
 	public void setSensorType(final SensorType sensorType) {
 		this.sensorType = sensorType;
+	}
+
+	public Switch getSwitch(final SwitchFunction function) {
+		return getSwitches().get(function);
+	}
+
+	public void setSwitch(final SwitchFunction function, final Switch sw) {
+		getSwitches().put(function, sw);
+	}
+
+	public TrainerConfig getTrainerConfig() {
+		return trainerConfig;
+	}
+
+	public void setTrainerConfig(final TrainerConfig trainerConfig) {
+		this.trainerConfig = trainerConfig;
 	}
 }

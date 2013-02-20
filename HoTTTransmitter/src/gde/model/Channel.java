@@ -1,6 +1,10 @@
 package gde.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 public class Channel {
+	@XmlAttribute
+	private final int number;
 	private int center;
 	private FailSafeMode failSafeMode;
 	private int failSafePosition;
@@ -12,6 +16,10 @@ public class Channel {
 	private int travelHigh;
 	private int travelLow;
 	private TrainerMode trainerMode;
+
+	public Channel(final int number) {
+		this.number = number;
+	}
 
 	public int getCenter() {
 		return center;
@@ -99,5 +107,9 @@ public class Channel {
 
 	public void setTrainerMode(final TrainerMode trainerMode) {
 		this.trainerMode = trainerMode;
+	}
+
+	public int getNumber() {
+		return number;
 	}
 }

@@ -1,13 +1,17 @@
 package gde.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 public class Control {
-	private Channel channel;
+	@XmlAttribute
+	private final int number;
 	private ControlMode mode;
 	private int travelHigh;
 	private int travelLow;
+	private Switch sw;
 
-	public Channel getChannel() {
-		return channel;
+	public Control(final int number) {
+		this.number = number;
 	}
 
 	public ControlMode getMode() {
@@ -22,10 +26,6 @@ public class Control {
 		return travelLow;
 	}
 
-	public void setChannel(final Channel channel) {
-		this.channel = channel;
-	}
-
 	public void setMode(final ControlMode mode) {
 		this.mode = mode;
 	}
@@ -36,5 +36,17 @@ public class Control {
 
 	public void setTravelLow(final int travelLow) {
 		this.travelLow = travelLow;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public Switch getSwitch() {
+		return sw;
+	}
+
+	public void setSwitch(final Switch sw) {
+		this.sw = sw;
 	}
 }
