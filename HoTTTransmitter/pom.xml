@@ -1,19 +1,38 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>de.treichels.hott</groupId>
-  <artifactId>HoTTTransmitter</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.treichels.hott</groupId>
+	<artifactId>HoTTTransmitter</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<scm>
+		<connection>scm:svn:https://hott-transmitter-config.googlecode.com/svn/trunk/HoTTTransmitter/</connection>
+		<url>https://code.google.com/p/hott-transmitter-config/source/browse/</url>
+	</scm>
+	<issueManagement>
+		<url>https://code.google.com/p/hott-transmitter-config/issues/list</url>
+		<system>Google Code</system>
+	</issueManagement>
+	<url>https://code.google.com/p/hott-transmitter-config/</url>
+	<description>The goal of this project is to provide a tool for display and update of model configurations of the HoTT series of Graupner transmitters.
+
+The data format of the model files is only available under a non disclosure agreement. Therefore, the decoder/encoder for those files will not be provided as source code. Don't ask me for details about the format.I won't tell you!
+
+The project will provide an abstract data model for all model configuration settings. With this model, the data can be displayed in various formats (e.g. text, XML, PDF) or as a graphical user interface.
+
+This project complements the great Data Explorer project from Winfried Bruegmann and may eventually be merged with it.</description>
+	<inceptionYear>2013</inceptionYear>
+	<name>hott-transmitter-config</name>
 </project>
