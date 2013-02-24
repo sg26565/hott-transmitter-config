@@ -19,13 +19,13 @@
 	</build>
 	<scm>
 		<connection>scm:svn:https://hott-transmitter-config.googlecode.com/svn/trunk/HoTTTransmitter/</connection>
-		<url>https://code.google.com/p/hott-transmitter-config/source/browse/</url>
+		<url>https://code.google.com/p/hott-transmitter-config/source/browse/trunk/HoTTTransmitter/</url>
 	</scm>
 	<issueManagement>
 		<url>https://code.google.com/p/hott-transmitter-config/issues/list</url>
 		<system>Google Code</system>
 	</issueManagement>
-	<url>https://code.google.com/p/hott-transmitter-config/</url>
+	<url>https://hott-transmitter-config.googlecode.com/</url>
 	<description>The goal of this project is to provide a tool for display and update of model configurations of the HoTT series of Graupner transmitters.
 
 The data format of the model files is only available under a non disclosure agreement. Therefore, the decoder/encoder for those files will not be provided as source code. Don't ask me for details about the format.I won't tell you!
