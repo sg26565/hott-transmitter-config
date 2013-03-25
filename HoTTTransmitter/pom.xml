@@ -4,8 +4,8 @@
 	<groupId>de.treichels.hott</groupId>
 	<artifactId>HoTTTransmitter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
 	<build>
-		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -17,10 +17,12 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 	<scm>
 		<connection>scm:svn:https://hott-transmitter-config.googlecode.com/svn/trunk/HoTTTransmitter/</connection>
 		<url>https://code.google.com/p/hott-transmitter-config/source/browse/trunk/HoTTTransmitter/</url>
 	</scm>
+	
 	<issueManagement>
 		<url>https://code.google.com/p/hott-transmitter-config/issues/list</url>
 		<system>Google Code</system>
@@ -35,4 +37,18 @@ The project will provide an abstract data model for all model configuration sett
 This project complements the great Data Explorer project from Winfried Bruegmann and may eventually be merged with it.</description>
 	<inceptionYear>2013</inceptionYear>
 	<name>hott-transmitter-config</name>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.19</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
