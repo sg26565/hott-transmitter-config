@@ -3,19 +3,23 @@ package gde.model;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 
+/**
+ * @author oli@treichels.de
+ */
 public class Phase {
-	@XmlAttribute
-	private final int number;
 	private Map<Function, DualRateExpo> dualRate;
 	private PhasedMixer mixer;
 	private String name;
+	private final String number;
+	private Switch sw;
 	private PhasedTrim trim;
 	private PhaseType type;
-	private Switch sw;
 
 	public Phase(final int number) {
-		this.number = number;
+		this.number = Integer.toString(number);
 	}
 
 	public Map<Function, DualRateExpo> getDualRate() {
@@ -28,6 +32,17 @@ public class Phase {
 
 	public String getName() {
 		return name;
+	}
+
+	@XmlAttribute
+	@XmlID
+	public String getNumber() {
+		return number;
+	}
+
+	@XmlIDREF
+	public Switch getSwitch() {
+		return sw;
 	}
 
 	public PhasedTrim getTrim() {
@@ -50,23 +65,15 @@ public class Phase {
 		this.name = name;
 	}
 
+	public void setSwitch(final Switch sw) {
+		this.sw = sw;
+	}
+
 	public void setTrim(final PhasedTrim trim) {
 		this.trim = trim;
 	}
 
 	public void setType(final PhaseType type) {
 		this.type = type;
-	}
-
-	public int getNumber() {
-		return number;
-	}
-
-	public Switch getSwitch() {
-		return sw;
-	}
-
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
 	}
 }

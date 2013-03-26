@@ -1,24 +1,27 @@
 package gde.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
 
+/**
+ * @author oli@treichels.de
+ */
 public class Channel {
-	@XmlAttribute
-	private final int number;
 	private int center;
 	private FailSafeMode failSafeMode;
 	private int failSafePosition;
 	private Function function;
 	private int limitHigh;
 	private int limitLow;
+	private final String number;
 	private int outputChannel;
 	private boolean reverse;
+	private TrainerMode trainerMode;
 	private int travelHigh;
 	private int travelLow;
-	private TrainerMode trainerMode;
 
 	public Channel(final int number) {
-		this.number = number;
+		this.number = Integer.toString(number);
 	}
 
 	public int getCenter() {
@@ -45,8 +48,18 @@ public class Channel {
 		return limitLow;
 	}
 
+	@XmlAttribute
+	@XmlID
+	public String getNumber() {
+		return number;
+	}
+
 	public int getOutputChannel() {
 		return outputChannel;
+	}
+
+	public TrainerMode getTrainerMode() {
+		return trainerMode;
 	}
 
 	public int getTravelHigh() {
@@ -93,23 +106,15 @@ public class Channel {
 		this.reverse = reverse;
 	}
 
+	public void setTrainerMode(final TrainerMode trainerMode) {
+		this.trainerMode = trainerMode;
+	}
+
 	public void setTravelHigh(final int travelHigh) {
 		this.travelHigh = travelHigh;
 	}
 
 	public void setTravelLow(final int travelLow) {
 		this.travelLow = travelLow;
-	}
-
-	public TrainerMode getTrainerMode() {
-		return trainerMode;
-	}
-
-	public void setTrainerMode(final TrainerMode trainerMode) {
-		this.trainerMode = trainerMode;
-	}
-
-	public int getNumber() {
-		return number;
 	}
 }

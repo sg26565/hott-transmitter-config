@@ -1,23 +1,28 @@
 package gde.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 
+/**
+ * @author oli@treichels.de
+ */
 public class Mixer {
-	@XmlAttribute
-	private final int number;
 	private Channel fromChannel;
 	private MixerInputType inputType;
+	private final String number;
 	private int offset;
+	private Switch sw;
 	private Channel toChannel;
 	private int travelHigh;
 	private int travelLow;
 	private MixerType type;
-	private Switch sw;
 
 	public Mixer(final int number) {
-		this.number = number;
+		this.number = Integer.toString(number);
 	}
 
+	@XmlIDREF
 	public Channel getFromChannel() {
 		return fromChannel;
 	}
@@ -26,10 +31,22 @@ public class Mixer {
 		return inputType;
 	}
 
+	@XmlAttribute
+	@XmlID
+	public String getNumber() {
+		return number;
+	}
+
 	public int getOffset() {
 		return offset;
 	}
 
+	@XmlIDREF
+	public Switch getSwitch() {
+		return sw;
+	}
+
+	@XmlIDREF
 	public Channel getToChannel() {
 		return toChannel;
 	}
@@ -47,7 +64,7 @@ public class Mixer {
 	}
 
 	public void setFromChannel(final Channel from) {
-		this.fromChannel = from;
+		fromChannel = from;
 	}
 
 	public void setInputType(final MixerInputType inputType) {
@@ -58,8 +75,12 @@ public class Mixer {
 		this.offset = offset;
 	}
 
+	public void setSwitch(final Switch sw) {
+		this.sw = sw;
+	}
+
 	public void setToChannel(final Channel to) {
-		this.toChannel = to;
+		toChannel = to;
 	}
 
 	public void setTravelHigh(final int travelHigh) {
@@ -72,17 +93,5 @@ public class Mixer {
 
 	public void setType(final MixerType type) {
 		this.type = type;
-	}
-
-	public int getNumber() {
-		return number;
-	}
-
-	public Switch getSwitch() {
-		return sw;
-	}
-
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
 	}
 }

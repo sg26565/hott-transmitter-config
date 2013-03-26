@@ -1,7 +1,11 @@
 package gde.model;
 
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * @author oli@treichels.de
+ */
 @XmlRootElement
 public class HelicopterModel extends BaseModel {
 	private int autorotationPosition;
@@ -22,6 +26,7 @@ public class HelicopterModel extends BaseModel {
 		return autorotationPosition;
 	}
 
+	@XmlIDREF
 	public Switch getAutorotatonSwitch() {
 		return autorotatonSwitch;
 	}
@@ -30,6 +35,7 @@ public class HelicopterModel extends BaseModel {
 		return expoThrottleLimit;
 	}
 
+	@XmlIDREF
 	public Switch getMarkerSwitch() {
 		return markerSwitch;
 	}

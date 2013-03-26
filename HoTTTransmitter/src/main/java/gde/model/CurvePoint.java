@@ -1,5 +1,8 @@
 package gde.model;
 
+/**
+ * @author oli@treichels.de
+ */
 public class CurvePoint {
 	private boolean enabled;
 	private int value;

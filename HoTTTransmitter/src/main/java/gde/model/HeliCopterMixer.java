@@ -2,6 +2,9 @@ package gde.model;
 
 import java.util.List;
 
+/**
+ * @author oli@treichels.de
+ */
 public class HeliCopterMixer extends PhasedMixer {
 	private int channel8Value;
 	private int gyroGain;

@@ -1,5 +1,8 @@
 package gde.model;
 
+/**
+ * @author oli@treichels.de
+ */
 public enum ModelType {
-	Helicopter, Winged, Unknown;
+	Helicopter, Unknown, Winged;
 }

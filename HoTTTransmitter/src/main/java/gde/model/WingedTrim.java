@@ -1,5 +1,8 @@
 package gde.model;
 
+/**
+ * @author oli@treichels.de
+ */
 public class WingedTrim extends PhasedTrim {
 	private int aileronPhaseTrim;
 	private int aileronStickTrim;

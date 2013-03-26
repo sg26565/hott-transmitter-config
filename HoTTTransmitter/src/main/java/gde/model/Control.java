@@ -1,21 +1,36 @@
 package gde.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 
+/**
+ * @author oli@treichels.de
+ */
 public class Control {
-	@XmlAttribute
-	private final int number;
 	private ControlMode mode;
+	private final String number;
+	private Switch sw;
 	private int travelHigh;
 	private int travelLow;
-	private Switch sw;
 
 	public Control(final int number) {
-		this.number = number;
+		this.number = Integer.toString(number);
 	}
 
 	public ControlMode getMode() {
 		return mode;
+	}
+
+	@XmlAttribute
+	@XmlID
+	public String getNumber() {
+		return number;
+	}
+
+	@XmlIDREF
+	public Switch getSwitch() {
+		return sw;
 	}
 
 	public int getTravelHigh() {
@@ -30,23 +45,15 @@ public class Control {
 		this.mode = mode;
 	}
 
+	public void setSwitch(final Switch sw) {
+		this.sw = sw;
+	}
+
 	public void setTravelHigh(final int travelHigh) {
 		this.travelHigh = travelHigh;
 	}
 
 	public void setTravelLow(final int travelLow) {
 		this.travelLow = travelLow;
-	}
-
-	public int getNumber() {
-		return number;
-	}
-
-	public Switch getSwitch() {
-		return sw;
-	}
-
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
 	}
 }

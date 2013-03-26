@@ -1,5 +1,8 @@
 package gde.model;
 
+/**
+ * @author oli@treichels.de
+ */
 public class HelicopterTrim extends PhasedTrim {
 	private int nickStickTrim;
 	private int rollStickTrim;

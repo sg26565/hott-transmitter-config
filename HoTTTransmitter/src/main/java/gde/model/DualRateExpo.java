@@ -1,14 +1,16 @@
 package gde.model;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
+/**
+ * @author oli@treichels.de
+ */
 public class DualRateExpo {
 	@XmlList
 	private final int[] dualRate = new int[2];
 	@XmlList
 	private final int[] expo = new int[2];
-	@XmlElement(name = "switch")
 	private Switch sw;
 
 	public int getDualRate(final int pos) {
@@ -19,6 +21,7 @@ public class DualRateExpo {
 		return expo[pos];
 	}
 
+	@XmlIDREF
 	public Switch getSwich() {
 		return sw;
 	}

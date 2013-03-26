@@ -3,6 +3,11 @@ package gde.model;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlIDREF;
+
+/**
+ * @author oli@treichels.de
+ */
 abstract public class BaseModel {
 	private int appVersion;
 	private boolean autoTimerReset;
@@ -25,17 +30,17 @@ abstract public class BaseModel {
 	private List<Phase> phases;
 	private Switch powerOnWarning; // TODO check type
 	private long receiverId;
+	private SensorType sensorType;
 	private StickMode stickMode;
 	private Map<SwitchFunction, Switch> switches;
 	private ThrottleCutOf throttleCutOf;
 	private int throttleLastIdlePosition;
 	private int throttleTrim;
+	private TrainerConfig trainerConfig;
 	private long transmitterId;
 	private TransmitterType transmitterType;
 	private Vendor vendor;
-	private TrainerConfig trainerConfig;
 	private int voiceDelay;
-	private SensorType sensorType;
 
 	public BaseModel() {
 		// required by JAXB
@@ -50,6 +55,7 @@ abstract public class BaseModel {
 		return appVersion;
 	}
 
+	@XmlIDREF
 	public Switch getAutoTrimSwitch() {
 		return autoTrimSwitch;
 	}
@@ -110,6 +116,7 @@ abstract public class BaseModel {
 		return phases;
 	}
 
+	@XmlIDREF
 	public Switch getPowerOnWarning() {
 		return powerOnWarning;
 	}
@@ -118,8 +125,16 @@ abstract public class BaseModel {
 		return receiverId;
 	}
 
+	public SensorType getSensorType() {
+		return sensorType;
+	}
+
 	public StickMode getStickMode() {
 		return stickMode;
+	}
+
+	public Switch getSwitch(final SwitchFunction function) {
+		return getSwitches().get(function);
 	}
 
 	public Map<SwitchFunction, Switch> getSwitches() {
@@ -138,6 +153,10 @@ abstract public class BaseModel {
 		return throttleTrim;
 	}
 
+	public TrainerConfig getTrainerConfig() {
+		return trainerConfig;
+	}
+
 	public long getTransmitterId() {
 		return transmitterId;
 	}
@@ -148,6 +167,10 @@ abstract public class BaseModel {
 
 	public Vendor getVendor() {
 		return vendor;
+	}
+
+	public int getVoiceDelay() {
+		return voiceDelay;
 	}
 
 	public boolean isAutoTimerReset() {
@@ -242,8 +265,16 @@ abstract public class BaseModel {
 		this.receiverId = receiverId;
 	}
 
+	public void setSensorType(final SensorType sensorType) {
+		this.sensorType = sensorType;
+	}
+
 	public void setStickMode(final StickMode stickMode) {
 		this.stickMode = stickMode;
+	}
+
+	public void setSwitch(final SwitchFunction function, final Switch sw) {
+		getSwitches().put(function, sw);
 	}
 
 	public void setSwitches(final Map<SwitchFunction, Switch> switches) {
@@ -262,6 +293,10 @@ abstract public class BaseModel {
 		this.throttleTrim = throttleTrim;
 	}
 
+	public void setTrainerConfig(final TrainerConfig trainerConfig) {
+		this.trainerConfig = trainerConfig;
+	}
+
 	public void setTransmitterId(final long transmitterId) {
 		this.transmitterId = transmitterId;
 	}
@@ -274,35 +309,7 @@ abstract public class BaseModel {
 		this.vendor = vendor;
 	}
 
-	public int getVoiceDelay() {
-		return voiceDelay;
-	}
-
 	public void setVoiceDelay(final int voiceDelay) {
 		this.voiceDelay = voiceDelay;
-	}
-
-	public SensorType getSensorType() {
-		return sensorType;
-	}
-
-	public void setSensorType(final SensorType sensorType) {
-		this.sensorType = sensorType;
-	}
-
-	public Switch getSwitch(final SwitchFunction function) {
-		return getSwitches().get(function);
-	}
-
-	public void setSwitch(final SwitchFunction function, final Switch sw) {
-		getSwitches().put(function, sw);
-	}
-
-	public TrainerConfig getTrainerConfig() {
-		return trainerConfig;
-	}
-
-	public void setTrainerConfig(final TrainerConfig trainerConfig) {
-		this.trainerConfig = trainerConfig;
 	}
 }

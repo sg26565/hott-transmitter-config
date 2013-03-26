@@ -1,5 +1,8 @@
 package gde.model;
 
+/**
+ * @author oli@treichels.de
+ */
 public enum SensorType {
-	Receiver, GeneralModule, GeneralAirModule, ElectricAirModule, Vario, GPS
+	ElectricAirModule, GeneralAirModule, GeneralModule, GPS, Receiver, Vario
 }

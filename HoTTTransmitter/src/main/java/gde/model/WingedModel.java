@@ -2,6 +2,9 @@ package gde.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * @author oli@treichels.de
+ */
 @XmlRootElement
 public class WingedModel extends BaseModel {
 	private AileronFlapType aileronFlapType;

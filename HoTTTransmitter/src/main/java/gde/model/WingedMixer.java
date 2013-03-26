@@ -1,6 +1,8 @@
 package gde.model;
 
-
+/**
+ * @author oli@treichels.de
+ */
 public class WingedMixer extends PhasedMixer {
 	private int diffAileron;
 	private int diffFlap;

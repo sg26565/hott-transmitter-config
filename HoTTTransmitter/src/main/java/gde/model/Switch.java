@@ -1,17 +1,35 @@
 package gde.model;
 
+import javax.xml.bind.annotation.XmlID;
 
+/**
+ * @author oli@treichels.de
+ */
 public class Switch {
-	private SwitchType type;
 	private int assigment;
+	private final String number;
 	private int position;
+	private SwitchType type;
+
+	public Switch(final int number) {
+		this.number = Integer.toString(number);
+	}
 
 	public int getAssigment() {
 		return assigment;
 	}
 
+	@XmlID
+	public String getNumber() {
+		return number;
+	}
+
 	public int getPosition() {
 		return position;
+	}
+
+	public SwitchType getType() {
+		return type;
 	}
 
 	public void setAssigment(final int assigment) {
@@ -20,10 +38,6 @@ public class Switch {
 
 	public void setPosition(final int position) {
 		this.position = position;
-	}
-
-	public SwitchType getType() {
-		return type;
 	}
 
 	public void setType(final SwitchType type) {
