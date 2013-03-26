@@ -1,4 +1,6 @@
-package gde.model;
+package gde.model.container;
+
+import gde.model.Phase;
 
 import java.util.ArrayList;
 import java.util.Iterator;

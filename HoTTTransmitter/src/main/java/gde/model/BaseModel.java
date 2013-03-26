@@ -1,5 +1,11 @@
 package gde.model;
 
+import gde.model.container.Channels;
+import gde.model.container.Clocks;
+import gde.model.container.Controls;
+import gde.model.container.Mixers;
+import gde.model.container.Phases;
+import gde.model.container.Switches;
 import gde.model.enums.DSCOutputType;
 import gde.model.enums.ExtPPMType;
 import gde.model.enums.ModelType;
@@ -8,6 +14,7 @@ import gde.model.enums.StickMode;
 import gde.model.enums.TransmitterType;
 import gde.model.enums.Vendor;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 
 /**
@@ -97,6 +104,7 @@ abstract public class BaseModel {
 		return memoryVersion;
 	}
 
+	@XmlElement(name = "freeMixers")
 	public Mixers getMixers() {
 		return mixers;
 	}

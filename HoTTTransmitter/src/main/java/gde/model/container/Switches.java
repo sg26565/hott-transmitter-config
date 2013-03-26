@@ -1,5 +1,6 @@
-package gde.model;
+package gde.model.container;
 
+import gde.model.Switch;
 import gde.model.enums.SwitchFunction;
 
 import java.util.Collection;

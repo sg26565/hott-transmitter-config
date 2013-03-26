@@ -1,4 +1,6 @@
-package gde.model;
+package gde.model.winged;
+
+import gde.model.PhasedMixer;
 
 /**
  * @author oli@treichels.de

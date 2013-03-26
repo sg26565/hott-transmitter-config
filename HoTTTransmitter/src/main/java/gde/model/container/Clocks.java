@@ -1,4 +1,6 @@
-package gde.model;
+package gde.model.container;
+
+import gde.model.Clock;
 
 import java.util.ArrayList;
 import java.util.Iterator;

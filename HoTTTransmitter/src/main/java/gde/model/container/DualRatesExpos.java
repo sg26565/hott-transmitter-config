@@ -1,5 +1,6 @@
-package gde.model;
+package gde.model.container;
 
+import gde.model.DualRateExpo;
 import gde.model.enums.Function;
 
 import java.util.Collection;

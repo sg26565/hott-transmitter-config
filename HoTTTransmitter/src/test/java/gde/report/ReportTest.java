@@ -3,7 +3,7 @@ package gde.report;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import freemarker.template.TemplateException;
-import gde.model.WingedModel;
+import gde.model.winged.WingedModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

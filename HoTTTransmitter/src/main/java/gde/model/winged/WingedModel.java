@@ -1,5 +1,6 @@
-package gde.model;
+package gde.model.winged;
 
+import gde.model.BaseModel;
 import gde.model.enums.AileronFlapType;
 import gde.model.enums.ModelType;
 import gde.model.enums.MoterOnC1Type;

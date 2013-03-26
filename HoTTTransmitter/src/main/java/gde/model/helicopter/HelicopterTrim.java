@@ -1,4 +1,6 @@
-package gde.model;
+package gde.model.helicopter;
+
+import gde.model.PhasedTrim;
 
 /**
  * @author oli@treichels.de

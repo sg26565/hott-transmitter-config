@@ -1,5 +1,6 @@
-package gde.model;
+package gde.model.winged;
 
+import gde.model.PhasedTrim;
 import gde.model.enums.PhaseType;
 
 /**

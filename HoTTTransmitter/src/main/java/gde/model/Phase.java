@@ -1,5 +1,6 @@
 package gde.model;
 
+import gde.model.container.DualRatesExpos;
 import gde.model.enums.PhaseType;
 
 import javax.xml.bind.annotation.XmlAttribute;

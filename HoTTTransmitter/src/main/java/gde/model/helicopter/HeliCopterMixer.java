@@ -1,4 +1,8 @@
-package gde.model;
+package gde.model.helicopter;
+
+import gde.model.PhasedMixer;
+import gde.model.Swashplate;
+import gde.model.container.CurvePoints;
 
 /**
  * @author oli@treichels.de

@@ -1,5 +1,7 @@
-package gde.model;
+package gde.model.helicopter;
 
+import gde.model.BaseModel;
+import gde.model.Switch;
 import gde.model.enums.ModelType;
 import gde.model.enums.PitchMin;
 import gde.model.enums.RotorDirection;
