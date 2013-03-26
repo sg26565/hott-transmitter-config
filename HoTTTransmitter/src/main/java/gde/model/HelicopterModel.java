@@ -1,5 +1,10 @@
 package gde.model;
 
+import gde.model.enums.ModelType;
+import gde.model.enums.PitchMin;
+import gde.model.enums.RotorDirection;
+import gde.model.enums.SwashplateType;
+
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 

@@ -1,5 +1,7 @@
 package gde.model;
 
+import gde.model.enums.ClockType;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;

@@ -1,5 +1,7 @@
 package gde.model;
 
+import gde.model.enums.HFModuleType;
+
 /**
  * @author oli@treichels.de
  */

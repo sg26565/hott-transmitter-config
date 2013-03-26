@@ -1,4 +1,4 @@
-package gde.model;
+package gde.model.enums;
 
 /**
  * @author oli@treichels.de

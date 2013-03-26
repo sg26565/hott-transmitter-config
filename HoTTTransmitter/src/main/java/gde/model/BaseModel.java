@@ -1,5 +1,14 @@
 package gde.model;
 
+import gde.model.enums.DSCOutputType;
+import gde.model.enums.ExtPPMType;
+import gde.model.enums.ModelType;
+import gde.model.enums.SensorType;
+import gde.model.enums.StickMode;
+import gde.model.enums.SwitchFunction;
+import gde.model.enums.TransmitterType;
+import gde.model.enums.Vendor;
+
 import java.util.List;
 import java.util.Map;
 

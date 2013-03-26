@@ -1,5 +1,7 @@
 package gde.model;
 
+import gde.model.enums.SwitchType;
+
 import javax.xml.bind.annotation.XmlID;
 
 /**

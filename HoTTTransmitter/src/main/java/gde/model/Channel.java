@@ -1,5 +1,9 @@
 package gde.model;
 
+import gde.model.enums.FailSafeMode;
+import gde.model.enums.Function;
+import gde.model.enums.TrainerMode;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 

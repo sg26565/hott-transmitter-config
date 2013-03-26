@@ -1,5 +1,8 @@
 package gde.model;
 
+import gde.model.enums.Function;
+import gde.model.enums.PhaseType;
+
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;

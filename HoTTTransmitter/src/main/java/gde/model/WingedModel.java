@@ -1,5 +1,10 @@
 package gde.model;
 
+import gde.model.enums.AileronFlapType;
+import gde.model.enums.ModelType;
+import gde.model.enums.MoterOnC1Type;
+import gde.model.enums.TailType;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**

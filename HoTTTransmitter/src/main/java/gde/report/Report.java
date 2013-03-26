@@ -11,6 +11,9 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import gde.model.BaseModel;
 
+/**
+ * @author oli@treichels.de
+ */
 public class Report {
 	private final Configuration configuration;
 	private final Template template;

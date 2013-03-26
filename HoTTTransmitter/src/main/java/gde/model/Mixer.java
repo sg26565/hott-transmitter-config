@@ -1,5 +1,8 @@
 package gde.model;
 
+import gde.model.enums.MixerInputType;
+import gde.model.enums.MixerType;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;

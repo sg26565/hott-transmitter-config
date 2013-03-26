@@ -1,5 +1,7 @@
 package gde.model;
 
+import gde.model.enums.PhaseType;
+
 /**
  * @author oli@treichels.de
  */
