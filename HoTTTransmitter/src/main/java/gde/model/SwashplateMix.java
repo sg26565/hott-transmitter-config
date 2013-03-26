@@ -3,7 +3,7 @@ package gde.model;
 /**
  * @author oli@treichels.de
  */
-public class Swashplate {
+public class SwashplateMix {
 	private int limit;
 	private int nickMix;
 	private int pitchMix;

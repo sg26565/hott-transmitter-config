@@ -1,7 +1,7 @@
 package gde.model.helicopter;
 
 import gde.model.PhasedMixer;
-import gde.model.Swashplate;
+import gde.model.SwashplateMix;
 import gde.model.container.CurvePoints;
 
 /**
@@ -11,7 +11,7 @@ public class HeliCopterMixer extends PhasedMixer {
 	private int channel8Value;
 	private int gyroGain;
 	private CurvePoints pitchCurve;
-	private Swashplate swashplate;
+	private SwashplateMix swashplateMix;
 	private CurvePoints tailCurve;
 	private CurvePoints throttleCurve;
 
@@ -55,11 +55,11 @@ public class HeliCopterMixer extends PhasedMixer {
 		this.throttleCurve = throttleCurve;
 	}
 
-	public Swashplate getSwashplate() {
-		return swashplate;
+	public SwashplateMix getSwashplateMix() {
+		return swashplateMix;
 	}
 
-	public void setSwashplate(final Swashplate swashplate) {
-		this.swashplate = swashplate;
+	public void setSwashplateMix(final SwashplateMix swashplateMix) {
+		this.swashplateMix = swashplateMix;
 	}
 }
