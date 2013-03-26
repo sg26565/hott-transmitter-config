@@ -2,6 +2,7 @@ package gde.model;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 
 /**
@@ -19,6 +20,7 @@ public class TrainerConfig {
 	}
 
 	@XmlIDREF
+	@XmlElement(name = "pupilChannel")
 	public List<Channel> getPupilChannels() {
 		return pupilChannels;
 	}
@@ -28,11 +30,13 @@ public class TrainerConfig {
 	}
 
 	@XmlIDREF
+	@XmlElement(name = "trainerSwitch")
 	public Switch getSwitch() {
 		return sw;
 	}
 
 	@XmlIDREF
+	@XmlElement(name = "trainerChannel")
 	public List<Channel> getTrainerChannels() {
 		return trainerChannels;
 	}

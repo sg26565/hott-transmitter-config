@@ -5,14 +5,8 @@ import gde.model.enums.ExtPPMType;
 import gde.model.enums.ModelType;
 import gde.model.enums.SensorType;
 import gde.model.enums.StickMode;
-import gde.model.enums.SwitchFunction;
 import gde.model.enums.TransmitterType;
 import gde.model.enums.Vendor;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -24,26 +18,26 @@ abstract public class BaseModel {
 	private boolean autoTimerReset;
 	private Switch autoTrimSwitch;
 	private boolean bound;
-	private List<Channel> channels;
-	private List<Clock> clocks;
-	private List<Control> controls;
+	private Channels channels;
+	private Clocks clocks;
+	private Controls controls;
 	private DSCOutputType dscOutput;
 	private ExtPPMType extPpmType;
 	private int failSafeDelay;
 	private boolean failSafeSettingCheck;
 	private String info;
 	private int memoryVersion;
-	private List<Mixer> mixers;
+	private Mixers mixers;
 	private String modelName;
 	private int modelNumber;
 	private final ModelType modelType;
 	private HFModule module;
-	private List<Phase> phases;
+	private Phases phases;
 	private Switch powerOnWarning; // TODO check type
 	private long receiverId;
 	private SensorType sensorType;
 	private StickMode stickMode;
-	private final Map<SwitchFunction, Switch> switches = new HashMap<SwitchFunction, Switch>();
+	private Switches switches;
 	private ThrottleCutOf throttleCutOf;
 	private int throttleLastIdlePosition;
 	private int throttleTrim;
@@ -62,10 +56,6 @@ abstract public class BaseModel {
 		this.modelType = modelType;
 	}
 
-	public void addSwitch(final Switch sw) {
-		switches.put(SwitchFunction.valueOf(sw.getFunction()), sw);
-	}
-
 	public int getAppVersion() {
 		return appVersion;
 	}
@@ -75,15 +65,15 @@ abstract public class BaseModel {
 		return autoTrimSwitch;
 	}
 
-	public List<Channel> getChannels() {
+	public Channels getChannels() {
 		return channels;
 	}
 
-	public List<Clock> getClocks() {
+	public Clocks getClocks() {
 		return clocks;
 	}
 
-	public List<Control> getControls() {
+	public Controls getControls() {
 		return controls;
 	}
 
@@ -107,7 +97,7 @@ abstract public class BaseModel {
 		return memoryVersion;
 	}
 
-	public List<Mixer> getMixers() {
+	public Mixers getMixers() {
 		return mixers;
 	}
 
@@ -127,7 +117,7 @@ abstract public class BaseModel {
 		return module;
 	}
 
-	public List<Phase> getPhases() {
+	public Phases getPhases() {
 		return phases;
 	}
 
@@ -148,12 +138,8 @@ abstract public class BaseModel {
 		return stickMode;
 	}
 
-	public Switch getSwitch(final SwitchFunction function) {
-		return switches.get(function);
-	}
-
-	public Collection<Switch> getSwitches() {
-		return switches.values();
+	public Switches getSwitches() {
+		return switches;
 	}
 
 	public ThrottleCutOf getThrottleCutOf() {
@@ -216,15 +202,15 @@ abstract public class BaseModel {
 		this.bound = bound;
 	}
 
-	public void setChannels(final List<Channel> channels) {
+	public void setChannels(final Channels channels) {
 		this.channels = channels;
 	}
 
-	public void setClocks(final List<Clock> clocks) {
+	public void setClocks(final Clocks clocks) {
 		this.clocks = clocks;
 	}
 
-	public void setControls(final List<Control> controls) {
+	public void setControls(final Controls controls) {
 		this.controls = controls;
 	}
 
@@ -252,7 +238,7 @@ abstract public class BaseModel {
 		this.memoryVersion = memoryVersion;
 	}
 
-	public void setMixers(final List<Mixer> mixers) {
+	public void setMixers(final Mixers mixers) {
 		this.mixers = mixers;
 	}
 
@@ -268,7 +254,7 @@ abstract public class BaseModel {
 		this.module = module;
 	}
 
-	public void setPhases(final List<Phase> phases) {
+	public void setPhases(final Phases phases) {
 		this.phases = phases;
 	}
 
@@ -288,10 +274,8 @@ abstract public class BaseModel {
 		this.stickMode = stickMode;
 	}
 
-	public void setSwitches(final Collection<Switch> switches) {
-		for (final Switch sw : switches) {
-			addSwitch(sw);
-		}
+	public void setSwitches(final Switches switches) {
+		this.switches = switches;
 	}
 
 	public void setThrottleCutOf(final ThrottleCutOf throttleCutOf) {

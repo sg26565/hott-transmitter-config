@@ -11,12 +11,12 @@ import javax.xml.bind.annotation.XmlID;
  */
 public class Switch {
 	private int assigment;
-	private final String function;
+	private final SwitchFunction function;
 	private int position;
 	private SwitchType type;
 
 	public Switch(final SwitchFunction function) {
-		this.function = function.toString();
+		this.function = function;
 	}
 
 	public int getAssigment() {
@@ -46,6 +46,6 @@ public class Switch {
 	@XmlAttribute
 	@XmlID
 	public String getFunction() {
-		return function;
+		return function.toString();
 	}
 }

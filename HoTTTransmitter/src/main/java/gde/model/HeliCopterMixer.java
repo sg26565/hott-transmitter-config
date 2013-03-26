@@ -1,20 +1,15 @@
 package gde.model;
 
-import java.util.List;
-
 /**
  * @author oli@treichels.de
  */
 public class HeliCopterMixer extends PhasedMixer {
 	private int channel8Value;
 	private int gyroGain;
-	private List<CurvePoint> pitchCurve;
-	private int swashplateLimit;
-	private int swashplateMixNick;
-	private int swashplateMixPitch;
-	private int swashplateMixRoll;
-	private List<CurvePoint> tailCurve;
-	private List<CurvePoint> throttleCurve;
+	private CurvePoints pitchCurve;
+	private Swashplate swashplate;
+	private CurvePoints tailCurve;
+	private CurvePoints throttleCurve;
 
 	public int getChannel8Value() {
 		return channel8Value;
@@ -24,31 +19,15 @@ public class HeliCopterMixer extends PhasedMixer {
 		return gyroGain;
 	}
 
-	public List<CurvePoint> getPitchCurve() {
+	public CurvePoints getPitchCurve() {
 		return pitchCurve;
 	}
 
-	public int getSwashplateLimit() {
-		return swashplateLimit;
-	}
-
-	public int getSwashplateMixNick() {
-		return swashplateMixNick;
-	}
-
-	public int getSwashplateMixPitch() {
-		return swashplateMixPitch;
-	}
-
-	public int getSwashplateMixRoll() {
-		return swashplateMixRoll;
-	}
-
-	public List<CurvePoint> getTailCurve() {
+	public CurvePoints getTailCurve() {
 		return tailCurve;
 	}
 
-	public List<CurvePoint> getThrottleCurve() {
+	public CurvePoints getThrottleCurve() {
 		return throttleCurve;
 	}
 
@@ -60,31 +39,23 @@ public class HeliCopterMixer extends PhasedMixer {
 		this.gyroGain = gyroGain;
 	}
 
-	public void setPitchCurve(final List<CurvePoint> pitchCurve) {
+	public void setPitchCurve(final CurvePoints pitchCurve) {
 		this.pitchCurve = pitchCurve;
 	}
 
-	public void setSwashplateLimit(final int swashplateLimit) {
-		this.swashplateLimit = swashplateLimit;
-	}
-
-	public void setSwashplateMixNick(final int swashplateMixNick) {
-		this.swashplateMixNick = swashplateMixNick;
-	}
-
-	public void setSwashplateMixPitch(final int swashplateMixPitch) {
-		this.swashplateMixPitch = swashplateMixPitch;
-	}
-
-	public void setSwashplateMixRoll(final int swashplateMixRoll) {
-		this.swashplateMixRoll = swashplateMixRoll;
-	}
-
-	public void setTailCurve(final List<CurvePoint> tailCurve) {
+	public void setTailCurve(final CurvePoints tailCurve) {
 		this.tailCurve = tailCurve;
 	}
 
-	public void setThrottleCurve(final List<CurvePoint> throttleCurve) {
+	public void setThrottleCurve(final CurvePoints throttleCurve) {
 		this.throttleCurve = throttleCurve;
+	}
+
+	public Swashplate getSwashplate() {
+		return swashplate;
+	}
+
+	public void setSwashplate(final Swashplate swashplate) {
+		this.swashplate = swashplate;
 	}
 }

@@ -1,11 +1,19 @@
 package gde.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
+
 /**
  * @author oli@treichels.de
  */
 public class CurvePoint {
+	private final String number;
 	private boolean enabled;
 	private int value;
+
+	public CurvePoint(final int number) {
+		this.number = Integer.toString(number);
+	}
 
 	public int getValue() {
 		return value;
@@ -21,5 +29,11 @@ public class CurvePoint {
 
 	public void setValue(final int value) {
 		this.value = value;
+	}
+
+	@XmlAttribute
+	@XmlID
+	public String getNumber() {
+		return number;
 	}
 }

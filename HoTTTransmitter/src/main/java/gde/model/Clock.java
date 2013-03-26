@@ -14,9 +14,10 @@ public class Clock {
 	private Switch sw;
 	private ClockType type;
 	private int value;
+	private final String number;
 
-	public Clock(final String name) {
-		this.name = name;
+	public Clock(final int number) {
+		this.number = Integer.toString(number);
 	}
 
 	public int getMinutes() {
@@ -25,6 +26,10 @@ public class Clock {
 
 	@XmlAttribute
 	@XmlID
+	public String getNumber() {
+		return number;
+	}
+
 	public String getName() {
 		return name;
 	}
