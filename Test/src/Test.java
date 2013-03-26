@@ -1,3 +1,7 @@
+import gde.model.BaseModel;
+import gde.model.HeliCopterMixer;
+import gde.model.HelicopterModel;
+import gde.model.HelicopterTrim;
 import gde.model.WingedMixer;
 import gde.model.WingedModel;
 import gde.model.WingedTrim;
@@ -17,13 +21,15 @@ public class Test {
 	public static void main(final String[] args) throws IOException, URISyntaxException, JAXBException {
 		// lookup the binary model file from the class path - for testing
 		// purposes
-		final URL url = ClassLoader.getSystemResource("aMERLIN.mdl");
+		// final URL url = ClassLoader.getSystemResource("aMERLIN.mdl");
+		final URL url = ClassLoader.getSystemResource("hSPACER-4X.mdl");
 
 		// decode the model file into the data model
-		final WingedModel model = (WingedModel) HoTTDecoder.decode(new File(url.toURI()));
+		final BaseModel model = HoTTDecoder.decode(new File(url.toURI()));
 
 		// create a JAXB marshaller to convert the data model into XML
-		final JAXBContext ctx = JAXBContext.newInstance(WingedModel.class, WingedMixer.class, WingedTrim.class);
+		final JAXBContext ctx = JAXBContext.newInstance(WingedModel.class, WingedMixer.class, WingedTrim.class, HelicopterModel.class, HeliCopterMixer.class,
+				HelicopterTrim.class);
 		final Marshaller m = ctx.createMarshaller();
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
