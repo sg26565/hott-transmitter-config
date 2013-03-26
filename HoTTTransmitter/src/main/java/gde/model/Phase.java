@@ -3,6 +3,8 @@ package gde.model;
 import gde.model.enums.Function;
 import gde.model.enums.PhaseType;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -13,7 +15,7 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Phase {
-	private Map<Function, DualRateExpo> dualRate;
+	private final Map<Function, DualRateExpo> dualRate = new HashMap<Function, DualRateExpo>();
 	private PhasedMixer mixer;
 	private String name;
 	private final String number;
@@ -25,8 +27,12 @@ public class Phase {
 		this.number = Integer.toString(number);
 	}
 
-	public Map<Function, DualRateExpo> getDualRate() {
-		return dualRate;
+	public DualRateExpo getDualRate(final Function function) {
+		return dualRate.get(function);
+	}
+
+	public Collection<DualRateExpo> getDualRates() {
+		return dualRate.values();
 	}
 
 	public PhasedMixer getMixer() {
@@ -56,8 +62,14 @@ public class Phase {
 		return type;
 	}
 
-	public void setDualRate(final Map<Function, DualRateExpo> dualRate) {
-		this.dualRate = dualRate;
+	public void setDualRate(final Function function, final DualRateExpo dualRate) {
+		this.dualRate.put(function, dualRate);
+	}
+
+	public void setDualRates(final Collection<DualRateExpo> dualRate) {
+		for (final DualRateExpo dr : dualRate) {
+			this.dualRate.put(Function.valueOf(dr.getFunction()), dr);
+		}
 	}
 
 	public void setMixer(final PhasedMixer mixer) {

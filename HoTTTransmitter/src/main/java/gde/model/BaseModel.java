@@ -9,6 +9,8 @@ import gde.model.enums.SwitchFunction;
 import gde.model.enums.TransmitterType;
 import gde.model.enums.Vendor;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +43,7 @@ abstract public class BaseModel {
 	private long receiverId;
 	private SensorType sensorType;
 	private StickMode stickMode;
-	private Map<SwitchFunction, Switch> switches;
+	private final Map<SwitchFunction, Switch> switches = new HashMap<SwitchFunction, Switch>();
 	private ThrottleCutOf throttleCutOf;
 	private int throttleLastIdlePosition;
 	private int throttleTrim;
@@ -58,6 +60,10 @@ abstract public class BaseModel {
 
 	public BaseModel(final ModelType modelType) {
 		this.modelType = modelType;
+	}
+
+	public void addSwitch(final Switch sw) {
+		switches.put(SwitchFunction.valueOf(sw.getFunction()), sw);
 	}
 
 	public int getAppVersion() {
@@ -143,11 +149,11 @@ abstract public class BaseModel {
 	}
 
 	public Switch getSwitch(final SwitchFunction function) {
-		return getSwitches().get(function);
+		return switches.get(function);
 	}
 
-	public Map<SwitchFunction, Switch> getSwitches() {
-		return switches;
+	public Collection<Switch> getSwitches() {
+		return switches.values();
 	}
 
 	public ThrottleCutOf getThrottleCutOf() {
@@ -282,12 +288,10 @@ abstract public class BaseModel {
 		this.stickMode = stickMode;
 	}
 
-	public void setSwitch(final SwitchFunction function, final Switch sw) {
-		getSwitches().put(function, sw);
-	}
-
-	public void setSwitches(final Map<SwitchFunction, Switch> switches) {
-		this.switches = switches;
+	public void setSwitches(final Collection<Switch> switches) {
+		for (final Switch sw : switches) {
+			addSwitch(sw);
+		}
 	}
 
 	public void setThrottleCutOf(final ThrottleCutOf throttleCutOf) {

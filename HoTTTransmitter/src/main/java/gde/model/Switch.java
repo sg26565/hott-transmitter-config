@@ -1,7 +1,9 @@
 package gde.model;
 
+import gde.model.enums.SwitchFunction;
 import gde.model.enums.SwitchType;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 
 /**
@@ -9,21 +11,16 @@ import javax.xml.bind.annotation.XmlID;
  */
 public class Switch {
 	private int assigment;
-	private final String number;
+	private final String function;
 	private int position;
 	private SwitchType type;
 
-	public Switch(final int number) {
-		this.number = Integer.toString(number);
+	public Switch(final SwitchFunction function) {
+		this.function = function.toString();
 	}
 
 	public int getAssigment() {
 		return assigment;
-	}
-
-	@XmlID
-	public String getNumber() {
-		return number;
 	}
 
 	public int getPosition() {
@@ -44,5 +41,11 @@ public class Switch {
 
 	public void setType(final SwitchType type) {
 		this.type = type;
+	}
+
+	@XmlAttribute
+	@XmlID
+	public String getFunction() {
+		return function;
 	}
 }
