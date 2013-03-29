@@ -125,7 +125,7 @@
 					<table cellpadding="0">
 						<tr>
 							<td align="right">Countdown:</td>
-							<td>${model.clocks[0].minutes}:<#setting number_format="00">${model.clocks[0].seconds}<#setting number_format="number"></td>
+							<td>${model.clocks[0].minutes}:${model.clocks[0].seconds?string("00")}</td>
 						</tr>
 						<tr>
 							<td align="right">Schalter:</td>
@@ -275,5 +275,100 @@
 		</table>
 </#if>
 
+		<h1>Freie Mixer</h1>
+		
+		<table>
+			<tr>
+				<th>Mixer</th>
+				<th>Typ</th>
+				<th>von</th>
+				<th>zu</th>
+				<th>Schalter</th>
+				<th>Weg -</th>
+				<th>weg +</th>
+				<th>Offset</th>
+			</tr>
+		
+			<#list model.mixers as mixer>
+				<tr>
+					<td>M${mixer.number?number+1}</td>
+					<td>${mixer.inputType}</td>
+					<td>${mixer.fromChannel.number}</td>
+					<td>${mixer.toChannel.number}</td>
+					<td><@switch mixer.switch/></td>
+					<td>${mixer.travelLow}%</td>
+					<td>${mixer.travelHigh}%</td>
+					<td>${mixer.offset}%</td>
+				</tr>
+			</#list>
+		</table>
+
+		<h1>Fail Safe</h1>
+		
+		<table>
+			<tr>
+				<th align="right">Verzögerung</th>
+				<td>${(model.failSafeDelay+1)*0.25}s</td>
+			</tr>
+			<tr>
+				<th align="right">FlailSafe Check</th>
+				<td>${model.failSafeSettingCheck?string}</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td>&nbsp;</td>
+				<#list model.channels as channel>
+					<th>S${channel.number?number+1}</th>
+				</#list>
+			</tr>
+			<tr>
+				<th>Mode</th>
+				<#list model.channels as channel>
+					<td align="center">${channel.failSafeMode}</td>
+				</#list>
+			</tr>
+			<tr>
+				<th>Position</th>
+				<#list model.channels as channel>
+					<td align="center">${((channel.failSafePosition/2-1500)/4)?round}%</td>
+				</#list>
+			</tr>
+		</table>
+		
+		<h1>Lehrer/Schüler</h1>
+		
+		<table>
+			<tr>
+				<th align="right">Kabellos</th>
+				<td>${model.trainerConfig.wireless?string}</td>
+			</tr>
+			<tr>
+				<th align="right">Trainer ID</th>
+				<td>${model.trainerConfig.trainerId}</td>
+			</tr>
+			<tr>
+				<th align="right">Schüler ID</th>
+				<td>${model.trainerConfig.pupilId}</td>
+			</tr>
+			<tr>
+				<th align="right">Schalter</th>
+				<td><@switch model.trainerConfig.switch/></td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td>&nbsp;</td>
+				<#list model.channels as channel>
+					<th>S${channel.number?number+1}</th>
+				</#list>
+			</tr>
+			<tr>
+				<th>Mode</th>
+				<#list model.channels as channel>
+					<td align="center">${channel.trainerMode}</td>
+				</#list>
+			</tr>
+		</table>		
 	</body>
 </html>
