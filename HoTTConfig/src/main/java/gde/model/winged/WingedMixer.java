@@ -11,9 +11,9 @@ public class WingedMixer extends PhasedMixer {
 	private int diffReduction;
 	private int mixAileronFlap;
 	private int mixAileronRudder;
-	private int mixBreakAileron;
-	private int mixBreakElvator;
-	private int mixBreakFlap;
+	private int mixBrakeAileron;
+	private int mixBrakeElevator;
+	private int mixBrakeFlap;
 	private int mixElevatorAileron;
 	private int mixElevatorFlap;
 	private int mixFlapAileron;
@@ -39,16 +39,16 @@ public class WingedMixer extends PhasedMixer {
 		return mixAileronRudder;
 	}
 
-	public int getMixBreakAileron() {
-		return mixBreakAileron;
+	public int getMixBrakeAileron() {
+		return mixBrakeAileron;
 	}
 
-	public int getMixBreakElvator() {
-		return mixBreakElvator;
+	public int getMixBrakeElevator() {
+		return mixBrakeElevator;
 	}
 
-	public int getMixBreakFlap() {
-		return mixBreakFlap;
+	public int getMixBrakeFlap() {
+		return mixBrakeFlap;
 	}
 
 	public int getMixElevatorAileron() {
@@ -87,16 +87,16 @@ public class WingedMixer extends PhasedMixer {
 		this.mixAileronRudder = mixAileronRudder;
 	}
 
-	public void setMixBreakAileron(final int mixBreakAileron) {
-		this.mixBreakAileron = mixBreakAileron;
+	public void setMixBrakeAileron(final int mixBreakAileron) {
+		this.mixBrakeAileron = mixBreakAileron;
 	}
 
-	public void setMixBreakElvator(final int mixBreakElvator) {
-		this.mixBreakElvator = mixBreakElvator;
+	public void setMixBrakeElevator(final int mixBreakEelvator) {
+		mixBrakeElevator = mixBreakEelvator;
 	}
 
-	public void setMixBreakFlap(final int mixBreakFlap) {
-		this.mixBreakFlap = mixBreakFlap;
+	public void setMixBrakeFlap(final int mixBreakFlap) {
+		this.mixBrakeFlap = mixBreakFlap;
 	}
 
 	public void setMixElevatorAileron(final int mixElevatorAileron) {

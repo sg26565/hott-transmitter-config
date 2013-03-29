@@ -27,13 +27,13 @@
 <#macro drexpo name dr>
 	<tr>			  	
 		<th align="right" rowspan="2">${name}</th>
-		<td align="center">${dr.dualRate0}</td>
-		<td align="center">${dr.expo0}</td>
+		<td align="center">${dr.dualRate0}%</td>
+		<td align="center">${dr.expo0}%</td>
 		<td rowspan="2"><@switch dr.switch/></td>
 	</tr>
 	<tr>
-		<td align="center">${dr.dualRate1}</td>
-		<td align="center">${dr.expo1}</td>
+		<td align="center">${dr.dualRate1}%</td>
+		<td align="center">${dr.expo1}%</td>
 	</tr>
 </#macro>
 <#macro phasedr phase>
@@ -96,11 +96,11 @@
 					<table cellpadding="0">
 						<tr>
 							<td align="right">Position:</td>						
-							<td>${model.throttleCutOf.position}</td>
+							<td>${model.throttleCutOf.position}%</td>
 						</tr>
 						<tr>
 							<td align="right">Limit:</td>
-							<td>${model.throttleCutOf.threshold}</td>
+							<td>${model.throttleCutOf.threshold}%</td>
 						</tr>
 						<tr>
 							<td align="right">Schalter:</td>
@@ -170,9 +170,9 @@
 				<tr>
 					<td align="center">S${channel.number?number+1}</td>
 					<td align="center"><#if channel.reverse>&lt;=<#else>=&gt;</#if></td>
-					<td align="center">${channel.center}</td>
-					<td align="center">${channel.travelLow}</td>
-					<td align="center">${channel.travelHigh}</td>
+					<td align="center">${channel.center}%</td>
+					<td align="center">${channel.travelLow}%</td>
+					<td align="center">${channel.travelHigh}%</td>
 				</tr>
 			</#list>
 		</table>
@@ -189,8 +189,8 @@
 				<tr>
 					<td align="center">E${control.number?number+1}</td>
 					<td align="cender">${control.switch.assignment}</td>
-					<td align="cender">${control.travelLow}</td>
-					<td align="cender">${control.travelHigh}</td>
+					<td align="cender">${control.travelLow}%</td>
+					<td align="cender">${control.travelHigh}%</td>
 				</tr>
 			</#list>
 		</table>
@@ -199,6 +199,81 @@
 		
 		<#list model.phases as phase>
 			<@phasedr phase/>
-		</#list>		
+		</#list>
+		
+<#if wingedModel??>
+		<h1>Phasentrimm</h1>
+
+		<table>
+			<tr>
+				<th>Phase</th>
+				<th>WK</th>
+				<th>QR</th>
+				<th>HR</th>
+			</tr>
+			<#list wingedModel.phases as phase>				
+				<tr>
+					<th align="right">${phase.name}</th>
+					<td>${phase.trim.flapPhaseTrim}%</td>
+					<td>${phase.trim.aileronPhaseTrim}%</td>
+					<td>${phase.trim.elevatorPhaseTrim}%</td>
+				</tr>
+			</#list>
+		</table>
+		
+		<h1>Fläschenmix</h1>
+
+		<table>
+			<tr>
+				<th>QR-Diff.</th>
+				<td>${wingedModel.phases[0].mixer.diffAileron}%</td>
+			</tr>
+			<tr>
+				<th>WK-Diff.</th>
+				<td>${wingedModel.phases[0].mixer.diffFlap}%</td>
+			</tr>
+			<tr>
+				<th>Diff.-Red.</th>
+				<td>${wingedModel.phases[0].mixer.diffReduction}%</td>
+			</tr>
+			<tr>
+				<th>QR-&gt;SR</th>
+				<td>${wingedModel.phases[0].mixer.mixAileronRudder}%</td>
+			</tr>
+			<tr>
+				<th>QR-&gt;WK</th>
+				<td>${wingedModel.phases[0].mixer.mixAileronFlap}%</td>
+			</tr>
+			<tr>
+				<th>BR-&gt;HR</th>
+				<td>${wingedModel.phases[0].mixer.mixBrakeElevator}%</td>
+			</tr>
+			<tr>
+				<th>BR-&gt;WK</th>
+				<td>${wingedModel.phases[0].mixer.mixBrakeFlap}%</td>
+			</tr>
+			<tr>
+				<th>BR-&gt;QR</th>
+				<td>${wingedModel.phases[0].mixer.mixBrakeAileron}%</td>
+			</tr>
+			<tr>
+				<th>HR-&gt;WK</th>
+				<td>${wingedModel.phases[0].mixer.mixElevatorFlap}%</td>
+			</tr>
+			<tr>
+				<th>HR-&gt;QR</th>
+				<td>${wingedModel.phases[0].mixer.mixElevatorAileron}%</td>
+			</tr>
+			<tr>
+				<th>WK-&gt;HR</th>
+				<td>${wingedModel.phases[0].mixer.mixFlapElevator}%</td>
+			</tr>
+			<tr>
+				<th>WK-&gt;QR</th>
+				<td>${wingedModel.phases[0].mixer.mixFlapAileron}%</td>
+			</tr>
+		</table>
+</#if>
+
 	</body>
 </html>
