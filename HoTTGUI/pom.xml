@@ -55,5 +55,10 @@ This project complements the great Data Explorer project from Winfried Bruegmann
 			<artifactId>HoTTConfig</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HottDecoder</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
