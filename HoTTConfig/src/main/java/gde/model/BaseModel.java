@@ -42,7 +42,9 @@ abstract public class BaseModel {
 	private Phases phases;
 	private Switch powerOnWarning; // TODO check type
 	private long receiverId;
-	private SensorType sensorType;
+	private SensorType displaySensorType;
+	private SensorType settingSensorType;
+	private int settingSensorPage;
 	private StickMode stickMode;
 	private Switches switches;
 	private ThrottleCutOf throttleCutOf;
@@ -138,8 +140,8 @@ abstract public class BaseModel {
 		return receiverId;
 	}
 
-	public SensorType getSensorType() {
-		return sensorType;
+	public SensorType getDisplaySensorType() {
+		return displaySensorType;
 	}
 
 	public StickMode getStickMode() {
@@ -274,8 +276,8 @@ abstract public class BaseModel {
 		this.receiverId = receiverId;
 	}
 
-	public void setSensorType(final SensorType sensorType) {
-		this.sensorType = sensorType;
+	public void setDisplaySensorType(final SensorType sensorType) {
+		displaySensorType = sensorType;
 	}
 
 	public void setStickMode(final StickMode stickMode) {
@@ -316,5 +318,21 @@ abstract public class BaseModel {
 
 	public void setVoiceDelay(final int voiceDelay) {
 		this.voiceDelay = voiceDelay;
+	}
+
+	public int getSettingSensorPage() {
+		return settingSensorPage;
+	}
+
+	public void setSettingSensorPage(final int settingSensorPage) {
+		this.settingSensorPage = settingSensorPage;
+	}
+
+	public SensorType getSettingSensorType() {
+		return settingSensorType;
+	}
+
+	public void setSettingSensorType(final SensorType settingSensorType) {
+		this.settingSensorType = settingSensorType;
 	}
 }
