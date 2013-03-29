@@ -1,8 +1,10 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
@@ -16,6 +18,10 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.html.HTMLEditorKit;
 
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import com.lowagie.text.DocumentException;
+
 import freemarker.template.TemplateException;
 import gde.model.BaseModel;
 import gde.report.Report;
@@ -27,7 +33,9 @@ public class Test {
 		final JScrollPane scrollPane = new JScrollPane(editorPane);
 		final HTMLEditorKit kit = new HTMLEditorKit();
 		final JButton refreshButton = new JButton("Refresh");
+		final JButton saveButton = new JButton("Save");
 		final JPanel panel = new JPanel();
+		final JPanel boxPanel = new JPanel();
 
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -40,24 +48,46 @@ public class Test {
 		refreshButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent evt) {
-				final ByteArrayOutputStream out = new ByteArrayOutputStream();
 				try {
+					final ByteArrayOutputStream out = new ByteArrayOutputStream();
 					Report.process(model, out, "mx-16.xhtml");
-				} catch (IOException | TemplateException e) {
+					editorPane.setText(out.toString());
+				} catch (final IOException | TemplateException e) {
 					showError(frame, e);
 				}
-				editorPane.setText(out.toString());
 			}
 		});
 
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent evt) {
+				try {
+					final FileOutputStream os = new FileOutputStream("mx-16.pdf");
+					final ITextRenderer renderer = new ITextRenderer();
+					renderer.setDocumentFromString(editorPane.getText());
+					renderer.layout();
+					renderer.createPDF(os);
+					os.close();
+				} catch (final DocumentException | IOException e) {
+					showError(frame, e);
+				}
+			}
+		});
+
+		boxPanel.setLayout(new FlowLayout());
+		boxPanel.add(refreshButton);
+		boxPanel.add(saveButton);
+
 		panel.setLayout(new BorderLayout());
-		panel.add(refreshButton, BorderLayout.SOUTH);
+		panel.add(boxPanel, BorderLayout.SOUTH);
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setVisible(true);
+
+		refreshButton.getActionListeners()[0].actionPerformed(null);
 	}
 
 	private static void showError(final JFrame frame, final Throwable t) {
