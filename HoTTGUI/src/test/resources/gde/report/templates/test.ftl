@@ -1,1 +1,1 @@
-Name: ${modelName}
+Name: ${model.modelName}

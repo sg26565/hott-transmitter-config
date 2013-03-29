@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlID;
  * @author oli@treichels.de
  */
 public class Switch {
-	private int assigment;
+	private int assignment;
 	private final SwitchFunction function;
 	private int position;
 	private SwitchType type;
@@ -19,8 +19,8 @@ public class Switch {
 		this.function = function;
 	}
 
-	public int getAssigment() {
-		return assigment;
+	public int getAssignment() {
+		return assignment;
 	}
 
 	public int getPosition() {
@@ -31,8 +31,8 @@ public class Switch {
 		return type;
 	}
 
-	public void setAssigment(final int assigment) {
-		this.assigment = assigment;
+	public void setAssignment(final int assigment) {
+		assignment = assigment;
 	}
 
 	public void setPosition(final int position) {

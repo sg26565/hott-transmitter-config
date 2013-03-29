@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -52,7 +54,16 @@ public class Report {
 
 	public static void process(final BaseModel model, final OutputStream out, final String templateName) throws IOException, TemplateException {
 		final Template template = configuration.getTemplate(templateName);
-		template.process(model, new OutputStreamWriter(out));
+		final Map<String, Object> rootMap = new HashMap<String, Object>();
+
+		rootMap.put("model", model);
+		if (model instanceof WingedModel) {
+			rootMap.put("wingedModel", model);
+		} else if (model instanceof HelicopterModel) {
+			rootMap.put("helicoperModel", model);
+		}
+
+		template.process(rootMap, new OutputStreamWriter(out));
 	}
 
 	public static BaseModel getModel(final File file) throws IOException, URISyntaxException {

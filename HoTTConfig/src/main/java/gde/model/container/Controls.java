@@ -3,7 +3,6 @@ package gde.model.container;
 import gde.model.Control;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -11,32 +10,16 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * @author oli@treichels.de
  */
-public class Controls implements Iterable<Control> {
-	private List<Control> controls = new ArrayList<Control>();
+public class Controls extends ArrayList<Control> {
+	private static final long serialVersionUID = 1L;
 
 	@XmlElement(name = "control")
 	public List<Control> getControls() {
-		return controls;
+		return this;
 	}
 
 	public void setControls(final List<Control> controls) {
-		this.controls = controls;
-	}
-
-	public void addControl(final Control control) {
-		getControls().add(control);
-	}
-
-	public Control getControl(final int number) {
-		return getControls().get(number);
-	}
-
-	public int size() {
-		return getControls().size();
-	}
-
-	@Override
-	public Iterator<Control> iterator() {
-		return getControls().iterator();
+		clear();
+		addAll(controls);
 	}
 }

@@ -6,41 +6,32 @@ import gde.model.enums.SwitchFunction;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import javax.xml.bind.annotation.XmlElement;
 
 /**
  * @author oli@treichels.de
  */
-public class Switches implements Iterable<Switch> {
-	private final Map<SwitchFunction, Switch> switches = new HashMap<SwitchFunction, Switch>();
+public class Switches extends HashMap<SwitchFunction, Switch> implements Iterable<Switch> {
+	private static final long serialVersionUID = 1L;
 
 	@XmlElement(name = "switch")
 	public Collection<Switch> getSwitches() {
-		return switches.values();
+		return values();
 	}
 
 	public void setSwitches(final Collection<Switch> switches) {
 		for (final Switch sw : switches) {
-			addSwitch(sw);
+			add(sw);
 		}
 	}
 
-	public void addSwitch(final Switch sw) {
-		switches.put(SwitchFunction.valueOf(sw.getFunction()), sw);
-	}
-
-	public Switch getSwitch(final SwitchFunction function) {
-		return switches.get(function);
-	}
-
-	public int size() {
-		return getSwitches().size();
+	public void add(final Switch sw) {
+		put(SwitchFunction.valueOf(sw.getFunction()), sw);
 	}
 
 	@Override
 	public Iterator<Switch> iterator() {
-		return getSwitches().iterator();
+		return values().iterator();
 	}
 }

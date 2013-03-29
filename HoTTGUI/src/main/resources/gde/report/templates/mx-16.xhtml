@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<#macro switch sw>
+	<#if sw.assignment == 255>
+		---
+	<#else>
+		${sw.assignment+1} <#if sw.position == 0>normal<#else>invers</#if>
+	</#if>
+</#macro>
+<#macro phase name ph>
+	<tr>
+		<th align="right" valign="top">${name}</th>
+		<td>
+			<table cellpadding="0">
+				<tr>
+					<td align="right">Name:</td>
+					<td>${ph.type}</td>
+				</tr>
+				<tr>
+					<td align="right">Schalter:</td>
+					<td><@switch ph.switch/></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</#macro>
+<#macro drexpo dr>
+</#macro>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
+	<head>
+		<title>${model.vendor} ${model.transmitterType} - ${model.modelName}</title>
+	</head>
+	<body>
+		<h1>Grundeinstellungen</h1>
+		<table>
+			<tr>
+				<th align="right">Sendertyp</th>
+				<td >${model.vendor} ${model.transmitterType}</td>
+			</tr>
+			<tr>
+				<th align="right">Sender ID</th>
+				<td >${model.transmitterId}</td>
+			</tr>
+			<tr>
+				<th align="right">Modelltyp</th>
+				<td >${model.modelType}</td>
+			</tr>
+			<tr>
+				<th align="right">Modellspeicher</th>
+				<td >${model.modelNumber}</td>
+			</tr>
+			<tr>
+				<th align="right">Modellname</th>
+				<td >${model.modelName}</td>
+			</tr>
+			<tr>
+				<th align="right">Steueranordnung</th>
+				<td >${model.stickMode}</td>
+			</tr>
+			<#if wingedModel??>
+			<tr>
+				<th align="right">Motor an K1</th>
+				<td >${wingedModel.motorOnC1Type}</td>
+			</tr>
+			</#if>
+			<tr>
+				<th align="right" valign="top">Motor-Stopp</th>
+				<td>
+					<table cellpadding="0">
+						<tr>
+							<td align="right">Position:</td>						
+							<td>${model.throttleCutOf.position}</td>
+						</tr>
+						<tr>
+							<td align="right">Limit:</td>
+							<td>${model.throttleCutOf.threshold}</td>
+						</tr>
+						<tr>
+							<td align="right">Schalter:</td>
+							<td><@switch model.throttleCutOf.switch/></td>							
+						</tr>
+					</table>
+				</td>	
+			</tr>
+			<#if wingedModel??>
+			<tr>
+				<th align="right">Leitwerk</th>
+				<td >${wingedModel.tailType}</td>
+			</tr>
+			<tr>
+				<th align="right">Querruder/Wölbklappen</th>
+				<td >${wingedModel.aileronFlapType}</td>
+			</tr>
+			</#if>
+			<tr>
+				<th align="right" valign="top">Uhren</th>
+				<td>
+					<table cellpadding="0">
+						<tr>
+							<td align="right">Countdown:</td>
+							<td>${model.clocks[0].minutes}:<#setting number_format="00">${model.clocks[0].seconds}<#setting number_format="number"></td>
+						</tr>
+						<tr>
+							<td align="right">Schalter:</td>
+							<td><@switch model.clocks[0].switch/></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<@phase "Phase 2" model.phases[1]/>
+			<@phase "Phase 3" model.phases[2]/>
+			<@phase "Phase 4" model.phases[3]/>
+			<tr>
+				<th align="right" valign="top">Empfängerausgang</th>
+				<td >
+					<table cellpadding="0">
+						<#list model.channels as channel>
+							<tr>
+								<td align="center">S${channel.number?number+1}</td>
+								<td align="center">=></td>
+								<td align="center">Ausgang ${channel.outputChannel+1}</td>
+							</tr>
+						</#list>					
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<th align="right">Epmfänger ID</th>
+				<td ><#if model.bound><i>gebunden</i> ${model.receiverId}<#else><i>nicht	gebunden</i></#if></td>
+			</tr>
+		</table>
+		
+		<h1>Servoeinstellungen</h1>
+		<table>
+			<tr>
+				<th>Servo</th>
+				<th>Umkehr</th>
+				<th>Mitte</th>
+				<th>Weg -</th>
+				<th>Weg +</th>
+			</tr>
+			<#list model.channels as channel>
+				<tr>
+					<td align="center">S${channel.number?number+1}</td>
+					<td align="center"><#if channel.reverse>&lt;=<#else>=&gt;</#if></td>
+					<td align="center">${channel.center}</td>
+					<td align="center">${channel.travelLow}</td>
+					<td align="center">${channel.travelHigh}</td>
+				</tr>
+			</#list>
+		</table>
+		
+		<h1>Gebereinstellungen</h1>
+		<table>
+			<tr>
+				<th>Eingang</th>
+				<th>Geber</th>
+				<th>Weg -</th>
+				<th>Weg +</th>
+			</tr>
+			<#list model.controls as control>
+				<tr>
+					<td align="center">E${control.number?number+1}</td>
+					<td align="cender">${control.switch.assignment}</td>
+					<td align="cender">${control.travelLow}</td>
+					<td align="cender">${control.travelHigh}</td>
+				</tr>
+			</#list>
+		</table>
+		
+		<h1>DualRate Expo</h1>
+		
+		<#list model.phases as phase>
+			<h2>Phase ${phase.number?number+1}: ${phase.name}</h2>
+			<table>
+			  <tr>
+			    <th align="right">QR</th>
+			  </tr>
+			</table>
+		</#list>
+		
+	</body>
+</html>

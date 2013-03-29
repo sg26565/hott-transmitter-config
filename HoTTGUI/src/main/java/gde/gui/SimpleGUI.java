@@ -1,4 +1,5 @@
 package gde.gui;
+
 import gde.model.BaseModel;
 import gde.report.Report;
 
