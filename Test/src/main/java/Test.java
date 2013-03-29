@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
@@ -33,7 +34,8 @@ public class Test {
 		final JScrollPane scrollPane = new JScrollPane(editorPane);
 		final HTMLEditorKit kit = new HTMLEditorKit();
 		final JButton refreshButton = new JButton("Refresh");
-		final JButton saveButton = new JButton("Save");
+		final JButton saveHTMLButton = new JButton("Save HTML");
+		final JButton savePDFButton = new JButton("Save PDF");
 		final JPanel panel = new JPanel();
 		final JPanel boxPanel = new JPanel();
 
@@ -58,7 +60,20 @@ public class Test {
 			}
 		});
 
-		saveButton.addActionListener(new ActionListener() {
+		saveHTMLButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent evt) {
+				try {
+					final FileWriter w = new FileWriter("mx-16.html");
+					w.write(editorPane.getText());
+					w.close();
+				} catch (final IOException e) {
+					showError(frame, e);
+				}
+			}
+		});
+
+		savePDFButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent evt) {
 				try {
@@ -76,7 +91,8 @@ public class Test {
 
 		boxPanel.setLayout(new FlowLayout());
 		boxPanel.add(refreshButton);
-		boxPanel.add(saveButton);
+		boxPanel.add(saveHTMLButton);
+		boxPanel.add(savePDFButton);
 
 		panel.setLayout(new BorderLayout());
 		panel.add(boxPanel, BorderLayout.SOUTH);
