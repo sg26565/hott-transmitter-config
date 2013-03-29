@@ -13,7 +13,7 @@
 	<modules>
 		<module>../HoTTConfig</module>
 		<module>../HoTTGUI</module>
-		<module>../HottDecoder</module>
+		<module>../HoTTDecoder</module>
 	</modules>
 
 	<scm>
@@ -121,7 +121,7 @@
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
-				<artifactId>HottDecoder</artifactId>
+				<artifactId>HoTTDecoder</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

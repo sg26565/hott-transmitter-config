@@ -51,7 +51,7 @@
 		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
-			<artifactId>HottDecoder</artifactId>
+			<artifactId>HoTTDecoder</artifactId>
 		</dependency>
 	</dependencies>
 </project>
