@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * @author oli@treichels.de
  */
-public class DualRatesExpos extends HashMap<Function, DualRateExpo> implements Iterable<DualRateExpo> {
+public class DualRatesExpos extends HashMap<String, DualRateExpo> implements Iterable<DualRateExpo> {
 	private static final long serialVersionUID = 1L;
 
 	@XmlElement(name = "dualRateExpo")
@@ -26,8 +26,12 @@ public class DualRatesExpos extends HashMap<Function, DualRateExpo> implements I
 		}
 	}
 
+	public DualRateExpo get(final Function func) {
+		return get(func.toString());
+	}
+
 	public void add(final DualRateExpo sw) {
-		put(Function.valueOf(sw.getFunction()), sw);
+		put(sw.getFunction(), sw);
 	}
 
 	@Override

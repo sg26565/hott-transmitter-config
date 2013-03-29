@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * @author oli@treichels.de
  */
-public class Switches extends HashMap<SwitchFunction, Switch> implements Iterable<Switch> {
+public class Switches extends HashMap<String, Switch> implements Iterable<Switch> {
 	private static final long serialVersionUID = 1L;
 
 	@XmlElement(name = "switch")
@@ -26,8 +26,12 @@ public class Switches extends HashMap<SwitchFunction, Switch> implements Iterabl
 		}
 	}
 
+	public Switch get(final SwitchFunction func) {
+		return get(func.toString());
+	}
+
 	public void add(final Switch sw) {
-		put(SwitchFunction.valueOf(sw.getFunction()), sw);
+		put(sw.getFunction(), sw);
 	}
 
 	@Override

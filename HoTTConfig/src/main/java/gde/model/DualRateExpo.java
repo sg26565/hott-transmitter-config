@@ -15,7 +15,6 @@ public class DualRateExpo {
 	private int expo0;
 	private int expo1;
 	private final String function;
-
 	private Switch sw;
 
 	public DualRateExpo(final Function function) {
@@ -45,7 +44,7 @@ public class DualRateExpo {
 	}
 
 	@XmlIDREF
-	public Switch getSwich() {
+	public Switch getSwitch() {
 		return sw;
 	}
 
