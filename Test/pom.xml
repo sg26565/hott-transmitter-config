@@ -18,7 +18,6 @@
 		<dependency>
 			<groupId>org.xhtmlrenderer</groupId>
 			<artifactId>flying-saucer-pdf</artifactId>
-			<version>9.0.1</version>
 		</dependency>
 	</dependencies>
 </project>
