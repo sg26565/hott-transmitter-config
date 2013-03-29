@@ -64,7 +64,7 @@ public class Test {
 			@Override
 			public void actionPerformed(final ActionEvent evt) {
 				try {
-					final FileWriter w = new FileWriter("mx-16.html");
+					final FileWriter w = new FileWriter("aMERLIN.html");
 					w.write(editorPane.getText());
 					w.close();
 				} catch (final IOException e) {
@@ -77,7 +77,7 @@ public class Test {
 			@Override
 			public void actionPerformed(final ActionEvent evt) {
 				try {
-					final FileOutputStream os = new FileOutputStream("mx-16.pdf");
+					final FileOutputStream os = new FileOutputStream("aMERLIN.pdf");
 					final ITextRenderer renderer = new ITextRenderer();
 					renderer.setDocumentFromString(editorPane.getText());
 					renderer.layout();
