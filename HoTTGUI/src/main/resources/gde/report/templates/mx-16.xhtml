@@ -69,6 +69,14 @@
 				<td >${model.transmitterId}</td>
 			</tr>
 			<tr>
+				<th align="right">Firmware Version</th>
+				<td >${model.appVersion}</td>
+			</tr>
+			<tr>
+				<th align="right">Datei Version</th>
+				<td >${model.memoryVersion}</td>
+			</tr>
+			<tr>
 				<th align="right">Modelltyp</th>
 				<td >${model.modelType}</td>
 			</tr>
@@ -109,6 +117,14 @@
 					</table>
 				</td>	
 			</tr>
+			<tr>
+				<th align="right">Gastrimm</th>
+				<td >${model.throttleTrim}%</td>
+			</tr>
+			<tr>
+				<th align="right">letzte Leerlaufposition</th>
+				<td >${model.throttleLastIdlePosition}%</td>
+			</tr>			
 			<#if wingedModel??>
 			<tr>
 				<th align="right">Leitwerk</th>
@@ -188,7 +204,7 @@
 			<#list model.controls as control>
 				<tr>
 					<td align="center">E${control.number?number+1}</td>
-					<td align="cender">${control.switch.assignment}</td>
+					<td align="cender"><#if control.switch.assignment == 255>frei<#else>${control.switch.assignment}</#if></td>
 					<td align="cender">${control.travelLow}%</td>
 					<td align="cender">${control.travelHigh}%</td>
 				</tr>
@@ -312,7 +328,7 @@
 			</tr>
 			<tr>
 				<th align="right">FlailSafe Check</th>
-				<td>${model.failSafeSettingCheck?string}</td>
+				<td>${model.failSafeSettingCheck?string("ja", "nein")}</td>
 			</tr>
 		</table>
 		<table>
@@ -341,7 +357,7 @@
 		<table>
 			<tr>
 				<th align="right">Kabellos</th>
-				<td>${model.trainerConfig.wireless?string}</td>
+				<td>${model.trainerConfig.wireless?string("ja", "nein")}</td>
 			</tr>
 			<tr>
 				<th align="right">Trainer ID</th>
