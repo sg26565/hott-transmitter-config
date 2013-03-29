@@ -1,3 +1,4 @@
+package gde.gui;
 import gde.model.BaseModel;
 import gde.report.Report;
 
@@ -23,7 +24,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.filechooser.FileFilter;
 import javax.xml.bind.JAXBException;
 
-public class Main {
+public class SimpleGUI {
 	public static void main(final String[] args) {
 		final JFrame frame = new JFrame("Hott Transmitter Config");
 		final JMenuBar menubar = new JMenuBar();
