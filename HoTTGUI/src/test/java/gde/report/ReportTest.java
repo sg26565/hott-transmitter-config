@@ -11,6 +11,7 @@ import java.net.URL;
 
 import javax.xml.bind.JAXBException;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import freemarker.template.TemplateException;
@@ -18,6 +19,12 @@ import gde.model.BaseModel;
 import gde.model.winged.WingedModel;
 
 public class ReportTest {
+	@BeforeClass
+	public static void init() throws ClassNotFoundException {
+		// initialize Report class
+		Class.forName("gde.report.Report");
+	}
+
 	@Test
 	public void testProcessTemplate() throws TemplateException, IOException {
 		final BaseModel model = new WingedModel();
