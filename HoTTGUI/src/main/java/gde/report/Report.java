@@ -57,6 +57,7 @@ public class Report {
 		final Map<String, Object> rootMap = new HashMap<String, Object>();
 
 		rootMap.put("model", model);
+		rootMap.put("hex", new FreeMarkerHexConverter());
 		if (model instanceof WingedModel) {
 			rootMap.put("wingedModel", model);
 		} else if (model instanceof HelicopterModel) {
