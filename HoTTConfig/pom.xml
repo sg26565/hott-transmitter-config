@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.treichels.hott</groupId>
-	<artifactId>HoTTTransmitter</artifactId>
+	<artifactId>HoTTConfig</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	
 	<build>
@@ -36,7 +36,7 @@ The project will provide an abstract data model for all model configuration sett
 
 This project complements the great Data Explorer project from Winfried Bruegmann and may eventually be merged with it.</description>
 	<inceptionYear>2013</inceptionYear>
-	<name>hott-transmitter-config</name>
+	<name>HoTT Transmitter Config - Data Model</name>
 	
 	<dependencies>
 		<dependency>
