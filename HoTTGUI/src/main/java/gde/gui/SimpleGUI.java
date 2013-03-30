@@ -86,6 +86,12 @@ public class SimpleGUI {
 				lastDir = file.getParentFile();
 				try {
 					model = Report.getModel(file);
+					htmlButton.setEnabled(true);
+					htmlMenuItem.setEnabled(true);
+					xmlButton.setEnabled(true);
+					xmlMenuItem.setEnabled(true);
+					saveButton.setEnabled(true);
+					saveMenuItem.setEnabled(true);
 					updateView();
 				} catch (IOException | URISyntaxException | TemplateException | JAXBException e) {
 					showError(frame, e);
@@ -207,6 +213,13 @@ public class SimpleGUI {
 		buttonPanel.add(saveButton);
 		buttonPanel.add(htmlButton);
 		buttonPanel.add(xmlButton);
+
+		htmlButton.setEnabled(false);
+		htmlMenuItem.setEnabled(false);
+		xmlButton.setEnabled(false);
+		xmlMenuItem.setEnabled(false);
+		saveButton.setEnabled(false);
+		saveMenuItem.setEnabled(false);
 
 		frame.setJMenuBar(menubar);
 		frame.setLayout(new BorderLayout());
