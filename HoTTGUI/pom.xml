@@ -13,6 +13,19 @@
 	<build>
 		<plugins>
 			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>gde.gui.SimpleGUI</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
@@ -29,7 +42,7 @@
 				<configuration>
 					<descriptors>
 						<descriptor>src/main/assembly/bin.xml</descriptor>
-					</descriptors>					
+					</descriptors>
 				</configuration>
 				<executions>
 					<execution>
@@ -40,7 +53,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>		
+			</plugin>
 		</plugins>
 	</build>
 

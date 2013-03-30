@@ -31,15 +31,12 @@
 			</includes>
 		</fileSet>
 		<fileSet>
-			<directory>src/main/resources</directory>
-			<outputDirectory>templates</outputDirectory>
-			<includes>
-				<include>gde/report/templates/*</include>
-			</includes>
-		</fileSet>
-		<fileSet>
 			<directory>${project.basedir}/../parent/target/site/apidocs</directory>
 			<outputDirectory>docs</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/demo</directory>
+			<outputDirectory>demo</outputDirectory>
 		</fileSet>
 	</fileSets>
 </assembly>

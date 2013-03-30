@@ -76,10 +76,14 @@ public class SimpleGUI {
 			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			fc.setMultiSelectionEnabled(false);
 			fc.setFileFilter(new FileNameExtensionFilter("HoTT Transmitter Model Files", "mdl"));
+			if (lastDir != null) {
+				fc.setCurrentDirectory(lastDir);
+			}
 			final int result = fc.showOpenDialog(frame);
 
 			if (result == JFileChooser.APPROVE_OPTION) {
 				final File file = fc.getSelectedFile();
+				lastDir = file.getParentFile();
 				try {
 					model = Report.getModel(file);
 					updateView();
@@ -103,10 +107,14 @@ public class SimpleGUI {
 			fc.addChoosableFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
 			fc.addChoosableFileFilter(new FileNameExtensionFilter("HTML Files", "html", "htm", "xhtml"));
 			fc.addChoosableFileFilter(new FileNameExtensionFilter("PDF Files", "pdf"));
+			if (lastDir != null) {
+				fc.setCurrentDirectory(lastDir);
+			}
 			final int result = fc.showSaveDialog(frame);
 
 			if (result == JFileChooser.APPROVE_OPTION) {
 				final File file = fc.getSelectedFile();
+				lastDir = file.getParentFile();
 
 				try {
 					String data;
@@ -147,6 +155,7 @@ public class SimpleGUI {
 	private final JButton htmlButton = new JButton("View HTML");
 	private final JButton closeButton = new JButton("Close");
 
+	private File lastDir = null;
 	private BaseModel model = null;
 	private boolean raw = false;
 
