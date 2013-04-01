@@ -1,117 +1,48 @@
 package gde.model.winged;
 
-import gde.model.PhasedMixer;
+import gde.model.Switch;
+import gde.model.enums.SwitchFunction;
 
-/**
- * @author oli@treichels.de
- */
-public class WingedMixer extends PhasedMixer {
-	private int diffAileron;
-	private int diffFlap;
-	private int diffReduction;
-	private int mixAileronFlap;
-	private int mixAileronRudder;
-	private int mixBrakeAileron;
-	private int mixBrakeElevator;
-	private int mixBrakeFlap;
-	private int mixElevatorAileron;
-	private int mixElevatorFlap;
-	private int mixFlapAileron;
-	private int mixFlapElevator;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 
-	public int getDiffAileron() {
-		return diffAileron;
+public class WingedMixer {
+	private static int NEXT_NUMBER = 0;
+
+	private final SwitchFunction function;
+	private final String number;
+	private Switch sw;
+	private int value;
+
+	public WingedMixer(final SwitchFunction function) {
+		this.function = function;
+		number = Integer.toString(NEXT_NUMBER++);
 	}
 
-	public int getDiffFlap() {
-		return diffFlap;
+	public SwitchFunction getFunction() {
+		return function;
 	}
 
-	public int getDiffReduction() {
-		return diffReduction;
+	@XmlID
+	public String getNumber() {
+		return number;
 	}
 
-	public int getMixAileronFlap() {
-		return mixAileronFlap;
+	@XmlIDREF
+	public Switch getSwitch() {
+		return sw;
 	}
 
-	public int getMixAileronRudder() {
-		return mixAileronRudder;
+	public int getValue() {
+		return value;
 	}
 
-	public int getMixBrakeAileron() {
-		return mixBrakeAileron;
+	public void setSwitch(final Switch sw) {
+		this.sw = sw;
 	}
 
-	public int getMixBrakeElevator() {
-		return mixBrakeElevator;
+	public void setValue(final int value) {
+		this.value = value;
 	}
 
-	public int getMixBrakeFlap() {
-		return mixBrakeFlap;
-	}
-
-	public int getMixElevatorAileron() {
-		return mixElevatorAileron;
-	}
-
-	public int getMixElevatorFlap() {
-		return mixElevatorFlap;
-	}
-
-	public int getMixFlapAileron() {
-		return mixFlapAileron;
-	}
-
-	public int getMixFlapElevator() {
-		return mixFlapElevator;
-	}
-
-	public void setDiffAileron(final int diffAileron) {
-		this.diffAileron = diffAileron;
-	}
-
-	public void setDiffFlap(final int diffFlap) {
-		this.diffFlap = diffFlap;
-	}
-
-	public void setDiffReduction(final int diffReduction) {
-		this.diffReduction = diffReduction;
-	}
-
-	public void setMixAileronFlap(final int mixAileronFlap) {
-		this.mixAileronFlap = mixAileronFlap;
-	}
-
-	public void setMixAileronRudder(final int mixAileronRudder) {
-		this.mixAileronRudder = mixAileronRudder;
-	}
-
-	public void setMixBrakeAileron(final int mixBreakAileron) {
-		this.mixBrakeAileron = mixBreakAileron;
-	}
-
-	public void setMixBrakeElevator(final int mixBreakEelvator) {
-		mixBrakeElevator = mixBreakEelvator;
-	}
-
-	public void setMixBrakeFlap(final int mixBreakFlap) {
-		this.mixBrakeFlap = mixBreakFlap;
-	}
-
-	public void setMixElevatorAileron(final int mixElevatorAileron) {
-		this.mixElevatorAileron = mixElevatorAileron;
-	}
-
-	public void setMixElevatorFlap(final int mixElevatorFlap) {
-		this.mixElevatorFlap = mixElevatorFlap;
-	}
-
-	public void setMixFlapAileron(final int mixFlapAileron) {
-		this.mixFlapAileron = mixFlapAileron;
-	}
-
-	public void setMixFlapElevator(final int mixFlapElevator) {
-		this.mixFlapElevator = mixFlapElevator;
-	}
 }

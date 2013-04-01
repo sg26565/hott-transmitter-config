@@ -1,6 +1,7 @@
 package gde.model.container;
 
 import gde.model.Phase;
+import gde.model.enums.PhaseType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,5 +22,15 @@ public class Phases extends ArrayList<Phase> {
 	public void setPhases(final List<Phase> phases) {
 		clear();
 		addAll(phases);
+	}
+
+	public Phase get(final PhaseType type) {
+		for (final Phase phase : this) {
+			if (phase.getType() == type) {
+				return phase;
+			}
+		}
+
+		return null;
 	}
 }

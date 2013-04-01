@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli@treichels.de
  */
-abstract public class BaseModel {
+public class BaseModel {
 	private int appVersion;
 	private boolean autoTimerReset;
 	private Switch autoTrimSwitch;

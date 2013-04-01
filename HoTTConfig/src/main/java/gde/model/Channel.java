@@ -23,6 +23,7 @@ public class Channel {
 	private TrainerMode trainerMode;
 	private int travelHigh;
 	private int travelLow;
+	private boolean virtual = false;
 
 	public Channel(final int number) {
 		this.number = Integer.toString(number);
@@ -120,5 +121,13 @@ public class Channel {
 
 	public void setTravelLow(final int travelLow) {
 		this.travelLow = travelLow;
+	}
+
+	public boolean isVirtual() {
+		return virtual;
+	}
+
+	public void setVirtual(final boolean virtual) {
+		this.virtual = virtual;
 	}
 }

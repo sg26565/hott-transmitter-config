@@ -3,37 +3,27 @@
 	<#if sw.assignment == 255>
 		---
 	<#else>
-		${sw.assignment+1} <#if sw.position == 0>normal<#else>invers</#if>
+		${sw.assignment+1} <#if sw.position == 1>normal<#else><#if sw.position=2>invers</#if></#if>
 	</#if>
 </#macro>
-<#macro phase name ph>
-	<tr>
-		<th align="right" valign="top">${name}</th>
-		<td>
-			<table cellpadding="0">
-				<tr>
-					<td align="right">Name:</td>
-					<td>${ph.type}</td>
-				</tr>
-				<tr>
-					<td align="right">Schalter:</td>
-					<td><@switch ph.switch/></td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</#macro>
-<#macro drexpo dr>
-	<tr>			  	
-		<th align="right" rowspan="2">${dr.function}</th>
-		<td align="center">${dr.dualRate0}%</td>
-		<td align="center">${dr.expo0}%</td>
-		<td rowspan="2"><@switch dr.switch/></td>
-	</tr>
-	<tr>
-		<td align="center">${dr.dualRate1}%</td>
-		<td align="center">${dr.expo1}%</td>
-	</tr>
+<#macro phasesw ph>
+	<#if ph.name != "Global">
+		<tr>
+			<th align="right" valign="top">Phase ${ph.number}</th>
+			<td>
+				<table cellpadding="0">
+					<tr>
+						<td align="right">Name:</td>
+						<td>${ph.type}</td>
+					</tr>
+					<tr>
+						<td align="right">Schalter:</td>
+						<td><#if ph.switch??><@switch ph.switch/><#else>---</#if></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</#if>
 </#macro>
 <#macro phasedr phase>
 	<h2>Phase ${phase.number}: ${phase.name}</h2>
@@ -44,16 +34,25 @@
 			<th>Expo</th>
 			<th>Schalter</th>
 		</tr>
-		<@drexpo phase.dualRatesExpos.Aileron/>
-		<@drexpo phase.dualRatesExpos.Elevator/>
-		<@drexpo phase.dualRatesExpos.Rudder/>
+		<#list phase.dualRatesExpos?values as dr>
+			<tr>			  	
+				<th align="right" rowspan="2">${dr.function}</th>
+				<td align="center">${dr.dualRate0}%</td>
+				<td align="center">${dr.expo0}%</td>
+				<td rowspan="2"><@switch dr.switch/></td>
+			</tr>
+			<tr>
+				<td align="center">${dr.dualRate1}%</td>
+				<td align="center">${dr.expo1}%</td>
+			</tr>
+		</#list>
 	</table>
 </#macro>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
 	<head>
 		<title>${model.vendor} ${model.transmitterType} - ${model.modelName}</title>
 		<style type="text/css" media="print">
-			@page {  size: a4; }
+			@page { size: a4; }
 		</style>		
 	</head>
 	<body>
@@ -96,10 +95,10 @@
 				<td >${model.stickMode}</td>
 			</tr>
 			<#if wingedModel??>
-			<tr>
-				<th align="right">Motor an K1</th>
-				<td >${wingedModel.motorOnC1Type}</td>
-			</tr>
+				<tr>
+					<th align="right">Motor an K1</th>
+					<td >${wingedModel.motorOnC1Type}</td>
+				</tr>
 			</#if>
 			<tr>
 				<th align="right" valign="top">Motor-Stopp</th>
@@ -129,21 +128,21 @@
 				<td >${model.throttleLastIdlePosition}%</td>
 			</tr>			
 			<#if wingedModel??>
-			<tr>
-				<th align="right">Leitwerk</th>
-				<td >${wingedModel.tailType}</td>
-			</tr>
-			<tr>
-				<th align="right">Querruder/W&ouml;lbklappen</th>
-				<td >${wingedModel.aileronFlapType}</td>
-			</tr>
+				<tr>
+					<th align="right">Leitwerk</th>
+					<td >${wingedModel.tailType}</td>
+				</tr>
+				<tr>
+					<th align="right">Querruder/W&ouml;lbklappen</th>
+					<td >${wingedModel.aileronFlapType}</td>
+				</tr>
 			</#if>
 			<tr>
 				<th align="right" valign="top">Uhren</th>
 				<td>
 					<table cellpadding="0">
 						<tr>
-							<td align="right">Countdown:</td>
+							<td align="right">Alarm:</td>
 							<td>${model.clocks[0].minutes}:${model.clocks[0].seconds?string("00")}</td>
 						</tr>
 						<tr>
@@ -153,19 +152,21 @@
 					</table>
 				</td>
 			</tr>
-			<@phase "Phase 2" model.phases[2]/>
-			<@phase "Phase 3" model.phases[3]/>
-			<@phase "Phase 4" model.phases[4]/>
+			<#list model.phases as phase>
+				<@phasesw phase/>
+			</#list>
 			<tr>
 				<th align="right" valign="top">Empf&auml;ngerausgang</th>
 				<td >
 					<table cellpadding="0">
 						<#list model.channels as channel>
-							<tr>
-								<td align="center">S${channel.number?number+1}</td>
-								<td align="center">=></td>
-								<td align="center">Ausgang ${channel.outputChannel+1}</td>
-							</tr>
+							<#if !channel.virtual>						
+								<tr>
+									<td align="center">S${channel.number?number+1}</td>
+									<td align="center">=></td>
+									<td align="center">Ausgang ${channel.outputChannel+1}</td>
+								</tr>
+							</#if>
 						</#list>					
 					</table>
 				</td>
@@ -190,13 +191,15 @@
 				<th>Weg +</th>
 			</tr>
 			<#list model.channels as channel>
-				<tr>
-					<td align="center">S${channel.number?number+1}</td>
-					<td align="center"><#if channel.reverse>&lt;=<#else>=&gt;</#if></td>
-					<td align="center">${channel.center}%</td>
-					<td align="center">${channel.travelLow}%</td>
-					<td align="center">${channel.travelHigh}%</td>
-				</tr>
+				<#if !channel.virtual>						
+					<tr>
+						<td align="center">S${channel.number?number+1}</td>
+						<td align="center"><#if channel.reverse>&lt;=<#else>=&gt;</#if></td>
+						<td align="center">${channel.center}%</td>
+						<td align="center">${channel.travelLow}%</td>
+						<td align="center">${channel.travelHigh}%</td>
+					</tr>
+				</#if>
 			</#list>
 		</table>
 		
@@ -211,7 +214,7 @@
 			<#list model.controls as control>
 				<tr>
 					<td align="center">E${control.number?number+1}</td>
-					<td align="cender"><#if control.switch.assignment == 255>frei<#else>${control.switch.assignment}</#if></td>
+					<td align="cender"><#if control.switch.assignment == 255>frei<#else><@switch control.switch/></#if></td>
 					<td align="cender">${control.travelLow}%</td>
 					<td align="cender">${control.travelHigh}%</td>
 				</tr>
@@ -252,53 +255,16 @@
 
 		<table>
 			<tr>
-				<th>QR-Diff.</th>
-				<td>${wingedModel.phases[0].mixer.diffAileron}%</td>
-			</tr>
-			<tr>
-				<th>WK-Diff.</th>
-				<td>${wingedModel.phases[0].mixer.diffFlap}%</td>
-			</tr>
-			<tr>
-				<th>Diff.-Red.</th>
-				<td>${wingedModel.phases[0].mixer.diffReduction}%</td>
-			</tr>
-			<tr>
-				<th>QR-&gt;SR</th>
-				<td>${wingedModel.phases[0].mixer.mixAileronRudder}%</td>
-			</tr>
-			<tr>
-				<th>QR-&gt;WK</th>
-				<td>${wingedModel.phases[0].mixer.mixAileronFlap}%</td>
-			</tr>
-			<tr>
-				<th>BR-&gt;HR</th>
-				<td>${wingedModel.phases[0].mixer.mixBrakeElevator}%</td>
-			</tr>
-			<tr>
-				<th>BR-&gt;WK</th>
-				<td>${wingedModel.phases[0].mixer.mixBrakeFlap}%</td>
-			</tr>
-			<tr>
-				<th>BR-&gt;QR</th>
-				<td>${wingedModel.phases[0].mixer.mixBrakeAileron}%</td>
-			</tr>
-			<tr>
-				<th>HR-&gt;WK</th>
-				<td>${wingedModel.phases[0].mixer.mixElevatorFlap}%</td>
-			</tr>
-			<tr>
-				<th>HR-&gt;QR</th>
-				<td>${wingedModel.phases[0].mixer.mixElevatorAileron}%</td>
-			</tr>
-			<tr>
-				<th>WK-&gt;HR</th>
-				<td>${wingedModel.phases[0].mixer.mixFlapElevator}%</td>
-			</tr>
-			<tr>
-				<th>WK-&gt;QR</th>
-				<td>${wingedModel.phases[0].mixer.mixFlapAileron}%</td>
-			</tr>
+				<th align="right">Funktion</th>
+				<th>Wert</th>
+				<th>Schalter</th>
+				<#list wingedModel.phases[0].mixer?values as mixer>
+					<tr>
+						<th align="right">${mixer.function}</th>
+						<td>${mixer.value}%</td>
+						<td><#if mixer.switch??><@switch mixer.switch/><#else>---</#if></td>						
+					</tr>
+				</#list>						
 		</table>
 </#if>
 
@@ -338,7 +304,7 @@
 				<td>${(model.failSafeDelay+1)*0.25}s</td>
 			</tr>
 			<tr>
-				<th align="right">FlailSafe Check</th>
+				<th align="right">FlailSafe Prüfung</th>
 				<td>${model.failSafeSettingCheck?string("ja", "nein")}</td>
 			</tr>
 		</table>
@@ -346,19 +312,25 @@
 			<tr>
 				<td>&nbsp;</td>
 				<#list model.channels as channel>
-					<th align="center">S${channel.number?number+1}</th>
+					<#if !channel.virtual>
+						<th align="center">S${channel.number?number+1}</th>
+					</#if>
 				</#list>
 			</tr>
 			<tr>
 				<th>Mode</th>
 				<#list model.channels as channel>
-					<td align="center">${channel.failSafeMode}</td>
+					<#if !channel.virtual>
+						<td align="center">${channel.failSafeMode}</td>
+					</#if>
 				</#list>
 			</tr>
 			<tr>
 				<th>Position</th>
 				<#list model.channels as channel>
-					<td align="center">${((channel.failSafePosition/2-1500)/4)?round}%</td>
+					<#if !channel.virtual>
+						<td align="center">${((channel.failSafePosition/2-1500)/4)?round}%</td>
+					</#if>
 				</#list>
 			</tr>
 		</table>
@@ -367,11 +339,10 @@
 		
 		<table>
 			<tr>
-				<th align="right">Ansage wiederholen</th>
+				<th align="right" rowspan="2">Ansage wiederholen</th>
 				<td>${model.voiceDelay}s</td>
 			</tr>
 			<tr>
-				<th align="right">Schalter</th>
 				<td><@switch model.switches.VoiceRepeat/></td>
 			</tr>
 			<tr>
@@ -379,7 +350,7 @@
 				<td><@switch model.switches.VoiceTrigger/></td>
 			</tr>
 			<tr>
-				<th align="right">Vario</th>
+				<th align="right">Varioton</th>
 				<td><@switch model.switches.VarioTone/></td>
 			</tr>
 			<tr>
@@ -420,15 +391,35 @@
 			<tr>
 				<td>&nbsp;</td>
 				<#list model.channels as channel>
-					<th>S${channel.number?number+1}</th>
+					<#if !channel.virtual>
+						<th>S${channel.number?number+1}</th>
+					</#if>
 				</#list>
 			</tr>
 			<tr>
 				<th>Mode</th>
 				<#list model.channels as channel>
-					<td align="center">${channel.trainerMode}</td>
+					<#if !channel.virtual>
+						<td align="center">${channel.trainerMode}</td>
+					</#if>
 				</#list>
 			</tr>
 		</table>		
+		
+		<h1>Schalterzuordnungen</h1>
+		
+		<table>
+			<tr>
+				<th align="right">Funktion</th>
+				<th>Schalter</tr>
+			</tr>
+		<#list model.switches?values as sw>
+			<#if sw.assignment != 255>
+				<tr>
+					<td align="right">${sw.function}</td>
+					<td><@switch sw/></tr>
+				</tr>
+			</#if>
+		</#list>
 	</body>
 </html>
