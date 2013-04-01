@@ -2,6 +2,7 @@ package gde.model.winged;
 
 import gde.model.PhasedMixer;
 import gde.model.enums.Function;
+import gde.model.enums.SwitchFunction;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -65,6 +66,10 @@ public class WingedMixers extends PhasedMixer implements Map<String, WingedMixer
 	@Override
 	public WingedMixer put(final String key, final WingedMixer value) {
 		return mixers.put(key, value);
+	}
+
+	public WingedMixer put(final SwitchFunction function, final WingedMixer value) {
+		return mixers.put(function.name(), value);
 	}
 
 	@Override

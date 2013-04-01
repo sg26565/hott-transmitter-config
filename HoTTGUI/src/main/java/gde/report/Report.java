@@ -61,7 +61,7 @@ public class Report {
 		if (model instanceof WingedModel) {
 			rootMap.put("wingedModel", model);
 		} else if (model instanceof HelicopterModel) {
-			rootMap.put("helicoperModel", model);
+			rootMap.put("helicopterModel", model);
 		}
 
 		template.process(rootMap, new OutputStreamWriter(out));

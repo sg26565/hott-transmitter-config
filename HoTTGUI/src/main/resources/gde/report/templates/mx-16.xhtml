@@ -3,7 +3,7 @@
 	<#if sw.assignment == 255>
 		---
 	<#else>
-		${sw.assignment+1} <#if sw.position == 1>normal<#else><#if sw.position=2>invers</#if></#if>
+		${sw.assignment+1} <#if sw.position == 2>normal<#else><#if sw.position=1>invers</#if></#if>
 	</#if>
 </#macro>
 <#macro phasesw ph>
@@ -94,6 +94,12 @@
 				<th align="right">Steueranordnung</th>
 				<td >${model.stickMode}</td>
 			</tr>
+			<#if helicopterModel??>
+				<tr>
+					<th align="right">Taumelscheibe</th>
+					<td >${helicopterModel.swashplateType}</td>
+				</tr>				
+			</#if>
 			<#if wingedModel??>
 				<tr>
 					<th align="right">Motor an K1</th>
@@ -119,6 +125,22 @@
 					</table>
 				</td>	
 			</tr>
+			<#if helicopterModel??>
+				<tr>
+					<th align="right">Rotor Drehrichtung</th>
+					<td >${helicopterModel.rotorDirection}</td>
+				</tr>
+				<tr>
+					<th align="right">Pitch Minimum</th>
+					<td >${helicopterModel.pitchMin}</td>
+				</tr>
+			</#if>
+			<#if wingedModel??>
+				<tr>
+					<th align="right">Kanal 8 verzügert</th>
+					<td >${wingedModel.channel8Delay?string("ja","nein")}</td>
+				</tr>
+			</#if>
 			<tr>
 				<th align="right">Gastrimm</th>
 				<td >${model.throttleTrim}%</td>
@@ -212,12 +234,23 @@
 				<th>Weg +</th>
 			</tr>
 			<#list model.controls as control>
+			<#if control.number?number < 8>
 				<tr>
 					<td align="center">E${control.number?number+1}</td>
 					<td align="cender"><#if control.switch.assignment == 255>frei<#else><@switch control.switch/></#if></td>
 					<td align="cender">${control.travelLow}%</td>
 					<td align="cender">${control.travelHigh}%</td>
 				</tr>
+			<#else>
+				<#if helicopterModel??>
+					<tr>
+						<td align="center">Gaslimiter</td>
+						<td align="cender"><#if control.switch.assignment == 255>frei<#else><@switch control.switch/></#if></td>
+						<td align="cender">${control.travelLow}%</td>
+						<td align="cender">${control.travelHigh}%</td>
+					</tr>				
+				</#if>
+			</#if>
 			</#list>
 		</table>
 		
@@ -268,6 +301,31 @@
 		</table>
 </#if>
 
+<#if helicopterModel??>
+		<h1>Helimix</h1>
+		
+		<#list helicopterModel.phases as phase>
+			<#if phase.type != "Global">
+				<h2>Phase ${phase.number}: ${phase.name}</h2>
+				
+				<table>
+					<tr>
+						<th align="right">Gyro</th>
+						<td>${phase.mixer.gyroGain}%</td>
+					</tr>
+					<tr>
+						<th align="right">Eingang 8</th>
+						<td>${phase.mixer.channel8Value}%</td>
+					</tr>
+					<tr>
+						<th align="right">Taumelscheibenlimit</th>
+						<td><#if phase.mixer.swashplateMix.limit == 150>aus<#else>${phase.mixer.swashplateMix.limit}%</#if></td>
+					</tr>
+				</table>
+			</#if>
+		</#list>
+</#if>
+
 		<h1>Freie Mixer</h1>
 		
 		<table>
@@ -286,7 +344,7 @@
 				<tr>
 					<td>M${mixer.number?number+1}</td>
 					<td>${mixer.inputType}</td>
-					<td>${mixer.fromChannel.number}</td>
+					<td><#if mixer.fromChannel.number?number == 9>S<#else>${mixer.fromChannel.number}</#if></td>
 					<td>${mixer.toChannel.number}</td>
 					<td><@switch mixer.switch/></td>
 					<td>${mixer.travelLow}%</td>

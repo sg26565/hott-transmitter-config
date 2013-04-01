@@ -2,6 +2,8 @@
 	<context-values>
 		<resource path="src/main/resources/gde/report/templates/mx-16.xhtml">
 			<value key="model" object-class="gde.model.BaseModel"/>
+			<value key="wingedModel" object-class="gde.model.winged.WingedModel"/>
+			<value key="helicopterModel" object-class="gde.model.helicopter.HelicopterModel"/>
 		</resource>
 		<resource path="src/test/resources/gde/report/templates/test.ftl">
 			<value key="model" object-class="gde.model.BaseModel"/>
