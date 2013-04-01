@@ -6,10 +6,10 @@
 			@page { size: a4; }
 		</style>		
 		<#macro switch sw>
-			<#if sw.assignment == 255>
+			<#if sw.assignment == "Unassigned">
 				---
 			<#else>
-				${sw.assignment+1} <#if sw.position == 2>normal<#else><#if sw.position=1>invers</#if></#if>
+				${sw.assignment} <#if sw.position == 2>normal<#else><#if sw.position=1>invers</#if></#if>
 			</#if>
 		</#macro>
 		<#macro phasesw ph>
@@ -241,7 +241,7 @@
 			<#if control.number?number < 8>
 				<tr>
 					<td align="center">E${control.number?number+1}</td>
-					<td align="cender"><#if control.switch.assignment == 255>frei<#else><@switch control.switch/></#if></td>
+					<td align="cender"><#if control.switch.assignment == "Unassigned">frei<#else><@switch control.switch/></#if></td>
 					<td align="cender">${control.travelLow}%</td>
 					<td align="cender">${control.travelHigh}%</td>
 				</tr>
@@ -249,7 +249,7 @@
 				<#if helicopterModel??>
 					<tr>
 						<td align="center">Gaslimiter</td>
-						<td align="cender"><#if control.switch.assignment == 255>frei<#else><@switch control.switch/></#if></td>
+						<td align="cender"><#if control.switch.assignment == "Unassigned">frei<#else><@switch control.switch/></#if></td>
 						<td align="cender">${control.travelLow}%</td>
 						<td align="cender">${control.travelHigh}%</td>
 					</tr>				
@@ -583,18 +583,20 @@
 		
 		<hr/>
 		
-		<h1>Schalterzuordnungen</h1>
+		<h1>Schalter-/Geberzuordnungen</h1>
 		
 		<table>
 			<tr>
 				<th align="right">Funktion</th>
-				<th>Schalter</th>
+				<th>Schalter/Geber</th>
+				<th>Typ</th>
 			</tr>
 			<#list model.switches?values as sw>
-				<#if sw.assignment != 255>
+				<#if sw.assignment != "Unassigned">
 					<tr>
 						<td align="right">${sw.function}</td>
 						<td><@switch sw/></td>
+						<td>${sw.type}</td>
 					</tr>
 				</#if>
 			</#list>
