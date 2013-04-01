@@ -5,8 +5,8 @@ import java.util.ResourceBundle;
 /**
  * @author oli@treichels.de
  */
-public enum RotorDirection {
-	Left, Right;
+public enum MotorOnC1Type {
+	Idle_Front, Idle_Rear, None, None_Inv;
 
 	/** @return the locale-dependent message */
 	@Override

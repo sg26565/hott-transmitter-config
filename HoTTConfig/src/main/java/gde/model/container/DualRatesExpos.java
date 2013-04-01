@@ -21,17 +21,17 @@ public class DualRatesExpos extends HashMap<String, DualRateExpo> implements Ite
 	}
 
 	public void setDualRateExpoes(final Collection<DualRateExpo> dualRateExpoes) {
-		for (final DualRateExpo sw : dualRateExpoes) {
-			add(sw);
+		for (final DualRateExpo dr : dualRateExpoes) {
+			add(dr);
 		}
 	}
 
 	public DualRateExpo get(final Function func) {
-		return get(func.toString());
+		return get(func.name());
 	}
 
-	public void add(final DualRateExpo sw) {
-		put(sw.getFunction(), sw);
+	public void add(final DualRateExpo dr) {
+		put(dr.getFunction().name(), dr);
 	}
 
 	@Override

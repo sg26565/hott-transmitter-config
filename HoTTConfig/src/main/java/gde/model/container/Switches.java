@@ -26,12 +26,12 @@ public class Switches extends HashMap<String, Switch> implements Iterable<Switch
 		}
 	}
 
-	public Switch get(SwitchFunction func) {
-		return get(func.toString());
+	public Switch get(final SwitchFunction func) {
+		return get(func.name());
 	}
-	
+
 	public void add(final Switch sw) {
-		put(sw.getFunction(), sw);
+		put(sw.getFunction().name(), sw);
 	}
 
 	@Override

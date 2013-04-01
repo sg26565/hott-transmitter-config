@@ -3,7 +3,7 @@ package gde.model.winged;
 import gde.model.BaseModel;
 import gde.model.enums.AileronFlapType;
 import gde.model.enums.ModelType;
-import gde.model.enums.MoterOnC1Type;
+import gde.model.enums.MotorOnC1Type;
 import gde.model.enums.TailType;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,7 +17,7 @@ public class WingedModel extends BaseModel {
 	private int brakeInput;
 	private int brakeOffset;
 	private boolean channel8Delay;
-	private MoterOnC1Type motorOnC1Type;
+	private MotorOnC1Type motorOnC1Type;
 	private TailType tailType;
 
 	public WingedModel() {
@@ -36,7 +36,7 @@ public class WingedModel extends BaseModel {
 		return brakeOffset;
 	}
 
-	public MoterOnC1Type getMotorOnC1Type() {
+	public MotorOnC1Type getMotorOnC1Type() {
 		return motorOnC1Type;
 	}
 
@@ -64,7 +64,7 @@ public class WingedModel extends BaseModel {
 		this.channel8Delay = channel8Delay;
 	}
 
-	public void setMotorOnC1Type(final MoterOnC1Type motorOnC1Type) {
+	public void setMotorOnC1Type(final MotorOnC1Type motorOnC1Type) {
 		this.motorOnC1Type = motorOnC1Type;
 	}
 

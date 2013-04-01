@@ -23,9 +23,9 @@
 		</td>
 	</tr>
 </#macro>
-<#macro drexpo name dr>
+<#macro drexpo dr>
 	<tr>			  	
-		<th align="right" rowspan="2">${name}</th>
+		<th align="right" rowspan="2">${dr.function}</th>
 		<td align="center">${dr.dualRate0}%</td>
 		<td align="center">${dr.expo0}%</td>
 		<td rowspan="2"><@switch dr.switch/></td>
@@ -44,9 +44,9 @@
 			<th>Expo</th>
 			<th>Schalter</th>
 		</tr>
-		<@drexpo "QR" phase.dualRatesExpos.Aileron/>
-		<@drexpo "HR" phase.dualRatesExpos.Elevator/>
-		<@drexpo "SR" phase.dualRatesExpos.Rudder/>
+		<@drexpo phase.dualRatesExpos.Aileron/>
+		<@drexpo phase.dualRatesExpos.Elevator/>
+		<@drexpo phase.dualRatesExpos.Rudder/>
 	</table>
 </#macro>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
@@ -60,8 +60,12 @@
 		<h1>Grundeinstellungen</h1>
 		<table>
 			<tr>
+				<th align="right">Hersteller</th>
+				<td >${model.vendor}</td>
+			</tr>
+			<tr>
 				<th align="right">Sendertyp</th>
-				<td >${model.vendor} ${model.transmitterType}</td>
+				<td >${model.transmitterType}</td>
 			</tr>
 			<tr>
 				<th align="right">Sender ID</th>
@@ -400,7 +404,7 @@
 				<td>${model.trainerConfig.wireless?string("ja", "nein")}</td>
 			</tr>
 			<tr>
-				<th align="right">Trainer ID</th>
+				<th align="right">Lehrer ID</th>
 				<td>${hex(model.trainerConfig.trainerId?c)}</td>
 			</tr>
 			<tr>

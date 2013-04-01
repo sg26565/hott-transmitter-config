@@ -1,5 +1,7 @@
 package gde.model.enums;
 
+import java.util.ResourceBundle;
+
 /**
  * @author oli@treichels.de
  */
@@ -20,5 +22,11 @@ public enum AileronFlapType {
 
 	public int getFlaps() {
 		return flaps;
+	}
+
+	/** @return the locale-dependent message */
+	@Override
+	public String toString() {
+		return ResourceBundle.getBundle(getClass().getName()).getString(name());
 	}
 }

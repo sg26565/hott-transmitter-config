@@ -10,15 +10,19 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class DualRateExpo {
+	private static int NEXT_NUMBER = 0;
+
 	private int dualRate0;
 	private int dualRate1;
 	private int expo0;
 	private int expo1;
-	private final String function;
+	private final Function function;
+	private final String number;
 	private Switch sw;
 
 	public DualRateExpo(final Function function) {
-		this.function = function.toString();
+		this.function = function;
+		number = Integer.toString(NEXT_NUMBER++);
 	}
 
 	public int getDualRate0() {
@@ -37,9 +41,7 @@ public class DualRateExpo {
 		return expo1;
 	}
 
-	@XmlAttribute
-	@XmlID
-	public String getFunction() {
+	public Function getFunction() {
 		return function;
 	}
 
@@ -66,5 +68,11 @@ public class DualRateExpo {
 
 	public void setSwitch(final Switch sw) {
 		this.sw = sw;
+	}
+
+	@XmlAttribute
+	@XmlID
+	public String getNumber() {
+		return number;
 	}
 }

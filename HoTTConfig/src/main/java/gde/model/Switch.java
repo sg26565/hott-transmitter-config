@@ -10,13 +10,17 @@ import javax.xml.bind.annotation.XmlID;
  * @author oli@treichels.de
  */
 public class Switch {
+	private static int NEXT_NUMBER = 0;
+
 	private int assignment;
 	private final SwitchFunction function;
 	private int position;
 	private SwitchType type;
+	private final String number;
 
 	public Switch(final SwitchFunction function) {
 		this.function = function;
+		number = Integer.toString(NEXT_NUMBER++);
 	}
 
 	public int getAssignment() {
@@ -43,9 +47,13 @@ public class Switch {
 		this.type = type;
 	}
 
+	public SwitchFunction getFunction() {
+		return function;
+	}
+
 	@XmlAttribute
 	@XmlID
-	public String getFunction() {
-		return function.toString();
+	public String getNumber() {
+		return number;
 	}
 }
