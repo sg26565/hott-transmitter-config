@@ -14,6 +14,8 @@ import gde.model.enums.StickMode;
 import gde.model.enums.TransmitterType;
 import gde.model.enums.Vendor;
 
+import java.util.Collection;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -42,9 +44,9 @@ abstract public class BaseModel {
 	private Phases phases;
 	private Switch powerOnWarning; // TODO check type
 	private long receiverId;
-	private SensorType displaySensorType;
-	private SensorType settingSensorType;
-	private int settingSensorPage;
+	private Collection<SensorType> selectedSensors;
+	private SensorType currentSensor;
+	private int currentSensorPage;
 	private StickMode stickMode;
 	private Switches switches;
 	private ThrottleCutOf throttleCutOf;
@@ -140,8 +142,8 @@ abstract public class BaseModel {
 		return receiverId;
 	}
 
-	public SensorType getDisplaySensorType() {
-		return displaySensorType;
+	public Collection<SensorType> getSelectedSensors() {
+		return selectedSensors;
 	}
 
 	public StickMode getStickMode() {
@@ -276,8 +278,8 @@ abstract public class BaseModel {
 		this.receiverId = receiverId;
 	}
 
-	public void setDisplaySensorType(final SensorType sensorType) {
-		displaySensorType = sensorType;
+	public void setSelectedSensors(final Collection<SensorType> sensorType) {
+		selectedSensors = sensorType;
 	}
 
 	public void setStickMode(final StickMode stickMode) {
@@ -320,19 +322,19 @@ abstract public class BaseModel {
 		this.voiceDelay = voiceDelay;
 	}
 
-	public int getSettingSensorPage() {
-		return settingSensorPage;
+	public int getCurrentSensorPage() {
+		return currentSensorPage;
 	}
 
-	public void setSettingSensorPage(final int settingSensorPage) {
-		this.settingSensorPage = settingSensorPage;
+	public void setCurrentSensorPage(final int settingSensorPage) {
+		currentSensorPage = settingSensorPage;
 	}
 
-	public SensorType getSettingSensorType() {
-		return settingSensorType;
+	public SensorType getCurrentSensor() {
+		return currentSensor;
 	}
 
-	public void setSettingSensorType(final SensorType settingSensorType) {
-		this.settingSensorType = settingSensorType;
+	public void setCurrentSensor(final SensorType settingSensorType) {
+		currentSensor = settingSensorType;
 	}
 }

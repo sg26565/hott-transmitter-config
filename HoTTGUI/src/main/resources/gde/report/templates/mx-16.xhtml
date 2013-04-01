@@ -36,7 +36,7 @@
 	</tr>
 </#macro>
 <#macro phasedr phase>
-	<h2>Phase ${phase.number?number+1}: ${phase.name}</h2>
+	<h2>Phase ${phase.number}: ${phase.name}</h2>
 	<table>
 		<tr>
 			<td>&nbsp;</td>
@@ -149,9 +149,9 @@
 					</table>
 				</td>
 			</tr>
-			<@phase "Phase 2" model.phases[1]/>
-			<@phase "Phase 3" model.phases[2]/>
-			<@phase "Phase 4" model.phases[3]/>
+			<@phase "Phase 2" model.phases[2]/>
+			<@phase "Phase 3" model.phases[3]/>
+			<@phase "Phase 4" model.phases[4]/>
 			<tr>
 				<th align="right" valign="top">Empf&auml;ngerausgang</th>
 				<td >
@@ -217,7 +217,9 @@
 		<h1>DualRate Expo</h1>
 		
 		<#list model.phases as phase>
-			<@phasedr phase/>
+			<#if phase.name != "Global">
+				<@phasedr phase/>
+			</#if>
 		</#list>
 		
 <#if wingedModel??>
@@ -231,12 +233,14 @@
 				<th>HR</th>
 			</tr>
 			<#list wingedModel.phases as phase>				
-				<tr>
-					<th align="right">${phase.name}</th>
-					<td>${phase.trim.flapPhaseTrim}%</td>
-					<td>${phase.trim.aileronPhaseTrim}%</td>
-					<td>${phase.trim.elevatorPhaseTrim}%</td>
-				</tr>
+				<#if phase.name != "Global">
+					<tr>
+						<th align="right">${phase.name}</th>
+						<td>${phase.trim.flapPhaseTrim}%</td>
+						<td>${phase.trim.aileronPhaseTrim}%</td>
+						<td>${phase.trim.elevatorPhaseTrim}%</td>
+					</tr>
+				</#if>
 			</#list>
 		</table>
 		
@@ -375,16 +379,16 @@
 				<td><@switch model.switches.VarioTone/></td>
 			</tr>
 			<tr>
-				<th align="right">aktueller Sensor (Anzeige)</th>
-				<td>${model.displaySensorType}</td>
+				<th align="right">ausgew&auml;hlte Sensoren</th>
+				<td><#list model.selectedSensors as sensor>${sensor} </#list></td>
 			</tr>
 			<tr>
-				<th align="right">aktueller Sensor (Telemetrie)</th>
-				<td>${model.settingSensorType}</td>
+				<th align="right">aktueller Sensor</th>
+				<td>${model.currentSensor}</td>
 			</tr>
 			<tr>
-				<th align="right">aktuelle Seite (Telemetrie)</th>
-				<td>${model.settingSensorPage}</td>
+				<th align="right">aktuelle Sensorseite</th>
+				<td>${model.currentSensorPage}</td>
 			</tr>
 		</table>
 		
