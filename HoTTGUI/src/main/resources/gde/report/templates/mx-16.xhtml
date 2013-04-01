@@ -26,27 +26,27 @@
 	</#if>
 </#macro>
 <#macro phasedr phase>
-	<h2>Phase ${phase.number}: ${phase.name}</h2>
-	<table>
-		<tr>
-			<td>&nbsp;</td>
-			<th>Dual Rate</th>
-			<th>Expo</th>
-			<th>Schalter</th>
-		</tr>
-		<#list phase.dualRatesExpos?values as dr>
-			<tr>			  	
-				<th align="right" rowspan="2">${dr.function}</th>
-				<td align="center">${dr.dualRate0}%</td>
-				<td align="center">${dr.expo0}%</td>
-				<td rowspan="2"><@switch dr.switch/></td>
-			</tr>
+		<h2>Phase ${phase.number}: ${phase.name}</h2>
+		<table>
 			<tr>
-				<td align="center">${dr.dualRate1}%</td>
-				<td align="center">${dr.expo1}%</td>
+				<td>&nbsp;</td>
+				<th>Dual Rate</th>
+				<th>Expo</th>
+				<th>Schalter</th>
 			</tr>
-		</#list>
-	</table>
+			<#list phase.dualRatesExpos?values as dr>
+				<tr>			  	
+					<th align="right" rowspan="2">${dr.function}</th>
+					<td align="center">${dr.dualRate0}%</td>
+					<td align="center">${dr.expo0}%</td>
+					<td rowspan="2"><@switch dr.switch/></td>
+				</tr>
+				<tr>
+					<td align="center">${dr.dualRate1}%</td>
+					<td align="center">${dr.expo1}%</td>
+				</tr>
+			</#list>
+		</table>
 </#macro>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
 	<head>
@@ -202,7 +202,9 @@
 				<td >${hex(model.receiverId?c)}</td>
 			</tr>
 		</table>
-		
+
+		<hr/>
+
 		<h1>Servoeinstellungen</h1>
 		<table>
 			<tr>
@@ -224,7 +226,9 @@
 				</#if>
 			</#list>
 		</table>
-		
+
+		<hr/>	
+
 		<h1>Gebereinstellungen</h1>
 		<table>
 			<tr>
@@ -253,7 +257,9 @@
 			</#if>
 			</#list>
 		</table>
-		
+
+		<hr/>	
+
 		<h1>DualRate Expo</h1>
 		
 		<#list model.phases as phase>
@@ -261,36 +267,40 @@
 				<@phasedr phase/>
 			</#if>
 		</#list>
-		
-<#if wingedModel??>
-		<h1>Phasentrimm</h1>
 
-		<table>
-			<tr>
-				<th>Phase</th>
-				<th>WK</th>
-				<th>QR</th>
-				<th>HR</th>
-			</tr>
-			<#list wingedModel.phases as phase>				
-				<#if phase.name != "Global">
-					<tr>
-						<th align="right">${phase.name}</th>
-						<td>${phase.trim.flapPhaseTrim}%</td>
-						<td>${phase.trim.aileronPhaseTrim}%</td>
-						<td>${phase.trim.elevatorPhaseTrim}%</td>
-					</tr>
-				</#if>
-			</#list>
-		</table>
-		
-		<h1>Fl&auml;chenmix</h1>
+		<hr/>	
 
-		<table>
-			<tr>
-				<th align="right">Funktion</th>
-				<th>Wert</th>
-				<th>Schalter</th>
+		<#if wingedModel??>
+			<h1>Phasentrimm</h1>
+	
+			<table>
+				<tr>
+					<th>Phase</th>
+					<th>WK</th>
+					<th>QR</th>
+					<th>HR</th>
+				</tr>
+				<#list wingedModel.phases as phase>				
+					<#if phase.name != "Global">
+						<tr>
+							<th align="right">${phase.name}</th>
+							<td>${phase.trim.flapPhaseTrim}%</td>
+							<td>${phase.trim.aileronPhaseTrim}%</td>
+							<td>${phase.trim.elevatorPhaseTrim}%</td>
+						</tr>
+					</#if>
+				</#list>
+			</table>
+	
+			<hr/>
+	
+			<h1>Fl&auml;chenmix</h1>
+			<table>
+				<tr>
+					<th align="right">Funktion</th>
+					<th>Wert</th>
+					<th>Schalter</th>
+				</tr>
 				<#list wingedModel.phases[0].mixer?values as mixer>
 					<tr>
 						<th align="right">${mixer.function}</th>
@@ -298,34 +308,114 @@
 						<td><#if mixer.switch??><@switch mixer.switch/><#else>---</#if></td>						
 					</tr>
 				</#list>						
-		</table>
-</#if>
+			</table>
+		</#if>
 
-<#if helicopterModel??>
-		<h1>Helimix</h1>
+		<#if helicopterModel??>
+			<h1>Helimix</h1>
+			
+			<#list helicopterModel.phases as phase>
+				<#if phase.type != "Global">
+					<h2>Phase ${phase.number}: ${phase.name}</h2>
+					
+					<table>
+						<tr>
+							<th align="right">Pitchkurve</th>
+							<td>
+								<table>
+									<tr>
+										<th>Punkt</th>
+										<th>aktiv</th>
+										<th>Eingang</th>
+										<th>Ausgang</th>
+									</tr>
+									<#list phase.mixer.pitchCurve as point>
+										<tr>
+											<td>${point.number?number+1}</td>
+											<td>${point.enabled?string("ja","nein")}</td>
+											<#if point.enabled>
+												<td>${point.number?number*50-100}</td>
+												<td>${point.value}</td>
+											<#else>
+												<td colspan="2">&nbsp;</td>
+											</#if>
+										</tr>
+									</#list>
+								</table>
+							</td>
+						</tr>
+						
+						<tr>
+							<th align="right">Gaskurve (K1 -> Gas)</th>
+							<td>
+								<table>
+									<tr>
+										<th>Punkt</th>
+										<th>aktiv</th>
+										<th>Eingang</th>
+										<th>Ausgang</th>
+									</tr>
+									<#list phase.mixer.throttleCurve as point>
+										<tr>
+											<td>${point.number?number+1}</td>
+											<td>${point.enabled?string("ja","nein")}</td>
+											<#if point.enabled>
+												<td>${point.number?number*50-100}</td>
+												<td>${point.value}</td>
+											<#else>
+												<td colspan="2">&nbsp;</td>
+											</#if>
+										</tr>
+									</#list>
+								</table>							
+							</td>
+						</tr>				
+	
+						<tr>
+							<th align="right">Heckrotorkurve (K1 -> Heck)</th>
+							<td>
+								<table>
+									<tr>
+										<th>Punkt</th>
+										<th>aktiv</th>
+										<th>Eingang</th>
+										<th>Ausgang</th>
+									</tr>
+									<#list phase.mixer.tailCurve as point>
+										<tr>
+											<td>${point.number?number+1}</td>
+											<td>${point.enabled?string("ja","nein")}</td>
+											<#if point.enabled>
+												<td>${point.number?number*50-100}</td>
+												<td>${point.value}</td>
+											<#else>
+												<td colspan="2">&nbsp;</td>
+											</#if>
+										</tr>
+									</#list>
+								</table>
+							</td>
+						</tr>
+
+						<tr>
+							<th align="right">Gyro</th>
+							<td>${phase.mixer.gyroGain}%</td>
+						</tr>
+						<tr>
+							<th align="right">Eingang 8</th>
+							<td>${phase.mixer.channel8Value}%</td>
+						</tr>
+						<tr>
+							<th align="right">Taumelscheibenlimit</th>
+							<td><#if phase.mixer.swashplateMix.limit == 150>aus<#else>${phase.mixer.swashplateMix.limit}%</#if></td>
+						</tr>
+					</table>	
+				</#if>
+			</#list>
+		</#if>
+
+		<hr/>
 		
-		<#list helicopterModel.phases as phase>
-			<#if phase.type != "Global">
-				<h2>Phase ${phase.number}: ${phase.name}</h2>
-				
-				<table>
-					<tr>
-						<th align="right">Gyro</th>
-						<td>${phase.mixer.gyroGain}%</td>
-					</tr>
-					<tr>
-						<th align="right">Eingang 8</th>
-						<td>${phase.mixer.channel8Value}%</td>
-					</tr>
-					<tr>
-						<th align="right">Taumelscheibenlimit</th>
-						<td><#if phase.mixer.swashplateMix.limit == 150>aus<#else>${phase.mixer.swashplateMix.limit}%</#if></td>
-					</tr>
-				</table>
-			</#if>
-		</#list>
-</#if>
-
 		<h1>Freie Mixer</h1>
 		
 		<table>
@@ -354,6 +444,8 @@
 			</#list>
 		</table>
 
+		<hr/>
+		
 		<h1>Fail Safe</h1>
 		
 		<table>
@@ -393,6 +485,8 @@
 			</tr>
 		</table>
 		
+		<hr/>
+		
 		<h1>Telemetrie</h1>
 		
 		<table>
@@ -424,6 +518,8 @@
 				<td>${model.currentSensorPage}</td>
 			</tr>
 		</table>
+		
+		<hr/>
 		
 		<h1>Lehrer/Sch&uuml;ler</h1>
 		
@@ -464,20 +560,23 @@
 			</tr>
 		</table>		
 		
+		<hr/>
+		
 		<h1>Schalterzuordnungen</h1>
 		
 		<table>
 			<tr>
 				<th align="right">Funktion</th>
-				<th>Schalter</tr>
+				<th>Schalter</th>
 			</tr>
-		<#list model.switches?values as sw>
-			<#if sw.assignment != 255>
-				<tr>
-					<td align="right">${sw.function}</td>
-					<td><@switch sw/></tr>
-				</tr>
-			</#if>
-		</#list>
+			<#list model.switches?values as sw>
+				<#if sw.assignment != 255>
+					<tr>
+						<td align="right">${sw.function}</td>
+						<td><@switch sw/></td>
+					</tr>
+				</#if>
+			</#list>
+		</table>
 	</body>
 </html>
