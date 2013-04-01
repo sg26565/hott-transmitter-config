@@ -5,54 +5,39 @@
 		<style type="text/css" media="print">
 			@page { size: a4; }
 		</style>		
-		<#macro switch sw>
+		<#macro switch sw={"assignment":"Unassigned"}>
 			<#if sw.assignment == "Unassigned">
 				---
 			<#else>
 				${sw.assignment} <#if sw.position == 2>normal<#else><#if sw.position=1>invers</#if></#if>
 			</#if>
 		</#macro>
-		<#macro phasesw ph>
-			<#if ph.name != "Global">
-				<tr>
-					<th align="right" valign="top">Phase ${ph.number}</th>
-					<td>
-						<table cellpadding="0">
-							<tr>
-								<td align="right">Name:</td>
-								<td>${ph.type}</td>
-							</tr>
-							<tr>
-								<td align="right">Schalter:</td>
-								<td><#if ph.switch??><@switch ph.switch/><#else>---</#if></td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</#if>
-		</#macro>
-		<#macro phasedr phase>
-				<h2>Phase ${phase.number}: ${phase.name}</h2>
-				<table>
-					<tr>
-						<td>&nbsp;</td>
-						<th>Dual Rate</th>
-						<th>Expo</th>
-						<th>Schalter</th>
-					</tr>
-					<#list phase.dualRatesExpos?values as dr>
-						<tr>			  	
-							<th align="right" rowspan="2">${dr.function}</th>
-							<td align="center">${dr.dualRate0}%</td>
-							<td align="center">${dr.expo0}%</td>
-							<td rowspan="2"><@switch dr.switch/></td>
-						</tr>
+		<#macro curve title points>
+			<tr>
+				<th align="right">${title}</th>
+				<td>
+					<table>
 						<tr>
-							<td align="center">${dr.dualRate1}%</td>
-							<td align="center">${dr.expo1}%</td>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
 						</tr>
-					</#list>
-				</table>
+						<#list points as point>
+							<tr>
+								<td>${point.number?number+1}</td>
+								<td>${point.enabled?string("ja","nein")}</td>
+								<#if point.enabled>
+									<td>${point.number?number*50-100}</td>
+									<td>${point.value}</td>
+								<#else>
+									<td colspan="2">&nbsp;</td>
+								</#if>
+							</tr>
+						</#list>
+					</table>
+				</td>
+			</tr>
 		</#macro>
 	</head>
 	<body>
@@ -60,126 +45,109 @@
 		<table>
 			<tr>
 				<th align="right">Hersteller</th>
-				<td >${model.vendor}</td>
+				<td colspan="3">${model.vendor}</td>
 			</tr>
 			<tr>
 				<th align="right">Sendertyp</th>
-				<td >${model.transmitterType}</td>
+				<td colspan="3">${model.transmitterType}</td>
 			</tr>
 			<tr>
 				<th align="right">Sender ID</th>
-				<td >${hex(model.transmitterId?c)}</td>
+				<td colspan="3">${hex(model.transmitterId?c)}</td>
 			</tr>
 			<tr>
 				<th align="right">Firmware Version</th>
-				<td >${model.appVersion}</td>
+				<td colspan="3">${model.appVersion}</td>
 			</tr>
 			<tr>
 				<th align="right">Datei Version</th>
-				<td >${model.memoryVersion}</td>
+				<td colspan="3">${model.memoryVersion}</td>
 			</tr>
 			<tr>
 				<th align="right">Modelltyp</th>
-				<td >${model.modelType}</td>
+				<td colspan="3">${model.modelType}</td>
 			</tr>
 			<tr>
 				<th align="right">Modellspeicher</th>
-				<td >${model.modelNumber}</td>
+				<td colspan="3">${model.modelNumber}</td>
 			</tr>
 			<tr>
 				<th align="right">Modellname</th>
-				<td >${model.modelName}</td>
+				<td colspan="3">${model.modelName}</td>
 			</tr>
 			<tr>
 				<th align="right">Steueranordnung</th>
-				<td >${model.stickMode}</td>
+				<td colspan="3">${model.stickMode}</td>
 			</tr>
 			<#if helicopterModel??>
 				<tr>
 					<th align="right">Taumelscheibe</th>
-					<td >${helicopterModel.swashplateType}</td>
+					<td colspan="3">${helicopterModel.swashplateType}</td>
 				</tr>				
 			</#if>
 			<#if wingedModel??>
 				<tr>
 					<th align="right">Motor an K1</th>
-					<td >${wingedModel.motorOnC1Type}</td>
+					<td colspan="3">${wingedModel.motorOnC1Type}</td>
 				</tr>
 			</#if>
 			<tr>
 				<th align="right" valign="top">Motor-Stopp</th>
-				<td>
-					<table cellpadding="0">
-						<tr>
-							<td align="right">Position:</td>						
-							<td>${model.throttleCutOf.position}%</td>
-						</tr>
-						<tr>
-							<td align="right">Limit:</td>
-							<td>${model.throttleCutOf.threshold}%</td>
-						</tr>
-						<tr>
-							<td align="right">Schalter:</td>
-							<td><@switch model.throttleCutOf.switch/></td>							
-						</tr>
-					</table>
-				</td>	
+				<td><i>Position:</i> ${model.throttleCutOf.position}%</td>
+				<td><i>Limit:</i> ${model.throttleCutOf.threshold}%</td>
+				<td><i>Schalter:</i> <@switch model.throttleCutOf.switch/></td>							
 			</tr>
 			<#if helicopterModel??>
 				<tr>
 					<th align="right">Rotor Drehrichtung</th>
-					<td >${helicopterModel.rotorDirection}</td>
+					<td colspan="3">${helicopterModel.rotorDirection}</td>
 				</tr>
 				<tr>
 					<th align="right">Pitch Minimum</th>
-					<td >${helicopterModel.pitchMin}</td>
+					<td colspan="3">${helicopterModel.pitchMin}</td>
 				</tr>
 			</#if>
 			<#if wingedModel??>
 				<tr>
 					<th align="right">Kanal 8 verzügert</th>
-					<td >${wingedModel.channel8Delay?string("ja","nein")}</td>
+					<td colspan="3">${wingedModel.channel8Delay?string("ja","nein")}</td>
 				</tr>
 			</#if>
 			<tr>
 				<th align="right">Gastrimm</th>
-				<td >${model.throttleTrim}%</td>
+				<td colspan="3">${model.throttleTrim}%</td>
 			</tr>
 			<tr>
 				<th align="right">letzte Leerlaufposition</th>
-				<td >${model.throttleLastIdlePosition}%</td>
+				<td colspan="3">${model.throttleLastIdlePosition}%</td>
 			</tr>			
 			<#if wingedModel??>
 				<tr>
 					<th align="right">Leitwerk</th>
-					<td >${wingedModel.tailType}</td>
+					<td colspan="3">${wingedModel.tailType}</td>
 				</tr>
 				<tr>
 					<th align="right">Querruder/W&ouml;lbklappen</th>
-					<td >${wingedModel.aileronFlapType}</td>
+					<td colspan="3">${wingedModel.aileronFlapType}</td>
 				</tr>
 			</#if>
 			<tr>
 				<th align="right" valign="top">Uhren</th>
-				<td>
-					<table cellpadding="0">
-						<tr>
-							<td align="right">Alarm:</td>
-							<td>${model.clocks[0].minutes}:${model.clocks[0].seconds?string("00")}</td>
-						</tr>
-						<tr>
-							<td align="right">Schalter:</td>
-							<td><@switch model.clocks[0].switch/></td>
-						</tr>
-					</table>
-				</td>
+				<td><i>${model.clocks[0].type}:</i> ${model.clocks[0].minutes}:${model.clocks[0].seconds?string("00")}</td>
+				<td colspan="2"><i>Schalter:</i> <@switch model.clocks[0].switch/></td>
 			</tr>
 			<#list model.phases as phase>
-				<@phasesw phase/>
+				<#if phase.name != "Global">
+					<tr>
+						<th align="right" valign="top">Phase ${phase.number}</th>
+						<td><i>Name:</i> ${phase.type}</td>
+						<td colspan="2"><i>Schalter:</i> <@switch phase.switch/></td>
+					</tr>
+				</#if>
 			</#list>
 			<tr>
 				<th align="right" valign="top">Empf&auml;ngerausgang</th>
-				<td >
+				<td colspan="3">
 					<table cellpadding="0">
 						<#list model.channels as channel>
 							<#if !channel.virtual>						
@@ -195,11 +163,11 @@
 			</tr>
 			<tr>
 				<th align="right">Empf&auml;nger gebunden</th>
-				<td >${model.bound?string("ja","nein")}</td>
+				<td colspan="3">${model.bound?string("ja","nein")}</td>
 			</tr>			
 			<tr>
 				<th align="right">Empf&auml;nger ID</th>
-				<td >${hex(model.receiverId?c)}</td>
+				<td colspan="3">${hex(model.receiverId?c)}</td>
 			</tr>
 		</table>
 
@@ -241,7 +209,7 @@
 			<#if control.number?number < 8>
 				<tr>
 					<td align="center">E${control.number?number+1}</td>
-					<td align="cender"><#if control.switch.assignment == "Unassigned">frei<#else><@switch control.switch/></#if></td>
+					<td align="cender"><@switch control.switch/></td>
 					<td align="cender">${control.travelLow}%</td>
 					<td align="cender">${control.travelHigh}%</td>
 				</tr>
@@ -249,7 +217,7 @@
 				<#if helicopterModel??>
 					<tr>
 						<td align="center">Gaslimiter</td>
-						<td align="cender"><#if control.switch.assignment == "Unassigned">frei<#else><@switch control.switch/></#if></td>
+						<td align="cender"><@switch control.switch/></td>
 						<td align="cender">${control.travelLow}%</td>
 						<td align="cender">${control.travelHigh}%</td>
 					</tr>				
@@ -264,7 +232,23 @@
 		
 		<#list model.phases as phase>
 			<#if phase.name != "Global">
-				<@phasedr phase/>
+				<h2>Phase ${phase.number}: ${phase.name}</h2>
+				<table>
+					<tr>
+						<td>&nbsp;</td>
+						<th>Dual Rate</th>
+						<th>Expo</th>
+						<th>Schalter</th>
+					</tr>
+					<#list phase.dualRatesExpos?values as dr>
+						<tr>			  	
+							<th align="right">${dr.function}</th>
+							<td align="center">${dr.dualRate0}% / ${dr.dualRate1}%</td>
+							<td align="center">${dr.expo0}% / ${dr.expo1}%</td>
+							<td><@switch dr.switch/></td>
+						</tr>
+					</#list>
+				</table>
 			</#if>
 		</#list>
 
@@ -275,7 +259,7 @@
 	
 			<table>
 				<tr>
-					<th>Phase</th>
+					<th align="right">Phase</th>
 					<th>WK</th>
 					<th>QR</th>
 					<th>HR</th>
@@ -297,15 +281,15 @@
 			<h1>Fl&auml;chenmix</h1>
 			<table>
 				<tr>
-					<th align="right">Funktion</th>
-					<th>Wert</th>
-					<th>Schalter</th>
+					<th align="right">Mischer</th>
+					<th align="center">Wert</th>
+					<th align="left">Schalter</th>
 				</tr>
 				<#list wingedModel.phases[0].mixer?values as mixer>
 					<tr>
 						<th align="right">${mixer.function}</th>
-						<td>${mixer.value}%</td>
-						<td><#if mixer.switch??><@switch mixer.switch/><#else>---</#if></td>						
+						<td align="center">${mixer.value}%</td>
+						<td><@switch mixer.switch/></td>						
 					</tr>
 				</#list>						
 			</table>
@@ -319,83 +303,9 @@
 					<h2>Phase ${phase.number}: ${phase.name}</h2>
 					
 					<table>
-						<tr>
-							<th align="right">Pitchkurve</th>
-							<td>
-								<table>
-									<tr>
-										<th>Punkt</th>
-										<th>aktiv</th>
-										<th>Eingang</th>
-										<th>Ausgang</th>
-									</tr>
-									<#list phase.mixer.pitchCurve as point>
-										<tr>
-											<td>${point.number?number+1}</td>
-											<td>${point.enabled?string("ja","nein")}</td>
-											<#if point.enabled>
-												<td>${point.number?number*50-100}</td>
-												<td>${point.value}</td>
-											<#else>
-												<td colspan="2">&nbsp;</td>
-											</#if>
-										</tr>
-									</#list>
-								</table>
-							</td>
-						</tr>
-						
-						<tr>
-							<th align="right">Gaskurve (K1 -> Gas)</th>
-							<td>
-								<table>
-									<tr>
-										<th>Punkt</th>
-										<th>aktiv</th>
-										<th>Eingang</th>
-										<th>Ausgang</th>
-									</tr>
-									<#list phase.mixer.throttleCurve as point>
-										<tr>
-											<td>${point.number?number+1}</td>
-											<td>${point.enabled?string("ja","nein")}</td>
-											<#if point.enabled>
-												<td>${point.number?number*50-100}</td>
-												<td>${point.value}</td>
-											<#else>
-												<td colspan="2">&nbsp;</td>
-											</#if>
-										</tr>
-									</#list>
-								</table>							
-							</td>
-						</tr>				
-	
-						<tr>
-							<th align="right">Heckrotorkurve (K1 -> Heck)</th>
-							<td>
-								<table>
-									<tr>
-										<th>Punkt</th>
-										<th>aktiv</th>
-										<th>Eingang</th>
-										<th>Ausgang</th>
-									</tr>
-									<#list phase.mixer.tailCurve as point>
-										<tr>
-											<td>${point.number?number+1}</td>
-											<td>${point.enabled?string("ja","nein")}</td>
-											<#if point.enabled>
-												<td>${point.number?number*50-100}</td>
-												<td>${point.value}</td>
-											<#else>
-												<td colspan="2">&nbsp;</td>
-											</#if>
-										</tr>
-									</#list>
-								</table>
-							</td>
-						</tr>
+						<@curve "Pitchkurve" phase.mixer.pitchCurve/>
+						<@curve "Gaskurve (K1 -> Gas)" phase.mixer.throttleCurve/>
+						<@curve "Heckrotorkurve (K1 -> Heck)" phase.mixer.tailCurve/>
 
 						<tr>
 							<th align="right">Gyro</th>
@@ -589,13 +499,13 @@
 			<tr>
 				<th align="right">Funktion</th>
 				<th>Schalter/Geber</th>
-				<th>Typ</th>
+				<th align="left">Typ</th>
 			</tr>
 			<#list model.switches?values as sw>
 				<#if sw.assignment != "Unassigned">
 					<tr>
 						<td align="right">${sw.function}</td>
-						<td><@switch sw/></td>
+						<td align="center"><@switch sw/></td>
 						<td>${sw.type}</td>
 					</tr>
 				</#if>
