@@ -58,6 +58,7 @@ public class Report {
 
 		rootMap.put("model", model);
 		rootMap.put("hex", new FreeMarkerHexConverter());
+		rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective());
 		if (model instanceof WingedModel) {
 			rootMap.put("wingedModel", model);
 		} else if (model instanceof HelicopterModel) {

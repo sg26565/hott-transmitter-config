@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<@htmlsafe>
 	<head>
 		<title>${model.vendor} ${model.transmitterType} - ${model.modelName}</title>
 		<style type="text/css" media="print">
@@ -109,7 +110,7 @@
 			</#if>
 			<#if wingedModel??>
 				<tr>
-					<th align="right">Kanal 8 verzügert</th>
+					<th align="right">Kanal 8 verzögert</th>
 					<td colspan="3">${wingedModel.channel8Delay?string("ja","nein")}</td>
 				</tr>
 			</#if>
@@ -127,7 +128,7 @@
 					<td colspan="3">${wingedModel.tailType}</td>
 				</tr>
 				<tr>
-					<th align="right">Querruder/W&ouml;lbklappen</th>
+					<th align="right">Querruder/Wölbklappen</th>
 					<td colspan="3">${wingedModel.aileronFlapType}</td>
 				</tr>
 			</#if>
@@ -146,7 +147,7 @@
 				</#if>
 			</#list>
 			<tr>
-				<th align="right" valign="top">Empf&auml;ngerausgang</th>
+				<th align="right" valign="top">Empfängerausgang</th>
 				<td colspan="3">
 					<table cellpadding="0">
 						<#list model.channels as channel>
@@ -162,11 +163,11 @@
 				</td>
 			</tr>
 			<tr>
-				<th align="right">Empf&auml;nger gebunden</th>
+				<th align="right">Empfänger gebunden</th>
 				<td colspan="3">${model.bound?string("ja","nein")}</td>
 			</tr>			
 			<tr>
-				<th align="right">Empf&auml;nger ID</th>
+				<th align="right">Empfänger ID</th>
 				<td colspan="3">${hex(model.receiverId?c)}</td>
 			</tr>
 		</table>
@@ -278,7 +279,7 @@
 	
 			<hr/>
 	
-			<h1>Fl&auml;chenmix</h1>
+			<h1>Flächenmix</h1>
 			<table>
 				<tr>
 					<th align="right">Mischer</th>
@@ -381,7 +382,7 @@
 		
 		<table>
 			<tr>
-				<th align="right">Verz&ouml;gerung</th>
+				<th align="right">Verzögerung</th>
 				<td>${(model.failSafeDelay+1)*0.25}s</td>
 			</tr>
 			<tr>
@@ -429,7 +430,7 @@
 				<td><@switch model.switches.VoiceRepeat/></td>
 			</tr>
 			<tr>
-				<th align="right">n&auml;chste Ansage</th>
+				<th align="right">nächste Ansage</th>
 				<td><@switch model.switches.VoiceTrigger/></td>
 			</tr>
 			<tr>
@@ -437,7 +438,7 @@
 				<td><@switch model.switches.VarioTone/></td>
 			</tr>
 			<tr>
-				<th align="right">ausgew&auml;hlte Sensoren</th>
+				<th align="right">ausgewählte Sensoren</th>
 				<td><#list model.selectedSensors as sensor>${sensor} </#list></td>
 			</tr>
 			<tr>
@@ -452,7 +453,7 @@
 		
 		<hr/>
 		
-		<h1>Lehrer/Sch&uuml;ler</h1>
+		<h1>Lehrer/Schüler</h1>
 		
 		<table>
 			<tr>
@@ -464,7 +465,7 @@
 				<td>${hex(model.trainerConfig.trainerId?c)}</td>
 			</tr>
 			<tr>
-				<th align="right">Sch&uuml;ler ID</th>
+				<th align="right">Schüler ID</th>
 				<td>${hex(model.trainerConfig.pupilId?c)}</td>
 			</tr>
 			<tr>
@@ -512,4 +513,5 @@
 			</#list>
 		</table>
 	</body>
+</@htmlsafe>
 </html>
