@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 public class Mixer {
 	private Channel fromChannel;
 	private MixerInputType inputType;
-	private final String number;
+	private String number;
 	private int offset;
 	private Switch sw;
 	private Channel toChannel;
@@ -72,6 +72,10 @@ public class Mixer {
 
 	public void setInputType(final MixerInputType inputType) {
 		this.inputType = inputType;
+	}
+
+	public void setNumber(final String number) {
+		this.number = number;
 	}
 
 	public void setOffset(final int offset) {

@@ -16,9 +16,13 @@ public class DualRateExpo {
 	private int dualRate1;
 	private int expo0;
 	private int expo1;
-	private final Function function;
-	private final String number;
+	private Function function;
+	private String number;
 	private Switch sw;
+
+	public DualRateExpo() {
+		this(Function.Unknown);
+	}
 
 	public DualRateExpo(final Function function) {
 		this.function = function;
@@ -45,6 +49,12 @@ public class DualRateExpo {
 		return function;
 	}
 
+	@XmlAttribute
+	@XmlID
+	public String getNumber() {
+		return number;
+	}
+
 	@XmlIDREF
 	public Switch getSwitch() {
 		return sw;
@@ -66,13 +76,15 @@ public class DualRateExpo {
 		this.expo1 = expo1;
 	}
 
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
+	public void setFunction(final Function function) {
+		this.function = function;
 	}
 
-	@XmlAttribute
-	@XmlID
-	public String getNumber() {
-		return number;
+	public void setNumber(final String number) {
+		this.number = number;
+	}
+
+	public void setSwitch(final Switch sw) {
+		this.sw = sw;
 	}
 }

@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlIDREF;
  */
 public class Control {
 	private ControlMode mode;
-	private final String number;
+	private String number;
 	private Switch sw;
 	private int travelHigh;
 	private int travelLow;
@@ -45,6 +45,10 @@ public class Control {
 
 	public void setMode(final ControlMode mode) {
 		this.mode = mode;
+	}
+
+	public void setNumber(final String number) {
+		this.number = number;
 	}
 
 	public void setSwitch(final Switch sw) {

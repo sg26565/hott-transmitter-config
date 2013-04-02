@@ -1,10 +1,13 @@
 package gde.model;
 
-import gde.model.container.DualRatesExpos;
+import gde.model.enums.Function;
 import gde.model.enums.PhaseType;
+
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -12,10 +15,10 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Phase {
-	private DualRatesExpos dualRatesExpos;
+	private List<DualRateExpo> dualRatesExpos;
 	private PhasedMixer mixer;
 	private String name;
-	private final String number;
+	private String number;
 	private Switch sw;
 	private PhasedTrim trim;
 	private PhaseType type;
@@ -24,7 +27,19 @@ public class Phase {
 		this.number = Integer.toString(number);
 	}
 
-	public DualRatesExpos getDualRatesExpos() {
+	public DualRateExpo get(final Function function) {
+		for (final DualRateExpo expo : getDualRatesExpos()) {
+			if (expo.getFunction() == function) {
+				return expo;
+			}
+		}
+
+		return null;
+	}
+
+	@XmlElement(name = "dualRateExpo")
+	@XmlElementWrapper(name = "dualRateExpos")
+	public List<DualRateExpo> getDualRatesExpos() {
 		return dualRatesExpos;
 	}
 
@@ -57,7 +72,7 @@ public class Phase {
 		return type;
 	}
 
-	public void setDualRatesExpos(final DualRatesExpos dualRatesExpos) {
+	public void setDualRatesExpos(final List<DualRateExpo> dualRatesExpos) {
 		this.dualRatesExpos = dualRatesExpos;
 	}
 
@@ -67,6 +82,10 @@ public class Phase {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setNumber(final String number) {
+		this.number = number;
 	}
 
 	public void setSwitch(final Switch sw) {

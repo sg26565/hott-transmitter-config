@@ -14,10 +14,10 @@ public class Switch {
 	private static int NEXT_NUMBER = 0;
 
 	private SwitchName assignment;
-	private final SwitchFunction function;
+	private SwitchFunction function;
+	private String number;
 	private int position;
 	private SwitchType type;
-	private final String number;
 
 	public Switch(final SwitchFunction function) {
 		this.function = function;
@@ -26,6 +26,16 @@ public class Switch {
 
 	public SwitchName getAssignment() {
 		return assignment;
+	}
+
+	public SwitchFunction getFunction() {
+		return function;
+	}
+
+	@XmlAttribute
+	@XmlID
+	public String getNumber() {
+		return number;
 	}
 
 	public int getPosition() {
@@ -40,21 +50,19 @@ public class Switch {
 		assignment = assigment;
 	}
 
+	public void setFunction(final SwitchFunction function) {
+		this.function = function;
+	}
+
+	public void setNumber(final String number) {
+		this.number = number;
+	}
+
 	public void setPosition(final int position) {
 		this.position = position;
 	}
 
 	public void setType(final SwitchType type) {
 		this.type = type;
-	}
-
-	public SwitchFunction getFunction() {
-		return function;
-	}
-
-	@XmlAttribute
-	@XmlID
-	public String getNumber() {
-		return number;
 	}
 }

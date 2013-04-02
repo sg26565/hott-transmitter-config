@@ -11,10 +11,10 @@ import javax.xml.bind.annotation.XmlIDREF;
  */
 public class Clock {
 	private String name;
+	private String number;
 	private Switch sw;
 	private ClockType type;
 	private int value;
-	private final String number;
 
 	public Clock(final int number) {
 		this.number = Integer.toString(number);
@@ -24,14 +24,14 @@ public class Clock {
 		return getValue() / 60;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	@XmlAttribute
 	@XmlID
 	public String getNumber() {
 		return number;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public int getSeconds() {
@@ -57,6 +57,10 @@ public class Clock {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setNumber(final String number) {
+		this.number = number;
 	}
 
 	public void setSeconds(final int seconds) {

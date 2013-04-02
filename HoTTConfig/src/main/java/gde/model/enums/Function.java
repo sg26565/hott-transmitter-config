@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum Function {
-	Aileron, Brake, Elevator, Flap, Nick, Roll, Rudder, TailRotor, Throttel;
+	Aileron, Brake, Elevator, Flap, Nick, Roll, Rudder, TailRotor, Throttel, Unknown;
 
 	/** @return the locale-dependent message */
 	@Override

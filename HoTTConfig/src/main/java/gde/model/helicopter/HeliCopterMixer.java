@@ -1,8 +1,13 @@
 package gde.model.helicopter;
 
+import gde.model.CurvePoint;
 import gde.model.PhasedMixer;
 import gde.model.SwashplateMix;
-import gde.model.container.CurvePoints;
+
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 
 /**
  * @author oli@treichels.de
@@ -10,10 +15,10 @@ import gde.model.container.CurvePoints;
 public class HeliCopterMixer extends PhasedMixer {
 	private int channel8Value;
 	private int gyroGain;
-	private CurvePoints pitchCurve;
+	private List<CurvePoint> pitchCurve;
 	private SwashplateMix swashplateMix;
-	private CurvePoints tailCurve;
-	private CurvePoints throttleCurve;
+	private List<CurvePoint> tailCurve;
+	private List<CurvePoint> throttleCurve;
 
 	public int getChannel8Value() {
 		return channel8Value;
@@ -23,15 +28,25 @@ public class HeliCopterMixer extends PhasedMixer {
 		return gyroGain;
 	}
 
-	public CurvePoints getPitchCurve() {
+	@XmlElement(name = "point")
+	@XmlElementWrapper(name = "pitchcurve")
+	public List<CurvePoint> getPitchCurve() {
 		return pitchCurve;
 	}
 
-	public CurvePoints getTailCurve() {
+	public SwashplateMix getSwashplateMix() {
+		return swashplateMix;
+	}
+
+	@XmlElement(name = "point")
+	@XmlElementWrapper(name = "tailcurve")
+	public List<CurvePoint> getTailCurve() {
 		return tailCurve;
 	}
 
-	public CurvePoints getThrottleCurve() {
+	@XmlElement(name = "point")
+	@XmlElementWrapper(name = "throttlecurve")
+	public List<CurvePoint> getThrottleCurve() {
 		return throttleCurve;
 	}
 
@@ -43,23 +58,19 @@ public class HeliCopterMixer extends PhasedMixer {
 		this.gyroGain = gyroGain;
 	}
 
-	public void setPitchCurve(final CurvePoints pitchCurve) {
+	public void setPitchCurve(final List<CurvePoint> pitchCurve) {
 		this.pitchCurve = pitchCurve;
-	}
-
-	public void setTailCurve(final CurvePoints tailCurve) {
-		this.tailCurve = tailCurve;
-	}
-
-	public void setThrottleCurve(final CurvePoints throttleCurve) {
-		this.throttleCurve = throttleCurve;
-	}
-
-	public SwashplateMix getSwashplateMix() {
-		return swashplateMix;
 	}
 
 	public void setSwashplateMix(final SwashplateMix swashplateMix) {
 		this.swashplateMix = swashplateMix;
+	}
+
+	public void setTailCurve(final List<CurvePoint> tailCurve) {
+		this.tailCurve = tailCurve;
+	}
+
+	public void setThrottleCurve(final List<CurvePoint> throttleCurve) {
+		this.throttleCurve = throttleCurve;
 	}
 }

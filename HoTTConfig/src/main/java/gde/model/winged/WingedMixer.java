@@ -3,14 +3,15 @@ package gde.model.winged;
 import gde.model.Switch;
 import gde.model.enums.SwitchFunction;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
 public class WingedMixer {
 	private static int NEXT_NUMBER = 0;
 
-	private final SwitchFunction function;
-	private final String number;
+	private SwitchFunction function;
+	private String number;
 	private Switch sw;
 	private int value;
 
@@ -24,6 +25,7 @@ public class WingedMixer {
 	}
 
 	@XmlID
+	@XmlAttribute
 	public String getNumber() {
 		return number;
 	}
@@ -37,6 +39,14 @@ public class WingedMixer {
 		return value;
 	}
 
+	public void setFunction(final SwitchFunction function) {
+		this.function = function;
+	}
+
+	public void setNumber(final String number) {
+		this.number = number;
+	}
+
 	public void setSwitch(final Switch sw) {
 		this.sw = sw;
 	}
@@ -44,5 +54,4 @@ public class WingedMixer {
 	public void setValue(final int value) {
 		this.value = value;
 	}
-
 }

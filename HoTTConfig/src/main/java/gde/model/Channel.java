@@ -17,7 +17,7 @@ public class Channel {
 	private Function function;
 	private int limitHigh;
 	private int limitLow;
-	private final String number;
+	private String number;
 	private int outputChannel;
 	private boolean reverse;
 	private TrainerMode trainerMode;
@@ -79,6 +79,11 @@ public class Channel {
 		return reverse;
 	}
 
+	@XmlAttribute
+	public boolean isVirtual() {
+		return virtual;
+	}
+
 	public void setCenter(final int center) {
 		this.center = center;
 	}
@@ -103,6 +108,10 @@ public class Channel {
 		this.limitLow = limitLow;
 	}
 
+	public void setNumber(final String number) {
+		this.number = number;
+	}
+
 	public void setOutputChannel(final int outputChannel) {
 		this.outputChannel = outputChannel;
 	}
@@ -121,10 +130,6 @@ public class Channel {
 
 	public void setTravelLow(final int travelLow) {
 		this.travelLow = travelLow;
-	}
-
-	public boolean isVirtual() {
-		return virtual;
 	}
 
 	public void setVirtual(final boolean virtual) {

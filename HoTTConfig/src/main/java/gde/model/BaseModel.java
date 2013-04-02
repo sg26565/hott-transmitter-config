@@ -1,22 +1,19 @@
 package gde.model;
 
-import gde.model.container.Channels;
-import gde.model.container.Clocks;
-import gde.model.container.Controls;
-import gde.model.container.Mixers;
-import gde.model.container.Phases;
-import gde.model.container.Switches;
 import gde.model.enums.DSCOutputType;
 import gde.model.enums.ExtPPMType;
 import gde.model.enums.ModelType;
 import gde.model.enums.SensorType;
 import gde.model.enums.StickMode;
+import gde.model.enums.SwitchFunction;
 import gde.model.enums.TransmitterType;
 import gde.model.enums.Vendor;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 
 /**
@@ -27,28 +24,28 @@ public class BaseModel {
 	private boolean autoTimerReset;
 	private Switch autoTrimSwitch;
 	private boolean bound;
-	private Channels channels;
-	private Clocks clocks;
-	private Controls controls;
+	private List<Channel> channels;
+	private List<Clock> clocks;
+	private List<Control> controls;
+	private SensorType currentSensor;
+	private int currentSensorPage;
 	private DSCOutputType dscOutput;
 	private ExtPPMType extPpmType;
 	private int failSafeDelay;
 	private boolean failSafeSettingCheck;
 	private String info;
 	private int memoryVersion;
-	private Mixers mixers;
+	private List<Mixer> mixers;
 	private String modelName;
 	private int modelNumber;
-	private final ModelType modelType;
+	private ModelType modelType;
 	private HFModule module;
-	private Phases phases;
+	private List<Phase> phases;
 	private Switch powerOnWarning; // TODO check type
 	private long receiverId;
 	private Collection<SensorType> selectedSensors;
-	private SensorType currentSensor;
-	private int currentSensorPage;
 	private StickMode stickMode;
-	private Switches switches;
+	private List<Switch> switches;
 	private ThrottleCutOf throttleCutOf;
 	private int throttleLastIdlePosition;
 	private int throttleTrim;
@@ -67,6 +64,16 @@ public class BaseModel {
 		this.modelType = modelType;
 	}
 
+	public Switch get(final SwitchFunction function) {
+		for (final Switch sw : getSwitches()) {
+			if (sw.getFunction() == function) {
+				return sw;
+			}
+		}
+
+		return null;
+	}
+
 	public int getAppVersion() {
 		return appVersion;
 	}
@@ -76,16 +83,30 @@ public class BaseModel {
 		return autoTrimSwitch;
 	}
 
-	public Channels getChannels() {
+	@XmlElement(name = "channel")
+	@XmlElementWrapper(name = "channels")
+	public List<Channel> getChannels() {
 		return channels;
 	}
 
-	public Clocks getClocks() {
+	@XmlElement(name = "clock")
+	@XmlElementWrapper(name = "clocks")
+	public List<Clock> getClocks() {
 		return clocks;
 	}
 
-	public Controls getControls() {
+	@XmlElement(name = "control")
+	@XmlElementWrapper(name = "controls")
+	public List<Control> getControls() {
 		return controls;
+	}
+
+	public SensorType getCurrentSensor() {
+		return currentSensor;
+	}
+
+	public int getCurrentSensorPage() {
+		return currentSensorPage;
 	}
 
 	public DSCOutputType getDscOutput() {
@@ -108,8 +129,9 @@ public class BaseModel {
 		return memoryVersion;
 	}
 
-	@XmlElement(name = "freeMixers")
-	public Mixers getMixers() {
+	@XmlElement(name = "freeMixer")
+	@XmlElementWrapper(name = "freeMixers")
+	public List<Mixer> getMixers() {
 		return mixers;
 	}
 
@@ -129,7 +151,9 @@ public class BaseModel {
 		return module;
 	}
 
-	public Phases getPhases() {
+	@XmlElement(name = "phase")
+	@XmlElementWrapper(name = "phases")
+	public List<Phase> getPhases() {
 		return phases;
 	}
 
@@ -150,7 +174,9 @@ public class BaseModel {
 		return stickMode;
 	}
 
-	public Switches getSwitches() {
+	@XmlElement(name = "switch")
+	@XmlElementWrapper(name = "switches")
+	public List<Switch> getSwitches() {
 		return switches;
 	}
 
@@ -214,16 +240,24 @@ public class BaseModel {
 		this.bound = bound;
 	}
 
-	public void setChannels(final Channels channels) {
+	public void setChannels(final List<Channel> channels) {
 		this.channels = channels;
 	}
 
-	public void setClocks(final Clocks clocks) {
+	public void setClocks(final List<Clock> clocks) {
 		this.clocks = clocks;
 	}
 
-	public void setControls(final Controls controls) {
+	public void setControls(final List<Control> controls) {
 		this.controls = controls;
+	}
+
+	public void setCurrentSensor(final SensorType settingSensorType) {
+		currentSensor = settingSensorType;
+	}
+
+	public void setCurrentSensorPage(final int settingSensorPage) {
+		currentSensorPage = settingSensorPage;
 	}
 
 	public void setDscOutput(final DSCOutputType dscOutput) {
@@ -250,7 +284,7 @@ public class BaseModel {
 		this.memoryVersion = memoryVersion;
 	}
 
-	public void setMixers(final Mixers mixers) {
+	public void setMixers(final List<Mixer> mixers) {
 		this.mixers = mixers;
 	}
 
@@ -262,11 +296,15 @@ public class BaseModel {
 		this.modelNumber = modelNumber;
 	}
 
+	public void setModelType(final ModelType modelType) {
+		this.modelType = modelType;
+	}
+
 	public void setModule(final HFModule module) {
 		this.module = module;
 	}
 
-	public void setPhases(final Phases phases) {
+	public void setPhases(final List<Phase> phases) {
 		this.phases = phases;
 	}
 
@@ -286,7 +324,7 @@ public class BaseModel {
 		this.stickMode = stickMode;
 	}
 
-	public void setSwitches(final Switches switches) {
+	public void setSwitches(final List<Switch> switches) {
 		this.switches = switches;
 	}
 
@@ -320,21 +358,5 @@ public class BaseModel {
 
 	public void setVoiceDelay(final int voiceDelay) {
 		this.voiceDelay = voiceDelay;
-	}
-
-	public int getCurrentSensorPage() {
-		return currentSensorPage;
-	}
-
-	public void setCurrentSensorPage(final int settingSensorPage) {
-		currentSensorPage = settingSensorPage;
-	}
-
-	public SensorType getCurrentSensor() {
-		return currentSensor;
-	}
-
-	public void setCurrentSensor(final SensorType settingSensorType) {
-		currentSensor = settingSensorType;
 	}
 }

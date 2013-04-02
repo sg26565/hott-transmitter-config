@@ -7,12 +7,18 @@ import javax.xml.bind.annotation.XmlID;
  * @author oli@treichels.de
  */
 public class CurvePoint {
-	private final String number;
 	private boolean enabled;
+	private String number;
 	private int value;
 
 	public CurvePoint(final int number) {
 		this.number = Integer.toString(number);
+	}
+
+	@XmlAttribute
+	@XmlID
+	public String getNumber() {
+		return number;
 	}
 
 	public int getValue() {
@@ -27,13 +33,11 @@ public class CurvePoint {
 		this.enabled = enabled;
 	}
 
-	public void setValue(final int value) {
-		this.value = value;
+	public void setNumber(final String number) {
+		this.number = number;
 	}
 
-	@XmlAttribute
-	@XmlID
-	public String getNumber() {
-		return number;
+	public void setValue(final int value) {
+		this.value = value;
 	}
 }
