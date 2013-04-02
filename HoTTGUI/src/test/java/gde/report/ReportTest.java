@@ -26,22 +26,12 @@ public class ReportTest {
 	}
 
 	@Test
-	public void testProcessTemplate() throws TemplateException, IOException {
-		final BaseModel model = new WingedModel();
-		model.setModelName("testModel1");
+	public void testGetModelClassPath() throws IOException, URISyntaxException, TemplateException {
+		final BaseModel model = Report.getModel("gde/report/models/aMERLIN.mdl");
 
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Report.process(model, baos, "test.ftl");
-	}
-
-	@Test
-	public void testProcessXML() throws IOException, JAXBException {
-		final BaseModel model = new WingedModel();
-		model.setModelName("testModel1");
-
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos);
-		assertTrue(baos.toString().contains("<modelName>testModel1</modelName>"));
+		assertEquals("Name: MERLIN", baos.toString());
 	}
 
 	@Test
@@ -67,11 +57,21 @@ public class ReportTest {
 	}
 
 	@Test
-	public void testGetModelClassPath() throws IOException, URISyntaxException, TemplateException {
-		final BaseModel model = Report.getModel("gde/report/models/aMERLIN.mdl");
+	public void testProcessTemplate() throws TemplateException, IOException {
+		final BaseModel model = new WingedModel();
+		model.setModelName("testModel1");
 
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Report.process(model, baos, "test.ftl");
-		assertEquals("Name: MERLIN", baos.toString());
+	}
+
+	@Test
+	public void testProcessXML() throws IOException, JAXBException {
+		final BaseModel model = new WingedModel();
+		model.setModelName("testModel1");
+
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Report.process(model, baos);
+		assertTrue(baos.toString().contains("<modelName>testModel1</modelName>"));
 	}
 }

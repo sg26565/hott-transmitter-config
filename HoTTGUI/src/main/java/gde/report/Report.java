@@ -48,6 +48,25 @@ public class Report {
 		}
 	}
 
+	public static BaseModel getModel(final File file) throws IOException, URISyntaxException {
+		// decode the model file into the data model
+		return HoTTDecoder.decode(file);
+	}
+
+	public static BaseModel getModel(final String fileName) throws IOException, URISyntaxException {
+		// lookup the binary model file from the class path
+		final URL url = ClassLoader.getSystemResource(fileName);
+		final File file;
+
+		if (url != null) {
+			file = new File(url.toURI());
+		} else {
+			file = new File(fileName);
+		}
+
+		return getModel(file);
+	}
+
 	public static void process(final BaseModel model, final OutputStream out) throws JAXBException {
 		marshaller.marshal(model, out);
 	}
@@ -66,24 +85,5 @@ public class Report {
 		}
 
 		template.process(rootMap, new OutputStreamWriter(out));
-	}
-
-	public static BaseModel getModel(final File file) throws IOException, URISyntaxException {
-		// decode the model file into the data model
-		return HoTTDecoder.decode(file);
-	}
-
-	public static BaseModel getModel(final String fileName) throws IOException, URISyntaxException {
-		// lookup the binary model file from the class path
-		final URL url = ClassLoader.getSystemResource(fileName);
-		final File file;
-
-		if (url != null) {
-			file = new File(url.toURI());
-		} else {
-			file = new File(fileName);
-		}
-
-		return getModel(file);
 	}
 }

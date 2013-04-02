@@ -12,19 +12,21 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 
 public class FreeMarkerHtmlSafeDirective implements TemplateDirectiveModel {
-	@Override
-	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params, final TemplateModel[] loopVars, final TemplateDirectiveBody body)
-			throws TemplateException, IOException {
-		if (body != null) {
-			body.render(new HtmlSafeWriter(env.getOut()));
-		}
-	}
-
 	private static class HtmlSafeWriter extends Writer {
 		private final Writer out;
 
 		public HtmlSafeWriter(final Writer out) {
 			this.out = out;
+		}
+
+		@Override
+		public void close() throws IOException {
+			out.close();
+		}
+
+		@Override
+		public void flush() throws IOException {
+			out.flush();
 		}
 
 		@Override
@@ -74,15 +76,13 @@ public class FreeMarkerHtmlSafeDirective implements TemplateDirectiveModel {
 
 			out.write(w.toCharArray());
 		}
+	}
 
-		@Override
-		public void flush() throws IOException {
-			out.flush();
-		}
-
-		@Override
-		public void close() throws IOException {
-			out.close();
+	@Override
+	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params, final TemplateModel[] loopVars, final TemplateDirectiveBody body)
+			throws TemplateException, IOException {
+		if (body != null) {
+			body.render(new HtmlSafeWriter(env.getOut()));
 		}
 	}
 }

@@ -36,6 +36,13 @@ import gde.model.BaseModel;
 import gde.report.Report;
 
 public class SimpleGUI {
+	private final class CloseActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(final ActionEvent evt) {
+			System.exit(0);
+		}
+	}
+
 	private final class HtmlActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(final ActionEvent evt) {
@@ -46,26 +53,6 @@ public class SimpleGUI {
 			} catch (IOException | TemplateException | JAXBException e) {
 				showError(frame, e);
 			}
-		}
-	}
-
-	private final class XmlActionListener implements ActionListener {
-		@Override
-		public void actionPerformed(final ActionEvent evt) {
-			raw = true;
-			editorPane.setContentType("text/xml");
-			try {
-				updateView();
-			} catch (IOException | TemplateException | JAXBException e) {
-				showError(frame, e);
-			}
-		}
-	}
-
-	private final class CloseActionListener implements ActionListener {
-		@Override
-		public void actionPerformed(final ActionEvent evt) {
-			System.exit(0);
 		}
 	}
 
@@ -142,31 +129,71 @@ public class SimpleGUI {
 		}
 	}
 
-	private final JFrame frame = new JFrame("Hott Transmitter Config");
-	private final JMenuBar menubar = new JMenuBar();
-	private final JMenu fileMenu = new JMenu("File");
-	private final JMenuItem loadMenuItem = new JMenuItem("Load");
-	private final JMenuItem saveMenuItem = new JMenuItem("Save");
-	private final JMenuItem closeMenuItem = new JMenuItem("Close");
-	private final JMenu viewMenu = new JMenu("View");
-	private final JMenuItem xmlMenuItem = new JMenuItem("XML");
-	private final JMenuItem htmlMenuItem = new JMenuItem("HTML");
-	private final HTMLEditorKit editorKit = new HTMLEditorKit();
-	private final JEditorPane editorPane = new JEditorPane();
-	private final JScrollPane scrollPane = new JScrollPane(editorPane);
-	private final JPanel buttonPanel = new JPanel();
-	private final JButton loadButton = new JButton("Load");
-	private final JButton saveButton = new JButton("Save");
-	private final JButton xmlButton = new JButton("View XML");
-	private final JButton htmlButton = new JButton("View HTML");
-	private final JButton closeButton = new JButton("Close");
-
-	private File lastDir = null;
-	private BaseModel model = null;
-	private boolean raw = false;
+	private final class XmlActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(final ActionEvent evt) {
+			raw = true;
+			editorPane.setContentType("text/xml");
+			try {
+				updateView();
+			} catch (IOException | TemplateException | JAXBException e) {
+				showError(frame, e);
+			}
+		}
+	}
 
 	public static void main(final String[] args) {
 		new SimpleGUI().show();
+	}
+	private static void save(final File file, final String data) throws IOException {
+		final FileWriter fw = new FileWriter(file);
+		fw.write(data);
+		fw.close();
+	}
+	private final JPanel buttonPanel = new JPanel();
+	private final JButton closeButton = new JButton("Close");
+	private final JMenuItem closeMenuItem = new JMenuItem("Close");
+	private final HTMLEditorKit editorKit = new HTMLEditorKit();
+	private final JEditorPane editorPane = new JEditorPane();
+	private final JMenu fileMenu = new JMenu("File");
+	private final JFrame frame = new JFrame("Hott Transmitter Config");
+	private final JButton htmlButton = new JButton("View HTML");
+	private final JMenuItem htmlMenuItem = new JMenuItem("HTML");
+	private File lastDir = null;
+	private final JButton loadButton = new JButton("Load");
+	private final JMenuItem loadMenuItem = new JMenuItem("Load");
+	private final JMenuBar menubar = new JMenuBar();
+	private BaseModel model = null;
+	private boolean raw = false;
+	private final JButton saveButton = new JButton("Save");
+
+	private final JMenuItem saveMenuItem = new JMenuItem("Save");
+	private final JScrollPane scrollPane = new JScrollPane(editorPane);
+	private final JMenu viewMenu = new JMenu("View");
+
+	private final JButton xmlButton = new JButton("View XML");
+
+	private final JMenuItem xmlMenuItem = new JMenuItem("XML");
+
+	private String generateHTML(final BaseModel model) throws IOException, TemplateException {
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Report.process(model, baos, "mx-16.xhtml");
+		return baos.toString();
+	}
+
+	private String generateXML(final BaseModel model) throws JAXBException {
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Report.process(model, baos);
+		return baos.toString();
+	}
+
+	private void savePDF(final File file, final String data) throws IOException, DocumentException {
+		final FileOutputStream fos = new FileOutputStream(file);
+		final ITextRenderer renderer = new ITextRenderer();
+		renderer.setDocumentFromString(data);
+		renderer.layout();
+		renderer.createPDF(fos);
+		fos.close();
 	}
 
 	private void show() {
@@ -232,14 +259,6 @@ public class SimpleGUI {
 		frame.setVisible(true);
 	}
 
-	private void updateView() throws IOException, TemplateException, JAXBException {
-		if (raw) {
-			editorPane.setText(generateXML(model));
-		} else {
-			editorPane.setText(generateHTML(model));
-		}
-	}
-
 	private void showError(final JFrame frame, final Throwable t) {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final PrintStream ps = new PrintStream(baos);
@@ -247,30 +266,11 @@ public class SimpleGUI {
 		JOptionPane.showMessageDialog(frame, baos.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
-	private String generateXML(final BaseModel model) throws JAXBException {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos);
-		return baos.toString();
-	}
-
-	private String generateHTML(final BaseModel model) throws IOException, TemplateException {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos, "mx-16.xhtml");
-		return baos.toString();
-	}
-
-	private void savePDF(final File file, final String data) throws IOException, DocumentException {
-		final FileOutputStream fos = new FileOutputStream(file);
-		final ITextRenderer renderer = new ITextRenderer();
-		renderer.setDocumentFromString(data);
-		renderer.layout();
-		renderer.createPDF(fos);
-		fos.close();
-	}
-
-	private static void save(final File file, final String data) throws IOException {
-		final FileWriter fw = new FileWriter(file);
-		fw.write(data);
-		fw.close();
+	private void updateView() throws IOException, TemplateException, JAXBException {
+		if (raw) {
+			editorPane.setText(generateXML(model));
+		} else {
+			editorPane.setText(generateHTML(model));
+		}
 	}
 }
