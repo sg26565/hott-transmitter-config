@@ -13,11 +13,11 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/[].
  */
 package gde.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
@@ -26,10 +26,10 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class TrainerConfig {
-	private List<Channel> pupilChannels;
+	private Collection<Channel> pupilChannels;
 	private long pupilId;
 	private Switch sw;
-	private List<Channel> trainerChannels;
+	private Collection<Channel> trainerChannels;
 	private long trainerId;
 	private boolean wireless;
 
@@ -38,7 +38,7 @@ public class TrainerConfig {
 
 	@XmlIDREF
 	@XmlElement(name = "pupilChannel")
-	public List<Channel> getPupilChannels() {
+	public Collection<Channel> getPupilChannels() {
 		return pupilChannels;
 	}
 
@@ -54,7 +54,7 @@ public class TrainerConfig {
 
 	@XmlIDREF
 	@XmlElement(name = "trainerChannel")
-	public List<Channel> getTrainerChannels() {
+	public Collection<Channel> getTrainerChannels() {
 		return trainerChannels;
 	}
 
@@ -66,7 +66,7 @@ public class TrainerConfig {
 		return wireless;
 	}
 
-	public void setPupilChannels(final List<Channel> pupilChannels) {
+	public void setPupilChannels(final Collection<Channel> pupilChannels) {
 		this.pupilChannels = pupilChannels;
 	}
 
@@ -78,7 +78,7 @@ public class TrainerConfig {
 		this.sw = sw;
 	}
 
-	public void setTrainerChannels(final List<Channel> trainerChannels) {
+	public void setTrainerChannels(final Collection<Channel> trainerChannels) {
 		this.trainerChannels = trainerChannels;
 	}
 

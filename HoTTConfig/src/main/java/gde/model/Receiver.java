@@ -18,41 +18,61 @@
 package gde.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
 
 /**
- * @author oli@treichels.de
+ * @author oli
  */
-public class CurvePoint {
-	private boolean enabled;
-	private int number;
-	private int value;
+public class Receiver {
+	private boolean bound;
+	private int[] inputChannel;
+	private String number;
+	private long rfid;
+	private boolean telemetry;
 
-	public CurvePoint(final int number) {
-		this.number = number;
+	public Receiver(final int number) {
+		this.number = Integer.toString(number);
+	}
+
+	public int[] getInputChannel() {
+		return inputChannel;
 	}
 
 	@XmlAttribute
-	public int getNumber() {
+	@XmlID
+	public String getNumber() {
 		return number;
 	}
 
-	public int getValue() {
-		return value;
+	public long getRfid() {
+		return rfid;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
+	public boolean isBound() {
+		return bound;
 	}
 
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
+	public boolean isTelemetry() {
+		return telemetry;
 	}
 
-	public void setNumber(final int number) {
+	public void setBound(final boolean bound) {
+		this.bound = bound;
+	}
+
+	public void setInputChannel(final int[] inputChannel) {
+		this.inputChannel = inputChannel;
+	}
+
+	public void setNumber(final String number) {
 		this.number = number;
 	}
 
-	public void setValue(final int value) {
-		this.value = value;
+	public void setRfid(final long id) {
+		rfid = id;
+	}
+
+	public void setTelemetry(final boolean telemetry) {
+		this.telemetry = telemetry;
 	}
 }

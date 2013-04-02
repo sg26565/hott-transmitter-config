@@ -13,15 +13,13 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/[].
  */
 package gde.model.helicopter;
 
 import gde.model.CurvePoint;
 import gde.model.PhasedMixer;
 import gde.model.SwashplateMix;
-
-import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -32,10 +30,10 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 public class HeliCopterMixer extends PhasedMixer {
 	private int channel8Value;
 	private int gyroGain;
-	private List<CurvePoint> pitchCurve;
+	private CurvePoint[] pitchCurve;
 	private SwashplateMix swashplateMix;
-	private List<CurvePoint> tailCurve;
-	private List<CurvePoint> throttleCurve;
+	private CurvePoint[] tailCurve;
+	private CurvePoint[] throttleCurve;
 
 	public int getChannel8Value() {
 		return channel8Value;
@@ -47,7 +45,7 @@ public class HeliCopterMixer extends PhasedMixer {
 
 	@XmlElement(name = "point")
 	@XmlElementWrapper(name = "pitchcurve")
-	public List<CurvePoint> getPitchCurve() {
+	public CurvePoint[] getPitchCurve() {
 		return pitchCurve;
 	}
 
@@ -57,13 +55,13 @@ public class HeliCopterMixer extends PhasedMixer {
 
 	@XmlElement(name = "point")
 	@XmlElementWrapper(name = "tailcurve")
-	public List<CurvePoint> getTailCurve() {
+	public CurvePoint[] getTailCurve() {
 		return tailCurve;
 	}
 
 	@XmlElement(name = "point")
 	@XmlElementWrapper(name = "throttlecurve")
-	public List<CurvePoint> getThrottleCurve() {
+	public CurvePoint[] getThrottleCurve() {
 		return throttleCurve;
 	}
 
@@ -75,7 +73,7 @@ public class HeliCopterMixer extends PhasedMixer {
 		this.gyroGain = gyroGain;
 	}
 
-	public void setPitchCurve(final List<CurvePoint> pitchCurve) {
+	public void setPitchCurve(final CurvePoint[] pitchCurve) {
 		this.pitchCurve = pitchCurve;
 	}
 
@@ -83,11 +81,11 @@ public class HeliCopterMixer extends PhasedMixer {
 		this.swashplateMix = swashplateMix;
 	}
 
-	public void setTailCurve(final List<CurvePoint> tailCurve) {
+	public void setTailCurve(final CurvePoint[] tailCurve) {
 		this.tailCurve = tailCurve;
 	}
 
-	public void setThrottleCurve(final List<CurvePoint> throttleCurve) {
+	public void setThrottleCurve(final CurvePoint[] throttleCurve) {
 		this.throttleCurve = throttleCurve;
 	}
 }

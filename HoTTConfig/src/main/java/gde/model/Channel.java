@@ -35,7 +35,6 @@ public class Channel {
 	private int limitHigh;
 	private int limitLow;
 	private String number;
-	private int outputChannel;
 	private boolean reverse;
 	private TrainerMode trainerMode;
 	private int travelHigh;
@@ -76,10 +75,6 @@ public class Channel {
 		return number;
 	}
 
-	public int getOutputChannel() {
-		return outputChannel;
-	}
-
 	public TrainerMode getTrainerMode() {
 		return trainerMode;
 	}
@@ -96,7 +91,6 @@ public class Channel {
 		return reverse;
 	}
 
-	@XmlAttribute
 	public boolean isVirtual() {
 		return virtual;
 	}
@@ -127,10 +121,6 @@ public class Channel {
 
 	public void setNumber(final String number) {
 		this.number = number;
-	}
-
-	public void setOutputChannel(final int outputChannel) {
-		this.outputChannel = outputChannel;
 	}
 
 	public void setReverse(final boolean reverse) {

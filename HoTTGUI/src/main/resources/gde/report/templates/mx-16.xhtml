@@ -164,9 +164,9 @@
 <#list model.channels as channel>
 <#if !channel.virtual>						
 						<tr>
-							<td align="center">S${channel.number?number+1}</td>
+							<td align="center">S${model.receivers[0].inputChannel[channel.number?number]+1}</td>
 							<td align="center">=></td>
-							<td align="center">Ausgang ${channel.outputChannel+1}</td>
+							<td align="center">Ausgang ${channel.number?number+1}</td>
 						</tr>
 </#if>
 </#list>					
@@ -179,7 +179,7 @@
 			</tr>			
 			<tr>
 				<th align="right">Empfänger ID</th>
-				<td colspan="3">${hex(model.receiverId?c)}</td>
+				<td colspan="3">${hex(model.receivers[0].rfid?c)}</td>
 			</tr>
 		</table>
 

@@ -20,21 +20,17 @@ package gde.model;
 import gde.model.enums.Function;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
 /**
  * @author oli@treichels.de
  */
 public class DualRateExpo {
-	private static int NEXT_NUMBER = 0;
-
 	private int dualRate0;
 	private int dualRate1;
 	private int expo0;
 	private int expo1;
 	private Function function;
-	private String number;
 	private Switch sw;
 
 	public DualRateExpo() {
@@ -43,7 +39,6 @@ public class DualRateExpo {
 
 	public DualRateExpo(final Function function) {
 		this.function = function;
-		number = Integer.toString(NEXT_NUMBER++);
 	}
 
 	public int getDualRate0() {
@@ -62,14 +57,9 @@ public class DualRateExpo {
 		return expo1;
 	}
 
+	@XmlAttribute
 	public Function getFunction() {
 		return function;
-	}
-
-	@XmlAttribute
-	@XmlID
-	public String getNumber() {
-		return number;
 	}
 
 	@XmlIDREF
@@ -95,10 +85,6 @@ public class DualRateExpo {
 
 	public void setFunction(final Function function) {
 		this.function = function;
-	}
-
-	public void setNumber(final String number) {
-		this.number = number;
 	}
 
 	public void setSwitch(final Switch sw) {

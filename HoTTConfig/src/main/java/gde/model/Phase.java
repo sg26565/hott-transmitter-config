@@ -20,8 +20,6 @@ package gde.model;
 import gde.model.enums.Function;
 import gde.model.enums.PhaseType;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -32,7 +30,7 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Phase {
-	private List<DualRateExpo> dualRatesExpos;
+	private DualRateExpo[] dualRatesExpos;
 	private PhasedMixer mixer;
 	private String name;
 	private String number;
@@ -56,7 +54,7 @@ public class Phase {
 
 	@XmlElement(name = "dualRateExpo")
 	@XmlElementWrapper(name = "dualRateExpos")
-	public List<DualRateExpo> getDualRatesExpos() {
+	public DualRateExpo[] getDualRatesExpos() {
 		return dualRatesExpos;
 	}
 
@@ -89,7 +87,7 @@ public class Phase {
 		return type;
 	}
 
-	public void setDualRatesExpos(final List<DualRateExpo> dualRatesExpos) {
+	public void setDualRatesExpos(final DualRateExpo[] dualRatesExpos) {
 		this.dualRatesExpos = dualRatesExpos;
 	}
 

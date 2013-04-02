@@ -28,18 +28,10 @@ import javax.xml.bind.annotation.XmlID;
  * @author oli@treichels.de
  */
 public class Switch {
-	private static int NEXT_NUMBER = 0;
-
 	private SwitchName assignment;
 	private SwitchFunction function;
-	private String number;
 	private int position;
 	private SwitchType type;
-
-	public Switch(final SwitchFunction function) {
-		this.function = function;
-		number = Integer.toString(NEXT_NUMBER++);
-	}
 
 	public SwitchName getAssignment() {
 		return assignment;
@@ -51,8 +43,8 @@ public class Switch {
 
 	@XmlAttribute
 	@XmlID
-	public String getNumber() {
-		return number;
+	public String getId() {
+		return function.name();
 	}
 
 	public int getPosition() {
@@ -69,10 +61,6 @@ public class Switch {
 
 	public void setFunction(final SwitchFunction function) {
 		this.function = function;
-	}
-
-	public void setNumber(final String number) {
-		this.number = number;
 	}
 
 	public void setPosition(final int position) {

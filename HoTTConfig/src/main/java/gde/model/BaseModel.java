@@ -13,7 +13,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/[].
  */
 package gde.model;
 
@@ -27,7 +27,6 @@ import gde.model.enums.TransmitterType;
 import gde.model.enums.Vendor;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -41,9 +40,9 @@ public class BaseModel {
 	private boolean autoTimerReset;
 	private Switch autoTrimSwitch;
 	private boolean bound;
-	private List<Channel> channels;
-	private List<Clock> clocks;
-	private List<Control> controls;
+	private Channel[] channels;
+	private Clock[] clocks;
+	private Control[] controls;
 	private SensorType currentSensor;
 	private int currentSensorPage;
 	private DSCOutputType dscOutput;
@@ -52,17 +51,17 @@ public class BaseModel {
 	private boolean failSafeSettingCheck;
 	private String info;
 	private int memoryVersion;
-	private List<Mixer> mixers;
+	private Mixer[] mixers;
 	private String modelName;
 	private int modelNumber;
 	private ModelType modelType;
 	private HFModule module;
-	private List<Phase> phases;
+	private Phase[] phases;
 	private Switch powerOnWarning; // TODO check type
-	private long receiverId;
+	private Receiver[] receivers;
 	private Collection<SensorType> selectedSensors;
 	private StickMode stickMode;
-	private List<Switch> switches;
+	private Switch[] switches;
 	private ThrottleCutOf throttleCutOf;
 	private int throttleLastIdlePosition;
 	private int throttleTrim;
@@ -102,19 +101,19 @@ public class BaseModel {
 
 	@XmlElement(name = "channel")
 	@XmlElementWrapper(name = "channels")
-	public List<Channel> getChannels() {
+	public Channel[] getChannels() {
 		return channels;
 	}
 
 	@XmlElement(name = "clock")
 	@XmlElementWrapper(name = "clocks")
-	public List<Clock> getClocks() {
+	public Clock[] getClocks() {
 		return clocks;
 	}
 
 	@XmlElement(name = "control")
 	@XmlElementWrapper(name = "controls")
-	public List<Control> getControls() {
+	public Control[] getControls() {
 		return controls;
 	}
 
@@ -148,7 +147,7 @@ public class BaseModel {
 
 	@XmlElement(name = "freeMixer")
 	@XmlElementWrapper(name = "freeMixers")
-	public List<Mixer> getMixers() {
+	public Mixer[] getMixers() {
 		return mixers;
 	}
 
@@ -170,7 +169,7 @@ public class BaseModel {
 
 	@XmlElement(name = "phase")
 	@XmlElementWrapper(name = "phases")
-	public List<Phase> getPhases() {
+	public Phase[] getPhases() {
 		return phases;
 	}
 
@@ -179,8 +178,10 @@ public class BaseModel {
 		return powerOnWarning;
 	}
 
-	public long getReceiverId() {
-		return receiverId;
+	@XmlElement(name = "receiver")
+	@XmlElementWrapper(name = "receivers")
+	public Receiver[] getReceivers() {
+		return receivers;
 	}
 
 	public Collection<SensorType> getSelectedSensors() {
@@ -193,7 +194,7 @@ public class BaseModel {
 
 	@XmlElement(name = "switch")
 	@XmlElementWrapper(name = "switches")
-	public List<Switch> getSwitches() {
+	public Switch[] getSwitches() {
 		return switches;
 	}
 
@@ -257,15 +258,15 @@ public class BaseModel {
 		this.bound = bound;
 	}
 
-	public void setChannels(final List<Channel> channels) {
+	public void setChannels(final Channel[] channels) {
 		this.channels = channels;
 	}
 
-	public void setClocks(final List<Clock> clocks) {
+	public void setClocks(final Clock[] clocks) {
 		this.clocks = clocks;
 	}
 
-	public void setControls(final List<Control> controls) {
+	public void setControls(final Control[] controls) {
 		this.controls = controls;
 	}
 
@@ -301,7 +302,7 @@ public class BaseModel {
 		this.memoryVersion = memoryVersion;
 	}
 
-	public void setMixers(final List<Mixer> mixers) {
+	public void setMixers(final Mixer[] mixers) {
 		this.mixers = mixers;
 	}
 
@@ -321,7 +322,7 @@ public class BaseModel {
 		this.module = module;
 	}
 
-	public void setPhases(final List<Phase> phases) {
+	public void setPhases(final Phase[] phases) {
 		this.phases = phases;
 	}
 
@@ -329,19 +330,19 @@ public class BaseModel {
 		this.powerOnWarning = powerOnWarning;
 	}
 
-	public void setReceiverId(final long receiverId) {
-		this.receiverId = receiverId;
+	public void setReceivers(final Receiver[] receivers) {
+		this.receivers = receivers;
 	}
 
-	public void setSelectedSensors(final Collection<SensorType> sensorType) {
-		selectedSensors = sensorType;
+	public void setSelectedSensors(final Collection<SensorType> selectedSensors) {
+		this.selectedSensors = selectedSensors;
 	}
 
 	public void setStickMode(final StickMode stickMode) {
 		this.stickMode = stickMode;
 	}
 
-	public void setSwitches(final List<Switch> switches) {
+	public void setSwitches(final Switch[] switches) {
 		this.switches = switches;
 	}
 
