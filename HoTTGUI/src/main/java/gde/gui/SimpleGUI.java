@@ -177,6 +177,8 @@ public class SimpleGUI {
 		scrollPane.setPreferredSize(new Dimension(800, 600));
 		scrollPane.setMinimumSize(new Dimension(100, 100));
 
+		lastDir = new File(System.getProperty("user.dir"));
+
 		ActionListener l = new CloseActionListener();
 		closeMenuItem.addActionListener(l);
 		closeButton.addActionListener(l);

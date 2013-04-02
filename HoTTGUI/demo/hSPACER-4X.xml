@@ -3,879 +3,852 @@
     <appVersion>1722</appVersion>
     <autoTimerReset>false</autoTimerReset>
     <bound>true</bound>
-    <channels number="0">
-        <center>0</center>
-        <failSafeMode>Position</failSafeMode>
-        <failSafePosition>2999</failSafePosition>
-        <limitHigh>150</limitHigh>
-        <limitLow>150</limitLow>
-        <outputChannel>2</outputChannel>
-        <reverse>false</reverse>
-        <trainerMode>Trainer</trainerMode>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
+    <channels>
+        <channel number="0" virtual="false">
+            <center>0</center>
+            <failSafeMode>Position</failSafeMode>
+            <failSafePosition>2999</failSafePosition>
+            <limitHigh>0</limitHigh>
+            <limitLow>0</limitLow>
+            <outputChannel>2</outputChannel>
+            <reverse>false</reverse>
+            <trainerMode>Trainer</trainerMode>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </channel>
+        <channel number="1" virtual="false">
+            <center>0</center>
+            <failSafeMode>Position</failSafeMode>
+            <failSafePosition>3000</failSafePosition>
+            <limitHigh>0</limitHigh>
+            <limitLow>0</limitLow>
+            <outputChannel>1</outputChannel>
+            <reverse>false</reverse>
+            <trainerMode>Trainer</trainerMode>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </channel>
+        <channel number="2" virtual="false">
+            <center>0</center>
+            <failSafeMode>Position</failSafeMode>
+            <failSafePosition>2200</failSafePosition>
+            <limitHigh>0</limitHigh>
+            <limitLow>0</limitLow>
+            <outputChannel>2</outputChannel>
+            <reverse>false</reverse>
+            <trainerMode>Trainer</trainerMode>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </channel>
+        <channel number="3" virtual="false">
+            <center>0</center>
+            <failSafeMode>Position</failSafeMode>
+            <failSafePosition>3004</failSafePosition>
+            <limitHigh>0</limitHigh>
+            <limitLow>0</limitLow>
+            <outputChannel>3</outputChannel>
+            <reverse>false</reverse>
+            <trainerMode>Trainer</trainerMode>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </channel>
+        <channel number="4" virtual="false">
+            <center>0</center>
+            <failSafeMode>Position</failSafeMode>
+            <failSafePosition>3000</failSafePosition>
+            <limitHigh>0</limitHigh>
+            <limitLow>0</limitLow>
+            <outputChannel>4</outputChannel>
+            <reverse>false</reverse>
+            <trainerMode>Trainer</trainerMode>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </channel>
+        <channel number="5" virtual="false">
+            <center>0</center>
+            <failSafeMode>Position</failSafeMode>
+            <failSafePosition>3000</failSafePosition>
+            <limitHigh>0</limitHigh>
+            <limitLow>0</limitLow>
+            <outputChannel>2</outputChannel>
+            <reverse>false</reverse>
+            <trainerMode>Trainer</trainerMode>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </channel>
+        <channel number="6" virtual="false">
+            <center>0</center>
+            <failSafeMode>Position</failSafeMode>
+            <failSafePosition>3000</failSafePosition>
+            <limitHigh>0</limitHigh>
+            <limitLow>0</limitLow>
+            <outputChannel>6</outputChannel>
+            <reverse>false</reverse>
+            <trainerMode>Trainer</trainerMode>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </channel>
+        <channel number="7" virtual="false">
+            <center>0</center>
+            <failSafeMode>Position</failSafeMode>
+            <failSafePosition>3000</failSafePosition>
+            <limitHigh>0</limitHigh>
+            <limitLow>0</limitLow>
+            <outputChannel>7</outputChannel>
+            <reverse>false</reverse>
+            <trainerMode>Trainer</trainerMode>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </channel>
+        <channel number="8" virtual="true">
+            <center>0</center>
+            <failSafePosition>0</failSafePosition>
+            <limitHigh>0</limitHigh>
+            <limitLow>0</limitLow>
+            <outputChannel>0</outputChannel>
+            <reverse>false</reverse>
+            <travelHigh>0</travelHigh>
+            <travelLow>0</travelLow>
+        </channel>
+        <channel number="9" virtual="true">
+            <center>0</center>
+            <failSafePosition>0</failSafePosition>
+            <limitHigh>0</limitHigh>
+            <limitLow>0</limitLow>
+            <outputChannel>0</outputChannel>
+            <reverse>false</reverse>
+            <travelHigh>0</travelHigh>
+            <travelLow>0</travelLow>
+        </channel>
     </channels>
-    <channels number="1">
-        <center>0</center>
-        <failSafeMode>Position</failSafeMode>
-        <failSafePosition>3000</failSafePosition>
-        <limitHigh>150</limitHigh>
-        <limitLow>150</limitLow>
-        <outputChannel>1</outputChannel>
-        <reverse>false</reverse>
-        <trainerMode>Trainer</trainerMode>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
-    </channels>
-    <channels number="2">
-        <center>0</center>
-        <failSafeMode>Position</failSafeMode>
-        <failSafePosition>2200</failSafePosition>
-        <limitHigh>150</limitHigh>
-        <limitLow>150</limitLow>
-        <outputChannel>2</outputChannel>
-        <reverse>false</reverse>
-        <trainerMode>Trainer</trainerMode>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
-    </channels>
-    <channels number="3">
-        <center>0</center>
-        <failSafeMode>Position</failSafeMode>
-        <failSafePosition>3004</failSafePosition>
-        <limitHigh>150</limitHigh>
-        <limitLow>150</limitLow>
-        <outputChannel>3</outputChannel>
-        <reverse>false</reverse>
-        <trainerMode>Trainer</trainerMode>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
-    </channels>
-    <channels number="4">
-        <center>0</center>
-        <failSafeMode>Position</failSafeMode>
-        <failSafePosition>3000</failSafePosition>
-        <limitHigh>150</limitHigh>
-        <limitLow>150</limitLow>
-        <outputChannel>4</outputChannel>
-        <reverse>false</reverse>
-        <trainerMode>Trainer</trainerMode>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
-    </channels>
-    <channels number="5">
-        <center>0</center>
-        <failSafeMode>Position</failSafeMode>
-        <failSafePosition>3000</failSafePosition>
-        <limitHigh>150</limitHigh>
-        <limitLow>150</limitLow>
-        <outputChannel>2</outputChannel>
-        <reverse>false</reverse>
-        <trainerMode>Trainer</trainerMode>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
-    </channels>
-    <channels number="6">
-        <center>0</center>
-        <failSafeMode>Position</failSafeMode>
-        <failSafePosition>3000</failSafePosition>
-        <limitHigh>150</limitHigh>
-        <limitLow>150</limitLow>
-        <outputChannel>6</outputChannel>
-        <reverse>false</reverse>
-        <trainerMode>Trainer</trainerMode>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
-    </channels>
-    <channels number="7">
-        <center>0</center>
-        <failSafeMode>Position</failSafeMode>
-        <failSafePosition>3000</failSafePosition>
-        <limitHigh>150</limitHigh>
-        <limitLow>150</limitLow>
-        <outputChannel>7</outputChannel>
-        <reverse>false</reverse>
-        <trainerMode>Trainer</trainerMode>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
-    </channels>
-    <clocks number="0">
-        <minutes>0</minutes>
-        <name>StopTimer</name>
-        <seconds>0</seconds>
-        <switch>Clock</switch>
-        <type>Timer</type>
-        <value>0</value>
+    <clocks>
+        <clock number="0">
+            <minutes>0</minutes>
+            <name>StopTimer</name>
+            <seconds>0</seconds>
+            <switch>95</switch>
+            <type>Timer</type>
+            <value>0</value>
+        </clock>
     </clocks>
-    <controls number="4">
-        <switch>InputControl5</switch>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
+    <controls>
+        <control number="4">
+            <switch>118</switch>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </control>
+        <control number="5">
+            <switch>119</switch>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </control>
+        <control number="6">
+            <switch>120</switch>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </control>
+        <control number="7">
+            <switch>121</switch>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </control>
+        <control number="8">
+            <switch>122</switch>
+            <travelHigh>100</travelHigh>
+            <travelLow>100</travelLow>
+        </control>
     </controls>
-    <controls number="5">
-        <switch>InputControl6</switch>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
-    </controls>
-    <controls number="6">
-        <switch>InputControl7</switch>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
-    </controls>
-    <controls number="7">
-        <switch>InputControl8</switch>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
-    </controls>
-    <controls number="8">
-        <switch>ThrottleLimit</switch>
-        <travelHigh>100</travelHigh>
-        <travelLow>100</travelLow>
-    </controls>
-    <displaySensorType>Receiver</displaySensorType>
+    <currentSensor>Receiver</currentSensor>
+    <currentSensorPage>0</currentSensorPage>
     <failSafeDelay>2</failSafeDelay>
     <failSafeSettingCheck>true</failSafeSettingCheck>
     <memoryVersion>1001</memoryVersion>
-    <freeMixers number="0">
-        <fromChannel>0</fromChannel>
-        <inputType>Normal</inputType>
-        <offset>0</offset>
-        <switch>FreeMixer1</switch>
-        <toChannel>0</toChannel>
-        <travelHigh>0</travelHigh>
-        <travelLow>0</travelLow>
-    </freeMixers>
-    <freeMixers number="1">
-        <fromChannel>0</fromChannel>
-        <inputType>Normal</inputType>
-        <offset>0</offset>
-        <switch>FreeMixer2</switch>
-        <toChannel>0</toChannel>
-        <travelHigh>0</travelHigh>
-        <travelLow>0</travelLow>
-    </freeMixers>
-    <freeMixers number="2">
-        <fromChannel>0</fromChannel>
-        <inputType>Normal</inputType>
-        <offset>0</offset>
-        <switch>FreeMixer3</switch>
-        <toChannel>0</toChannel>
-        <travelHigh>0</travelHigh>
-        <travelLow>0</travelLow>
+    <freeMixers>
+        <freeMixer number="0">
+            <fromChannel>0</fromChannel>
+            <inputType>Normal</inputType>
+            <offset>0</offset>
+            <switch>115</switch>
+            <toChannel>0</toChannel>
+            <travelHigh>0</travelHigh>
+            <travelLow>0</travelLow>
+        </freeMixer>
+        <freeMixer number="1">
+            <fromChannel>0</fromChannel>
+            <inputType>Normal</inputType>
+            <offset>0</offset>
+            <switch>116</switch>
+            <toChannel>0</toChannel>
+            <travelHigh>0</travelHigh>
+            <travelLow>0</travelLow>
+        </freeMixer>
+        <freeMixer number="2">
+            <fromChannel>0</fromChannel>
+            <inputType>Normal</inputType>
+            <offset>0</offset>
+            <switch>117</switch>
+            <toChannel>0</toChannel>
+            <travelHigh>0</travelHigh>
+            <travelLow>0</travelLow>
+        </freeMixer>
     </freeMixers>
     <modelName>SPACER-4X</modelName>
     <modelNumber>0</modelNumber>
-    <phases number="0">
-        <dualRatesExpos>
-            <entry>
-                <key>Rudder</key>
-                <value function="Rudder">
+    <modelType>Helicopter</modelType>
+    <phases>
+        <phase number="0">
+            <name>Global</name>
+            <type>Global</type>
+        </phase>
+        <phase number="1">
+            <dualRateExpos>
+                <dualRateExpo number="36">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Rudder</switch>
-                </value>
-            </entry>
-            <entry>
-                <key>Aileron</key>
-                <value function="Aileron">
+                    <function>Aileron</function>
+                    <switch>101</switch>
+                </dualRateExpo>
+                <dualRateExpo number="37">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Aileron</switch>
-                </value>
-            </entry>
-            <entry>
-                <key>Elevator</key>
-                <value function="Elevator">
+                    <function>Elevator</function>
+                    <switch>102</switch>
+                </dualRateExpo>
+                <dualRateExpo number="38">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Elevator</switch>
-                </value>
-            </entry>
-        </dualRatesExpos>
-        <phasemixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="heliCopterMixer">
-            <channel8Value>0</channel8Value>
-            <gyroGain>0</gyroGain>
-            <pitchCurve number="0">
-                <enabled>true</enabled>
-                <value>0</value>
-            </pitchCurve>
-            <pitchCurve number="1">
-                <enabled>false</enabled>
-                <value>-50</value>
-            </pitchCurve>
-            <pitchCurve number="2">
-                <enabled>false</enabled>
-                <value>0</value>
-            </pitchCurve>
-            <pitchCurve number="3">
-                <enabled>false</enabled>
-                <value>50</value>
-            </pitchCurve>
-            <pitchCurve number="4">
-                <enabled>true</enabled>
-                <value>0</value>
-            </pitchCurve>
-            <swashplateMix>
-                <limit>150</limit>
-                <nickMix>61</nickMix>
-                <pitchMix>61</pitchMix>
-                <rollMix>61</rollMix>
-            </swashplateMix>
-            <tailCurve number="0">
-                <enabled>true</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="1">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="2">
-                <enabled>true</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="3">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="4">
-                <enabled>true</enabled>
-                <value>0</value>
-            </tailCurve>
-            <throttleCurve number="0">
-                <enabled>true</enabled>
-                <value>-100</value>
-            </throttleCurve>
-            <throttleCurve number="1">
-                <enabled>false</enabled>
-                <value>-50</value>
-            </throttleCurve>
-            <throttleCurve number="2">
-                <enabled>true</enabled>
-                <value>0</value>
-            </throttleCurve>
-            <throttleCurve number="3">
-                <enabled>false</enabled>
-                <value>50</value>
-            </throttleCurve>
-            <throttleCurve number="4">
-                <enabled>true</enabled>
-                <value>100</value>
-            </throttleCurve>
-        </phasemixer>
-        <name>Normal</name>
-        <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterTrim">
-            <nickStickTrim>0</nickStickTrim>
-            <rollStickTrim>0</rollStickTrim>
-            <tailStickTrim>0</tailStickTrim>
-        </phasetrim>
-        <type>Normal</type>
-    </phases>
-    <phases number="1">
-        <dualRatesExpos>
-            <entry>
-                <key>Rudder</key>
-                <value function="Rudder">
+                    <function>Rudder</function>
+                    <switch>103</switch>
+                </dualRateExpo>
+            </dualRateExpos>
+            <phasemixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="heliCopterMixer">
+                <channel8Value>0</channel8Value>
+                <gyroGain>0</gyroGain>
+                <pitchcurve>
+                    <point number="0">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>-50</value>
+                    </point>
+                    <point number="2">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>50</value>
+                    </point>
+                    <point number="4">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                </pitchcurve>
+                <swashplateMix>
+                    <limit>150</limit>
+                    <nickMix>61</nickMix>
+                    <pitchMix>61</pitchMix>
+                    <rollMix>61</rollMix>
+                </swashplateMix>
+                <tailcurve>
+                    <point number="0">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="4">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                </tailcurve>
+                <throttlecurve>
+                    <point number="0">
+                        <enabled>true</enabled>
+                        <value>-100</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>-50</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>50</value>
+                    </point>
+                    <point number="4">
+                        <enabled>true</enabled>
+                        <value>100</value>
+                    </point>
+                </throttlecurve>
+            </phasemixer>
+            <name>Normal</name>
+            <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterTrim">
+                <nickStickTrim>0</nickStickTrim>
+                <rollStickTrim>0</rollStickTrim>
+                <tailStickTrim>0</tailStickTrim>
+            </phasetrim>
+            <type>Normal</type>
+        </phase>
+        <phase number="2">
+            <dualRateExpos>
+                <dualRateExpo number="39">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Rudder</switch>
-                </value>
-            </entry>
-            <entry>
-                <key>Aileron</key>
-                <value function="Aileron">
+                    <function>Aileron</function>
+                    <switch>101</switch>
+                </dualRateExpo>
+                <dualRateExpo number="40">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Aileron</switch>
-                </value>
-            </entry>
-            <entry>
-                <key>Elevator</key>
-                <value function="Elevator">
+                    <function>Elevator</function>
+                    <switch>102</switch>
+                </dualRateExpo>
+                <dualRateExpo number="41">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Elevator</switch>
-                </value>
-            </entry>
-        </dualRatesExpos>
-        <phasemixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="heliCopterMixer">
-            <channel8Value>0</channel8Value>
-            <gyroGain>0</gyroGain>
-            <pitchCurve number="0">
-                <enabled>false</enabled>
-                <value>-100</value>
-            </pitchCurve>
-            <pitchCurve number="1">
-                <enabled>false</enabled>
-                <value>-50</value>
-            </pitchCurve>
-            <pitchCurve number="2">
-                <enabled>true</enabled>
-                <value>0</value>
-            </pitchCurve>
-            <pitchCurve number="3">
-                <enabled>false</enabled>
-                <value>50</value>
-            </pitchCurve>
-            <pitchCurve number="4">
-                <enabled>false</enabled>
-                <value>100</value>
-            </pitchCurve>
-            <swashplateMix>
-                <limit>150</limit>
-                <nickMix>61</nickMix>
-                <pitchMix>61</pitchMix>
-                <rollMix>61</rollMix>
-            </swashplateMix>
-            <tailCurve number="0">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="1">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="2">
-                <enabled>true</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="3">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="4">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <throttleCurve number="0">
-                <enabled>false</enabled>
-                <value>-100</value>
-            </throttleCurve>
-            <throttleCurve number="1">
-                <enabled>false</enabled>
-                <value>-50</value>
-            </throttleCurve>
-            <throttleCurve number="2">
-                <enabled>true</enabled>
-                <value>0</value>
-            </throttleCurve>
-            <throttleCurve number="3">
-                <enabled>false</enabled>
-                <value>50</value>
-            </throttleCurve>
-            <throttleCurve number="4">
-                <enabled>false</enabled>
-                <value>100</value>
-            </throttleCurve>
-        </phasemixer>
-        <name>Hover</name>
-        <switch>Phase2</switch>
-        <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterTrim">
-            <nickStickTrim>0</nickStickTrim>
-            <rollStickTrim>0</rollStickTrim>
-            <tailStickTrim>0</tailStickTrim>
-        </phasetrim>
-        <type>Hover</type>
-    </phases>
-    <phases number="2">
-        <dualRatesExpos>
-            <entry>
-                <key>Rudder</key>
-                <value function="Rudder">
+                    <function>Rudder</function>
+                    <switch>103</switch>
+                </dualRateExpo>
+            </dualRateExpos>
+            <phasemixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="heliCopterMixer">
+                <channel8Value>0</channel8Value>
+                <gyroGain>0</gyroGain>
+                <pitchcurve>
+                    <point number="0">
+                        <enabled>false</enabled>
+                        <value>-100</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>-50</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>50</value>
+                    </point>
+                    <point number="4">
+                        <enabled>false</enabled>
+                        <value>100</value>
+                    </point>
+                </pitchcurve>
+                <swashplateMix>
+                    <limit>150</limit>
+                    <nickMix>61</nickMix>
+                    <pitchMix>61</pitchMix>
+                    <rollMix>61</rollMix>
+                </swashplateMix>
+                <tailcurve>
+                    <point number="0">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="4">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                </tailcurve>
+                <throttlecurve>
+                    <point number="0">
+                        <enabled>false</enabled>
+                        <value>-100</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>-50</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>50</value>
+                    </point>
+                    <point number="4">
+                        <enabled>false</enabled>
+                        <value>100</value>
+                    </point>
+                </throttlecurve>
+            </phasemixer>
+            <name>Schwebeflug</name>
+            <switch>96</switch>
+            <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterTrim">
+                <nickStickTrim>0</nickStickTrim>
+                <rollStickTrim>0</rollStickTrim>
+                <tailStickTrim>0</tailStickTrim>
+            </phasetrim>
+            <type>Hover</type>
+        </phase>
+        <phase number="3">
+            <dualRateExpos>
+                <dualRateExpo number="42">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Rudder</switch>
-                </value>
-            </entry>
-            <entry>
-                <key>Aileron</key>
-                <value function="Aileron">
+                    <function>Aileron</function>
+                    <switch>101</switch>
+                </dualRateExpo>
+                <dualRateExpo number="43">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Aileron</switch>
-                </value>
-            </entry>
-            <entry>
-                <key>Elevator</key>
-                <value function="Elevator">
+                    <function>Elevator</function>
+                    <switch>102</switch>
+                </dualRateExpo>
+                <dualRateExpo number="44">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Elevator</switch>
-                </value>
-            </entry>
-        </dualRatesExpos>
-        <phasemixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="heliCopterMixer">
-            <channel8Value>0</channel8Value>
-            <gyroGain>0</gyroGain>
-            <pitchCurve number="0">
-                <enabled>false</enabled>
-                <value>-100</value>
-            </pitchCurve>
-            <pitchCurve number="1">
-                <enabled>false</enabled>
-                <value>-50</value>
-            </pitchCurve>
-            <pitchCurve number="2">
-                <enabled>true</enabled>
-                <value>0</value>
-            </pitchCurve>
-            <pitchCurve number="3">
-                <enabled>false</enabled>
-                <value>50</value>
-            </pitchCurve>
-            <pitchCurve number="4">
-                <enabled>false</enabled>
-                <value>100</value>
-            </pitchCurve>
-            <swashplateMix>
-                <limit>150</limit>
-                <nickMix>61</nickMix>
-                <pitchMix>61</pitchMix>
-                <rollMix>61</rollMix>
-            </swashplateMix>
-            <tailCurve number="0">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="1">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="2">
-                <enabled>true</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="3">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="4">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <throttleCurve number="0">
-                <enabled>false</enabled>
-                <value>-100</value>
-            </throttleCurve>
-            <throttleCurve number="1">
-                <enabled>false</enabled>
-                <value>-50</value>
-            </throttleCurve>
-            <throttleCurve number="2">
-                <enabled>true</enabled>
-                <value>0</value>
-            </throttleCurve>
-            <throttleCurve number="3">
-                <enabled>false</enabled>
-                <value>50</value>
-            </throttleCurve>
-            <throttleCurve number="4">
-                <enabled>false</enabled>
-                <value>100</value>
-            </throttleCurve>
-        </phasemixer>
-        <name>Speed</name>
-        <switch>Phase3</switch>
-        <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterTrim">
-            <nickStickTrim>0</nickStickTrim>
-            <rollStickTrim>0</rollStickTrim>
-            <tailStickTrim>0</tailStickTrim>
-        </phasetrim>
-        <type>Speed</type>
-    </phases>
-    <phases number="3">
-        <dualRatesExpos>
-            <entry>
-                <key>Rudder</key>
-                <value function="Rudder">
+                    <function>Rudder</function>
+                    <switch>103</switch>
+                </dualRateExpo>
+            </dualRateExpos>
+            <phasemixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="heliCopterMixer">
+                <channel8Value>0</channel8Value>
+                <gyroGain>0</gyroGain>
+                <pitchcurve>
+                    <point number="0">
+                        <enabled>false</enabled>
+                        <value>-100</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>-50</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>50</value>
+                    </point>
+                    <point number="4">
+                        <enabled>false</enabled>
+                        <value>100</value>
+                    </point>
+                </pitchcurve>
+                <swashplateMix>
+                    <limit>150</limit>
+                    <nickMix>61</nickMix>
+                    <pitchMix>61</pitchMix>
+                    <rollMix>61</rollMix>
+                </swashplateMix>
+                <tailcurve>
+                    <point number="0">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="4">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                </tailcurve>
+                <throttlecurve>
+                    <point number="0">
+                        <enabled>false</enabled>
+                        <value>-100</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>-50</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>50</value>
+                    </point>
+                    <point number="4">
+                        <enabled>false</enabled>
+                        <value>100</value>
+                    </point>
+                </throttlecurve>
+            </phasemixer>
+            <name>Speed</name>
+            <switch>97</switch>
+            <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterTrim">
+                <nickStickTrim>0</nickStickTrim>
+                <rollStickTrim>0</rollStickTrim>
+                <tailStickTrim>0</tailStickTrim>
+            </phasetrim>
+            <type>Speed</type>
+        </phase>
+        <phase number="4">
+            <dualRateExpos>
+                <dualRateExpo number="45">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Rudder</switch>
-                </value>
-            </entry>
-            <entry>
-                <key>Aileron</key>
-                <value function="Aileron">
+                    <function>Aileron</function>
+                    <switch>101</switch>
+                </dualRateExpo>
+                <dualRateExpo number="46">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Aileron</switch>
-                </value>
-            </entry>
-            <entry>
-                <key>Elevator</key>
-                <value function="Elevator">
+                    <function>Elevator</function>
+                    <switch>102</switch>
+                </dualRateExpo>
+                <dualRateExpo number="47">
                     <dualRate0>100</dualRate0>
                     <dualRate1>100</dualRate1>
                     <expo0>0</expo0>
                     <expo1>0</expo1>
-                    <switch>Dr_Expo_Elevator</switch>
-                </value>
-            </entry>
-        </dualRatesExpos>
-        <phasemixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="heliCopterMixer">
-            <channel8Value>0</channel8Value>
-            <gyroGain>0</gyroGain>
-            <pitchCurve number="0">
-                <enabled>false</enabled>
-                <value>-100</value>
-            </pitchCurve>
-            <pitchCurve number="1">
-                <enabled>false</enabled>
-                <value>-50</value>
-            </pitchCurve>
-            <pitchCurve number="2">
-                <enabled>true</enabled>
-                <value>0</value>
-            </pitchCurve>
-            <pitchCurve number="3">
-                <enabled>false</enabled>
-                <value>50</value>
-            </pitchCurve>
-            <pitchCurve number="4">
-                <enabled>false</enabled>
-                <value>100</value>
-            </pitchCurve>
-            <swashplateMix>
-                <limit>150</limit>
-                <nickMix>61</nickMix>
-                <pitchMix>61</pitchMix>
-                <rollMix>61</rollMix>
-            </swashplateMix>
-            <tailCurve number="0">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="1">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="2">
-                <enabled>true</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="3">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <tailCurve number="4">
-                <enabled>false</enabled>
-                <value>0</value>
-            </tailCurve>
-            <throttleCurve number="0">
-                <enabled>false</enabled>
-                <value>-90</value>
-            </throttleCurve>
-            <throttleCurve number="1">
-                <enabled>false</enabled>
-                <value>-50</value>
-            </throttleCurve>
-            <throttleCurve number="2">
-                <enabled>true</enabled>
-                <value>0</value>
-            </throttleCurve>
-            <throttleCurve number="3">
-                <enabled>false</enabled>
-                <value>50</value>
-            </throttleCurve>
-            <throttleCurve number="4">
-                <enabled>false</enabled>
-                <value>100</value>
-            </throttleCurve>
-        </phasemixer>
-        <name>Autorotation</name>
-        <switch>Autorotation</switch>
-        <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterTrim">
-            <nickStickTrim>0</nickStickTrim>
-            <rollStickTrim>0</rollStickTrim>
-            <tailStickTrim>0</tailStickTrim>
-        </phasetrim>
-        <type>Autorotation</type>
+                    <function>Rudder</function>
+                    <switch>103</switch>
+                </dualRateExpo>
+            </dualRateExpos>
+            <phasemixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="heliCopterMixer">
+                <channel8Value>0</channel8Value>
+                <gyroGain>0</gyroGain>
+                <pitchcurve>
+                    <point number="0">
+                        <enabled>false</enabled>
+                        <value>-100</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>-50</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>50</value>
+                    </point>
+                    <point number="4">
+                        <enabled>false</enabled>
+                        <value>100</value>
+                    </point>
+                </pitchcurve>
+                <swashplateMix>
+                    <limit>150</limit>
+                    <nickMix>61</nickMix>
+                    <pitchMix>61</pitchMix>
+                    <rollMix>61</rollMix>
+                </swashplateMix>
+                <tailcurve>
+                    <point number="0">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="4">
+                        <enabled>false</enabled>
+                        <value>0</value>
+                    </point>
+                </tailcurve>
+                <throttlecurve>
+                    <point number="0">
+                        <enabled>false</enabled>
+                        <value>-90</value>
+                    </point>
+                    <point number="1">
+                        <enabled>false</enabled>
+                        <value>-50</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <value>0</value>
+                    </point>
+                    <point number="3">
+                        <enabled>false</enabled>
+                        <value>50</value>
+                    </point>
+                    <point number="4">
+                        <enabled>false</enabled>
+                        <value>100</value>
+                    </point>
+                </throttlecurve>
+            </phasemixer>
+            <name>Autorotation</name>
+            <switch>98</switch>
+            <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterTrim">
+                <nickStickTrim>0</nickStickTrim>
+                <rollStickTrim>0</rollStickTrim>
+                <tailStickTrim>0</tailStickTrim>
+            </phasetrim>
+            <type>Autorotation</type>
+        </phase>
     </phases>
     <receiverId>622770317941</receiverId>
-    <settingSensorPage>0</settingSensorPage>
-    <settingSensorType>Receiver</settingSensorType>
+    <selectedSensors>Receiver</selectedSensors>
     <stickMode>Mode3</stickMode>
     <switches>
-        <entry>
-            <key>Autorotation</key>
-            <value function="Autorotation">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>VoiceRepeat</key>
-            <value function="VoiceRepeat">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Mix_Aileron_Flap</key>
-            <value function="Mix_Aileron_Flap">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Dr_Expo_Elevator</key>
-            <value function="Dr_Expo_Elevator">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>CutOff</key>
-            <value function="CutOff">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Mix_Elevator_Flap</key>
-            <value function="Mix_Elevator_Flap">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Trainer</key>
-            <value function="Trainer">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Clock</key>
-            <value function="Clock">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>VarioTone</key>
-            <value function="VarioTone">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Phase3</key>
-            <value function="Phase3">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Mix_Falp_Aileron</key>
-            <value function="Mix_Falp_Aileron">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Dr_Expo_Aileron</key>
-            <value function="Dr_Expo_Aileron">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>FreeMixer3</key>
-            <value function="FreeMixer3">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Phase2</key>
-            <value function="Phase2">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>FreeMixer1</key>
-            <value function="FreeMixer1">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Mix_Flap_Elevator</key>
-            <value function="Mix_Flap_Elevator">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>FreeMixer2</key>
-            <value function="FreeMixer2">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Diff_AileronDiff</key>
-            <value function="Diff_AileronDiff">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Mix_Brake_Elevator</key>
-            <value function="Mix_Brake_Elevator">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Dr_Expo_Rudder</key>
-            <value function="Dr_Expo_Rudder">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Diff_Flap</key>
-            <value function="Diff_Flap">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>VoiceTrigger</key>
-            <value function="VoiceTrigger">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Mix_Brake_Flap</key>
-            <value function="Mix_Brake_Flap">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Mix_Brake_Aileron</key>
-            <value function="Mix_Brake_Aileron">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>InputControl6</key>
-            <value function="InputControl6">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Control</type>
-            </value>
-        </entry>
-        <entry>
-            <key>InputControl5</key>
-            <value function="InputControl5">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Control</type>
-            </value>
-        </entry>
-        <entry>
-            <key>InputControl8</key>
-            <value function="InputControl8">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Control</type>
-            </value>
-        </entry>
-        <entry>
-            <key>ThrottleLimit</key>
-            <value function="ThrottleLimit">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Control</type>
-            </value>
-        </entry>
-        <entry>
-            <key>InputControl7</key>
-            <value function="InputControl7">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Control</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Mix_Elevator_Aileron</key>
-            <value function="Mix_Elevator_Aileron">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
-        <entry>
-            <key>Mix_Aileron_Rudder</key>
-            <value function="Mix_Aileron_Rudder">
-                <assignment>255</assignment>
-                <position>255</position>
-                <type>Standard</type>
-            </value>
-        </entry>
+        <switch number="93">
+            <assignment>Unassigned</assignment>
+            <function>VoiceRepeat</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="94">
+            <assignment>Unassigned</assignment>
+            <function>VoiceTrigger</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="95">
+            <assignment>Unassigned</assignment>
+            <function>Clock</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="96">
+            <assignment>Unassigned</assignment>
+            <function>Phase2</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="97">
+            <assignment>Unassigned</assignment>
+            <function>Phase3</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="98">
+            <assignment>Unassigned</assignment>
+            <function>Autorotation</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="99">
+            <assignment>Unassigned</assignment>
+            <function>CutOff</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="100">
+            <assignment>Unassigned</assignment>
+            <function>Trainer</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="101">
+            <assignment>Unassigned</assignment>
+            <function>Dr_Expo_Aileron</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="102">
+            <assignment>Unassigned</assignment>
+            <function>Dr_Expo_Elevator</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="103">
+            <assignment>Unassigned</assignment>
+            <function>Dr_Expo_Rudder</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="104">
+            <assignment>Unassigned</assignment>
+            <function>Diff_Aileron</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="105">
+            <assignment>Unassigned</assignment>
+            <function>Diff_Flap</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="106">
+            <assignment>Unassigned</assignment>
+            <function>Mix_Aileron_Rudder</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="107">
+            <assignment>Unassigned</assignment>
+            <function>Mix_Aileron_Flap</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="108">
+            <assignment>Unassigned</assignment>
+            <function>Mix_Brake_Elevator</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="109">
+            <assignment>Unassigned</assignment>
+            <function>Mix_Brake_Flap</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="110">
+            <assignment>Unassigned</assignment>
+            <function>Mix_Brake_Aileron</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="111">
+            <assignment>Unassigned</assignment>
+            <function>Mix_Elevator_Flap</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="112">
+            <assignment>Unassigned</assignment>
+            <function>Mix_Elevator_Aileron</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="113">
+            <assignment>Unassigned</assignment>
+            <function>Mix_Flap_Elevator</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="114">
+            <assignment>Unassigned</assignment>
+            <function>Mix_Flap_Aileron</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="115">
+            <assignment>Unassigned</assignment>
+            <function>FreeMixer1</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="116">
+            <assignment>Unassigned</assignment>
+            <function>FreeMixer2</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="117">
+            <assignment>Unassigned</assignment>
+            <function>FreeMixer3</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
+        <switch number="118">
+            <assignment>Unassigned</assignment>
+            <function>InputControl5</function>
+            <position>255</position>
+            <type>Control</type>
+        </switch>
+        <switch number="119">
+            <assignment>Unassigned</assignment>
+            <function>InputControl6</function>
+            <position>255</position>
+            <type>Control</type>
+        </switch>
+        <switch number="120">
+            <assignment>Unassigned</assignment>
+            <function>InputControl7</function>
+            <position>255</position>
+            <type>Control</type>
+        </switch>
+        <switch number="121">
+            <assignment>Unassigned</assignment>
+            <function>InputControl8</function>
+            <position>255</position>
+            <type>Control</type>
+        </switch>
+        <switch number="122">
+            <assignment>Unassigned</assignment>
+            <function>ThrottleLimit</function>
+            <position>255</position>
+            <type>Control</type>
+        </switch>
+        <switch number="123">
+            <assignment>Unassigned</assignment>
+            <function>VarioTone</function>
+            <position>255</position>
+            <type>Standard</type>
+        </switch>
     </switches>
     <throttleCutOf>
         <position>-100</position>
-        <switch>CutOff</switch>
+        <switch>99</switch>
         <threshold>1200</threshold>
     </throttleCutOf>
     <throttleLastIdlePosition>0</throttleLastIdlePosition>
     <throttleTrim>0</throttleTrim>
     <trainerConfig>
         <pupilId>0</pupilId>
-        <trainerSwitch>Trainer</trainerSwitch>
+        <trainerSwitch>100</trainerSwitch>
         <trainerChannel>0</trainerChannel>
         <trainerChannel>1</trainerChannel>
         <trainerChannel>2</trainerChannel>
