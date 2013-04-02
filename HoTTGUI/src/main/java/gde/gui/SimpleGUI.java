@@ -145,11 +145,7 @@ public class SimpleGUI {
 	public static void main(final String[] args) {
 		new SimpleGUI().show();
 	}
-	private static void save(final File file, final String data) throws IOException {
-		final FileWriter fw = new FileWriter(file);
-		fw.write(data);
-		fw.close();
-	}
+
 	private final JPanel buttonPanel = new JPanel();
 	private final JButton closeButton = new JButton("Close");
 	private final JMenuItem closeMenuItem = new JMenuItem("Close");
@@ -166,13 +162,10 @@ public class SimpleGUI {
 	private BaseModel model = null;
 	private boolean raw = false;
 	private final JButton saveButton = new JButton("Save");
-
 	private final JMenuItem saveMenuItem = new JMenuItem("Save");
 	private final JScrollPane scrollPane = new JScrollPane(editorPane);
 	private final JMenu viewMenu = new JMenu("View");
-
 	private final JButton xmlButton = new JButton("View XML");
-
 	private final JMenuItem xmlMenuItem = new JMenuItem("XML");
 
 	private String generateHTML(final BaseModel model) throws IOException, TemplateException {
@@ -185,6 +178,12 @@ public class SimpleGUI {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Report.process(model, baos);
 		return baos.toString();
+	}
+
+	private void save(final File file, final String data) throws IOException {
+		final FileWriter fw = new FileWriter(file);
+		fw.write(data);
+		fw.close();
 	}
 
 	private void savePDF(final File file, final String data) throws IOException, DocumentException {
@@ -272,5 +271,7 @@ public class SimpleGUI {
 		} else {
 			editorPane.setText(generateHTML(model));
 		}
+
+		editorPane.setCaretPosition(0);
 	}
 }
