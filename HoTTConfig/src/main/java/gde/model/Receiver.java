@@ -18,6 +18,7 @@
 package gde.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
 
 /**
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlID;
  */
 public class Receiver {
 	private boolean bound;
-	private int[] inputChannel;
+	private ChannelMapping[] channemMapping;
 	private String number;
 	private long rfid;
 	private boolean telemetry;
@@ -34,8 +35,9 @@ public class Receiver {
 		this.number = Integer.toString(number);
 	}
 
-	public int[] getInputChannel() {
-		return inputChannel;
+	@XmlElement(name = "channelMapping")
+	public ChannelMapping[] getChannemMapping() {
+		return channemMapping;
 	}
 
 	@XmlAttribute
@@ -60,8 +62,8 @@ public class Receiver {
 		this.bound = bound;
 	}
 
-	public void setInputChannel(final int[] inputChannel) {
-		this.inputChannel = inputChannel;
+	public void setChannemMapping(final ChannelMapping[] channemMapping) {
+		this.channemMapping = channemMapping;
 	}
 
 	public void setNumber(final String number) {
