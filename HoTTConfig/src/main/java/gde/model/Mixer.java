@@ -38,10 +38,6 @@ public class Mixer {
 	private int travelLow;
 	private MixerType type;
 
-	public Mixer(final int number) {
-		this.number = Integer.toString(number);
-	}
-
 	@XmlIDREF
 	public Channel getFromChannel() {
 		return fromChannel;
@@ -89,6 +85,10 @@ public class Mixer {
 
 	public void setInputType(final MixerInputType inputType) {
 		this.inputType = inputType;
+	}
+
+	public void setNumber(final int number) {
+		this.number = Integer.toString(number);
 	}
 
 	public void setNumber(final String number) {

@@ -33,9 +33,6 @@ public class TrainerConfig {
 	private long trainerId;
 	private boolean wireless;
 
-	public TrainerConfig() {
-	}
-
 	@XmlIDREF
 	@XmlElement(name = "pupilChannel")
 	public Collection<Channel> getPupilChannels() {

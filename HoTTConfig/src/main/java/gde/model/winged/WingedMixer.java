@@ -20,21 +20,48 @@ package gde.model.winged;
 import gde.model.Switch;
 import gde.model.enums.SwitchFunction;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
 public class WingedMixer {
 	private SwitchFunction function;
 	private Switch sw;
 	private int value;
+	private Object[] qualifier;
 
-	public WingedMixer(final SwitchFunction function) {
-		this.function = function;
-	}
-
-	@XmlAttribute
 	public SwitchFunction getFunction() {
 		return function;
+	}
+
+	@XmlID
+	@XmlAttribute
+	public String getId() {
+		final StringBuilder b = new StringBuilder();
+
+		b.append(function.name());
+
+		if (qualifier != null) {
+			for (final Object q : qualifier) {
+				b.append("_");
+
+				if (q.getClass().isEnum()) {
+					try {
+						final Method m = q.getClass().getMethod("name");
+						b.append(m.invoke(q));
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+						throw new RuntimeException(e);
+					}
+				} else {
+					b.append(q.toString());
+				}
+			}
+		}
+
+		return b.toString();
 	}
 
 	@XmlIDREF
@@ -56,5 +83,13 @@ public class WingedMixer {
 
 	public void setValue(final int value) {
 		this.value = value;
+	}
+
+	public Object[] getQualifier() {
+		return qualifier;
+	}
+
+	public void setQualifier(final Object[] qualifier) {
+		this.qualifier = qualifier;
 	}
 }

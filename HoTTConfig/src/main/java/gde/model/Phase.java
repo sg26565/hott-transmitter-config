@@ -17,7 +17,6 @@
  */
 package gde.model;
 
-import gde.model.enums.Function;
 import gde.model.enums.PhaseType;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -30,7 +29,9 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Phase {
-	private DualRateExpo[] dualRatesExpos;
+	private Control[] control;
+	private DualRate[] dualRate;
+	private Expo[] expo;
 	private PhasedMixer mixer;
 	private String name;
 	private String number;
@@ -38,24 +39,19 @@ public class Phase {
 	private PhasedTrim trim;
 	private PhaseType type;
 
-	public Phase(final int number) {
-		this.number = Integer.toString(number);
+	@XmlElementWrapper(name = "controls")
+	public Control[] getControl() {
+		return control;
 	}
 
-	public DualRateExpo get(final Function function) {
-		for (final DualRateExpo expo : getDualRatesExpos()) {
-			if (expo.getFunction() == function) {
-				return expo;
-			}
-		}
-
-		return null;
+	@XmlElementWrapper(name = "dualRates")
+	public DualRate[] getDualRate() {
+		return dualRate;
 	}
 
-	@XmlElement(name = "dualRateExpo")
-	@XmlElementWrapper(name = "dualRateExpos")
-	public DualRateExpo[] getDualRatesExpos() {
-		return dualRatesExpos;
+	@XmlElementWrapper(name = "expos")
+	public Expo[] getExpo() {
+		return expo;
 	}
 
 	@XmlElement(name = "phasemixer")
@@ -87,8 +83,16 @@ public class Phase {
 		return type;
 	}
 
-	public void setDualRatesExpos(final DualRateExpo[] dualRatesExpos) {
-		this.dualRatesExpos = dualRatesExpos;
+	public void setControl(final Control[] controls) {
+		control = controls;
+	}
+
+	public void setDualRate(final DualRate[] dualRate) {
+		this.dualRate = dualRate;
+	}
+
+	public void setExpo(final Expo[] expo) {
+		this.expo = expo;
 	}
 
 	public void setMixer(final PhasedMixer mixer) {
@@ -97,6 +101,10 @@ public class Phase {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setNumber(final int number) {
+		this.number = Integer.toString(number);
 	}
 
 	public void setNumber(final String number) {

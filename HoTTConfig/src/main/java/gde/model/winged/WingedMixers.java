@@ -36,7 +36,7 @@ public class WingedMixers extends PhasedMixer implements Map<String, WingedMixer
 	private final Map<String, WingedMixer> mixers = new TreeMap<String, WingedMixer>();
 
 	public void add(final WingedMixer mixer) {
-		mixers.put(mixer.getFunction().name(), mixer);
+		mixers.put(mixer.getId(), mixer);
 	}
 
 	@Override

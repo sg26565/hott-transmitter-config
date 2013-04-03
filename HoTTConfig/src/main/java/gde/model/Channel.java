@@ -41,10 +41,6 @@ public class Channel {
 	private int travelLow;
 	private boolean virtual = false;
 
-	public Channel(final int number) {
-		this.number = Integer.toString(number);
-	}
-
 	public int getCenter() {
 		return center;
 	}
@@ -121,6 +117,10 @@ public class Channel {
 
 	public void setNumber(final String number) {
 		this.number = number;
+	}
+
+	public void setNumber(final int number) {
+		this.number = Integer.toString(number);
 	}
 
 	public void setReverse(final boolean reverse) {

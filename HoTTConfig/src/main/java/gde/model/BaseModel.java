@@ -42,7 +42,6 @@ public class BaseModel {
 	private boolean bound;
 	private Channel[] channels;
 	private Clock[] clocks;
-	private Control[] controls;
 	private SensorType currentSensor;
 	private int currentSensorPage;
 	private DSCOutputType dscOutput;
@@ -61,6 +60,7 @@ public class BaseModel {
 	private Receiver[] receivers;
 	private Collection<SensorType> selectedSensors;
 	private StickMode stickMode;
+	private StickTrim[] stickTrim;
 	private Switch[] switches;
 	private ThrottleCutOf throttleCutOf;
 	private int throttleLastIdlePosition;
@@ -70,11 +70,6 @@ public class BaseModel {
 	private TransmitterType transmitterType;
 	private Vendor vendor;
 	private int voiceDelay;
-
-	public BaseModel() {
-		// required by JAXB
-		this(ModelType.Unknown);
-	}
 
 	public BaseModel(final ModelType modelType) {
 		this.modelType = modelType;
@@ -109,12 +104,6 @@ public class BaseModel {
 	@XmlElementWrapper(name = "clocks")
 	public Clock[] getClocks() {
 		return clocks;
-	}
-
-	@XmlElement(name = "control")
-	@XmlElementWrapper(name = "controls")
-	public Control[] getControls() {
-		return controls;
 	}
 
 	public SensorType getCurrentSensor() {
@@ -192,6 +181,11 @@ public class BaseModel {
 		return stickMode;
 	}
 
+	@XmlElementWrapper(name = "sicktrims")
+	public StickTrim[] getStickTrim() {
+		return stickTrim;
+	}
+
 	@XmlElement(name = "switch")
 	@XmlElementWrapper(name = "switches")
 	public Switch[] getSwitches() {
@@ -266,10 +260,6 @@ public class BaseModel {
 		this.clocks = clocks;
 	}
 
-	public void setControls(final Control[] controls) {
-		this.controls = controls;
-	}
-
 	public void setCurrentSensor(final SensorType settingSensorType) {
 		currentSensor = settingSensorType;
 	}
@@ -340,6 +330,10 @@ public class BaseModel {
 
 	public void setStickMode(final StickMode stickMode) {
 		this.stickMode = stickMode;
+	}
+
+	public void setStickTrim(final StickTrim[] stickTrim) {
+		this.stickTrim = stickTrim;
 	}
 
 	public void setSwitches(final Switch[] switches) {

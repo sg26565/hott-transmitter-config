@@ -17,9 +17,12 @@
  */
 package gde.model;
 
+import gde.model.enums.SwitchAssignment;
 import gde.model.enums.SwitchFunction;
-import gde.model.enums.SwitchName;
 import gde.model.enums.SwitchType;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
@@ -28,12 +31,14 @@ import javax.xml.bind.annotation.XmlID;
  * @author oli@treichels.de
  */
 public class Switch {
-	private SwitchName assignment;
+	private SwitchAssignment assignment;
 	private SwitchFunction function;
+	private int number;
 	private int position;
 	private SwitchType type;
+	private Object[] qualifier;
 
-	public SwitchName getAssignment() {
+	public SwitchAssignment getAssignment() {
 		return assignment;
 	}
 
@@ -41,10 +46,35 @@ public class Switch {
 		return function;
 	}
 
-	@XmlAttribute
+	public int getNumber() {
+		return number;
+	}
+
 	@XmlID
+	@XmlAttribute
 	public String getId() {
-		return function.name();
+		final StringBuilder b = new StringBuilder();
+
+		b.append(function.name());
+
+		if (qualifier != null) {
+			for (final Object q : qualifier) {
+				b.append("_");
+
+				if (q.getClass().isEnum()) {
+					try {
+						final Method m = q.getClass().getMethod("name");
+						b.append(m.invoke(q));
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+						throw new RuntimeException(e);
+					}
+				} else {
+					b.append(q.toString());
+				}
+			}
+		}
+
+		return b.toString();
 	}
 
 	public int getPosition() {
@@ -55,12 +85,16 @@ public class Switch {
 		return type;
 	}
 
-	public void setAssignment(final SwitchName assigment) {
+	public void setAssignment(final SwitchAssignment assigment) {
 		assignment = assigment;
 	}
 
 	public void setFunction(final SwitchFunction function) {
 		this.function = function;
+	}
+
+	public void setNumber(final int number) {
+		this.number = number;
 	}
 
 	public void setPosition(final int position) {
@@ -69,5 +103,13 @@ public class Switch {
 
 	public void setType(final SwitchType type) {
 		this.type = type;
+	}
+
+	public Object[] getQualifier() {
+		return qualifier;
+	}
+
+	public void setQualifier(final Object[] qualifier) {
+		this.qualifier = qualifier;
 	}
 }

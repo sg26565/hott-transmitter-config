@@ -15,19 +15,26 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gde.model.enums;
+package gde.report;
 
-import java.util.ResourceBundle;
+import java.io.IOException;
+import java.io.Writer;
+
+import freemarker.core.Environment;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
 
 /**
- * @author oli@treichels.de
+ * @author oli
+ * 
  */
-public enum SwitchFunction {
-	Autorotation, Clock, CutOff, Diff, DualRate, Expo, Dr_Expo, Mixer, Control, ToggleRight, ToggleLeft, Phase, ThrottleLimit, Trainer, VarioTone, VoiceRepeat, VoiceTrigger, AutorotationC1, MarkerKey, PowerWarning, AutoTrim;
-
-	/** @return the locale-dependent message */
+public class FreeMarkerExceptionHandler implements TemplateExceptionHandler {
 	@Override
-	public String toString() {
-		return ResourceBundle.getBundle(getClass().getName()).getString(name());
+	public void handleTemplateException(final TemplateException e, final Environment env, final Writer out) throws TemplateException {
+		try {
+			out.write("[ERROR: " + e.getMessage() + "]");
+		} catch (final IOException e1) {
+			throw new TemplateException("Failed to print error message. Cause: " + e1, env);
+		}
 	}
 }

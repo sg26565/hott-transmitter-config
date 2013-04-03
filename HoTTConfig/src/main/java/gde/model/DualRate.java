@@ -15,19 +15,44 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gde.model.enums;
+package gde.model;
 
-import java.util.ResourceBundle;
+import gde.model.enums.Function;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlIDREF;
 
 /**
  * @author oli@treichels.de
  */
-public enum SwitchFunction {
-	Autorotation, Clock, CutOff, Diff, DualRate, Expo, Dr_Expo, Mixer, Control, ToggleRight, ToggleLeft, Phase, ThrottleLimit, Trainer, VarioTone, VoiceRepeat, VoiceTrigger, AutorotationC1, MarkerKey, PowerWarning, AutoTrim;
+public class DualRate {
+	private Function function;
+	private Switch sw;
+	private int[] values;
 
-	/** @return the locale-dependent message */
-	@Override
-	public String toString() {
-		return ResourceBundle.getBundle(getClass().getName()).getString(name());
+	@XmlAttribute
+	public Function getFunction() {
+		return function;
+	}
+
+	@XmlIDREF
+	public Switch getSwitch() {
+		return sw;
+	}
+
+	public int[] getValues() {
+		return values;
+	}
+
+	public void setFunction(final Function function) {
+		this.function = function;
+	}
+
+	public void setSwitch(final Switch sw) {
+		this.sw = sw;
+	}
+
+	public void setValues(final int[] values) {
+		this.values = values;
 	}
 }

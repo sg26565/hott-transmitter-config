@@ -27,14 +27,28 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Control {
+	private Switch controlSwitch;
+	private Switch leftSwitch;
 	private ControlMode mode;
 	private String number;
-	private Switch sw;
+	private int offset;
+	private Switch rightSwitch;
+	private int timeHigh;
+
+	private int timeLow;
+
 	private int travelHigh;
+
 	private int travelLow;
 
-	public Control(final int number) {
-		this.number = Integer.toString(number);
+	@XmlIDREF
+	public Switch getControlSwitch() {
+		return controlSwitch;
+	}
+
+	@XmlIDREF
+	public Switch getLeftSwitch() {
+		return leftSwitch;
 	}
 
 	public ControlMode getMode() {
@@ -47,9 +61,21 @@ public class Control {
 		return number;
 	}
 
+	public int getOffset() {
+		return offset;
+	}
+
 	@XmlIDREF
-	public Switch getSwitch() {
-		return sw;
+	public Switch getRightSwitch() {
+		return rightSwitch;
+	}
+
+	public int getTimeHigh() {
+		return timeHigh;
+	}
+
+	public int getTimeLow() {
+		return timeLow;
 	}
 
 	public int getTravelHigh() {
@@ -60,16 +86,40 @@ public class Control {
 		return travelLow;
 	}
 
+	public void setControlSwitch(final Switch controlSwitch) {
+		this.controlSwitch = controlSwitch;
+	}
+
+	public void setLeftSwitch(final Switch leftSwitch) {
+		this.leftSwitch = leftSwitch;
+	}
+
 	public void setMode(final ControlMode mode) {
 		this.mode = mode;
+	}
+
+	public void setNumber(final int number) {
+		this.number = Integer.toString(number);
 	}
 
 	public void setNumber(final String number) {
 		this.number = number;
 	}
 
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
+	public void setOffset(final int offset) {
+		this.offset = offset;
+	}
+
+	public void setRightSwitch(final Switch rightSwitch) {
+		this.rightSwitch = rightSwitch;
+	}
+
+	public void setTimeHigh(final int timeHigh) {
+		this.timeHigh = timeHigh;
+	}
+
+	public void setTimeLow(final int timeLow) {
+		this.timeLow = timeLow;
 	}
 
 	public void setTravelHigh(final int travelHigh) {

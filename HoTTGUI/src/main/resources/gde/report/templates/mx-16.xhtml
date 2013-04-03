@@ -161,14 +161,12 @@
 				<th align="right" valign="top">Empfängerausgang</th>
 				<td colspan="3">
 					<table cellpadding="0">
-<#list model.channels as channel>
-<#if !channel.virtual>						
+<#list model.receivers[0].channelMappings as mapping>
 						<tr>
-							<td align="center">S${model.receivers[0].inputChannel[channel.number?number]+1}</td>
+							<td align="center">S${mapping.inputChannel+1}</td>
 							<td align="center">=></td>
-							<td align="center">Ausgang ${channel.number?number+1}</td>
+							<td align="center">Ausgang ${mapping.outputChannel+1}</td>
 						</tr>
-</#if>
 </#list>					
 					</table>
 				</td>
@@ -217,11 +215,11 @@
 				<th>Weg -</th>
 				<th>Weg +</th>
 			</tr>
-<#list model.controls as control>
+<#list model.phases[0].control as control>
 <#if control.number?number < 8>
 			<tr>
 				<td align="center">E${control.number?number+1}</td>
-				<td align="cender"><@switch control.switch/></td>
+				<td align="cender"><@switch control.controlSwitch/></td>
 				<td align="cender">${control.travelLow}%</td>
 				<td align="cender">${control.travelHigh}%</td>
 			</tr>
@@ -229,7 +227,7 @@
 <#if helicopterModel??>
 			<tr>
 				<td align="center">Gaslimiter</td>
-				<td align="cender"><@switch control.switch/></td>
+				<td align="cender"><@switch control.controlSwitch/></td>
 				<td align="cender">${control.travelLow}%</td>
 				<td align="cender">${control.travelHigh}%</td>
 			</tr>				
@@ -251,12 +249,12 @@
 				<th>Expo</th>
 				<th>Schalter</th>
 			</tr>
-<#list phase.dualRatesExpos as dr>
+<#list [0,1,2] as i>
 			<tr>			  	
-				<th align="right">${dr.function}</th>
-				<td align="center">${dr.dualRate0}% / ${dr.dualRate1}%</td>
-				<td align="center">${dr.expo0}% / ${dr.expo1}%</td>
-				<td><@switch dr.switch/></td>
+				<th align="right">${phase.dualRate[i].function}</th>
+				<td align="center">${phase.dualRate[i].values[0]}% / ${phase.dualRate[i].values[1]}%</td>
+				<td align="center">${phase.expo[i].values[0]}% / ${phase.expo[i].values[1]}%</td>
+				<td><@switch phase.dualRate[i].switch/></td>
 			</tr>
 </#list>
 		</table>
@@ -297,7 +295,7 @@
 			</tr>
 <#list wingedModel.phases[0].mixer?values as mixer>
 			<tr>
-				<th align="right">${mixer.function}</th>
+				<th align="right">${mixer.id}</th>
 				<td align="center">${mixer.value}%</td>
 				<td><@switch mixer.switch/></td>						
 			</tr>
@@ -505,7 +503,7 @@
 <#list model.switches as sw>
 <#if sw.assignment != "Unassigned">
 			<tr>
-				<td align="right">${sw.function}</td>
+				<td align="right">${sw.id}</td>
 				<td align="center"><@switch sw/></td>
 				<td>${sw.type}</td>
 			</tr>

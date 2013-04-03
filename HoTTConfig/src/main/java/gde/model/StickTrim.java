@@ -17,38 +17,58 @@
  */
 package gde.model;
 
+import gde.model.enums.TrimMode;
+
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * @author oli@treichels.de
+ * @author oli
  */
-public class CurvePoint {
-	private boolean enabled;
-	private int number;
-	private int value;
+public class StickTrim {
+	private int channel;
+	private int increment;
+	private TrimMode mode;
+	private int timeHigh;
+	private int timeLow;
 
 	@XmlAttribute
-	public int getNumber() {
-		return number;
+	public int getChannel() {
+		return channel;
 	}
 
-	public int getValue() {
-		return value;
+	public int getIncrement() {
+		return increment;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
+	public TrimMode getMode() {
+		return mode;
 	}
 
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
+	public int getTimeHigh() {
+		return timeHigh;
 	}
 
-	public void setNumber(final int number) {
-		this.number = number;
+	public int getTimeLow() {
+		return timeLow;
 	}
 
-	public void setValue(final int value) {
-		this.value = value;
+	public void setChannel(final int channel) {
+		this.channel = channel;
+	}
+
+	public void setIncrement(final int increment) {
+		this.increment = increment;
+	}
+
+	public void setMode(final TrimMode mode) {
+		this.mode = mode;
+	}
+
+	public void setTimeHigh(final int timeHigh) {
+		this.timeHigh = timeHigh;
+	}
+
+	public void setTimeLow(final int timeLow) {
+		this.timeLow = timeLow;
 	}
 }

@@ -26,18 +26,14 @@ import javax.xml.bind.annotation.XmlID;
  */
 public class Receiver {
 	private boolean bound;
-	private ChannelMapping[] channemMapping;
+	private ChannelMapping[] channelMappings;
 	private String number;
 	private long rfid;
 	private boolean telemetry;
 
-	public Receiver(final int number) {
-		this.number = Integer.toString(number);
-	}
-
 	@XmlElement(name = "channelMapping")
-	public ChannelMapping[] getChannemMapping() {
-		return channemMapping;
+	public ChannelMapping[] getChannelMappings() {
+		return channelMappings;
 	}
 
 	@XmlAttribute
@@ -62,8 +58,12 @@ public class Receiver {
 		this.bound = bound;
 	}
 
-	public void setChannemMapping(final ChannelMapping[] channemMapping) {
-		this.channemMapping = channemMapping;
+	public void setChannelMappings(final ChannelMapping[] channemMapping) {
+		this.channelMappings = channemMapping;
+	}
+
+	public void setNumber(final int number) {
+		this.number = Integer.toString(number);
 	}
 
 	public void setNumber(final String number) {

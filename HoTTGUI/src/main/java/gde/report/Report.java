@@ -55,6 +55,7 @@ public class Report {
 		configuration = new Configuration();
 		configuration.setClassForTemplateLoading(Report.class, "templates");
 		configuration.setObjectWrapper(new DefaultObjectWrapper());
+		configuration.setTemplateExceptionHandler(new FreeMarkerExceptionHandler());
 
 		try {
 			final JAXBContext ctx = JAXBContext.newInstance(WingedModel.class, WingedMixers.class, WingedTrim.class, HelicopterModel.class,
