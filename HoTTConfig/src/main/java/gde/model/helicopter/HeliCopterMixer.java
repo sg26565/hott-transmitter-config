@@ -30,7 +30,6 @@ public class HeliCopterMixer extends PhasedMixer {
 	private int swashplateLimit;
 	private Curve tailCurve;
 	private Curve throttleCurve;
-	private int 
 
 	public int getChannel8Value() {
 		return channel8Value;
