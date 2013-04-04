@@ -29,16 +29,13 @@ import javax.xml.bind.annotation.XmlIDREF;
 public class Control {
 	private Switch controlSwitch;
 	private Switch highSwitch;
+	private Switch lowSwitch;
 	private ControlMode mode;
 	private String number;
 	private int offset;
-	private Switch lowSwitch;
-	private int timeHigh;
-
-	private int timeLow;
-
+	private double timeHigh;
+	private double timeLow;
 	private int travelHigh;
-
 	private int travelLow;
 
 	@XmlIDREF
@@ -49,6 +46,11 @@ public class Control {
 	@XmlIDREF
 	public Switch getHighSwitch() {
 		return highSwitch;
+	}
+
+	@XmlIDREF
+	public Switch getLowSwitch() {
+		return lowSwitch;
 	}
 
 	public ControlMode getMode() {
@@ -65,16 +67,11 @@ public class Control {
 		return offset;
 	}
 
-	@XmlIDREF
-	public Switch getLowSwitch() {
-		return lowSwitch;
-	}
-
-	public int getTimeHigh() {
+	public double getTimeHigh() {
 		return timeHigh;
 	}
 
-	public int getTimeLow() {
+	public double getTimeLow() {
 		return timeLow;
 	}
 
@@ -91,7 +88,11 @@ public class Control {
 	}
 
 	public void setHighSwitch(final Switch leftSwitch) {
-		this.highSwitch = leftSwitch;
+		highSwitch = leftSwitch;
+	}
+
+	public void setLowSwitch(final Switch rightSwitch) {
+		lowSwitch = rightSwitch;
 	}
 
 	public void setMode(final ControlMode mode) {
@@ -110,15 +111,11 @@ public class Control {
 		this.offset = offset;
 	}
 
-	public void setLowSwitch(final Switch rightSwitch) {
-		this.lowSwitch = rightSwitch;
-	}
-
-	public void setTimeHigh(final int timeHigh) {
+	public void setTimeHigh(final double timeHigh) {
 		this.timeHigh = timeHigh;
 	}
 
-	public void setTimeLow(final int timeLow) {
+	public void setTimeLow(final double timeLow) {
 		this.timeLow = timeLow;
 	}
 

@@ -18,6 +18,7 @@
 package gde.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlID;
 
 /**
@@ -30,6 +31,7 @@ public class Receiver {
 	private long rfid;
 	private boolean telemetry;
 
+	@XmlElementWrapper(name = "channelMappings")
 	public ChannelMapping[] getChannelMapping() {
 		return channelMapping;
 	}

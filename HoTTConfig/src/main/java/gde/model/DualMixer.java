@@ -15,19 +15,50 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gde.model.enums;
+package gde.model;
 
-import java.util.ResourceBundle;
+import gde.model.enums.MixerType;
 
 /**
- * @author oli@treichels.de
+ * Kreuzmischer
+ * 
+ * @author oli
  */
-public enum MixerType {
-	Curve, Dual, Linear;
+public class DualMixer {
+	private Channel[] channel;
+	private int diff;
+	private int number;
+	private MixerType type;
 
-	/** @return the locale-dependent message */
-	@Override
-	public String toString() {
-		return ResourceBundle.getBundle(getClass().getName()).getString(name());
+	public Channel[] getChannel() {
+		return channel;
+	}
+
+	public int getDiff() {
+		return diff;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public MixerType getType() {
+		return type;
+	}
+
+	public void setChannel(final Channel[] channel) {
+		this.channel = channel;
+	}
+
+	public void setDiff(final int diff) {
+		this.diff = diff;
+	}
+
+	public void setNumber(final int number) {
+		this.number = number;
+	}
+
+	public void setType(final MixerType type) {
+		this.type = type;
 	}
 }

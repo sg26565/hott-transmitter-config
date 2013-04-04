@@ -35,6 +35,7 @@ public class Channel {
 	private Function function;
 	private int limitHigh;
 	private int limitLow;
+	private boolean mixOnly;
 	private String number;
 	private ChannelPhaseSetting[] phaseSetting;
 	private boolean reverse;
@@ -73,6 +74,11 @@ public class Channel {
 		return number;
 	}
 
+	@XmlElementWrapper(name = "phaseSettings")
+	public ChannelPhaseSetting[] getPhaseSetting() {
+		return phaseSetting;
+	}
+
 	public TrainerMode getTrainerMode() {
 		return trainerMode;
 	}
@@ -85,9 +91,8 @@ public class Channel {
 		return travelLow;
 	}
 
-	@XmlElementWrapper(name = "phaseSettings")
-	public ChannelPhaseSetting[] getPhaseSetting() {
-		return phaseSetting;
+	public boolean isMixOnly() {
+		return mixOnly;
 	}
 
 	public boolean isReverse() {
@@ -120,6 +125,10 @@ public class Channel {
 
 	public void setLimitLow(final int limitLow) {
 		this.limitLow = limitLow;
+	}
+
+	public void setMixOnly(final boolean mixOnly) {
+		this.mixOnly = mixOnly;
 	}
 
 	public void setNumber(final int number) {

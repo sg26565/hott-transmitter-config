@@ -40,13 +40,15 @@ public class BaseModel {
 	private Switch autoTrimSwitch;
 	private boolean bound;
 	private Channel[] channel;
+	private ChannelMapping[] channelMapping;
 	private Clock[] clock;
 	private ControlSwitch[] controlSwitch;
 	private SensorType currentSensor;
 	private int currentSensorPage;
 	private DSCOutputType dscOutputType;
+	private DualMixer[] dualMixer;
 	private ExtPPMType extPpmType;
-	private int failSafeDelay;
+	private double failSafeDelay;
 	private boolean failSafeSettingCheck;
 	private String info;
 	private LogicalSwitch[] logicalSwitch;
@@ -100,6 +102,11 @@ public class BaseModel {
 		return channel;
 	}
 
+	@XmlElementWrapper(name = "channelMappings")
+	public ChannelMapping[] getChannelMapping() {
+		return channelMapping;
+	}
+
 	@XmlElementWrapper(name = "clocks")
 	public Clock[] getClock() {
 		return clock;
@@ -123,11 +130,15 @@ public class BaseModel {
 		return dscOutputType;
 	}
 
+	public DualMixer[] getDualMixer() {
+		return dualMixer;
+	}
+
 	public ExtPPMType getExtPpmType() {
 		return extPpmType;
 	}
 
-	public int getFailSafeDelay() {
+	public double getFailSafeDelay() {
 		return failSafeDelay;
 	}
 
@@ -262,6 +273,10 @@ public class BaseModel {
 		channel = channels;
 	}
 
+	public void setChannelMapping(final ChannelMapping[] channelMapping) {
+		this.channelMapping = channelMapping;
+	}
+
 	public void setClock(final Clock[] clocks) {
 		clock = clocks;
 	}
@@ -282,12 +297,16 @@ public class BaseModel {
 		dscOutputType = dscOutput;
 	}
 
+	public void setDualMixer(final DualMixer[] dualMixer) {
+		this.dualMixer = dualMixer;
+	}
+
 	public void setExtPpmType(final ExtPPMType extPpmType) {
 		this.extPpmType = extPpmType;
 	}
 
-	public void setFailSafeDelay(final int failSafeDelay) {
-		this.failSafeDelay = failSafeDelay;
+	public void setFailSafeDelay(final double d) {
+		failSafeDelay = d;
 	}
 
 	public void setFailSafeSettingCheck(final boolean failSafeSettingCheck) {

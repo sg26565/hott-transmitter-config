@@ -37,7 +37,7 @@ public class Phase {
 	private PhasedMixer phaseMixer;
 	private String phaseName;
 	private Switch phaseSwitch;
-	private int phaseSwitchTime;
+	private double phaseSwitchTime;
 	private Clock phaseTimer;
 	private PhasedTrim phaseTrim;
 	private PhaseType phaseType;
@@ -81,7 +81,7 @@ public class Phase {
 		return phaseSwitch;
 	}
 
-	public int getPhaseSwitchTime() {
+	public double getPhaseSwitchTime() {
 		return phaseSwitchTime;
 	}
 
@@ -142,8 +142,8 @@ public class Phase {
 		this.phaseSwitch = phaseSwitch;
 	}
 
-	public void setPhaseSwitchTime(final int phaseSwtichTime) {
-		phaseSwitchTime = phaseSwtichTime;
+	public void setPhaseSwitchTime(final double d) {
+		phaseSwitchTime = d;
 	}
 
 	public void setPhaseTimer(final Clock phaseTimer) {
