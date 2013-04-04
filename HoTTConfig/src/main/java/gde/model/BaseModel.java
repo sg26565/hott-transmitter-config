@@ -57,6 +57,7 @@ public class BaseModel {
 	private int modelNumber;
 	private ModelType modelType;
 	private HFModule module;
+	private PhaseAssignment phaseAssignment;
 	private Phase[] phases;
 	private Switch powerOnWarning; // TODO check type
 	private Receiver[] receivers;
@@ -170,6 +171,10 @@ public class BaseModel {
 
 	public HFModule getModule() {
 		return module;
+	}
+
+	public PhaseAssignment getPhaseAssignment() {
+		return phaseAssignment;
 	}
 
 	@XmlElement(name = "phase")
@@ -289,7 +294,7 @@ public class BaseModel {
 	}
 
 	public void setDscOutputType(final DSCOutputType dscOutput) {
-		this.dscOutputType = dscOutput;
+		dscOutputType = dscOutput;
 	}
 
 	public void setExtPpmType(final ExtPPMType extPpmType) {
@@ -334,6 +339,10 @@ public class BaseModel {
 
 	public void setModule(final HFModule module) {
 		this.module = module;
+	}
+
+	public void setPhaseAssignment(final PhaseAssignment phaseAssignment) {
+		this.phaseAssignment = phaseAssignment;
 	}
 
 	public void setPhases(final Phase[] phases) {

@@ -22,6 +22,7 @@ import gde.model.enums.Function;
 import gde.model.enums.TrainerMode;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlID;
 
 /**
@@ -35,6 +36,7 @@ public class Channel {
 	private int limitHigh;
 	private int limitLow;
 	private String number;
+	private ChannelPhaseSetting[] phaseSetting;
 	private boolean reverse;
 	private TrainerMode trainerMode;
 	private int travelHigh;
@@ -83,6 +85,11 @@ public class Channel {
 		return travelLow;
 	}
 
+	@XmlElementWrapper(name = "phaseSettings")
+	public ChannelPhaseSetting[] getPhaseSetting() {
+		return phaseSetting;
+	}
+
 	public boolean isReverse() {
 		return reverse;
 	}
@@ -115,12 +122,16 @@ public class Channel {
 		this.limitLow = limitLow;
 	}
 
+	public void setNumber(final int number) {
+		this.number = Integer.toString(number);
+	}
+
 	public void setNumber(final String number) {
 		this.number = number;
 	}
 
-	public void setNumber(final int number) {
-		this.number = Integer.toString(number);
+	public void setPhaseSetting(final ChannelPhaseSetting[] delayed) {
+		phaseSetting = delayed;
 	}
 
 	public void setReverse(final boolean reverse) {

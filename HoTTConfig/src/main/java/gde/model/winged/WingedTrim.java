@@ -24,13 +24,19 @@ import gde.model.enums.PhaseType;
  * @author oli@treichels.de
  */
 public class WingedTrim extends PhasedTrim {
+	private int aileron2PhaseTrim;
 	private int aileronPhaseTrim;
 	private int aileronStickTrim;
 	private int elevatorPhaseTrim;
 	private int elevtorStickTrim;
+	private int flap2PhaseTrim;
 	private int flapPhaseTrim;
 	private PhaseType phaseType;
 	private int rudderStickTrim;
+
+	public int getAileron2PhaseTrim() {
+		return aileron2PhaseTrim;
+	}
 
 	public int getAileronPhaseTrim() {
 		return aileronPhaseTrim;
@@ -48,6 +54,10 @@ public class WingedTrim extends PhasedTrim {
 		return elevtorStickTrim;
 	}
 
+	public int getFlap2PhaseTrim() {
+		return flap2PhaseTrim;
+	}
+
 	public int getFlapPhaseTrim() {
 		return flapPhaseTrim;
 	}
@@ -58,6 +68,10 @@ public class WingedTrim extends PhasedTrim {
 
 	public int getRudderStickTrim() {
 		return rudderStickTrim;
+	}
+
+	public void setAileron2PhaseTrim(final int aileron2PhaseTrim) {
+		this.aileron2PhaseTrim = aileron2PhaseTrim;
 	}
 
 	public void setAileronPhaseTrim(final int aileronPhaseTrim) {
@@ -74,6 +88,10 @@ public class WingedTrim extends PhasedTrim {
 
 	public void setElevtorStickTrim(final int elevtorStickTrim) {
 		this.elevtorStickTrim = elevtorStickTrim;
+	}
+
+	public void setFlap2PhaseTrim(final int flap2PhaseTrim) {
+		this.flap2PhaseTrim = flap2PhaseTrim;
 	}
 
 	public void setFlapPhaseTrim(final int flapPhaseTrim) {

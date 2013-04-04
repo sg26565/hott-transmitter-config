@@ -513,7 +513,7 @@
 				<th align="left">Typ</th>
 			</tr>
 <#list model.switches as sw>
-<#if sw.assignment != "Unassigned">
+<#if (sw.assignment!"Null") != "Unassigned">
 			<tr>
 				<td align="right">${sw.id}</td>
 				<td align="center"><@switch sw/></td>
