@@ -39,6 +39,7 @@ public class HelicopterModel extends BaseModel {
 	private PitchMin pitchMin;
 	private RotorDirection rotorDirection;
 	private boolean swashplateLinearization;
+	private SwashplateMix swashplateMix;
 	private SwashplateType swashplateType;
 	private int throttleLimitWarning;
 
@@ -70,6 +71,10 @@ public class HelicopterModel extends BaseModel {
 
 	public RotorDirection getRotorDirection() {
 		return rotorDirection;
+	}
+
+	public SwashplateMix getSwashplateMix() {
+		return swashplateMix;
 	}
 
 	public SwashplateType getSwashplateType() {
@@ -110,6 +115,10 @@ public class HelicopterModel extends BaseModel {
 
 	public void setSwashplateLinearization(final boolean swashplateLinearization) {
 		this.swashplateLinearization = swashplateLinearization;
+	}
+
+	public void setSwashplateMix(final SwashplateMix swashplateMix) {
+		this.swashplateMix = swashplateMix;
 	}
 
 	public void setSwashplateType(final SwashplateType swashplateType) {

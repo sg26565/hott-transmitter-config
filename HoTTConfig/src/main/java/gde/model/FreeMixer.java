@@ -32,12 +32,9 @@ public class FreeMixer {
 	private Channel fromChannel;
 	private MixerInputType inputType;
 	private String number;
-	private int offset;
 	private FreeMixerPhaseSetting[] phaseSetting;
 	private Switch sw;
 	private Channel toChannel;
-	private int travelHigh;
-	private int travelLow;
 	private MixerType type;
 
 	@XmlIDREF
@@ -55,10 +52,6 @@ public class FreeMixer {
 		return number;
 	}
 
-	public int getOffset() {
-		return offset;
-	}
-
 	@XmlElementWrapper(name = "phaseSettings")
 	public FreeMixerPhaseSetting[] getPhaseSetting() {
 		return phaseSetting;
@@ -72,14 +65,6 @@ public class FreeMixer {
 	@XmlIDREF
 	public Channel getToChannel() {
 		return toChannel;
-	}
-
-	public int getTravelHigh() {
-		return travelHigh;
-	}
-
-	public int getTravelLow() {
-		return travelLow;
 	}
 
 	public MixerType getType() {
@@ -102,10 +87,6 @@ public class FreeMixer {
 		this.number = number;
 	}
 
-	public void setOffset(final int offset) {
-		this.offset = offset;
-	}
-
 	public void setPhaseSetting(final FreeMixerPhaseSetting[] phaseSetting) {
 		this.phaseSetting = phaseSetting;
 	}
@@ -116,14 +97,6 @@ public class FreeMixer {
 
 	public void setToChannel(final Channel to) {
 		toChannel = to;
-	}
-
-	public void setTravelHigh(final int travelHigh) {
-		this.travelHigh = travelHigh;
-	}
-
-	public void setTravelLow(final int travelLow) {
-		this.travelLow = travelLow;
 	}
 
 	public void setType(final MixerType type) {

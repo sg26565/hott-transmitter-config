@@ -19,7 +19,6 @@ package gde.model.helicopter;
 
 import gde.model.Curve;
 import gde.model.PhasedMixer;
-import gde.model.SwashplateMix;
 
 /**
  * @author oli@treichels.de
@@ -28,9 +27,10 @@ public class HeliCopterMixer extends PhasedMixer {
 	private int channel8Value;
 	private int gyroGain;
 	private Curve pitchCurve;
-	private SwashplateMix swashplateMix;
+	private int swashplateLimit;
 	private Curve tailCurve;
 	private Curve throttleCurve;
+	private int 
 
 	public int getChannel8Value() {
 		return channel8Value;
@@ -44,8 +44,8 @@ public class HeliCopterMixer extends PhasedMixer {
 		return pitchCurve;
 	}
 
-	public SwashplateMix getSwashplateMix() {
-		return swashplateMix;
+	public int getSwashplateLimit() {
+		return swashplateLimit;
 	}
 
 	public Curve getTailCurve() {
@@ -68,8 +68,8 @@ public class HeliCopterMixer extends PhasedMixer {
 		this.pitchCurve = pitchCurve;
 	}
 
-	public void setSwashplateMix(final SwashplateMix swashplateMix) {
-		this.swashplateMix = swashplateMix;
+	public void setSwashplateLimit(final int limit) {
+		swashplateLimit = limit;
 	}
 
 	public void setTailCurve(final Curve tailCurve) {

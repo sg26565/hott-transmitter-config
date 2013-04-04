@@ -40,9 +40,9 @@ import gde.model.BaseModel;
 import gde.model.helicopter.HeliCopterMixer;
 import gde.model.helicopter.HelicopterModel;
 import gde.model.helicopter.HelicopterTrim;
-import gde.model.winged.WingedMixers;
+import gde.model.winged.WingMixers;
 import gde.model.winged.WingedModel;
-import gde.model.winged.WingedTrim;
+import gde.model.winged.WingTrim;
 
 /**
  * @author oli@treichels.de
@@ -58,7 +58,7 @@ public class Report {
 		configuration.setTemplateExceptionHandler(new FreeMarkerExceptionHandler());
 
 		try {
-			final JAXBContext ctx = JAXBContext.newInstance(WingedModel.class, WingedMixers.class, WingedTrim.class, HelicopterModel.class,
+			final JAXBContext ctx = JAXBContext.newInstance(WingedModel.class, WingMixers.class, WingTrim.class, HelicopterModel.class,
 					HeliCopterMixer.class, HelicopterTrim.class);
 			marshaller = ctx.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);

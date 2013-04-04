@@ -18,43 +18,35 @@
 package gde.model;
 
 /**
- * @author oli@treichels.de
+ * @author oli
+ * 
  */
-public class SwashplateMix {
-	private int limit;
-	private int nickMix;
-	private int pitchMix;
-	private int rollMix;
+public class LinearMixer extends FreeMixer {
+	private int offset;
+	private int travelHigh;
+	private int travelLow;
 
-	public int getLimit() {
-		return limit;
+	public int getOffset() {
+		return offset;
 	}
 
-	public int getNickMix() {
-		return nickMix;
+	public int getTravelHigh() {
+		return travelHigh;
 	}
 
-	public int getPitchMix() {
-		return pitchMix;
+	public int getTravelLow() {
+		return travelLow;
 	}
 
-	public int getRollMix() {
-		return rollMix;
+	public void setOffset(final int offset) {
+		this.offset = offset;
 	}
 
-	public void setLimit(final int limit) {
-		this.limit = limit;
+	public void setTravelHigh(final int travelHigh) {
+		this.travelHigh = travelHigh;
 	}
 
-	public void setNickMix(final int nickMix) {
-		this.nickMix = nickMix;
-	}
-
-	public void setPitchMix(final int pitchMix) {
-		this.pitchMix = pitchMix;
-	}
-
-	public void setRollMix(final int rollMix) {
-		this.rollMix = rollMix;
+	public void setTravelLow(final int travelLow) {
+		this.travelLow = travelLow;
 	}
 }

@@ -23,7 +23,7 @@ import gde.model.enums.PhaseType;
 /**
  * @author oli@treichels.de
  */
-public class WingedTrim extends PhasedTrim {
+public class WingTrim extends PhasedTrim {
 	private int aileron2PhaseTrim;
 	private int aileronPhaseTrim;
 	private int aileronStickTrim;
