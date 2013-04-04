@@ -17,47 +17,30 @@
  */
 package gde.model;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementWrapper;
 
 /**
- * @author oli@treichels.de
+ * @author oli
+ * 
  */
-public class CurvePoint {
-	private boolean enabled;
-	private int number;
-	private int position;
-	private int value;
+public class Curve {
+	private CurvePoint[] point;
+	private boolean smoothing = false;
 
-	@XmlAttribute
-	public int getNumber() {
-		return number;
+	@XmlElementWrapper(name = "points")
+	public CurvePoint[] getPoint() {
+		return point;
 	}
 
-	public int getPosition() {
-		return position;
+	public boolean isSmoothing() {
+		return smoothing;
 	}
 
-	public int getValue() {
-		return value;
+	public void setPoint(final CurvePoint[] point) {
+		this.point = point;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public void setNumber(final int number) {
-		this.number = number;
-	}
-
-	public void setPosition(final int position) {
-		this.position = position;
-	}
-
-	public void setValue(final int value) {
-		this.value = value;
+	public void setSmoothing(final boolean smoothing) {
+		this.smoothing = smoothing;
 	}
 }

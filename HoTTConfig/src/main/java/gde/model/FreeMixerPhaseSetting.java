@@ -18,29 +18,23 @@
 package gde.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlIDREF;
 
 /**
- * @author oli@treichels.de
+ * @author oli
+ * 
  */
-public class CurvePoint {
+public class FreeMixerPhaseSetting {
 	private boolean enabled;
-	private int number;
-	private int position;
-	private int value;
+	private Phase phase;
+
+	@XmlIDREF
+	@XmlAttribute
+	public Phase getPhase() {
+		return phase;
+	}
 
 	@XmlAttribute
-	public int getNumber() {
-		return number;
-	}
-
-	public int getPosition() {
-		return position;
-	}
-
-	public int getValue() {
-		return value;
-	}
-
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -49,15 +43,7 @@ public class CurvePoint {
 		this.enabled = enabled;
 	}
 
-	public void setNumber(final int number) {
-		this.number = number;
-	}
-
-	public void setPosition(final int position) {
-		this.position = position;
-	}
-
-	public void setValue(final int value) {
-		this.value = value;
+	public void setPhase(final Phase phase) {
+		this.phase = phase;
 	}
 }

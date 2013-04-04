@@ -28,10 +28,10 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Phase {
+	private Curve channel1Curve;
 	private Control[] control;
 	private DualRate[] dualRate;
 	private Expo[] expo;
-	private FreeMixer[] freeMixer;
 	private boolean motorOn;
 	private String number;
 	private PhasedMixer phaseMixer;
@@ -41,6 +41,10 @@ public class Phase {
 	private Clock phaseTimer;
 	private PhasedTrim phaseTrim;
 	private PhaseType phaseType;
+
+	public Curve getChannel1Curve() {
+		return channel1Curve;
+	}
 
 	@XmlElementWrapper(name = "controls")
 	public Control[] getControl() {
@@ -55,11 +59,6 @@ public class Phase {
 	@XmlElementWrapper(name = "expos")
 	public Expo[] getExpo() {
 		return expo;
-	}
-
-	@XmlElementWrapper(name = "freeMixers")
-	public FreeMixer[] getFreeMixer() {
-		return freeMixer;
 	}
 
 	@XmlAttribute
@@ -102,6 +101,10 @@ public class Phase {
 		return motorOn;
 	}
 
+	public void setChannel1Curve(final Curve channel1Curve) {
+		this.channel1Curve = channel1Curve;
+	}
+
 	public void setControl(final Control[] controls) {
 		control = controls;
 	}
@@ -112,10 +115,6 @@ public class Phase {
 
 	public void setExpo(final Expo[] expo) {
 		this.expo = expo;
-	}
-
-	public void setFreeMixer(final FreeMixer[] freeMixer) {
-		this.freeMixer = freeMixer;
 	}
 
 	public void setMotorOn(final boolean motorOn) {

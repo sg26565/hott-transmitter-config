@@ -21,6 +21,7 @@ import gde.model.enums.MixerInputType;
 import gde.model.enums.MixerType;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -28,11 +29,11 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class FreeMixer {
-	private boolean enabled;
 	private Channel fromChannel;
 	private MixerInputType inputType;
 	private String number;
 	private int offset;
+	private FreeMixerPhaseSetting[] phaseSetting;
 	private Switch sw;
 	private Channel toChannel;
 	private int travelHigh;
@@ -58,6 +59,11 @@ public class FreeMixer {
 		return offset;
 	}
 
+	@XmlElementWrapper(name = "phaseSettings")
+	public FreeMixerPhaseSetting[] getPhaseSetting() {
+		return phaseSetting;
+	}
+
 	@XmlIDREF
 	public Switch getSwitch() {
 		return sw;
@@ -80,14 +86,6 @@ public class FreeMixer {
 		return type;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-	}
-
 	public void setFromChannel(final Channel from) {
 		fromChannel = from;
 	}
@@ -106,6 +104,10 @@ public class FreeMixer {
 
 	public void setOffset(final int offset) {
 		this.offset = offset;
+	}
+
+	public void setPhaseSetting(final FreeMixerPhaseSetting[] phaseSetting) {
+		this.phaseSetting = phaseSetting;
 	}
 
 	public void setSwitch(final Switch sw) {

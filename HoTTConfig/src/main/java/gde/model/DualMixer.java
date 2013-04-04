@@ -19,6 +19,8 @@ package gde.model;
 
 import gde.model.enums.MixerType;
 
+import javax.xml.bind.annotation.XmlIDREF;
+
 /**
  * Kreuzmischer
  * 
@@ -30,6 +32,7 @@ public class DualMixer {
 	private int number;
 	private MixerType type;
 
+	@XmlIDREF
 	public Channel[] getChannel() {
 		return channel;
 	}

@@ -35,7 +35,7 @@
 							<td>${point.number?number+1}</td>
 							<td>${point.enabled?string("ja","nein")}</td>
 <#if point.enabled>
-							<td>${point.number?number*50-100}</td>
+							<td>${point.position}</td>
 							<td>${point.value}</td>
 <#else>
 							<td colspan="2">&nbsp;</td>

@@ -22,7 +22,6 @@ import gde.model.enums.ExtPPMType;
 import gde.model.enums.ModelType;
 import gde.model.enums.SensorType;
 import gde.model.enums.StickMode;
-import gde.model.enums.SwitchFunction;
 import gde.model.enums.TransmitterType;
 import gde.model.enums.Vendor;
 
@@ -50,6 +49,7 @@ public class BaseModel {
 	private ExtPPMType extPpmType;
 	private double failSafeDelay;
 	private boolean failSafeSettingCheck;
+	private FreeMixer[] freeMixer;
 	private String info;
 	private LogicalSwitch[] logicalSwitch;
 	private int memoryVersion;
@@ -76,16 +76,6 @@ public class BaseModel {
 
 	public BaseModel(final ModelType modelType) {
 		this.modelType = modelType;
-	}
-
-	public Switch get(final SwitchFunction function) {
-		for (final Switch sw : getSwitch()) {
-			if (sw.getFunction() == function) {
-				return sw;
-			}
-		}
-
-		return null;
 	}
 
 	public int getAppVersion() {
@@ -140,6 +130,11 @@ public class BaseModel {
 
 	public double getFailSafeDelay() {
 		return failSafeDelay;
+	}
+
+	@XmlElementWrapper(name = "freeMixers")
+	public FreeMixer[] getFreeMixer() {
+		return freeMixer;
 	}
 
 	public String getInfo() {
@@ -311,6 +306,10 @@ public class BaseModel {
 
 	public void setFailSafeSettingCheck(final boolean failSafeSettingCheck) {
 		this.failSafeSettingCheck = failSafeSettingCheck;
+	}
+
+	public void setFreeMixer(final FreeMixer[] freeMixer) {
+		this.freeMixer = freeMixer;
 	}
 
 	public void setInfo(final String info) {

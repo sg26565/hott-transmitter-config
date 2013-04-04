@@ -17,12 +17,9 @@
  */
 package gde.model.helicopter;
 
-import gde.model.CurvePoint;
+import gde.model.Curve;
 import gde.model.PhasedMixer;
 import gde.model.SwashplateMix;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 
 /**
  * @author oli@treichels.de
@@ -30,10 +27,10 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 public class HeliCopterMixer extends PhasedMixer {
 	private int channel8Value;
 	private int gyroGain;
-	private CurvePoint[] pitchCurve;
+	private Curve pitchCurve;
 	private SwashplateMix swashplateMix;
-	private CurvePoint[] tailCurve;
-	private CurvePoint[] throttleCurve;
+	private Curve tailCurve;
+	private Curve throttleCurve;
 
 	public int getChannel8Value() {
 		return channel8Value;
@@ -43,9 +40,7 @@ public class HeliCopterMixer extends PhasedMixer {
 		return gyroGain;
 	}
 
-	@XmlElement(name = "point")
-	@XmlElementWrapper(name = "pitchcurve")
-	public CurvePoint[] getPitchCurve() {
+	public Curve getPitchCurve() {
 		return pitchCurve;
 	}
 
@@ -53,15 +48,11 @@ public class HeliCopterMixer extends PhasedMixer {
 		return swashplateMix;
 	}
 
-	@XmlElement(name = "point")
-	@XmlElementWrapper(name = "tailcurve")
-	public CurvePoint[] getTailCurve() {
+	public Curve getTailCurve() {
 		return tailCurve;
 	}
 
-	@XmlElement(name = "point")
-	@XmlElementWrapper(name = "throttlecurve")
-	public CurvePoint[] getThrottleCurve() {
+	public Curve getThrottleCurve() {
 		return throttleCurve;
 	}
 
@@ -73,7 +64,7 @@ public class HeliCopterMixer extends PhasedMixer {
 		this.gyroGain = gyroGain;
 	}
 
-	public void setPitchCurve(final CurvePoint[] pitchCurve) {
+	public void setPitchCurve(final Curve pitchCurve) {
 		this.pitchCurve = pitchCurve;
 	}
 
@@ -81,11 +72,11 @@ public class HeliCopterMixer extends PhasedMixer {
 		this.swashplateMix = swashplateMix;
 	}
 
-	public void setTailCurve(final CurvePoint[] tailCurve) {
+	public void setTailCurve(final Curve tailCurve) {
 		this.tailCurve = tailCurve;
 	}
 
-	public void setThrottleCurve(final CurvePoint[] throttleCurve) {
+	public void setThrottleCurve(final Curve throttleCurve) {
 		this.throttleCurve = throttleCurve;
 	}
 }
