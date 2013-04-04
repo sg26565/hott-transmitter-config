@@ -17,6 +17,7 @@
  */
 package gde.model;
 
+import gde.model.enums.ClockMode;
 import gde.model.enums.ClockType;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -27,19 +28,25 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Clock {
-	private String name;
+	private ClockMode mode;
+	private String number;
 	private Switch sw;
 	private ClockType type;
+
 	private int value;
 
 	public int getMinutes() {
 		return getValue() / 60;
 	}
 
+	public ClockMode getMode() {
+		return mode;
+	}
+
 	@XmlAttribute
 	@XmlID
-	public String getName() {
-		return name;
+	public String getNumber() {
+		return number;
 	}
 
 	public int getSeconds() {
@@ -63,8 +70,16 @@ public class Clock {
 		setValue(minutes * 60 + getSeconds());
 	}
 
-	public void setName(final String name) {
-		this.name = name;
+	public void setMode(final ClockMode mode) {
+		this.mode = mode;
+	}
+
+	public void setNumber(final int number) {
+		this.number = Integer.toString(number);
+	}
+
+	public void setNumber(final String number) {
+		this.number = number;
 	}
 
 	public void setSeconds(final int seconds) {

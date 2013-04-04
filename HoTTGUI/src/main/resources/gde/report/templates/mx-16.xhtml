@@ -145,14 +145,28 @@
 </#if>
 			<tr>
 				<th align="right" valign="top">Uhren</th>
-				<td><i>${model.clocks[0].type}:</i> ${model.clocks[0].minutes}:${model.clocks[0].seconds?string("00")}</td>
-				<td colspan="2"><i>Schalter:</i> <@switch model.clocks[0].switch/></td>
+				<td colspan="3">
+					<table callpadding="0">
+						<tr>
+							<th>Typ</th>
+							<th>Wert</th>
+							<th>Schalter</th>
+						</tr>
+<#list model.clocks as clock>
+						<tr>
+							<td>${clock.mode!""}${clock.type!""}</td>
+							<td>${clock.minutes}:${clock.seconds?string("00")}</td>
+							<td><@switch clock.switch/></td>
+						</tr>
+</#list>
+					</table>
+				</td>
 			</tr>
 <#list model.phases as phase>
 <#if phase.name != "Global">
 			<tr>
 				<th align="right" valign="top">Phase ${phase.number}</th>
-				<td><i>Name:</i> ${phase.type}</td>
+				<td><i>Name:</i> ${phase.name}</td>
 				<td colspan="2"><i>Schalter:</i> <@switch phase.switch/></td>
 			</tr>
 </#if>

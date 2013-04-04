@@ -33,8 +33,11 @@ public class Phase {
 	private DualRate[] dualRate;
 	private Expo[] expo;
 	private PhasedMixer mixer;
+	private boolean motorOn;
 	private String name;
 	private String number;
+	private int phaseSwtichTime;
+	private Clock phaseTimer;
 	private Switch sw;
 	private PhasedTrim trim;
 	private PhaseType type;
@@ -69,6 +72,15 @@ public class Phase {
 		return number;
 	}
 
+	public int getPhaseSwtichTime() {
+		return phaseSwtichTime;
+	}
+
+	@XmlIDREF
+	public Clock getPhaseTimer() {
+		return phaseTimer;
+	}
+
 	@XmlIDREF
 	public Switch getSwitch() {
 		return sw;
@@ -81,6 +93,10 @@ public class Phase {
 
 	public PhaseType getType() {
 		return type;
+	}
+
+	public boolean isMotorOn() {
+		return motorOn;
 	}
 
 	public void setControl(final Control[] controls) {
@@ -99,6 +115,10 @@ public class Phase {
 		this.mixer = mixer;
 	}
 
+	public void setMotorOn(final boolean motorOn) {
+		this.motorOn = motorOn;
+	}
+
 	public void setName(final String name) {
 		this.name = name;
 	}
@@ -109,6 +129,14 @@ public class Phase {
 
 	public void setNumber(final String number) {
 		this.number = number;
+	}
+
+	public void setPhaseSwtichTime(final int phaseSwtichTime) {
+		this.phaseSwtichTime = phaseSwtichTime;
+	}
+
+	public void setPhaseTimer(final Clock phaseTimer) {
+		this.phaseTimer = phaseTimer;
 	}
 
 	public void setSwitch(final Switch sw) {

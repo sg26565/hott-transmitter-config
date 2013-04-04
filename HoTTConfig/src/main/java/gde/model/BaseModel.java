@@ -45,7 +45,7 @@ public class BaseModel {
 	private ControlSwitch[] controlSwitches;
 	private SensorType currentSensor;
 	private int currentSensorPage;
-	private DSCOutputType dscOutput;
+	private DSCOutputType dscOutputType;
 	private ExtPPMType extPpmType;
 	private int failSafeDelay;
 	private boolean failSafeSettingCheck;
@@ -123,8 +123,8 @@ public class BaseModel {
 		return currentSensorPage;
 	}
 
-	public DSCOutputType getDscOutput() {
-		return dscOutput;
+	public DSCOutputType getDscOutputType() {
+		return dscOutputType;
 	}
 
 	public ExtPPMType getExtPpmType() {
@@ -288,8 +288,8 @@ public class BaseModel {
 		currentSensorPage = settingSensorPage;
 	}
 
-	public void setDscOutput(final DSCOutputType dscOutput) {
-		this.dscOutput = dscOutput;
+	public void setDscOutputType(final DSCOutputType dscOutput) {
+		this.dscOutputType = dscOutput;
 	}
 
 	public void setExtPpmType(final ExtPPMType extPpmType) {

@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum ClockType {
-	CountDown, Timer;
+	CENTER, PHASE1, PHASE2, PHASE3, ROUND, TOP;
 
 	/** @return the locale-dependent message */
 	@Override
