@@ -34,7 +34,7 @@ public class Switch {
 	private SwitchAssignment assignment;
 	private SwitchFunction function;
 	private int number;
-	private int position;
+	private int direction;
 	private SwitchType type;
 	private Object[] qualifier;
 
@@ -77,8 +77,8 @@ public class Switch {
 		return b.toString();
 	}
 
-	public int getPosition() {
-		return position;
+	public int getDirection() {
+		return direction;
 	}
 
 	public SwitchType getType() {
@@ -97,8 +97,8 @@ public class Switch {
 		this.number = number;
 	}
 
-	public void setPosition(final int position) {
-		this.position = position;
+	public void setDirection(final int position) {
+		this.direction = position;
 	}
 
 	public void setType(final SwitchType type) {

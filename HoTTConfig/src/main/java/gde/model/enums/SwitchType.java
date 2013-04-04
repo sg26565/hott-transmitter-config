@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum SwitchType {
-	Control, Fixed, Logical, Standard, Unknown;
+	InputControl, ControlSwitch, Fixed, LogicalSwitch, ToggleSwitch, Unknown;
 
 	/** @return the locale-dependent message */
 	@Override

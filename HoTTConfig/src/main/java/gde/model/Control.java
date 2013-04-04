@@ -28,11 +28,11 @@ import javax.xml.bind.annotation.XmlIDREF;
  */
 public class Control {
 	private Switch controlSwitch;
-	private Switch leftSwitch;
+	private Switch highSwitch;
 	private ControlMode mode;
 	private String number;
 	private int offset;
-	private Switch rightSwitch;
+	private Switch lowSwitch;
 	private int timeHigh;
 
 	private int timeLow;
@@ -47,8 +47,8 @@ public class Control {
 	}
 
 	@XmlIDREF
-	public Switch getLeftSwitch() {
-		return leftSwitch;
+	public Switch getHighSwitch() {
+		return highSwitch;
 	}
 
 	public ControlMode getMode() {
@@ -66,8 +66,8 @@ public class Control {
 	}
 
 	@XmlIDREF
-	public Switch getRightSwitch() {
-		return rightSwitch;
+	public Switch getLowSwitch() {
+		return lowSwitch;
 	}
 
 	public int getTimeHigh() {
@@ -90,8 +90,8 @@ public class Control {
 		this.controlSwitch = controlSwitch;
 	}
 
-	public void setLeftSwitch(final Switch leftSwitch) {
-		this.leftSwitch = leftSwitch;
+	public void setHighSwitch(final Switch leftSwitch) {
+		this.highSwitch = leftSwitch;
 	}
 
 	public void setMode(final ControlMode mode) {
@@ -110,8 +110,8 @@ public class Control {
 		this.offset = offset;
 	}
 
-	public void setRightSwitch(final Switch rightSwitch) {
-		this.rightSwitch = rightSwitch;
+	public void setLowSwitch(final Switch rightSwitch) {
+		this.lowSwitch = rightSwitch;
 	}
 
 	public void setTimeHigh(final int timeHigh) {

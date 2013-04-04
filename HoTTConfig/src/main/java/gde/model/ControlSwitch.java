@@ -15,19 +15,41 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gde.model.enums;
+package gde.model;
 
-import java.util.ResourceBundle;
+import javax.xml.bind.annotation.XmlIDREF;
 
 /**
- * @author oli@treichels.de
+ * @author oli
+ * 
  */
-public enum SwitchFunction {
-	Autorotation, AutorotationC1, AutoTrim, Clock, Combine, Control, CutOff, Diff, Dr_Expo, DualRate, Expo, InputControl, Logical, MarkerKey, Mixer, Phase, PowerWarning, ThrottleLimit, ToggleHigh, ToggleLow, Trainer, VarioTone, VoiceRepeat, VoiceTrigger;
+public class ControlSwitch extends Switch {
+	private Switch combineSwitch;
+	private boolean enabled;
+	private int position;
 
-	/** @return the locale-dependent message */
-	@Override
-	public String toString() {
-		return ResourceBundle.getBundle(getClass().getName()).getString(name());
+	@XmlIDREF
+	public Switch getCombineSwitch() {
+		return combineSwitch;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setCombineSwitch(final Switch combineSwitch) {
+		this.combineSwitch = combineSwitch;
+	}
+
+	public void setEnabled(final boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setPosition(final int position) {
+		this.position = position;
 	}
 }

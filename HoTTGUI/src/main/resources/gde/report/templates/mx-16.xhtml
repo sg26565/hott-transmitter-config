@@ -18,7 +18,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <@htmlsafe>
-<#macro switch sw={"assignment":"Unassigned"}><#if sw.assignment == "Unassigned">---<#else>${sw.assignment}<#if sw.position == 2> normal<#else><#if sw.position=1> invers</#if></#if></#if></#macro>
+<#macro switch sw={"assignment":"Unassigned"}><#if sw.assignment == "Unassigned">---<#else>${sw.assignment}<#if sw.direction == 2> normal<#else><#if sw.direction=1> invers</#if></#if></#if></#macro>
 <#macro curve title points>
 			<tr>
 				<th align="right">${title}</th>
@@ -216,22 +216,20 @@
 				<th>Weg +</th>
 			</tr>
 <#list model.phases[0].control as control>
-<#if control.number?number < 8>
+<#if helicopterModel?? && control.number?number == 8>
+			<tr>
+				<td align="center">Gaslimiter</td>
+				<td align="cender"><@switch control.controlSwitch/></td>
+				<td align="cender">${control.travelLow}%</td>
+				<td align="cender">${control.travelHigh}%</td>
+			</tr>
+<#else>
 			<tr>
 				<td align="center">E${control.number?number+1}</td>
 				<td align="cender"><@switch control.controlSwitch/></td>
 				<td align="cender">${control.travelLow}%</td>
 				<td align="cender">${control.travelHigh}%</td>
 			</tr>
-<#else>
-<#if helicopterModel??>
-			<tr>
-				<td align="center">Gaslimiter</td>
-				<td align="cender"><@switch control.controlSwitch/></td>
-				<td align="cender">${control.travelLow}%</td>
-				<td align="cender">${control.travelHigh}%</td>
-			</tr>				
-</#if>
 </#if>
 </#list>
 		</table>

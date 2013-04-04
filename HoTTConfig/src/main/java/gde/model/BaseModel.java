@@ -42,6 +42,7 @@ public class BaseModel {
 	private boolean bound;
 	private Channel[] channels;
 	private Clock[] clocks;
+	private ControlSwitch[] controlSwitches;
 	private SensorType currentSensor;
 	private int currentSensorPage;
 	private DSCOutputType dscOutput;
@@ -49,6 +50,7 @@ public class BaseModel {
 	private int failSafeDelay;
 	private boolean failSafeSettingCheck;
 	private String info;
+	private LogicalSwitch[] logicalSwitches;
 	private int memoryVersion;
 	private Mixer[] mixers;
 	private String modelName;
@@ -106,6 +108,13 @@ public class BaseModel {
 		return clocks;
 	}
 
+	@XmlElement(name = "controlSwitch")
+	@XmlElementWrapper(name = "controlSwitches")
+	@XmlIDREF
+	public ControlSwitch[] getControlSwitches() {
+		return controlSwitches;
+	}
+
 	public SensorType getCurrentSensor() {
 		return currentSensor;
 	}
@@ -128,6 +137,13 @@ public class BaseModel {
 
 	public String getInfo() {
 		return info;
+	}
+
+	@XmlElement(name = "logicalSwitch")
+	@XmlElementWrapper(name = "logicalSwitches")
+	@XmlIDREF
+	public LogicalSwitch[] getLogicalSwitches() {
+		return logicalSwitches;
 	}
 
 	public int getMemoryVersion() {
@@ -260,6 +276,10 @@ public class BaseModel {
 		this.clocks = clocks;
 	}
 
+	public void setControlSwitches(final ControlSwitch[] controlSwitches) {
+		this.controlSwitches = controlSwitches;
+	}
+
 	public void setCurrentSensor(final SensorType settingSensorType) {
 		currentSensor = settingSensorType;
 	}
@@ -286,6 +306,10 @@ public class BaseModel {
 
 	public void setInfo(final String info) {
 		this.info = info;
+	}
+
+	public void setLogicalSwitches(final LogicalSwitch[] logicalSwitches) {
+		this.logicalSwitches = logicalSwitches;
 	}
 
 	public void setMemoryVersion(final int memoryVersion) {
