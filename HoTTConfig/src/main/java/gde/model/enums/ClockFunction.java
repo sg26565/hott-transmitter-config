@@ -20,10 +20,11 @@ package gde.model.enums;
 import java.util.ResourceBundle;
 
 /**
- * @author oli@treichels.de
+ * @author oli
+ * 
  */
-public enum ClockType {
-	CENTER, LapDisplay, LapTimer, PHASE1, PHASE2, PHASE3, ROUND, TOP;
+public enum ClockFunction {
+	FlightTime, FrameTime, ModelTime, MotorTime, StopWatch;
 
 	/** @return the locale-dependent message */
 	@Override

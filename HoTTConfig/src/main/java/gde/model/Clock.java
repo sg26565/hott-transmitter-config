@@ -17,6 +17,7 @@
  */
 package gde.model;
 
+import gde.model.enums.ClockFunction;
 import gde.model.enums.ClockMode;
 import gde.model.enums.ClockType;
 
@@ -28,12 +29,21 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Clock {
+	private int alarm;
+	private ClockFunction function;
 	private ClockMode mode;
 	private String number;
 	private Switch sw;
 	private ClockType type;
-
 	private int value;
+
+	public int getAlarm() {
+		return alarm;
+	}
+
+	public ClockFunction getFunction() {
+		return function;
+	}
 
 	public int getMinutes() {
 		return getValue() / 60;
@@ -64,6 +74,14 @@ public class Clock {
 
 	public int getValue() {
 		return value;
+	}
+
+	public void setAlarm(final int alarm) {
+		this.alarm = alarm;
+	}
+
+	public void setFunction(final ClockFunction function) {
+		this.function = function;
 	}
 
 	public void setMinutes(final int minutes) {
