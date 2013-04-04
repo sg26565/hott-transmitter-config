@@ -152,7 +152,7 @@
 							<th>Wert</th>
 							<th>Schalter</th>
 						</tr>
-<#list model.clocks as clock>
+<#list model.clock as clock>
 						<tr>
 							<td>${clock.mode!""}${clock.type!""}</td>
 							<td>${clock.minutes}:${clock.seconds?string("00")}</td>
@@ -162,7 +162,7 @@
 					</table>
 				</td>
 			</tr>
-<#list model.phases as phase>
+<#list model.phase as phase>
 <#if phase.name != "Global">
 			<tr>
 				<th align="right" valign="top">Phase ${phase.number}</th>
@@ -175,7 +175,7 @@
 				<th align="right" valign="top">Empfängerausgang</th>
 				<td colspan="3">
 					<table cellpadding="0">
-<#list model.receivers[0].channelMappings as mapping>
+<#list model.receiver[0].channelMapping as mapping>
 						<tr>
 							<td align="center">S${mapping.inputChannel+1}</td>
 							<td align="center">=></td>
@@ -191,7 +191,7 @@
 			</tr>			
 			<tr>
 				<th align="right">Empfänger ID</th>
-				<td colspan="3">${hex(model.receivers[0].rfid?c)}</td>
+				<td colspan="3">${hex(model.receiver[0].rfid?c)}</td>
 			</tr>
 		</table>
 
@@ -206,7 +206,7 @@
 				<th>Weg -</th>
 				<th>Weg +</th>
 			</tr>
-<#list model.channels as channel>
+<#list model.channel as channel>
 <#if !channel.virtual>						
 			<tr>
 				<td align="center">S${channel.number?number+1}</td>
@@ -229,7 +229,7 @@
 				<th>Weg -</th>
 				<th>Weg +</th>
 			</tr>
-<#list model.phases[0].control as control>
+<#list model.phase[0].control as control>
 <#if helicopterModel?? && control.number?number == 8>
 			<tr>
 				<td align="center">Gaslimiter</td>
@@ -251,7 +251,7 @@
 		<hr/>	
 
 		<h1>DualRate Expo</h1>		
-<#list model.phases as phase>
+<#list model.phase as phase>
 <#if phase.name != "Global">
 		<h2>Phase ${phase.number}: ${phase.name}</h2>
 		<table>
@@ -284,7 +284,7 @@
 				<th>QR</th>
 				<th>HR</th>
 			</tr>
-<#list wingedModel.phases as phase>				
+<#list wingedModel.phase as phase>				
 <#if phase.name != "Global">
 			<tr>
 				<th align="right">${phase.name}</th>
@@ -305,7 +305,7 @@
 				<th align="center">Wert</th>
 				<th align="left">Schalter</th>
 			</tr>
-<#list wingedModel.phases[0].mixer?values as mixer>
+<#list wingedModel.phase[0].phaseMixer?values as mixer>
 			<tr>
 				<th align="right">${mixer.id}</th>
 				<td align="center">${mixer.value}%</td>
@@ -316,25 +316,25 @@
 </#if>
 <#if helicopterModel??>
 		<h1>Helimix</h1>		
-<#list helicopterModel.phases as phase>
+<#list helicopterModel.phase as phase>
 <#if phase.type != "Global">
 		<h2>Phase ${phase.number}: ${phase.name}</h2>
 		
 		<table>
-			<@curve "Pitchkurve" phase.mixer.pitchCurve/>
-			<@curve "Gaskurve (K1 -> Gas)" phase.mixer.throttleCurve/>
-			<@curve "Heckrotorkurve (K1 -> Heck)" phase.mixer.tailCurve/>
+			<@curve "Pitchkurve" phase.phaseMixer.pitchCurve/>
+			<@curve "Gaskurve (K1 -> Gas)" phase.phaseMixer.throttleCurve/>
+			<@curve "Heckrotorkurve (K1 -> Heck)" phase.phaseMixer.tailCurve/>
 			<tr>
 				<th align="right">Gyro</th>
-				<td>${phase.mixer.gyroGain}%</td>
+				<td>${phase.phaseMixer.gyroGain}%</td>
 			</tr>
 			<tr>
 				<th align="right">Eingang 8</th>
-				<td>${phase.mixer.channel8Value}%</td>
+				<td>${phase.phaseMixer.channel8Value}%</td>
 			</tr>
 			<tr>
 				<th align="right">Taumelscheibenlimit</th>
-				<td><#if phase.mixer.swashplateMix.limit == 150>aus<#else>${phase.mixer.swashplateMix.limit}%</#if></td>
+				<td><#if phase.phaseMixer.swashplateMix.limit == 150>aus<#else>${phase.phaseMixer.swashplateMix.limit}%</#if></td>
 			</tr>
 		</table>	
 </#if>
@@ -356,7 +356,7 @@
 				<th>Offset</th>
 			</tr>
 		
-<#list model.mixers as mixer>
+<#list model.phase[0].freeMixer as mixer>
 			<tr>
 				<td>M${mixer.number?number+1}</td>
 				<td>${mixer.inputType}</td>
@@ -377,15 +377,15 @@
 		<table>
 			<tr>
 				<th>Pitch</th>
-				<td>${helicopterModel.phases[1].mixer.swashplateMix.pitchMix}</td>
+				<td>${helicopterModel.phase[1].phaseMixer.swashplateMix.pitchMix}</td>
 			</tr>
 			<tr>
 				<th>Roll</th>
-				<td>${helicopterModel.phases[1].mixer.swashplateMix.rollMix}</td>
+				<td>${helicopterModel.phase[1].phaseMixer.swashplateMix.rollMix}</td>
 			</tr>
 			<tr>
 				<th>Nick</th>
-				<td>${helicopterModel.phases[1].mixer.swashplateMix.nickMix}</td>
+				<td>${helicopterModel.phase[1].phaseMixer.swashplateMix.nickMix}</td>
 			</tr>
 		</table>
 		
@@ -406,7 +406,7 @@
 		<table>
 			<tr>
 				<td>&nbsp;</td>
-<#list model.channels as channel>
+<#list model.channel as channel>
 <#if !channel.virtual>
 				<th align="center">S${channel.number?number+1}</th>
 </#if>
@@ -414,7 +414,7 @@
 			</tr>
 			<tr>
 				<th>Mode</th>
-<#list model.channels as channel>
+<#list model.channel as channel>
 <#if !channel.virtual>
 				<td align="center">${channel.failSafeMode}</td>
 </#if>
@@ -422,7 +422,7 @@
 			</tr>
 			<tr>
 				<th>Position</th>
-<#list model.channels as channel>
+<#list model.channel as channel>
 <#if !channel.virtual>
 				<td align="center">${((channel.failSafePosition/2-1500)/4)?round}%</td>
 </#if>
@@ -451,7 +451,7 @@
 			</tr>
 			<tr>
 				<th align="right">ausgewählte Sensoren</th>
-				<td><#list model.selectedSensors as sensor>${sensor} </#list></td>
+				<td><#list model.selectedSensor as sensor>${sensor} </#list></td>
 			</tr>
 			<tr>
 				<th align="right">aktueller Sensor</th>
@@ -481,13 +481,13 @@
 			</tr>
 			<tr>
 				<th align="right">Schalter</th>
-				<td><@switch model.trainerConfig.switch/></td>
+				<td><@switch model.trainerConfig.trainerswitch/></td>
 			</tr>
 		</table>
 		<table>
 			<tr>
 				<td>&nbsp;</td>
-<#list model.channels as channel>
+<#list model.channel as channel>
 <#if !channel.virtual>
 				<th>S${channel.number?number+1}</th>
 </#if>
@@ -495,7 +495,7 @@
 			</tr>
 			<tr>
 				<th>Mode</th>
-<#list model.channels as channel>
+<#list model.channel as channel>
 <#if !channel.virtual>
 				<td align="center">${channel.trainerMode}</td>
 </#if>
@@ -512,7 +512,7 @@
 				<th>Schalter/Geber</th>
 				<th align="left">Typ</th>
 			</tr>
-<#list model.switches as sw>
+<#list model.switch as sw>
 <#if (sw.assignment!"Null") != "Unassigned">
 			<tr>
 				<td align="right">${sw.id}</td>

@@ -27,98 +27,95 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import javax.xml.bind.annotation.XmlElement;
-
 /**
  * @author oli@treichels.de
  */
 public class WingedMixers extends PhasedMixer implements Map<String, WingedMixer>, Iterable<WingedMixer> {
-	private final Map<String, WingedMixer> mixers = new TreeMap<String, WingedMixer>();
+	private final Map<String, WingedMixer> mixer = new TreeMap<String, WingedMixer>();
 
 	public void add(final WingedMixer mixer) {
-		mixers.put(mixer.getId(), mixer);
+		this.mixer.put(mixer.getId(), mixer);
 	}
 
 	@Override
 	public void clear() {
-		mixers.clear();
+		mixer.clear();
 	}
 
 	@Override
 	public boolean containsKey(final Object key) {
-		return mixers.containsKey(key);
+		return mixer.containsKey(key);
 	}
 
 	@Override
 	public boolean containsValue(final Object value) {
-		return mixers.containsValue(value);
+		return mixer.containsValue(value);
 	}
 
 	@Override
 	public Set<java.util.Map.Entry<String, WingedMixer>> entrySet() {
-		return mixers.entrySet();
+		return mixer.entrySet();
 	}
 
 	@Override
 	public boolean equals(final Object o) {
-		return mixers.equals(o);
+		return mixer.equals(o);
 	}
 
 	public WingedMixer get(final Function function) {
-		return mixers.get(function.name());
+		return mixer.get(function.name());
 	}
 
 	@Override
 	public WingedMixer get(final Object key) {
-		return mixers.get(key);
+		return mixer.get(key);
 	}
 
-	@XmlElement(name = "mixer")
-	public Collection<WingedMixer> getMixers() {
-		return mixers.values();
+	public Collection<WingedMixer> getMixer() {
+		return mixer.values();
 	}
 
 	@Override
 	public int hashCode() {
-		return mixers.hashCode();
+		return mixer.hashCode();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return mixers.isEmpty();
+		return mixer.isEmpty();
 	}
 
 	@Override
 	public Iterator<WingedMixer> iterator() {
-		return mixers.values().iterator();
+		return mixer.values().iterator();
 	}
 
 	@Override
 	public Set<String> keySet() {
-		return mixers.keySet();
+		return mixer.keySet();
 	}
 
 	@Override
 	public WingedMixer put(final String key, final WingedMixer value) {
-		return mixers.put(key, value);
+		return mixer.put(key, value);
 	}
 
 	public WingedMixer put(final SwitchFunction function, final WingedMixer value) {
-		return mixers.put(function.name(), value);
+		return mixer.put(function.name(), value);
 	}
 
 	@Override
 	public void putAll(final Map<? extends String, ? extends WingedMixer> m) {
-		mixers.putAll(m);
+		mixer.putAll(m);
 	}
 
 	@Override
 	public WingedMixer remove(final Object key) {
-		return mixers.remove(key);
+		return mixer.remove(key);
 	}
 
 	public void setMixers(final Collection<WingedMixer> mixers) {
-		this.mixers.clear();
+		mixer.clear();
 		for (final WingedMixer mixer : mixers) {
 			add(mixer);
 		}
@@ -126,11 +123,11 @@ public class WingedMixers extends PhasedMixer implements Map<String, WingedMixer
 
 	@Override
 	public int size() {
-		return mixers.size();
+		return mixer.size();
 	}
 
 	@Override
 	public Collection<WingedMixer> values() {
-		return mixers.values();
+		return mixer.values();
 	}
 }

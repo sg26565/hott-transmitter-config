@@ -19,24 +19,22 @@ package gde.model;
 
 import java.util.Collection;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 
 /**
  * @author oli@treichels.de
  */
 public class TrainerConfig {
-	private Collection<Channel> pupilChannels;
+	private Collection<Channel> pupilChannel;
 	private long pupilId;
 	private Switch sw;
-	private Collection<Channel> trainerChannels;
+	private Collection<Channel> trainerChannel;
 	private long trainerId;
 	private boolean wireless;
 
 	@XmlIDREF
-	@XmlElement(name = "pupilChannel")
-	public Collection<Channel> getPupilChannels() {
-		return pupilChannels;
+	public Collection<Channel> getPupilChannel() {
+		return pupilChannel;
 	}
 
 	public long getPupilId() {
@@ -44,43 +42,41 @@ public class TrainerConfig {
 	}
 
 	@XmlIDREF
-	@XmlElement(name = "trainerSwitch")
-	public Switch getSwitch() {
-		return sw;
-	}
-
-	@XmlIDREF
-	@XmlElement(name = "trainerChannel")
-	public Collection<Channel> getTrainerChannels() {
-		return trainerChannels;
+	public Collection<Channel> getTrainerChannel() {
+		return trainerChannel;
 	}
 
 	public long getTrainerId() {
 		return trainerId;
 	}
 
+	@XmlIDREF
+	public Switch getTrainerSwitch() {
+		return sw;
+	}
+
 	public boolean isWireless() {
 		return wireless;
 	}
 
-	public void setPupilChannels(final Collection<Channel> pupilChannels) {
-		this.pupilChannels = pupilChannels;
+	public void setPupilChannel(final Collection<Channel> pupilChannels) {
+		pupilChannel = pupilChannels;
 	}
 
 	public void setPupilId(final long pupilId) {
 		this.pupilId = pupilId;
 	}
 
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
-	}
-
-	public void setTrainerChannels(final Collection<Channel> trainerChannels) {
-		this.trainerChannels = trainerChannels;
+	public void setTrainerChannel(final Collection<Channel> trainerChannels) {
+		trainerChannel = trainerChannels;
 	}
 
 	public void setTrainerId(final long trainerId) {
 		this.trainerId = trainerId;
+	}
+
+	public void setTrainerSwitch(final Switch sw) {
+		this.sw = sw;
 	}
 
 	public void setWireless(final boolean wireless) {

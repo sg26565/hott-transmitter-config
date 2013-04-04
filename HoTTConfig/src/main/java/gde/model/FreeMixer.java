@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli@treichels.de
  */
-public class Mixer {
+public class FreeMixer {
+	private boolean enabled;
 	private Channel fromChannel;
 	private MixerInputType inputType;
 	private String number;
@@ -77,6 +78,14 @@ public class Mixer {
 
 	public MixerType getType() {
 		return type;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(final boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public void setFromChannel(final Channel from) {

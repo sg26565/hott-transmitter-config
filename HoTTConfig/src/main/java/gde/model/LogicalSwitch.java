@@ -19,7 +19,6 @@ package gde.model;
 
 import gde.model.enums.LogicalSwitchMode;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -30,17 +29,16 @@ import javax.xml.bind.annotation.XmlIDREF;
 public class LogicalSwitch extends Switch {
 	private boolean enabled;
 	private LogicalSwitchMode mode;
-	private Switch[] switches;
+	private Switch[] sw;
 
 	public LogicalSwitchMode getMode() {
 		return mode;
 	}
 
-	@XmlElement(name = "switch")
 	@XmlElementWrapper(name = "switches")
 	@XmlIDREF
-	public Switch[] getSwitches() {
-		return switches;
+	public Switch[] getSwitch() {
+		return sw;
 	}
 
 	public boolean isEnabled() {
@@ -55,7 +53,7 @@ public class LogicalSwitch extends Switch {
 		this.mode = mode;
 	}
 
-	public void setSwitches(final Switch[] switches) {
-		this.switches = switches;
+	public void setSwitch(final Switch[] switches) {
+		sw = switches;
 	}
 }

@@ -28,7 +28,6 @@ import gde.model.enums.Vendor;
 
 import java.util.Collection;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -40,9 +39,9 @@ public class BaseModel {
 	private boolean autoTimerReset;
 	private Switch autoTrimSwitch;
 	private boolean bound;
-	private Channel[] channels;
-	private Clock[] clocks;
-	private ControlSwitch[] controlSwitches;
+	private Channel[] channel;
+	private Clock[] clock;
+	private ControlSwitch[] controlSwitch;
 	private SensorType currentSensor;
 	private int currentSensorPage;
 	private DSCOutputType dscOutputType;
@@ -50,21 +49,20 @@ public class BaseModel {
 	private int failSafeDelay;
 	private boolean failSafeSettingCheck;
 	private String info;
-	private LogicalSwitch[] logicalSwitches;
+	private LogicalSwitch[] logicalSwitch;
 	private int memoryVersion;
-	private Mixer[] mixers;
 	private String modelName;
 	private int modelNumber;
 	private ModelType modelType;
 	private HFModule module;
+	private Phase[] phase;
 	private PhaseAssignment phaseAssignment;
-	private Phase[] phases;
 	private Switch powerOnWarning; // TODO check type
-	private Receiver[] receivers;
-	private Collection<SensorType> selectedSensors;
+	private Receiver[] receiver;
+	private Collection<SensorType> selectedSensor;
 	private StickMode stickMode;
 	private StickTrim[] stickTrim;
-	private Switch[] switches;
+	private Switch[] sw;
 	private ThrottleCutOf throttleCutOf;
 	private int throttleLastIdlePosition;
 	private int throttleTrim;
@@ -79,7 +77,7 @@ public class BaseModel {
 	}
 
 	public Switch get(final SwitchFunction function) {
-		for (final Switch sw : getSwitches()) {
+		for (final Switch sw : getSwitch()) {
 			if (sw.getFunction() == function) {
 				return sw;
 			}
@@ -97,23 +95,20 @@ public class BaseModel {
 		return autoTrimSwitch;
 	}
 
-	@XmlElement(name = "channel")
 	@XmlElementWrapper(name = "channels")
-	public Channel[] getChannels() {
-		return channels;
+	public Channel[] getChannel() {
+		return channel;
 	}
 
-	@XmlElement(name = "clock")
 	@XmlElementWrapper(name = "clocks")
-	public Clock[] getClocks() {
-		return clocks;
+	public Clock[] getClock() {
+		return clock;
 	}
 
-	@XmlElement(name = "controlSwitch")
 	@XmlElementWrapper(name = "controlSwitches")
 	@XmlIDREF
-	public ControlSwitch[] getControlSwitches() {
-		return controlSwitches;
+	public ControlSwitch[] getControlSwitch() {
+		return controlSwitch;
 	}
 
 	public SensorType getCurrentSensor() {
@@ -140,21 +135,14 @@ public class BaseModel {
 		return info;
 	}
 
-	@XmlElement(name = "logicalSwitch")
 	@XmlElementWrapper(name = "logicalSwitches")
 	@XmlIDREF
-	public LogicalSwitch[] getLogicalSwitches() {
-		return logicalSwitches;
+	public LogicalSwitch[] getLogicalSwitch() {
+		return logicalSwitch;
 	}
 
 	public int getMemoryVersion() {
 		return memoryVersion;
-	}
-
-	@XmlElement(name = "freeMixer")
-	@XmlElementWrapper(name = "freeMixers")
-	public Mixer[] getMixers() {
-		return mixers;
 	}
 
 	public String getModelName() {
@@ -173,14 +161,13 @@ public class BaseModel {
 		return module;
 	}
 
-	public PhaseAssignment getPhaseAssignment() {
-		return phaseAssignment;
+	@XmlElementWrapper(name = "phases")
+	public Phase[] getPhase() {
+		return phase;
 	}
 
-	@XmlElement(name = "phase")
-	@XmlElementWrapper(name = "phases")
-	public Phase[] getPhases() {
-		return phases;
+	public PhaseAssignment getPhaseAssignment() {
+		return phaseAssignment;
 	}
 
 	@XmlIDREF
@@ -188,14 +175,13 @@ public class BaseModel {
 		return powerOnWarning;
 	}
 
-	@XmlElement(name = "receiver")
 	@XmlElementWrapper(name = "receivers")
-	public Receiver[] getReceivers() {
-		return receivers;
+	public Receiver[] getReceiver() {
+		return receiver;
 	}
 
-	public Collection<SensorType> getSelectedSensors() {
-		return selectedSensors;
+	public Collection<SensorType> getSelectedSensor() {
+		return selectedSensor;
 	}
 
 	public StickMode getStickMode() {
@@ -207,10 +193,9 @@ public class BaseModel {
 		return stickTrim;
 	}
 
-	@XmlElement(name = "switch")
 	@XmlElementWrapper(name = "switches")
-	public Switch[] getSwitches() {
-		return switches;
+	public Switch[] getSwitch() {
+		return sw;
 	}
 
 	public ThrottleCutOf getThrottleCutOf() {
@@ -273,16 +258,16 @@ public class BaseModel {
 		this.bound = bound;
 	}
 
-	public void setChannels(final Channel[] channels) {
-		this.channels = channels;
+	public void setChannel(final Channel[] channels) {
+		channel = channels;
 	}
 
-	public void setClocks(final Clock[] clocks) {
-		this.clocks = clocks;
+	public void setClock(final Clock[] clocks) {
+		clock = clocks;
 	}
 
-	public void setControlSwitches(final ControlSwitch[] controlSwitches) {
-		this.controlSwitches = controlSwitches;
+	public void setControlSwitch(final ControlSwitch[] controlSwitches) {
+		controlSwitch = controlSwitches;
 	}
 
 	public void setCurrentSensor(final SensorType settingSensorType) {
@@ -313,16 +298,12 @@ public class BaseModel {
 		this.info = info;
 	}
 
-	public void setLogicalSwitches(final LogicalSwitch[] logicalSwitches) {
-		this.logicalSwitches = logicalSwitches;
+	public void setLogicalSwitch(final LogicalSwitch[] logicalSwitches) {
+		logicalSwitch = logicalSwitches;
 	}
 
 	public void setMemoryVersion(final int memoryVersion) {
 		this.memoryVersion = memoryVersion;
-	}
-
-	public void setMixers(final Mixer[] mixers) {
-		this.mixers = mixers;
 	}
 
 	public void setModelName(final String modelName) {
@@ -341,24 +322,24 @@ public class BaseModel {
 		this.module = module;
 	}
 
-	public void setPhaseAssignment(final PhaseAssignment phaseAssignment) {
-		this.phaseAssignment = phaseAssignment;
+	public void setPhase(final Phase[] phases) {
+		phase = phases;
 	}
 
-	public void setPhases(final Phase[] phases) {
-		this.phases = phases;
+	public void setPhaseAssignment(final PhaseAssignment phaseAssignment) {
+		this.phaseAssignment = phaseAssignment;
 	}
 
 	public void setPowerOnWarning(final Switch powerOnWarning) {
 		this.powerOnWarning = powerOnWarning;
 	}
 
-	public void setReceivers(final Receiver[] receivers) {
-		this.receivers = receivers;
+	public void setReceiver(final Receiver[] receivers) {
+		receiver = receivers;
 	}
 
-	public void setSelectedSensors(final Collection<SensorType> selectedSensors) {
-		this.selectedSensors = selectedSensors;
+	public void setSelectedSensor(final Collection<SensorType> selectedSensors) {
+		selectedSensor = selectedSensors;
 	}
 
 	public void setStickMode(final StickMode stickMode) {
@@ -369,8 +350,8 @@ public class BaseModel {
 		this.stickTrim = stickTrim;
 	}
 
-	public void setSwitches(final Switch[] switches) {
-		this.switches = switches;
+	public void setSwitch(final Switch[] switches) {
+		sw = switches;
 	}
 
 	public void setThrottleCutOf(final ThrottleCutOf throttleCutOf) {

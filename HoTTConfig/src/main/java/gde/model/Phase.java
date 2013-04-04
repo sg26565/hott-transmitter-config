@@ -20,7 +20,6 @@ package gde.model;
 import gde.model.enums.PhaseType;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
@@ -32,15 +31,16 @@ public class Phase {
 	private Control[] control;
 	private DualRate[] dualRate;
 	private Expo[] expo;
-	private PhasedMixer mixer;
+	private FreeMixer[] freeMixer;
 	private boolean motorOn;
-	private String name;
 	private String number;
-	private int phaseSwtichTime;
+	private PhasedMixer phaseMixer;
+	private String phaseName;
+	private Switch phaseSwitch;
+	private int phaseSwitchTime;
 	private Clock phaseTimer;
-	private Switch sw;
-	private PhasedTrim trim;
-	private PhaseType type;
+	private PhasedTrim phaseTrim;
+	private PhaseType phaseType;
 
 	@XmlElementWrapper(name = "controls")
 	public Control[] getControl() {
@@ -57,13 +57,9 @@ public class Phase {
 		return expo;
 	}
 
-	@XmlElement(name = "phasemixer")
-	public PhasedMixer getMixer() {
-		return mixer;
-	}
-
-	public String getName() {
-		return name;
+	@XmlElementWrapper(name = "freeMixers")
+	public FreeMixer[] getFreeMixer() {
+		return freeMixer;
 	}
 
 	@XmlAttribute
@@ -72,8 +68,21 @@ public class Phase {
 		return number;
 	}
 
-	public int getPhaseSwtichTime() {
-		return phaseSwtichTime;
+	public PhasedMixer getPhaseMixer() {
+		return phaseMixer;
+	}
+
+	public String getPhaseName() {
+		return phaseName;
+	}
+
+	@XmlIDREF
+	public Switch getPhaseSwitch() {
+		return phaseSwitch;
+	}
+
+	public int getPhaseSwitchTime() {
+		return phaseSwitchTime;
 	}
 
 	@XmlIDREF
@@ -81,18 +90,12 @@ public class Phase {
 		return phaseTimer;
 	}
 
-	@XmlIDREF
-	public Switch getSwitch() {
-		return sw;
+	public PhasedTrim getPhaseTrim() {
+		return phaseTrim;
 	}
 
-	@XmlElement(name = "phasetrim")
-	public PhasedTrim getTrim() {
-		return trim;
-	}
-
-	public PhaseType getType() {
-		return type;
+	public PhaseType getPhaseType() {
+		return phaseType;
 	}
 
 	public boolean isMotorOn() {
@@ -111,16 +114,12 @@ public class Phase {
 		this.expo = expo;
 	}
 
-	public void setMixer(final PhasedMixer mixer) {
-		this.mixer = mixer;
+	public void setFreeMixer(final FreeMixer[] freeMixer) {
+		this.freeMixer = freeMixer;
 	}
 
 	public void setMotorOn(final boolean motorOn) {
 		this.motorOn = motorOn;
-	}
-
-	public void setName(final String name) {
-		this.name = name;
 	}
 
 	public void setNumber(final int number) {
@@ -131,23 +130,31 @@ public class Phase {
 		this.number = number;
 	}
 
-	public void setPhaseSwtichTime(final int phaseSwtichTime) {
-		this.phaseSwtichTime = phaseSwtichTime;
+	public void setPhaseMixer(final PhasedMixer phaseMixer) {
+		this.phaseMixer = phaseMixer;
+	}
+
+	public void setPhaseName(final String phaseName) {
+		this.phaseName = phaseName;
+	}
+
+	public void setPhaseSwitch(final Switch phaseSwitch) {
+		this.phaseSwitch = phaseSwitch;
+	}
+
+	public void setPhaseSwitchTime(final int phaseSwtichTime) {
+		phaseSwitchTime = phaseSwtichTime;
 	}
 
 	public void setPhaseTimer(final Clock phaseTimer) {
 		this.phaseTimer = phaseTimer;
 	}
 
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
+	public void setPhaseTrim(final PhasedTrim phaseTrim) {
+		this.phaseTrim = phaseTrim;
 	}
 
-	public void setTrim(final PhasedTrim trim) {
-		this.trim = trim;
-	}
-
-	public void setType(final PhaseType type) {
-		this.type = type;
+	public void setPhaseType(final PhaseType phaseType) {
+		this.phaseType = phaseType;
 	}
 }
