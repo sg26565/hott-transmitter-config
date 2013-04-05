@@ -288,9 +288,9 @@
 <#if phase.phaseName != "Global">
 			<tr>
 				<th align="right">${phase.phaseName}</th>
-				<td>${phase.wingedTrim.flapPhaseTrim}%</td>
-				<td>${phase.wingedTrim.aileronPhaseTrim}%</td>
-				<td>${phase.wingedTrim.elevatorPhaseTrim}%</td>
+				<td>${phase.wingTrim.flap1PhaseTrim}%</td>
+				<td>${phase.wingTrim.aileron1PhaseTrim}%</td>
+				<td>${phase.wingTrim.elevatorPhaseTrim}%</td>
 			</tr>
 </#if>
 </#list>
@@ -305,10 +305,10 @@
 				<th align="center">Wert</th>
 				<th align="left">Schalter</th>
 			</tr>
-<#list wingedModel.phase[0].wingedMixer as mixer>
+<#list wingedModel.phase[0].wingMixer as mixer>
 			<tr>
 				<th align="right">${mixer.id}</th>
-				<td align="center">${mixer.value}%</td>
+				<td align="center">${mixer.value[0]}%</td>
 				<td><@switch mixer.switch/></td>						
 			</tr>
 </#list>						

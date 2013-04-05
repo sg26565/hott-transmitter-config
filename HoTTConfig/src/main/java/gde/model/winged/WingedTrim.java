@@ -21,21 +21,15 @@ package gde.model.winged;
  * @author oli@treichels.de
  */
 public class WingedTrim {
-	private int aileron1PhaseTrim;
-	private int aileron2PhaseTrim;
+	private int[] aileronPhaseTrim;
 	private int aileronStickTrim;
 	private int elevatorPhaseTrim;
 	private int elevtorStickTrim;
-	private int flap1PhaseTrim;
-	private int flap2PhaseTrim;
+	private int[] flapPhaseTrim;
 	private int rudderStickTrim;
 
-	public int getAileron1PhaseTrim() {
-		return aileron1PhaseTrim;
-	}
-
-	public int getAileron2PhaseTrim() {
-		return aileron2PhaseTrim;
+	public int[] getAileronPhaseTrim() {
+		return aileronPhaseTrim;
 	}
 
 	public int getAileronStickTrim() {
@@ -50,24 +44,16 @@ public class WingedTrim {
 		return elevtorStickTrim;
 	}
 
-	public int getFlap1PhaseTrim() {
-		return flap1PhaseTrim;
-	}
-
-	public int getFlap2PhaseTrim() {
-		return flap2PhaseTrim;
+	public int[] getFlapPhaseTrim() {
+		return flapPhaseTrim;
 	}
 
 	public int getRudderStickTrim() {
 		return rudderStickTrim;
 	}
 
-	public void setAileron1PhaseTrim(final int aileronPhaseTrim) {
-		aileron1PhaseTrim = aileronPhaseTrim;
-	}
-
-	public void setAileron2PhaseTrim(final int aileron2PhaseTrim) {
-		this.aileron2PhaseTrim = aileron2PhaseTrim;
+	public void setAileronPhaseTrim(final int[] aileronPhaseTrim) {
+		this.aileronPhaseTrim = aileronPhaseTrim;
 	}
 
 	public void setAileronStickTrim(final int aileronStickTrim) {
@@ -82,12 +68,8 @@ public class WingedTrim {
 		this.elevtorStickTrim = elevtorStickTrim;
 	}
 
-	public void setFlap1PhaseTrim(final int flapPhaseTrim) {
-		flap1PhaseTrim = flapPhaseTrim;
-	}
-
-	public void setFlap2PhaseTrim(final int flap2PhaseTrim) {
-		this.flap2PhaseTrim = flap2PhaseTrim;
+	public void setFlapPhaseTrim(final int[] flapPhaseTrim) {
+		this.flapPhaseTrim = flapPhaseTrim;
 	}
 
 	public void setRudderStickTrim(final int rudderStickTrim) {
