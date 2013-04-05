@@ -29,9 +29,9 @@ import javax.xml.bind.annotation.XmlIDREF;
 
 public class WingedMixer {
 	private SwitchFunction function;
-	private Switch sw;
-	private int value;
 	private Object[] qualifier;
+	private Switch sw;
+	private int[] value;
 
 	public SwitchFunction getFunction() {
 		return function;
@@ -64,12 +64,16 @@ public class WingedMixer {
 		return b.toString();
 	}
 
+	public Object[] getQualifier() {
+		return qualifier;
+	}
+
 	@XmlIDREF
 	public Switch getSwitch() {
 		return sw;
 	}
 
-	public int getValue() {
+	public int[] getValue() {
 		return value;
 	}
 
@@ -77,19 +81,22 @@ public class WingedMixer {
 		this.function = function;
 	}
 
+	public void setQualifier(final Object[] qualifier) {
+		this.qualifier = qualifier;
+	}
+
 	public void setSwitch(final Switch sw) {
 		this.sw = sw;
 	}
 
 	public void setValue(final int value) {
+		final int[] values = new int[1];
+		values[0] = value;
+
+		setValue(values);
+	}
+
+	public void setValue(final int[] value) {
 		this.value = value;
-	}
-
-	public Object[] getQualifier() {
-		return qualifier;
-	}
-
-	public void setQualifier(final Object[] qualifier) {
-		this.qualifier = qualifier;
 	}
 }

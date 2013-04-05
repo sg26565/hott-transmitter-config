@@ -29,7 +29,7 @@ public class WingedPhase extends Phase {
 	private WingedMixer[] wingedMixer;
 	private WingedTrim wingedTrim;
 
-	@XmlElementWrapper(name = "wingedMixers")
+	@XmlElementWrapper(name = "wingMixers")
 	public WingedMixer[] getWingedMixer() {
 		return wingedMixer;
 	}
@@ -38,12 +38,12 @@ public class WingedPhase extends Phase {
 		return wingedTrim;
 	}
 
-	public void setWingedMixer(final WingedMixer[] wingedMixers) {
-		wingedMixer = wingedMixers;
+	public void setWingedMixer(final WingedMixer[] wingedMixer) {
+		this.wingedMixer = wingedMixer;
 	}
 
-	public void setWingedTrim(final WingedTrim wingTrim) {
-		wingedTrim = wingTrim;
+	public void setWingedTrim(final WingedTrim wingedTrim) {
+		this.wingedTrim = wingedTrim;
 	}
 
 }
