@@ -26,24 +26,32 @@ import javax.xml.bind.annotation.XmlElementWrapper;
  * 
  */
 public class WingedPhase extends Phase {
-	private WingedMixer[] wingedMixer;
+	private WingedMixer[] multiFlapMixer;
 	private WingedTrim wingedTrim;
+	private WingedMixer[] wingMixer;
 
-	@XmlElementWrapper(name = "wingMixers")
-	public WingedMixer[] getWingedMixer() {
-		return wingedMixer;
+	public WingedMixer[] getMultiFlapMixer() {
+		return multiFlapMixer;
 	}
 
 	public WingedTrim getWingedTrim() {
 		return wingedTrim;
 	}
 
-	public void setWingedMixer(final WingedMixer[] wingedMixer) {
-		this.wingedMixer = wingedMixer;
+	@XmlElementWrapper(name = "wingMixers")
+	public WingedMixer[] getWingMixer() {
+		return wingMixer;
+	}
+
+	public void setMultiFlapMixer(final WingedMixer[] multiFlapMixer) {
+		this.multiFlapMixer = multiFlapMixer;
 	}
 
 	public void setWingedTrim(final WingedTrim wingedTrim) {
 		this.wingedTrim = wingedTrim;
 	}
 
+	public void setWingMixer(final WingedMixer[] wingMixer) {
+		this.wingMixer = wingMixer;
+	}
 }
