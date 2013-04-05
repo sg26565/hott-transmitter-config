@@ -163,7 +163,7 @@
 				</td>
 			</tr>
 <#list model.phase as phase>
-<#if phase.phaseName != "Global">
+<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
 			<tr>
 				<th align="right" valign="top">Phase ${phase.number}</th>
 				<td><i>Name:</i> ${phase.phaseName}</td>
@@ -252,7 +252,7 @@
 
 		<h1>DualRate Expo</h1>		
 <#list model.phase as phase>
-<#if phase.phaseName != "Global">
+<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
 		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
 		<table>
 			<tr>
@@ -285,11 +285,11 @@
 				<th>HR</th>
 			</tr>
 <#list wingedModel.phase as phase>				
-<#if phase.phaseName != "Global">
+<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
 			<tr>
 				<th align="right">${phase.phaseName}</th>
-				<td>${phase.wingTrim.flap1PhaseTrim}%</td>
-				<td>${phase.wingTrim.aileron1PhaseTrim}%</td>
+				<td>${phase.wingTrim.flapPhaseTrim[0]}%</td>
+				<td>${phase.wingTrim.aileronPhaseTrim[0]}%</td>
 				<td>${phase.wingTrim.elevatorPhaseTrim}%</td>
 			</tr>
 </#if>
@@ -317,7 +317,7 @@
 <#if helicopterModel??>
 		<h1>Helimix</h1>		
 <#list helicopterModel.phase as phase>
-<#if phase.phaseType != "Global">
+<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
 		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
 		
 		<table>
@@ -348,6 +348,7 @@
 			<tr>
 				<th>Mixer</th>
 				<th>Typ</th>
+				<th>Input</th>
 				<th>von</th>
 				<th>zu</th>
 				<th>Schalter</th>
@@ -359,13 +360,18 @@
 <#list model.freeMixer as mixer>
 			<tr>
 				<td>M${mixer.number?number+1}</td>
+				<td>${mixer.type}</td>
 				<td>${mixer.inputType}</td>
 				<td><#if mixer.fromChannel.number?number == 9>S<#else>${mixer.fromChannel.number}</#if></td>
 				<td>${mixer.toChannel.number}</td>
 				<td><@switch mixer.switch/></td>
+<#if mixer.type.name() == "Curve">
+				<td colspan="3" align="center"><i>Kurve</i></td>
+<#else>
 				<td>${mixer.travelLow}%</td>
 				<td>${mixer.travelHigh}%</td>
 				<td>${mixer.offset}%</td>
+</#if>
 			</tr>
 </#list>
 		</table>
