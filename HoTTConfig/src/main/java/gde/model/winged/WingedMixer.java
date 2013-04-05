@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
-public class WingMixer {
+public class WingedMixer {
 	private SwitchFunction function;
 	private Switch sw;
 	private int value;

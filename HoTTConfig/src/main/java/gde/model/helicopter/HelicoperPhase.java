@@ -13,23 +13,21 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/[].
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package gde.model.helicopter;
 
-import gde.model.Curve;
-import gde.model.PhasedMixer;
+import gde.model.Phase;
 
 /**
- * @author oli@treichels.de
+ * @author oli
+ * 
  */
-public class HeliCopterMixer extends PhasedMixer {
+public class HelicoperPhase extends Phase {
 	private int channel8Value;
 	private int gyroGain;
-	private Curve pitchCurve;
-	private int swashplateLimit;
-	private Curve tailCurve;
-	private Curve throttleCurve;
+	private HelicopterMixer helicopterMixer;
+	private HelicopterTrim helicopterTrim;
 
 	public int getChannel8Value() {
 		return channel8Value;
@@ -39,20 +37,12 @@ public class HeliCopterMixer extends PhasedMixer {
 		return gyroGain;
 	}
 
-	public Curve getPitchCurve() {
-		return pitchCurve;
+	public HelicopterMixer getHelicopterMixer() {
+		return helicopterMixer;
 	}
 
-	public int getSwashplateLimit() {
-		return swashplateLimit;
-	}
-
-	public Curve getTailCurve() {
-		return tailCurve;
-	}
-
-	public Curve getThrottleCurve() {
-		return throttleCurve;
+	public HelicopterTrim getHelicopterTrim() {
+		return helicopterTrim;
 	}
 
 	public void setChannel8Value(final int channel8Value) {
@@ -63,19 +53,11 @@ public class HeliCopterMixer extends PhasedMixer {
 		this.gyroGain = gyroGain;
 	}
 
-	public void setPitchCurve(final Curve pitchCurve) {
-		this.pitchCurve = pitchCurve;
+	public void setHelicopterMixer(final HelicopterMixer heliMix) {
+		helicopterMixer = heliMix;
 	}
 
-	public void setSwashplateLimit(final int limit) {
-		swashplateLimit = limit;
-	}
-
-	public void setTailCurve(final Curve tailCurve) {
-		this.tailCurve = tailCurve;
-	}
-
-	public void setThrottleCurve(final Curve throttleCurve) {
-		this.throttleCurve = throttleCurve;
+	public void setHelicopterTrim(final HelicopterTrim strickTrim) {
+		helicopterTrim = strickTrim;
 	}
 }

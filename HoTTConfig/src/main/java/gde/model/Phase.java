@@ -27,19 +27,17 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli@treichels.de
  */
-public class Phase {
+public abstract class Phase {
 	private Curve channel1Curve;
 	private Control[] control;
 	private DualRate[] dualRate;
 	private Expo[] expo;
 	private boolean motorOn;
 	private String number;
-	private PhasedMixer phaseMixer;
 	private String phaseName;
 	private Switch phaseSwitch;
 	private double phaseSwitchTime;
 	private Clock phaseTimer;
-	private PhasedTrim phaseTrim;
 	private PhaseType phaseType;
 
 	public Curve getChannel1Curve() {
@@ -67,10 +65,6 @@ public class Phase {
 		return number;
 	}
 
-	public PhasedMixer getPhaseMixer() {
-		return phaseMixer;
-	}
-
 	public String getPhaseName() {
 		return phaseName;
 	}
@@ -87,10 +81,6 @@ public class Phase {
 	@XmlIDREF
 	public Clock getPhaseTimer() {
 		return phaseTimer;
-	}
-
-	public PhasedTrim getPhaseTrim() {
-		return phaseTrim;
 	}
 
 	public PhaseType getPhaseType() {
@@ -129,10 +119,6 @@ public class Phase {
 		this.number = number;
 	}
 
-	public void setPhaseMixer(final PhasedMixer phaseMixer) {
-		this.phaseMixer = phaseMixer;
-	}
-
 	public void setPhaseName(final String phaseName) {
 		this.phaseName = phaseName;
 	}
@@ -147,10 +133,6 @@ public class Phase {
 
 	public void setPhaseTimer(final Clock phaseTimer) {
 		this.phaseTimer = phaseTimer;
-	}
-
-	public void setPhaseTrim(final PhasedTrim phaseTrim) {
-		this.phaseTrim = phaseTrim;
 	}
 
 	public void setPhaseType(final PhaseType phaseType) {

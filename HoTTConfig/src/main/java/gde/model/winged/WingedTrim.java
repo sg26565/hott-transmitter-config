@@ -17,13 +17,11 @@
  */
 package gde.model.winged;
 
-import gde.model.PhasedTrim;
-import gde.model.enums.PhaseType;
 
 /**
  * @author oli@treichels.de
  */
-public class WingTrim extends PhasedTrim {
+public class WingedTrim {
 	private int aileron2PhaseTrim;
 	private int aileronPhaseTrim;
 	private int aileronStickTrim;
@@ -31,7 +29,6 @@ public class WingTrim extends PhasedTrim {
 	private int elevtorStickTrim;
 	private int flap2PhaseTrim;
 	private int flapPhaseTrim;
-	private PhaseType phaseType;
 	private int rudderStickTrim;
 
 	public int getAileron2PhaseTrim() {
@@ -60,10 +57,6 @@ public class WingTrim extends PhasedTrim {
 
 	public int getFlapPhaseTrim() {
 		return flapPhaseTrim;
-	}
-
-	public PhaseType getPhaseType() {
-		return phaseType;
 	}
 
 	public int getRudderStickTrim() {
@@ -96,10 +89,6 @@ public class WingTrim extends PhasedTrim {
 
 	public void setFlapPhaseTrim(final int flapPhaseTrim) {
 		this.flapPhaseTrim = flapPhaseTrim;
-	}
-
-	public void setPhaseType(final PhaseType phaseType) {
-		this.phaseType = phaseType;
 	}
 
 	public void setRudderStickTrim(final int rudderStickTrim) {

@@ -163,10 +163,10 @@
 				</td>
 			</tr>
 <#list model.phase as phase>
-<#if phase.name != "Global">
+<#if phase.phaseName != "Global">
 			<tr>
 				<th align="right" valign="top">Phase ${phase.number}</th>
-				<td><i>Name:</i> ${phase.name}</td>
+				<td><i>Name:</i> ${phase.phaseName}</td>
 				<td colspan="2"><i>Schalter:</i> <@switch phase.switch/></td>
 			</tr>
 </#if>
@@ -175,7 +175,7 @@
 				<th align="right" valign="top">Empfängerausgang</th>
 				<td colspan="3">
 					<table cellpadding="0">
-<#list model.receiver[0].channelMapping as mapping>
+<#list model.channelMapping as mapping>
 						<tr>
 							<td align="center">S${mapping.inputChannel+1}</td>
 							<td align="center">=></td>
@@ -252,8 +252,8 @@
 
 		<h1>DualRate Expo</h1>		
 <#list model.phase as phase>
-<#if phase.name != "Global">
-		<h2>Phase ${phase.number}: ${phase.name}</h2>
+<#if phase.phaseName != "Global">
+		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
 		<table>
 			<tr>
 				<td>&nbsp;</td>
@@ -266,7 +266,7 @@
 				<th align="right">${phase.dualRate[i].function}</th>
 				<td align="center">${phase.dualRate[i].values[0]}% / ${phase.dualRate[i].values[1]}%</td>
 				<td align="center">${phase.expo[i].values[0]}% / ${phase.expo[i].values[1]}%</td>
-				<td><@switch phase.dualRate[i].switch/></td>
+				<td><@switch model.phase[0].dualRate[i].switch/></td>
 			</tr>
 </#list>
 		</table>
@@ -285,12 +285,12 @@
 				<th>HR</th>
 			</tr>
 <#list wingedModel.phase as phase>				
-<#if phase.name != "Global">
+<#if phase.phaseName != "Global">
 			<tr>
-				<th align="right">${phase.name}</th>
-				<td>${phase.trim.flapPhaseTrim}%</td>
-				<td>${phase.trim.aileronPhaseTrim}%</td>
-				<td>${phase.trim.elevatorPhaseTrim}%</td>
+				<th align="right">${phase.phaseName}</th>
+				<td>${phase.wingedTrim.flapPhaseTrim}%</td>
+				<td>${phase.wingedTrim.aileronPhaseTrim}%</td>
+				<td>${phase.wingedTrim.elevatorPhaseTrim}%</td>
 			</tr>
 </#if>
 </#list>
@@ -305,7 +305,7 @@
 				<th align="center">Wert</th>
 				<th align="left">Schalter</th>
 			</tr>
-<#list wingedModel.phase[0].phaseMixer?values as mixer>
+<#list wingedModel.phase[0].wingedMixer as mixer>
 			<tr>
 				<th align="right">${mixer.id}</th>
 				<td align="center">${mixer.value}%</td>
@@ -317,24 +317,24 @@
 <#if helicopterModel??>
 		<h1>Helimix</h1>		
 <#list helicopterModel.phase as phase>
-<#if phase.type != "Global">
-		<h2>Phase ${phase.number}: ${phase.name}</h2>
+<#if phase.phaseType != "Global">
+		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
 		
 		<table>
-			<@curve "Pitchkurve" phase.phaseMixer.pitchCurve/>
-			<@curve "Gaskurve (K1 -> Gas)" phase.phaseMixer.throttleCurve/>
-			<@curve "Heckrotorkurve (K1 -> Heck)" phase.phaseMixer.tailCurve/>
+			<@curve "Pitchkurve" phase.helicopterMixer.pitchCurve.point/>
+			<@curve "Gaskurve (K1 -> Gas)" phase.helicopterMixer.throttleCurve.point/>
+			<@curve "Heckrotorkurve (K1 -> Heck)" phase.helicopterMixer.tailCurve.point/>
 			<tr>
 				<th align="right">Gyro</th>
-				<td>${phase.phaseMixer.gyroGain}%</td>
+				<td>${phase.gyroGain}%</td>
 			</tr>
 			<tr>
 				<th align="right">Eingang 8</th>
-				<td>${phase.phaseMixer.channel8Value}%</td>
+				<td>${phase.channel8Value}%</td>
 			</tr>
 			<tr>
 				<th align="right">Taumelscheibenlimit</th>
-				<td><#if phase.phaseMixer.swashplateMix.limit == 150>aus<#else>${phase.phaseMixer.swashplateMix.limit}%</#if></td>
+				<td><#if phase.helicopterMixer.swashplateLimit == 150>aus<#else>${phase.helicopterMixer.swashplateLimit}%</#if></td>
 			</tr>
 		</table>	
 </#if>
@@ -356,7 +356,7 @@
 				<th>Offset</th>
 			</tr>
 		
-<#list model.phase[0].freeMixer as mixer>
+<#list model.freeMixer as mixer>
 			<tr>
 				<td>M${mixer.number?number+1}</td>
 				<td>${mixer.inputType}</td>
@@ -377,15 +377,15 @@
 		<table>
 			<tr>
 				<th>Pitch</th>
-				<td>${helicopterModel.phase[1].phaseMixer.swashplateMix.pitchMix}</td>
+				<td>${helicopterModel.swashplateMix.pitchMix}</td>
 			</tr>
 			<tr>
 				<th>Roll</th>
-				<td>${helicopterModel.phase[1].phaseMixer.swashplateMix.rollMix}</td>
+				<td>${helicopterModel.swashplateMix.rollMix}</td>
 			</tr>
 			<tr>
 				<th>Nick</th>
-				<td>${helicopterModel.phase[1].phaseMixer.swashplateMix.nickMix}</td>
+				<td>${helicopterModel.swashplateMix.nickMix}</td>
 			</tr>
 		</table>
 		

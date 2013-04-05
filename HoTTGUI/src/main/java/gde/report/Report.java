@@ -37,12 +37,10 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import gde.model.BaseModel;
-import gde.model.helicopter.HeliCopterMixer;
+import gde.model.helicopter.HelicoperPhase;
 import gde.model.helicopter.HelicopterModel;
-import gde.model.helicopter.HelicopterTrim;
-import gde.model.winged.WingMixers;
 import gde.model.winged.WingedModel;
-import gde.model.winged.WingTrim;
+import gde.model.winged.WingedPhase;
 
 /**
  * @author oli@treichels.de
@@ -58,8 +56,7 @@ public class Report {
 		configuration.setTemplateExceptionHandler(new FreeMarkerExceptionHandler());
 
 		try {
-			final JAXBContext ctx = JAXBContext.newInstance(WingedModel.class, WingMixers.class, WingTrim.class, HelicopterModel.class,
-					HeliCopterMixer.class, HelicopterTrim.class);
+			final JAXBContext ctx = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicoperPhase.class);
 			marshaller = ctx.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 		} catch (final JAXBException e) {

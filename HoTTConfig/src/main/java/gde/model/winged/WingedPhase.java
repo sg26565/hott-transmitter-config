@@ -15,10 +15,35 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gde.model;
+package gde.model.winged;
+
+import gde.model.Phase;
+
+import javax.xml.bind.annotation.XmlElementWrapper;
 
 /**
- * @author oli@treichels.de
+ * @author oli
+ * 
  */
-public abstract class PhasedTrim {
+public class WingedPhase extends Phase {
+	private WingedMixer[] wingedMixer;
+	private WingedTrim wingedTrim;
+
+	@XmlElementWrapper(name = "wingedMixers")
+	public WingedMixer[] getWingedMixer() {
+		return wingedMixer;
+	}
+
+	public WingedTrim getWingedTrim() {
+		return wingedTrim;
+	}
+
+	public void setWingedMixer(final WingedMixer[] wingedMixers) {
+		wingedMixer = wingedMixers;
+	}
+
+	public void setWingedTrim(final WingedTrim wingTrim) {
+		wingedTrim = wingTrim;
+	}
+
 }
