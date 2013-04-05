@@ -120,6 +120,7 @@ public class BaseModel {
 		return dscOutputType;
 	}
 
+	@XmlElementWrapper(name = "dualMixers")
 	public DualMixer[] getDualMixer() {
 		return dualMixer;
 	}

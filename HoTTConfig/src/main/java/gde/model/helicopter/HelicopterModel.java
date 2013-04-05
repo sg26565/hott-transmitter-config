@@ -32,8 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class HelicopterModel extends BaseModel {
-	private int autorotationPosition;
-	private Switch autorotatonSwitch;
+	private int autorotationC1TriggerPosition;
+	private Switch autorotationSwitch;
+	private int autorotationTailPosition;
+	private int autorotationThrottlePosition;
 	private int expoThrottleLimit;
 	private Switch markerSwitch;
 	private PitchMin pitchMin;
@@ -47,13 +49,21 @@ public class HelicopterModel extends BaseModel {
 		super(ModelType.Helicopter);
 	}
 
-	public int getAutorotationPosition() {
-		return autorotationPosition;
+	public int getAutorotationC1TriggerPosition() {
+		return autorotationC1TriggerPosition;
 	}
 
 	@XmlIDREF
-	public Switch getAutorotatonSwitch() {
-		return autorotatonSwitch;
+	public Switch getAutorotationSwitch() {
+		return autorotationSwitch;
+	}
+
+	public int getAutorotationTailPosition() {
+		return autorotationTailPosition;
+	}
+
+	public int getAutorotationThrottlePosition() {
+		return autorotationThrottlePosition;
 	}
 
 	public int getExpoThrottleLimit() {
@@ -89,12 +99,20 @@ public class HelicopterModel extends BaseModel {
 		return swashplateLinearization;
 	}
 
-	public void setAutorotationPosition(final int autorotationPosition) {
-		this.autorotationPosition = autorotationPosition;
+	public void setAutorotationC1TriggerPosition(final int autorotationPosition) {
+		autorotationC1TriggerPosition = autorotationPosition;
 	}
 
-	public void setAutorotatonSwitch(final Switch autorotatonSwitch) {
-		this.autorotatonSwitch = autorotatonSwitch;
+	public void setAutorotationSwitch(final Switch autorotatonSwitch) {
+		autorotationSwitch = autorotatonSwitch;
+	}
+
+	public void setAutorotationTailPosition(final int autorotationTailPosition) {
+		this.autorotationTailPosition = autorotationTailPosition;
+	}
+
+	public void setAutorotationThrottlePosition(final int autorotationThrottlePosition) {
+		this.autorotationThrottlePosition = autorotationThrottlePosition;
 	}
 
 	public void setExpoThrottleLimit(final int expoThrottleLimit) {

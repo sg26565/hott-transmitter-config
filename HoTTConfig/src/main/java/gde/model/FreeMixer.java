@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli@treichels.de
  */
-public class FreeMixer {
+public abstract class FreeMixer {
 	private Channel fromChannel;
 	private MixerInputType inputType;
 	private String number;

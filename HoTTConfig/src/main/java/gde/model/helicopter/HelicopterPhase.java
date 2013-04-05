@@ -23,7 +23,7 @@ import gde.model.Phase;
  * @author oli
  * 
  */
-public class HelicoperPhase extends Phase {
+public class HelicopterPhase extends Phase {
 	private int channel8Value;
 	private int gyroGain;
 	private HelicopterMixer helicopterMixer;

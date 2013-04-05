@@ -18,11 +18,13 @@
 package gde.model.winged;
 
 import gde.model.BaseModel;
+import gde.model.Channel;
 import gde.model.enums.AileronFlapType;
 import gde.model.enums.ModelType;
 import gde.model.enums.MotorOnC1Type;
 import gde.model.enums.TailType;
 
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class WingedModel extends BaseModel {
 	private AileronFlapType aileronFlapType;
-	private int brakeInput;
+	private Channel brakeInputChannel;
 	private int brakeOffset;
 	private boolean channel8Delay;
 	private MotorOnC1Type motorOnC1Type;
@@ -45,8 +47,9 @@ public class WingedModel extends BaseModel {
 		return aileronFlapType;
 	}
 
-	public int getBrakeInput() {
-		return brakeInput;
+	@XmlIDREF
+	public Channel getBrakeInputChannel() {
+		return brakeInputChannel;
 	}
 
 	public int getBrakeOffset() {
@@ -69,8 +72,8 @@ public class WingedModel extends BaseModel {
 		this.aileronFlapType = aileronFlapType;
 	}
 
-	public void setBrakeInput(final int brakeInput) {
-		this.brakeInput = brakeInput;
+	public void setBrakeInputChannel(final Channel brakeInputChannel) {
+		this.brakeInputChannel = brakeInputChannel;
 	}
 
 	public void setBrakeOffset(final int brakeOffset) {
