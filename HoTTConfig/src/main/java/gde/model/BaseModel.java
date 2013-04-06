@@ -40,6 +40,7 @@ public class BaseModel {
 	private boolean bound;
 	private Channel[] channel;
 	private ChannelMapping[] channelMapping;
+	private ChannelSequencer channelSequencer;
 	private Clock[] clock;
 	private ControlSwitch[] controlSwitch;
 	private SensorType currentSensor;
@@ -96,6 +97,10 @@ public class BaseModel {
 	@XmlElementWrapper(name = "channelMappings")
 	public ChannelMapping[] getChannelMapping() {
 		return channelMapping;
+	}
+
+	public ChannelSequencer getChannelSequencer() {
+		return channelSequencer;
 	}
 
 	@XmlElementWrapper(name = "clocks")
@@ -277,6 +282,10 @@ public class BaseModel {
 
 	public void setChannelMapping(final ChannelMapping[] channelMapping) {
 		this.channelMapping = channelMapping;
+	}
+
+	public void setChannelSequencer(final ChannelSequencer channelSequencer) {
+		this.channelSequencer = channelSequencer;
 	}
 
 	public void setClock(final Clock[] clocks) {
