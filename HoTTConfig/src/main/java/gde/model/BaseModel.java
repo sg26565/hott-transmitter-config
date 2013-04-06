@@ -58,6 +58,7 @@ public class BaseModel {
 	private int modelNumber;
 	private ModelType modelType;
 	private HFModule module;
+	private Mp3Player mp3Player;
 	private Multichannel[] multichannel;
 	private Phase[] phase;
 	private PhaseAssignment phaseAssignment;
@@ -172,6 +173,10 @@ public class BaseModel {
 
 	public HFModule getModule() {
 		return module;
+	}
+
+	public Mp3Player getMp3Player() {
+		return mp3Player;
 	}
 
 	@XmlElementWrapper(name = "multichannels")
@@ -354,6 +359,10 @@ public class BaseModel {
 
 	public void setModule(final HFModule module) {
 		this.module = module;
+	}
+
+	public void setMp3Player(final Mp3Player mp3Player) {
+		this.mp3Player = mp3Player;
 	}
 
 	public void setMultichannel(final Multichannel[] multichannel) {
