@@ -17,41 +17,51 @@
  */
 package gde.model;
 
-import gde.model.enums.CurveType;
-
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlIDREF;
 
 /**
  * @author oli
- * 
  */
-public class Curve {
-	private CurvePoint[] point;
-	private boolean smoothing = false;
-	private CurveType type;
+public class Multichannel {
+	private Control[] control;
+	private boolean enabled;
+	private Channel inputChannel;
+	private int number;
 
-	@XmlElementWrapper(name = "points")
-	public CurvePoint[] getPoint() {
-		return point;
+	@XmlElementWrapper(name = "controls")
+	public Control[] getControl() {
+		return control;
 	}
 
-	public CurveType getType() {
-		return type;
+	@XmlIDREF
+	public Channel getInputChannel() {
+		return inputChannel;
 	}
 
-	public boolean isSmoothing() {
-		return smoothing;
+	@XmlAttribute
+	public int getNumber() {
+		return number;
 	}
 
-	public void setPoint(final CurvePoint[] point) {
-		this.point = point;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setSmoothing(final boolean smoothing) {
-		this.smoothing = smoothing;
+	public void setControl(final Control[] control) {
+		this.control = control;
 	}
 
-	public void setType(final CurveType type) {
-		this.type = type;
+	public void setEnabled(final boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setInputChannel(final Channel inputChannel) {
+		this.inputChannel = inputChannel;
+	}
+
+	public void setNumber(final int number) {
+		this.number = number;
 	}
 }

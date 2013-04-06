@@ -27,9 +27,9 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Control {
-	private Switch controlSwitch;
-	private Switch highSwitch;
-	private Switch lowSwitch;
+	private Switch inputControl;
+	private Switch toggleHighSwitch;
+	private Switch toggleLowSwitch;
 	private ControlMode mode;
 	private String number;
 	private int offset;
@@ -39,18 +39,18 @@ public class Control {
 	private int travelLow;
 
 	@XmlIDREF
-	public Switch getControlSwitch() {
-		return controlSwitch;
+	public Switch getInputControl() {
+		return inputControl;
 	}
 
 	@XmlIDREF
-	public Switch getHighSwitch() {
-		return highSwitch;
+	public Switch getToggleHighSwitch() {
+		return toggleHighSwitch;
 	}
 
 	@XmlIDREF
-	public Switch getLowSwitch() {
-		return lowSwitch;
+	public Switch getToggleLowSwitch() {
+		return toggleLowSwitch;
 	}
 
 	public ControlMode getMode() {
@@ -83,16 +83,16 @@ public class Control {
 		return travelLow;
 	}
 
-	public void setControlSwitch(final Switch controlSwitch) {
-		this.controlSwitch = controlSwitch;
+	public void setInputControl(final Switch controlSwitch) {
+		this.inputControl = controlSwitch;
 	}
 
-	public void setHighSwitch(final Switch leftSwitch) {
-		highSwitch = leftSwitch;
+	public void setToggleHighSwitch(final Switch leftSwitch) {
+		toggleHighSwitch = leftSwitch;
 	}
 
-	public void setLowSwitch(final Switch rightSwitch) {
-		lowSwitch = rightSwitch;
+	public void setToggleLowSwitch(final Switch rightSwitch) {
+		toggleLowSwitch = rightSwitch;
 	}
 
 	public void setMode(final ControlMode mode) {

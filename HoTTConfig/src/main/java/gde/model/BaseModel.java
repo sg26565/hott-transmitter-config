@@ -57,6 +57,7 @@ public class BaseModel {
 	private int modelNumber;
 	private ModelType modelType;
 	private HFModule module;
+	private Multichannel[] multichannel;
 	private Phase[] phase;
 	private PhaseAssignment phaseAssignment;
 	private Switch powerOnWarning; // TODO check type
@@ -166,6 +167,11 @@ public class BaseModel {
 
 	public HFModule getModule() {
 		return module;
+	}
+
+	@XmlElementWrapper(name = "multichannels")
+	public Multichannel[] getMultichannel() {
+		return multichannel;
 	}
 
 	@XmlElementWrapper(name = "phases")
@@ -339,6 +345,10 @@ public class BaseModel {
 
 	public void setModule(final HFModule module) {
 		this.module = module;
+	}
+
+	public void setMultichannel(final Multichannel[] multichannel) {
+		this.multichannel = multichannel;
 	}
 
 	public void setPhase(final Phase[] phases) {

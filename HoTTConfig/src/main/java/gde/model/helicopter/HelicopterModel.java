@@ -24,6 +24,7 @@ import gde.model.enums.PitchMin;
 import gde.model.enums.RotorDirection;
 import gde.model.enums.SwashplateType;
 
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -39,6 +40,7 @@ public class HelicopterModel extends BaseModel {
 	private int expoThrottleLimit;
 	private Switch markerSwitch;
 	private PitchMin pitchMin;
+	private HelicopterProfiTrim[] profiTrim;
 	private RotorDirection rotorDirection;
 	private boolean swashplateLinearization;
 	private SwashplateMix swashplateMix;
@@ -77,6 +79,11 @@ public class HelicopterModel extends BaseModel {
 
 	public PitchMin getPitchMin() {
 		return pitchMin;
+	}
+
+	@XmlElementWrapper(name = "profitrims")
+	public HelicopterProfiTrim[] getProfiTrim() {
+		return profiTrim;
 	}
 
 	public RotorDirection getRotorDirection() {
@@ -125,6 +132,10 @@ public class HelicopterModel extends BaseModel {
 
 	public void setPitchMin(final PitchMin pitchMin) {
 		this.pitchMin = pitchMin;
+	}
+
+	public void setProfiTrim(final HelicopterProfiTrim[] profiTrim) {
+		this.profiTrim = profiTrim;
 	}
 
 	public void setRotorDirection(final RotorDirection rotorDirection) {

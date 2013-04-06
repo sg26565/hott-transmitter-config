@@ -15,43 +15,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gde.model;
+package gde.model.enums;
 
-import gde.model.enums.CurveType;
-
-import javax.xml.bind.annotation.XmlElementWrapper;
+import java.util.ResourceBundle;
 
 /**
  * @author oli
  * 
  */
-public class Curve {
-	private CurvePoint[] point;
-	private boolean smoothing = false;
-	private CurveType type;
+public enum CurveType {
+	Brake, Channel1, FreeMixer, Pitch, Tail, Throttle, Unused;
 
-	@XmlElementWrapper(name = "points")
-	public CurvePoint[] getPoint() {
-		return point;
+	/** @return the locale-dependent message */
+	@Override
+	public String toString() {
+		return ResourceBundle.getBundle(getClass().getName()).getString(name());
 	}
 
-	public CurveType getType() {
-		return type;
-	}
-
-	public boolean isSmoothing() {
-		return smoothing;
-	}
-
-	public void setPoint(final CurvePoint[] point) {
-		this.point = point;
-	}
-
-	public void setSmoothing(final boolean smoothing) {
-		this.smoothing = smoothing;
-	}
-
-	public void setType(final CurveType type) {
-		this.type = type;
-	}
 }
