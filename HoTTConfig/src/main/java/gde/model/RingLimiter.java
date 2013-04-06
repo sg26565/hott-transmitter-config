@@ -18,30 +18,46 @@
 package gde.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 
 /**
  * @author oli
  * 
  */
-public class Sequence {
+public class RingLimiter {
 	private boolean enabled;
+	private Channel[] inputChannel;
+	private int[] limit;
 	private int number;
-	private Channel outputChannel;
-	private int[] stepPosition;
+	private int[] offset;
+	private Channel[] outputChannel;
+
+	@XmlIDREF
+	@XmlElementWrapper(name = "inputChannels")
+	public Channel[] getInputChannel() {
+		return inputChannel;
+	}
+
+	@XmlElementWrapper(name = "limits")
+	public int[] getLimit() {
+		return limit;
+	}
 
 	@XmlAttribute
 	public int getNumber() {
 		return number;
 	}
 
-	@XmlIDREF
-	public Channel getOutputChannel() {
-		return outputChannel;
+	@XmlElementWrapper(name = "offsets")
+	public int[] getOffset() {
+		return offset;
 	}
 
-	public int[] getStepPosition() {
-		return stepPosition;
+	@XmlIDREF
+	@XmlElementWrapper(name = "outputChannels")
+	public Channel[] getOutputChannel() {
+		return outputChannel;
 	}
 
 	public boolean isEnabled() {
@@ -52,15 +68,23 @@ public class Sequence {
 		this.enabled = enabled;
 	}
 
+	public void setInputChannel(final Channel[] inputChannel) {
+		this.inputChannel = inputChannel;
+	}
+
+	public void setLimit(final int[] limit) {
+		this.limit = limit;
+	}
+
 	public void setNumber(final int number) {
 		this.number = number;
 	}
 
-	public void setOutputChannel(final Channel outputChannel) {
-		this.outputChannel = outputChannel;
+	public void setOffset(final int[] offset) {
+		this.offset = offset;
 	}
 
-	public void setStepPosition(final int[] stepPosition) {
-		this.stepPosition = stepPosition;
+	public void setOutputChannel(final Channel[] outputChannel) {
+		this.outputChannel = outputChannel;
 	}
 }

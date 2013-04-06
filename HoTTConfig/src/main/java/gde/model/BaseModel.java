@@ -64,6 +64,7 @@ public class BaseModel {
 	private PhaseAssignment phaseAssignment;
 	private Switch powerOnWarning; // TODO check type
 	private Receiver[] receiver;
+	private RingLimiter[] ringLimiter;
 	private Collection<SensorType> selectedSensor;
 	private StickMode stickMode;
 	private StickTrim[] stickTrim;
@@ -201,6 +202,10 @@ public class BaseModel {
 	@XmlElementWrapper(name = "receivers")
 	public Receiver[] getReceiver() {
 		return receiver;
+	}
+
+	public RingLimiter[] getRingLimiter() {
+		return ringLimiter;
 	}
 
 	public Collection<SensorType> getSelectedSensor() {
@@ -383,6 +388,10 @@ public class BaseModel {
 
 	public void setReceiver(final Receiver[] receivers) {
 		receiver = receivers;
+	}
+
+	public void setRingLimiter(final RingLimiter[] ringLimiter) {
+		this.ringLimiter = ringLimiter;
 	}
 
 	public void setSelectedSensor(final Collection<SensorType> selectedSensors) {
