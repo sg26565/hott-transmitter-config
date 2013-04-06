@@ -105,9 +105,9 @@
 </#if>
 			<tr>
 				<th align="right" valign="top">Motor-Stopp</th>
-				<td><i>Position:</i> ${model.throttleCutOf.position}%</td>
-				<td><i>Limit:</i> ${model.throttleCutOf.threshold}%</td>
-				<td><i>Schalter:</i> <@switch model.throttleCutOf.switch/></td>							
+				<td><i>Position:</i> ${model.throttleSettings.throttleCutOf.position}%</td>
+				<td><i>Limit:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
+				<td><i>Schalter:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>							
 			</tr>
 <#if helicopterModel??>
 			<tr>
@@ -127,11 +127,11 @@
 </#if>
 			<tr>
 				<th align="right">Gastrimm</th>
-				<td colspan="3">${model.throttleTrim}%</td>
+				<td colspan="3">${model.throttleSettings.throttleTrim}%</td>
 			</tr>
 			<tr>
 				<th align="right">letzte Leerlaufposition</th>
-				<td colspan="3">${model.throttleLastIdlePosition}%</td>
+				<td colspan="3">${model.throttleSettings.throttleLastIdlePosition}%</td>
 			</tr>			
 <#if wingedModel??>
 			<tr>
@@ -430,7 +430,11 @@
 				<th>Position</th>
 <#list model.channel as channel>
 <#if !channel.virtual>
+<#if channel.failSafeMode.name() == "Position">
 				<td align="center">${channel.failSafePosition}%</td>
+<#else>
+				<td>---</td>
+</#if>
 </#if>
 </#list>
 			</tr>
@@ -441,31 +445,28 @@
 		<h1>Telemetrie</h1>
 		<table>
 			<tr>
-				<th align="right" rowspan="2">Ansage wiederholen</th>
-				<td>${model.voiceDelay}s</td>
-			</tr>
-			<tr>
-				<td><@switch model.VoiceRepeat/></td>
+				<th align="right">Ansage wiederholen</th>
+				<td>${model.telemetry.voiceDelay}s <i>Schalter:</i> <@switch model.telemetry.VoiceRepeat/></td>
 			</tr>
 			<tr>
 				<th align="right">nächste Ansage</th>
-				<td><@switch model.VoiceTrigger/></td>
+				<td><@switch model.telemetry.VoiceTrigger/></td>
 			</tr>
 			<tr>
 				<th align="right">Varioton</th>
-				<td><@switch model.VarioTone/></td>
+				<td><@switch model.telemetry.VarioTone/></td>
 			</tr>
 			<tr>
 				<th align="right">ausgewählte Sensoren</th>
-				<td><#list model.selectedSensor as sensor>${sensor} </#list></td>
+				<td><#list model.telemetry.selectedSensor as sensor>${sensor} </#list></td>
 			</tr>
 			<tr>
 				<th align="right">aktueller Sensor</th>
-				<td>${model.currentSensor}</td>
+				<td>${model.telemetry.currentSensor}</td>
 			</tr>
 			<tr>
 				<th align="right">aktuelle Sensorseite</th>
-				<td>${model.currentSensorPage}</td>
+				<td>${model.telemetry.currentSensorPage}</td>
 			</tr>
 		</table>
 		

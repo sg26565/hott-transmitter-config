@@ -15,8 +15,33 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gde.model.enums;
+package gde.model;
 
-public enum SwitchAssignment {
-	CTRL1, CTRL10, CTRL2, CTRL4, CTRL5, CTRL6, CTRL7, CTRL8, CTRL9, DG1, DG2, DG3, DG4, DG5, Fx, FX, FXi, G1, G2, G3, G4, G5, G6, G7, G8, GB1, GB2, GB3, GB4, GB5, GB6, Gi1, Gi2, Gi3, Gi4, Gi5, Gi6, Gi7, Gi8, L1, L2, L3, L4, L5, L6, L7, L8, Li1, Li2, Li3, Li4, Li5, Li6, Li7, Li8, SD1, SD2, SR1, SR2, SR3, SW1, SW10, SW11, SW12, SW13, SW14, SW15, SW16, SW2, SW3, SW4, SW5, SW6, SW7, SW8, SW9, TR1, TR2, TR3, TR4, Unassigned;
+/**
+ * @author oli
+ */
+public class ThrottleSettings {
+
+	private ThrottleCutOf throttleCutOf;
+	private int throttleLastIdlePosition;
+	private int throttleTrim;
+	public void setThrottleCutOf(final ThrottleCutOf throttleCutOf) {
+		this.throttleCutOf = throttleCutOf;
+	}
+	public void setThrottleLastIdlePosition(final int throttleLastPosition) {
+		throttleLastIdlePosition = throttleLastPosition;
+	}
+	public void setThrottleTrim(final int throttleTrim) {
+		this.throttleTrim = throttleTrim;
+	}
+	public ThrottleCutOf getThrottleCutOf() {
+		return throttleCutOf;
+	}
+	public int getThrottleLastIdlePosition() {
+		return throttleLastIdlePosition;
+	}
+	public int getThrottleTrim() {
+		return throttleTrim;
+	}
+
 }

@@ -20,12 +20,9 @@ package gde.model;
 import gde.model.enums.DSCOutputType;
 import gde.model.enums.ExtPPMType;
 import gde.model.enums.ModelType;
-import gde.model.enums.SensorType;
 import gde.model.enums.StickMode;
 import gde.model.enums.TransmitterType;
 import gde.model.enums.Vendor;
-
-import java.util.Collection;
 
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
@@ -43,15 +40,12 @@ public class BaseModel {
 	private ChannelSequencer channelSequencer;
 	private Clock[] clock;
 	private ControlSwitch[] controlSwitch;
-	private SensorType currentSensor;
-	private int currentSensorPage;
 	private DSCOutputType dscOutputType;
 	private DualMixer[] dualMixer;
 	private ExtPPMType extPpmType;
 	private double failSafeDelay;
 	private boolean failSafeSettingCheck;
 	private FreeMixer[] freeMixer;
-	private String info;
 	private LogicalSwitch[] logicalSwitch;
 	private int memoryVersion;
 	private String modelName;
@@ -62,21 +56,17 @@ public class BaseModel {
 	private Multichannel[] multichannel;
 	private Phase[] phase;
 	private PhaseAssignment phaseAssignment;
-	private Switch powerOnWarning; // TODO check type
 	private Receiver[] receiver;
 	private RingLimiter[] ringLimiter;
-	private Collection<SensorType> selectedSensor;
 	private StickMode stickMode;
 	private StickTrim[] stickTrim;
 	private Switch[] sw;
-	private ThrottleCutOf throttleCutOf;
-	private int throttleLastIdlePosition;
-	private int throttleTrim;
+	private Telemetry telemetry;
+	private ThrottleSettings throttleSettings;
 	private TrainerConfig trainerConfig;
 	private long transmitterId;
 	private TransmitterType transmitterType;
 	private Vendor vendor;
-	private int voiceDelay;
 
 	public BaseModel(final ModelType modelType) {
 		this.modelType = modelType;
@@ -116,14 +106,6 @@ public class BaseModel {
 		return controlSwitch;
 	}
 
-	public SensorType getCurrentSensor() {
-		return currentSensor;
-	}
-
-	public int getCurrentSensorPage() {
-		return currentSensorPage;
-	}
-
 	public DSCOutputType getDscOutputType() {
 		return dscOutputType;
 	}
@@ -144,10 +126,6 @@ public class BaseModel {
 	@XmlElementWrapper(name = "freeMixers")
 	public FreeMixer[] getFreeMixer() {
 		return freeMixer;
-	}
-
-	public String getInfo() {
-		return info;
 	}
 
 	@XmlElementWrapper(name = "logicalSwitches")
@@ -194,22 +172,14 @@ public class BaseModel {
 		return phaseAssignment;
 	}
 
-	@XmlIDREF
-	public Switch getPowerOnWarning() {
-		return powerOnWarning;
-	}
-
 	@XmlElementWrapper(name = "receivers")
 	public Receiver[] getReceiver() {
 		return receiver;
 	}
 
+	@XmlElementWrapper(name = "ringLimiters")
 	public RingLimiter[] getRingLimiter() {
 		return ringLimiter;
-	}
-
-	public Collection<SensorType> getSelectedSensor() {
-		return selectedSensor;
 	}
 
 	public StickMode getStickMode() {
@@ -226,16 +196,12 @@ public class BaseModel {
 		return sw;
 	}
 
-	public ThrottleCutOf getThrottleCutOf() {
-		return throttleCutOf;
+	public Telemetry getTelemetry() {
+		return telemetry;
 	}
 
-	public int getThrottleLastIdlePosition() {
-		return throttleLastIdlePosition;
-	}
-
-	public int getThrottleTrim() {
-		return throttleTrim;
+	public ThrottleSettings getThrottleSettings() {
+		return throttleSettings;
 	}
 
 	public TrainerConfig getTrainerConfig() {
@@ -252,10 +218,6 @@ public class BaseModel {
 
 	public Vendor getVendor() {
 		return vendor;
-	}
-
-	public int getVoiceDelay() {
-		return voiceDelay;
 	}
 
 	public boolean isAutoTimerReset() {
@@ -306,14 +268,6 @@ public class BaseModel {
 		controlSwitch = controlSwitches;
 	}
 
-	public void setCurrentSensor(final SensorType settingSensorType) {
-		currentSensor = settingSensorType;
-	}
-
-	public void setCurrentSensorPage(final int settingSensorPage) {
-		currentSensorPage = settingSensorPage;
-	}
-
 	public void setDscOutputType(final DSCOutputType dscOutput) {
 		dscOutputType = dscOutput;
 	}
@@ -336,10 +290,6 @@ public class BaseModel {
 
 	public void setFreeMixer(final FreeMixer[] freeMixer) {
 		this.freeMixer = freeMixer;
-	}
-
-	public void setInfo(final String info) {
-		this.info = info;
 	}
 
 	public void setLogicalSwitch(final LogicalSwitch[] logicalSwitches) {
@@ -382,20 +332,12 @@ public class BaseModel {
 		this.phaseAssignment = phaseAssignment;
 	}
 
-	public void setPowerOnWarning(final Switch powerOnWarning) {
-		this.powerOnWarning = powerOnWarning;
-	}
-
 	public void setReceiver(final Receiver[] receivers) {
 		receiver = receivers;
 	}
 
 	public void setRingLimiter(final RingLimiter[] ringLimiter) {
 		this.ringLimiter = ringLimiter;
-	}
-
-	public void setSelectedSensor(final Collection<SensorType> selectedSensors) {
-		selectedSensor = selectedSensors;
 	}
 
 	public void setStickMode(final StickMode stickMode) {
@@ -410,16 +352,12 @@ public class BaseModel {
 		sw = switches;
 	}
 
-	public void setThrottleCutOf(final ThrottleCutOf throttleCutOf) {
-		this.throttleCutOf = throttleCutOf;
+	public void setTelemetry(final Telemetry telemetry) {
+		this.telemetry = telemetry;
 	}
 
-	public void setThrottleLastIdlePosition(final int throttleLastPosition) {
-		throttleLastIdlePosition = throttleLastPosition;
-	}
-
-	public void setThrottleTrim(final int throttleTrim) {
-		this.throttleTrim = throttleTrim;
+	public void setThrottleSettings(final ThrottleSettings throttleSettings) {
+		this.throttleSettings = throttleSettings;
 	}
 
 	public void setTrainerConfig(final TrainerConfig trainerConfig) {
@@ -436,9 +374,5 @@ public class BaseModel {
 
 	public void setVendor(final Vendor vendor) {
 		this.vendor = vendor;
-	}
-
-	public void setVoiceDelay(final int voiceDelay) {
-		this.voiceDelay = voiceDelay;
 	}
 }
