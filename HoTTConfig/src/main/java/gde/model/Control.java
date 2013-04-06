@@ -28,29 +28,20 @@ import javax.xml.bind.annotation.XmlIDREF;
  */
 public class Control {
 	private Switch inputControl;
-	private Switch toggleHighSwitch;
-	private Switch toggleLowSwitch;
 	private ControlMode mode;
 	private String number;
 	private int offset;
 	private double timeHigh;
 	private double timeLow;
+	private Switch toggleHighSwitch;
+	private Switch toggleLowSwitch;
 	private int travelHigh;
 	private int travelLow;
+	private int trim;
 
 	@XmlIDREF
 	public Switch getInputControl() {
 		return inputControl;
-	}
-
-	@XmlIDREF
-	public Switch getToggleHighSwitch() {
-		return toggleHighSwitch;
-	}
-
-	@XmlIDREF
-	public Switch getToggleLowSwitch() {
-		return toggleLowSwitch;
 	}
 
 	public ControlMode getMode() {
@@ -75,6 +66,16 @@ public class Control {
 		return timeLow;
 	}
 
+	@XmlIDREF
+	public Switch getToggleHighSwitch() {
+		return toggleHighSwitch;
+	}
+
+	@XmlIDREF
+	public Switch getToggleLowSwitch() {
+		return toggleLowSwitch;
+	}
+
 	public int getTravelHigh() {
 		return travelHigh;
 	}
@@ -83,16 +84,12 @@ public class Control {
 		return travelLow;
 	}
 
+	public int getTrim() {
+		return trim;
+	}
+
 	public void setInputControl(final Switch controlSwitch) {
-		this.inputControl = controlSwitch;
-	}
-
-	public void setToggleHighSwitch(final Switch leftSwitch) {
-		toggleHighSwitch = leftSwitch;
-	}
-
-	public void setToggleLowSwitch(final Switch rightSwitch) {
-		toggleLowSwitch = rightSwitch;
+		inputControl = controlSwitch;
 	}
 
 	public void setMode(final ControlMode mode) {
@@ -119,11 +116,23 @@ public class Control {
 		this.timeLow = timeLow;
 	}
 
+	public void setToggleHighSwitch(final Switch leftSwitch) {
+		toggleHighSwitch = leftSwitch;
+	}
+
+	public void setToggleLowSwitch(final Switch rightSwitch) {
+		toggleLowSwitch = rightSwitch;
+	}
+
 	public void setTravelHigh(final int travelHigh) {
 		this.travelHigh = travelHigh;
 	}
 
 	public void setTravelLow(final int travelLow) {
 		this.travelLow = travelLow;
+	}
+
+	public void setTrim(final int trim) {
+		this.trim = trim;
 	}
 }

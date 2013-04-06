@@ -17,6 +17,8 @@
  */
 package gde.model;
 
+import gde.model.enums.MultichannelMode;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
@@ -28,6 +30,7 @@ public class Multichannel {
 	private Control[] control;
 	private boolean enabled;
 	private Channel inputChannel;
+	private MultichannelMode mode;
 	private int number;
 
 	@XmlElementWrapper(name = "controls")
@@ -38,6 +41,10 @@ public class Multichannel {
 	@XmlIDREF
 	public Channel getInputChannel() {
 		return inputChannel;
+	}
+
+	public MultichannelMode getMode() {
+		return mode;
 	}
 
 	@XmlAttribute
@@ -59,6 +66,10 @@ public class Multichannel {
 
 	public void setInputChannel(final Channel inputChannel) {
 		this.inputChannel = inputChannel;
+	}
+
+	public void setMode(final MultichannelMode mode) {
+		this.mode = mode;
 	}
 
 	public void setNumber(final int number) {
