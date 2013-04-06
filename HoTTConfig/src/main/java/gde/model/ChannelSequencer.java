@@ -29,7 +29,7 @@ public class ChannelSequencer {
 	private int maxStep;
 	private SequenceStatus powerOffStatus;
 	private Sequence[] sequence;
-	private int[] stepTime;
+	private double[] stepTime;
 	private Switch sw;
 
 	public int getMaxStep() {
@@ -46,7 +46,7 @@ public class ChannelSequencer {
 	}
 
 	@XmlElementWrapper(name = "stepTimes")
-	public int[] getStepTime() {
+	public double[] getStepTime() {
 		return stepTime;
 	}
 
@@ -67,7 +67,7 @@ public class ChannelSequencer {
 		this.sequence = sequence;
 	}
 
-	public void setStepTime(final int[] stepTime) {
+	public void setStepTime(final double[] stepTime) {
 		this.stepTime = stepTime;
 	}
 
