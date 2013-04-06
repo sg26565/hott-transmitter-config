@@ -26,6 +26,7 @@ import gde.model.Phase;
 public class HelicopterPhase extends Phase {
 	private int channel8Value;
 	private int gyroGain;
+	private int gyroSuppression;
 	private HelicopterMixer helicopterMixer;
 	private HelicopterTrim helicopterTrim;
 
@@ -35,6 +36,10 @@ public class HelicopterPhase extends Phase {
 
 	public int getGyroGain() {
 		return gyroGain;
+	}
+
+	public int getGyroSuppression() {
+		return gyroSuppression;
 	}
 
 	public HelicopterMixer getHelicopterMixer() {
@@ -51,6 +56,10 @@ public class HelicopterPhase extends Phase {
 
 	public void setGyroGain(final int gyroGain) {
 		this.gyroGain = gyroGain;
+	}
+
+	public void setGyroSuppression(final int gyroSuppression) {
+		this.gyroSuppression = gyroSuppression;
 	}
 
 	public void setHelicopterMixer(final HelicopterMixer heliMix) {
