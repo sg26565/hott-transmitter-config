@@ -17,7 +17,6 @@
  */
 package gde.model.helicopter;
 
-import gde.model.Phase;
 import gde.model.Switch;
 import gde.model.enums.CurveType;
 
@@ -30,7 +29,7 @@ public class HelicopterProfiTrim {
 	private CurveType curveType;
 	private boolean enabled;
 	private Switch inputControl;
-	private Phase phase;
+	private HelicopterPhase phase;
 	private int point;
 
 	public CurveType getCurveType() {
@@ -43,7 +42,7 @@ public class HelicopterProfiTrim {
 	}
 
 	@XmlIDREF
-	public Phase getPhase() {
+	public HelicopterPhase getPhase() {
 		return phase;
 	}
 
@@ -67,7 +66,7 @@ public class HelicopterProfiTrim {
 		this.inputControl = inputControl;
 	}
 
-	public void setPhase(final Phase phase) {
+	public void setPhase(final HelicopterPhase phase) {
 		this.phase = phase;
 	}
 
