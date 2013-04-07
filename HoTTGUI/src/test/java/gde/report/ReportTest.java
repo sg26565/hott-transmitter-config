@@ -34,6 +34,7 @@ import org.junit.Test;
 
 import freemarker.template.TemplateException;
 import gde.model.BaseModel;
+import gde.model.enums.TransmitterType;
 import gde.model.winged.WingedModel;
 
 public class ReportTest {
@@ -45,7 +46,7 @@ public class ReportTest {
 
 	@Test
 	public void testGetModelClassPath() throws IOException, URISyntaxException, TemplateException {
-		final BaseModel model = Report.getModel("gde/report/models/aMERLIN.mdl");
+		final BaseModel model = Report.getModel("gde/report/models/mx16/aMERLIN.mdl");
 
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Report.process(model, baos, "test.ftl");
@@ -54,7 +55,7 @@ public class ReportTest {
 
 	@Test
 	public void testGetModelFile() throws URISyntaxException, IOException, TemplateException {
-		final URL url = ClassLoader.getSystemResource("gde/report/models/aMERLIN.mdl");
+		final URL url = ClassLoader.getSystemResource("gde/report/models/mx16/aMERLIN.mdl");
 		final File file = new File(url.toURI());
 		final BaseModel model = Report.getModel(file);
 
@@ -65,13 +66,58 @@ public class ReportTest {
 
 	@Test
 	public void testGetModelFilePath() throws IOException, URISyntaxException, TemplateException {
-		final URL url = ClassLoader.getSystemResource("gde/report/models/aMERLIN.mdl");
+		final URL url = ClassLoader.getSystemResource("gde/report/models/mx16/aMERLIN.mdl");
 		final File file = new File(url.toURI());
 		final BaseModel model = Report.getModel(file.getAbsolutePath());
 
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Report.process(model, baos, "test.ftl");
 		assertEquals("Name: MERLIN", baos.toString());
+	}
+
+	@Test
+	public void testMx12Models() throws URISyntaxException, IOException, JAXBException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx12").toURI());
+
+		for (final File file : dir.listFiles()) {
+			final BaseModel model = Report.getModel(file);
+
+			assertEquals(TransmitterType.mx12, model.getTransmitterType());
+
+			final ByteArrayOutputStream out = new ByteArrayOutputStream();
+			Report.process(model, out);
+			assertTrue(out.size() > 0);
+		}
+	}
+
+	@Test
+	public void testMx16Models() throws URISyntaxException, IOException, JAXBException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx16").toURI());
+
+		for (final File file : dir.listFiles()) {
+			final BaseModel model = Report.getModel(file);
+
+			assertEquals(TransmitterType.mx16, model.getTransmitterType());
+
+			final ByteArrayOutputStream out = new ByteArrayOutputStream();
+			Report.process(model, out);
+			assertTrue(out.size() > 0);
+		}
+	}
+
+	@Test
+	public void testMx32Models() throws URISyntaxException, IOException, JAXBException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mc32").toURI());
+
+		for (final File file : dir.listFiles()) {
+			final BaseModel model = Report.getModel(file);
+
+			assertEquals(TransmitterType.mc32, model.getTransmitterType());
+
+			final ByteArrayOutputStream out = new ByteArrayOutputStream();
+			Report.process(model, out);
+			assertTrue(out.size() > 0);
+		}
 	}
 
 	@Test
