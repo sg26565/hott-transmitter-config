@@ -36,7 +36,7 @@ public class GenerateDemoFiles {
 	public static void main(final String[] args) throws IOException, URISyntaxException, JAXBException, TemplateException, DocumentException {
 		final File dir = new File("demo");
 
-		Report.generateXsd(new File(dir, "HottGUI.xsd"));
+		Report.generateXsd(new File(dir, "HoTTGUI.xsd"));
 
 		for (final File file : dir.listFiles()) {
 			if (file.getName().endsWith(".mdl")) {

@@ -1065,6 +1065,7 @@
   <xs:simpleType name="sensorType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="ElectricAirModule"/>
+      <xs:enumeration value="ESC"/>
       <xs:enumeration value="GeneralAirModule"/>
       <xs:enumeration value="GeneralModule"/>
       <xs:enumeration value="GPS"/>
