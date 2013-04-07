@@ -30,6 +30,9 @@ import java.util.Map;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.SchemaOutputResolver;
+import javax.xml.transform.Result;
+import javax.xml.transform.stream.StreamResult;
 
 import de.treichels.hott.HoTTDecoder;
 import freemarker.template.Configuration;
@@ -49,6 +52,7 @@ import gde.model.winged.WingedPhase;
  */
 public class Report {
 	private static final Configuration configuration;
+	private static final JAXBContext ctx;
 	private static final Marshaller marshaller;
 
 	static {
@@ -58,13 +62,23 @@ public class Report {
 		configuration.setTemplateExceptionHandler(new FreeMarkerExceptionHandler());
 
 		try {
-			final JAXBContext ctx = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class,
-					LinearMixer.class, CurveMixer.class);
+			ctx = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class, LinearMixer.class,
+					CurveMixer.class);
 			marshaller = ctx.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 		} catch (final JAXBException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static void generateXsd(final File file) throws IOException {
+		ctx.generateSchema(new SchemaOutputResolver() {
+			@Override
+			public Result createOutput(final String namespaceUri, final String suggestedFileName) throws IOException {
+				final StreamResult result = new StreamResult(file);
+				return result;
+			}
+		});
 	}
 
 	public static BaseModel getModel(final File file) throws IOException, URISyntaxException {
