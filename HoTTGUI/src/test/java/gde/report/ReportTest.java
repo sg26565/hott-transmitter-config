@@ -76,6 +76,36 @@ public class ReportTest {
 	}
 
 	@Test
+	public void testMc20Models() throws URISyntaxException, IOException, JAXBException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mc20").toURI());
+
+		for (final File file : dir.listFiles()) {
+			final BaseModel model = Report.getModel(file);
+
+			assertEquals(TransmitterType.mc20, model.getTransmitterType());
+
+			final ByteArrayOutputStream out = new ByteArrayOutputStream();
+			Report.process(model, out);
+			assertTrue(out.size() > 0);
+		}
+	}
+
+	@Test
+	public void testMc32Models() throws URISyntaxException, IOException, JAXBException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mc32").toURI());
+
+		for (final File file : dir.listFiles()) {
+			final BaseModel model = Report.getModel(file);
+
+			assertEquals(TransmitterType.mc32, model.getTransmitterType());
+
+			final ByteArrayOutputStream out = new ByteArrayOutputStream();
+			Report.process(model, out);
+			assertTrue(out.size() > 0);
+		}
+	}
+
+	@Test
 	public void testMx12Models() throws URISyntaxException, IOException, JAXBException {
 		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx12").toURI());
 
@@ -106,13 +136,13 @@ public class ReportTest {
 	}
 
 	@Test
-	public void testMx32Models() throws URISyntaxException, IOException, JAXBException {
-		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mc32").toURI());
+	public void testMx20Models() throws URISyntaxException, IOException, JAXBException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx20").toURI());
 
 		for (final File file : dir.listFiles()) {
 			final BaseModel model = Report.getModel(file);
 
-			assertEquals(TransmitterType.mc32, model.getTransmitterType());
+			assertEquals(TransmitterType.mx20, model.getTransmitterType());
 
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
 			Report.process(model, out);
