@@ -1,5 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<!--
+	HoTT Transmitter Config
+	Copyright (C) 2013  Oliver Treichel
+	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 	<head>
 		<title>Graupner/SJ mx-16 - T1</title>
 		<style type="text/css" media="print">
@@ -52,7 +69,7 @@
 			<tr>
 				<th align="right" valign="top">Motor-Stopp</th>
 				<td><i>Position:</i> -100%</td>
-				<td><i>Limit:</i> 1.200%</td>
+				<td><i>Limit:</i> 150%</td>
 				<td><i>Schalter:</i> ---</td>							
 			</tr>
 			<tr>
@@ -77,8 +94,20 @@
 			</tr>
 			<tr>
 				<th align="right" valign="top">Uhren</th>
-				<td><i>Stoppuhr:</i> 0:00</td>
-				<td colspan="2"><i>Schalter:</i> SW1 invers</td>
+				<td colspan="3">
+					<table callpadding="0">
+						<tr>
+							<th>Typ</th>
+							<th>Wert</th>
+							<th>Schalter</th>
+						</tr>
+						<tr>
+							<td>Stoppuhr</td>
+							<td>0:00</td>
+							<td>SW1 invers</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
 				<th align="right" valign="top">Phase 1</th>
@@ -88,17 +117,17 @@
 			<tr>
 				<th align="right" valign="top">Phase 2</th>
 				<td><i>Name:</i> Test</td>
-				<td colspan="2"><i>Schalter:</i> SW2 normal</td>
+				<td colspan="2"><i>Schalter:</i> ---</td>
 			</tr>
 			<tr>
 				<th align="right" valign="top">Phase 3</th>
 				<td><i>Name:</i> Schlepp</td>
-				<td colspan="2"><i>Schalter:</i> SW3 normal</td>
+				<td colspan="2"><i>Schalter:</i> ---</td>
 			</tr>
 			<tr>
 				<th align="right" valign="top">Phase 4</th>
 				<td><i>Name:</i> Landung</td>
-				<td colspan="2"><i>Schalter:</i> SW4 normal</td>
+				<td colspan="2"><i>Schalter:</i> ---</td>
 			</tr>
 			<tr>
 				<th align="right" valign="top">Empf&auml;ngerausgang</th>
@@ -238,27 +267,33 @@
 			</tr>
 			<tr>
 				<td align="center">E5</td>
-				<td align="cender">CTRL6</td>
+				<td align="cender">---</td>
 				<td align="cender">90%</td>
 				<td align="cender">91%</td>
 			</tr>
 			<tr>
 				<td align="center">E6</td>
-				<td align="cender">CTRL7</td>
+				<td align="cender">---</td>
 				<td align="cender">92%</td>
 				<td align="cender">93%</td>
 			</tr>
 			<tr>
 				<td align="center">E7</td>
-				<td align="cender">CTRL8</td>
+				<td align="cender">---</td>
 				<td align="cender">94%</td>
 				<td align="cender">95%</td>
 			</tr>
 			<tr>
 				<td align="center">E8</td>
-				<td align="cender">CTRL9</td>
+				<td align="cender">---</td>
 				<td align="cender">96%</td>
 				<td align="cender">97%</td>
+			</tr>
+			<tr>
+				<td align="center">E9</td>
+				<td align="cender">---</td>
+				<td align="cender">100%</td>
+				<td align="cender">100%</td>
 			</tr>
 		</table>
 
@@ -420,63 +455,63 @@
 				<th align="left">Schalter</th>
 			</tr>
 			<tr>
-				<th align="right">Mischer QR->WK</th>
-				<td align="center">4%</td>
-				<td>---</td>						
-			</tr>
-			<tr>
-				<th align="right">Mischer BR->HR</th>
-				<td align="center">5%</td>
-				<td>---</td>						
-			</tr>
-			<tr>
-				<th align="right">Mischer HR->WK</th>
-				<td align="center">8%</td>
-				<td>---</td>						
-			</tr>
-			<tr>
-				<th align="right">W&ouml;lbklappendifferenzierung</th>
-				<td align="center">2%</td>
-				<td>SW9 normal</td>						
-			</tr>
-			<tr>
-				<th align="right">Querruderdifferenzierung</th>
+				<th align="right">Diff_Aileron</th>
 				<td align="center">1%</td>
 				<td>SW8 normal</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer BR->WK</th>
+				<th align="right">Diff_Flap</th>
+				<td align="center">2%</td>
+				<td>SW9 normal</td>						
+			</tr>
+			<tr>
+				<th align="right">Mixer_Aileron_Rudder</th>
+				<td align="center">3%</td>
+				<td>---</td>						
+			</tr>
+			<tr>
+				<th align="right">Mixer_Aileron_Flap</th>
+				<td align="center">4%</td>
+				<td>---</td>						
+			</tr>
+			<tr>
+				<th align="right">Mixer_Brake_Elevator</th>
+				<td align="center">5%</td>
+				<td>---</td>						
+			</tr>
+			<tr>
+				<th align="right">Mixer_Brake_Flap</th>
 				<td align="center">6%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Diff.-Reduzierung</th>
-				<td align="center">12%</td>
-				<td>---</td>						
-			</tr>
-			<tr>
-				<th align="right">Mischer BR->QR</th>
+				<th align="right">Mixer_Brake_Aileron</th>
 				<td align="center">7%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer HR->QR</th>
+				<th align="right">Mixer_Elevator_Flap</th>
+				<td align="center">8%</td>
+				<td>---</td>						
+			</tr>
+			<tr>
+				<th align="right">Mixer_Elevator_Aileron</th>
 				<td align="center">9%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer WK->HR</th>
+				<th align="right">Mixer_Flap_Elevator</th>
 				<td align="center">10%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer WK->QR</th>
+				<th align="right">Mixer_Flap_Aileron</th>
 				<td align="center">11%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer QA->SR</th>
-				<td align="center">3%</td>
+				<th align="right">Diff_Reduction</th>
+				<td align="center">12%</td>
 				<td>---</td>						
 			</tr>
 		</table>
@@ -488,6 +523,7 @@
 			<tr>
 				<th>Mixer</th>
 				<th>Typ</th>
+				<th>Input</th>
 				<th>von</th>
 				<th>zu</th>
 				<th>Schalter</th>
@@ -498,7 +534,8 @@
 		
 			<tr>
 				<td>M1</td>
-				<td>Trim</td>
+				<td>Linearmischer</td>
+				<td>Trimm</td>
 				<td>1</td>
 				<td>2</td>
 				<td>G1</td>
@@ -508,6 +545,7 @@
 			</tr>
 			<tr>
 				<td>M2</td>
+				<td>Linearmischer</td>
 				<td>Normal</td>
 				<td>S</td>
 				<td>3</td>
@@ -518,6 +556,7 @@
 			</tr>
 			<tr>
 				<td>M3</td>
+				<td>Linearmischer</td>
 				<td>Normal</td>
 				<td>2</td>
 				<td>3</td>
@@ -567,13 +606,13 @@
 			<tr>
 				<th>Position</th>
 				<td align="center">34%</td>
-				<td align="center">-77%</td>
+				<td>---</td>
 				<td align="center">61%</td>
-				<td align="center">-69%</td>
+				<td>---</td>
 				<td align="center">-103%</td>
-				<td align="center">-4%</td>
+				<td>---</td>
 				<td align="center">-10%</td>
-				<td align="center">8%</td>
+				<td>---</td>
 			</tr>
 		</table>
 		
@@ -582,11 +621,8 @@
 		<h1>Telemetrie</h1>
 		<table>
 			<tr>
-				<th align="right" rowspan="2">Ansage wiederholen</th>
-				<td>17s</td>
-			</tr>
-			<tr>
-				<td>---</td>
+				<th align="right">Ansage wiederholen</th>
+				<td>17s <i>Schalter:</i> ---</td>
 			</tr>
 			<tr>
 				<th align="right">n&auml;chste Ansage</th>
@@ -628,7 +664,7 @@
 			</tr>
 			<tr>
 				<th align="right">Schalter</th>
-				<td>SW9 normal</td>
+				<td>---</td>
 			</tr>
 		</table>
 		<table>
@@ -666,97 +702,97 @@
 				<th align="left">Typ</th>
 			</tr>
 			<tr>
-				<td align="right">Ansage widerholen</td>
+				<td align="right">VoiceRepeat</td>
 				<td align="center">SW8 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">n&auml;chste Ansage</td>
+				<td align="right">VoiceTrigger</td>
 				<td align="center">SW9 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">Uhr</td>
+				<td align="right">Clock</td>
 				<td align="center">SW1 invers</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">Phase 2</td>
+				<td align="right">Phase_2</td>
 				<td align="center">SW2 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">Phase 3</td>
+				<td align="right">Phase_3</td>
 				<td align="center">SW3 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">Phase 4</td>
+				<td align="right">Phase_4</td>
 				<td align="center">SW4 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">Lehrer</td>
+				<td align="right">Trainer</td>
 				<td align="center">SW9 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">D/R Expo Querruder</td>
+				<td align="right">Dr_Expo_Aileron</td>
 				<td align="center">SW5 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">D/R Expo H&ouml;henruder</td>
+				<td align="right">Dr_Expo_Elevator</td>
 				<td align="center">SW6 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">D/R Expo Seitenruder</td>
+				<td align="right">Dr_Expo_Rudder</td>
 				<td align="center">SW7 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">Querruderdifferenzierung</td>
+				<td align="right">Diff_Aileron</td>
 				<td align="center">SW8 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">W&ouml;lbklappendifferenzierung</td>
+				<td align="right">Diff_Flap</td>
 				<td align="center">SW9 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">Mischer 1</td>
+				<td align="right">Mixer_1</td>
 				<td align="center">G1</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">Geber 5</td>
+				<td align="right">InputControl_5</td>
 				<td align="center">CTRL6</td>
 				<td>Geber</td>
 			</tr>
 			<tr>
-				<td align="right">Geber 6</td>
+				<td align="right">InputControl_6</td>
 				<td align="center">CTRL7</td>
 				<td>Geber</td>
 			</tr>
 			<tr>
-				<td align="right">Geber 7</td>
+				<td align="right">InputControl_7</td>
 				<td align="center">CTRL8</td>
 				<td>Geber</td>
 			</tr>
 			<tr>
-				<td align="right">Geber 8</td>
+				<td align="right">InputControl_8</td>
 				<td align="center">CTRL9</td>
 				<td>Geber</td>
 			</tr>
 			<tr>
-				<td align="right">Gaslimiter</td>
+				<td align="right">ThrottleLimit</td>
 				<td align="center">CTRL6</td>
 				<td>Geber</td>
 			</tr>
 			<tr>
-				<td align="right">Varioton</td>
+				<td align="right">VarioTone</td>
 				<td align="center">SW1 invers</td>
 				<td>Schalter</td>
 			</tr>

@@ -18,7 +18,10 @@
 
 package gde.report;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -33,6 +36,10 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.SchemaOutputResolver;
 import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamResult;
+
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import com.lowagie.text.DocumentException;
 
 import de.treichels.hott.HoTTDecoder;
 import freemarker.template.Configuration;
@@ -69,6 +76,18 @@ public class Report {
 		} catch (final JAXBException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static String generateHTML(final BaseModel model) throws IOException, TemplateException {
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Report.process(model, baos, "mx-16.xhtml");
+		return baos.toString();
+	}
+
+	public static String generateXML(final BaseModel model) throws JAXBException {
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Report.process(model, baos);
+		return baos.toString();
 	}
 
 	public static void generateXsd(final File file) throws IOException {
@@ -118,5 +137,20 @@ public class Report {
 		}
 
 		template.process(rootMap, new OutputStreamWriter(out));
+	}
+
+	public static void save(final File file, final String data) throws IOException {
+		final FileWriter fw = new FileWriter(file);
+		fw.write(data);
+		fw.close();
+	}
+
+	public static void savePDF(final File file, final String data) throws IOException, DocumentException {
+		final FileOutputStream fos = new FileOutputStream(file);
+		final ITextRenderer renderer = new ITextRenderer();
+		renderer.setDocumentFromString(data);
+		renderer.layout();
+		renderer.createPDF(fos);
+		fos.close();
 	}
 }

@@ -18,7 +18,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 	<head>
-		<title>Graupner/SJ mx-16 - T2</title>
+		<title>Graupner/SJ mx-16 - T3</title>
 		<style type="text/css" media="print">
 			@page { size: a4; }
 		</style>		
@@ -48,7 +48,7 @@
 			</tr>
 			<tr>
 				<th align="right">Modelltyp</th>
-				<td colspan="3">Flugzeug</td>
+				<td colspan="3">Helikopter</td>
 			</tr>
 			<tr>
 				<th align="right">Modellspeicher</th>
@@ -56,16 +56,16 @@
 			</tr>
 			<tr>
 				<th align="right">Modellname</th>
-				<td colspan="3">T2</td>
+				<td colspan="3">T3</td>
 			</tr>
 			<tr>
 				<th align="right">Steueranordnung</th>
-				<td colspan="3">Mode 1</td>
+				<td colspan="3">Mode 3</td>
 			</tr>
 			<tr>
-				<th align="right">Motor an K1</th>
-				<td colspan="3">kein invers</td>
-			</tr>
+				<th align="right">Taumelscheibe</th>
+				<td colspan="3">3 Servos (2 Roll)</td>
+			</tr>				
 			<tr>
 				<th align="right" valign="top">Motor-Stopp</th>
 				<td><i>Position:</i> -100%</td>
@@ -73,8 +73,12 @@
 				<td><i>Schalter:</i> ---</td>							
 			</tr>
 			<tr>
-				<th align="right">Kanal 8 verz&ouml;gert</th>
-				<td colspan="3">ja</td>
+				<th align="right">Rotor Drehrichtung</th>
+				<td colspan="3">rechts</td>
+			</tr>
+			<tr>
+				<th align="right">Pitch Minimum</th>
+				<td colspan="3">vorne</td>
 			</tr>
 			<tr>
 				<th align="right">Gastrimm</th>
@@ -84,14 +88,6 @@
 				<th align="right">letzte Leerlaufposition</th>
 				<td colspan="3">0%</td>
 			</tr>			
-			<tr>
-				<th align="right">Leitwerk</th>
-				<td colspan="3">V-Leitwerk</td>
-			</tr>
-			<tr>
-				<th align="right">Querruder/W&ouml;lbklappen</th>
-				<td colspan="3">1QR 1WK</td>
-			</tr>
 			<tr>
 				<th align="right" valign="top">Uhren</th>
 				<td colspan="3">
@@ -104,7 +100,7 @@
 						<tr>
 							<td>Stoppuhr</td>
 							<td>0:00</td>
-							<td>SW5 normal</td>
+							<td>G2</td>
 						</tr>
 					</table>
 				</td>
@@ -116,17 +112,17 @@
 			</tr>
 			<tr>
 				<th align="right" valign="top">Phase 2</th>
-				<td><i>Name:</i> Start</td>
+				<td><i>Name:</i> Schwebeflug</td>
 				<td colspan="2"><i>Schalter:</i> ---</td>
 			</tr>
 			<tr>
 				<th align="right" valign="top">Phase 3</th>
-				<td><i>Name:</i> Speed</td>
+				<td><i>Name:</i> Akro 3D</td>
 				<td colspan="2"><i>Schalter:</i> ---</td>
 			</tr>
 			<tr>
 				<th align="right" valign="top">Phase 4</th>
-				<td><i>Name:</i> Landung</td>
+				<td><i>Name:</i> Autorotation</td>
 				<td colspan="2"><i>Schalter:</i> ---</td>
 			</tr>
 			<tr>
@@ -290,7 +286,7 @@
 				<td align="cender">100%</td>
 			</tr>
 			<tr>
-				<td align="center">E9</td>
+				<td align="center">Gaslimiter</td>
 				<td align="cender">---</td>
 				<td align="cender">100%</td>
 				<td align="cender">100%</td>
@@ -327,7 +323,7 @@
 				<td>---</td>
 			</tr>
 		</table>
-		<h2>Phase 2: Start</h2>
+		<h2>Phase 2: Schwebeflug</h2>
 		<table>
 			<tr>
 				<td>&nbsp;</td>
@@ -354,7 +350,7 @@
 				<td>---</td>
 			</tr>
 		</table>
-		<h2>Phase 3: Speed</h2>
+		<h2>Phase 3: Akro 3D</h2>
 		<table>
 			<tr>
 				<td>&nbsp;</td>
@@ -381,7 +377,7 @@
 				<td>---</td>
 			</tr>
 		</table>
-		<h2>Phase 4: Landung</h2>
+		<h2>Phase 4: Autorotation</h2>
 		<table>
 			<tr>
 				<td>&nbsp;</td>
@@ -411,110 +407,563 @@
 
 		<hr/>	
 
-		<h1>Phasentrimm</h1>
+		<h1>Helimix</h1>		
+		<h2>Phase 1: Normal</h2>
+		
 		<table>
 			<tr>
-				<th align="right">Phase</th>
-				<th>WK</th>
-				<th>QR</th>
-				<th>HR</th>
+				<th align="right">Pitchkurve</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>44</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>-50</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>18</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
-				<th align="right">Normal</th>
-				<td>0%</td>
-				<td>0%</td>
-				<td>0%</td>
+				<th align="right">Gaskurve (K1 -> Gas)</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>-100</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>-48</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>100</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
-				<th align="right">Start</th>
-				<td>0%</td>
-				<td>0%</td>
-				<td>0%</td>
+				<th align="right">Heckrotorkurve (K1 -> Heck)</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>32</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>0</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
-				<th align="right">Speed</th>
-				<td>0%</td>
-				<td>0%</td>
-				<td>0%</td>
+				<th align="right">Gyro</th>
+				<td>-9%</td>
 			</tr>
 			<tr>
-				<th align="right">Landung</th>
-				<td>0%</td>
-				<td>0%</td>
-				<td>0%</td>
+				<th align="right">Eingang 8</th>
+				<td>13%</td>
 			</tr>
-		</table>
-
-		<hr/>
-
-		<h1>Fl&auml;chenmix</h1>
+			<tr>
+				<th align="right">Taumelscheibenlimit</th>
+				<td>aus</td>
+			</tr>
+		</table>	
+		<h2>Phase 2: Schwebeflug</h2>
+		
 		<table>
 			<tr>
-				<th align="right">Mischer</th>
-				<th align="center">Wert</th>
-				<th align="left">Schalter</th>
+				<th align="right">Pitchkurve</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>-100</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>100</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
-				<th align="right">Diff_Aileron</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Gaskurve (K1 -> Gas)</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>-100</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>100</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
-				<th align="right">Diff_Flap</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Heckrotorkurve (K1 -> Heck)</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>0</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
-				<th align="right">Mixer_Aileron_Rudder</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Gyro</th>
+				<td>0%</td>
 			</tr>
 			<tr>
-				<th align="right">Mixer_Aileron_Flap</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Eingang 8</th>
+				<td>0%</td>
 			</tr>
 			<tr>
-				<th align="right">Mixer_Brake_Elevator</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Taumelscheibenlimit</th>
+				<td>aus</td>
+			</tr>
+		</table>	
+		<h2>Phase 3: Akro 3D</h2>
+		
+		<table>
+			<tr>
+				<th align="right">Pitchkurve</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>-100</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>100</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
-				<th align="right">Mixer_Brake_Flap</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Gaskurve (K1 -> Gas)</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>-100</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>100</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
-				<th align="right">Mixer_Brake_Aileron</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Heckrotorkurve (K1 -> Heck)</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>-46</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>0</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
-				<th align="right">Mixer_Elevator_Flap</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Gyro</th>
+				<td>-12%</td>
 			</tr>
 			<tr>
-				<th align="right">Mixer_Elevator_Aileron</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Eingang 8</th>
+				<td>4%</td>
 			</tr>
 			<tr>
-				<th align="right">Mixer_Flap_Elevator</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Taumelscheibenlimit</th>
+				<td>149%</td>
+			</tr>
+		</table>	
+		<h2>Phase 4: Autorotation</h2>
+		
+		<table>
+			<tr>
+				<th align="right">Pitchkurve</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>-100</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>100</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
-				<th align="right">Mixer_Flap_Aileron</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Gaskurve (K1 -> Gas)</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>-90</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>100</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
-				<th align="right">Diff_Reduction</th>
-				<td align="center">0%</td>
-				<td>---</td>						
+				<th align="right">Heckrotorkurve (K1 -> Heck)</th>
+				<td>
+					<table>
+						<tr>
+							<th>Punkt</th>
+							<th>aktiv</th>
+							<th>Eingang</th>
+							<th>Ausgang</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>ja</td>
+							<td>-100</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>ja</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>nein</td>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>ja</td>
+							<td>100</td>
+							<td>0</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
-		</table>
+			<tr>
+				<th align="right">Gyro</th>
+				<td>0%</td>
+			</tr>
+			<tr>
+				<th align="right">Eingang 8</th>
+				<td>0%</td>
+			</tr>
+			<tr>
+				<th align="right">Taumelscheibenlimit</th>
+				<td>aus</td>
+			</tr>
+		</table>	
 
 		<hr/>
 		
@@ -569,6 +1018,24 @@
 
 		<hr/>
 
+		<h1>Taumelscheibenmischer</h1>
+		<table>
+			<tr>
+				<th>Pitch</th>
+				<td>52</td>
+			</tr>
+			<tr>
+				<th>Roll</th>
+				<td>69</td>
+			</tr>
+			<tr>
+				<th>Nick</th>
+				<td>40</td>
+			</tr>
+		</table>
+		
+		<hr/>			
+
 		<h1>Fail Safe</h1>		
 		<table>
 			<tr>
@@ -577,7 +1044,7 @@
 			</tr>
 			<tr>
 				<th align="right">FlailSafe Pr&uuml;fung</th>
-				<td>nein</td>
+				<td>ja</td>
 			</tr>
 		</table>
 		<table>
@@ -703,27 +1170,42 @@
 			</tr>
 			<tr>
 				<td align="right">Clock</td>
-				<td align="center">SW5 normal</td>
+				<td align="center">G2</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
 				<td align="right">Phase_2</td>
-				<td align="center">SW6 normal</td>
-				<td>Schalter</td>
-			</tr>
-			<tr>
-				<td align="right">Phase_3</td>
-				<td align="center">SW7 normal</td>
-				<td>Schalter</td>
-			</tr>
-			<tr>
-				<td align="right">Phase_4</td>
 				<td align="center">SW8 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
+				<td align="right">Phase_3</td>
+				<td align="center">SW5 normal</td>
+				<td>Schalter</td>
+			</tr>
+			<tr>
+				<td align="right">Autorotation</td>
+				<td align="center">SW1 invers</td>
+				<td>Schalter</td>
+			</tr>
+			<tr>
 				<td align="right">InputControl_5</td>
+				<td align="center">CTRL9</td>
+				<td>Geber</td>
+			</tr>
+			<tr>
+				<td align="right">InputControl_6</td>
 				<td align="center">CTRL10</td>
+				<td>Geber</td>
+			</tr>
+			<tr>
+				<td align="right">InputControl_7</td>
+				<td align="center">CTRL7</td>
+				<td>Geber</td>
+			</tr>
+			<tr>
+				<td align="right">InputControl_8</td>
+				<td align="center">CTRL8</td>
 				<td>Geber</td>
 			</tr>
 			<tr>

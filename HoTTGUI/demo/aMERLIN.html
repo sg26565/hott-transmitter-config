@@ -1,5 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<!--
+	HoTT Transmitter Config
+	Copyright (C) 2013  Oliver Treichel
+	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 	<head>
 		<title>Graupner/SJ mx-16 - MERLIN</title>
 		<style type="text/css" media="print">
@@ -52,7 +69,7 @@
 			<tr>
 				<th align="right" valign="top">Motor-Stopp</th>
 				<td><i>Position:</i> -100%</td>
-				<td><i>Limit:</i> 1.200%</td>
+				<td><i>Limit:</i> 150%</td>
 				<td><i>Schalter:</i> SW3 invers</td>							
 			</tr>
 			<tr>
@@ -77,8 +94,20 @@
 			</tr>
 			<tr>
 				<th align="right" valign="top">Uhren</th>
-				<td><i>Stoppuhr:</i> 0:00</td>
-				<td colspan="2"><i>Schalter:</i> G2</td>
+				<td colspan="3">
+					<table callpadding="0">
+						<tr>
+							<th>Typ</th>
+							<th>Wert</th>
+							<th>Schalter</th>
+						</tr>
+						<tr>
+							<td>Stoppuhr</td>
+							<td>0:00</td>
+							<td>G2</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
 				<th align="right" valign="top">Phase 1</th>
@@ -260,6 +289,12 @@
 				<td align="cender">100%</td>
 				<td align="cender">100%</td>
 			</tr>
+			<tr>
+				<td align="center">E9</td>
+				<td align="cender">---</td>
+				<td align="cender">100%</td>
+				<td align="cender">100%</td>
+			</tr>
 		</table>
 
 		<hr/>	
@@ -420,62 +455,62 @@
 				<th align="left">Schalter</th>
 			</tr>
 			<tr>
-				<th align="right">Mischer QR->WK</th>
+				<th align="right">Diff_Aileron</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer BR->HR</th>
+				<th align="right">Diff_Flap</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer HR->WK</th>
+				<th align="right">Mixer_Aileron_Rudder</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">W&ouml;lbklappendifferenzierung</th>
+				<th align="right">Mixer_Aileron_Flap</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Querruderdifferenzierung</th>
+				<th align="right">Mixer_Brake_Elevator</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer BR->WK</th>
+				<th align="right">Mixer_Brake_Flap</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Diff.-Reduzierung</th>
+				<th align="right">Mixer_Brake_Aileron</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer BR->QR</th>
+				<th align="right">Mixer_Elevator_Flap</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer HR->QR</th>
+				<th align="right">Mixer_Elevator_Aileron</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer WK->HR</th>
+				<th align="right">Mixer_Flap_Elevator</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer WK->QR</th>
+				<th align="right">Mixer_Flap_Aileron</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
 			<tr>
-				<th align="right">Mischer QA->SR</th>
+				<th align="right">Diff_Reduction</th>
 				<td align="center">0%</td>
 				<td>---</td>						
 			</tr>
@@ -488,6 +523,7 @@
 			<tr>
 				<th>Mixer</th>
 				<th>Typ</th>
+				<th>Input</th>
 				<th>von</th>
 				<th>zu</th>
 				<th>Schalter</th>
@@ -498,6 +534,7 @@
 		
 			<tr>
 				<td>M1</td>
+				<td>Linearmischer</td>
 				<td>Normal</td>
 				<td>0</td>
 				<td>0</td>
@@ -508,6 +545,7 @@
 			</tr>
 			<tr>
 				<td>M2</td>
+				<td>Linearmischer</td>
 				<td>Normal</td>
 				<td>0</td>
 				<td>0</td>
@@ -518,6 +556,7 @@
 			</tr>
 			<tr>
 				<td>M3</td>
+				<td>Linearmischer</td>
 				<td>Normal</td>
 				<td>0</td>
 				<td>0</td>
@@ -582,11 +621,8 @@
 		<h1>Telemetrie</h1>
 		<table>
 			<tr>
-				<th align="right" rowspan="2">Ansage wiederholen</th>
-				<td>10s</td>
-			</tr>
-			<tr>
-				<td>---</td>
+				<th align="right">Ansage wiederholen</th>
+				<td>10s <i>Schalter:</i> ---</td>
 			</tr>
 			<tr>
 				<th align="right">n&auml;chste Ansage</th>
@@ -628,7 +664,7 @@
 			</tr>
 			<tr>
 				<th align="right">Schalter</th>
-				<td>SW8 normal</td>
+				<td>---</td>
 			</tr>
 		</table>
 		<table>
@@ -666,37 +702,37 @@
 				<th align="left">Typ</th>
 			</tr>
 			<tr>
-				<td align="right">Uhr</td>
+				<td align="right">Clock</td>
 				<td align="center">G2</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">Motorstopp</td>
+				<td align="right">CutOff</td>
 				<td align="center">SW3 invers</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">Lehrer</td>
+				<td align="right">Trainer</td>
 				<td align="center">SW8 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">D/R Expo Querruder</td>
+				<td align="right">Dr_Expo_Aileron</td>
 				<td align="center">SW2 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">D/R Expo H&ouml;henruder</td>
+				<td align="right">Dr_Expo_Elevator</td>
 				<td align="center">SW2 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">D/R Expo Seitenruder</td>
+				<td align="right">Dr_Expo_Rudder</td>
 				<td align="center">SW2 normal</td>
 				<td>Schalter</td>
 			</tr>
 			<tr>
-				<td align="right">Gaslimiter</td>
+				<td align="right">ThrottleLimit</td>
 				<td align="center">CTRL6</td>
 				<td>Geber</td>
 			</tr>

@@ -4,641 +4,826 @@
     <autoTimerReset>false</autoTimerReset>
     <bound>false</bound>
     <channels>
-        <channel number="0" virtual="false">
+        <channel number="0">
             <center>1</center>
             <failSafeMode>Position</failSafeMode>
-            <failSafePosition>3273</failSafePosition>
+            <failSafePosition>34</failSafePosition>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
-            <outputChannel>0</outputChannel>
+            <mixOnly>false</mixOnly>
             <reverse>true</reverse>
             <trainerMode>Pupil</trainerMode>
             <travelHigh>91</travelHigh>
             <travelLow>90</travelLow>
+            <virtual>false</virtual>
         </channel>
-        <channel number="1" virtual="false">
+        <channel number="1">
             <center>2</center>
             <failSafeMode>Hold</failSafeMode>
-            <failSafePosition>2380</failSafePosition>
+            <failSafePosition>-77</failSafePosition>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
-            <outputChannel>1</outputChannel>
+            <mixOnly>false</mixOnly>
             <reverse>false</reverse>
             <trainerMode>Trainer</trainerMode>
             <travelHigh>93</travelHigh>
             <travelLow>92</travelLow>
+            <virtual>false</virtual>
         </channel>
-        <channel number="2" virtual="false">
+        <channel number="2">
             <center>3</center>
             <failSafeMode>Position</failSafeMode>
-            <failSafePosition>3484</failSafePosition>
+            <failSafePosition>61</failSafePosition>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
-            <outputChannel>2</outputChannel>
+            <mixOnly>false</mixOnly>
             <reverse>false</reverse>
             <trainerMode>Pupil</trainerMode>
             <travelHigh>95</travelHigh>
             <travelLow>94</travelLow>
+            <virtual>false</virtual>
         </channel>
-        <channel number="3" virtual="false">
+        <channel number="3">
             <center>4</center>
             <failSafeMode>Hold</failSafeMode>
-            <failSafePosition>2448</failSafePosition>
+            <failSafePosition>-69</failSafePosition>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
-            <outputChannel>3</outputChannel>
+            <mixOnly>false</mixOnly>
             <reverse>true</reverse>
             <trainerMode>Trainer</trainerMode>
             <travelHigh>97</travelHigh>
             <travelLow>96</travelLow>
+            <virtual>false</virtual>
         </channel>
-        <channel number="4" virtual="false">
+        <channel number="4">
             <center>5</center>
             <failSafeMode>Position</failSafeMode>
-            <failSafePosition>2174</failSafePosition>
+            <failSafePosition>-103</failSafePosition>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
-            <outputChannel>4</outputChannel>
+            <mixOnly>false</mixOnly>
             <reverse>false</reverse>
             <trainerMode>Pupil</trainerMode>
             <travelHigh>99</travelHigh>
             <travelLow>98</travelLow>
+            <virtual>false</virtual>
         </channel>
-        <channel number="5" virtual="false">
+        <channel number="5">
             <center>6</center>
             <failSafeMode>Hold</failSafeMode>
-            <failSafePosition>2969</failSafePosition>
+            <failSafePosition>-4</failSafePosition>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
-            <outputChannel>5</outputChannel>
+            <mixOnly>false</mixOnly>
             <reverse>false</reverse>
             <trainerMode>Trainer</trainerMode>
             <travelHigh>101</travelHigh>
             <travelLow>100</travelLow>
+            <virtual>false</virtual>
         </channel>
-        <channel number="6" virtual="false">
+        <channel number="6">
             <center>7</center>
             <failSafeMode>Position</failSafeMode>
-            <failSafePosition>2919</failSafePosition>
+            <failSafePosition>-10</failSafePosition>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
-            <outputChannel>6</outputChannel>
+            <mixOnly>false</mixOnly>
             <reverse>true</reverse>
             <trainerMode>Pupil</trainerMode>
             <travelHigh>103</travelHigh>
             <travelLow>102</travelLow>
+            <virtual>false</virtual>
         </channel>
-        <channel number="7" virtual="false">
+        <channel number="7">
             <center>8</center>
             <failSafeMode>Hold</failSafeMode>
-            <failSafePosition>3064</failSafePosition>
+            <failSafePosition>8</failSafePosition>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
-            <outputChannel>7</outputChannel>
+            <mixOnly>false</mixOnly>
             <reverse>false</reverse>
             <trainerMode>Trainer</trainerMode>
             <travelHigh>105</travelHigh>
             <travelLow>104</travelLow>
+            <virtual>false</virtual>
         </channel>
-        <channel number="8" virtual="true">
+        <channel number="8">
             <center>0</center>
             <failSafePosition>0</failSafePosition>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
-            <outputChannel>0</outputChannel>
+            <mixOnly>false</mixOnly>
             <reverse>false</reverse>
             <travelHigh>0</travelHigh>
             <travelLow>0</travelLow>
+            <virtual>true</virtual>
         </channel>
-        <channel number="9" virtual="true">
+        <channel number="9">
             <center>0</center>
             <failSafePosition>0</failSafePosition>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
-            <outputChannel>0</outputChannel>
+            <mixOnly>false</mixOnly>
             <reverse>false</reverse>
             <travelHigh>0</travelHigh>
             <travelLow>0</travelLow>
+            <virtual>true</virtual>
         </channel>
     </channels>
+    <channelMappings>
+        <channelMapping inputChannel="0" outputChannel="0"/>
+        <channelMapping inputChannel="1" outputChannel="1"/>
+        <channelMapping inputChannel="2" outputChannel="2"/>
+        <channelMapping inputChannel="3" outputChannel="3"/>
+        <channelMapping inputChannel="4" outputChannel="4"/>
+        <channelMapping inputChannel="5" outputChannel="5"/>
+        <channelMapping inputChannel="6" outputChannel="6"/>
+        <channelMapping inputChannel="7" outputChannel="7"/>
+    </channelMappings>
     <clocks>
         <clock number="0">
+            <alarm>0</alarm>
             <minutes>0</minutes>
-            <name>StopTimer</name>
+            <mode>Timer</mode>
             <seconds>0</seconds>
-            <switch>33</switch>
-            <type>Timer</type>
+            <switch>Clock</switch>
             <value>0</value>
         </clock>
     </clocks>
-    <controls>
-        <control number="4">
-            <switch>56</switch>
-            <travelHigh>91</travelHigh>
-            <travelLow>90</travelLow>
-        </control>
-        <control number="5">
-            <switch>57</switch>
-            <travelHigh>93</travelHigh>
-            <travelLow>92</travelLow>
-        </control>
-        <control number="6">
-            <switch>58</switch>
-            <travelHigh>95</travelHigh>
-            <travelLow>94</travelLow>
-        </control>
-        <control number="7">
-            <switch>59</switch>
-            <travelHigh>97</travelHigh>
-            <travelLow>96</travelLow>
-        </control>
-        <control number="8">
-            <switch>60</switch>
-            <travelHigh>100</travelHigh>
-            <travelLow>100</travelLow>
-        </control>
-    </controls>
-    <currentSensor>Receiver</currentSensor>
-    <currentSensorPage>0</currentSensorPage>
-    <failSafeDelay>2</failSafeDelay>
+    <failSafeDelay>0.75</failSafeDelay>
     <failSafeSettingCheck>true</failSafeSettingCheck>
-    <memoryVersion>1001</memoryVersion>
     <freeMixers>
-        <freeMixer number="0">
+        <freeMixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="linearMixer" number="0">
             <fromChannel>1</fromChannel>
             <inputType>Trim</inputType>
-            <offset>18</offset>
-            <switch>53</switch>
+            <switch>Mixer_1</switch>
             <toChannel>2</toChannel>
+            <type>Linear</type>
+            <offset>18</offset>
             <travelHigh>-20</travelHigh>
             <travelLow>20</travelLow>
         </freeMixer>
-        <freeMixer number="1">
+        <freeMixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="linearMixer" number="1">
             <fromChannel>9</fromChannel>
             <inputType>Normal</inputType>
-            <offset>0</offset>
-            <switch>54</switch>
+            <switch>Mixer_2</switch>
             <toChannel>3</toChannel>
+            <type>Linear</type>
+            <offset>0</offset>
             <travelHigh>0</travelHigh>
             <travelLow>0</travelLow>
         </freeMixer>
-        <freeMixer number="2">
+        <freeMixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="linearMixer" number="2">
             <fromChannel>2</fromChannel>
             <inputType>Normal</inputType>
-            <offset>0</offset>
-            <switch>55</switch>
+            <switch>Mixer_3</switch>
             <toChannel>3</toChannel>
+            <type>Linear</type>
+            <offset>0</offset>
             <travelHigh>0</travelHigh>
             <travelLow>0</travelLow>
         </freeMixer>
     </freeMixers>
+    <memoryVersion>1001</memoryVersion>
     <modelName>T1</modelName>
     <modelNumber>0</modelNumber>
     <modelType>Winged</modelType>
     <phases>
-        <phase number="0">
-            <phasemixer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedMixers">
-                <mixer number="12">
-                    <function>Diff_Aileron</function>
-                    <switch>42</switch>
+        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="0">
+            <controls>
+                <control number="4">
+                    <inputControl>InputControl_5</inputControl>
+                    <offset>0</offset>
+                    <timeHigh>0.0</timeHigh>
+                    <timeLow>0.0</timeLow>
+                    <travelHigh>91</travelHigh>
+                    <travelLow>90</travelLow>
+                    <trim>0</trim>
+                </control>
+                <control number="5">
+                    <inputControl>InputControl_6</inputControl>
+                    <offset>0</offset>
+                    <timeHigh>0.0</timeHigh>
+                    <timeLow>0.0</timeLow>
+                    <travelHigh>93</travelHigh>
+                    <travelLow>92</travelLow>
+                    <trim>0</trim>
+                </control>
+                <control number="6">
+                    <inputControl>InputControl_7</inputControl>
+                    <offset>0</offset>
+                    <timeHigh>0.0</timeHigh>
+                    <timeLow>0.0</timeLow>
+                    <travelHigh>95</travelHigh>
+                    <travelLow>94</travelLow>
+                    <trim>0</trim>
+                </control>
+                <control number="7">
+                    <inputControl>InputControl_8</inputControl>
+                    <offset>0</offset>
+                    <timeHigh>0.0</timeHigh>
+                    <timeLow>0.0</timeLow>
+                    <travelHigh>97</travelHigh>
+                    <travelLow>96</travelLow>
+                    <trim>0</trim>
+                </control>
+                <control number="8">
+                    <inputControl>ThrottleLimit</inputControl>
+                    <offset>0</offset>
+                    <timeHigh>0.0</timeHigh>
+                    <timeLow>0.0</timeLow>
+                    <travelHigh>100</travelHigh>
+                    <travelLow>100</travelLow>
+                    <trim>0</trim>
+                </control>
+            </controls>
+            <dualRates>
+                <dualRate function="Aileron">
+                    <switch>Dr_Expo_Aileron</switch>
+                    <values>0</values>
+                    <values>0</values>
+                </dualRate>
+                <dualRate function="Elevator">
+                    <switch>Dr_Expo_Elevator</switch>
+                    <values>0</values>
+                    <values>0</values>
+                </dualRate>
+                <dualRate function="Rudder">
+                    <switch>Dr_Expo_Rudder</switch>
+                    <values>0</values>
+                    <values>0</values>
+                </dualRate>
+            </dualRates>
+            <expos>
+                <expo function="Aileron">
+                    <switch>Dr_Expo_Aileron</switch>
+                    <values>0</values>
+                    <values>0</values>
+                </expo>
+                <expo function="Elevator">
+                    <switch>Dr_Expo_Elevator</switch>
+                    <values>0</values>
+                    <values>0</values>
+                </expo>
+                <expo function="Rudder">
+                    <switch>Dr_Expo_Rudder</switch>
+                    <values>0</values>
+                    <values>0</values>
+                </expo>
+            </expos>
+            <motorOn>false</motorOn>
+            <phaseName>Global</phaseName>
+            <phaseSwitchTime>0.0</phaseSwitchTime>
+            <phaseType>Global</phaseType>
+            <wingMixers>
+                <wingMixer id="Diff_Aileron">
+                    <function>Diff</function>
+                    <qualifier xsi:type="function">Aileron</qualifier>
+                    <switch>Diff_Aileron</switch>
                     <value>1</value>
-                </mixer>
-                <mixer number="13">
-                    <function>Diff_Flap</function>
-                    <switch>43</switch>
+                </wingMixer>
+                <wingMixer id="Diff_Flap">
+                    <function>Diff</function>
+                    <qualifier xsi:type="function">Flap</qualifier>
+                    <switch>Diff_Flap</switch>
                     <value>2</value>
-                </mixer>
-                <mixer number="23">
-                    <function>Diff_Reduction</function>
-                    <value>12</value>
-                </mixer>
-                <mixer number="15">
-                    <function>Mix_Aileron_Flap</function>
-                    <switch>45</switch>
-                    <value>4</value>
-                </mixer>
-                <mixer number="14">
-                    <function>Mix_Aileron_Rudder</function>
-                    <switch>44</switch>
+                </wingMixer>
+                <wingMixer id="Mixer_Aileron_Rudder">
+                    <function>Mixer</function>
+                    <qualifier xsi:type="function">Aileron</qualifier>
+                    <qualifier xsi:type="function">Rudder</qualifier>
+                    <switch>Mixer_Aileron_Rudder</switch>
                     <value>3</value>
-                </mixer>
-                <mixer number="18">
-                    <function>Mix_Brake_Aileron</function>
-                    <switch>48</switch>
-                    <value>7</value>
-                </mixer>
-                <mixer number="16">
-                    <function>Mix_Brake_Elevator</function>
-                    <switch>46</switch>
+                </wingMixer>
+                <wingMixer id="Mixer_Aileron_Flap">
+                    <function>Mixer</function>
+                    <qualifier xsi:type="function">Aileron</qualifier>
+                    <qualifier xsi:type="function">Flap</qualifier>
+                    <switch>Mixer_Aileron_Flap</switch>
+                    <value>4</value>
+                </wingMixer>
+                <wingMixer id="Mixer_Brake_Elevator">
+                    <function>Mixer</function>
+                    <qualifier xsi:type="function">Brake</qualifier>
+                    <qualifier xsi:type="function">Elevator</qualifier>
+                    <switch>Mixer_Brake_Elevator</switch>
                     <value>5</value>
-                </mixer>
-                <mixer number="17">
-                    <function>Mix_Brake_Flap</function>
-                    <switch>47</switch>
+                </wingMixer>
+                <wingMixer id="Mixer_Brake_Flap">
+                    <function>Mixer</function>
+                    <qualifier xsi:type="function">Brake</qualifier>
+                    <qualifier xsi:type="function">Flap</qualifier>
+                    <switch>Mixer_Brake_Flap</switch>
                     <value>6</value>
-                </mixer>
-                <mixer number="20">
-                    <function>Mix_Elevator_Aileron</function>
-                    <switch>50</switch>
-                    <value>9</value>
-                </mixer>
-                <mixer number="19">
-                    <function>Mix_Elevator_Flap</function>
-                    <switch>49</switch>
+                </wingMixer>
+                <wingMixer id="Mixer_Brake_Aileron">
+                    <function>Mixer</function>
+                    <qualifier xsi:type="function">Brake</qualifier>
+                    <qualifier xsi:type="function">Aileron</qualifier>
+                    <switch>Mixer_Brake_Aileron</switch>
+                    <value>7</value>
+                </wingMixer>
+                <wingMixer id="Mixer_Elevator_Flap">
+                    <function>Mixer</function>
+                    <qualifier xsi:type="function">Elevator</qualifier>
+                    <qualifier xsi:type="function">Flap</qualifier>
+                    <switch>Mixer_Elevator_Flap</switch>
                     <value>8</value>
-                </mixer>
-                <mixer number="22">
-                    <function>Mix_Flap_Aileron</function>
-                    <switch>52</switch>
-                    <value>11</value>
-                </mixer>
-                <mixer number="21">
-                    <function>Mix_Flap_Elevator</function>
-                    <switch>51</switch>
+                </wingMixer>
+                <wingMixer id="Mixer_Elevator_Aileron">
+                    <function>Mixer</function>
+                    <qualifier xsi:type="function">Elevator</qualifier>
+                    <qualifier xsi:type="function">Aileron</qualifier>
+                    <switch>Mixer_Elevator_Aileron</switch>
+                    <value>9</value>
+                </wingMixer>
+                <wingMixer id="Mixer_Flap_Elevator">
+                    <function>Mixer</function>
+                    <qualifier xsi:type="function">Flap</qualifier>
+                    <qualifier xsi:type="function">Elevator</qualifier>
+                    <switch>Mixer_Flap_Elevator</switch>
                     <value>10</value>
-                </mixer>
-            </phasemixer>
-            <name>Global</name>
-            <type>Global</type>
+                </wingMixer>
+                <wingMixer id="Mixer_Flap_Aileron">
+                    <function>Mixer</function>
+                    <qualifier xsi:type="function">Flap</qualifier>
+                    <qualifier xsi:type="function">Aileron</qualifier>
+                    <switch>Mixer_Flap_Aileron</switch>
+                    <value>11</value>
+                </wingMixer>
+                <wingMixer id="Diff_Reduction">
+                    <function>Diff</function>
+                    <qualifier xsi:type="function">Reduction</qualifier>
+                    <value>12</value>
+                </wingMixer>
+            </wingMixers>
         </phase>
-        <phase number="1">
-            <dualRateExpos>
-                <dualRateExpo number="12">
-                    <dualRate0>99</dualRate0>
-                    <dualRate1>101</dualRate1>
-                    <expo0>-1</expo0>
-                    <expo1>1</expo1>
-                    <function>Aileron</function>
-                    <switch>39</switch>
-                </dualRateExpo>
-                <dualRateExpo number="13">
-                    <dualRate0>98</dualRate0>
-                    <dualRate1>102</dualRate1>
-                    <expo0>-2</expo0>
-                    <expo1>2</expo1>
-                    <function>Elevator</function>
-                    <switch>40</switch>
-                </dualRateExpo>
-                <dualRateExpo number="14">
-                    <dualRate0>97</dualRate0>
-                    <dualRate1>103</dualRate1>
-                    <expo0>-3</expo0>
-                    <expo1>3</expo1>
-                    <function>Rudder</function>
-                    <switch>41</switch>
-                </dualRateExpo>
-            </dualRateExpos>
-            <name>Normal</name>
-            <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedTrim">
+        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="1">
+            <dualRates>
+                <dualRate function="Aileron">
+                    <values>99</values>
+                    <values>101</values>
+                </dualRate>
+                <dualRate function="Elevator">
+                    <values>98</values>
+                    <values>102</values>
+                </dualRate>
+                <dualRate function="Rudder">
+                    <values>97</values>
+                    <values>103</values>
+                </dualRate>
+            </dualRates>
+            <expos>
+                <expo function="Aileron">
+                    <values>-1</values>
+                    <values>1</values>
+                </expo>
+                <expo function="Elevator">
+                    <values>-2</values>
+                    <values>2</values>
+                </expo>
+                <expo function="Rudder">
+                    <values>-3</values>
+                    <values>3</values>
+                </expo>
+            </expos>
+            <motorOn>false</motorOn>
+            <phaseName>Normal</phaseName>
+            <phaseSwitchTime>0.0</phaseSwitchTime>
+            <phaseType>Normal</phaseType>
+            <wingTrim>
                 <aileronPhaseTrim>2</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>3</elevatorPhaseTrim>
                 <elevtorStickTrim>0</elevtorStickTrim>
                 <flapPhaseTrim>1</flapPhaseTrim>
-                <phaseType>Normal</phaseType>
                 <rudderStickTrim>0</rudderStickTrim>
-            </phasetrim>
-            <type>Normal</type>
+            </wingTrim>
         </phase>
-        <phase number="2">
-            <dualRateExpos>
-                <dualRateExpo number="15">
-                    <dualRate0>96</dualRate0>
-                    <dualRate1>104</dualRate1>
-                    <expo0>-4</expo0>
-                    <expo1>4</expo1>
-                    <function>Aileron</function>
-                    <switch>39</switch>
-                </dualRateExpo>
-                <dualRateExpo number="16">
-                    <dualRate0>95</dualRate0>
-                    <dualRate1>105</dualRate1>
-                    <expo0>-5</expo0>
-                    <expo1>5</expo1>
-                    <function>Elevator</function>
-                    <switch>40</switch>
-                </dualRateExpo>
-                <dualRateExpo number="17">
-                    <dualRate0>94</dualRate0>
-                    <dualRate1>106</dualRate1>
-                    <expo0>-6</expo0>
-                    <expo1>6</expo1>
-                    <function>Rudder</function>
-                    <switch>41</switch>
-                </dualRateExpo>
-            </dualRateExpos>
-            <name>Test</name>
-            <switch>34</switch>
-            <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedTrim">
+        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="2">
+            <dualRates>
+                <dualRate function="Aileron">
+                    <values>96</values>
+                    <values>104</values>
+                </dualRate>
+                <dualRate function="Elevator">
+                    <values>95</values>
+                    <values>105</values>
+                </dualRate>
+                <dualRate function="Rudder">
+                    <values>94</values>
+                    <values>106</values>
+                </dualRate>
+            </dualRates>
+            <expos>
+                <expo function="Aileron">
+                    <values>-4</values>
+                    <values>4</values>
+                </expo>
+                <expo function="Elevator">
+                    <values>-5</values>
+                    <values>5</values>
+                </expo>
+                <expo function="Rudder">
+                    <values>-6</values>
+                    <values>6</values>
+                </expo>
+            </expos>
+            <motorOn>false</motorOn>
+            <phaseName>Test</phaseName>
+            <phaseSwitch>Phase_2</phaseSwitch>
+            <phaseSwitchTime>0.0</phaseSwitchTime>
+            <phaseType>Test</phaseType>
+            <wingTrim>
                 <aileronPhaseTrim>5</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>6</elevatorPhaseTrim>
                 <elevtorStickTrim>0</elevtorStickTrim>
                 <flapPhaseTrim>4</flapPhaseTrim>
-                <phaseType>Test</phaseType>
                 <rudderStickTrim>0</rudderStickTrim>
-            </phasetrim>
-            <type>Test</type>
+            </wingTrim>
         </phase>
-        <phase number="3">
-            <dualRateExpos>
-                <dualRateExpo number="18">
-                    <dualRate0>93</dualRate0>
-                    <dualRate1>107</dualRate1>
-                    <expo0>-7</expo0>
-                    <expo1>7</expo1>
-                    <function>Aileron</function>
-                    <switch>39</switch>
-                </dualRateExpo>
-                <dualRateExpo number="19">
-                    <dualRate0>92</dualRate0>
-                    <dualRate1>108</dualRate1>
-                    <expo0>-8</expo0>
-                    <expo1>8</expo1>
-                    <function>Elevator</function>
-                    <switch>40</switch>
-                </dualRateExpo>
-                <dualRateExpo number="20">
-                    <dualRate0>91</dualRate0>
-                    <dualRate1>109</dualRate1>
-                    <expo0>-9</expo0>
-                    <expo1>9</expo1>
-                    <function>Rudder</function>
-                    <switch>41</switch>
-                </dualRateExpo>
-            </dualRateExpos>
-            <name>Schlepp</name>
-            <switch>35</switch>
-            <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedTrim">
+        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="3">
+            <dualRates>
+                <dualRate function="Aileron">
+                    <values>93</values>
+                    <values>107</values>
+                </dualRate>
+                <dualRate function="Elevator">
+                    <values>92</values>
+                    <values>108</values>
+                </dualRate>
+                <dualRate function="Rudder">
+                    <values>91</values>
+                    <values>109</values>
+                </dualRate>
+            </dualRates>
+            <expos>
+                <expo function="Aileron">
+                    <values>-7</values>
+                    <values>7</values>
+                </expo>
+                <expo function="Elevator">
+                    <values>-8</values>
+                    <values>8</values>
+                </expo>
+                <expo function="Rudder">
+                    <values>-9</values>
+                    <values>9</values>
+                </expo>
+            </expos>
+            <motorOn>false</motorOn>
+            <phaseName>Schlepp</phaseName>
+            <phaseSwitch>Phase_3</phaseSwitch>
+            <phaseSwitchTime>0.0</phaseSwitchTime>
+            <phaseType>AirTow</phaseType>
+            <wingTrim>
                 <aileronPhaseTrim>8</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>9</elevatorPhaseTrim>
                 <elevtorStickTrim>0</elevtorStickTrim>
                 <flapPhaseTrim>7</flapPhaseTrim>
-                <phaseType>AirTow</phaseType>
                 <rudderStickTrim>0</rudderStickTrim>
-            </phasetrim>
-            <type>AirTow</type>
+            </wingTrim>
         </phase>
-        <phase number="4">
-            <dualRateExpos>
-                <dualRateExpo number="21">
-                    <dualRate0>100</dualRate0>
-                    <dualRate1>110</dualRate1>
-                    <expo0>0</expo0>
-                    <expo1>10</expo1>
-                    <function>Aileron</function>
-                    <switch>39</switch>
-                </dualRateExpo>
-                <dualRateExpo number="22">
-                    <dualRate0>89</dualRate0>
-                    <dualRate1>111</dualRate1>
-                    <expo0>-11</expo0>
-                    <expo1>11</expo1>
-                    <function>Elevator</function>
-                    <switch>40</switch>
-                </dualRateExpo>
-                <dualRateExpo number="23">
-                    <dualRate0>88</dualRate0>
-                    <dualRate1>112</dualRate1>
-                    <expo0>-12</expo0>
-                    <expo1>12</expo1>
-                    <function>Rudder</function>
-                    <switch>41</switch>
-                </dualRateExpo>
-            </dualRateExpos>
-            <name>Landung</name>
-            <switch>36</switch>
-            <phasetrim xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedTrim">
+        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="4">
+            <dualRates>
+                <dualRate function="Aileron">
+                    <values>100</values>
+                    <values>110</values>
+                </dualRate>
+                <dualRate function="Elevator">
+                    <values>89</values>
+                    <values>111</values>
+                </dualRate>
+                <dualRate function="Rudder">
+                    <values>88</values>
+                    <values>112</values>
+                </dualRate>
+            </dualRates>
+            <expos>
+                <expo function="Aileron">
+                    <values>0</values>
+                    <values>10</values>
+                </expo>
+                <expo function="Elevator">
+                    <values>-11</values>
+                    <values>11</values>
+                </expo>
+                <expo function="Rudder">
+                    <values>-12</values>
+                    <values>12</values>
+                </expo>
+            </expos>
+            <motorOn>false</motorOn>
+            <phaseName>Landung</phaseName>
+            <phaseSwitch>Phase_4</phaseSwitch>
+            <phaseSwitchTime>0.0</phaseSwitchTime>
+            <phaseType>Landing</phaseType>
+            <wingTrim>
                 <aileronPhaseTrim>11</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>12</elevatorPhaseTrim>
                 <elevtorStickTrim>0</elevtorStickTrim>
                 <flapPhaseTrim>10</flapPhaseTrim>
-                <phaseType>Landing</phaseType>
                 <rudderStickTrim>0</rudderStickTrim>
-            </phasetrim>
-            <type>Landing</type>
+            </wingTrim>
         </phase>
     </phases>
-    <receiverId>1099511627775</receiverId>
-    <selectedSensors>Receiver</selectedSensors>
+    <receivers>
+        <receiver number="0">
+            <bound>false</bound>
+            <rfid>1099511627775</rfid>
+            <telemetry>false</telemetry>
+        </receiver>
+    </receivers>
     <stickMode>Mode1</stickMode>
     <switches>
-        <switch number="31">
+        <switch id="VoiceRepeat">
             <assignment>SW8</assignment>
+            <direction>2</direction>
             <function>VoiceRepeat</function>
-            <position>2</position>
-            <type>Standard</type>
+            <number>0</number>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="32">
+        <switch id="VoiceTrigger">
             <assignment>SW9</assignment>
+            <direction>2</direction>
             <function>VoiceTrigger</function>
-            <position>2</position>
-            <type>Standard</type>
+            <number>0</number>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="33">
+        <switch id="Clock">
             <assignment>SW1</assignment>
+            <direction>1</direction>
             <function>Clock</function>
-            <position>1</position>
-            <type>Standard</type>
+            <number>0</number>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="34">
+        <switch id="Phase_2">
             <assignment>SW2</assignment>
-            <function>Phase2</function>
-            <position>2</position>
-            <type>Standard</type>
+            <direction>2</direction>
+            <function>Phase</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:int">2</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="35">
+        <switch id="Phase_3">
             <assignment>SW3</assignment>
-            <function>Phase3</function>
-            <position>2</position>
-            <type>Standard</type>
+            <direction>2</direction>
+            <function>Phase</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:int">3</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="36">
+        <switch id="Phase_4">
             <assignment>SW4</assignment>
-            <function>Phase4</function>
-            <position>2</position>
-            <type>Standard</type>
+            <direction>2</direction>
+            <function>Phase</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:int">4</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="37">
+        <switch id="CutOff">
             <assignment>Unassigned</assignment>
+            <direction>255</direction>
             <function>CutOff</function>
-            <position>255</position>
-            <type>Standard</type>
+            <number>0</number>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="38">
+        <switch id="Trainer">
             <assignment>SW9</assignment>
+            <direction>2</direction>
             <function>Trainer</function>
-            <position>2</position>
-            <type>Standard</type>
+            <number>0</number>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="39">
+        <switch id="Dr_Expo_Aileron">
             <assignment>SW5</assignment>
-            <function>Dr_Expo_Aileron</function>
-            <position>2</position>
-            <type>Standard</type>
+            <direction>2</direction>
+            <function>Dr_Expo</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Aileron</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="40">
+        <switch id="Dr_Expo_Elevator">
             <assignment>SW6</assignment>
-            <function>Dr_Expo_Elevator</function>
-            <position>2</position>
-            <type>Standard</type>
+            <direction>2</direction>
+            <function>Dr_Expo</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Elevator</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="41">
+        <switch id="Dr_Expo_Rudder">
             <assignment>SW7</assignment>
-            <function>Dr_Expo_Rudder</function>
-            <position>2</position>
-            <type>Standard</type>
+            <direction>2</direction>
+            <function>Dr_Expo</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Rudder</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="42">
+        <switch id="Diff_Aileron">
             <assignment>SW8</assignment>
-            <function>Diff_Aileron</function>
-            <position>2</position>
-            <type>Standard</type>
+            <direction>2</direction>
+            <function>Diff</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Aileron</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="43">
+        <switch id="Diff_Flap">
             <assignment>SW9</assignment>
-            <function>Diff_Flap</function>
-            <position>2</position>
-            <type>Standard</type>
+            <direction>2</direction>
+            <function>Diff</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Flap</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="44">
+        <switch id="Mixer_Aileron_Rudder">
             <assignment>Unassigned</assignment>
-            <function>Mix_Aileron_Rudder</function>
-            <position>255</position>
-            <type>Standard</type>
+            <direction>255</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Aileron</qualifier>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Rudder</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="45">
+        <switch id="Mixer_Aileron_Flap">
             <assignment>Unassigned</assignment>
-            <function>Mix_Aileron_Flap</function>
-            <position>255</position>
-            <type>Standard</type>
+            <direction>255</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Aileron</qualifier>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Flap</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="46">
+        <switch id="Mixer_Brake_Elevator">
             <assignment>Unassigned</assignment>
-            <function>Mix_Brake_Elevator</function>
-            <position>255</position>
-            <type>Standard</type>
+            <direction>255</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Brake</qualifier>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Elevator</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="47">
+        <switch id="Mixer_Brake_Flap">
             <assignment>Unassigned</assignment>
-            <function>Mix_Brake_Flap</function>
-            <position>255</position>
-            <type>Standard</type>
+            <direction>255</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Brake</qualifier>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Flap</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="48">
+        <switch id="Mixer_Brake_Aileron">
             <assignment>Unassigned</assignment>
-            <function>Mix_Brake_Aileron</function>
-            <position>255</position>
-            <type>Standard</type>
+            <direction>255</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Brake</qualifier>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Aileron</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="49">
+        <switch id="Mixer_Elevator_Flap">
             <assignment>Unassigned</assignment>
-            <function>Mix_Elevator_Flap</function>
-            <position>255</position>
-            <type>Standard</type>
+            <direction>255</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Elevator</qualifier>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Flap</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="50">
+        <switch id="Mixer_Elevator_Aileron">
             <assignment>Unassigned</assignment>
-            <function>Mix_Elevator_Aileron</function>
-            <position>255</position>
-            <type>Standard</type>
+            <direction>255</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Elevator</qualifier>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Aileron</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="51">
+        <switch id="Mixer_Flap_Elevator">
             <assignment>Unassigned</assignment>
-            <function>Mix_Flap_Elevator</function>
-            <position>255</position>
-            <type>Standard</type>
+            <direction>255</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Flap</qualifier>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Elevator</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="52">
+        <switch id="Mixer_Flap_Aileron">
             <assignment>Unassigned</assignment>
-            <function>Mix_Flap_Aileron</function>
-            <position>255</position>
-            <type>Standard</type>
+            <direction>255</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Flap</qualifier>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="function">Aileron</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="53">
+        <switch id="Mixer_1">
             <assignment>G1</assignment>
-            <function>FreeMixer1</function>
-            <position>0</position>
-            <type>Standard</type>
+            <direction>0</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:int">1</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="54">
+        <switch id="Mixer_2">
             <assignment>Unassigned</assignment>
-            <function>FreeMixer2</function>
-            <position>255</position>
-            <type>Standard</type>
+            <direction>255</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:int">2</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="55">
+        <switch id="Mixer_3">
             <assignment>Unassigned</assignment>
-            <function>FreeMixer3</function>
-            <position>255</position>
-            <type>Standard</type>
+            <direction>255</direction>
+            <function>Mixer</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:int">3</qualifier>
+            <type>ToggleSwitch</type>
         </switch>
-        <switch number="56">
+        <switch id="InputControl_5">
             <assignment>CTRL6</assignment>
-            <function>InputControl5</function>
-            <position>255</position>
-            <type>Control</type>
+            <direction>255</direction>
+            <function>InputControl</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:int">5</qualifier>
+            <type>InputControl</type>
         </switch>
-        <switch number="57">
+        <switch id="InputControl_6">
             <assignment>CTRL7</assignment>
-            <function>InputControl6</function>
-            <position>255</position>
-            <type>Control</type>
+            <direction>255</direction>
+            <function>InputControl</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:int">6</qualifier>
+            <type>InputControl</type>
         </switch>
-        <switch number="58">
+        <switch id="InputControl_7">
             <assignment>CTRL8</assignment>
-            <function>InputControl7</function>
-            <position>255</position>
-            <type>Control</type>
+            <direction>255</direction>
+            <function>InputControl</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:int">7</qualifier>
+            <type>InputControl</type>
         </switch>
-        <switch number="59">
+        <switch id="InputControl_8">
             <assignment>CTRL9</assignment>
-            <function>InputControl8</function>
-            <position>255</position>
-            <type>Control</type>
+            <direction>255</direction>
+            <function>InputControl</function>
+            <number>0</number>
+            <qualifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:int">8</qualifier>
+            <type>InputControl</type>
         </switch>
-        <switch number="60">
+        <switch id="ThrottleLimit">
             <assignment>CTRL6</assignment>
+            <direction>255</direction>
             <function>ThrottleLimit</function>
-            <position>255</position>
-            <type>Control</type>
+            <number>0</number>
+            <type>InputControl</type>
         </switch>
-        <switch number="61">
+        <switch id="VarioTone">
             <assignment>SW1</assignment>
+            <direction>1</direction>
             <function>VarioTone</function>
-            <position>1</position>
-            <type>Standard</type>
+            <number>0</number>
+            <type>ToggleSwitch</type>
         </switch>
     </switches>
-    <throttleCutOf>
-        <position>-100</position>
-        <switch>37</switch>
-        <threshold>1200</threshold>
-    </throttleCutOf>
-    <throttleLastIdlePosition>0</throttleLastIdlePosition>
-    <throttleTrim>0</throttleTrim>
+    <telemetry>
+        <currentSensor>Receiver</currentSensor>
+        <currentSensorPage>0</currentSensorPage>
+        <selectedSensor>Receiver</selectedSensor>
+        <voiceDelay>17</voiceDelay>
+    </telemetry>
+    <throttleSettings>
+        <throttleCutOf>
+            <position>-100</position>
+            <switch>CutOff</switch>
+            <threshold>150</threshold>
+        </throttleCutOf>
+        <throttleLastIdlePosition>0</throttleLastIdlePosition>
+        <throttleTrim>0</throttleTrim>
+    </throttleSettings>
     <trainerConfig>
         <pupilChannel>0</pupilChannel>
         <pupilChannel>2</pupilChannel>
         <pupilChannel>4</pupilChannel>
         <pupilChannel>6</pupilChannel>
         <pupilId>1099511627775</pupilId>
-        <trainerSwitch>38</trainerSwitch>
         <trainerChannel>1</trainerChannel>
         <trainerChannel>3</trainerChannel>
         <trainerChannel>5</trainerChannel>
         <trainerChannel>7</trainerChannel>
         <trainerId>1099511627775</trainerId>
+        <trainerSwitch>Trainer</trainerSwitch>
         <wireless>false</wireless>
     </trainerConfig>
     <transmitterId>206158434783</transmitterId>
     <transmitterType>mx16</transmitterType>
     <vendor>Graupner</vendor>
-    <voiceDelay>17</voiceDelay>
     <aileronFlapType>TwoAilTwoFlap</aileronFlapType>
-    <brakeInput>0</brakeInput>
     <brakeOffset>0</brakeOffset>
     <channel8Delay>true</channel8Delay>
     <motorOnC1Type>None</motorOnC1Type>

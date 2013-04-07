@@ -1,0 +1,1122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="helicopterModel" type="helicopterModel"/>
+
+  <xs:element name="wingedModel" type="wingedModel"/>
+
+  <xs:complexType name="wingedModel">
+    <xs:complexContent>
+      <xs:extension base="baseModel">
+        <xs:sequence>
+          <xs:element name="aileronFlapType" type="aileronFlapType" minOccurs="0"/>
+          <xs:element name="brakeInputChannel" type="xs:IDREF" minOccurs="0"/>
+          <xs:element name="brakeOffset" type="xs:int"/>
+          <xs:element name="channel8Delay" type="xs:boolean"/>
+          <xs:element name="motorOnC1Type" type="motorOnC1Type" minOccurs="0"/>
+          <xs:element name="tailType" type="tailType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="baseModel">
+    <xs:sequence>
+      <xs:element name="appVersion" type="xs:int"/>
+      <xs:element name="autoTimerReset" type="xs:boolean"/>
+      <xs:element name="autoTrimSwitch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="bound" type="xs:boolean"/>
+      <xs:element name="channels" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="channel" type="channel" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="channelMappings" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="channelMapping" type="channelMapping" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="channelSequencer" type="channelSequencer" minOccurs="0"/>
+      <xs:element name="clocks" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="clock" type="clock" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="controlSwitches" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="controlSwitch" type="xs:IDREF" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="dscOutputType" type="dscOutputType" minOccurs="0"/>
+      <xs:element name="dualMixers" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="dualMixer" type="dualMixer" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="extPpmType" type="extPPMType" minOccurs="0"/>
+      <xs:element name="failSafeDelay" type="xs:double"/>
+      <xs:element name="failSafeSettingCheck" type="xs:boolean"/>
+      <xs:element name="freeMixers" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="freeMixer" type="freeMixer" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="logicalSwitches" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="logicalSwitch" type="xs:IDREF" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="memoryVersion" type="xs:int"/>
+      <xs:element name="modelName" type="xs:string" minOccurs="0"/>
+      <xs:element name="modelNumber" type="xs:int"/>
+      <xs:element name="modelType" type="modelType" minOccurs="0"/>
+      <xs:element name="module" type="hfModule" minOccurs="0"/>
+      <xs:element name="mp3Player" type="mp3Player" minOccurs="0"/>
+      <xs:element name="multichannels" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="multichannel" type="multichannel" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="phases" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="phase" type="phase" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="phaseAssignment" type="phaseAssignment" minOccurs="0"/>
+      <xs:element name="receivers" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="receiver" type="receiver" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ringLimiters" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ringLimiter" type="ringLimiter" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="stickMode" type="stickMode" minOccurs="0"/>
+      <xs:element name="sicktrims" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="stickTrim" type="stickTrim" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="switches" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="switch" type="switch" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="telemetry" type="telemetry" minOccurs="0"/>
+      <xs:element name="throttleSettings" type="throttleSettings" minOccurs="0"/>
+      <xs:element name="trainerConfig" type="trainerConfig" minOccurs="0"/>
+      <xs:element name="transmitterId" type="xs:long"/>
+      <xs:element name="transmitterType" type="transmitterType" minOccurs="0"/>
+      <xs:element name="vendor" type="vendor" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="channel">
+    <xs:sequence>
+      <xs:element name="center" type="xs:int"/>
+      <xs:element name="failSafeMode" type="failSafeMode" minOccurs="0"/>
+      <xs:element name="failSafePosition" type="xs:int"/>
+      <xs:element name="function" type="function" minOccurs="0"/>
+      <xs:element name="limitHigh" type="xs:int"/>
+      <xs:element name="limitLow" type="xs:int"/>
+      <xs:element name="mixOnly" type="xs:boolean"/>
+      <xs:element name="phaseSettings" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="phaseSetting" type="channelPhaseSetting" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="reverse" type="xs:boolean"/>
+      <xs:element name="trainerMode" type="trainerMode" minOccurs="0"/>
+      <xs:element name="travelHigh" type="xs:int"/>
+      <xs:element name="travelLow" type="xs:int"/>
+      <xs:element name="virtual" type="xs:boolean"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="channelPhaseSetting">
+    <xs:sequence/>
+    <xs:attribute name="nonDelayed" type="xs:boolean" use="required"/>
+    <xs:attribute name="phase" type="xs:IDREF"/>
+  </xs:complexType>
+
+  <xs:complexType name="phase" abstract="true">
+    <xs:sequence>
+      <xs:element name="channel1Curve" type="curve" minOccurs="0"/>
+      <xs:element name="controls" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="control" type="control" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="dualRates" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="dualRate" type="dualRate" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="expos" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="expo" type="expo" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="motorOn" type="xs:boolean"/>
+      <xs:element name="phaseName" type="xs:string" minOccurs="0"/>
+      <xs:element name="phaseSwitch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="phaseSwitchTime" type="xs:double"/>
+      <xs:element name="phaseTimer" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="phaseType" type="phaseType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="curve">
+    <xs:sequence>
+      <xs:element name="points" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="point" type="curvePoint" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="smoothing" type="xs:boolean"/>
+      <xs:element name="type" type="curveType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="curvePoint">
+    <xs:sequence>
+      <xs:element name="enabled" type="xs:boolean"/>
+      <xs:element name="position" type="xs:int"/>
+      <xs:element name="value" type="xs:int"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:int" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="control">
+    <xs:sequence>
+      <xs:element name="inputControl" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="mode" type="controlMode" minOccurs="0"/>
+      <xs:element name="offset" type="xs:int"/>
+      <xs:element name="timeHigh" type="xs:double"/>
+      <xs:element name="timeLow" type="xs:double"/>
+      <xs:element name="toggleHighSwitch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="toggleLowSwitch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="travelHigh" type="xs:int"/>
+      <xs:element name="travelLow" type="xs:int"/>
+      <xs:element name="trim" type="xs:int"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="switch">
+    <xs:sequence>
+      <xs:element name="assignment" type="switchAssignment" minOccurs="0"/>
+      <xs:element name="direction" type="xs:int"/>
+      <xs:element name="function" type="switchFunction" minOccurs="0"/>
+      <xs:element name="number" type="xs:int"/>
+      <xs:element name="qualifier" type="xs:anyType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="type" type="switchType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="dualRate">
+    <xs:sequence>
+      <xs:element name="switch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="values" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="function" type="function"/>
+  </xs:complexType>
+
+  <xs:complexType name="expo">
+    <xs:sequence>
+      <xs:element name="switch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="values" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="function" type="function"/>
+  </xs:complexType>
+
+  <xs:complexType name="clock">
+    <xs:sequence>
+      <xs:element name="alarm" type="xs:int"/>
+      <xs:element name="function" type="clockFunction" minOccurs="0"/>
+      <xs:element name="minutes" type="xs:int"/>
+      <xs:element name="mode" type="clockMode" minOccurs="0"/>
+      <xs:element name="seconds" type="xs:int"/>
+      <xs:element name="switch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="type" type="clockType" minOccurs="0"/>
+      <xs:element name="value" type="xs:int"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="channelMapping">
+    <xs:sequence/>
+    <xs:attribute name="inputChannel" type="xs:int" use="required"/>
+    <xs:attribute name="outputChannel" type="xs:int" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="channelSequencer">
+    <xs:sequence>
+      <xs:element name="maxStep" type="xs:int"/>
+      <xs:element name="powerOffStatus" type="sequenceStatus" minOccurs="0"/>
+      <xs:element name="sequences" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sequence" type="sequence" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="stepTimes" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="stepTime" type="xs:double" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="switch" type="xs:IDREF" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sequence">
+    <xs:sequence>
+      <xs:element name="enabled" type="xs:boolean"/>
+      <xs:element name="outputChannel" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="stepPosition" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:int" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="controlSwitch">
+    <xs:complexContent>
+      <xs:extension base="switch">
+        <xs:sequence>
+          <xs:element name="combineSwitch" type="xs:IDREF" minOccurs="0"/>
+          <xs:element name="enabled" type="xs:boolean"/>
+          <xs:element name="position" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="dualMixer">
+    <xs:sequence>
+      <xs:element name="channel" type="xs:IDREF" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="diff" type="xs:int"/>
+      <xs:element name="number" type="xs:int"/>
+      <xs:element name="type" type="mixerType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="freeMixer" abstract="true">
+    <xs:sequence>
+      <xs:element name="fromChannel" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="inputType" type="mixerInputType" minOccurs="0"/>
+      <xs:element name="phaseSettings" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="phaseSetting" type="freeMixerPhaseSetting" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="switch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="toChannel" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="type" type="mixerType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="freeMixerPhaseSetting">
+    <xs:sequence/>
+    <xs:attribute name="enabled" type="xs:boolean" use="required"/>
+    <xs:attribute name="phase" type="xs:IDREF"/>
+  </xs:complexType>
+
+  <xs:complexType name="logicalSwitch">
+    <xs:complexContent>
+      <xs:extension base="switch">
+        <xs:sequence>
+          <xs:element name="enabled" type="xs:boolean"/>
+          <xs:element name="mode" type="logicalSwitchMode" minOccurs="0"/>
+          <xs:element name="switches" minOccurs="0">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="switch" type="xs:IDREF" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="hfModule">
+    <xs:sequence>
+      <xs:element name="type" type="hfModuleType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="mp3Player">
+    <xs:sequence>
+      <xs:element name="album" type="xs:int"/>
+      <xs:element name="mode" type="mp3PlayerMode" minOccurs="0"/>
+      <xs:element name="track" type="xs:int"/>
+      <xs:element name="volume" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="multichannel">
+    <xs:sequence>
+      <xs:element name="controls" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="control" type="control" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="enabled" type="xs:boolean"/>
+      <xs:element name="inputChannel" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="mode" type="multichannelMode" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:int" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="phaseAssignment">
+    <xs:sequence>
+      <xs:element name="assignments" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="assignment" type="xs:IDREF" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="combiCSwitch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="combiDSwitch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="combiESwitch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="combiFSwitch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="priorityASwitch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="priorityBSwitch" type="xs:IDREF" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="receiver">
+    <xs:sequence>
+      <xs:element name="bound" type="xs:boolean"/>
+      <xs:element name="channelMappings" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="channelMapping" type="channelMapping" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="rfid" type="xs:long"/>
+      <xs:element name="telemetry" type="xs:boolean"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="ringLimiter">
+    <xs:sequence>
+      <xs:element name="enabled" type="xs:boolean"/>
+      <xs:element name="inputChannels" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="inputChannel" type="xs:IDREF" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="limits" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="limit" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="offsets" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="offset" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="outputChannels" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="outputChannel" type="xs:IDREF" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:int" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="stickTrim">
+    <xs:sequence>
+      <xs:element name="increment" type="xs:int"/>
+      <xs:element name="mode" type="trimMode" minOccurs="0"/>
+      <xs:element name="timeHigh" type="xs:int"/>
+      <xs:element name="timeLow" type="xs:int"/>
+    </xs:sequence>
+    <xs:attribute name="channel" type="xs:int" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="telemetry">
+    <xs:sequence>
+      <xs:element name="currentSensor" type="sensorType" minOccurs="0"/>
+      <xs:element name="currentSensorPage" type="xs:int"/>
+      <xs:element name="selectedSensor" type="sensorType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="voiceDelay" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="throttleSettings">
+    <xs:sequence>
+      <xs:element name="throttleCutOf" type="throttleCutOf" minOccurs="0"/>
+      <xs:element name="throttleLastIdlePosition" type="xs:int"/>
+      <xs:element name="throttleTrim" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="throttleCutOf">
+    <xs:sequence>
+      <xs:element name="position" type="xs:int"/>
+      <xs:element name="switch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="threshold" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="trainerConfig">
+    <xs:sequence>
+      <xs:element name="pupilChannel" type="xs:IDREF" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="pupilId" type="xs:long"/>
+      <xs:element name="trainerChannel" type="xs:IDREF" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="trainerId" type="xs:long"/>
+      <xs:element name="trainerSwitch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="wireless" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="wingedPhase">
+    <xs:complexContent>
+      <xs:extension base="phase">
+        <xs:sequence>
+          <xs:element name="brakeElevatorCurve" type="curve" minOccurs="0"/>
+          <xs:element name="brakeMixers" minOccurs="0">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="brakeMixer" type="wingedMixer" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="multiFlapMixers" minOccurs="0">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="multiFlapMixer" type="wingedMixer" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="wingMixers" minOccurs="0">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="wingMixer" type="wingedMixer" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="wingTrim" type="wingedTrim" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="wingedMixer">
+    <xs:sequence>
+      <xs:element name="function" type="switchFunction" minOccurs="0"/>
+      <xs:element name="qualifier" type="xs:anyType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="switch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="value" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="wingedTrim">
+    <xs:sequence>
+      <xs:element name="aileronPhaseTrim" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="aileronStickTrim" type="xs:int"/>
+      <xs:element name="elevatorPhaseTrim" type="xs:int"/>
+      <xs:element name="elevtorStickTrim" type="xs:int"/>
+      <xs:element name="flapPhaseTrim" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="rudderStickTrim" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="helicopterModel">
+    <xs:complexContent>
+      <xs:extension base="baseModel">
+        <xs:sequence>
+          <xs:element name="autorotationC1TriggerPosition" type="xs:int"/>
+          <xs:element name="autorotationSwitch" type="xs:IDREF" minOccurs="0"/>
+          <xs:element name="autorotationTailPosition" type="xs:int"/>
+          <xs:element name="autorotationThrottlePosition" type="xs:int"/>
+          <xs:element name="expoThrottleLimit" type="xs:int"/>
+          <xs:element name="markerSwitch" type="xs:IDREF" minOccurs="0"/>
+          <xs:element name="pitchMin" type="pitchMin" minOccurs="0"/>
+          <xs:element name="profitrims" minOccurs="0">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="profiTrim" type="helicopterProfiTrim" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="rotorDirection" type="rotorDirection" minOccurs="0"/>
+          <xs:element name="swashplateLinearization" type="xs:boolean"/>
+          <xs:element name="swashplateMix" type="swashplateMix" minOccurs="0"/>
+          <xs:element name="swashplateType" type="swashplateType" minOccurs="0"/>
+          <xs:element name="throttleLimitWarning" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="helicopterProfiTrim">
+    <xs:sequence>
+      <xs:element name="curveType" type="curveType" minOccurs="0"/>
+      <xs:element name="enabled" type="xs:boolean"/>
+      <xs:element name="inputControl" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="phase" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="point" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="helicopterPhase">
+    <xs:complexContent>
+      <xs:extension base="phase">
+        <xs:sequence>
+          <xs:element name="channel8Value" type="xs:int"/>
+          <xs:element name="gyroGain" type="xs:int"/>
+          <xs:element name="gyroSuppression" type="xs:int"/>
+          <xs:element name="helicopterMixer" type="helicopterMixer" minOccurs="0"/>
+          <xs:element name="helicopterTrim" type="helicopterTrim" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="helicopterMixer">
+    <xs:sequence>
+      <xs:element name="nich2TailMix" type="xs:int"/>
+      <xs:element name="nick2ThrottleMix" type="xs:int"/>
+      <xs:element name="pitchCurve" type="curve" minOccurs="0"/>
+      <xs:element name="roll2TailMix" type="xs:int"/>
+      <xs:element name="roll2ThrottleMix" type="xs:int"/>
+      <xs:element name="swashplateLimit" type="xs:int"/>
+      <xs:element name="swashplateRotation" type="xs:int"/>
+      <xs:element name="tail2ThrottleMix" type="xs:int"/>
+      <xs:element name="tailCurve" type="curve" minOccurs="0"/>
+      <xs:element name="throttleCurve" type="curve" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="helicopterTrim">
+    <xs:sequence>
+      <xs:element name="nickStickTrim" type="xs:int"/>
+      <xs:element name="rollStickTrim" type="xs:int"/>
+      <xs:element name="tailStickTrim" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="swashplateMix">
+    <xs:sequence>
+      <xs:element name="nickMix" type="xs:int"/>
+      <xs:element name="pitchMix" type="xs:int"/>
+      <xs:element name="rollMix" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="linearMixer">
+    <xs:complexContent>
+      <xs:extension base="freeMixer">
+        <xs:sequence>
+          <xs:element name="offset" type="xs:int"/>
+          <xs:element name="travelHigh" type="xs:int"/>
+          <xs:element name="travelLow" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="curveMixer">
+    <xs:complexContent>
+      <xs:extension base="freeMixer">
+        <xs:sequence>
+          <xs:element name="curve" type="curve" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="aileronFlapType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FourAilFourFlap"/>
+      <xs:enumeration value="FourAilTwoFlap"/>
+      <xs:enumeration value="OneAil"/>
+      <xs:enumeration value="OneAilOneFlap"/>
+      <xs:enumeration value="TwoAil"/>
+      <xs:enumeration value="TwoAilFourFlap"/>
+      <xs:enumeration value="TwoAilOneFlap"/>
+      <xs:enumeration value="TwoAilTwoFlap"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="failSafeMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Hold"/>
+      <xs:enumeration value="Position"/>
+      <xs:enumeration value="Undefined"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="function">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Aileron"/>
+      <xs:enumeration value="Brake"/>
+      <xs:enumeration value="Elevator"/>
+      <xs:enumeration value="Flap"/>
+      <xs:enumeration value="Nick"/>
+      <xs:enumeration value="Roll"/>
+      <xs:enumeration value="Rudder"/>
+      <xs:enumeration value="TailRotor"/>
+      <xs:enumeration value="Throttel"/>
+      <xs:enumeration value="Unknown"/>
+      <xs:enumeration value="Reduction"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="curveType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Brake"/>
+      <xs:enumeration value="Channel1"/>
+      <xs:enumeration value="FreeMixer"/>
+      <xs:enumeration value="Pitch"/>
+      <xs:enumeration value="Tail"/>
+      <xs:enumeration value="Throttle"/>
+      <xs:enumeration value="Unused"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="switchAssignment">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CTRL1"/>
+      <xs:enumeration value="CTRL10"/>
+      <xs:enumeration value="CTRL2"/>
+      <xs:enumeration value="CTRL4"/>
+      <xs:enumeration value="CTRL5"/>
+      <xs:enumeration value="CTRL6"/>
+      <xs:enumeration value="CTRL7"/>
+      <xs:enumeration value="CTRL8"/>
+      <xs:enumeration value="CTRL9"/>
+      <xs:enumeration value="DG1"/>
+      <xs:enumeration value="DG2"/>
+      <xs:enumeration value="DG3"/>
+      <xs:enumeration value="DG4"/>
+      <xs:enumeration value="DG5"/>
+      <xs:enumeration value="Fx"/>
+      <xs:enumeration value="FX"/>
+      <xs:enumeration value="FXi"/>
+      <xs:enumeration value="G1"/>
+      <xs:enumeration value="G2"/>
+      <xs:enumeration value="G3"/>
+      <xs:enumeration value="G4"/>
+      <xs:enumeration value="G5"/>
+      <xs:enumeration value="G6"/>
+      <xs:enumeration value="G7"/>
+      <xs:enumeration value="G8"/>
+      <xs:enumeration value="GB1"/>
+      <xs:enumeration value="GB2"/>
+      <xs:enumeration value="GB3"/>
+      <xs:enumeration value="GB4"/>
+      <xs:enumeration value="GB5"/>
+      <xs:enumeration value="GB6"/>
+      <xs:enumeration value="Gi1"/>
+      <xs:enumeration value="Gi2"/>
+      <xs:enumeration value="Gi3"/>
+      <xs:enumeration value="Gi4"/>
+      <xs:enumeration value="Gi5"/>
+      <xs:enumeration value="Gi6"/>
+      <xs:enumeration value="Gi7"/>
+      <xs:enumeration value="Gi8"/>
+      <xs:enumeration value="L1"/>
+      <xs:enumeration value="L2"/>
+      <xs:enumeration value="L3"/>
+      <xs:enumeration value="L4"/>
+      <xs:enumeration value="L5"/>
+      <xs:enumeration value="L6"/>
+      <xs:enumeration value="L7"/>
+      <xs:enumeration value="L8"/>
+      <xs:enumeration value="Li1"/>
+      <xs:enumeration value="Li2"/>
+      <xs:enumeration value="Li3"/>
+      <xs:enumeration value="Li4"/>
+      <xs:enumeration value="Li5"/>
+      <xs:enumeration value="Li6"/>
+      <xs:enumeration value="Li7"/>
+      <xs:enumeration value="Li8"/>
+      <xs:enumeration value="SD1"/>
+      <xs:enumeration value="SD2"/>
+      <xs:enumeration value="SR1"/>
+      <xs:enumeration value="SR2"/>
+      <xs:enumeration value="SR3"/>
+      <xs:enumeration value="SW1"/>
+      <xs:enumeration value="SW10"/>
+      <xs:enumeration value="SW11"/>
+      <xs:enumeration value="SW12"/>
+      <xs:enumeration value="SW13"/>
+      <xs:enumeration value="SW14"/>
+      <xs:enumeration value="SW15"/>
+      <xs:enumeration value="SW16"/>
+      <xs:enumeration value="SW2"/>
+      <xs:enumeration value="SW3"/>
+      <xs:enumeration value="SW4"/>
+      <xs:enumeration value="SW5"/>
+      <xs:enumeration value="SW6"/>
+      <xs:enumeration value="SW7"/>
+      <xs:enumeration value="SW8"/>
+      <xs:enumeration value="SW9"/>
+      <xs:enumeration value="TR1"/>
+      <xs:enumeration value="TR2"/>
+      <xs:enumeration value="TR3"/>
+      <xs:enumeration value="TR4"/>
+      <xs:enumeration value="Unassigned"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="switchFunction">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Autorotation"/>
+      <xs:enumeration value="AutorotationC1"/>
+      <xs:enumeration value="AutoTrim"/>
+      <xs:enumeration value="Clock"/>
+      <xs:enumeration value="Combine"/>
+      <xs:enumeration value="Control"/>
+      <xs:enumeration value="CutOff"/>
+      <xs:enumeration value="Diff"/>
+      <xs:enumeration value="Dr_Expo"/>
+      <xs:enumeration value="DualRate"/>
+      <xs:enumeration value="Expo"/>
+      <xs:enumeration value="InputControl"/>
+      <xs:enumeration value="Logical"/>
+      <xs:enumeration value="MarkerKey"/>
+      <xs:enumeration value="Mixer"/>
+      <xs:enumeration value="Phase"/>
+      <xs:enumeration value="PowerWarning"/>
+      <xs:enumeration value="ChannelSeqencer"/>
+      <xs:enumeration value="ThrottleLimit"/>
+      <xs:enumeration value="ToggleHigh"/>
+      <xs:enumeration value="ToggleLow"/>
+      <xs:enumeration value="Trainer"/>
+      <xs:enumeration value="VarioTone"/>
+      <xs:enumeration value="VoiceRepeat"/>
+      <xs:enumeration value="VoiceTrigger"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="switchType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="InputControl"/>
+      <xs:enumeration value="ControlSwitch"/>
+      <xs:enumeration value="Fixed"/>
+      <xs:enumeration value="LogicalSwitch"/>
+      <xs:enumeration value="ToggleSwitch"/>
+      <xs:enumeration value="Unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="controlMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Global"/>
+      <xs:enumeration value="Phase"/>
+      <xs:enumeration value="Unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="clockFunction">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FlightTime"/>
+      <xs:enumeration value="FrameTime"/>
+      <xs:enumeration value="ModelTime"/>
+      <xs:enumeration value="MotorTime"/>
+      <xs:enumeration value="StopWatch"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="clockMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CountDown"/>
+      <xs:enumeration value="Timer"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="clockType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CENTER"/>
+      <xs:enumeration value="LapDisplay"/>
+      <xs:enumeration value="LapTimer"/>
+      <xs:enumeration value="PHASE1"/>
+      <xs:enumeration value="PHASE2"/>
+      <xs:enumeration value="PHASE3"/>
+      <xs:enumeration value="ROUND"/>
+      <xs:enumeration value="TOP"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="phaseType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Acro"/>
+      <xs:enumeration value="Acro_3D"/>
+      <xs:enumeration value="Acro2"/>
+      <xs:enumeration value="AirTow"/>
+      <xs:enumeration value="Autorotation"/>
+      <xs:enumeration value="Custom1"/>
+      <xs:enumeration value="Custom10"/>
+      <xs:enumeration value="Custom2"/>
+      <xs:enumeration value="Custom3"/>
+      <xs:enumeration value="Custom4"/>
+      <xs:enumeration value="Custom5"/>
+      <xs:enumeration value="Custom6"/>
+      <xs:enumeration value="Custom7"/>
+      <xs:enumeration value="Custom8"/>
+      <xs:enumeration value="Custom9"/>
+      <xs:enumeration value="Distance"/>
+      <xs:enumeration value="Distance2"/>
+      <xs:enumeration value="Global"/>
+      <xs:enumeration value="Hover"/>
+      <xs:enumeration value="Landing"/>
+      <xs:enumeration value="landing2"/>
+      <xs:enumeration value="Normal"/>
+      <xs:enumeration value="Speed"/>
+      <xs:enumeration value="Speed2"/>
+      <xs:enumeration value="Takeoff"/>
+      <xs:enumeration value="Takeoff2"/>
+      <xs:enumeration value="Test"/>
+      <xs:enumeration value="Test2"/>
+      <xs:enumeration value="Thermal"/>
+      <xs:enumeration value="Thermal2"/>
+      <xs:enumeration value="Unused"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="trainerMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Pupil"/>
+      <xs:enumeration value="Trainer"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="motorOnC1Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Idle_Front"/>
+      <xs:enumeration value="Idle_Rear"/>
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="None_Inv"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="tailType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Delta"/>
+      <xs:enumeration value="Normal"/>
+      <xs:enumeration value="TwoElevators"/>
+      <xs:enumeration value="VTail"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="sequenceStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Dec"/>
+      <xs:enumeration value="Inc"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="dscOutputType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PPM10"/>
+      <xs:enumeration value="PPM16"/>
+      <xs:enumeration value="PPM18"/>
+      <xs:enumeration value="PPM24"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="mixerType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Curve"/>
+      <xs:enumeration value="Dual"/>
+      <xs:enumeration value="Linear"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="extPPMType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Inverse"/>
+      <xs:enumeration value="Normal"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="mixerInputType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal"/>
+      <xs:enumeration value="Sequence"/>
+      <xs:enumeration value="Trim"/>
+      <xs:enumeration value="Trim_Sequence"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="logicalSwitchMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AND"/>
+      <xs:enumeration value="OR"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="modelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Helicopter"/>
+      <xs:enumeration value="Unknown"/>
+      <xs:enumeration value="Winged"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="hfModuleType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EXT_PPM"/>
+      <xs:enumeration value="HoTT"/>
+      <xs:enumeration value="SP"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="mp3PlayerMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AllRound"/>
+      <xs:enumeration value="One"/>
+      <xs:enumeration value="OneRound"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="multichannelMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EightCh"/>
+      <xs:enumeration value="FourCh"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="stickMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Mode1"/>
+      <xs:enumeration value="Mode2"/>
+      <xs:enumeration value="Mode3"/>
+      <xs:enumeration value="Mode4"/>
+      <xs:enumeration value="Undefined"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="trimMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Global"/>
+      <xs:enumeration value="Phase"/>
+      <xs:enumeration value="Pitch"/>
+      <xs:enumeration value="ThrottelAR"/>
+      <xs:enumeration value="ThrottleLimit"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="sensorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ElectricAirModule"/>
+      <xs:enumeration value="ESC"/>
+      <xs:enumeration value="GeneralAirModule"/>
+      <xs:enumeration value="GeneralModule"/>
+      <xs:enumeration value="GPS"/>
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="Receiver"/>
+      <xs:enumeration value="Vario"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="transmitterType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="mc16"/>
+      <xs:enumeration value="mc20"/>
+      <xs:enumeration value="mc32"/>
+      <xs:enumeration value="mx10"/>
+      <xs:enumeration value="mx12"/>
+      <xs:enumeration value="mx16"/>
+      <xs:enumeration value="mx20"/>
+      <xs:enumeration value="mx32"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="vendor">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Graupner"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="pitchMin">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Front"/>
+      <xs:enumeration value="Rear"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="rotorDirection">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Left"/>
+      <xs:enumeration value="Right"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="swashplateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FourServo"/>
+      <xs:enumeration value="OneServo"/>
+      <xs:enumeration value="ThreeServo140"/>
+      <xs:enumeration value="ThreeServoNick"/>
+      <xs:enumeration value="ThreeServoRoll"/>
+      <xs:enumeration value="TwoServo"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+

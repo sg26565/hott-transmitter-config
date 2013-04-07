@@ -24,8 +24,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
@@ -44,8 +42,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.xml.bind.JAXBException;
-
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.lowagie.text.DocumentException;
 
@@ -130,15 +126,15 @@ public class SimpleGUI {
 				try {
 					String data;
 					if (file.getName().endsWith(".xml")) {
-						data = generateXML(model);
+						data = Report.generateXML(model);
 					} else {
-						data = generateHTML(model);
+						data = Report.generateHTML(model);
 					}
 
 					if (file.getName().endsWith(".pdf")) {
-						savePDF(file, data);
+						Report.savePDF(file, data);
 					} else {
-						save(file, data);
+						Report.save(file, data);
 					}
 				} catch (final IOException | JAXBException | TemplateException | DocumentException e) {
 					showError(frame, e);
@@ -185,33 +181,6 @@ public class SimpleGUI {
 	private final JMenu viewMenu = new JMenu("View");
 	private final JButton xmlButton = new JButton("View XML");
 	private final JMenuItem xmlMenuItem = new JMenuItem("XML");
-
-	private String generateHTML(final BaseModel model) throws IOException, TemplateException {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos, "mx-16.xhtml");
-		return baos.toString();
-	}
-
-	private String generateXML(final BaseModel model) throws JAXBException {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos);
-		return baos.toString();
-	}
-
-	private void save(final File file, final String data) throws IOException {
-		final FileWriter fw = new FileWriter(file);
-		fw.write(data);
-		fw.close();
-	}
-
-	private void savePDF(final File file, final String data) throws IOException, DocumentException {
-		final FileOutputStream fos = new FileOutputStream(file);
-		final ITextRenderer renderer = new ITextRenderer();
-		renderer.setDocumentFromString(data);
-		renderer.layout();
-		renderer.createPDF(fos);
-		fos.close();
-	}
 
 	private void show() {
 		editorPane.setEditable(false);
@@ -285,9 +254,9 @@ public class SimpleGUI {
 
 	private void updateView() throws IOException, TemplateException, JAXBException {
 		if (raw) {
-			editorPane.setText(generateXML(model));
+			editorPane.setText(Report.generateXML(model));
 		} else {
-			editorPane.setText(generateHTML(model));
+			editorPane.setText(Report.generateHTML(model));
 		}
 
 		editorPane.setCaretPosition(0);

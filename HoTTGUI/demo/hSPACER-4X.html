@@ -1,5 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<!--
+	HoTT Transmitter Config
+	Copyright (C) 2013  Oliver Treichel
+	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 	<head>
 		<title>Graupner/SJ mx-16 - SPACER-4X</title>
 		<style type="text/css" media="print">
@@ -52,7 +69,7 @@
 			<tr>
 				<th align="right" valign="top">Motor-Stopp</th>
 				<td><i>Position:</i> -100%</td>
-				<td><i>Limit:</i> 1.200%</td>
+				<td><i>Limit:</i> 150%</td>
 				<td><i>Schalter:</i> ---</td>							
 			</tr>
 			<tr>
@@ -73,8 +90,20 @@
 			</tr>			
 			<tr>
 				<th align="right" valign="top">Uhren</th>
-				<td><i>Stoppuhr:</i> 0:00</td>
-				<td colspan="2"><i>Schalter:</i> ---</td>
+				<td colspan="3">
+					<table callpadding="0">
+						<tr>
+							<th>Typ</th>
+							<th>Wert</th>
+							<th>Schalter</th>
+						</tr>
+						<tr>
+							<td>Stoppuhr</td>
+							<td>0:00</td>
+							<td>---</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
 				<th align="right" valign="top">Phase 1</th>
@@ -101,9 +130,9 @@
 				<td colspan="3">
 					<table cellpadding="0">
 						<tr>
-							<td align="center">S1</td>
+							<td align="center">S3</td>
 							<td align="center">=></td>
-							<td align="center">Ausgang 3</td>
+							<td align="center">Ausgang 1</td>
 						</tr>
 						<tr>
 							<td align="center">S2</td>
@@ -126,9 +155,9 @@
 							<td align="center">Ausgang 5</td>
 						</tr>
 						<tr>
-							<td align="center">S6</td>
+							<td align="center">S3</td>
 							<td align="center">=></td>
-							<td align="center">Ausgang 3</td>
+							<td align="center">Ausgang 6</td>
 						</tr>
 						<tr>
 							<td align="center">S7</td>
@@ -261,7 +290,7 @@
 				<td align="cender">---</td>
 				<td align="cender">100%</td>
 				<td align="cender">100%</td>
-			</tr>				
+			</tr>
 		</table>
 
 		<hr/>	
@@ -924,6 +953,7 @@
 			<tr>
 				<th>Mixer</th>
 				<th>Typ</th>
+				<th>Input</th>
 				<th>von</th>
 				<th>zu</th>
 				<th>Schalter</th>
@@ -934,6 +964,7 @@
 		
 			<tr>
 				<td>M1</td>
+				<td>Linearmischer</td>
 				<td>Normal</td>
 				<td>0</td>
 				<td>0</td>
@@ -944,6 +975,7 @@
 			</tr>
 			<tr>
 				<td>M2</td>
+				<td>Linearmischer</td>
 				<td>Normal</td>
 				<td>0</td>
 				<td>0</td>
@@ -954,6 +986,7 @@
 			</tr>
 			<tr>
 				<td>M3</td>
+				<td>Linearmischer</td>
 				<td>Normal</td>
 				<td>0</td>
 				<td>0</td>
@@ -1036,11 +1069,8 @@
 		<h1>Telemetrie</h1>
 		<table>
 			<tr>
-				<th align="right" rowspan="2">Ansage wiederholen</th>
-				<td>10s</td>
-			</tr>
-			<tr>
-				<td>---</td>
+				<th align="right">Ansage wiederholen</th>
+				<td>10s <i>Schalter:</i> ---</td>
 			</tr>
 			<tr>
 				<th align="right">n&auml;chste Ansage</th>
