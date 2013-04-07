@@ -76,7 +76,7 @@ public class ReportTest {
 	}
 
 	@Test
-	public void testMc20Models() throws URISyntaxException, IOException, JAXBException {
+	public void testMc20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
 		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mc20").toURI());
 
 		for (final File file : dir.listFiles()) {
@@ -87,11 +87,15 @@ public class ReportTest {
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
 			Report.process(model, out);
 			assertTrue(out.size() > 0);
+
+			out.reset();
+			Report.process(model, out, "mx-16.xhtml");
+			assertTrue(out.size() > 0);
 		}
 	}
 
 	@Test
-	public void testMc32Models() throws URISyntaxException, IOException, JAXBException {
+	public void testMc32Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
 		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mc32").toURI());
 
 		for (final File file : dir.listFiles()) {
@@ -102,11 +106,15 @@ public class ReportTest {
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
 			Report.process(model, out);
 			assertTrue(out.size() > 0);
+
+			out.reset();
+			Report.process(model, out, "mx-16.xhtml");
+			assertTrue(out.size() > 0);
 		}
 	}
 
 	@Test
-	public void testMx12Models() throws URISyntaxException, IOException, JAXBException {
+	public void testMx12Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
 		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx12").toURI());
 
 		for (final File file : dir.listFiles()) {
@@ -117,11 +125,15 @@ public class ReportTest {
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
 			Report.process(model, out);
 			assertTrue(out.size() > 0);
+
+			out.reset();
+			Report.process(model, out, "mx-16.xhtml");
+			assertTrue(out.size() > 0);
 		}
 	}
 
 	@Test
-	public void testMx16Models() throws URISyntaxException, IOException, JAXBException {
+	public void testMx16Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
 		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx16").toURI());
 
 		for (final File file : dir.listFiles()) {
@@ -132,11 +144,15 @@ public class ReportTest {
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
 			Report.process(model, out);
 			assertTrue(out.size() > 0);
+
+			out.reset();
+			Report.process(model, out, "mx-16.xhtml");
+			assertTrue(out.size() > 0);
 		}
 	}
 
 	@Test
-	public void testMx20Models() throws URISyntaxException, IOException, JAXBException {
+	public void testMx20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
 		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx20").toURI());
 
 		for (final File file : dir.listFiles()) {
@@ -146,6 +162,10 @@ public class ReportTest {
 
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
 			Report.process(model, out);
+			assertTrue(out.size() > 0);
+
+			out.reset();
+			Report.process(model, out, "mx-16.xhtml");
 			assertTrue(out.size() > 0);
 		}
 	}
