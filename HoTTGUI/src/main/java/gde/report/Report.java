@@ -46,6 +46,7 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
 import gde.model.BaseModel;
 import gde.model.CurveMixer;
 import gde.model.LinearMixer;
@@ -58,21 +59,22 @@ import gde.model.winged.WingedPhase;
  * @author oli@treichels.de
  */
 public class Report {
-	private static final Configuration configuration;
-	private static final JAXBContext ctx;
-	private static final Marshaller marshaller;
+	private static final Configuration CONFIGURATION;
+	private static final JAXBContext CTX;
+	private static final TemplateExceptionHandler CUSTOM_HANDLER;
+	private static final Marshaller MARSHALLER;
 
 	static {
-		configuration = new Configuration();
-		configuration.setClassForTemplateLoading(Report.class, "templates");
-		configuration.setObjectWrapper(new DefaultObjectWrapper());
-		configuration.setTemplateExceptionHandler(new FreeMarkerExceptionHandler());
+		CONFIGURATION = new Configuration();
+		CONFIGURATION.setClassForTemplateLoading(Report.class, "templates");
+		CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
+		CUSTOM_HANDLER = new FreeMarkerExceptionHandler();
 
 		try {
-			ctx = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class, LinearMixer.class,
+			CTX = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class, LinearMixer.class,
 					CurveMixer.class);
-			marshaller = ctx.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			MARSHALLER = CTX.createMarshaller();
+			MARSHALLER.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 		} catch (final JAXBException e) {
 			throw new RuntimeException(e);
 		}
@@ -80,7 +82,26 @@ public class Report {
 
 	public static String generateHTML(final BaseModel model) throws IOException, TemplateException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos, "mx-16.xhtml");
+		final String templateName;
+
+		switch (model.getTransmitterType()) {
+		case mc16:
+		case mc20:
+		case mc32:
+		case mx20:
+			templateName = "mc-32.xhtml";
+			break;
+
+		case mx12:
+		case mx16:
+			templateName = "mx-16.xhtml";
+			break;
+
+		default:
+			throw new IOException("Unsupported transmitter type");
+		}
+
+		Report.process(model, baos, templateName);
 		return baos.toString();
 	}
 
@@ -91,7 +112,7 @@ public class Report {
 	}
 
 	public static void generateXsd(final File file) throws IOException {
-		ctx.generateSchema(new SchemaOutputResolver() {
+		CTX.generateSchema(new SchemaOutputResolver() {
 			@Override
 			public Result createOutput(final String namespaceUri, final String suggestedFileName) throws IOException {
 				final StreamResult result = new StreamResult(file);
@@ -119,12 +140,16 @@ public class Report {
 		return getModel(file);
 	}
 
+	public static boolean isSuppressExceptions() {
+		return CONFIGURATION.getTemplateExceptionHandler() instanceof FreeMarkerExceptionHandler;
+	}
+
 	public static void process(final BaseModel model, final OutputStream out) throws JAXBException {
-		marshaller.marshal(model, out);
+		MARSHALLER.marshal(model, out);
 	}
 
 	public static void process(final BaseModel model, final OutputStream out, final String templateName) throws IOException, TemplateException {
-		final Template template = configuration.getTemplate(templateName);
+		final Template template = CONFIGURATION.getTemplate(templateName);
 		final Map<String, Object> rootMap = new HashMap<String, Object>();
 
 		rootMap.put("model", model);
@@ -152,5 +177,13 @@ public class Report {
 		renderer.layout();
 		renderer.createPDF(fos);
 		fos.close();
+	}
+
+	public static void setSuppressExceptions(final boolean suppress) {
+		if (suppress) {
+			CONFIGURATION.setTemplateExceptionHandler(CUSTOM_HANDLER);
+		} else {
+			CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
+		}
 	}
 }

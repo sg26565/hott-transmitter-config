@@ -196,6 +196,16 @@ public class BaseModel {
 		return sw;
 	}
 
+	public Switch getSwitch(final String id) {
+		for (final Switch sw : getSwitch()) {
+			if (sw.getId().equals(id)) {
+				return sw;
+			}
+		}
+
+		return null;
+	}
+
 	public Telemetry getTelemetry() {
 		return telemetry;
 	}
