@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum MixerInputType {
-	Normal, Sequence, Trim, Trim_Sequence;
+	Normal, Phase, Sequence, Trim, Trim_Sequence;
 
 	/** @return the locale-dependent message */
 	@Override

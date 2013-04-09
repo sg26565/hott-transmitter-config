@@ -257,29 +257,29 @@
 				<td>Kanal 1</td>
 				<td>${model.stickTrim[0].mode}</td>
 				<td align="center">${model.stickTrim[0].increment}</td>
-				<td align="center">${model.stickTrim[0].timeLow?string("0.0")}</td>
-				<td align="center">${model.stickTrim[0].timeHigh?string("0.0")}</td>
+				<td align="center">${model.stickTrim[0].timeLow?string("0.0")}s</td>
+				<td align="center">${model.stickTrim[0].timeHigh?string("0.0")}s</td>
 			</tr>
 			<tr>
 				<td>Querruder</td>
 				<td>${model.stickTrim[1].mode}</td>
 				<td align="center">${model.stickTrim[1].increment}</td>
-				<td align="center">${model.stickTrim[1].timeLow?string("0.0")}</td>
-				<td align="center">${model.stickTrim[1].timeHigh?string("0.0")}</td>
+				<td align="center">${model.stickTrim[1].timeLow?string("0.0")}s</td>
+				<td align="center">${model.stickTrim[1].timeHigh?string("0.0")}s</td>
 			</tr>
 			<tr>
 				<td>Höhenruder</td>
 				<td>${model.stickTrim[2].mode}</td>
 				<td align="center">${model.stickTrim[2].increment}</td>
-				<td align="center">${model.stickTrim[2].timeLow?string("0.0")}</td>
-				<td align="center">${model.stickTrim[2].timeHigh?string("0.0")}</td>
+				<td align="center">${model.stickTrim[2].timeLow?string("0.0")}s</td>
+				<td align="center">${model.stickTrim[2].timeHigh?string("0.0")}s</td>
 			</tr>
 			<tr>
 				<td>Seitenruder</td>
 				<td>${model.stickTrim[3].mode}</td>
 				<td align="center">${model.stickTrim[3].increment}</td>
-				<td align="center">${model.stickTrim[3].timeLow?string("0.0")}</td>
-				<td align="center">${model.stickTrim[3].timeHigh?string("0.0")}</td>
+				<td align="center">${model.stickTrim[3].timeLow?string("0.0")}s</td>
+				<td align="center">${model.stickTrim[3].timeHigh?string("0.0")}s</td>
 			</tr>
 </#if>
 <#if helicopterModel??>
@@ -351,8 +351,8 @@
 				<td align="center">${control.offset}%</td>
 				<td align="center">${control.travelLow}%</td>
 				<td align="center">${control.travelHigh}%</td>
-				<td align="center">${control.timeLow?string("0.0")}</td>
-				<td align="center">${control.timeHigh?string("0.0")}</td>
+				<td align="center">${control.timeLow?string("0.0")}s</td>
+				<td align="center">${control.timeHigh?string("0.0")}s</td>
 			</tr>
 </#list>
 		</table>
@@ -400,8 +400,175 @@
 </#list>
 
 		<hr/>	
+
+		<h1>Kanal 1 Kurve</h1>
+		
+<#list model.phase as phase>
+<#if phase.phaseType.name() != "Unused">
+		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
+		<table>
+			<tr>
+				<th>Kurve</th>
+				<td colspan="2">${phase.channel1Curve.smoothing?string("an","aus")}</td>
+			</tr>
+			<tr>
+				<th>Nummer</th>
+				<th>Position</th>
+				<th>Wert</th>
+			</tr>
+<#list phase.channel1Curve.point as point>
+			<tr>
+				<td align="center">${point.number+1}</td>
+<#if point.enabled>
+				<td align="center">${point.position}%</td>
+				<td align="center">${point.value}%</td>
+<#else>
+				<td colspan="2" align="center">aus</td>
+</#if>
+			</tr>
+</#list>
+		</table>
+</#if>
+</#list>
+
 		<hr/>
 		
+		<h1>Geberschalter</h1>
+		
+		<table>
+			<tr>
+				<th>Nummer</th>
+				<th>Geber</th>
+				<th>Position</th>
+				<th>Richtung</th>
+				<th>Schalter</th>
+			</tr>
+<#list model.controlSwitch as sw>
+			<tr>
+				<th>G${sw_index+1}</th>
+				<td align="center">${sw.assignment}</td>
+				<td align="center">${sw.position}</td>
+				<td align="center"><#if sw.direction==0>=&gt;<#else>&lt;=</#if></td>
+				<td align="center"><@switch sw.combineSwitch/></td>
+			</tr>
+</#list>
+		</table>
+		
+		<hr/>
+		
+		<h1>logische Schalter</h1>
+
+		<table>
+			<tr>
+				<th>Nummer</th>
+				<th>Schalter 1</th>
+				<th>Funktion</th>
+				<th>Schalter 2</th>
+			</tr>
+<#list model.logicalSwitch as sw>
+			<tr>
+				<th>L${sw_index+1}</th>
+				<td align="center"><@switch sw.switch[0]/></td>
+				<td align="center">${sw.mode}</td>
+				<td align="center"><@switch sw.switch[1]/></td>
+			</tr>
+</#list>
+		</table>
+		
+		<hr/>
+		
+		<h1>Phaseneinstellungen</h1>
+		
+		<table>
+			<tr>
+				<th>Phase</th>
+				<th>Name</th>
+				<th>Uhr</th>
+				<th>Motor</th>
+				<th>Umschaltzeit</th>
+			</tr>
+<#list model.phase as phase>
+<#if phase.phaseType.name() != "Unused">
+			<tr>
+				<td aling="center">Phase ${phase.number?number+1}</td>
+				<td aling="center">${phase.phaseName}</td>
+<#if phase.phaseTimer??>				
+				<td aling="center">${phase.phaseTimer.mode}</td>
+<#else>
+				<td aling="center">---</td>
+</#if>
+				<td aling="center">${phase.motorOn?string("ja","nein")}</td>
+				<td aling="center">${phase.phaseSwitchTime?string("0.0")}s</td>
+			</tr>
+</#if>
+</#list>			
+		</table>
+		
+		<hr/>
+		
+		<h1>Phasenzuweisung</h1>
+		
+		<table>
+			<tr>
+				<th align="right">Prioritätsschalter A</th>
+				<td><@switch model.phaseAssignment.priorityASwitch/></td>
+				<td><i>Phase:</i> ${model.phaseAssignment.assignment[1].number?number+1}:${model.phaseAssignment.assignment[1].phaseName}</td>
+			</tr>
+			<tr>
+				<th align="right">Prioritätsschalter B</th>
+				<td><@switch model.phaseAssignment.priorityBSwitch/></td>
+				<td><i>Phase:</i> ${model.phaseAssignment.assignment[2].number?number+1}:${model.phaseAssignment.assignment[2].phaseName}</td>
+			</tr>
+			<tr>
+				<th align="right">Kombinationsschalter C</th>
+				<td><@switch model.phaseAssignment.combiCSwitch/></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<th align="right">Kombinationsschalter D</th>
+				<td><@switch model.phaseAssignment.combiDSwitch/></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<th align="right">Kombinationsschalter E</th>
+				<td><@switch model.phaseAssignment.comiESwitch/></td>
+				<td>&nbsp;</td>				
+			</tr>
+			<tr>
+				<th align="right">Kombinationsschalter F</th>
+				<td><@switch model.phaseAssignment.combiFSwitch/></td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+		<h2>Kombinationsphasenzuweisungen</h2>
+		<table>
+			<tr>
+				<th>C</th>
+				<th>D</th>
+				<th>E</th>
+				<th>F</th>
+				<th>Phase</th>
+			</tr>
+<#list model.phaseAssignment.assignment as assignment>
+<#if (assignment_index > 1)>
+			<tr>
+				<td alling="center">${((assignment_index-2)/8%2==1)?string("an","aus")}</td>
+				<td alling="center">${((assignment_index-2)/4%2==1)?string("an","aus")}</td>
+				<td alling="center">${((assignment_index-2)/2%2==1)?string("an","aus")}</td>
+				<td alling="center">${((assignment_index-2)%2==1)?string("an","aus")}</td>
+<#if (assignment_index == 2)>
+				<td>${model.phaseAssignment.assignment[0].number?number+1}:${model.phaseAssignment.assignment[0].phaseName}</td>
+<#else>
+				<td>${assignment.number?number+1}:${assignment.phaseName}</td>
+</#if>
+			</tr>
+</#if>
+</#list>
+		</table>
+		
+		<hr/>
+		
+		<table>
 			<tr>
 				<th align="right">Gastrimm</th>
 				<td colspan="3">${model.throttleSettings.throttleTrim}%</td>
