@@ -9,20 +9,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
-
-
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 public class BaseConfiguration extends ScrolledComposite {
 
 	private CLabel						infoLabel;
@@ -52,9 +38,9 @@ public class BaseConfiguration extends ScrolledComposite {
 	baseComposite.layout();
 	}
 	
-	public BaseConfiguration(Composite tabFolder) {
+	public BaseConfiguration(Composite tabFolder, String name) {
 	super(tabFolder, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-	this.open("Grundeinstellung");
+	this.open(name);
 	baseComposite.layout();
 	}
 
@@ -63,7 +49,7 @@ public class BaseConfiguration extends ScrolledComposite {
 		this.setContent(baseComposite);
 		GridLayout composite1Layout1 = new GridLayout();
 		composite1Layout1.numColumns = 6;
-		baseComposite.setSize(500, 300);
+		baseComposite.setBounds(0, 0, 500, 300);
 		baseComposite.setLayout(composite1Layout1);
 		if (header != null && header.length() > 0){
 			headerLabel = new CLabel(baseComposite, SWT.NONE);
@@ -73,7 +59,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			gridData.widthHint = 175;
 			gridData.heightHint = 22;
 			headerLabel.setLayoutData(gridData);
-			//headerLabel.setFont(SWTResourceManager.getFont("Microsoft Sans Serif", 10, 1, false, false));
+			//TODO headerLabel.setFont(SWTResourceManager.getFont("Microsoft Sans Serif", 10, 1, false, false));
 		}
 		{
 			modellNameLabel = new CLabel(baseComposite, SWT.NONE);
@@ -107,6 +93,8 @@ public class BaseConfiguration extends ScrolledComposite {
 			infoText = new Text(baseComposite, SWT.BORDER);
 			GridData infoTextLData = new GridData();
 			infoTextLData.horizontalSpan = 4;
+			infoTextLData.widthHint = 100;
+			infoTextLData.heightHint = 16;
 			infoText.setLayoutData(infoTextLData);
 			infoText.setText("Modell Zusatzinformation");
 		}
