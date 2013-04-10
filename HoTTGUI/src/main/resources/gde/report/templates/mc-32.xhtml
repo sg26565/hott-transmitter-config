@@ -117,7 +117,7 @@
 </#list>
 </#if>
 </#list>
-</#if>			
+</#if>
 			<tr>
 				<th align="right">DSC-Ausgang</th>
 				<td colspan="3">${model.dscOutputType}</td>
@@ -227,7 +227,7 @@
 				<th>Begrenzung +</th>
 			</tr>
 <#list model.channel as channel>
-<#if !channel.virtual>						
+<#if !channel.virtual>
 			<tr>
 				<td align="center">S${channel.number?number+1}</td>
 				<td align="center"><#if channel.reverse>&lt;=<#else>=&gt;</#if></td>
@@ -337,14 +337,14 @@
 			<tr>
 				<td align="center">E${control.number?number+1}</td>
 				<td align="center">${control.mode}</td>
-<#if control.controlSwitch?? && control.controlSwitch.assignment.name() != "Unassigned">				
+<#if control.controlSwitch?? && control.controlSwitch.assignment.name() != "Unassigned">
 				<td align="center" colspan="2"><@switch control.controlSwitch/></td>
 <#else>
 <#if control.toggleLowSwitch?? && control.toggleLowSwitch.assignment.name() != "Unassigned" || control.toggleHighSwitch?? && control.toggleHighSwitch.assignment.name() != "Unassigned">
 				<td><@switch control.toggleLowSwitch/></td>
 				<td><@switch control.toggleHighSwitch/></td>
 <#else>
-				<td>fr</td>
+				<td>frei</td>
 				<td>---</td>
 </#if>
 </#if>
@@ -361,10 +361,10 @@
 
 		<hr/>	
 
-		<h1>DualRate Expo</h1>		
+		<h1>DualRate Expo</h1>
 <#list model.phase as phase>
 <#if phase.phaseType.name() != "Unused">
-		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
+		<h2>Phase ${phase.number?number+1}: ${phase.phaseName}</h2>
 		<table>
 			<tr>
 				<td>&nbsp;</td>
@@ -405,7 +405,7 @@
 		
 <#list model.phase as phase>
 <#if phase.phaseType.name() != "Unused">
-		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
+		<h2>Phase ${phase.number?number+1}: ${phase.phaseName}</h2>
 		<table>
 			<tr>
 				<th>Kurve</th>
@@ -492,7 +492,7 @@
 			<tr>
 				<td aling="center">Phase ${phase.number?number+1}</td>
 				<td aling="center">${phase.phaseName}</td>
-<#if phase.phaseTimer??>				
+<#if phase.phaseTimer??>
 				<td aling="center">${phase.phaseTimer.mode}</td>
 <#else>
 				<td aling="center">---</td>
@@ -501,7 +501,7 @@
 				<td aling="center">${phase.phaseSwitchTime?string("0.0")}s</td>
 			</tr>
 </#if>
-</#list>			
+</#list>
 		</table>
 		
 		<hr/>
@@ -567,7 +567,177 @@
 		</table>
 		
 		<hr/>
+
+<#if wingedModel??>
+		<h1>Phasentrimm</h1>
+		<table>
+			<tr>
+				<th align="right">Phase</th>
+				<th>HR</th>
+				<th>QR</th>
+				<th>QR2</th>
+				<th>WK</th>
+				<th>WK2</th>
+			</tr>
+<#list wingedModel.phase as phase>
+<#if phase.phaseType.name() != "Unused">
+			<tr>
+				<th align="right">${phase.number?number+1}:${phase.phaseName}</th>
+				<td>${phase.wingTrim.elevatorPhaseTrim}%</td>
+				<td>${phase.wingTrim.aileronPhaseTrim[0]}%</td>
+				<td>${phase.wingTrim.aileronPhaseTrim[1]}%</td>
+				<td>${phase.wingTrim.flapPhaseTrim[0]}%</td>
+				<td>${phase.wingTrim.flapPhaseTrim[1]}%</td>
+			</tr>
+</#if>
+</#list>
+		</table>
+</#if>
+
+		<hr/>
 		
+		<h1>Unverzögerte Kanäle</h1>
+		<table>
+			<tr>
+				<th>Phase</th>
+<#list model.channel as channel>
+<#if !channel.virtual>		
+				<th>${channel.number?number+1}</th>
+</#if>
+</#list>
+			</tr>
+<#list model.phase as phase>
+<#if phase.phaseType.name() != "Unused">
+			<tr>
+				<td>${phase.number?number+1}:${phase.phaseName}</td>
+<#list model.channel as channel>
+<#if !channel.virtual>		
+				<td>${channel.phaseSetting[phase_index].nonDelayed?string("unverzögert","normal")}</td>
+</#if>
+</#list>
+			</tr>
+</#if>
+</#list>
+		</table>
+
+		<hr/>
+		
+		<h1>Uhren (allgemein)</h1>
+		<table>
+			<tr>
+				<td>&nbsp;</td>
+				<th>Uhr</th>
+				<th>Timer</th>
+				<th>Alarm</th>
+				<th>Schalter</th>
+			</tr>
+			<tr>
+				<th align="right">Modellzeit</th>
+				<td colspan="3">&nbsp;</td>
+				<td><@switch model.getSwitch("ModelTime")/></td>
+			</tr>
+<#list [4,5] as index>
+			<tr>
+				<th align="right">${model.clock[index].type}</th>
+				<td>${model.clock[index].function}</td>
+				<td>${model.clock[index].minutes}:${model.clock[index].seconds?string("00")}</td>
+				<td>${model.clock[index].alarm}s</td>
+				<td><@switch model.clock[index].switch/></td>
+			</tr>
+</#list>
+		</table>
+		
+		<hr/>
+		
+		<h1>Flugphasenuhren</h1>
+		<table>
+			<tr>
+				<td>&nbsp;</td>
+				<th>Timer</th>
+				<th>Alarm</th>
+				<th>Schalter</th>
+			</tr>
+<#list [0,1,2] as index>
+			<tr>
+				<th align="right">${model.clock[index].type}</th>
+				<td>${model.clock[index].minutes}:${model.clock[index].seconds?string("00")}</td>
+				<td>${model.clock[index].alarm}s</td>
+				<td><@switch model.clock[index].switch/></td>
+			</tr>
+</#list>
+			<tr>
+				<th align="right">Rundenzähler/Zeittabelle</th>
+				<td colspan="2">&nbsp;</td>
+				<td><@switch model.getSwitch("LapTimer")/></td>
+			</tr>
+			<tr>
+				<th align="right">Rundenanzeige</th>
+				<td colspan="2">&nbsp;</td>
+				<td><@switch model.getSwitch("LapDisplay")/></td>
+			</tr>
+		</table>
+
+		<hr/>
+
+<#if wingedModel??>
+		<h1>Flächenmischer</h1>
+<#list model.phase as phase>
+<#if phase.phaseType.name() != "Unused">
+		<h2>Phase ${phase.number?number+1}: ${phase.phaseName}</h2>
+		<table>
+			<tr>
+				<th align="right">Mischer</th>
+				<th align="center">Wert</th>
+				<th align="left">Schalter</th>
+			</tr>
+<#list phase.wingMixer as mixer>
+			<tr>
+				<th align="right">${mixer.id}</th>
+				<td align="center">${mixer.value[0]}%</td>
+				<td><@switch mixer.switch/></td>						
+			</tr>
+</#list>
+		</table>
+</#if>
+</#list>
+</#if>
+<#if helicopterModel??>
+		<h1>Helikoptermix</h1>
+<#list helicopterModel.phase as phase>
+<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
+		
+		<table>
+			<@curve "Pitchkurve" phase.helicopterMixer.pitchCurve.point/>
+			<@curve "Gaskurve (K1 -> Gas)" phase.helicopterMixer.throttleCurve.point/>
+			<@curve "Heckrotorkurve (K1 -> Heck)" phase.helicopterMixer.tailCurve.point/>
+			<tr>
+				<th align="right">Gyro</th>
+				<td>${phase.gyroGain}%</td>
+			</tr>
+			<tr>
+				<th align="right">Eingang 8</th>
+				<td>${phase.channel8Value}%</td>
+			</tr>
+			<tr>
+				<th align="right">Taumelscheibenlimit</th>
+				<td><#if phase.helicopterMixer.swashplateLimit == 150>aus<#else>${phase.helicopterMixer.swashplateLimit}%</#if></td>
+			</tr>
+		</table>
+</#if>
+</#list>
+</#if>
+
+		<hr/>
+
+
+
+
+
+
+
+
+
 		<table>
 			<tr>
 				<th align="right">Gastrimm</th>
@@ -634,73 +804,7 @@
 
 
 
-<#if wingedModel??>
-		<h1>Phasentrimm</h1>
-		<table>
-			<tr>
-				<th align="right">Phase</th>
-				<th>WK</th>
-				<th>QR</th>
-				<th>HR</th>
-			</tr>
-<#list wingedModel.phase as phase>				
-<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
-			<tr>
-				<th align="right">${phase.phaseName}</th>
-				<td>${phase.wingTrim.flapPhaseTrim[0]}%</td>
-				<td>${phase.wingTrim.aileronPhaseTrim[0]}%</td>
-				<td>${phase.wingTrim.elevatorPhaseTrim}%</td>
-			</tr>
-</#if>
-</#list>
-		</table>
 
-		<hr/>
-
-		<h1>Flächenmix</h1>
-		<table>
-			<tr>
-				<th align="right">Mischer</th>
-				<th align="center">Wert</th>
-				<th align="left">Schalter</th>
-			</tr>
-<#list wingedModel.phase[0].wingMixer as mixer>
-			<tr>
-				<th align="right">${mixer.id}</th>
-				<td align="center">${mixer.value[0]}%</td>
-				<td><@switch mixer.switch/></td>						
-			</tr>
-</#list>						
-		</table>
-</#if>
-<#if helicopterModel??>
-		<h1>Helimix</h1>		
-<#list helicopterModel.phase as phase>
-<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
-		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
-		
-		<table>
-			<@curve "Pitchkurve" phase.helicopterMixer.pitchCurve.point/>
-			<@curve "Gaskurve (K1 -> Gas)" phase.helicopterMixer.throttleCurve.point/>
-			<@curve "Heckrotorkurve (K1 -> Heck)" phase.helicopterMixer.tailCurve.point/>
-			<tr>
-				<th align="right">Gyro</th>
-				<td>${phase.gyroGain}%</td>
-			</tr>
-			<tr>
-				<th align="right">Eingang 8</th>
-				<td>${phase.channel8Value}%</td>
-			</tr>
-			<tr>
-				<th align="right">Taumelscheibenlimit</th>
-				<td><#if phase.helicopterMixer.swashplateLimit == 150>aus<#else>${phase.helicopterMixer.swashplateLimit}%</#if></td>
-			</tr>
-		</table>	
-</#if>
-</#list>
-</#if>
-
-		<hr/>
 		
 		<h1>Freie Mixer</h1>
 		<table>

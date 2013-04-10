@@ -29,13 +29,14 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Clock {
-	private int alarm;
-	private ClockFunction function;
-	private ClockMode mode;
-	private String number;
-	private Switch sw;
-	private ClockType type;
-	private int value;
+	private int						alarm;
+	private ClockFunction	function;
+	private ClockMode			mode;
+	private String				number;
+	private Switch				sw;
+	private int						timer;
+	private ClockType			type;
+	private int						value;
 
 	public int getAlarm() {
 		return alarm;
@@ -66,6 +67,18 @@ public class Clock {
 	@XmlIDREF
 	public Switch getSwitch() {
 		return sw;
+	}
+
+	public int getTimer() {
+		return timer;
+	}
+
+	public int getTimerMinutes() {
+		return getTimer() / 60;
+	}
+
+	public int getTimerSeconds() {
+		return getTimer() % 60;
 	}
 
 	public ClockType getType() {
@@ -106,6 +119,18 @@ public class Clock {
 
 	public void setSwitch(final Switch sw) {
 		this.sw = sw;
+	}
+
+	public void setTimer(final int timer) {
+		this.timer = timer;
+	}
+
+	public void setTimerMinutes(final int minutes) {
+		setTimer(minutes * 60 + getTimerSeconds());
+	}
+
+	public void setTimerSeconds(final int seconds) {
+		setTimer(getTimerMinutes() * 60 + seconds);
 	}
 
 	public void setType(final ClockType type) {
