@@ -23,23 +23,23 @@ import gde.model.Curve;
  * @author oli@treichels.de
  */
 public class HelicopterMixer {
-	private int Nich2TailMix;
-	private int Nick2ThrottleMix;
-	private Curve pitchCurve;
-	private int roll2TailMix;
-	private int roll2ThrottleMix;
-	private int swashplateLimit;
-	private int swashplateRotation;
-	private int tail2ThrottleMix;
-	private Curve tailCurve;
-	private Curve throttleCurve;
+	private int		nick2TailMix;
+	private int		nick2ThrottleMix;
+	private Curve	pitchCurve;
+	private int		roll2TailMix;
+	private int		roll2ThrottleMix;
+	private int		swashplateLimit;
+	private int		swashplateRotation;
+	private int		tail2ThrottleMix;
+	private Curve	tailCurve;
+	private Curve	throttleCurve;
 
-	public int getNich2TailMix() {
-		return Nich2TailMix;
+	public int getNick2TailMix() {
+		return nick2TailMix;
 	}
 
 	public int getNick2ThrottleMix() {
-		return Nick2ThrottleMix;
+		return nick2ThrottleMix;
 	}
 
 	public Curve getPitchCurve() {
@@ -74,12 +74,12 @@ public class HelicopterMixer {
 		return throttleCurve;
 	}
 
-	public void setNich2TailMix(final int nich2TailMix) {
-		Nich2TailMix = nich2TailMix;
+	public void setNick2TailMix(final int nick2TailMix) {
+		this.nick2TailMix = nick2TailMix;
 	}
 
 	public void setNick2ThrottleMix(final int nick2ThrottleMix) {
-		Nick2ThrottleMix = nick2ThrottleMix;
+		this.nick2ThrottleMix = nick2ThrottleMix;
 	}
 
 	public void setPitchCurve(final Curve pitchCurve) {

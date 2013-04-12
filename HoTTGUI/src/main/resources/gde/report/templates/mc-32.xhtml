@@ -19,32 +19,38 @@
 -->
 <@htmlsafe>
 <#macro switch sw={"assignment":"Unassigned"}><#if sw.assignment == "Unassigned">---<#else>${sw.assignment}<#if sw.direction == 2> normal<#else><#if sw.direction=1> invers</#if></#if></#if></#macro>
-<#macro curve title points>
+<#macro curve c title="">
 			<tr>
-				<th align="right">${title}</th>
-				<td>
-					<table>
-						<tr>
-							<th>Punkt</th>
-							<th>aktiv</th>
-							<th>Eingang</th>
-							<th>Ausgang</th>
-						</tr>
-<#list points as point>
-						<tr>
-							<td>${point.number?number+1}</td>
-							<td>${point.enabled?string("ja","nein")}</td>
-<#if point.enabled>
-							<td>${point.position}</td>
-							<td>${point.value}</td>
-<#else>
-							<td colspan="2">&nbsp;</td>
+<#if title!="">
+				<th>${title}</th>
 </#if>
-						</tr>
-</#list>
-					</table>
-				</td>
+				<th>Kurve</th>
+				<td colspan="3" align="left">${c.smoothing?string("an","aus")}</td>
 			</tr>
+			<tr>
+<#if title!="">
+				<td>&nbsp;</td>
+</#if>				
+				<th>Punkt</th>				
+				<th>aktiv</th>
+				<th>Eingang</th>
+				<th>Ausgang</th>
+			</tr>
+<#list c.point as point>
+			<tr>
+<#if title!="">
+				<td>&nbsp;</td>
+</#if>				
+				<td align="center">${point.number?number+1}</td>
+				<td align="center">${point.enabled?string("ja","nein")}</td>
+<#if point.enabled>
+				<td align="center">${point.position}</td>
+				<td align="center">${point.value}</td>
+<#else>
+				<td colspan="2">&nbsp;</td>
+</#if>
+			</tr>
+</#list>
 </#macro>
 	<head>
 		<title>${model.vendor} ${model.transmitterType} - ${model.modelName}</title>
@@ -112,7 +118,7 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td align="right"><#if mapping.outputChannel == 0><i>Empfängerausgang</i><#else>&nbsp;</#if></td>
-				<td colspan="2">${mapping.inputChannel+1} => ${mapping.outputChannel+1}</td>
+				<td colspan="2">${mapping.inputChannel+1} &rArr; ${mapping.outputChannel+1}</td>
 			</tr>
 </#list>
 </#if>
@@ -230,7 +236,7 @@
 <#if !channel.virtual>
 			<tr>
 				<td align="center">S${channel.number?number+1}</td>
-				<td align="center"><#if channel.reverse>&lt;=<#else>=&gt;</#if></td>
+				<td align="center"><#if channel.reverse>&lArr;<#else>&rArr;</#if></td>
 				<td align="center">${channel.center}%</td>
 				<td align="center">${channel.travelLow}%</td>
 				<td align="center">${channel.travelHigh}%</td>
@@ -407,26 +413,7 @@
 <#if phase.phaseType.name() != "Unused">
 		<h2>Phase ${phase.number?number+1}: ${phase.phaseName}</h2>
 		<table>
-			<tr>
-				<th>Kurve</th>
-				<td colspan="2">${phase.channel1Curve.smoothing?string("an","aus")}</td>
-			</tr>
-			<tr>
-				<th>Nummer</th>
-				<th>Position</th>
-				<th>Wert</th>
-			</tr>
-<#list phase.channel1Curve.point as point>
-			<tr>
-				<td align="center">${point.number+1}</td>
-<#if point.enabled>
-				<td align="center">${point.position}%</td>
-				<td align="center">${point.value}%</td>
-<#else>
-				<td colspan="2" align="center">aus</td>
-</#if>
-			</tr>
-</#list>
+			<@curve phase.channel1Curve/>
 		</table>
 </#if>
 </#list>
@@ -446,9 +433,9 @@
 <#list model.controlSwitch as sw>
 			<tr>
 				<th>G${sw_index+1}</th>
-				<td align="center">${sw.assignment}</td>
+				<td align="center"><#if sw.assignment == "Unassigned">---<#else>${sw.assignment}</#if></td>
 				<td align="center">${sw.position}</td>
-				<td align="center"><#if sw.direction==0>=&gt;<#else>&lt;=</#if></td>
+				<td align="center"><#if sw.direction==0>&rArr;<#else>&lArr;</#if></td>
 				<td align="center"><@switch sw.combineSwitch/></td>
 			</tr>
 </#list>
@@ -582,7 +569,7 @@
 <#list wingedModel.phase as phase>
 <#if phase.phaseType.name() != "Unused">
 			<tr>
-				<th align="right">${phase.number?number+1}:${phase.phaseName}</th>
+				<th align="right">${phase.number?number+1}: ${phase.phaseName}</th>
 				<td>${phase.wingTrim.elevatorPhaseTrim}%</td>
 				<td>${phase.wingTrim.aileronPhaseTrim[0]}%</td>
 				<td>${phase.wingTrim.aileronPhaseTrim[1]}%</td>
@@ -592,9 +579,9 @@
 </#if>
 </#list>
 		</table>
-</#if>
 
 		<hr/>
+</#if>
 		
 		<h1>Unverzögerte Kanäle</h1>
 		<table>
@@ -609,7 +596,7 @@
 <#list model.phase as phase>
 <#if phase.phaseType.name() != "Unused">
 			<tr>
-				<td>${phase.number?number+1}:${phase.phaseName}</td>
+				<td>${phase.number?number+1}: ${phase.phaseName}</td>
 <#list model.channel as channel>
 <#if !channel.virtual>		
 				<td>${channel.phaseSetting[phase_index].nonDelayed?string("unverzögert","normal")}</td>
@@ -684,19 +671,97 @@
 <#list model.phase as phase>
 <#if phase.phaseType.name() != "Unused">
 		<h2>Phase ${phase.number?number+1}: ${phase.phaseName}</h2>
+		
 		<table>
 			<tr>
-				<th align="right">Mischer</th>
-				<th align="center">Wert</th>
-				<th align="left">Schalter</th>
+				<th colspan="9"><font size="+1">Flächenmischer</font></th>
 			</tr>
-<#list phase.wingMixer as mixer>
 			<tr>
-				<th align="right">${mixer.id}</th>
-				<td align="center">${mixer.value[0]}%</td>
-				<td><@switch mixer.switch/></td>						
+				<th>Querruder 2&rarr;4 Seitenruder</th>
+				<td colspan="2" align="center">${phase.wingMixer[0].value[0]}%</td>
+				<td colspan="6" align="left"><@switch phase.wingMixer[0].switch/></td>
 			</tr>
+			<tr>
+				<th>Höhenruder 3&rarr;6 Wölbklappen</th>
+				<td colspan="1" align="center">${phase.wingMixer[1].value[0]}%</td>
+				<td colspan="1" align="center">${phase.wingMixer[1].value[1]}%</td>
+				<td colspan="6" align="left"><@switch phase.wingMixer[1].switch/></td>
+			</tr>
+			<tr>
+				<th>Wölbklappen 6&rarr;3 Höhenruder</th>
+				<td colspan="1" align="center">${phase.wingMixer[2].value[0]}%</td>
+				<td colspan="1" align="center">${phase.wingMixer[2].value[1]}%</td>
+				<td colspan="6" align="left"><@switch phase.wingMixer[2].switch/></td>
+			</tr>
+			<tr>
+				<th>Höhenruder 3&rarr;5 Querruder</th>
+				<td colspan="1" align="center">${phase.wingMixer[3].value[0]}%</td>
+				<td colspan="1" align="center">${phase.wingMixer[3].value[1]}%</td>
+				<td colspan="6" align="left"><@switch phase.wingMixer[3].switch/></td>
+			</tr>
+			<tr>
+				<th colspan="9"><font size="+1">Multi-Klappen-Menü</font></th>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<th colspan="2">QR</th>
+				<th colspan="2">QR2</th>
+				<th colspan="2">WK</th>
+				<th colspan="2">WK2</th>				
+			</tr>
+			<tr>
+				<th>&uarr;QR&darr;</th>
+<#list phase.multiFlapMixer[0].value as mix>			
+				<td colspan="2" align="center">${mix}%</td>
 </#list>
+			</tr>
+			<tr>
+				<th>Querrudertrimmung</th>
+<#list phase.multiFlapMixer[1].value as mix>			
+				<td colspan="2" align="center">${mix}%</td>
+</#list>
+			</tr>
+			<tr>
+				<th>Querruderdifferenzierung</th>
+<#list phase.multiFlapMixer[2].value as mix>			
+				<td colspan="2" align="center">${mix}%</td>
+</#list>
+			</tr>
+			<tr>
+				<th>Wölbklappenposition</th>
+				<td colspan="2" align="center">${phase.wingTrim.aileronPhaseTrim[0]}%</td>
+				<td colspan="2" align="center">${phase.wingTrim.aileronPhaseTrim[1]}%</td>
+				<td colspan="2" align="center">${phase.wingTrim.flapPhaseTrim[0]}%</td>
+				<td colspan="2" align="center">${phase.wingTrim.flapPhaseTrim[1]}%</td>
+			</tr>
+			<tr>
+				<th>&uarr;WK&uarr;</th>
+<#list phase.multiFlapMixer[3].value as mix>			
+				<td align="center">${mix}%</td>
+</#list>
+			</tr>
+			<tr>
+				<th>HR&rarr;WK</th>
+<#list phase.multiFlapMixer[4].value as mix>			
+				<td align="center">${mix}%</td>
+</#list>
+			</tr>
+			<tr>
+				<th colspan="9"><font size="+1">Bremseinstellungen</font></th>
+			</tr>
+			<tr>
+				<th>Butterfly</th>
+<#list phase.brakeMixer[0].value as mix>			
+				<td colspan="2" align="center">${mix}%</td>
+</#list>
+			</tr>
+			<tr>
+				<th>Diff.-Reduction</th>
+<#list phase.brakeMixer[1].value as mix>			
+				<td colspan="2" align="center">${mix}%</td>
+</#list>
+			</tr>
+			<@curve phase.brakeElevatorCurve "HR-Kurve"/>
 		</table>
 </#if>
 </#list>
@@ -704,23 +769,54 @@
 <#if helicopterModel??>
 		<h1>Helikoptermix</h1>
 <#list helicopterModel.phase as phase>
-<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
-		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
+<#if phase.phaseType.name() != "Unused">
+		<h2>Phase ${phase.number?number+1}: ${phase.phaseName}</h2>
 		
 		<table>
-			<@curve "Pitchkurve" phase.helicopterMixer.pitchCurve.point/>
-			<@curve "Gaskurve (K1 -> Gas)" phase.helicopterMixer.throttleCurve.point/>
-			<@curve "Heckrotorkurve (K1 -> Heck)" phase.helicopterMixer.tailCurve.point/>
+			<@curve phase.helicopterMixer.pitchCurve "Pitchkurve"/>
+<#if phase.number == "0">
 			<tr>
-				<th align="right">Gyro</th>
-				<td>${phase.gyroGain}%</td>
+				<th>Gasposition AR</th>
+				<td colspan="4">${phase.autorotationThrottlePosition}</td>
 			</tr>
 			<tr>
-				<th align="right">Eingang 8</th>
-				<td>${phase.channel8Value}%</td>
+				<th>Heckrotoroffset AR</th>
+				<td colspan="4">${phase.autorotationTailPosition}</td>
 			</tr>
+<#else>
+			<@curve phase.helicopterMixer.throttleCurve "Gaskurve (K1 &rarr; Gas)"/>
+			<@curve phase.helicopterMixer.tailCurve "Heckrotorkurve (K1 &rarr; Heck)"/>
+</#if>
 			<tr>
-				<th align="right">Taumelscheibenlimit</th>
+				<th>Heckrotor &rarr; Gas</th>
+				<td colspan="4">${phase.helicopterMixer.tail2ThrottleMix}%</td>
+			</tr>	
+			<tr>
+				<th>Roll &rarr; Gas</th>
+				<td colspan="4">${phase.helicopterMixer.roll2ThrottleMix}%</td>
+			</tr>	
+			<tr>
+				<th>Roll &rarr; Heckrotor</th>
+				<td colspan="4">${phase.helicopterMixer.roll2TailMix}%</td>
+			</tr>	
+			<tr>
+				<th>Nick &rarr; Gas</th>
+				<td colspan="4">${phase.helicopterMixer.nick2ThrottleMix}%</td>
+			</tr>	
+			<tr>
+				<th>Nick &rarr; Heckrotor</th>
+				<td colspan="4">${phase.helicopterMixer.nick2TailMix}%</td>
+			</tr>	
+			<tr>
+				<th>Kreiselausblendung</th>
+				<td colspan="4">${phase.gyroSuppression}%</td>
+			</tr>	
+			<tr>
+				<th>Taumelscheibendrehung</th>
+				<td colspan="4">${phase.helicopterMixer.swashplateRotation}&deg;</td>
+			</tr>	
+			<tr>
+				<th align="right">Taumelscheibenbegrenzung</th>
 				<td><#if phase.helicopterMixer.swashplateLimit == 150>aus<#else>${phase.helicopterMixer.swashplateLimit}%</#if></td>
 			</tr>
 		</table>
@@ -730,83 +826,8 @@
 
 		<hr/>
 
-
-
-
-
-
-
-
-
-		<table>
-			<tr>
-				<th align="right">Gastrimm</th>
-				<td colspan="3">${model.throttleSettings.throttleTrim}%</td>
-			</tr>
-			<tr>
-				<th align="right">letzte Leerlaufposition</th>
-				<td colspan="3">${model.throttleSettings.throttleLastIdlePosition}%</td>
-			</tr>			
-			<tr>
-				<th align="right" valign="top">Uhren</th>
-				<td colspan="3">
-					<table callpadding="0">
-						<tr>
-							<th>Typ</th>
-							<th>Wert</th>
-							<th>Schalter</th>
-						</tr>
-<#list model.clock as clock>
-						<tr>
-							<td>${clock.mode!""}${clock.type!""}</td>
-							<td>${clock.minutes}:${clock.seconds?string("00")}</td>
-							<td><@switch clock.switch/></td>
-						</tr>
-</#list>
-					</table>
-				</td>
-			</tr>
-<#list model.phase as phase>
-<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
-			<tr>
-				<th align="right" valign="top">Phase ${phase.number}</th>
-				<td><i>Name:</i> ${phase.phaseName}</td>
-				<td colspan="2"><i>Schalter:</i> <@switch phase.switch/></td>
-			</tr>
-</#if>
-</#list>
-			<tr>
-				<th align="right" valign="top">Empfängerausgang</th>
-				<td colspan="3">
-					<table cellpadding="0">
-<#list model.channelMapping as mapping>
-						<tr>
-							<td align="center">S${mapping.inputChannel+1}</td>
-							<td align="center">=></td>
-							<td align="center">Ausgang ${mapping.outputChannel+1}</td>
-						</tr>
-</#list>					
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<th align="right">Empfänger gebunden</th>
-				<td colspan="3">${model.bound?string("ja","nein")}</td>
-			</tr>			
-			<tr>
-				<th align="right">Empfänger ID</th>
-				<td colspan="3">${hex(model.receiver[0].rfid?c)}</td>
-			</tr>
-		</table>
-
-		<hr/>
-
-
-
-
-
-		
-		<h1>Freie Mixer</h1>
+		<h1>Freie Mischer</h1>
+		<h2>Linearmischer</h2>
 		<table>
 			<tr>
 				<th>Mixer</th>
@@ -820,25 +841,77 @@
 			</tr>
 		
 <#list model.freeMixer as mixer>
+<#if mixer_index < 8>			
 			<tr>
-				<td>M${mixer.number?number+1}</td>
-				<td>${mixer.inputType}</td>
-				<td><#if mixer.fromChannel.number?number == 9>S<#else>${mixer.fromChannel.number}</#if></td>
-				<td>${mixer.toChannel.number}</td>
-				<td><@switch mixer.switch/></td>
-<#if mixer.type.name() == "Curve">
-				<td colspan="3" align="center"><i>Kurve</i></td>
+				<th>LinearMix ${mixer.number?number+1}</th>
+				<td align="center">${mixer.inputType}</td>
+				<td align="center"><#if mixer.fromChannel.number?number == 17>S<#else>${mixer.fromChannel.number}</#if></td>
+				<td align="center">${mixer.toChannel.number}</td>
+				<td align="center"><@switch mixer.switch/></td>
+				<td align="center">${mixer.travelLow}%</td>
+				<td align="center">${mixer.travelHigh}%</td>
+				<td align="center">${mixer.offset}%</td>
+			</tr>
+</#if>
+</#list>
+		</table>
+		
+		<h2>Kurvenmischer</h2>
+		<table>
+			<tr>
+				<th>Mixer</th>
+				<th>Input</th>
+				<th>von</th>
+				<th>zu</th>
+				<th>Schalter</th>
+				<th>Kurve</th>
+				<th>Punkt</th>				
+				<th>aktiv</th>
+				<th>Eingang</th>
+				<th>Ausgang</th>
+			</tr>
+<#list model.freeMixer as mixer>
+<#if mixer_index &gt;= 8>
+<#list mixer.curve.point as point>
+			<tr>
+<#if point.number==0>
+				<th>KurvenMix ${mixer.number?number+1}</th>
+				<td align="center">${mixer.inputType}</td>
+				<td align="center"><#if mixer.fromChannel.number?number == 17>S<#else>${mixer.fromChannel.number}</#if></td>
+				<td align="center">${mixer.toChannel.number}</td>
+				<td align="center"><@switch mixer.switch/></td>
+				<td align="center">${mixer.curve.smoothing?string("an","aus")}</td>
 <#else>
-				<td>${mixer.travelLow}%</td>
-				<td>${mixer.travelHigh}%</td>
-				<td>${mixer.offset}%</td>
+				<td colspan="6">&nbsp;</td>
+</#if>
+				<td align="center">${point.number?number+1}</td>
+				<td align="center">${point.enabled?string("ja","nein")}</td>
+<#if point.enabled>
+				<td align="center">${point.position}%</td>
+				<td align="center">${point.value}%</td>
+<#else>
+				<td colspan="2">&nbsp;</td>
 </#if>
 			</tr>
 </#list>
+</#if>
+</#list>		
 		</table>
 
 		<hr/>
 
+		<h1>MIX aktiv / Phase</h1>
+
+		<hr/>
+		
+		<h1>Nur MIX Kanal</h1>
+
+		<hr/>
+		
+		<h1>Kreuzmischer</h1>
+
+		<hr/>
+		
 <#if helicopterModel??>
 		<h1>Taumelscheibenmischer</h1>
 		<table>
@@ -900,37 +973,7 @@
 </#list>
 			</tr>
 		</table>
-		
-		<hr/>
-		
-		<h1>Telemetrie</h1>
-		<table>
-			<tr>
-				<th align="right">Ansage wiederholen</th>
-				<td>${model.telemetry.voiceDelay}s <i>Schalter:</i> <@switch model.telemetry.VoiceRepeat/></td>
-			</tr>
-			<tr>
-				<th align="right">nächste Ansage</th>
-				<td><@switch model.telemetry.VoiceTrigger/></td>
-			</tr>
-			<tr>
-				<th align="right">Varioton</th>
-				<td><@switch model.telemetry.VarioTone/></td>
-			</tr>
-			<tr>
-				<th align="right">ausgewählte Sensoren</th>
-				<td><#list model.telemetry.selectedSensor as sensor>${sensor} </#list></td>
-			</tr>
-			<tr>
-				<th align="right">aktueller Sensor</th>
-				<td>${model.telemetry.currentSensor}</td>
-			</tr>
-			<tr>
-				<th align="right">aktuelle Sensorseite</th>
-				<td>${model.telemetry.currentSensorPage}</td>
-			</tr>
-		</table>
-		
+				
 		<hr/>
 		
 		<h1>Lehrer/Schüler</h1>		
@@ -970,6 +1013,64 @@
 </#list>
 			</tr>
 		</table>		
+		
+		<hr/>
+		
+		<h1>Senderausgang</h1>
+		
+		<hr/>
+		
+		<h1>Profitrimm</h1>
+		
+		<hr/>
+		
+		<h1>Trimmspeicher</h1>
+		
+		<hr/>
+		
+		<h1>Telemetrie</h1>
+		<table>
+			<tr>
+				<th align="right">Ansage wiederholen</th>
+				<td>${model.telemetry.voiceDelay}s <i>Schalter:</i> <@switch model.telemetry.VoiceRepeat/></td>
+			</tr>
+			<tr>
+				<th align="right">nächste Ansage</th>
+				<td><@switch model.telemetry.VoiceTrigger/></td>
+			</tr>
+			<tr>
+				<th align="right">Varioton</th>
+				<td><@switch model.telemetry.VarioTone/></td>
+			</tr>
+			<tr>
+				<th align="right">ausgewählte Sensoren</th>
+				<td><#list model.telemetry.selectedSensor as sensor>${sensor} </#list></td>
+			</tr>
+			<tr>
+				<th align="right">aktueller Sensor</th>
+				<td>${model.telemetry.currentSensor}</td>
+			</tr>
+			<tr>
+				<th align="right">aktuelle Sensorseite</th>
+				<td>${model.telemetry.currentSensorPage}</td>
+			</tr>
+		</table>
+	
+		<hr/>
+		
+		<h1>Kanal Sequenzer</h1>
+		
+		<hr/>
+		
+		<h1>Multikanal</h1>
+		
+		<hr/>
+
+		<h1>Ringbegrenzer</h1>
+		
+		<hr/>
+		
+		<h1>MP3-Player</h1>
 		
 		<hr/>
 		
