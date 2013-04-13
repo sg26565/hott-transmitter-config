@@ -29,7 +29,7 @@
 			</tr>
 			<tr>
 <#if title!="">
-				<td>&nbsp;</td>
+				<td></td>
 </#if>				
 				<th>Punkt</th>				
 				<th>aktiv</th>
@@ -39,7 +39,7 @@
 <#list c.point as point>
 			<tr>
 <#if title!="">
-				<td>&nbsp;</td>
+				<td></td>
 </#if>				
 				<td align="center">${point.number?number+1}</td>
 				<td align="center">${point.enabled?string("ja","nein")}</td>
@@ -47,7 +47,7 @@
 				<td align="center">${point.position}</td>
 				<td align="center">${point.value}</td>
 <#else>
-				<td colspan="2">&nbsp;</td>
+				<td colspan="2"></td>
 </#if>
 			</tr>
 </#list>
@@ -116,8 +116,8 @@
 <#if receiver.bound>
 <#list receiver.channelMapping as mapping>
 			<tr>
-				<td>&nbsp;</td>
-				<td align="right"><#if mapping.outputChannel == 0><i>Empfängerausgang</i><#else>&nbsp;</#if></td>
+				<td></td>
+				<td align="right"><#if mapping.outputChannel == 0><i>Empfängerausgang</i><#else></#if></td>
 				<td colspan="2">S${mapping.inputChannel+1} <#if model.channel[mapping.inputChannel].function??>(${model.channel[mapping.inputChannel].function})</#if> &rArr; Ausgang ${mapping.outputChannel+1}</td>
 			</tr>
 </#list>
@@ -373,12 +373,12 @@
 		<h2>Phase ${phase.number?number+1}: ${phase.phaseName}</h2>
 		<table>
 			<tr>
-				<td>&nbsp;</td>
+				<td></td>
 				<th colspan="3">Dual Rate</th>
 				<th colspan="3">Expo</th>
 			</tr>
 			<tr>
-				<td>&nbsp;</td>
+				<td></td>
 				<th>Schalter</th>
 				<th>Wert</th>
 				<th>Schalter</th>
@@ -509,22 +509,22 @@
 			<tr>
 				<th align="right">Kombinationsschalter C</th>
 				<td><@switch model.phaseAssignment.combiCSwitch/></td>
-				<td>&nbsp;</td>
+				<td></td>
 			</tr>
 			<tr>
 				<th align="right">Kombinationsschalter D</th>
 				<td><@switch model.phaseAssignment.combiDSwitch/></td>
-				<td>&nbsp;</td>
+				<td></td>
 			</tr>
 			<tr>
 				<th align="right">Kombinationsschalter E</th>
 				<td><@switch model.phaseAssignment.comiESwitch/></td>
-				<td>&nbsp;</td>				
+				<td></td>				
 			</tr>
 			<tr>
 				<th align="right">Kombinationsschalter F</th>
 				<td><@switch model.phaseAssignment.combiFSwitch/></td>
-				<td>&nbsp;</td>
+				<td></td>
 			</tr>
 		</table>
 		<h2>Kombinationsphasenzuweisungen</h2>
@@ -612,7 +612,7 @@
 		<h1>Uhren (allgemein)</h1>
 		<table>
 			<tr>
-				<td>&nbsp;</td>
+				<td></td>
 				<th>Uhr</th>
 				<th>Timer</th>
 				<th>Alarm</th>
@@ -620,7 +620,7 @@
 			</tr>
 			<tr>
 				<th align="right">Modellzeit</th>
-				<td colspan="3">&nbsp;</td>
+				<td colspan="3"></td>
 				<td><@switch model.getSwitch("ModelTime")/></td>
 			</tr>
 <#list [4,5] as index>
@@ -639,7 +639,7 @@
 		<h1>Flugphasenuhren</h1>
 		<table>
 			<tr>
-				<td>&nbsp;</td>
+				<td></td>
 				<th>Timer</th>
 				<th>Alarm</th>
 				<th>Schalter</th>
@@ -654,12 +654,12 @@
 </#list>
 			<tr>
 				<th align="right">Rundenzähler/Zeittabelle</th>
-				<td colspan="2">&nbsp;</td>
+				<td colspan="2"></td>
 				<td><@switch model.getSwitch("LapTimer")/></td>
 			</tr>
 			<tr>
 				<th align="right">Rundenanzeige</th>
-				<td colspan="2">&nbsp;</td>
+				<td colspan="2"></td>
 				<td><@switch model.getSwitch("LapDisplay")/></td>
 			</tr>
 		</table>
@@ -703,7 +703,7 @@
 				<th colspan="9"><font size="+1">Multi-Klappen-Menü</font></th>
 			</tr>
 			<tr>
-				<td>&nbsp;</td>
+				<td></td>
 				<th colspan="2">QR</th>
 				<th colspan="2">QR2</th>
 				<th colspan="2">WK</th>
@@ -878,7 +878,7 @@
 				<td align="center"><@switch mixer.switch/></td>
 				<td align="center">${mixer.curve.smoothing?string("an","aus")}</td>
 <#else>
-				<td colspan="6">&nbsp;</td>
+				<td colspan="6"></td>
 </#if>
 				<td align="center">${point.number?number+1}</td>
 				<td align="center">${point.enabled?string("ja","nein")}</td>
@@ -886,7 +886,7 @@
 				<td align="center">${point.position}%</td>
 				<td align="center">${point.value}%</td>
 <#else>
-				<td colspan="2">&nbsp;</td>
+				<td colspan="2"></td>
 </#if>
 			</tr>
 </#list>
@@ -926,7 +926,7 @@
 		<h1>Nur MIX Kanal</h1>
 		<table>
 			<tr>
-				<td>&nbsp;</td>
+				<td></td>
 <#list model.channel as channel>
 <#if !channel.virtual>		
 				<th>S${channel.number?number+1}</th>
@@ -948,7 +948,7 @@
 		<h1>Kreuzmischer</h1>
 		<table>
 			<tr>
-				<td>&nbsp;</td>
+				<td></td>
 				<th>Kanal 1</th>
 				<th>Kanal 2</th>
 				<th>Differenzierung</th>
@@ -998,7 +998,7 @@
 		</table>
 		<table>
 			<tr>
-				<td>&nbsp;</td>
+				<td></td>
 <#list model.channel as channel>
 <#if !channel.virtual>
 				<th align="center">S${channel.number?number+1}</th>
@@ -1050,7 +1050,7 @@
 		</table>
 		<table>
 			<tr>
-				<td>&nbsp;</td>
+				<td></td>
 <#list model.channel as channel>
 <#if !channel.virtual>
 				<th>S${channel.number?number+1}</th>
@@ -1086,7 +1086,7 @@
 <#if wingedModel??>
 		<table>
 			<tr>
-				<td>&nbsp;</td>
+				<td></td>
 				<th>&uarr;QR&darr;</th>
 				<th>&uarr;QR&uarr;</th>
 				<th>&uarr;WK&darr;</th>
@@ -1107,7 +1107,7 @@
 			<tr>
 				<th>EIN/AUS</th>
 				<td align="center"><@switch wingedModel.profiTrimSwitch/></td>
-				<td colspan="3">&nbsp;</td>
+				<td colspan="3"></td>
 			</tr>
 		</table>
 <#else>
@@ -1239,7 +1239,7 @@
 </#if>
 </#list>
 <#else>
-				<td colspan="9">&nbsp;</td>
+				<td colspan="9"></td>
 </#if>
 			</tr>
 </#list>
@@ -1248,6 +1248,49 @@
 		<hr/>
 		
 		<h1>Multikanal</h1>
+		<table>
+			<tr>
+				<td></td>
+				<th>aktiv?</th>
+				<th>Steuerkanal</th>
+				<th>Kanalzahl</th>
+				<th>Eingang</th>
+				<th colspan="2">Geber</th>
+				<th>Offset</th>
+				<th>Weg -</th>
+				<th>Weg +</th>
+			</tr>
+<#list model.multichannel as multi>
+			<tr>
+				<th>Multikanal ${multi_index+1}</th>
+				<td align="center">${multi.enabled?string("aktiv","inaktiv")}</td>
+				<td align="center">K${multi.inputChannel.number?number+1}</td>
+				<td align="center">${multi.mode}</td>
+<#list multi.control as control>
+<#if control_index < 4 || multi.mode.name() == "EightCh">
+<#if control_index &gt; 0>
+				<td colspan="4"/>
+</#if>
+				<td>Eingang ${control_index+1}</td>
+<#if control.controlSwitch?? && control.controlSwitch.assignment.name() != "Unassigned">
+				<td align="center" colspan="2"><@switch control.controlSwitch/></td>
+<#else>
+<#if control.toggleLowSwitch?? && control.toggleLowSwitch.assignment.name() != "Unassigned" || control.toggleHighSwitch?? && control.toggleHighSwitch.assignment.name() != "Unassigned">
+				<td><@switch control.toggleLowSwitch/></td>
+				<td><@switch control.toggleHighSwitch/></td>
+<#else>
+				<td>frei</td>
+				<td>---</td>
+</#if>
+</#if>
+				<td align="center">${control.offset}%</td>
+				<td align="center">${control.travelLow}%</td>
+				<td align="center">${control.travelHigh}%</td>
+			</tr>
+</#if>
+</#list>
+</#list>
+		</table>
 		
 		<hr/>
 
