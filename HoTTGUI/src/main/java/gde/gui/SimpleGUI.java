@@ -76,14 +76,18 @@ public class SimpleGUI {
 			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			fc.setMultiSelectionEnabled(false);
 			fc.setFileFilter(new FileNameExtensionFilter("HoTT Transmitter Model Files", "mdl"));
-			if (lastDir != null) {
-				fc.setCurrentDirectory(lastDir);
+			if (lastLoadDir != null) {
+				fc.setCurrentDirectory(lastLoadDir);
 			}
+			else {
+				fc.setCurrentDirectory(new File(System.getProperty("program.dir")));
+			}
+
 			final int result = fc.showOpenDialog(frame);
 
 			if (result == JFileChooser.APPROVE_OPTION) {
 				final File file = fc.getSelectedFile();
-				lastDir = file.getParentFile();
+				lastLoadDir = file.getParentFile();
 				try {
 					model = Report.getModel(file);
 					htmlButton.setEnabled(true);
@@ -114,14 +118,21 @@ public class SimpleGUI {
 			fc.addChoosableFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
 			fc.addChoosableFileFilter(new FileNameExtensionFilter("HTML Files", "html", "htm", "xhtml"));
 			fc.addChoosableFileFilter(new FileNameExtensionFilter("PDF Files", "pdf"));
-			if (lastDir != null) {
-				fc.setCurrentDirectory(lastDir);
+			if (lastSaveDir != null) {
+				fc.setCurrentDirectory(lastSaveDir);
 			}
+			else if (lastLoadDir != null) {
+				fc.setCurrentDirectory(lastLoadDir);
+			}
+			else {
+				fc.setCurrentDirectory(new File(System.getProperty("program.dir")));
+			}
+
 			final int result = fc.showSaveDialog(frame);
 
 			if (result == JFileChooser.APPROVE_OPTION) {
 				final File file = fc.getSelectedFile();
-				lastDir = file.getParentFile();
+				lastSaveDir = file.getParentFile();
 
 				try {
 					String data;
@@ -192,7 +203,8 @@ public class SimpleGUI {
 	private final JFrame				frame					= new JFrame("Hott Transmitter Config");
 	private final JButton				htmlButton		= new JButton("View HTML");
 	private final JMenuItem			htmlMenuItem	= new JMenuItem("HTML");
-	private File								lastDir				= null;
+	private File								lastLoadDir		= null;
+	private File								lastSaveDir		= null;
 	private final JButton				loadButton		= new JButton("Load");
 	private final JMenuItem			loadMenuItem	= new JMenuItem("Load");
 	private final JMenuBar			menubar				= new JMenuBar();
@@ -213,8 +225,6 @@ public class SimpleGUI {
 			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			scrollPane.setPreferredSize(new Dimension(800, 600));
 			scrollPane.setMinimumSize(new Dimension(100, 100));
-
-			lastDir = new File(System.getProperty("user.dir"));
 
 			ActionListener l = new CloseActionListener();
 			closeMenuItem.addActionListener(l);
