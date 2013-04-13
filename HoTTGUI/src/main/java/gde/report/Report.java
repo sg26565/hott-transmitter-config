@@ -37,6 +37,7 @@ import javax.xml.bind.SchemaOutputResolver;
 import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.log4j.Logger;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.lowagie.text.DocumentException;
@@ -62,11 +63,24 @@ public class Report {
 	private static final Configuration						CONFIGURATION;
 	private static final JAXBContext							CTX;
 	private static final TemplateExceptionHandler	CUSTOM_HANDLER;
+	private static final Logger										LOG	= Logger.getLogger(Report.class);
 	private static final Marshaller								MARSHALLER;
 
 	static {
 		CONFIGURATION = new Configuration();
-		CONFIGURATION.setClassForTemplateLoading(Report.class, "templates");
+		final File templateDir = new File("templates");
+		if (templateDir.exists() && templateDir.isDirectory()) {
+			try {
+				CONFIGURATION.setDirectoryForTemplateLoading(templateDir);
+			}
+			catch (final IOException e) {
+				LOG.warn("template directory " + templateDir.getAbsolutePath() + " not found.", e);
+				CONFIGURATION.setClassForTemplateLoading(Report.class, "templates");
+			}
+		}
+		else {
+			CONFIGURATION.setClassForTemplateLoading(Report.class, "templates");
+		}
 		CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
 		CUSTOM_HANDLER = new FreeMarkerExceptionHandler();
 

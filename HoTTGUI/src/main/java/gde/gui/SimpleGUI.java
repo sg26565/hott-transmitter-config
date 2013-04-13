@@ -22,10 +22,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.URISyntaxException;
 
 import javax.swing.JButton;
@@ -42,6 +40,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.xml.bind.JAXBException;
+
+import org.apache.log4j.Logger;
 
 import com.lowagie.text.DocumentException;
 
@@ -162,6 +162,8 @@ public class SimpleGUI {
 		}
 	}
 
+	private static final Logger	LOG	= Logger.getLogger(SimpleGUI.class);
+
 	public static void main(final String[] args) {
 		new SimpleGUI().show();
 	}
@@ -254,10 +256,8 @@ public class SimpleGUI {
 	}
 
 	private void showError(final JFrame frame, final Throwable t) {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		final PrintStream ps = new PrintStream(baos);
-		t.printStackTrace(ps);
-		JOptionPane.showMessageDialog(frame, baos.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+		LOG.error(t.getMessage(), t);
+		JOptionPane.showMessageDialog(frame, t.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void updateView() throws IOException, TemplateException, JAXBException {
