@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum SwitchFunction {
-	Autorotation, AutorotationC1, AutoTrim, Clock, Combine, Control, CutOff, Diff, Dr_Expo, DualRate, Expo, InputControl, Logical, MarkerKey, Mixer, Phase, PowerWarning, ChannelSeqencer, ThrottleLimit, ToggleHigh, ToggleLow, Trainer, VarioTone, VoiceRepeat, VoiceTrigger;
+	Autorotation, AutorotationC1, AutoTrim, ChannelSeqencer, Clock, Combine, Control, CutOff, Diff, Dr_Expo, DualRate, Expo, InputControl, Logical, MarkerKey, Mixer, Phase, PowerWarning, ProfiTrim, ThrottleLimit, ToggleHigh, ToggleLow, Trainer, VarioTone, VoiceRepeat, VoiceTrigger;
 
 	/** @return the locale-dependent message */
 	@Override

@@ -59,10 +59,10 @@ import gde.model.winged.WingedPhase;
  * @author oli@treichels.de
  */
 public class Report {
-	private static final Configuration CONFIGURATION;
-	private static final JAXBContext CTX;
-	private static final TemplateExceptionHandler CUSTOM_HANDLER;
-	private static final Marshaller MARSHALLER;
+	private static final Configuration						CONFIGURATION;
+	private static final JAXBContext							CTX;
+	private static final TemplateExceptionHandler	CUSTOM_HANDLER;
+	private static final Marshaller								MARSHALLER;
 
 	static {
 		CONFIGURATION = new Configuration();
@@ -71,11 +71,11 @@ public class Report {
 		CUSTOM_HANDLER = new FreeMarkerExceptionHandler();
 
 		try {
-			CTX = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class, LinearMixer.class,
-					CurveMixer.class);
+			CTX = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class, LinearMixer.class, CurveMixer.class);
 			MARSHALLER = CTX.createMarshaller();
 			MARSHALLER.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-		} catch (final JAXBException e) {
+		}
+		catch (final JAXBException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -133,7 +133,8 @@ public class Report {
 
 		if (url != null) {
 			file = new File(url.toURI());
-		} else {
+		}
+		else {
 			file = new File(fileName);
 		}
 
@@ -157,7 +158,8 @@ public class Report {
 		rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective());
 		if (model instanceof WingedModel) {
 			rootMap.put("wingedModel", model);
-		} else if (model instanceof HelicopterModel) {
+		}
+		else if (model instanceof HelicopterModel) {
 			rootMap.put("helicopterModel", model);
 		}
 
@@ -182,7 +184,8 @@ public class Report {
 	public static void setSuppressExceptions(final boolean suppress) {
 		if (suppress) {
 			CONFIGURATION.setTemplateExceptionHandler(CUSTOM_HANDLER);
-		} else {
+		}
+		else {
 			CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
 		}
 	}

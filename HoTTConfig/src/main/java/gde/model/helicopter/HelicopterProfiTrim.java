@@ -26,11 +26,10 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class HelicopterProfiTrim {
-	private CurveType curveType;
-	private boolean enabled;
-	private Switch inputControl;
-	private HelicopterPhase phase;
-	private int point;
+	private CurveType				curveType;
+	private Switch					inputControl;
+	private HelicopterPhase	phase;
+	private int							point;
 
 	public CurveType getCurveType() {
 		return curveType;
@@ -50,16 +49,8 @@ public class HelicopterProfiTrim {
 		return point;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
-	}
-
 	public void setCurveType(final CurveType curveType) {
 		this.curveType = curveType;
-	}
-
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
 	}
 
 	public void setInputControl(final Switch inputControl) {

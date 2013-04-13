@@ -15,53 +15,33 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gde.model;
+package gde.model.winged;
 
-import gde.model.enums.MixerType;
+import gde.model.Switch;
 
 import javax.xml.bind.annotation.XmlIDREF;
 
 /**
- * Kreuzmischer
- * 
  * @author oli
  */
-public class DualMixer {
-	private Channel[]	channel;
-	private int				diff;
-	private int				number;
-	private MixerType	type;
+public class WingedProfiTrim {
+	private boolean	enabled;
+	private Switch	inputControl;
 
 	@XmlIDREF
-	public Channel[] getChannel() {
-		return channel;
+	public Switch getInputControl() {
+		return inputControl;
 	}
 
-	public int getDiff() {
-		return diff;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public int getNumber() {
-		return number;
+	public void setEnabled(final boolean enabled) {
+		this.enabled = enabled;
 	}
 
-	public MixerType getType() {
-		return type;
-	}
-
-	public void setChannel(final Channel[] channel) {
-		this.channel = channel;
-	}
-
-	public void setDiff(final int diff) {
-		this.diff = diff;
-	}
-
-	public void setNumber(final int number) {
-		this.number = number;
-	}
-
-	public void setType(final MixerType type) {
-		this.type = type;
+	public void setInputControl(final Switch inputControl) {
+		this.inputControl = inputControl;
 	}
 }

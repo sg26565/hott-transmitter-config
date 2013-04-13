@@ -19,11 +19,13 @@ package gde.model.winged;
 
 import gde.model.BaseModel;
 import gde.model.Channel;
+import gde.model.Switch;
 import gde.model.enums.AileronFlapType;
 import gde.model.enums.ModelType;
 import gde.model.enums.MotorOnC1Type;
 import gde.model.enums.TailType;
 
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,12 +34,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class WingedModel extends BaseModel {
-	private AileronFlapType aileronFlapType;
-	private Channel brakeInputChannel;
-	private int brakeOffset;
-	private boolean channel8Delay;
-	private MotorOnC1Type motorOnC1Type;
-	private TailType tailType;
+	private AileronFlapType		aileronFlapType;
+	private Channel						brakeInputChannel;
+	private int								brakeOffset;
+	private boolean						channel8Delay;
+	private MotorOnC1Type			motorOnC1Type;
+	private WingedProfiTrim[]	profiTrim;
+	private Switch						profiTrimSwitch;
+	private TailType					tailType;
 
 	public WingedModel() {
 		super(ModelType.Winged);
@@ -58,6 +62,16 @@ public class WingedModel extends BaseModel {
 
 	public MotorOnC1Type getMotorOnC1Type() {
 		return motorOnC1Type;
+	}
+
+	@XmlElementWrapper(name = "profitrims")
+	public WingedProfiTrim[] getProfiTrim() {
+		return profiTrim;
+	}
+
+	@XmlIDREF
+	public Switch getProfiTrimSwitch() {
+		return profiTrimSwitch;
 	}
 
 	public TailType getTailType() {
@@ -86,6 +100,14 @@ public class WingedModel extends BaseModel {
 
 	public void setMotorOnC1Type(final MotorOnC1Type motorOnC1Type) {
 		this.motorOnC1Type = motorOnC1Type;
+	}
+
+	public void setProfiTrim(final WingedProfiTrim[] profiTrim) {
+		this.profiTrim = profiTrim;
+	}
+
+	public void setProfiTrimSwitch(final Switch profiTrimSwitch) {
+		this.profiTrimSwitch = profiTrimSwitch;
 	}
 
 	public void setTailType(final TailType tailType) {
