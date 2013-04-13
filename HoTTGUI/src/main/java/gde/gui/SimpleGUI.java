@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -159,7 +160,24 @@ public class SimpleGUI {
 		}
 	}
 
-	private static final Logger	LOG	= Logger.getLogger(SimpleGUI.class);
+	private static final Logger	LOG;
+
+	static {
+		File mainJar;
+		try {
+			mainJar = new File(Report.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+		}
+		catch (final URISyntaxException e) {
+			throw new RuntimeException(e);
+		}
+
+		final File programDir = mainJar.getParentFile();
+		System.setProperty("program.dir", programDir.getAbsolutePath());
+
+		LOG = Logger.getLogger(SimpleGUI.class);
+		LOG.debug("main jar location: " + mainJar.getAbsolutePath());
+		LOG.debug("program dir: " + programDir.getAbsolutePath());
+	}
 
 	public static void main(final String[] args) {
 		new SimpleGUI().show();
@@ -258,7 +276,7 @@ public class SimpleGUI {
 	}
 
 	private void showError(final Throwable t) {
-		LOG.error(t.getMessage(), t);
+		LOG.error("Error", t);
 		JOptionPane.showMessageDialog(frame, t.getClass().getName() + ": " + t.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	}
 

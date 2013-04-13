@@ -67,20 +67,26 @@ public class Report {
 	private static final Marshaller								MARSHALLER;
 
 	static {
+		final String programDir = System.getProperty("program.dir");
+		final File templateDir = new File(programDir, "templates");
+		LOG.debug("templates dir: " + templateDir.getAbsolutePath());
+
 		CONFIGURATION = new Configuration();
-		final File templateDir = new File("templates");
 		if (templateDir.exists() && templateDir.isDirectory()) {
+			LOG.debug("using dir for template loading");
 			try {
 				CONFIGURATION.setDirectoryForTemplateLoading(templateDir);
 			}
 			catch (final IOException e) {
-				LOG.warn("template directory " + templateDir.getAbsolutePath() + " not found.", e);
+				LOG.error("using classpath for template loading due to error", e);
 				CONFIGURATION.setClassForTemplateLoading(Report.class, "templates");
 			}
 		}
 		else {
+			LOG.debug("using classpath for template loading");
 			CONFIGURATION.setClassForTemplateLoading(Report.class, "templates");
 		}
+
 		CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
 		CUSTOM_HANDLER = new FreeMarkerExceptionHandler();
 
