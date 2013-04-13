@@ -36,6 +36,7 @@ public class GenerateDemoFiles {
 	public static void main(final String[] args) throws IOException, URISyntaxException, JAXBException, TemplateException, DocumentException {
 		final File dir = new File("demo");
 
+		Report.setSuppressExceptions(true);
 		Report.generateXsd(new File(dir, "HoTTGUI.xsd"));
 
 		for (final File file : dir.listFiles()) {

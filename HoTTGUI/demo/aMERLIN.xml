@@ -148,6 +148,9 @@
             <mode>Timer</mode>
             <seconds>0</seconds>
             <switch>Clock</switch>
+            <timer>0</timer>
+            <timerMinutes>0</timerMinutes>
+            <timerSeconds>0</timerSeconds>
             <value>0</value>
         </clock>
     </clocks>

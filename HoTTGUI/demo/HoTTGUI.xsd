@@ -14,6 +14,14 @@
           <xs:element name="brakeOffset" type="xs:int"/>
           <xs:element name="channel8Delay" type="xs:boolean"/>
           <xs:element name="motorOnC1Type" type="motorOnC1Type" minOccurs="0"/>
+          <xs:element name="profitrims" minOccurs="0">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="profiTrim" type="wingedProfiTrim" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="profiTrimSwitch" type="xs:IDREF" minOccurs="0"/>
           <xs:element name="tailType" type="tailType" minOccurs="0"/>
         </xs:sequence>
       </xs:extension>
@@ -279,10 +287,20 @@
       <xs:element name="mode" type="clockMode" minOccurs="0"/>
       <xs:element name="seconds" type="xs:int"/>
       <xs:element name="switch" type="xs:IDREF" minOccurs="0"/>
+      <xs:element name="timer" type="xs:int"/>
+      <xs:element name="timerMinutes" type="xs:int"/>
+      <xs:element name="timerSeconds" type="xs:int"/>
       <xs:element name="type" type="clockType" minOccurs="0"/>
       <xs:element name="value" type="xs:int"/>
     </xs:sequence>
     <xs:attribute name="number" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="wingedProfiTrim">
+    <xs:sequence>
+      <xs:element name="enabled" type="xs:boolean"/>
+      <xs:element name="inputControl" type="xs:IDREF" minOccurs="0"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="channelMapping">
@@ -615,7 +633,6 @@
   <xs:complexType name="helicopterProfiTrim">
     <xs:sequence>
       <xs:element name="curveType" type="curveType" minOccurs="0"/>
-      <xs:element name="enabled" type="xs:boolean"/>
       <xs:element name="inputControl" type="xs:IDREF" minOccurs="0"/>
       <xs:element name="phase" type="xs:IDREF" minOccurs="0"/>
       <xs:element name="point" type="xs:int"/>
@@ -638,7 +655,7 @@
 
   <xs:complexType name="helicopterMixer">
     <xs:sequence>
-      <xs:element name="nich2TailMix" type="xs:int"/>
+      <xs:element name="nick2TailMix" type="xs:int"/>
       <xs:element name="nick2ThrottleMix" type="xs:int"/>
       <xs:element name="pitchCurve" type="curve" minOccurs="0"/>
       <xs:element name="roll2TailMix" type="xs:int"/>
@@ -714,15 +731,18 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Aileron"/>
       <xs:enumeration value="Brake"/>
+      <xs:enumeration value="Delta"/>
       <xs:enumeration value="Elevator"/>
       <xs:enumeration value="Flap"/>
       <xs:enumeration value="Nick"/>
+      <xs:enumeration value="Pitch"/>
+      <xs:enumeration value="Reduction"/>
       <xs:enumeration value="Roll"/>
       <xs:enumeration value="Rudder"/>
       <xs:enumeration value="TailRotor"/>
-      <xs:enumeration value="Throttel"/>
+      <xs:enumeration value="Throttle"/>
       <xs:enumeration value="Unknown"/>
-      <xs:enumeration value="Reduction"/>
+      <xs:enumeration value="VTail"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -829,6 +849,7 @@
       <xs:enumeration value="Autorotation"/>
       <xs:enumeration value="AutorotationC1"/>
       <xs:enumeration value="AutoTrim"/>
+      <xs:enumeration value="ChannelSeqencer"/>
       <xs:enumeration value="Clock"/>
       <xs:enumeration value="Combine"/>
       <xs:enumeration value="Control"/>
@@ -843,7 +864,7 @@
       <xs:enumeration value="Mixer"/>
       <xs:enumeration value="Phase"/>
       <xs:enumeration value="PowerWarning"/>
-      <xs:enumeration value="ChannelSeqencer"/>
+      <xs:enumeration value="ProfiTrim"/>
       <xs:enumeration value="ThrottleLimit"/>
       <xs:enumeration value="ToggleHigh"/>
       <xs:enumeration value="ToggleLow"/>
@@ -998,6 +1019,7 @@
   <xs:simpleType name="mixerInputType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Normal"/>
+      <xs:enumeration value="Phase"/>
       <xs:enumeration value="Sequence"/>
       <xs:enumeration value="Trim"/>
       <xs:enumeration value="Trim_Sequence"/>

@@ -148,6 +148,9 @@
             <mode>Timer</mode>
             <seconds>0</seconds>
             <switch>Clock</switch>
+            <timer>0</timer>
+            <timerMinutes>0</timerMinutes>
+            <timerSeconds>0</timerSeconds>
             <value>0</value>
         </clock>
     </clocks>
@@ -317,7 +320,7 @@
             <gyroGain>0</gyroGain>
             <gyroSuppression>0</gyroSuppression>
             <helicopterMixer>
-                <nich2TailMix>0</nich2TailMix>
+                <nick2TailMix>0</nick2TailMix>
                 <nick2ThrottleMix>0</nick2ThrottleMix>
                 <pitchCurve>
                     <points>
@@ -390,23 +393,23 @@
                     <points>
                         <point number="0">
                             <enabled>true</enabled>
-                            <position>-100</position>
-                            <value>-100</value>
-                        </point>
-                        <point number="1">
-                            <enabled>false</enabled>
-                            <position>-50</position>
-                            <value>-50</value>
-                        </point>
-                        <point number="2">
-                            <enabled>true</enabled>
                             <position>0</position>
                             <value>0</value>
                         </point>
-                        <point number="3">
+                        <point number="1">
                             <enabled>false</enabled>
+                            <position>25</position>
+                            <value>25</value>
+                        </point>
+                        <point number="2">
+                            <enabled>true</enabled>
                             <position>50</position>
                             <value>50</value>
+                        </point>
+                        <point number="3">
+                            <enabled>false</enabled>
+                            <position>75</position>
+                            <value>75</value>
                         </point>
                         <point number="4">
                             <enabled>true</enabled>
@@ -462,7 +465,7 @@
             <gyroGain>0</gyroGain>
             <gyroSuppression>0</gyroSuppression>
             <helicopterMixer>
-                <nich2TailMix>0</nich2TailMix>
+                <nick2TailMix>0</nick2TailMix>
                 <nick2ThrottleMix>0</nick2ThrottleMix>
                 <pitchCurve>
                     <points>
@@ -535,23 +538,23 @@
                     <points>
                         <point number="0">
                             <enabled>false</enabled>
-                            <position>-100</position>
-                            <value>-100</value>
-                        </point>
-                        <point number="1">
-                            <enabled>false</enabled>
-                            <position>-50</position>
-                            <value>-50</value>
-                        </point>
-                        <point number="2">
-                            <enabled>true</enabled>
                             <position>0</position>
                             <value>0</value>
                         </point>
-                        <point number="3">
+                        <point number="1">
                             <enabled>false</enabled>
+                            <position>25</position>
+                            <value>25</value>
+                        </point>
+                        <point number="2">
+                            <enabled>true</enabled>
                             <position>50</position>
                             <value>50</value>
+                        </point>
+                        <point number="3">
+                            <enabled>false</enabled>
+                            <position>75</position>
+                            <value>75</value>
                         </point>
                         <point number="4">
                             <enabled>false</enabled>
@@ -607,7 +610,7 @@
             <gyroGain>0</gyroGain>
             <gyroSuppression>0</gyroSuppression>
             <helicopterMixer>
-                <nich2TailMix>0</nich2TailMix>
+                <nick2TailMix>0</nick2TailMix>
                 <nick2ThrottleMix>0</nick2ThrottleMix>
                 <pitchCurve>
                     <points>
@@ -680,23 +683,23 @@
                     <points>
                         <point number="0">
                             <enabled>false</enabled>
-                            <position>-100</position>
-                            <value>-100</value>
-                        </point>
-                        <point number="1">
-                            <enabled>false</enabled>
-                            <position>-50</position>
-                            <value>-50</value>
-                        </point>
-                        <point number="2">
-                            <enabled>true</enabled>
                             <position>0</position>
                             <value>0</value>
                         </point>
-                        <point number="3">
+                        <point number="1">
                             <enabled>false</enabled>
+                            <position>25</position>
+                            <value>25</value>
+                        </point>
+                        <point number="2">
+                            <enabled>true</enabled>
                             <position>50</position>
                             <value>50</value>
+                        </point>
+                        <point number="3">
+                            <enabled>false</enabled>
+                            <position>75</position>
+                            <value>75</value>
                         </point>
                         <point number="4">
                             <enabled>false</enabled>
@@ -752,7 +755,7 @@
             <gyroGain>0</gyroGain>
             <gyroSuppression>0</gyroSuppression>
             <helicopterMixer>
-                <nich2TailMix>0</nich2TailMix>
+                <nick2TailMix>0</nick2TailMix>
                 <nick2ThrottleMix>0</nick2ThrottleMix>
                 <pitchCurve>
                     <points>
@@ -825,23 +828,23 @@
                     <points>
                         <point number="0">
                             <enabled>false</enabled>
-                            <position>-100</position>
-                            <value>-90</value>
+                            <position>0</position>
+                            <value>5</value>
                         </point>
                         <point number="1">
                             <enabled>false</enabled>
-                            <position>-50</position>
-                            <value>-50</value>
+                            <position>25</position>
+                            <value>25</value>
                         </point>
                         <point number="2">
                             <enabled>true</enabled>
-                            <position>0</position>
-                            <value>0</value>
+                            <position>50</position>
+                            <value>50</value>
                         </point>
                         <point number="3">
                             <enabled>false</enabled>
-                            <position>50</position>
-                            <value>50</value>
+                            <position>75</position>
+                            <value>75</value>
                         </point>
                         <point number="4">
                             <enabled>false</enabled>

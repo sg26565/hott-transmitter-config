@@ -64,7 +64,8 @@ public class SimpleGUI {
 			editorPane.setContentType("text/html");
 			try {
 				updateView();
-			} catch (IOException | TemplateException | JAXBException e) {
+			}
+			catch (IOException | TemplateException | JAXBException e) {
 				showError(frame, e);
 			}
 		}
@@ -94,7 +95,8 @@ public class SimpleGUI {
 					saveButton.setEnabled(true);
 					saveMenuItem.setEnabled(true);
 					updateView();
-				} catch (IOException | URISyntaxException | TemplateException | JAXBException e) {
+				}
+				catch (IOException | URISyntaxException | TemplateException | JAXBException e) {
 					showError(frame, e);
 				}
 			}
@@ -127,16 +129,19 @@ public class SimpleGUI {
 					String data;
 					if (file.getName().endsWith(".xml")) {
 						data = Report.generateXML(model);
-					} else {
+					}
+					else {
 						data = Report.generateHTML(model);
 					}
 
 					if (file.getName().endsWith(".pdf")) {
 						Report.savePDF(file, data);
-					} else {
+					}
+					else {
 						Report.save(file, data);
 					}
-				} catch (final IOException | JAXBException | TemplateException | DocumentException e) {
+				}
+				catch (final IOException | JAXBException | TemplateException | DocumentException e) {
 					showError(frame, e);
 				}
 			}
@@ -150,7 +155,8 @@ public class SimpleGUI {
 			editorPane.setContentType("text/xml");
 			try {
 				updateView();
-			} catch (IOException | TemplateException | JAXBException e) {
+			}
+			catch (IOException | TemplateException | JAXBException e) {
 				showError(frame, e);
 			}
 		}
@@ -160,27 +166,27 @@ public class SimpleGUI {
 		new SimpleGUI().show();
 	}
 
-	private final JPanel buttonPanel = new JPanel();
-	private final JButton closeButton = new JButton("Close");
-	private final JMenuItem closeMenuItem = new JMenuItem("Close");
-	private final HTMLEditorKit editorKit = new HTMLEditorKit();
-	private final JEditorPane editorPane = new JEditorPane();
-	private final JMenu fileMenu = new JMenu("File");
-	private final JFrame frame = new JFrame("Hott Transmitter Config");
-	private final JButton htmlButton = new JButton("View HTML");
-	private final JMenuItem htmlMenuItem = new JMenuItem("HTML");
-	private File lastDir = null;
-	private final JButton loadButton = new JButton("Load");
-	private final JMenuItem loadMenuItem = new JMenuItem("Load");
-	private final JMenuBar menubar = new JMenuBar();
-	private BaseModel model = null;
-	private boolean raw = false;
-	private final JButton saveButton = new JButton("Save");
-	private final JMenuItem saveMenuItem = new JMenuItem("Save");
-	private final JScrollPane scrollPane = new JScrollPane(editorPane);
-	private final JMenu viewMenu = new JMenu("View");
-	private final JButton xmlButton = new JButton("View XML");
-	private final JMenuItem xmlMenuItem = new JMenuItem("XML");
+	private final JPanel				buttonPanel		= new JPanel();
+	private final JButton				closeButton		= new JButton("Close");
+	private final JMenuItem			closeMenuItem	= new JMenuItem("Close");
+	private final HTMLEditorKit	editorKit			= new HTMLEditorKit();
+	private final JEditorPane		editorPane		= new JEditorPane();
+	private final JMenu					fileMenu			= new JMenu("File");
+	private final JFrame				frame					= new JFrame("Hott Transmitter Config");
+	private final JButton				htmlButton		= new JButton("View HTML");
+	private final JMenuItem			htmlMenuItem	= new JMenuItem("HTML");
+	private File								lastDir				= null;
+	private final JButton				loadButton		= new JButton("Load");
+	private final JMenuItem			loadMenuItem	= new JMenuItem("Load");
+	private final JMenuBar			menubar				= new JMenuBar();
+	private BaseModel						model					= null;
+	private boolean							raw						= false;
+	private final JButton				saveButton		= new JButton("Save");
+	private final JMenuItem			saveMenuItem	= new JMenuItem("Save");
+	private final JScrollPane		scrollPane		= new JScrollPane(editorPane);
+	private final JMenu					viewMenu			= new JMenu("View");
+	private final JButton				xmlButton			= new JButton("View XML");
+	private final JMenuItem			xmlMenuItem		= new JMenuItem("XML");
 
 	private void show() {
 		editorPane.setEditable(false);
@@ -243,6 +249,8 @@ public class SimpleGUI {
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+
+		Report.setSuppressExceptions(true);
 	}
 
 	private void showError(final JFrame frame, final Throwable t) {
@@ -255,7 +263,8 @@ public class SimpleGUI {
 	private void updateView() throws IOException, TemplateException, JAXBException {
 		if (raw) {
 			editorPane.setText(Report.generateXML(model));
-		} else {
+		}
+		else {
 			editorPane.setText(Report.generateHTML(model));
 		}
 
