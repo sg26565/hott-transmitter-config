@@ -1125,7 +1125,7 @@
 				<td align="center">${trim.point}</td>
 				<td align="center">Phase ${trim.phase.number?number+1}: ${trim.phase.phaseName}</td>
 			</tr>
-</#list>			
+</#list>
 		</table>
 </#if>
 
@@ -1261,14 +1261,15 @@
 				<th>Weg +</th>
 			</tr>
 <#list model.multichannel as multi>
+<#list multi.control as control>
+<#if control_index < 4 || multi.mode.name() == "EightCh">
 			<tr>
+<#if control_index == 0>
 				<th>Multikanal ${multi_index+1}</th>
 				<td align="center">${multi.enabled?string("aktiv","inaktiv")}</td>
 				<td align="center">K${multi.inputChannel.number?number+1}</td>
 				<td align="center">${multi.mode}</td>
-<#list multi.control as control>
-<#if control_index < 4 || multi.mode.name() == "EightCh">
-<#if control_index &gt; 0>
+<#else>
 				<td colspan="4"/>
 </#if>
 				<td>Eingang ${control_index+1}</td>
@@ -1295,10 +1296,60 @@
 		<hr/>
 
 		<h1>Ringbegrenzer</h1>
+		<table>
+			<tr>
+				<th colspan="2">Eingang</th>
+				<th colspan="2">Ausgang</th>
+				<th rowspan="2" valign="bottom">aktiv?</th>
+				<th colspan="2">Limit</th>
+				<th colspan="2">Offset</th>
+			</tr>
+			<tr>
+				<th>X</th>
+				<th>Y</th>
+				<th>X</th>
+				<th>Y</th>				
+				<th>max-X</th>
+				<th>max-Y</th>
+				<th>&#58473;&harr;&#58426;-X</th>
+				<th>&#58473;&harr;&#58426;-Y</th>				
+			</tr>
+<#list model.ringLimiter as limit>
+			<tr>
+				<td align="center">${limit.inputChannel[0].number?number+1}</td>
+				<td align="center">${limit.inputChannel[1].number?number+1}</td>
+				<td align="center">${limit.outputChannel[0].number?number+1}</td>
+				<td align="center">${limit.outputChannel[1].number?number+1}</td>
+				<td align="center">${limit.enabled?string("aktiv","inaktiv")}</td>
+				<td align="center">${limit.limit[0]}%</td>
+				<td align="center">${limit.limit[1]}%</td>
+				<td align="center">${limit.offset[0]}%</td>
+				<td align="center">${limit.offset[1]}%</td>
+			</tr>
+</#list>
+		</table>
 		
 		<hr/>
 		
 		<h1>MP3-Player</h1>
+		<table>
+			<tr>
+				<th>Lautstärke</th>
+				<td>${model.mp3Player.volume}</td>
+			</tr>
+			<tr>
+				<th>Album</th>
+				<td>${model.mp3Player.album}</td>
+			</tr>
+			<tr>
+				<th>Titel</th>
+				<td>${model.mp3Player.track}</td>
+			</tr>
+			<tr>
+				<th>Modus</th>
+				<td>${model.mp3Player.mode}</td>
+			</tr>
+		</table>
 		
 		<hr/>
 		
