@@ -18,13 +18,16 @@
 
 package gde.gui;
 
+import freemarker.template.TemplateException;
+import gde.model.BaseModel;
+import gde.report.Report;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -43,12 +46,6 @@ import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
 
-import com.lowagie.text.DocumentException;
-
-import freemarker.template.TemplateException;
-import gde.model.BaseModel;
-import gde.report.Report;
-
 public class SimpleGUI {
 	private final class CloseActionListener implements ActionListener {
 		@Override
@@ -65,8 +62,8 @@ public class SimpleGUI {
 			try {
 				updateView();
 			}
-			catch (IOException | TemplateException | JAXBException e) {
-				showError(frame, e);
+			catch (final Throwable t) {
+				showError(t);
 			}
 		}
 	}
@@ -96,8 +93,8 @@ public class SimpleGUI {
 					saveMenuItem.setEnabled(true);
 					updateView();
 				}
-				catch (IOException | URISyntaxException | TemplateException | JAXBException e) {
-					showError(frame, e);
+				catch (final Throwable t) {
+					showError(t);
 				}
 			}
 		}
@@ -141,8 +138,8 @@ public class SimpleGUI {
 						Report.save(file, data);
 					}
 				}
-				catch (final IOException | JAXBException | TemplateException | DocumentException e) {
-					showError(frame, e);
+				catch (final Throwable t) {
+					showError(t);
 				}
 			}
 		}
@@ -156,8 +153,8 @@ public class SimpleGUI {
 			try {
 				updateView();
 			}
-			catch (IOException | TemplateException | JAXBException e) {
-				showError(frame, e);
+			catch (final Throwable t) {
+				showError(t);
 			}
 		}
 	}
@@ -191,73 +188,78 @@ public class SimpleGUI {
 	private final JMenuItem			xmlMenuItem		= new JMenuItem("XML");
 
 	private void show() {
-		editorPane.setEditable(false);
-		editorPane.setEditorKit(editorKit);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setPreferredSize(new Dimension(800, 600));
-		scrollPane.setMinimumSize(new Dimension(100, 100));
+		try {
+			editorPane.setEditable(false);
+			editorPane.setEditorKit(editorKit);
+			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			scrollPane.setPreferredSize(new Dimension(800, 600));
+			scrollPane.setMinimumSize(new Dimension(100, 100));
 
-		lastDir = new File(System.getProperty("user.dir"));
+			lastDir = new File(System.getProperty("user.dir"));
 
-		ActionListener l = new CloseActionListener();
-		closeMenuItem.addActionListener(l);
-		closeButton.addActionListener(l);
+			ActionListener l = new CloseActionListener();
+			closeMenuItem.addActionListener(l);
+			closeButton.addActionListener(l);
 
-		l = new LoadActionListener();
-		loadMenuItem.addActionListener(l);
-		loadButton.addActionListener(l);
+			l = new LoadActionListener();
+			loadMenuItem.addActionListener(l);
+			loadButton.addActionListener(l);
 
-		l = new SaveActionListener();
-		saveMenuItem.addActionListener(l);
-		saveButton.addActionListener(l);
+			l = new SaveActionListener();
+			saveMenuItem.addActionListener(l);
+			saveButton.addActionListener(l);
 
-		l = new XmlActionListener();
-		xmlMenuItem.addActionListener(l);
-		xmlButton.addActionListener(l);
+			l = new XmlActionListener();
+			xmlMenuItem.addActionListener(l);
+			xmlButton.addActionListener(l);
 
-		l = new HtmlActionListener();
-		htmlMenuItem.addActionListener(l);
-		htmlButton.addActionListener(l);
+			l = new HtmlActionListener();
+			htmlMenuItem.addActionListener(l);
+			htmlButton.addActionListener(l);
 
-		fileMenu.add(loadMenuItem);
-		fileMenu.add(saveMenuItem);
-		fileMenu.addSeparator();
-		fileMenu.add(closeMenuItem);
+			fileMenu.add(loadMenuItem);
+			fileMenu.add(saveMenuItem);
+			fileMenu.addSeparator();
+			fileMenu.add(closeMenuItem);
 
-		menubar.add(fileMenu);
+			menubar.add(fileMenu);
 
-		viewMenu.add(xmlMenuItem);
-		viewMenu.add(htmlMenuItem);
+			viewMenu.add(xmlMenuItem);
+			viewMenu.add(htmlMenuItem);
 
-		menubar.add(viewMenu);
+			menubar.add(viewMenu);
 
-		buttonPanel.add(loadButton);
-		buttonPanel.add(saveButton);
-		buttonPanel.add(htmlButton);
-		buttonPanel.add(xmlButton);
+			buttonPanel.add(loadButton);
+			buttonPanel.add(saveButton);
+			buttonPanel.add(htmlButton);
+			buttonPanel.add(xmlButton);
 
-		htmlButton.setEnabled(false);
-		htmlMenuItem.setEnabled(false);
-		xmlButton.setEnabled(false);
-		xmlMenuItem.setEnabled(false);
-		saveButton.setEnabled(false);
-		saveMenuItem.setEnabled(false);
+			htmlButton.setEnabled(false);
+			htmlMenuItem.setEnabled(false);
+			xmlButton.setEnabled(false);
+			xmlMenuItem.setEnabled(false);
+			saveButton.setEnabled(false);
+			saveMenuItem.setEnabled(false);
 
-		frame.setJMenuBar(menubar);
-		frame.setLayout(new BorderLayout());
-		frame.add(buttonPanel, BorderLayout.SOUTH);
-		frame.add(scrollPane, BorderLayout.CENTER);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+			frame.setJMenuBar(menubar);
+			frame.setLayout(new BorderLayout());
+			frame.add(buttonPanel, BorderLayout.SOUTH);
+			frame.add(scrollPane, BorderLayout.CENTER);
+			frame.pack();
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setVisible(true);
 
-		Report.setSuppressExceptions(true);
+			Report.setSuppressExceptions(true);
+		}
+		catch (final Throwable t) {
+			showError(t);
+		}
 	}
 
-	private void showError(final JFrame frame, final Throwable t) {
+	private void showError(final Throwable t) {
 		LOG.error(t.getMessage(), t);
-		JOptionPane.showMessageDialog(frame, t.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(frame, t.getClass().getName() + ": " + t.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void updateView() throws IOException, TemplateException, JAXBException {
