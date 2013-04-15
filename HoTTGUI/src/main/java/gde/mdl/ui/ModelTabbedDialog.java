@@ -1,25 +1,14 @@
 package gde.mdl.ui;
-
-import gde.mdl.ui.composites.BaseConfiguration;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
 public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 
 	private Shell				dialogShell;
-	private Menu				menu;
-	private MenuItem		saveItem;
-	private MenuItem		loadItem;
-	private MenuItem		quitMenuItem;
-	private CTabItem		cTabItem1;
 	private CTabFolder	mainTabFolder;
 	private Composite		mainComposite;
 
@@ -47,24 +36,9 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 		try {
 			Shell parent = getParent();
 			dialogShell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+			FillLayout dialogShellLayout = new FillLayout(org.eclipse.swt.SWT.HORIZONTAL);
+			dialogShell.setLayout(dialogShellLayout);
 			dialogShell.setText("Graupner/SJ HoTT MDL Explorer");
-			{
-				menu = new Menu(dialogShell, SWT.BAR | SWT.LEFT_TO_RIGHT);
-				dialogShell.setMenuBar(menu);
-				{
-					quitMenuItem = new MenuItem(menu, SWT.CASCADE);
-					quitMenuItem.setText("  Quit  ");
-				}
-				{
-					loadItem = new MenuItem(menu, SWT.CASCADE);
-					loadItem.setText(" load MDL ");
-				}
-				{
-					saveItem = new MenuItem(menu, SWT.PUSH);
-					saveItem.setText(" save MDL ");
-					saveItem.setEnabled(false);
-				}
-			}
 			{
 				mainComposite = new Composite(dialogShell, SWT.NONE);
 				FillLayout composite1Layout = new FillLayout(org.eclipse.swt.SWT.HORIZONTAL);
@@ -73,12 +47,11 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 				{
 					mainTabFolder = new CTabFolder(mainComposite, SWT.NONE);
 					{
-						cTabItem1 = new CTabItem(mainTabFolder, SWT.NONE);
-						cTabItem1.setText("Grundeinstellung");
-						{
-							new BaseConfiguration(mainTabFolder, cTabItem1);
-						}
+						new MdlTabItem(mainTabFolder, SWT.NONE);
 					}
+//						{
+//							new BaseConfiguration(mainTabFolder, mdlViewTabItem);
+//						}
 					mainTabFolder.setSelection(0);
 				}
 				mainComposite.layout();
@@ -86,7 +59,7 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 			dialogShell.setLocation(getParent().toDisplay(100, 100));
 			dialogShell.layout();
 			dialogShell.pack();
-			dialogShell.setSize(500, 350);
+			dialogShell.setSize(768, 768);
 			dialogShell.open();
 			Display display = dialogShell.getDisplay();
 			while (!dialogShell.isDisposed()) {
