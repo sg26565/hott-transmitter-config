@@ -26,10 +26,13 @@ import java.util.Collection;
  */
 public class Telemetry {
 
-	private SensorType currentSensor;
-	private int currentSensorPage;
-	private Collection<SensorType> selectedSensor;
-	private int voiceDelay;
+	private SensorType							currentSensor;
+	private int											currentSensorPage;
+	private Collection<SensorType>	selectedSensor;
+	private Switch									varioTone;
+	private int											voiceDelay;
+	private Switch									voiceRepeat;
+	private Switch									voiceTrigger;
 
 	public SensorType getCurrentSensor() {
 		return currentSensor;
@@ -43,8 +46,20 @@ public class Telemetry {
 		return selectedSensor;
 	}
 
+	public Switch getVarioTone() {
+		return varioTone;
+	}
+
 	public int getVoiceDelay() {
 		return voiceDelay;
+	}
+
+	public Switch getVoiceRepeat() {
+		return voiceRepeat;
+	}
+
+	public Switch getVoiceTrigger() {
+		return voiceTrigger;
 	}
 
 	public void setCurrentSensor(final SensorType currentSensor) {
@@ -59,7 +74,19 @@ public class Telemetry {
 		this.selectedSensor = selectedSensor;
 	}
 
+	public void setVarioTone(final Switch sw) {
+		varioTone = sw;
+	}
+
 	public void setVoiceDelay(final int voiceDelay) {
 		this.voiceDelay = voiceDelay;
+	}
+
+	public void setVoiceRepeat(final Switch sw) {
+		voiceRepeat = sw;
+	}
+
+	public void setVoiceTrigger(final Switch sw) {
+		voiceTrigger = sw;
 	}
 }

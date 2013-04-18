@@ -18,7 +18,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <@htmlsafe>
-<#macro switch sw={"assignment":"Unassigned"}><#if sw.assignment == "Unassigned">---<#else>${sw.assignment}<#if sw.direction == 2> normal<#else><#if sw.direction=1> invers</#if></#if></#if></#macro>
+<#macro switch sw><#if sw.assignment.name() == "Unassigned">---<#else>${sw.assignment}<#if sw.direction == 2> normal<#else><#if sw.direction=1> invers</#if></#if></#if></#macro>
 <#macro curve c title="">
 			<tr>
 <#if title!="">
@@ -131,12 +131,12 @@
 <#if helicopterModel??>
 			<tr>
 				<th align="right">Autorotation</th>
-				<td colspan="3"><@switch model.getSwitch("AutoRotation")/></td>
+				<td colspan="3"><@switch model.getSwitch("Autorotation")/></td>
 			</tr>	
 			<tr>
 				<th align="right">Autorotation K1 Position</th>
 				<td><i>Position:</i> ${helicopterModel.autorotationC1TriggerPosition}</td>
-				<td colspan="2"><i>Schalter:</i> <@switch model.getSwitch("AutoRotationC1")/></td>
+				<td colspan="2"><i>Schalter:</i> <@switch model.getSwitch("AutorotationC1")/></td>
 			</tr>
 </#if>
 			<tr>
@@ -343,15 +343,14 @@
 			<tr>
 				<td align="center">E${control.number?number+1}</td>
 				<td align="center">${control.mode}</td>
-<#if control.controlSwitch?? && control.controlSwitch.assignment.name() != "Unassigned">
-				<td align="center" colspan="2"><@switch control.controlSwitch/></td>
+<#if control.inputControl?? && control.inputControl.assignment.name() != "Unassigned">
+				<td align="center" colspan="2"><@switch control.inputControl/></td>
 <#else>
 <#if control.toggleLowSwitch?? && control.toggleLowSwitch.assignment.name() != "Unassigned" || control.toggleHighSwitch?? && control.toggleHighSwitch.assignment.name() != "Unassigned">
 				<td><@switch control.toggleLowSwitch/></td>
 				<td><@switch control.toggleHighSwitch/></td>
 <#else>
-				<td>frei</td>
-				<td>---</td>
+				<td align="center" colspan="2">---</td>
 </#if>
 </#if>
 				<td align="center">${control.offset}%</td>
@@ -388,13 +387,13 @@
 			<tr>			  	
 				<th align="right">${phase.dualRate[i].function}</th>
 				<td align="center"><@switch phase.dualRate[i].switch/></td>
-<#if phase.dualRate[i].switch.assignment != "Unassigned">
+<#if phase.dualRate[i].switch.assignment.name() != "Unassigned">
 				<td align="center">${phase.dualRate[i].values[0]}% / ${phase.dualRate[i].values[1]}%</td>
 <#else>
 				<td align="center">${phase.dualRate[i].values[0]}%</td>
 </#if>
 				<td align="center"><@switch phase.expo[i].switch/></td>
-<#if phase.expo[i].switch.assignment != "Unassigned">
+<#if phase.expo[i].switch.assignment.name() != "Unassigned">
 				<td align="center">${phase.expo[i].values[0]}% / ${phase.expo[i].values[1]}%</td>
 <#else>
 				<td align="center">${phase.expo[i].values[0]}%</td>
@@ -433,7 +432,7 @@
 <#list model.controlSwitch as sw>
 			<tr>
 				<th>G${sw_index+1}</th>
-				<td align="center"><#if sw.assignment == "Unassigned">---<#else>${sw.assignment}</#if></td>
+				<td align="center"><#if sw.assignment.name() == "Unassigned">---<#else>${sw.assignment}</#if></td>
 				<td align="center">${sw.position}</td>
 				<td align="center"><#if sw.direction==0>&rArr;<#else>&lArr;</#if></td>
 				<td align="center"><@switch sw.combineSwitch/></td>
@@ -518,7 +517,7 @@
 			</tr>
 			<tr>
 				<th align="right">Kombinationsschalter E</th>
-				<td><@switch model.phaseAssignment.comiESwitch/></td>
+				<td><@switch model.phaseAssignment.combiESwitch/></td>
 				<td></td>				
 			</tr>
 			<tr>
@@ -621,7 +620,7 @@
 			<tr>
 				<th align="right">Modellzeit</th>
 				<td colspan="3"></td>
-				<td><@switch model.getSwitch("ModelTime")/></td>
+				<td><@switch model.getSwitch("Clock_ModelTime")/></td>
 			</tr>
 <#list [4,5] as index>
 			<tr>
@@ -655,12 +654,12 @@
 			<tr>
 				<th align="right">Rundenzähler/Zeittabelle</th>
 				<td colspan="2"></td>
-				<td><@switch model.getSwitch("LapTimer")/></td>
+				<td><@switch model.getSwitch("Clock_LapTimer")/></td>
 			</tr>
 			<tr>
 				<th align="right">Rundenanzeige</th>
 				<td colspan="2"></td>
-				<td><@switch model.getSwitch("LapDisplay")/></td>
+				<td><@switch model.getSwitch("Clock_LapDisplay")/></td>
 			</tr>
 		</table>
 
@@ -777,11 +776,11 @@
 <#if phase.number == "0">
 			<tr>
 				<th>Gasposition AR</th>
-				<td colspan="4">${phase.autorotationThrottlePosition}</td>
+				<td colspan="4">${helicopterModel.autorotationThrottlePosition}</td>
 			</tr>
 			<tr>
 				<th>Heckrotoroffset AR</th>
-				<td colspan="4">${phase.autorotationTailPosition}</td>
+				<td colspan="4">${helicopterModel.autorotationTailPosition}</td>
 			</tr>
 <#else>
 			<@curve phase.helicopterMixer.throttleCurve "Gaskurve (K1 &rarr; Gas)"/>
@@ -878,7 +877,7 @@
 				<td align="center"><@switch mixer.switch/></td>
 				<td align="center">${mixer.curve.smoothing?string("an","aus")}</td>
 <#else>
-				<td colspan="6"></td>
+				<td colspan="5"></td>
 </#if>
 				<td align="center">${point.number?number+1}</td>
 				<td align="center">${point.enabled?string("ja","nein")}</td>
@@ -1045,7 +1044,7 @@
 			</tr>
 			<tr>
 				<th align="right">Schalter</th>
-				<td><@switch model.trainerConfig.trainerswitch/></td>
+				<td><@switch model.trainerConfig.trainerSwitch/></td>
 			</tr>
 		</table>
 		<table>
@@ -1181,21 +1180,29 @@
 		<h1>Telemetrie</h1>
 		<table>
 			<tr>
-				<th align="right">Ansage wiederholen</th>
-				<td>${model.telemetry.voiceDelay}s <i>Schalter:</i> <@switch model.telemetry.VoiceRepeat/></td>
+				<th align="right" rowspan="2" valign="top">Ansage wiederholen</th>
+				<td>${model.telemetry.voiceDelay}s</td>
+			</tr>
+			<tr>
+				<td><@switch model.telemetry.voiceRepeat/></td>
 			</tr>
 			<tr>
 				<th align="right">nächste Ansage</th>
-				<td><@switch model.telemetry.VoiceTrigger/></td>
+				<td><@switch model.telemetry.voiceTrigger/></td>
 			</tr>
 			<tr>
 				<th align="right">Varioton</th>
-				<td><@switch model.telemetry.VarioTone/></td>
+				<td><@switch model.telemetry.varioTone/></td>
 			</tr>
 			<tr>
-				<th align="right">ausgewählte Sensoren</th>
-				<td><#list model.telemetry.selectedSensor as sensor>${sensor} </#list></td>
+				<th align="right" rowspan="${model.telemetry.selectedSensor?size}" valign="top">ausgewählte Sensoren</th>
+<#list model.telemetry.selectedSensor as sensor>
+<#if sensor_index &gt; 0>
+			<tr>
+</#if>
+				<td>${sensor}</td>
 			</tr>
+</#list>				
 			<tr>
 				<th align="right">aktueller Sensor</th>
 				<td>${model.telemetry.currentSensor}</td>
@@ -1361,7 +1368,7 @@
 				<th align="left">Typ</th>
 			</tr>
 <#list model.switch as sw>
-<#if (sw.assignment!"Null") != "Unassigned">
+<#if sw?? && sw.assignment?? && sw.assignment.name() != "Unassigned">
 			<tr>
 				<td align="right">${sw.id}</td>
 				<td align="center"><@switch sw/></td>

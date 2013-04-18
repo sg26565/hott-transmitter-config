@@ -89,7 +89,7 @@ public class ReportTest {
 			assertTrue(out.size() > 0);
 
 			out.reset();
-			Report.process(model, out, "mx-16.xhtml");
+			Report.process(model, out, "mc-32.xhtml");
 			assertTrue(out.size() > 0);
 		}
 	}
@@ -108,7 +108,7 @@ public class ReportTest {
 			assertTrue(out.size() > 0);
 
 			out.reset();
-			Report.process(model, out, "mx-16.xhtml");
+			Report.process(model, out, "mc-32.xhtml");
 			assertTrue(out.size() > 0);
 		}
 	}
@@ -165,7 +165,7 @@ public class ReportTest {
 			assertTrue(out.size() > 0);
 
 			out.reset();
-			Report.process(model, out, "mx-16.xhtml");
+			Report.process(model, out, "mc-32.xhtml");
 			assertTrue(out.size() > 0);
 		}
 	}

@@ -18,7 +18,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <@htmlsafe>
-<#macro switch sw={"assignment":"Unassigned"}><#if sw.assignment == "Unassigned">---<#else>${sw.assignment}<#if sw.direction == 2> normal<#else><#if sw.direction=1> invers</#if></#if></#if></#macro>
+<#macro switch sw><#if sw.assignment.name() == "Unassigned">---<#else>${sw.assignment}<#if sw.direction == 2> normal<#else><#if sw.direction=1> invers</#if></#if></#if></#macro>
 <#macro curve title points>
 			<tr>
 				<th align="right">${title}</th>
@@ -95,7 +95,7 @@
 			<tr>
 				<th align="right">Taumelscheibe</th>
 				<td colspan="3">${helicopterModel.swashplateType}</td>
-			</tr>				
+			</tr>
 </#if>
 <#if wingedModel??>
 			<tr>
@@ -132,7 +132,7 @@
 			<tr>
 				<th align="right">letzte Leerlaufposition</th>
 				<td colspan="3">${model.throttleSettings.throttleLastIdlePosition}%</td>
-			</tr>			
+			</tr>
 <#if wingedModel??>
 			<tr>
 				<th align="right">Leitwerk</th>
@@ -167,7 +167,11 @@
 			<tr>
 				<th align="right" valign="top">Phase ${phase.number}</th>
 				<td><i>Name:</i> ${phase.phaseName}</td>
-				<td colspan="2"><i>Schalter:</i> <@switch phase.switch/></td>
+<#if phase.phaseSwitch??>
+				<td colspan="2"><i>Schalter:</i> <@switch phase.phaseSwitch/></td>
+<#else>
+				<td colpan="2"/>
+</#if>
 			</tr>
 </#if>
 </#list>
@@ -181,7 +185,7 @@
 							<td align="center">&rArr;</td>
 							<td align="center">Ausgang ${mapping.outputChannel+1}</td>
 						</tr>
-</#list>					
+</#list>
 					</table>
 				</td>
 			</tr>
@@ -207,7 +211,7 @@
 				<th>Weg +</th>
 			</tr>
 <#list model.channel as channel>
-<#if !channel.virtual>						
+<#if !channel.virtual>
 			<tr>
 				<td align="center">S${channel.number?number+1}</td>
 				<td align="center"><#if channel.reverse>&lArr;<#else>&rArr;</#if></td>
@@ -233,7 +237,7 @@
 <#if helicopterModel?? && control.number?number == 8>
 			<tr>
 				<td align="center">Gaslimiter</td>
-				<td align="cender"><@switch control.controlSwitch/></td>
+				<td align="cender"><@switch control.inputControl/></td>
 				<td align="cender">${control.travelLow}%</td>
 				<td align="cender">${control.travelHigh}%</td>
 			</tr>
@@ -241,7 +245,7 @@
 <#if control.number?number < 8>
 			<tr>
 				<td align="center">E${control.number?number+1}</td>
-				<td align="cender"><@switch control.controlSwitch/></td>
+				<td align="cender"><@switch control.inputControl/></td>
 				<td align="cender">${control.travelLow}%</td>
 				<td align="cender">${control.travelHigh}%</td>
 			</tr>
@@ -252,7 +256,7 @@
 
 		<hr/>	
 
-		<h1>DualRate Expo</h1>		
+		<h1>DualRate Expo</h1>
 <#list model.phase as phase>
 <#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
 		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
@@ -275,7 +279,7 @@
 </#if>
 </#list>
 
-		<hr/>	
+		<hr/>
 
 <#if wingedModel??>
 		<h1>Phasentrimm</h1>
@@ -286,7 +290,7 @@
 				<th>QR</th>
 				<th>HR</th>
 			</tr>
-<#list wingedModel.phase as phase>				
+<#list wingedModel.phase as phase>
 <#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
 			<tr>
 				<th align="right">${phase.phaseName}</th>
@@ -311,13 +315,17 @@
 			<tr>
 				<th align="right">${mixer.id}</th>
 				<td align="center">${mixer.value[0]}%</td>
-				<td><@switch mixer.switch/></td>						
+<#if mixer.switch??>
+				<td><@switch mixer.switch/></td>
+<#else>
+				<td/>
+</#if>
 			</tr>
-</#list>						
+</#list>
 		</table>
 </#if>
 <#if helicopterModel??>
-		<h1>Helimix</h1>		
+		<h1>Helimix</h1>
 <#list helicopterModel.phase as phase>
 <#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
 		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
@@ -338,7 +346,7 @@
 				<th align="right">Taumelscheibenlimit</th>
 				<td><#if phase.helicopterMixer.swashplateLimit == 150>aus<#else>${phase.helicopterMixer.swashplateLimit}%</#if></td>
 			</tr>
-		</table>	
+		</table>
 </#if>
 </#list>
 </#if>
@@ -395,7 +403,7 @@
 			</tr>
 		</table>
 		
-		<hr/>			
+		<hr/>
 
 </#if>		
 		<h1>Fail Safe</h1>		
@@ -446,15 +454,15 @@
 		<table>
 			<tr>
 				<th align="right">Ansage wiederholen</th>
-				<td>${model.telemetry.voiceDelay}s <i>Schalter:</i> <@switch model.telemetry.VoiceRepeat/></td>
+				<td>${model.telemetry.voiceDelay}s <i>Schalter:</i> <@switch model.telemetry.voiceRepeat/></td>
 			</tr>
 			<tr>
 				<th align="right">nächste Ansage</th>
-				<td><@switch model.telemetry.VoiceTrigger/></td>
+				<td><@switch model.telemetry.voiceTrigger/></td>
 			</tr>
 			<tr>
 				<th align="right">Varioton</th>
-				<td><@switch model.telemetry.VarioTone/></td>
+				<td><@switch model.telemetry.varioTone/></td>
 			</tr>
 			<tr>
 				<th align="right">ausgewählte Sensoren</th>
@@ -488,7 +496,7 @@
 			</tr>
 			<tr>
 				<th align="right">Schalter</th>
-				<td><@switch model.trainerConfig.trainerswitch/></td>
+				<td><@switch model.trainerConfig.trainerSwitch/></td>
 			</tr>
 		</table>
 		<table>

@@ -17,6 +17,14 @@
  */
 package gde.model.enums;
 
+import java.util.ResourceBundle;
+
 public enum SwitchAssignment {
-	CTRL1, CTRL10, CTRL2, CTRL4, CTRL5, CTRL6, CTRL7, CTRL8, CTRL9, DG1, DG2, DG3, DG4, DG5, Fx, FX, FXi, G1, G2, G3, G4, G5, G6, G7, G8, GB1, GB2, GB3, GB4, GB5, GB6, Gi1, Gi2, Gi3, Gi4, Gi5, Gi6, Gi7, Gi8, L1, L2, L3, L4, L5, L6, L7, L8, Li1, Li2, Li3, Li4, Li5, Li6, Li7, Li8, SD1, SD2, SR1, SR2, SR3, SW1, SW10, SW11, SW12, SW13, SW14, SW15, SW16, SW2, SW3, SW4, SW5, SW6, SW7, SW8, SW9, TR1, TR2, TR3, TR4, Unassigned;
+	DG1, DG2, DG3, DG4, DG5, FX, FXi, G1, G2, G3, G4, G5, G6, G7, G8, GB1, GB10, GB2, GB3, GB4, GB5, GB6, GB7, GB8, GB9, Gi1, Gi2, Gi3, Gi4, Gi5, Gi6, Gi7, Gi8, L1, L2, L3, L4, L5, L6, L7, L8, Li1, Li2, Li3, Li4, Li5, Li6, Li7, Li8, SD1, SD2, SR1, SR2, SR3, SW1, SW10, SW11, SW12, SW13, SW14, SW15, SW16, SW2, SW3, SW4, SW5, SW6, SW7, SW8, SW9, TR1, TR2, TR3, TR4, Unassigned;
+
+	/** @return the locale-dependent message */
+	@Override
+	public String toString() {
+		return ResourceBundle.getBundle(getClass().getName()).getString(name());
+	}
 }
