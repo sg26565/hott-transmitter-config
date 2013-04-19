@@ -73,10 +73,6 @@
 			<artifactId>HoTTDecoder</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.xhtmlrenderer</groupId>
-			<artifactId>flying-saucer-pdf</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.eclipse.swt.gtk.linux</groupId>
 			<artifactId>x86_64</artifactId>
 			<version>3.3.0-v3346</version>
@@ -85,6 +81,10 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-pdf-itext5</artifactId>
 		</dependency>
 	</dependencies>
 </project>

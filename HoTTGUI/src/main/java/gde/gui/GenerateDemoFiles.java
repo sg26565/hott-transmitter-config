@@ -23,7 +23,7 @@ import java.net.URISyntaxException;
 
 import javax.xml.bind.JAXBException;
 
-import com.lowagie.text.DocumentException;
+import com.itextpdf.text.DocumentException;
 
 import freemarker.template.TemplateException;
 import gde.model.BaseModel;

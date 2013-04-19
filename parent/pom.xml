@@ -184,7 +184,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.xhtmlrenderer</groupId>
-				<artifactId>flying-saucer-pdf</artifactId>
+				<artifactId>flying-saucer-pdf-itext5</artifactId>
 				<version>9.0.1</version>
 			</dependency>
 		</dependencies>

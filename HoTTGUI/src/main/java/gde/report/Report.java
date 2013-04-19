@@ -40,7 +40,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.log4j.Logger;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import com.lowagie.text.DocumentException;
+import com.itextpdf.text.DocumentException;
 
 import de.treichels.hott.HoTTDecoder;
 import freemarker.template.Configuration;
