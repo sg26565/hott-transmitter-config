@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum PhaseType {
-	Acro, Acro_3D, Acro2, AirTow, Autorotation, Custom1, Custom10, Custom2, Custom3, Custom4, Custom5, Custom6, Custom7, Custom8, Custom9, Distance, Distance2, Global, Hover, Landing, landing2, Normal, Speed, Speed2, Takeoff, Takeoff2, Test, Test2, Thermal, Thermal2, Unnamed, Unused;
+	Acro, Acro_3D, Acro2, AirTow, Autorotation, Custom1, Custom10, Custom2, Custom3, Custom4, Custom5, Custom6, Custom7, Custom8, Custom9, Distance, Distance2, Global, Hover, Landing, Landing2, Normal, Speed, Speed2, Takeoff, Takeoff2, Test, Test2, Thermal, Thermal2, Unnamed, Unused;
 
 	/** @return the locale-dependent message */
 	@Override
