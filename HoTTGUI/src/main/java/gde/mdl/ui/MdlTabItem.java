@@ -99,21 +99,27 @@ public class MdlTabItem extends CTabItem {
 					if (lastLoadDir != null) {
 						fd.setFilterPath(lastLoadDir.getPath());
 					}
+					else {
+						fd.setFilterPath(System.getProperty("program.dir"));
+					}
 
-					final File file = new File(fd.open());
-
-					if (file.exists() && file.canRead()) {
-						lastLoadDir = file.getParentFile();
-						try {
-							model = Report.getModel(file);
-							saveMdlButton.setEnabled(true);
-							updateView(false);
-						}
-						catch (final Throwable t) {
-							MessageBox mb = new MessageBox(parent.getShell(), SWT.NONE);
-							mb.setText(t.getMessage());
-							mb.open();
-							System.err.println(t.getStackTrace());
+					fd.open();
+					if (fd.getFileName().length() > 4) {
+						final File file = new File(fd.getFilterPath() + "/" + fd.getFileName());
+	
+						if (file.exists() && file.canRead()) {
+							lastLoadDir = file.getParentFile();
+							try {
+								model = Report.getModel(file);
+								saveMdlButton.setEnabled(true);
+								updateView(false);
+							}
+							catch (final Throwable t) {
+								MessageBox mb = new MessageBox(parent.getShell(), SWT.NONE);
+								mb.setText(t.getMessage());
+								mb.open();
+								System.err.println(t.getStackTrace());
+							}
 						}
 					}
 				}
@@ -134,7 +140,35 @@ public class MdlTabItem extends CTabItem {
 				@Override
 				public void widgetSelected(SelectionEvent evt) {
 					System.out.println("saveMdlButton.widgetSelected, event="+evt);
-					//TODO add your code for saveMdlButton.widgetSelected
+					FileDialog fileSaveDialog = new FileDialog(parent.getShell(), SWT.PRIMARY_MODAL | SWT.SAVE);
+					fileSaveDialog.setText("save PDF");
+					fileSaveDialog.setFilterExtensions(new String[] {"*.pdf"});
+					fileSaveDialog.setFilterNames(new String[] {"Portable Document Format"});
+					fileSaveDialog.setFilterPath(lastLoadDir != null ? lastLoadDir.getPath() : System.getProperty("program.dir"));
+					fileSaveDialog.open();
+					File file = new File(fileSaveDialog.getFilterPath() + "/" + fileSaveDialog.getFileName());
+					if (file.isFile() && file.canWrite()) {
+						try {
+							String data;
+							if (file.getName().endsWith(".xml")) {
+								data = Report.generateXML(model);
+							}
+							else {
+								data = Report.generateHTML(model);
+							}
+
+							if (file.getName().endsWith(".pdf")) {
+								Report.savePDF(file, data);
+							}
+							else {
+								Report.save(file, data);
+							}
+						}
+						catch (Throwable e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 			});
 		}
