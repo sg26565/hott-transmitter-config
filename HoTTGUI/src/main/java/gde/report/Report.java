@@ -28,6 +28,7 @@ import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
@@ -72,6 +73,7 @@ public class Report {
 		LOG.debug("templates dir: " + templateDir.getAbsolutePath());
 
 		CONFIGURATION = new Configuration();
+		CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8");
 		if (templateDir.exists() && templateDir.isDirectory()) {
 			LOG.debug("using dir for template loading");
 			try {
@@ -183,7 +185,7 @@ public class Report {
 			rootMap.put("helicopterModel", model);
 		}
 
-		template.process(rootMap, new OutputStreamWriter(out));
+		template.process(rootMap, new OutputStreamWriter(out,"UTF-8"));
 	}
 
 	public static void save(final File file, final String data) throws IOException {
