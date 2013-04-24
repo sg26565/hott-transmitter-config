@@ -293,22 +293,22 @@
 				<td>Pitch/Gas</td>
 				<td>${model.stickTrim[0].mode}</td>
 				<td align="center">${model.stickTrim[0].increment}</td>
-				<td align="center">${model.stickTrim[0].timeLow}</td>
-				<td align="center">${model.stickTrim[0].timeHigh}</td>
+				<td align="center">${model.stickTrim[0].timeLow?string("0.0")}</td>
+				<td align="center">${model.stickTrim[0].timeHigh?string("0.0")}</td>
 			</tr>
 			<tr>
 				<td>Roll</td>
 				<td>${model.stickTrim[1].mode}</td>
 				<td align="center">${model.stickTrim[1].increment}</td>
-				<td align="center">${model.stickTrim[1].timeLow}</td>
-				<td align="center">${model.stickTrim[1].timeHigh}</td>
+				<td align="center">${model.stickTrim[1].timeLow?string("0.0")}</td>
+				<td align="center">${model.stickTrim[1].timeHigh?string("0.0")}</td>
 			</tr>
 			<tr>
 				<td>Nick</td>
 				<td>${model.stickTrim[2].mode}</td>
 				<td align="center">${model.stickTrim[2].increment}</td>
-				<td align="center">${model.stickTrim[2].timeLow}</td>
-				<td align="center">${model.stickTrim[2].timeHigh}</td>
+				<td align="center">${model.stickTrim[2].timeLow?string("0.0")}</td>
+				<td align="center">${model.stickTrim[2].timeHigh?string("0.0")}</td>
 			</tr>
 			<tr>
 				<td>Heckrotor</td>
@@ -325,8 +325,8 @@
 		<h1>Gebereinstellungen</h1>
 
 <#list model.phase as phase>
-<#if phase.phaseType.name() != "Unused">
-		<h2>Phase ${phase.number?number+1}: ${phase.phaseName}</h2>
+<#if phase.phaseType.name() != "xUnused">
+		<h2>Phase ${phase.number?number+1}: ${phase.phaseName} ${phase.phaseType}</h2>
 		
 		<table>
 			<tr>
@@ -774,7 +774,7 @@
 		
 		<table>
 			<@curve phase.helicopterMixer.pitchCurve "Pitchkurve"/>
-<#if phase.number == "0">
+<#if phase.phaseType.name() == "Autorotation">
 			<tr>
 				<th>Gasposition AR</th>
 				<td colspan="4">${helicopterModel.autorotationThrottlePosition}</td>
