@@ -1,6 +1,9 @@
 package gde.mdl.ui;
+import java.lang.reflect.Constructor;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -47,7 +50,9 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 				{
 					mainTabFolder = new CTabFolder(mainComposite, SWT.NONE);
 					{
-						new MdlTabItem(mainTabFolder, SWT.NONE);
+						if (isUtilityGraphicsTabRequested()) 
+							getUtilityGraphicsTabItem();
+						//new MdlTabItem(mainTabFolder, SWT.NONE);
 					}
 //						{
 //							new BaseConfiguration(mainTabFolder, mdlViewTabItem);
@@ -69,6 +74,56 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * query if the utility graphics tabulator should be displayed and updated
+	 * @return the value of the property, if property does not exist return false (default behavior of Boolean)
+	 */
+	public boolean isUtilityGraphicsTabRequested() {
+		boolean rc = true;
+		try {
+			String className = "de.treichels.hott.HoTTDecoder";//$NON-NLS-1$
+			//log.log(Level.FINE, "loading Class " + className); //$NON-NLS-1$
+			ClassLoader loader = Thread.currentThread().getContextClassLoader();
+			Class<?> c = loader.loadClass(className);
+			Constructor<?> constructor = c.getDeclaredConstructor();
+			//log.log(java.util.logging.Level.FINE, "constructor != null -> " + (constructor != null ? "true" : "false")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			if (constructor != null) {
+				constructor.newInstance();
+			}
+			else
+				rc = false;
+		}
+		catch (final Throwable t) {
+			t.printStackTrace();
+			rc = false;
+		}
+		return rc;
+	}
+	
+	/**
+	 * This function allows to register a device specific CTabItem to the main application tab folder to display device 
+	 * specific curve calculated from point combinations or other specific dialog
+	 * As default the function should return null which stands for no device custom tab item.  
+	 */
+	public CTabItem getUtilityGraphicsTabItem() {
+		Object inst = null;
+		try {
+			String className = "gde.mdl.ui.MdlTabItem";//$NON-NLS-1$
+			//log.log(Level.FINE, "loading Class " + className); //$NON-NLS-1$
+			ClassLoader loader = Thread.currentThread().getContextClassLoader();
+			Class<?> c = loader.loadClass(className);
+			Constructor<?> constructor = c.getDeclaredConstructor(new Class[] { CTabFolder.class, int.class });
+			//log.log(java.util.logging.Level.FINE, "constructor != null -> " + (constructor != null ? "true" : "false")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			if (constructor != null) {
+				inst = constructor.newInstance(new Object[] {mainTabFolder, SWT.NONE});
+			}
+		}
+		catch (final Throwable t) {
+			t.printStackTrace();
+		}
+		return (CTabItem)inst;
 	}
 
 }

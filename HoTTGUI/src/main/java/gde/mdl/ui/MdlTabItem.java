@@ -147,29 +147,27 @@ public class MdlTabItem extends CTabItem {
 					fileSaveDialog.setFilterPath(lastLoadDir != null ? lastLoadDir.getPath() : System.getProperty("program.dir"));
 					fileSaveDialog.open();
 					File file = new File(fileSaveDialog.getFilterPath() + "/" + fileSaveDialog.getFileName());
-					if (file.isFile() && file.canWrite()) {
-						try {
-							String data;
-							if (file.getName().endsWith(".xml")) {
-								data = Report.generateXML(model);
-							}
-							else {
-								data = Report.generateHTML(model);
-							}
-
-							if (file.getName().endsWith(".pdf")) {
-								Report.savePDF(file, data);
-							}
-							else {
-								Report.save(file, data);
-							}
+					try {
+						String data;
+						if (file.getName().endsWith(".xml")) {
+							data = Report.generateXML(model);
 						}
-						catch (Throwable e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						else {
+							data = Report.generateHTML(model);
+						}
+
+						if (file.getName().endsWith(".pdf")) {
+							Report.savePDF(file, data);
+						}
+						else {
+							Report.save(file, data);
 						}
 					}
-				}
+					catch (Throwable e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					}
 			});
 		}
 		{
