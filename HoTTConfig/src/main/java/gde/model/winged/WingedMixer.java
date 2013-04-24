@@ -20,7 +20,6 @@ package gde.model.winged;
 import gde.model.Switch;
 import gde.model.enums.SwitchFunction;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -28,10 +27,10 @@ import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
 public class WingedMixer {
-	private SwitchFunction function;
-	private Object[] qualifier;
-	private Switch sw;
-	private int[] value;
+	private SwitchFunction	function;
+	private Object[]				qualifier;
+	private Switch					sw;
+	private int[]						value;
 
 	public SwitchFunction getFunction() {
 		return function;
@@ -52,10 +51,12 @@ public class WingedMixer {
 					try {
 						final Method m = q.getClass().getMethod("name");
 						b.append(m.invoke(q));
-					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+					}
+					catch (final Exception e) {
 						throw new RuntimeException(e);
 					}
-				} else {
+				}
+				else {
 					b.append(q.toString());
 				}
 			}
