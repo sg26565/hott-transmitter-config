@@ -38,7 +38,6 @@ import org.eclipse.swt.widgets.MessageBox;
 
 /**
  * tab item for DataExplorer integration of MDL reading and display purpose
- * @author brueg
  */
 public class MdlTabItem extends CTabItem {
 
@@ -134,7 +133,7 @@ public class MdlTabItem extends CTabItem {
 			saveMdlButtonLData.verticalAlignment = GridData.BEGINNING;
 			saveMdlButtonLData.grabExcessHorizontalSpace = true;
 			saveMdlButton.setLayoutData(saveMdlButtonLData);
-			saveMdlButton.setText("save PDF");
+			saveMdlButton.setText("save PDF/HTML/XML");
 			saveMdlButton.setEnabled(false);
 			saveMdlButton.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -142,8 +141,8 @@ public class MdlTabItem extends CTabItem {
 					System.out.println("saveMdlButton.widgetSelected, event="+evt);
 					FileDialog fileSaveDialog = new FileDialog(parent.getShell(), SWT.PRIMARY_MODAL | SWT.SAVE);
 					fileSaveDialog.setText("save PDF");
-					fileSaveDialog.setFilterExtensions(new String[] {"*.pdf"});
-					fileSaveDialog.setFilterNames(new String[] {"Portable Document Format"});
+					fileSaveDialog.setFilterExtensions(new String[] {"*.pdf", "*.html", "*.xml"});
+					fileSaveDialog.setFilterNames(new String[] {"Portable Document Format (*.pdf)", "Hypertext Markup Language (*.html)", "Extensible Markup Language (*.xml)"});
 					fileSaveDialog.setFilterPath(lastLoadDir != null ? lastLoadDir.getPath() : System.getProperty("program.dir"));
 					fileSaveDialog.open();
 					File file = new File(fileSaveDialog.getFilterPath() + "/" + fileSaveDialog.getFileName());
