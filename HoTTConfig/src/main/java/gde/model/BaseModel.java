@@ -72,6 +72,10 @@ public class BaseModel {
 		this.modelType = modelType;
 	}
 
+	public BaseModel() {
+		this.modelType = ModelType.Unknown;
+	}
+	
 	public int getAppVersion() {
 		return appVersion;
 	}
