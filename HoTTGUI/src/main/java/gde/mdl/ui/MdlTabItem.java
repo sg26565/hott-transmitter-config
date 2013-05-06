@@ -15,13 +15,15 @@
     along with GNU DataExplorer.  If not, see <http://www.gnu.org/licenses/>.
     
     Copyright (c) 2013 Winfried Bruegmann
-**************************************************************************************/
+ **************************************************************************************/
 package gde.mdl.ui;
 
 import gde.model.BaseModel;
 import gde.report.Report;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -29,10 +31,12 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 
@@ -40,14 +44,15 @@ import org.eclipse.swt.widgets.MessageBox;
  * tab item for DataExplorer integration of MDL reading and display purpose
  */
 public class MdlTabItem extends CTabItem {
+	final static Logger log = Logger.getLogger(MdlTabItem.class.getName());
 
 	private Browser browser;
 	private Button saveMdlButton;
 	private Button loadMdlButton;
 	private Composite tabItemComposite;
 
-	private File								lastLoadDir		= null;
-	private BaseModel						model					= null;
+	private File lastLoadDir = null;
+	private BaseModel model = null;
 
 	/**
 	 * @param parent
@@ -55,7 +60,7 @@ public class MdlTabItem extends CTabItem {
 	 */
 	public MdlTabItem(CTabFolder parent, int style) {
 		super(parent, style);
-		this.setText("MDL View");
+		this.setText("MDL Viewer");
 		this.open(parent);
 	}
 
@@ -66,7 +71,7 @@ public class MdlTabItem extends CTabItem {
 	 */
 	public MdlTabItem(CTabFolder parent, int style, int index) {
 		super(parent, style, index);
-		this.setText("MDL View");
+		this.setText("MDL Viewer");
 		this.open(parent);
 	}
 
@@ -76,10 +81,11 @@ public class MdlTabItem extends CTabItem {
 		tabItemCompositeLayout.numColumns = 4;
 		tabItemComposite.setLayout(tabItemCompositeLayout);
 		this.setControl(tabItemComposite);
+		tabItemComposite.setBackground(new Color(Display.getDefault(), 250,	249, 211));
 		{
 			loadMdlButton = new Button(tabItemComposite, SWT.PUSH | SWT.CENTER);
 			GridData loadMdlButtonLData = new GridData();
-			loadMdlButtonLData.widthHint = 120;
+			loadMdlButtonLData.widthHint = 150;
 			loadMdlButtonLData.heightHint = 26;
 			loadMdlButtonLData.verticalAlignment = GridData.BEGINNING;
 			loadMdlButtonLData.grabExcessHorizontalSpace = true;
@@ -89,35 +95,32 @@ public class MdlTabItem extends CTabItem {
 			loadMdlButton.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent evt) {
-					System.out.println("loadMdlButton.widgetSelected, event="+evt);
+					log.log(Level.FINEST, "loadMdlButton.widgetSelected, event=" + evt);
 
-					
-					final FileDialog fd = new FileDialog(parent.getShell(), SWT.SINGLE);
-					fd.setFilterExtensions(new String[] {"*.mdl"});
-					fd.setFilterNames(new String[] {"HoTT Transmitter Model Files"});
+					final FileDialog fd = new FileDialog(parent.getShell(),	SWT.SINGLE);
+					fd.setFilterExtensions(new String[] { "*.mdl" });
+					fd.setFilterNames(new String[] { "HoTT Transmitter Model Files" });
 					if (lastLoadDir != null) {
 						fd.setFilterPath(lastLoadDir.getPath());
-					}
-					else {
+					} else {
 						fd.setFilterPath(System.getProperty("program.dir"));
 					}
 
 					fd.open();
 					if (fd.getFileName().length() > 4) {
-						final File file = new File(fd.getFilterPath() + "/" + fd.getFileName());
-	
+						final File file = new File(fd.getFilterPath() + "/"	+ fd.getFileName());
 						if (file.exists() && file.canRead()) {
 							lastLoadDir = file.getParentFile();
 							try {
 								model = Report.getModel(file);
 								saveMdlButton.setEnabled(true);
 								updateView(false);
-							}
-							catch (final Throwable t) {
+							} catch (final Throwable t) {
 								MessageBox mb = new MessageBox(parent.getShell(), SWT.NONE);
-								mb.setText(t.getMessage());
+								mb.setText(t.getClass().getSimpleName());
+								mb.setMessage(t.getMessage() == null ? t.getClass().getSimpleName() : t.getMessage());
 								mb.open();
-								System.err.println(t.getStackTrace());
+								log.log(Level.SEVERE, t.getMessage(), t);
 							}
 						}
 					}
@@ -128,21 +131,27 @@ public class MdlTabItem extends CTabItem {
 			saveMdlButton = new Button(tabItemComposite, SWT.PUSH | SWT.CENTER);
 			GridData saveMdlButtonLData = new GridData();
 			saveMdlButtonLData.horizontalAlignment = GridData.CENTER;
-			saveMdlButtonLData.widthHint = 120;
+			saveMdlButtonLData.widthHint = 150;
 			saveMdlButtonLData.heightHint = 26;
 			saveMdlButtonLData.verticalAlignment = GridData.BEGINNING;
 			saveMdlButtonLData.grabExcessHorizontalSpace = true;
 			saveMdlButton.setLayoutData(saveMdlButtonLData);
-			saveMdlButton.setText("save PDF/HTML/XML");
+			saveMdlButton.setText("Save PDF/HTML/XML");
 			saveMdlButton.setEnabled(false);
 			saveMdlButton.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent evt) {
-					System.out.println("saveMdlButton.widgetSelected, event="+evt);
-					FileDialog fileSaveDialog = new FileDialog(parent.getShell(), SWT.PRIMARY_MODAL | SWT.SAVE);
+					log.log(Level.FINEST, "saveMdlButton.widgetSelected, event="
+							+ evt);
+					FileDialog fileSaveDialog = new FileDialog(parent
+							.getShell(), SWT.PRIMARY_MODAL | SWT.SAVE);
 					fileSaveDialog.setText("save PDF");
-					fileSaveDialog.setFilterExtensions(new String[] {"*.pdf", "*.html", "*.xml"});
-					fileSaveDialog.setFilterNames(new String[] {"Portable Document Format (*.pdf)", "Hypertext Markup Language (*.html)", "Extensible Markup Language (*.xml)"});
+					fileSaveDialog.setFilterExtensions(new String[] { "*.pdf",
+							"*.html", "*.xml" });
+					fileSaveDialog.setFilterNames(new String[] {
+							"Portable Document Format (*.pdf)",
+							"Hypertext Markup Language (*.html)",
+							"Extensible Markup Language (*.xml)" });
 					fileSaveDialog.setFilterPath(lastLoadDir != null ? lastLoadDir.getPath() : System.getProperty("program.dir"));
 					fileSaveDialog.open();
 					File file = new File(fileSaveDialog.getFilterPath() + "/" + fileSaveDialog.getFileName());
@@ -150,27 +159,23 @@ public class MdlTabItem extends CTabItem {
 						String data;
 						if (file.getName().endsWith(".xml")) {
 							data = Report.generateXML(model);
-						}
-						else {
+						} else {
 							data = Report.generateHTML(model);
 						}
 
 						if (file.getName().endsWith(".pdf")) {
 							Report.savePDF(file, data);
-						}
-						else {
+						} else {
 							Report.save(file, data);
 						}
+					} catch (Throwable e) {
+						log.log(Level.WARNING, e.getMessage(), e);
 					}
-					catch (Throwable e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					}
+				}
 			});
 		}
 		{
-			browser = new Browser(tabItemComposite, SWT.MULTI | SWT.LEFT | SWT.BORDER);
+			browser = new Browser(tabItemComposite, SWT.BORDER);
 			GridData viewTextLData = new GridData();
 			viewTextLData.grabExcessHorizontalSpace = true;
 			viewTextLData.verticalAlignment = GridData.FILL;
@@ -185,15 +190,12 @@ public class MdlTabItem extends CTabItem {
 		try {
 			if (isXML) {
 				browser.setUrl(Report.generateXML(model));
-			}
-			else {
+			} else {
 				browser.setText(Report.generateHTML(model));
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			browser.setText(e.getMessage());
 		}
 	}
-
 
 }
