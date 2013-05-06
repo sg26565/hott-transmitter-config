@@ -99,7 +99,7 @@ public class MdlTabItem extends CTabItem {
 
 					final FileDialog fd = new FileDialog(parent.getShell(),	SWT.SINGLE);
 					fd.setFilterExtensions(new String[] { "*.mdl" });
-					fd.setFilterNames(new String[] { "HoTT Transmitter Model Files" });
+					fd.setFilterNames(new String[] { "HoTT Transmitter Model Files (*.mdl)" });
 					if (lastLoadDir != null) {
 						fd.setFilterPath(lastLoadDir.getPath());
 					} else {
