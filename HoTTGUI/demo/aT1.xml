@@ -399,7 +399,7 @@
                 <aileronPhaseTrim>2</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>3</elevatorPhaseTrim>
-                <elevtorStickTrim>0</elevtorStickTrim>
+                <elevatorStickTrim>0</elevatorStickTrim>
                 <flapPhaseTrim>1</flapPhaseTrim>
                 <rudderStickTrim>0</rudderStickTrim>
             </wingTrim>
@@ -442,7 +442,7 @@
                 <aileronPhaseTrim>5</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>6</elevatorPhaseTrim>
-                <elevtorStickTrim>0</elevtorStickTrim>
+                <elevatorStickTrim>0</elevatorStickTrim>
                 <flapPhaseTrim>4</flapPhaseTrim>
                 <rudderStickTrim>0</rudderStickTrim>
             </wingTrim>
@@ -485,7 +485,7 @@
                 <aileronPhaseTrim>8</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>9</elevatorPhaseTrim>
-                <elevtorStickTrim>0</elevtorStickTrim>
+                <elevatorStickTrim>0</elevatorStickTrim>
                 <flapPhaseTrim>7</flapPhaseTrim>
                 <rudderStickTrim>0</rudderStickTrim>
             </wingTrim>
@@ -528,7 +528,7 @@
                 <aileronPhaseTrim>11</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>12</elevatorPhaseTrim>
-                <elevtorStickTrim>0</elevtorStickTrim>
+                <elevatorStickTrim>0</elevatorStickTrim>
                 <flapPhaseTrim>10</flapPhaseTrim>
                 <rudderStickTrim>0</rudderStickTrim>
             </wingTrim>
@@ -748,7 +748,7 @@
             <type>ToggleSwitch</type>
         </switch>
         <switch id="InputControl_5">
-            <assignment>CTRL6</assignment>
+            <assignment>GB6</assignment>
             <direction>255</direction>
             <function>InputControl</function>
             <number>0</number>
@@ -756,7 +756,7 @@
             <type>InputControl</type>
         </switch>
         <switch id="InputControl_6">
-            <assignment>CTRL7</assignment>
+            <assignment>GB7</assignment>
             <direction>255</direction>
             <function>InputControl</function>
             <number>0</number>
@@ -764,7 +764,7 @@
             <type>InputControl</type>
         </switch>
         <switch id="InputControl_7">
-            <assignment>CTRL8</assignment>
+            <assignment>GB8</assignment>
             <direction>255</direction>
             <function>InputControl</function>
             <number>0</number>
@@ -772,7 +772,7 @@
             <type>InputControl</type>
         </switch>
         <switch id="InputControl_8">
-            <assignment>CTRL9</assignment>
+            <assignment>GB9</assignment>
             <direction>255</direction>
             <function>InputControl</function>
             <number>0</number>
@@ -780,7 +780,7 @@
             <type>InputControl</type>
         </switch>
         <switch id="ThrottleLimit">
-            <assignment>CTRL6</assignment>
+            <assignment>GB6</assignment>
             <direction>255</direction>
             <function>ThrottleLimit</function>
             <number>0</number>
@@ -798,7 +798,28 @@
         <currentSensor>Receiver</currentSensor>
         <currentSensorPage>0</currentSensorPage>
         <selectedSensor>Receiver</selectedSensor>
+        <varioTone id="VarioTone">
+            <assignment>SW1</assignment>
+            <direction>1</direction>
+            <function>VarioTone</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </varioTone>
         <voiceDelay>17</voiceDelay>
+        <voiceRepeat id="VoiceRepeat">
+            <assignment>SW8</assignment>
+            <direction>2</direction>
+            <function>VoiceRepeat</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </voiceRepeat>
+        <voiceTrigger id="VoiceTrigger">
+            <assignment>SW9</assignment>
+            <direction>2</direction>
+            <function>VoiceTrigger</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </voiceTrigger>
     </telemetry>
     <throttleSettings>
         <throttleCutOf>

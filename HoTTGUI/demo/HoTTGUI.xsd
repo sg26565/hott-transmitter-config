@@ -518,7 +518,10 @@
       <xs:element name="currentSensor" type="sensorType" minOccurs="0"/>
       <xs:element name="currentSensorPage" type="xs:int"/>
       <xs:element name="selectedSensor" type="sensorType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="varioTone" type="switch" minOccurs="0"/>
       <xs:element name="voiceDelay" type="xs:int"/>
+      <xs:element name="voiceRepeat" type="switch" minOccurs="0"/>
+      <xs:element name="voiceTrigger" type="switch" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -596,7 +599,7 @@
       <xs:element name="aileronPhaseTrim" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="aileronStickTrim" type="xs:int"/>
       <xs:element name="elevatorPhaseTrim" type="xs:int"/>
-      <xs:element name="elevtorStickTrim" type="xs:int"/>
+      <xs:element name="elevatorStickTrim" type="xs:int"/>
       <xs:element name="flapPhaseTrim" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="rudderStickTrim" type="xs:int"/>
     </xs:sequence>
@@ -760,21 +763,11 @@
 
   <xs:simpleType name="switchAssignment">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="CTRL1"/>
-      <xs:enumeration value="CTRL10"/>
-      <xs:enumeration value="CTRL2"/>
-      <xs:enumeration value="CTRL4"/>
-      <xs:enumeration value="CTRL5"/>
-      <xs:enumeration value="CTRL6"/>
-      <xs:enumeration value="CTRL7"/>
-      <xs:enumeration value="CTRL8"/>
-      <xs:enumeration value="CTRL9"/>
       <xs:enumeration value="DG1"/>
       <xs:enumeration value="DG2"/>
       <xs:enumeration value="DG3"/>
       <xs:enumeration value="DG4"/>
       <xs:enumeration value="DG5"/>
-      <xs:enumeration value="Fx"/>
       <xs:enumeration value="FX"/>
       <xs:enumeration value="FXi"/>
       <xs:enumeration value="G1"/>
@@ -786,11 +779,15 @@
       <xs:enumeration value="G7"/>
       <xs:enumeration value="G8"/>
       <xs:enumeration value="GB1"/>
+      <xs:enumeration value="GB10"/>
       <xs:enumeration value="GB2"/>
       <xs:enumeration value="GB3"/>
       <xs:enumeration value="GB4"/>
       <xs:enumeration value="GB5"/>
       <xs:enumeration value="GB6"/>
+      <xs:enumeration value="GB7"/>
+      <xs:enumeration value="GB8"/>
+      <xs:enumeration value="GB9"/>
       <xs:enumeration value="Gi1"/>
       <xs:enumeration value="Gi2"/>
       <xs:enumeration value="Gi3"/>
@@ -840,6 +837,8 @@
       <xs:enumeration value="TR2"/>
       <xs:enumeration value="TR3"/>
       <xs:enumeration value="TR4"/>
+      <xs:enumeration value="UG1"/>
+      <xs:enumeration value="UG2"/>
       <xs:enumeration value="Unassigned"/>
     </xs:restriction>
   </xs:simpleType>
@@ -849,7 +848,7 @@
       <xs:enumeration value="Autorotation"/>
       <xs:enumeration value="AutorotationC1"/>
       <xs:enumeration value="AutoTrim"/>
-      <xs:enumeration value="ChannelSeqencer"/>
+      <xs:enumeration value="ChannelSequencer"/>
       <xs:enumeration value="Clock"/>
       <xs:enumeration value="Combine"/>
       <xs:enumeration value="Control"/>
@@ -946,7 +945,7 @@
       <xs:enumeration value="Global"/>
       <xs:enumeration value="Hover"/>
       <xs:enumeration value="Landing"/>
-      <xs:enumeration value="landing2"/>
+      <xs:enumeration value="Landing2"/>
       <xs:enumeration value="Normal"/>
       <xs:enumeration value="Speed"/>
       <xs:enumeration value="Speed2"/>
@@ -956,6 +955,7 @@
       <xs:enumeration value="Test2"/>
       <xs:enumeration value="Thermal"/>
       <xs:enumeration value="Thermal2"/>
+      <xs:enumeration value="Unnamed"/>
       <xs:enumeration value="Unused"/>
     </xs:restriction>
   </xs:simpleType>

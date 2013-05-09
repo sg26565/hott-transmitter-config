@@ -1126,7 +1126,28 @@
         <currentSensor>Receiver</currentSensor>
         <currentSensorPage>0</currentSensorPage>
         <selectedSensor>Receiver</selectedSensor>
+        <varioTone id="VarioTone">
+            <assignment>Unassigned</assignment>
+            <direction>255</direction>
+            <function>VarioTone</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </varioTone>
         <voiceDelay>10</voiceDelay>
+        <voiceRepeat id="VoiceRepeat">
+            <assignment>Unassigned</assignment>
+            <direction>255</direction>
+            <function>VoiceRepeat</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </voiceRepeat>
+        <voiceTrigger id="VoiceTrigger">
+            <assignment>Unassigned</assignment>
+            <direction>255</direction>
+            <function>VoiceTrigger</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </voiceTrigger>
     </telemetry>
     <throttleSettings>
         <throttleCutOf>

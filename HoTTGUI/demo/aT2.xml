@@ -399,7 +399,7 @@
                 <aileronPhaseTrim>0</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>0</elevatorPhaseTrim>
-                <elevtorStickTrim>0</elevtorStickTrim>
+                <elevatorStickTrim>0</elevatorStickTrim>
                 <flapPhaseTrim>0</flapPhaseTrim>
                 <rudderStickTrim>0</rudderStickTrim>
             </wingTrim>
@@ -442,7 +442,7 @@
                 <aileronPhaseTrim>0</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>0</elevatorPhaseTrim>
-                <elevtorStickTrim>0</elevtorStickTrim>
+                <elevatorStickTrim>0</elevatorStickTrim>
                 <flapPhaseTrim>0</flapPhaseTrim>
                 <rudderStickTrim>0</rudderStickTrim>
             </wingTrim>
@@ -485,7 +485,7 @@
                 <aileronPhaseTrim>0</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>0</elevatorPhaseTrim>
-                <elevtorStickTrim>0</elevtorStickTrim>
+                <elevatorStickTrim>0</elevatorStickTrim>
                 <flapPhaseTrim>0</flapPhaseTrim>
                 <rudderStickTrim>0</rudderStickTrim>
             </wingTrim>
@@ -528,7 +528,7 @@
                 <aileronPhaseTrim>0</aileronPhaseTrim>
                 <aileronStickTrim>0</aileronStickTrim>
                 <elevatorPhaseTrim>0</elevatorPhaseTrim>
-                <elevtorStickTrim>0</elevtorStickTrim>
+                <elevatorStickTrim>0</elevatorStickTrim>
                 <flapPhaseTrim>0</flapPhaseTrim>
                 <rudderStickTrim>0</rudderStickTrim>
             </wingTrim>
@@ -748,7 +748,7 @@
             <type>ToggleSwitch</type>
         </switch>
         <switch id="InputControl_5">
-            <assignment>CTRL10</assignment>
+            <assignment>GB10</assignment>
             <direction>255</direction>
             <function>InputControl</function>
             <number>0</number>
@@ -780,7 +780,7 @@
             <type>InputControl</type>
         </switch>
         <switch id="ThrottleLimit">
-            <assignment>CTRL6</assignment>
+            <assignment>GB6</assignment>
             <direction>255</direction>
             <function>ThrottleLimit</function>
             <number>0</number>
@@ -798,7 +798,28 @@
         <currentSensor>Receiver</currentSensor>
         <currentSensorPage>0</currentSensorPage>
         <selectedSensor>Receiver</selectedSensor>
+        <varioTone id="VarioTone">
+            <assignment>Unassigned</assignment>
+            <direction>255</direction>
+            <function>VarioTone</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </varioTone>
         <voiceDelay>10</voiceDelay>
+        <voiceRepeat id="VoiceRepeat">
+            <assignment>Unassigned</assignment>
+            <direction>255</direction>
+            <function>VoiceRepeat</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </voiceRepeat>
+        <voiceTrigger id="VoiceTrigger">
+            <assignment>Unassigned</assignment>
+            <direction>255</direction>
+            <function>VoiceTrigger</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </voiceTrigger>
     </telemetry>
     <throttleSettings>
         <throttleCutOf>

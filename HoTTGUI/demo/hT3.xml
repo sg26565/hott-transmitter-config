@@ -1076,7 +1076,7 @@
             <type>ToggleSwitch</type>
         </switch>
         <switch id="InputControl_5">
-            <assignment>CTRL9</assignment>
+            <assignment>GB9</assignment>
             <direction>255</direction>
             <function>InputControl</function>
             <number>0</number>
@@ -1084,7 +1084,7 @@
             <type>InputControl</type>
         </switch>
         <switch id="InputControl_6">
-            <assignment>CTRL10</assignment>
+            <assignment>GB10</assignment>
             <direction>255</direction>
             <function>InputControl</function>
             <number>0</number>
@@ -1092,7 +1092,7 @@
             <type>InputControl</type>
         </switch>
         <switch id="InputControl_7">
-            <assignment>CTRL7</assignment>
+            <assignment>GB7</assignment>
             <direction>255</direction>
             <function>InputControl</function>
             <number>0</number>
@@ -1100,7 +1100,7 @@
             <type>InputControl</type>
         </switch>
         <switch id="InputControl_8">
-            <assignment>CTRL8</assignment>
+            <assignment>GB8</assignment>
             <direction>255</direction>
             <function>InputControl</function>
             <number>0</number>
@@ -1108,7 +1108,7 @@
             <type>InputControl</type>
         </switch>
         <switch id="ThrottleLimit">
-            <assignment>CTRL6</assignment>
+            <assignment>GB6</assignment>
             <direction>255</direction>
             <function>ThrottleLimit</function>
             <number>0</number>
@@ -1126,7 +1126,28 @@
         <currentSensor>Receiver</currentSensor>
         <currentSensorPage>0</currentSensorPage>
         <selectedSensor>Receiver</selectedSensor>
+        <varioTone id="VarioTone">
+            <assignment>Unassigned</assignment>
+            <direction>255</direction>
+            <function>VarioTone</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </varioTone>
         <voiceDelay>10</voiceDelay>
+        <voiceRepeat id="VoiceRepeat">
+            <assignment>Unassigned</assignment>
+            <direction>255</direction>
+            <function>VoiceRepeat</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </voiceRepeat>
+        <voiceTrigger id="VoiceTrigger">
+            <assignment>Unassigned</assignment>
+            <direction>255</direction>
+            <function>VoiceTrigger</function>
+            <number>0</number>
+            <type>ToggleSwitch</type>
+        </voiceTrigger>
     </telemetry>
     <throttleSettings>
         <throttleCutOf>
