@@ -29,6 +29,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -46,14 +48,26 @@ import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.ScalableXHTMLPanel;
 
 public class SimpleGUI {
-	private final class CloseActionListener implements ActionListener {
+	private final class CloseAction extends AbstractAction {
+		private static final long	serialVersionUID	= 1L;
+
+		public CloseAction(final String name) {
+			super(name);
+		}
+
 		@Override
 		public void actionPerformed(final ActionEvent evt) {
 			System.exit(0);
 		}
 	}
 
-	private final class LoadActionListener implements ActionListener {
+	private final class LoadAction extends AbstractAction {
+		private static final long	serialVersionUID	= 1L;
+
+		public LoadAction(final String name) {
+			super(name);
+		}
+
 		@Override
 		public void actionPerformed(final ActionEvent evt) {
 			final JFileChooser fc = new JFileChooser();
@@ -75,12 +89,9 @@ public class SimpleGUI {
 				lastLoadDir = file.getParentFile();
 				try {
 					model = Report.getModel(file);
-					saveHtmlButton.setEnabled(true);
-					saveHtmlMenuItem.setEnabled(true);
-					savePdfButton.setEnabled(true);
-					savePdfMenuItem.setEnabled(true);
-					saveXmlButton.setEnabled(true);
-					saveXmlMenuItem.setEnabled(true);
+					saveHtmlAction.setEnabled(true);
+					savePdfAction.setEnabled(true);
+					saveXmlAction.setEnabled(true);
 					updateView();
 				}
 				catch (final Throwable t) {
@@ -90,7 +101,16 @@ public class SimpleGUI {
 		}
 	}
 
-	private final class SaveActionListener implements ActionListener {
+	private final class SaveAction extends AbstractAction {
+		private static final long	serialVersionUID	= 1L;
+
+		private final String			fileType;
+
+		public SaveAction(final String name, final String fileType) {
+			super(name);
+			this.fileType = fileType;
+		}
+
 		@Override
 		public void actionPerformed(final ActionEvent evt) {
 			if (model == null) {
@@ -101,15 +121,7 @@ public class SimpleGUI {
 			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			fc.setMultiSelectionEnabled(false);
 			fc.setAcceptAllFileFilterUsed(false);
-			if (evt.getSource() == saveXmlButton || evt.getSource() == saveXmlMenuItem) {
-				fc.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
-			}
-			else if (evt.getSource() == saveHtmlButton || evt.getSource() == saveHtmlMenuItem) {
-				fc.setFileFilter(new FileNameExtensionFilter("HTML Files", "html", "htm", "xhtml"));
-			}
-			else {
-				fc.setFileFilter(new FileNameExtensionFilter("PDF Files", "pdf"));
-			}
+
 			if (lastSaveDir != null) {
 				fc.setCurrentDirectory(lastSaveDir);
 			}
@@ -120,11 +132,18 @@ public class SimpleGUI {
 				fc.setCurrentDirectory(new File(System.getProperty("program.dir")));
 			}
 
+			fc.setFileFilter(new FileNameExtensionFilter(fileType.toUpperCase() + " Files", fileType));
+			fc.setSelectedFile(new File(getFileName(model)));
+
 			final int result = fc.showSaveDialog(frame);
 
 			if (result == JFileChooser.APPROVE_OPTION) {
-				final File file = fc.getSelectedFile();
+				File file = fc.getSelectedFile();
 				lastSaveDir = file.getParentFile();
+
+				if (!file.getName().endsWith("." + fileType)) {
+					file = new File(lastSaveDir, file.getName() + "." + fileType);
+				}
 
 				try {
 					String data;
@@ -173,43 +192,60 @@ public class SimpleGUI {
 	}
 
 	private final JPanel							buttonPanel				= new JPanel();
-	private final JButton							closeButton				= new JButton("Close");
-	private final JMenuItem						closeMenuItem			= new JMenuItem("Close");
+	private final Action							closeAction				= new CloseAction("Close");
+	private final JButton							closeButton				= new JButton(closeAction);
+	private final JMenuItem						closeMenuItem			= new JMenuItem(closeAction);
 	private final JMenu								fileMenu					= new JMenu("File");
 	private final JFrame							frame							= new JFrame("Hott Transmitter Config");
 	private File											lastLoadDir				= null;
 	private File											lastSaveDir				= null;
-	private final JButton							loadMdlButton			= new JButton("Load MDL");
-	private final JMenuItem						loadMdlMenuItem		= new JMenuItem("Load MDL");
+	private final Action							loadAction				= new LoadAction("Load MDL");
+	private final JButton							loadMdlButton			= new JButton(loadAction);
+	private final JMenuItem						loadMdlMenuItem		= new JMenuItem(loadAction);
 	private final JMenuBar						menubar						= new JMenuBar();
 	private BaseModel									model							= null;
-	private final JButton							saveHtmlButton		= new JButton("Save HTML");
-	private final JMenuItem						saveHtmlMenuItem	= new JMenuItem("Save HTML");
-	private final JButton							savePdfButton			= new JButton("Save PDF");
-	private final JMenuItem						savePdfMenuItem		= new JMenuItem("Save PDF");
-	private final JButton							saveXmlButton			= new JButton("Save XML");
-	private final JMenuItem						saveXmlMenuItem		= new JMenuItem("Save XML");
+	private final JButton							refreshButton			= new JButton("Refresh");
+	private final Action							saveHtmlAction		= new SaveAction("Save HTML", "html");
+	private final JButton							saveHtmlButton		= new JButton(saveHtmlAction);
+	private final JMenuItem						saveHtmlMenuItem	= new JMenuItem(saveHtmlAction);
+	private final Action							savePdfAction			= new SaveAction("Save PDF", "pdf");
+	private final JButton							savePdfButton			= new JButton(savePdfAction);
+	private final JMenuItem						savePdfMenuItem		= new JMenuItem(savePdfAction);
+	private final Action							saveXmlAction			= new SaveAction("Save XML", "xml");
+	private final JButton							saveXmlButton			= new JButton(saveXmlAction);
+	private final JMenuItem						saveXmlMenuItem		= new JMenuItem(saveXmlAction);
 	private final ScalableXHTMLPanel	xhtmlPane					= new ScalableXHTMLPanel();
 	private final FSScrollPane				xhtmlScrollPane		= new FSScrollPane(xhtmlPane);
 
+	private String getFileName(final BaseModel model) {
+		// setup filename
+		final StringBuilder fileName = new StringBuilder();
+		switch (model.getModelType()) {
+		case Helicopter:
+			fileName.append('h');
+			break;
+
+		case Winged:
+			fileName.append('a');
+			break;
+
+		default:
+			break;
+		}
+
+		fileName.append(model.getModelName());
+		if (model.getModelNumber() > 0) {
+			if (model.getModelNumber() < 10) {
+				fileName.append('0');
+			}
+			fileName.append(model.getModelNumber());
+		}
+
+		return fileName.toString();
+	}
+
 	private void show() {
 		try {
-			ActionListener l = new CloseActionListener();
-			closeMenuItem.addActionListener(l);
-			closeButton.addActionListener(l);
-
-			l = new LoadActionListener();
-			loadMdlMenuItem.addActionListener(l);
-			loadMdlButton.addActionListener(l);
-
-			l = new SaveActionListener();
-			saveHtmlMenuItem.addActionListener(l);
-			saveHtmlButton.addActionListener(l);
-			savePdfMenuItem.addActionListener(l);
-			savePdfButton.addActionListener(l);
-			saveXmlMenuItem.addActionListener(l);
-			saveXmlButton.addActionListener(l);
-
 			fileMenu.add(loadMdlMenuItem);
 			fileMenu.add(saveHtmlMenuItem);
 			fileMenu.add(savePdfMenuItem);
@@ -219,17 +255,30 @@ public class SimpleGUI {
 
 			menubar.add(fileMenu);
 
+			buttonPanel.add(closeButton);
+			buttonPanel.add(refreshButton);
 			buttonPanel.add(loadMdlButton);
 			buttonPanel.add(saveHtmlButton);
 			buttonPanel.add(savePdfButton);
 			buttonPanel.add(saveXmlButton);
 
-			saveHtmlButton.setEnabled(false);
-			saveHtmlMenuItem.setEnabled(false);
-			savePdfButton.setEnabled(false);
-			savePdfMenuItem.setEnabled(false);
-			saveXmlButton.setEnabled(false);
-			saveXmlMenuItem.setEnabled(false);
+			refreshButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent evt) {
+					try {
+						updateView();
+					}
+					catch (final Exception e) {
+						showError(e);
+					}
+				}
+			});
+
+			saveHtmlAction.setEnabled(false);
+			savePdfAction.setEnabled(false);
+			saveXmlAction.setEnabled(false);
+
+			xhtmlPane.getSharedContext().getTextRenderer().setSmoothingThreshold(10);
 
 			frame.setJMenuBar(menubar);
 			frame.setLayout(new BorderLayout());
@@ -239,7 +288,7 @@ public class SimpleGUI {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
 			frame.setSize(1280, 1024);
-			xhtmlPane.getSharedContext().getTextRenderer().setSmoothingThreshold(10);
+
 			Report.setSuppressExceptions(true);
 		}
 		catch (final Throwable t) {
@@ -253,6 +302,8 @@ public class SimpleGUI {
 	}
 
 	private void updateView() throws IOException, TemplateException, JAXBException {
-		xhtmlPane.setDocumentFromString(Report.generateHTML(model), "", new XhtmlNamespaceHandler());
+		if (model != null) {
+			xhtmlPane.setDocumentFromString(Report.generateHTML(model), "", new XhtmlNamespaceHandler());
+		}
 	}
 }

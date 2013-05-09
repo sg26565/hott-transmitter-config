@@ -42,7 +42,6 @@ import org.apache.log4j.Logger;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.BaseFont;
 
 import de.treichels.hott.HoTTDecoder;
 import freemarker.template.Configuration;
@@ -198,7 +197,6 @@ public class Report {
 	public static void savePDF(final File file, final String data) throws IOException, DocumentException {
 		final FileOutputStream fos = new FileOutputStream(file);
 		final ITextRenderer renderer = new ITextRenderer();
-		renderer.getFontResolver().addFont("/usr/share/fonts/truetype/msttcorefonts/Arial.ttf", BaseFont.IDENTITY_H, true);
 		renderer.setDocumentFromString(data);
 		renderer.layout();
 		renderer.createPDF(fos);
