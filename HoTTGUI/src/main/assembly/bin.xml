@@ -40,6 +40,10 @@
 			<outputDirectory>demo</outputDirectory>
 		</fileSet>
 		<fileSet>
+			<directory>${project.basedir}/fonts</directory>
+			<outputDirectory>fonts</outputDirectory>
+		</fileSet>
+		<fileSet>
 			<directory>${project.basedir}/src/main/resources/gde/report/templates</directory>
 			<outputDirectory>templates</outputDirectory>
 		</fileSet>

@@ -24,7 +24,7 @@ public class WingedTrim {
 	private int[] aileronPhaseTrim;
 	private int aileronStickTrim;
 	private int elevatorPhaseTrim;
-	private int elevtorStickTrim;
+	private int elevatorStickTrim;
 	private int[] flapPhaseTrim;
 	private int rudderStickTrim;
 
@@ -40,8 +40,8 @@ public class WingedTrim {
 		return elevatorPhaseTrim;
 	}
 
-	public int getElevtorStickTrim() {
-		return elevtorStickTrim;
+	public int getElevatorStickTrim() {
+		return elevatorStickTrim;
 	}
 
 	public int[] getFlapPhaseTrim() {
@@ -64,8 +64,8 @@ public class WingedTrim {
 		this.elevatorPhaseTrim = elevatorPhaseTrim;
 	}
 
-	public void setElevtorStickTrim(final int elevtorStickTrim) {
-		this.elevtorStickTrim = elevtorStickTrim;
+	public void setElevatorStickTrim(final int elevtorStickTrim) {
+		this.elevatorStickTrim = elevtorStickTrim;
 	}
 
 	public void setFlapPhaseTrim(final int[] flapPhaseTrim) {

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!--
@@ -20,521 +21,703 @@
 <@htmlsafe>
 <#macro switch sw><#if sw.assignment.name() == "Unassigned">---<#else>${sw.assignment}<#if sw.direction == 2> normal<#else><#if sw.direction=1> invers</#if></#if></#if></#macro>
 <#macro curve title points>
-			<tr>
-				<th align="right">${title}</th>
-				<td>
-					<table>
-						<tr>
-							<th>Punkt</th>
-							<th>aktiv</th>
-							<th>Eingang</th>
-							<th>Ausgang</th>
-						</tr>
-<#list points as point>
-						<tr>
-							<td>${point.number?number+1}</td>
-							<td>${point.enabled?string("ja","nein")}</td>
-<#if point.enabled>
-							<td>${point.position}</td>
-							<td>${point.value}</td>
-<#else>
-							<td colspan="2">&nbsp;</td>
-</#if>
-						</tr>
-</#list>
-					</table>
-				</td>
+			<tr class="<@d/>">
+				<th class="d2" colspan="4">${title}</th>
 			</tr>
+			<tr class="<@d/>">
+				<th align="center">Punkt</th>
+				<th align="center">aktiv</th>
+				<th align="center">Eingang</th>
+				<th align="center">Ausgang</th>
+			</tr>
+	<#list points as point>
+			<tr class="<@d/>">
+				<td align="center">${point.number?number+1}</td>
+				<td align="center">${point.enabled?string("ja","nein")}</td>
+		<#if point.enabled>
+				<td align="center">${point.position}%</td>
+				<td align="center">${point.value}%</td>
+		<#else>
+				<td colspan="2"/>
+		</#if>
+			</tr>
+	</#list>
 </#macro>
+<#macro reset><#assign row="even"/></#macro>
+<#macro d><#if row=="even">d0<#assign row="odd"/><#else>d1<#assign row="even"/></#if></#macro>
 	<head>
 		<title>${model.vendor} ${model.transmitterType} - ${model.modelName}</title>
 		<style type="text/css" media="print">
-			@page { size: a4; }
+			@page {
+				size: a4;
+			}
+
+			body {
+			    font-size: 9pt;
+			}
+		</style>
+		<style type="text/css" media="screen">
+			body {
+			    font-size: 14pt;
+			}
+		</style>		
+		<style type="text/css">
+			@font-face {
+			    src: url('fonts/Arial.ttf');
+			    -fs-pdf-font-embed: embed;
+			    -fs-pdf-font-encoding: Identity-H;
+			}
+			
+			body {
+			    font-family: Arial;
+			}
+			
+			table {
+				border-collapse: collapse;
+				color: black;
+				border-style: solid;
+				border-color: black;
+				border-width: 2px;
+				empty-cells: show;
+				margin: 0px;
+				padding: 0px;
+				white-space: nowrap;
+				page-break-inside: avoid;				
+			}
+			
+			table caption {
+				text-align: left;
+				font-size: x-large;
+				font-style: oblique;
+				font-weight: bold;
+				margin-top: 1em;
+			}
+						
+			td {
+				border-left-style: solid;
+				border-right-style: solid;
+				border-width: 1px;
+				border-color: white;
+				padding: 2px;
+				margin: 0px;
+			}
+			
+			th {
+				background-color: #ccc;
+				border-left-style: solid;
+				border-right-style: solid;
+				border-width: 1px;
+				border-color: white;
+				padding: 2px;
+				margin: 0px;
+			}
+			
+			tr.d0 td{
+				background-color: #eee;
+			}
+
+			tr.d1 td {
+				background-color: #ddd;
+			}
+			
+			th.d2 {
+				background-color: #bbb;
+				font-size: large;
+				text-align: center;
+			}
+			
+			tr.d1 td.d0{
+				background-color: #eee;
+			}
 		</style>		
 	</head>
 	<body>
-		<h1>Grundeinstellungen</h1>
 		<table>
-			<tr>
+			<caption>Grundeinstellungen</caption>
+			<@reset/>
+			<tr class="<@d/>">
 				<th align="right">Hersteller</th>
-				<td colspan="3">${model.vendor}</td>
+				<td align="left" colspan="3">${model.vendor}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Sendertyp</th>
-				<td colspan="3">${model.transmitterType}</td>
+				<td align="left" colspan="3">${model.transmitterType}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Sender ID</th>
-				<td colspan="3">${hex(model.transmitterId?c)}</td>
+				<td align="left" colspan="3">${hex(model.transmitterId?c)}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Firmware Version</th>
-				<td colspan="3">${model.appVersion}</td>
+				<td align="left" colspan="3">${model.appVersion}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Datei Version</th>
-				<td colspan="3">${model.memoryVersion}</td>
+				<td align="left" colspan="3">${model.memoryVersion}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Modelltyp</th>
-				<td colspan="3">${model.modelType}</td>
+				<td align="left" colspan="3">${model.modelType}</td>
 			</tr>
-			<tr>
+<#if model.modelNumber &gt; 0>
+			<tr class="<@d/>">
 				<th align="right">Modellspeicher</th>
-				<td colspan="3">${model.modelNumber}</td>
+				<td align="left" colspan="3">${model.modelNumber}</td>
 			</tr>
-			<tr>
+</#if>
+			<tr class="<@d/>">
 				<th align="right">Modellname</th>
-				<td colspan="3">${model.modelName}</td>
+				<td align="left" colspan="3">${model.modelName}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Steueranordnung</th>
-				<td colspan="3">${model.stickMode}</td>
+				<td align="left" colspan="3">${model.stickMode}</td>
 			</tr>
 <#if helicopterModel??>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Taumelscheibe</th>
-				<td colspan="3">${helicopterModel.swashplateType}</td>
+				<td align="left" colspan="3">${helicopterModel.swashplateType}</td>
 			</tr>
 </#if>
 <#if wingedModel??>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Motor an K1</th>
-				<td colspan="3">${wingedModel.motorOnC1Type}</td>
+				<td align="left" colspan="3">${wingedModel.motorOnC1Type}</td>
 			</tr>
 </#if>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right" valign="top">Motor-Stopp</th>
-				<td><i>Position:</i> ${model.throttleSettings.throttleCutOf.position}%</td>
-				<td><i>Limit:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
-				<td><i>Schalter:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>							
+				<td align="left"><i>Position:</i> ${model.throttleSettings.throttleCutOf.position}%</td>
+				<td align="left"><i>Limit:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
+				<td align="left"><i>Schalter:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>							
 			</tr>
 <#if helicopterModel??>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Rotor Drehrichtung</th>
-				<td colspan="3">${helicopterModel.rotorDirection}</td>
+				<td align="left" colspan="3">${helicopterModel.rotorDirection}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Pitch Minimum</th>
-				<td colspan="3">${helicopterModel.pitchMin}</td>
+				<td align="left" colspan="3">${helicopterModel.pitchMin}</td>
 			</tr>
 </#if>
-<#if wingedModel??>
-			<tr>
+<#if wingedModel?? && model.transmitterType.name()="mx16">
+			<tr class="<@d/>">
 				<th align="right">Kanal 8 verzögert</th>
-				<td colspan="3">${wingedModel.channel8Delay?string("ja","nein")}</td>
+				<td align="left" colspan="3">${wingedModel.channel8Delay?string("ja","nein")}</td>
 			</tr>
 </#if>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Gastrimm</th>
-				<td colspan="3">${model.throttleSettings.throttleTrim}%</td>
+				<td align="left" colspan="3">${model.throttleSettings.throttleTrim}%</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">letzte Leerlaufposition</th>
-				<td colspan="3">${model.throttleSettings.throttleLastIdlePosition}%</td>
+				<td align="left" colspan="3">${model.throttleSettings.throttleLastIdlePosition}%</td>
 			</tr>
 <#if wingedModel??>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Leitwerk</th>
-				<td colspan="3">${wingedModel.tailType}</td>
+				<td align="left" colspan="3">${wingedModel.tailType}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Querruder/Wölbklappen</th>
-				<td colspan="3">${wingedModel.aileronFlapType}</td>
+				<td align="left" colspan="3">${wingedModel.aileronFlapType}</td>
 			</tr>
 </#if>
-			<tr>
-				<th align="right" valign="top">Uhren</th>
-				<td colspan="3">
-					<table callpadding="0">
-						<tr>
-							<th>Typ</th>
-							<th>Wert</th>
-							<th>Schalter</th>
-						</tr>
+			<tr class="<@d/>">
+				<th colspan="4" class="d2">Uhren</th>
+			</tr>
+			<@reset/>
+			<tr class="<@d/>">
+				<th/>
+				<th align="center">Typ</th>
+				<th align="center">Wert</th>
+				<th align="center">Schalter</th>
+			</tr>
 <#list model.clock as clock>
-						<tr>
-							<td>${clock.mode!""}${clock.type!""}</td>
-							<td>${clock.minutes}:${clock.seconds?string("00")}</td>
-							<td><@switch clock.switch/></td>
-						</tr>
+			<tr class="<@d/>">
+				<th/>
+				<td align="center">${clock.mode!""}${clock.type!""}</td>
+				<td align="center">${clock.minutes}:${clock.seconds?string("00")}</td>
+				<td align="center"><@switch clock.switch/></td>
+			</tr>
 </#list>
-					</table>
-				</td>
+			<tr class="<@d/>">
+				<th colspan="4" class="d2">Flugphasen</th>
+			</tr>
+			<@reset/>
+			<tr class="<@d/>">
+				<th/>
+				<th align="center">Name</th>
+				<th align="center" colspan="2">Schalter</th>
 			</tr>
 <#list model.phase as phase>
-<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
-			<tr>
-				<th align="right" valign="top">Phase ${phase.number}</th>
-				<td><i>Name:</i> ${phase.phaseName}</td>
-<#if phase.phaseSwitch??>
-				<td colspan="2"><i>Schalter:</i> <@switch phase.phaseSwitch/></td>
-<#else>
-				<td colpan="2"/>
-</#if>
+	<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+			<tr class="<@d/>">
+				<th align="right">Phase ${phase.number}</th>
+				<td align="center">${phase.phaseName}</td>
+		<#if phase.phaseSwitch??>
+				<td align="center" colspan="2"><@switch phase.phaseSwitch/></td>
+		<#else>
+				<td colspan="2"/>
+		</#if>
 			</tr>
-</#if>
+	</#if>
 </#list>
-			<tr>
+			<tr class="<@d/>">
+				<th colspan="4" class="d2">Empfänger</th>
+			</tr>
+			<@reset/>
+			<tr class="<@d/>">
 				<th align="right" valign="top">Empfängerausgang</th>
-				<td colspan="3">
-					<table cellpadding="0">
-<#list model.channelMapping as mapping>
-						<tr>
-							<td align="center">S${mapping.inputChannel+1}</td>
-							<td align="center">&rArr;</td>
-							<td align="center">Ausgang ${mapping.outputChannel+1}</td>
-						</tr>
-</#list>
-					</table>
-				</td>
+				<th align="left">Eingang</th>
+				<th/>
+				<th align="center">Ausgang</th>
 			</tr>
-			<tr>
+<#list model.channelMapping as mapping>
+			<tr class="<@d/>">
+				<th/>
+				<td align="center">S${mapping.inputChannel+1}</td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang ${mapping.outputChannel+1}</td>
+			</tr>
+</#list>
+			<tr class="<@d/>">
 				<th align="right">Empfänger gebunden</th>
-				<td colspan="3">${model.bound?string("ja","nein")}</td>
+				<td align="left" colspan="3">${model.bound?string("ja","nein")}</td>
 			</tr>			
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Empfänger ID</th>
-				<td colspan="3">${hex(model.receiver[0].rfid?c)}</td>
+				<td align="left" colspan="3">${hex(model.receiver[0].rfid?c)}</td>
 			</tr>
 		</table>
 
-		<hr/>
-
-		<h1>Servoeinstellungen</h1>
 		<table>
-			<tr>
-				<th>Servo</th>
-				<th>Umkehr</th>
-				<th>Mitte</th>
-				<th>Weg -</th>
-				<th>Weg +</th>
+			<caption>Servoeinstellungen</caption>
+			<tr class="<@d/>">
+				<th align="center">Servo</th>
+				<th align="center">Umkehr</th>
+				<th align="center">Mitte</th>
+				<th align="center">Weg -</th>
+				<th align="center">Weg +</th>
 			</tr>
+			<@reset/>
 <#list model.channel as channel>
-<#if !channel.virtual>
-			<tr>
+	<#if !channel.virtual>
+			<tr class="<@d/>">
 				<td align="center">S${channel.number?number+1}</td>
-				<td align="center"><#if channel.reverse>&lArr;<#else>&rArr;</#if></td>
+				<td align="center"><#if channel.reverse>&larr;<#else>&rarr;</#if></td>
 				<td align="center">${channel.center}%</td>
 				<td align="center">${channel.travelLow}%</td>
 				<td align="center">${channel.travelHigh}%</td>
 			</tr>
-</#if>
+	</#if>
 </#list>
 		</table>
 
-		<hr/>	
-
-		<h1>Gebereinstellungen</h1>
 		<table>
-			<tr>
-				<th>Eingang</th>
-				<th>Geber</th>
-				<th>Weg -</th>
-				<th>Weg +</th>
+			<caption>Gebereinstellungen</caption>
+			<tr class="<@d/>">
+				<th align="center">Eingang</th>
+				<th align="center">Geber</th>
+				<th align="center">Weg -</th>
+				<th align="center">Weg +</th>
 			</tr>
+			<@reset/>
 <#list model.phase[0].control as control>
-<#if helicopterModel?? && control.number?number == 8>
-			<tr>
+	<#if helicopterModel?? && control.number?number == 8>
+			<tr class="<@d/>">
 				<td align="center">Gaslimiter</td>
-				<td align="cender"><@switch control.inputControl/></td>
-				<td align="cender">${control.travelLow}%</td>
-				<td align="cender">${control.travelHigh}%</td>
+				<td align="center"><@switch control.inputControl/></td>
+				<td align="center">${control.travelLow}%</td>
+				<td align="center">${control.travelHigh}%</td>
 			</tr>
-<#else>
-<#if control.number?number < 8>
-			<tr>
+	<#else>
+		<#if control.number?number < 8>
+			<tr class="<@d/>">
 				<td align="center">E${control.number?number+1}</td>
-				<td align="cender"><@switch control.inputControl/></td>
-				<td align="cender">${control.travelLow}%</td>
-				<td align="cender">${control.travelHigh}%</td>
+				<td align="center"><@switch control.inputControl/></td>
+				<td align="center">${control.travelLow}%</td>
+				<td align="center">${control.travelHigh}%</td>
 			</tr>
-</#if>
-</#if>
+		</#if>
+	</#if>
 </#list>
 		</table>
 
-		<hr/>	
-
-		<h1>DualRate Expo</h1>
 <#list model.phase as phase>
-<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
-		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
+	<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
 		<table>
-			<tr>
-				<td>&nbsp;</td>
-				<th>Dual Rate</th>
-				<th>Expo</th>
-				<th>Schalter</th>
+			<caption>DualRate Expo - Phase ${phase.number}: ${phase.phaseName}</caption>
+			<tr class="<@d/>">
+				<th/>
+				<th align="center">Dual Rate</th>
+				<th align="center">Expo</th>
+				<th align="center">Schalter</th>
 			</tr>
-<#list [0,1,2] as i>
-			<tr>			  	
+			<@reset/>
+		<#list 0..2 as i>
+			<tr class="<@d/>">			  	
 				<th align="right">${phase.dualRate[i].function}</th>
+			<#if model.phase[0].dualRate[i].switch?? && model.phase[0].dualRate[i].switch.assignment.name()!="Unassigned">
 				<td align="center">${phase.dualRate[i].values[0]}% / ${phase.dualRate[i].values[1]}%</td>
 				<td align="center">${phase.expo[i].values[0]}% / ${phase.expo[i].values[1]}%</td>
-				<td><@switch model.phase[0].dualRate[i].switch/></td>
+			<#else>
+				<td align="center">${phase.dualRate[i].values[0]}%</td>
+				<td align="center">${phase.expo[i].values[0]}%</td>
+			</#if> 
+				<td align="center"><@switch model.phase[0].dualRate[i].switch/></td>
 			</tr>
-</#list>
+		</#list>
 		</table>
-</#if>
+	</#if>
 </#list>
-
-		<hr/>
 
 <#if wingedModel??>
-		<h1>Phasentrimm</h1>
 		<table>
-			<tr>
+			<caption>Phasentrimm</caption>
+			<tr class="<@d/>">
 				<th align="right">Phase</th>
-				<th>WK</th>
-				<th>QR</th>
-				<th>HR</th>
+				<th align="center">WK</th>
+				<th align="center">QR</th>
+				<th align="center">HR</th>
 			</tr>
-<#list wingedModel.phase as phase>
-<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
-			<tr>
+			<@reset/>
+	<#list wingedModel.phase as phase>
+		<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+			<tr class="<@d/>">
 				<th align="right">${phase.phaseName}</th>
-				<td>${phase.wingTrim.flapPhaseTrim[0]}%</td>
-				<td>${phase.wingTrim.aileronPhaseTrim[0]}%</td>
-				<td>${phase.wingTrim.elevatorPhaseTrim}%</td>
+				<td align="center">${phase.wingTrim.flapPhaseTrim[0]}%</td>
+				<td align="center">${phase.wingTrim.aileronPhaseTrim[0]}%</td>
+				<td align="center">${phase.wingTrim.elevatorPhaseTrim}%</td>
 			</tr>
-</#if>
-</#list>
-		</table>
-
-		<hr/>
-
-		<h1>Flächenmix</h1>
-		<table>
-			<tr>
-				<th align="right">Mischer</th>
-				<th align="center">Wert</th>
-				<th align="left">Schalter</th>
-			</tr>
-<#list wingedModel.phase[0].wingMixer as mixer>
-			<tr>
-				<th align="right">${mixer.id}</th>
-				<td align="center">${mixer.value[0]}%</td>
-<#if mixer.switch??>
-				<td><@switch mixer.switch/></td>
-<#else>
-				<td/>
-</#if>
-			</tr>
-</#list>
+		</#if>
+	</#list>
 		</table>
 </#if>
-<#if helicopterModel??>
-		<h1>Helimix</h1>
-<#list helicopterModel.phase as phase>
-<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
-		<h2>Phase ${phase.number}: ${phase.phaseName}</h2>
 		
+
+<#if wingedModel??>
 		<table>
+			<caption>Flächenmix</caption>
+			<tr class="<@d/>">
+				<th align="center">Mischer</th>
+				<th align="center">Wert</th>
+				<th align="center">Schalter</th>
+			</tr>
+			<@reset/>
+	<#list wingedModel.phase[0].wingMixer as mixer>
+			<tr class="<@d/>">
+				<td align="center">${mixer.id}</td>
+				<td align="center">${mixer.value[0]}%</td>
+		<#if mixer.switch??>
+				<td align="center"><@switch mixer.switch/></td>
+		<#else>
+				<td/>
+		</#if>
+			</tr>
+	</#list>
+		</table>
+</#if>
+
+<#if helicopterModel??>
+	<#list helicopterModel.phase as phase>
+		<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+		<table>
+			<caption>Helimix -Phase ${phase.number}: ${phase.phaseName}</caption>
 			<@curve "Pitchkurve" phase.helicopterMixer.pitchCurve.point/>
 			<@curve "Gaskurve (K1 -> Gas)" phase.helicopterMixer.throttleCurve.point/>
 			<@curve "Heckrotorkurve (K1 -> Heck)" phase.helicopterMixer.tailCurve.point/>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Gyro</th>
-				<td>${phase.gyroGain}%</td>
+				<td align="left" colspan="3">${phase.gyroGain}%</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Eingang 8</th>
-				<td>${phase.channel8Value}%</td>
+				<td align="left" colspan="3">${phase.channel8Value}%</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Taumelscheibenlimit</th>
-				<td><#if phase.helicopterMixer.swashplateLimit == 150>aus<#else>${phase.helicopterMixer.swashplateLimit}%</#if></td>
+				<td align="left" colspan="3"><#if phase.helicopterMixer.swashplateLimit == 150>aus<#else>${phase.helicopterMixer.swashplateLimit}%</#if></td>
 			</tr>
 		</table>
+		</#if>
+	</#list>
 </#if>
-</#list>
-</#if>
-
-		<hr/>
 		
-		<h1>Freie Mixer</h1>
 		<table>
-			<tr>
-				<th>Mixer</th>
-				<th>Input</th>
-				<th>von</th>
-				<th>zu</th>
-				<th>Schalter</th>
-				<th>Weg -</th>
-				<th>Weg +</th>
-				<th>Offset</th>
+			<caption>Freie Mixer</caption>
+			<tr class="<@d/>">
+				<th align="center">Mixer</th>
+				<th align="center">Input</th>
+				<th align="center">von &rarr; zu</th>
+				<th align="center">Schalter</th>
+				<th align="center">Weg -</th>
+				<th align="center">Weg +</th>
+				<th align="center">Offset</th>
 			</tr>
-		
+			<@reset/>		
 <#list model.freeMixer as mixer>
-			<tr>
-				<td>M${mixer.number?number+1}</td>
-				<td>${mixer.inputType}</td>
-				<td><#if mixer.fromChannel.number?number == 9>S<#else>${mixer.fromChannel.number}</#if></td>
-				<td>${mixer.toChannel.number}</td>
-				<td><@switch mixer.switch/></td>
-<#if mixer.type.name() == "Curve">
-				<td colspan="3" align="center"><i>Kurve</i></td>
-<#else>
-				<td>${mixer.travelLow}%</td>
-				<td>${mixer.travelHigh}%</td>
-				<td>${mixer.offset}%</td>
-</#if>
+			<tr class="<@d/>">
+				<td align="center">M${mixer.number?number+1}</td>
+				<td align="center">${mixer.inputType}</td>
+				<td align="center"><#if mixer.fromChannel.number?number == 9>S<#else>${mixer.fromChannel.number}</#if> &rarr; ${mixer.toChannel.number}</td>
+				<td align="center"><@switch mixer.switch/></td>
+	<#if mixer.type.name() == "Curve">
+				<td align=center colspan="3"><i>Kurve</i></td>
+	<#else>
+				<td align="center">${mixer.travelLow}%</td>
+				<td align="center">${mixer.travelHigh}%</td>
+				<td align="center">${mixer.offset}%</td>
+	</#if>
 			</tr>
 </#list>
 		</table>
-
-		<hr/>
 
 <#if helicopterModel??>
-		<h1>Taumelscheibenmischer</h1>
 		<table>
-			<tr>
-				<th>Pitch</th>
-				<td>${helicopterModel.swashplateMix.pitchMix}</td>
+			<caption>Taumelscheibenmischer</caption>
+			<@reset/>
+			<tr class="<@d/>">
+				<th align="right">Pitch</th>
+				<td align="left">${helicopterModel.swashplateMix.pitchMix}%</td>
 			</tr>
-			<tr>
-				<th>Roll</th>
-				<td>${helicopterModel.swashplateMix.rollMix}</td>
+			<tr class="<@d/>">
+				<th align="right">Roll</th>
+				<td align="left">${helicopterModel.swashplateMix.rollMix}%</td>
 			</tr>
-			<tr>
-				<th>Nick</th>
-				<td>${helicopterModel.swashplateMix.nickMix}</td>
+			<tr class="<@d/>">
+				<th align="right">Nick</th>
+				<td align="left">${helicopterModel.swashplateMix.nickMix}%</td>
 			</tr>
 		</table>
-		
-		<hr/>
+</#if>
 
-</#if>		
-		<h1>Fail Safe</h1>		
 		<table>
-			<tr>
+			<caption>Fail Safe</caption>		
+			<tr class="<@d/>">
 				<th align="right">Verzögerung</th>
-				<td>${model.failSafeDelay}s</td>
+				<td align="left">${model.failSafeDelay}s</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">FlailSafe Prüfung</th>
-				<td>${model.failSafeSettingCheck?string("ja", "nein")}</td>
+				<td align="left">${model.failSafeSettingCheck?string("ja", "nein")}</td>
 			</tr>
 		</table>
 		<table>
-			<tr>
-				<td>&nbsp;</td>
+			<tr class="<@d/>">
+				<td align="left">&nbsp;</td>
 <#list model.channel as channel>
-<#if !channel.virtual>
+	<#if !channel.virtual>
 				<th align="center">S${channel.number?number+1}</th>
-</#if>
+	</#if>
 </#list>
 			</tr>
-			<tr>
-				<th>Mode</th>
+			<@reset/>	
+			<tr class="<@d/>">
+				<th align="center">Halten</th>
 <#list model.channel as channel>
-<#if !channel.virtual>
-				<td align="center">${channel.failSafeMode}</td>
-</#if>
+	<#if !channel.virtual>
+				<td align="center"><#if channel.failSafeMode.name() == "Hold">&times;</#if></td>
+	</#if>
 </#list>
 			</tr>
-			<tr>
-				<th>Position</th>
+			<tr class="<@d/>">
+				<th align="center">Position</th>
 <#list model.channel as channel>
-<#if !channel.virtual>
-<#if channel.failSafeMode.name() == "Position">
+	<#if !channel.virtual>
+		<#if channel.failSafeMode.name() == "Position">
 				<td align="center">${channel.failSafePosition}%</td>
-<#else>
-				<td>---</td>
-</#if>
-</#if>
+		<#else>
+				<td/>
+		</#if>
+	</#if>
 </#list>
 			</tr>
 		</table>
-		
-		<hr/>
-		
-		<h1>Telemetrie</h1>
+
 		<table>
-			<tr>
-				<th align="right">Ansage wiederholen</th>
-				<td>${model.telemetry.voiceDelay}s <i>Schalter:</i> <@switch model.telemetry.voiceRepeat/></td>
+			<caption>Telemetrie</caption>
+			<@reset/>
+			<tr class="<@d/>">
+				<th align="right" rowspan="2" valign="top">Ansage wiederholen</th>
+				<td align="left">${model.telemetry.voiceDelay}s</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
+				<td align="left"><@switch model.telemetry.voiceRepeat/></td>
+			</tr>
+			<tr class="<@d/>">
 				<th align="right">nächste Ansage</th>
-				<td><@switch model.telemetry.voiceTrigger/></td>
+				<td align="left"><@switch model.telemetry.voiceTrigger/></td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Varioton</th>
-				<td><@switch model.telemetry.varioTone/></td>
+				<td align="left"><@switch model.telemetry.varioTone/></td>
 			</tr>
-			<tr>
-				<th align="right">ausgewählte Sensoren</th>
-				<td><#list model.telemetry.selectedSensor as sensor>${sensor} </#list></td>
+			<tr class="<@d/>">
+				<th align="right" rowspan="${model.telemetry.selectedSensor?size}" valign="top">ausgewählte Sensoren</th>
+<#list model.telemetry.selectedSensor as sensor>
+	<#if sensor_index &gt; 0>
+			<tr class="<@d/>">
+	</#if>
+				<td align="left">${sensor}</td>
 			</tr>
-			<tr>
+</#list>				
+			<tr class="<@d/>">
 				<th align="right">aktueller Sensor</th>
-				<td>${model.telemetry.currentSensor}</td>
+				<td align="left">${model.telemetry.currentSensor}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">aktuelle Sensorseite</th>
-				<td>${model.telemetry.currentSensorPage}</td>
+				<td align="left">${model.telemetry.currentSensorPage}</td>
 			</tr>
 		</table>
 		
-		<hr/>
-		
-		<h1>Lehrer/Schüler</h1>		
 		<table>
-			<tr>
+			<caption>Lehrer/Schüler</caption>
+			<@reset/>	
+			<tr class="<@d/>">
 				<th align="right">Kabellos</th>
-				<td>${model.trainerConfig.wireless?string("ja", "nein")}</td>
+				<td align="left">${model.trainerConfig.wireless?string("ja", "nein")}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Lehrer ID</th>
-				<td>${hex(model.trainerConfig.trainerId?c)}</td>
+				<td align="left">${hex(model.trainerConfig.trainerId?c)}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Schüler ID</th>
-				<td>${hex(model.trainerConfig.pupilId?c)}</td>
+				<td align="left">${hex(model.trainerConfig.pupilId?c)}</td>
 			</tr>
-			<tr>
+			<tr class="<@d/>">
 				<th align="right">Schalter</th>
-				<td><@switch model.trainerConfig.trainerSwitch/></td>
+				<td align="left"><@switch model.trainerConfig.trainerSwitch/></td>
 			</tr>
 		</table>
 		<table>
-			<tr>
-				<td>&nbsp;</td>
+			<tr class="<@d/>">
+				<th/>
 <#list model.channel as channel>
-<#if !channel.virtual>
-				<th>S${channel.number?number+1}</th>
-</#if>
+	<#if !channel.virtual>
+				<th align="center">S${channel.number?number+1}</th>
+	</#if>
 </#list>
 			</tr>
-			<tr>
-				<th>Mode</th>
+			<@reset/>	
+			<tr class="<@d/>">
+				<th align="right">Schüler</th>
 <#list model.channel as channel>
-<#if !channel.virtual>
-				<td align="center">${channel.trainerMode}</td>
-</#if>
+	<#if !channel.virtual>
+				<td align="center"><#if channel.trainerMode.name()=="Pupil">&times;</#if></td>
+	</#if>
+</#list>
+			</tr>
+			<tr class="<@d/>">
+				<th align="right">Lehrer</th>
+<#list model.channel as channel>
+	<#if !channel.virtual>
+				<td align="center"><#if channel.trainerMode.name()=="Trainer">&times;</#if></td>
+	</#if>
 </#list>
 			</tr>
 		</table>		
 		
-		<hr/>
-		
-		<h1>Schalter-/Geberzuordnungen</h1>
 		<table>
-			<tr>
-				<th align="right">Funktion</th>
-				<th>Schalter/Geber</th>
-				<th align="left">Typ</th>
+			<caption>Knüppeltrimmung</caption>
+			<tr class="<@d/>">
+				<th/>
+<#list model.phase as phase>
+	<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+				<th align="center">Phase ${phase.number}</th>
+	</#if>
+</#list>
 			</tr>
+			<@reset/>
+<#if wingedModel??>
+			<tr class="<@d/>">
+				<th align="right">Kanal 1</th>
+	<#list model.phase as phase>
+		<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+				<td align="center">${model.throttleSettings.throttleTrim}%</td>
+		</#if>
+	</#list>
+			</tr>
+			<tr class="<@d/>">
+				<th align="right">Querruder</th>
+	<#list model.phase as phase>
+		<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+				<td align="center">${phase.wingTrim.aileronStickTrim}%</td>
+		</#if>
+	</#list>
+			</tr>
+			<tr class="<@d/>">
+				<th align="right">Höhenruder</th>
+	<#list model.phase as phase>
+		<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+				<td align="center">${phase.wingTrim.elevatorStickTrim}%</td>
+		</#if>
+	</#list>
+			</tr>
+			<tr class="<@d/>">
+				<th align="right">Seitenruder</th>
+	<#list model.phase as phase>
+		<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+				<td align="center">${phase.wingTrim.rudderStickTrim}%</td>
+		</#if>
+	</#list>
+			</tr>
+<#else>
+			<tr class="<@d/>">
+				<th align="right">Pitch/Gas</th>
+	<#list model.phase as phase>
+		<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+				<td align="center">${model.throttleSettings.throttleTrim}%</td>
+		</#if>
+	</#list>
+			</tr>
+			<tr class="<@d/>">
+				<th align="right">Roll</th>
+	<#list model.phase as phase>
+		<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+				<td align="center">${phase.helicopterTrim.rollStickTrim}%</td>
+		</#if>
+	</#list>
+			</tr>
+			<tr class="<@d/>">
+				<th align="right">Nick</th>
+	<#list model.phase as phase>
+		<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+				<td align="center">${phase.helicopterTrim.nickStickTrim}%</td>
+		</#if>
+	</#list>
+			</tr>
+			<tr class="<@d/>">
+				<th align="right">Heckrotor</th>
+	<#list model.phase as phase>
+		<#if phase.phaseName != "Global" && phase.phaseType.name() != "Unused">
+				<td align="center">${phase.helicopterTrim.tailStickTrim}%</td>
+		</#if>
+	</#list>
+			</tr>
+</#if>		
+		</table>
+
+		<table>
+			<caption>Schalter-/Geberzuordnungen</caption>
+			<tr class="<@d/>">
+				<th align="center">Funktion</th>
+				<th align="center">Schalter/Geber</th>
+				<th align="center">Typ</th>
+			</tr>
+			<@reset/>
 <#list model.switch as sw>
-<#if (sw.assignment!"Null") != "Unassigned">
-			<tr>
-				<td align="right">${sw.id}</td>
+	<#if sw?? && sw.assignment?? && sw.assignment.name()!="Unassigned">
+			<tr class="<@d/>">
+				<td align="center">${sw.id}</td>
 				<td align="center"><@switch sw/></td>
-				<td>${sw.type}</td>
+				<td align="center">${sw.type}</td>
 			</tr>
-</#if>
+	</#if>
 </#list>
 		</table>
 	</body>
