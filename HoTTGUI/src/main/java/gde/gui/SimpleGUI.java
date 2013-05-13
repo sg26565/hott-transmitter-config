@@ -79,7 +79,7 @@ public class SimpleGUI {
 				fc.setCurrentDirectory(lastLoadDir);
 			}
 			else {
-				fc.setCurrentDirectory(new File(System.getProperty("program.dir")));
+				fc.setCurrentDirectory(new File(System.getProperty("mdl.dir")));
 			}
 
 			final int result = fc.showOpenDialog(frame);
@@ -129,7 +129,7 @@ public class SimpleGUI {
 				fc.setCurrentDirectory(lastLoadDir);
 			}
 			else {
-				fc.setCurrentDirectory(new File(System.getProperty("program.dir")));
+				fc.setCurrentDirectory(new File(System.getProperty("mdl.dir")));
 			}
 
 			fc.setFileFilter(new FileNameExtensionFilter(fileType.toUpperCase() + " Files", fileType));
@@ -181,6 +181,14 @@ public class SimpleGUI {
 
 		final File programDir = mainJar.getParentFile();
 		System.setProperty("program.dir", programDir.getAbsolutePath());
+
+		if (!System.getProperties().containsKey("mdl.dir")) {
+			System.setProperty("mdl.dir", programDir.getAbsolutePath());
+		}
+
+		if (!System.getProperties().containsKey("log.dir")) {
+			System.setProperty("log.dir", programDir.getAbsolutePath());
+		}
 
 		LOG = Logger.getLogger(SimpleGUI.class);
 		LOG.debug("main jar location: " + mainJar.getAbsolutePath());
