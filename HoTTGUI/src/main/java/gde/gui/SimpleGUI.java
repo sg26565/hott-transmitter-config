@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.prefs.Preferences;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -123,8 +124,15 @@ public class SimpleGUI extends FSScrollPane {
 		}
 	}
 
+	private static final String	LAST_LOAD_DIR			= "lastLoadDir";
+	private static final String	LAST_SAVE_DIR			= "lastSaveDir";
 	private static final Logger	LOG;
+	public static final String	LOG_DIR						= "log.dir";
+	public static final String	MDL_DIR						= "mdl.dir";
+	private static Preferences	PREFS							= Preferences.userNodeForPackage(SimpleGUI.class);
+	public static final String	PROGRAM_DIR				= "program.dir";
 	private static final long		serialVersionUID	= 8824399313635999416L;
+	public static final String	TEMPLATE_DIR			= "template.dir";
 
 	static {
 		File mainJar;
@@ -136,26 +144,26 @@ public class SimpleGUI extends FSScrollPane {
 		}
 
 		final File programDir = mainJar.getParentFile();
-		System.setProperty("program.dir", programDir.getAbsolutePath());
+		System.setProperty(PROGRAM_DIR, programDir.getAbsolutePath());
 
-		if (!System.getProperties().containsKey("mdl.dir")) {
-			System.setProperty("mdl.dir", System.getProperty("program.dir"));
+		if (!System.getProperties().containsKey(MDL_DIR)) {
+			System.setProperty(MDL_DIR, System.getProperty(PROGRAM_DIR));
 		}
 
-		if (!System.getProperties().containsKey("log.dir")) {
-			System.setProperty("log.dir", System.getProperty("program.dir"));
+		if (!System.getProperties().containsKey(LOG_DIR)) {
+			System.setProperty(LOG_DIR, System.getProperty(PROGRAM_DIR));
 		}
 
-		if (!System.getProperties().containsKey("template.dir")) {
-			System.setProperty("template.dir", new File(programDir, "templates").getAbsolutePath());
+		if (!System.getProperties().containsKey(TEMPLATE_DIR)) {
+			System.setProperty(TEMPLATE_DIR, new File(programDir, "templates").getAbsolutePath());
 		}
 
 		LOG = Logger.getLogger(SimpleGUI.class);
 		LOG.debug("main jar location: " + mainJar.getAbsolutePath());
-		LOG.debug("program.dir: " + System.getProperty("program.dir"));
-		LOG.debug("log.dir: " + System.getProperty("log.dir"));
-		LOG.debug("mdl.dir: " + System.getProperty("mdl.dir"));
-		LOG.debug("templates.dir: " + System.getProperty("template.dir"));
+		LOG.debug("program.dir: " + System.getProperty(PROGRAM_DIR));
+		LOG.debug("log.dir: " + System.getProperty(LOG_DIR));
+		LOG.debug("mdl.dir: " + System.getProperty(MDL_DIR));
+		LOG.debug("templates.dir: " + System.getProperty(TEMPLATE_DIR));
 	}
 
 	public static void main(final String[] args) {
@@ -163,8 +171,6 @@ public class SimpleGUI extends FSScrollPane {
 	}
 
 	private final Action							closeAction			= new CloseAction("Close");
-	private File											lastLoadDir			= null;
-	private File											lastSaveDir			= null;
 	private final Action							loadAction			= new LoadAction("Load MDL");
 	private BaseModel									model						= null;
 	private final Action							refreshAction		= new RefreshAction("Refresh");
@@ -216,19 +222,14 @@ public class SimpleGUI extends FSScrollPane {
 		fc.setMultiSelectionEnabled(false);
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.setFileFilter(new FileNameExtensionFilter("HoTT Transmitter Model Files", "mdl"));
-
-		if (lastLoadDir != null) {
-			fc.setCurrentDirectory(lastLoadDir);
-		}
-		else {
-			fc.setCurrentDirectory(new File(System.getProperty("mdl.dir")));
-		}
+		fc.setCurrentDirectory(new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(MDL_DIR))));
 
 		final int result = fc.showOpenDialog(getTopLevelAncestor());
 
 		if (result == JFileChooser.APPROVE_OPTION) {
 			final File file = fc.getSelectedFile();
-			lastLoadDir = file.getParentFile();
+			PREFS.put(LAST_LOAD_DIR, file.getParentFile().getAbsolutePath());
+
 			model = Report.getModel(file);
 			saveHtmlAction.setEnabled(true);
 			savePdfAction.setEnabled(true);
@@ -255,16 +256,7 @@ public class SimpleGUI extends FSScrollPane {
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setMultiSelectionEnabled(false);
 		fc.setAcceptAllFileFilterUsed(false);
-
-		if (lastSaveDir != null) {
-			fc.setCurrentDirectory(lastSaveDir);
-		}
-		else if (lastLoadDir != null) {
-			fc.setCurrentDirectory(lastLoadDir);
-		}
-		else {
-			fc.setCurrentDirectory(new File(System.getProperty("mdl.dir")));
-		}
+		fc.setCurrentDirectory(new File(PREFS.get(LAST_SAVE_DIR, PREFS.get(LAST_LOAD_DIR, System.getProperty(MDL_DIR)))));
 
 		fc.setFileFilter(new FileNameExtensionFilter(description, extension));
 		fc.setSelectedFile(new File(getFileName(model)));
@@ -272,12 +264,8 @@ public class SimpleGUI extends FSScrollPane {
 		final int result = fc.showSaveDialog(getTopLevelAncestor());
 
 		if (result == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			lastSaveDir = file.getParentFile();
-
-			if (!file.getName().endsWith("." + extension)) {
-				file = new File(lastSaveDir, file.getName() + "." + extension);
-			}
+			final File file = fc.getSelectedFile();
+			PREFS.put(LAST_SAVE_DIR, file.getParentFile().getAbsolutePath());
 
 			switch (fileType) {
 			case XML:
