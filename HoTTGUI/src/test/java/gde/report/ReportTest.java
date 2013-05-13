@@ -40,20 +40,8 @@ import gde.model.winged.WingedModel;
 public class ReportTest {
 	@BeforeClass
 	public static void init() throws ClassNotFoundException {
-		// initialize log location
-		File mainJar;
-		try {
-			mainJar = new File(Report.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-		}
-		catch (final URISyntaxException e) {
-			throw new RuntimeException(e);
-		}
-
-		final File programDir = mainJar.getParentFile();
-		System.setProperty("program.dir", programDir.getAbsolutePath());
-
-		// initialize Report class
-		Class.forName("gde.report.Report");
+		// initialize SimpleGUI class
+		Class.forName("gde.gui.SimpleGUI");
 	}
 
 	@Test

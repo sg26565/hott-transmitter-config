@@ -68,18 +68,7 @@ public class Report {
 	private static final Marshaller								MARSHALLER;
 
 	static {
-		final String programDir = System.getProperty("program.dir");
-
-		final File templateDir;
-		if (System.getProperties().containsKey("template.dir")) {
-			templateDir = new File(System.getProperty("template.dir"));
-		}
-		else {
-			templateDir = new File(programDir, "templates");
-			System.setProperty("template.dir", templateDir.getAbsolutePath());
-		}
-
-		LOG.debug("templates dir: " + templateDir.getAbsolutePath());
+		final File templateDir = new File(System.getProperty("template.dir"));
 
 		CONFIGURATION = new Configuration();
 		CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8");
