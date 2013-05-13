@@ -124,15 +124,15 @@ public class SimpleGUI extends FSScrollPane {
 		}
 	}
 
-	private static final String	LAST_LOAD_DIR			= "lastLoadDir";
-	private static final String	LAST_SAVE_DIR			= "lastSaveDir";
-	private static final Logger	LOG;
-	public static final String	LOG_DIR						= "log.dir";
-	public static final String	MDL_DIR						= "mdl.dir";
-	private static Preferences	PREFS							= Preferences.userNodeForPackage(SimpleGUI.class);
-	public static final String	PROGRAM_DIR				= "program.dir";
-	private static final long		serialVersionUID	= 8824399313635999416L;
-	public static final String	TEMPLATE_DIR			= "template.dir";
+	private static final String				LAST_LOAD_DIR			= "lastLoadDir";
+	private static final String				LAST_SAVE_DIR			= "lastSaveDir";
+	private static final Logger				LOG;
+	private static final String				LOG_DIR						= "log.dir";
+	private static final String				MDL_DIR						= "mdl.dir";
+	private static final Preferences	PREFS							= Preferences.userNodeForPackage(SimpleGUI.class);
+	private static final String				PROGRAM_DIR				= "program.dir";
+	private static final long					serialVersionUID	= 8824399313635999416L;
+	private static final String				TEMPLATE_DIR			= "template.dir";
 
 	static {
 		File mainJar;
@@ -257,7 +257,6 @@ public class SimpleGUI extends FSScrollPane {
 		fc.setMultiSelectionEnabled(false);
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.setCurrentDirectory(new File(PREFS.get(LAST_SAVE_DIR, PREFS.get(LAST_LOAD_DIR, System.getProperty(MDL_DIR)))));
-
 		fc.setFileFilter(new FileNameExtensionFilter(description, extension));
 		fc.setSelectedFile(new File(getFileName(model)));
 
