@@ -263,8 +263,12 @@ public class SimpleGUI extends FSScrollPane {
 		final int result = fc.showSaveDialog(getTopLevelAncestor());
 
 		if (result == JFileChooser.APPROVE_OPTION) {
-			final File file = fc.getSelectedFile();
+			File file = fc.getSelectedFile();
 			PREFS.put(LAST_SAVE_DIR, file.getParentFile().getAbsolutePath());
+
+			if (!file.getName().endsWith("." + fileType)) {
+				file = new File(file.getParentFile(), file.getName() + "." + fileType);
+			}
 
 			switch (fileType) {
 			case XML:

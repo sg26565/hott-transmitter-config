@@ -50,17 +50,43 @@
 		<style type="text/css" media="print">
 			@page {
 				size: a4;
+
+				@top-left {
+					content: "${model.transmitterType} - ${model.modelName}";
+				}
+				
+				@top-center {
+					content: "erzeugt am ${.now}";
+				}
+				
+				@top-right {
+					content: "Seite " counter(page);
+				}
+
+				@bottom-left {
+					content: "${model.transmitterType} - ${model.modelName}";
+				}
+				
+				@bottom-center {
+					content: "erzeugt am ${.now}";
+				}
+				
+				@bottom-right {
+					content: "Seite " counter(page);
+				}
 			}
 
 			body {
 			    font-size: 9pt;
 			}
 		</style>
+		
 		<style type="text/css" media="screen">
 			body {
 			    font-size: 14pt;
 			}
-		</style>		
+		</style>
+				
 		<style type="text/css">
 			@font-face {
 			    src: url('${programDir}/fonts/Arial.ttf');
