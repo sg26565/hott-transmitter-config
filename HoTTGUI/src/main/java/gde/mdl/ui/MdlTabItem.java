@@ -103,7 +103,7 @@ public class MdlTabItem extends CTabItem {
 					if (lastLoadDir != null) {
 						fd.setFilterPath(lastLoadDir.getPath());
 					} else {
-						fd.setFilterPath(System.getProperty("program.dir"));
+						fd.setFilterPath(System.getProperty("mdl.dir"));
 					}
 
 					fd.open();
@@ -152,7 +152,7 @@ public class MdlTabItem extends CTabItem {
 							"Portable Document Format (*.pdf)",
 							"Hypertext Markup Language (*.html)",
 							"Extensible Markup Language (*.xml)" });
-					fileSaveDialog.setFilterPath(lastLoadDir != null ? lastLoadDir.getPath() : System.getProperty("program.dir"));
+					fileSaveDialog.setFilterPath(lastLoadDir != null ? lastLoadDir.getPath() : System.getProperty("mdl.dir"));
 					fileSaveDialog.open();
 					File file = new File(fileSaveDialog.getFilterPath() + "/" + fileSaveDialog.getFileName());
 					try {
