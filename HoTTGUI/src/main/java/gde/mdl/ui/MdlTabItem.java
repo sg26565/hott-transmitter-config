@@ -61,6 +61,7 @@ public class MdlTabItem extends CTabItem {
 	public MdlTabItem(CTabFolder parent, int style) {
 		super(parent, style);
 		this.setText("MDL Viewer");
+		Report.setSuppressExceptions(true);
 		this.open(parent);
 	}
 
@@ -72,6 +73,7 @@ public class MdlTabItem extends CTabItem {
 	public MdlTabItem(CTabFolder parent, int style, int index) {
 		super(parent, style, index);
 		this.setText("MDL Viewer");
+		Report.setSuppressExceptions(true);
 		this.open(parent);
 	}
 
@@ -85,7 +87,7 @@ public class MdlTabItem extends CTabItem {
 		{
 			loadMdlButton = new Button(tabItemComposite, SWT.PUSH | SWT.CENTER);
 			GridData loadMdlButtonLData = new GridData();
-			loadMdlButtonLData.widthHint = 150;
+			loadMdlButtonLData.widthHint = 180;
 			loadMdlButtonLData.heightHint = 26;
 			loadMdlButtonLData.verticalAlignment = GridData.BEGINNING;
 			loadMdlButtonLData.grabExcessHorizontalSpace = true;
@@ -131,7 +133,7 @@ public class MdlTabItem extends CTabItem {
 			saveMdlButton = new Button(tabItemComposite, SWT.PUSH | SWT.CENTER);
 			GridData saveMdlButtonLData = new GridData();
 			saveMdlButtonLData.horizontalAlignment = GridData.CENTER;
-			saveMdlButtonLData.widthHint = 150;
+			saveMdlButtonLData.widthHint = 180;
 			saveMdlButtonLData.heightHint = 26;
 			saveMdlButtonLData.verticalAlignment = GridData.BEGINNING;
 			saveMdlButtonLData.grabExcessHorizontalSpace = true;
