@@ -22,6 +22,9 @@ import gde.model.BaseModel;
 import gde.report.Report;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.jar.Manifest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,6 +41,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 
 /**
@@ -48,6 +52,7 @@ public class MdlTabItem extends CTabItem {
 
 	private Browser browser;
 	private Button saveMdlButton;
+	private Label		mdlVersionLabel;
 	private Button loadMdlButton;
 	private Composite tabItemComposite;
 
@@ -80,7 +85,7 @@ public class MdlTabItem extends CTabItem {
 	public void open(final CTabFolder parent) {
 		tabItemComposite = new Composite(parent, SWT.NONE);
 		GridLayout tabItemCompositeLayout = new GridLayout();
-		tabItemCompositeLayout.numColumns = 4;
+		tabItemCompositeLayout.numColumns = 3;
 		tabItemComposite.setLayout(tabItemCompositeLayout);
 		this.setControl(tabItemComposite);
 		tabItemComposite.setBackground(new Color(Display.getDefault(), 250,	249, 211));
@@ -128,6 +133,33 @@ public class MdlTabItem extends CTabItem {
 					}
 				}
 			});
+		}
+		{
+			mdlVersionLabel = new Label(tabItemComposite, SWT.BORDER);
+			GridData mdlVersionLabelLData = new GridData();
+			mdlVersionLabelLData.horizontalAlignment = GridData.CENTER;
+			mdlVersionLabelLData.widthHint = 180;
+			mdlVersionLabelLData.heightHint = 26;
+			mdlVersionLabelLData.verticalAlignment = GridData.BEGINNING;
+			mdlVersionLabelLData.grabExcessHorizontalSpace = true;
+			mdlVersionLabel.setLayoutData(mdlVersionLabelLData);
+			String version = "?";
+			try {
+				@SuppressWarnings("rawtypes")
+				Class clazz = MdlTabItem.class;
+				String className = clazz.getSimpleName() + ".class";
+				String classPath = clazz.getResource(className).toString();
+				if (classPath.startsWith("jar")) {
+					String manifestPath = classPath.substring(0, classPath.lastIndexOf("!") + 1) + "/META-INF/MANIFEST.MF";
+					Manifest manifest = new Manifest(new URL(manifestPath).openStream());
+					version = manifest.getMainAttributes().getValue("Implementation-Version"); //$NON-NLS-1$			
+				}
+				mdlVersionLabel.setText("Implementation-Version: " + version);
+			}
+			catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		{
 			saveMdlButton = new Button(tabItemComposite, SWT.PUSH | SWT.CENTER);
