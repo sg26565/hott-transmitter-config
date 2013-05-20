@@ -1,5 +1,9 @@
 package gde.mdl.ui;
+import gde.report.Report;
+
 import java.lang.reflect.Constructor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -10,6 +14,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
+	final static Logger log = Logger.getLogger(ModelTabbedDialog.class.getName());
 
 	private Shell				dialogShell;
 	private CTabFolder	mainTabFolder;
@@ -23,6 +28,18 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 		try {
 			Display display = Display.getDefault();
 			Shell shell = new Shell(display);
+			
+			String path = Report.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+			path = path.substring(0, path.indexOf("classes")-1);
+			System.setProperty("log.dir", path);
+			log.log(Level.OFF, "log.dir =  " + System.getProperty("log.dir")); //$NON-NLS-1$
+			System.setProperty("mdl.dir", path);//$NON-NLS-1$
+			log.log(Level.OFF, "mdl.dir =  " + System.getProperty("mdl.dir")); //$NON-NLS-1$
+			System.setProperty("program.dir", System.getProperty("mdl.dir"));//$NON-NLS-1$
+			log.log(Level.OFF, "program.dir =  " + System.getProperty("program.dir")); //$NON-NLS-1$
+			System.setProperty("template.dir", "");//load from classpath //$NON-NLS-1$
+			log.log(Level.OFF, "template.dir =  " + System.getProperty("template.dir")); //$NON-NLS-1$
+
 			ModelTabbedDialog inst = new ModelTabbedDialog(shell, SWT.NULL);
 			inst.open();
 		}
