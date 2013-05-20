@@ -135,7 +135,7 @@ public class MdlTabItem extends CTabItem {
 			});
 		}
 		{
-			mdlVersionLabel = new Label(tabItemComposite, SWT.BORDER);
+			mdlVersionLabel = new Label(tabItemComposite, SWT.CENTER);
 			GridData mdlVersionLabelLData = new GridData();
 			mdlVersionLabelLData.horizontalAlignment = GridData.CENTER;
 			mdlVersionLabelLData.widthHint = 180;
@@ -143,6 +143,7 @@ public class MdlTabItem extends CTabItem {
 			mdlVersionLabelLData.verticalAlignment = GridData.BEGINNING;
 			mdlVersionLabelLData.grabExcessHorizontalSpace = true;
 			mdlVersionLabel.setLayoutData(mdlVersionLabelLData);
+			mdlVersionLabel.setBackground(new Color(Display.getDefault(), 250,	249, 211));
 			String version = "?";
 			try {
 				@SuppressWarnings("rawtypes")
