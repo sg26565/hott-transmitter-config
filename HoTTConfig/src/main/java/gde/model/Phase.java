@@ -28,17 +28,17 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public abstract class Phase {
-	private Curve channel1Curve;
-	private Control[] control;
-	private DualRate[] dualRate;
-	private Expo[] expo;
-	private boolean motorOn;
-	private String number;
-	private String phaseName;
-	private Switch phaseSwitch;
-	private double phaseSwitchTime;
-	private Clock phaseTimer;
-	private PhaseType phaseType;
+	private Curve				channel1Curve;
+	private Control[]		control;
+	private DualRate[]	dualRate;
+	private Expo[]			expo;
+	private boolean			motorOn;
+	private String			number;
+	private String			phaseName;
+	private Switch			phaseSwitch;
+	private double			phaseSwitchTime;
+	private Clock				phaseTimer;
+	private PhaseType		phaseType;
 
 	public Curve getChannel1Curve() {
 		return channel1Curve;
@@ -137,5 +137,10 @@ public abstract class Phase {
 
 	public void setPhaseType(final PhaseType phaseType) {
 		this.phaseType = phaseType;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Phase %d: %s", Integer.parseInt(getNumber()) + 1, getPhaseName());
 	}
 }
