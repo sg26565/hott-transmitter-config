@@ -62,14 +62,20 @@ public class MdlTabItem extends CTabItem {
 	private BaseModel		model				= null;
 	private Font				font;
 
+	public static final boolean		IS_WINDOWS											= System.getProperty("os.name").toLowerCase().startsWith("windows");																													//$NON-NLS-1$ //$NON-NLS-2$
+	public static final boolean		IS_LINUX												= System.getProperty("os.name").toLowerCase().startsWith("linux");																														//$NON-NLS-1$ //$NON-NLS-2$
+	public static final boolean		IS_MAC													= System.getProperty("os.name").toLowerCase().startsWith("mac");																															//$NON-NLS-1$ //$NON-NLS-2$
+
+	public final static int				WIDGET_FONT_SIZE								= MdlTabItem.IS_MAC ? 12 : ((MdlTabItem.IS_LINUX ? 8 : 9) * 96 / Display.getDefault().getDPI().y);
+
 	/**
 	 * @param parent
 	 * @param style
 	 */
 	public MdlTabItem(CTabFolder parent, int style) {
 		super(parent, style);
-		this.font = new Font(Display.getDefault(), new FontData("Sans Serife", 9, SWT.NORMAL)); //$NON-NLS-1$
-		this.setFont(this.font);
+		this.font = new Font(Display.getDefault(), new FontData("Sans Serife", MdlTabItem.WIDGET_FONT_SIZE, SWT.NORMAL)); //$NON-NLS-1$
+		this.setFont(new Font(Display.getDefault(), new FontData("Sans Serife", MdlTabItem.WIDGET_FONT_SIZE+1, SWT.NORMAL)));
 		this.setText("MDL Viewer"); //$NON-NLS-1$
 		Report.setSuppressExceptions(true);
 		this.open(parent);
@@ -82,7 +88,8 @@ public class MdlTabItem extends CTabItem {
 	 */
 	public MdlTabItem(CTabFolder parent, int style, int index) {
 		super(parent, style, index);
-		this.font = new Font(Display.getDefault(), new FontData("Sans Serife", 9, SWT.NORMAL)); //$NON-NLS-1$
+		this.font = new Font(Display.getDefault(), new FontData("Sans Serife", MdlTabItem.WIDGET_FONT_SIZE, SWT.NORMAL)); //$NON-NLS-1$
+		this.setFont(new Font(Display.getDefault(), new FontData("Sans Serife", MdlTabItem.WIDGET_FONT_SIZE+1, SWT.NORMAL)));
 		this.setFont(this.font);
 		this.setText("MDL Viewer"); //$NON-NLS-1$
 		Report.setSuppressExceptions(true);
@@ -182,8 +189,8 @@ public class MdlTabItem extends CTabItem {
 			saveMdlButtonLData.verticalAlignment = GridData.BEGINNING;
 			saveMdlButtonLData.grabExcessHorizontalSpace = true;
 			this.saveMdlButton.setLayoutData(saveMdlButtonLData);
-			this.mdlVersionLabel.setFont(this.font);
-			this.mdlVersionLabel.setText("Save PDF/HTML/XML"); //$NON-NLS-1$
+			this.saveMdlButton.setFont(this.font);
+			this.saveMdlButton.setText("Save PDF/HTML/XML"); //$NON-NLS-1$
 			this.saveMdlButton.setEnabled(false);
 			this.saveMdlButton.addSelectionListener(new SelectionAdapter() {
 				@Override
