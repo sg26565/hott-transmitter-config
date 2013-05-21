@@ -50,23 +50,24 @@ import org.eclipse.swt.widgets.MessageBox;
  * tab item for DataExplorer integration of MDL reading and display purpose
  */
 public class MdlTabItem extends CTabItem {
-	final static Logger	log					= Logger.getLogger(MdlTabItem.class.getName());
+	final static Logger					log								= Logger.getLogger(MdlTabItem.class.getName());
 
-	private Browser			browser;
-	private Button			saveMdlButton;
-	private Label				mdlVersionLabel;
-	private Button			loadMdlButton;
-	private Composite		tabItemComposite;
+	private Browser							browser;
+	private Button							saveMdlButton;
+	private Label								mdlVersionLabel;
+	private Button							loadMdlButton;
+	private Composite						tabItemComposite;
 
-	private File				lastLoadDir	= null;
-	private BaseModel		model				= null;
-	private Font				font;
+	private File								lastLoadDir				= null;
+	private BaseModel						model							= null;
+	private Font								font;
 
-	public static final boolean		IS_WINDOWS											= System.getProperty("os.name").toLowerCase().startsWith("windows");																													//$NON-NLS-1$ //$NON-NLS-2$
-	public static final boolean		IS_LINUX												= System.getProperty("os.name").toLowerCase().startsWith("linux");																														//$NON-NLS-1$ //$NON-NLS-2$
-	public static final boolean		IS_MAC													= System.getProperty("os.name").toLowerCase().startsWith("mac");																															//$NON-NLS-1$ //$NON-NLS-2$
+	public static final boolean	IS_WINDOWS				= System.getProperty("os.name").toLowerCase().startsWith("windows");																//$NON-NLS-1$ //$NON-NLS-2$
+	public static final boolean	IS_LINUX					= System.getProperty("os.name").toLowerCase().startsWith("linux");																	//$NON-NLS-1$ //$NON-NLS-2$
+	public static final boolean	IS_MAC						= System.getProperty("os.name").toLowerCase().startsWith("mac");																		//$NON-NLS-1$ //$NON-NLS-2$
 
-	public final static int				WIDGET_FONT_SIZE								= MdlTabItem.IS_MAC ? 12 : ((MdlTabItem.IS_LINUX ? 8 : 9) * 96 / Display.getDefault().getDPI().y);
+	public final static int			WIDGET_FONT_SIZE	= MdlTabItem.IS_MAC ? 12 : ((MdlTabItem.IS_LINUX ? 8 : 9) * 96 / Display.getDefault().getDPI().y);
+	public final static String	WIDGET_FONT_NAME	= MdlTabItem.IS_WINDOWS ? "Microsoft Sans Serif" : "Sans Serif";																		//$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * @param parent
@@ -74,8 +75,8 @@ public class MdlTabItem extends CTabItem {
 	 */
 	public MdlTabItem(CTabFolder parent, int style) {
 		super(parent, style);
-		this.font = new Font(Display.getDefault(), new FontData("Sans Serife", MdlTabItem.WIDGET_FONT_SIZE, SWT.NORMAL)); //$NON-NLS-1$
-		this.setFont(new Font(Display.getDefault(), new FontData("Sans Serife", MdlTabItem.WIDGET_FONT_SIZE+1, SWT.NORMAL)));
+		this.font = new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE, SWT.NORMAL));
+		this.setFont(new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE + 1, SWT.NORMAL)));
 		this.setText("MDL Viewer"); //$NON-NLS-1$
 		Report.setSuppressExceptions(true);
 		this.open(parent);
@@ -88,8 +89,8 @@ public class MdlTabItem extends CTabItem {
 	 */
 	public MdlTabItem(CTabFolder parent, int style, int index) {
 		super(parent, style, index);
-		this.font = new Font(Display.getDefault(), new FontData("Sans Serife", MdlTabItem.WIDGET_FONT_SIZE, SWT.NORMAL)); //$NON-NLS-1$
-		this.setFont(new Font(Display.getDefault(), new FontData("Sans Serife", MdlTabItem.WIDGET_FONT_SIZE+1, SWT.NORMAL)));
+		this.font = new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE, SWT.NORMAL));
+		this.setFont(new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE + 1, SWT.NORMAL)));
 		this.setFont(this.font);
 		this.setText("MDL Viewer"); //$NON-NLS-1$
 		Report.setSuppressExceptions(true);
