@@ -10,11 +10,11 @@
 					<#if phase.phaseType.name() == "Autorotation">
 						<tr class="<@d/>">
 							<th align="right">Gasposition AR</th>
-							<td align="left" colspan="4">${helicopterModel.autorotationThrottlePosition}</td>
+							<td align="left" colspan="5">${helicopterModel.autorotationThrottlePosition}</td>
 						</tr>
 						<tr class="<@d/>">
 							<th align="right">Heckrotoroffset AR</th>
-							<td align="left" colspan="4">${helicopterModel.autorotationTailPosition}</td>
+							<td align="left" colspan="5">${helicopterModel.autorotationTailPosition}</td>
 						</tr>
 					<#else>
 						<@heliCurve "Gaskurve (K1 &rarr; Gas)" phase.helicopterMixer.throttleCurve/>
@@ -23,35 +23,35 @@
 
 					<tr class="<@d/>">
 						<th align="right">Heckrotor &rarr; Gas</th>
-						<td align="left" colspan="4">${phase.helicopterMixer.tail2ThrottleMix}%</td>
+						<td align="left" colspan="5">${phase.helicopterMixer.tail2ThrottleMix}%</td>
 					</tr>	
 					<tr class="<@d/>">
 						<th align="right">Roll &rarr; Gas</th>
-						<td align="left" colspan="4">${phase.helicopterMixer.roll2ThrottleMix}%</td>
+						<td align="left" colspan="5">${phase.helicopterMixer.roll2ThrottleMix}%</td>
 					</tr>	
 					<tr class="<@d/>">
 						<th align="right">Roll &rarr; Heckrotor</th>
-						<td align="left" colspan="4">${phase.helicopterMixer.roll2TailMix}%</td>
+						<td align="left" colspan="5">${phase.helicopterMixer.roll2TailMix}%</td>
 					</tr>	
 					<tr class="<@d/>">
 						<th align="right">Nick &rarr; Gas</th>
-						<td align="left" colspan="4">${phase.helicopterMixer.nick2ThrottleMix}%</td>
+						<td align="left" colspan="5">${phase.helicopterMixer.nick2ThrottleMix}%</td>
 					</tr>	
 					<tr class="<@d/>">
 						<th align="right">Nick &rarr; Heckrotor</th>
-						<td align="left" colspan="4">${phase.helicopterMixer.nick2TailMix}%</td>
+						<td align="left" colspan="5">${phase.helicopterMixer.nick2TailMix}%</td>
 					</tr>	
 					<tr class="<@d/>">
 						<th align="right">Kreiselausblendung</th>
-						<td align="left" colspan="4">${phase.gyroSuppression}%</td>
+						<td align="left" colspan="5">${phase.gyroSuppression}%</td>
 					</tr>	
 					<tr class="<@d/>">
 						<th align="right">Taumelscheibendrehung</th>
-						<td align="left" colspan="4">${phase.helicopterMixer.swashplateRotation}&deg;</td>
+						<td align="left" colspan="5">${phase.helicopterMixer.swashplateRotation}&deg;</td>
 					</tr>	
 					<tr class="<@d/>">
 						<th align="right">Taumelscheibenbegrenzung</th>
-						<td align="left" colspan="4"><#if phase.helicopterMixer.swashplateLimit == 150>aus<#else>${phase.helicopterMixer.swashplateLimit}%</#if></td>
+						<td align="left" colspan="5"><#if phase.helicopterMixer.swashplateLimit == 150>aus<#else>${phase.helicopterMixer.swashplateLimit}%</#if></td>
 					</tr>
 				</tbody>
 			</table>
