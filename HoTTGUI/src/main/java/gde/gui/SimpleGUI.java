@@ -206,12 +206,6 @@ public class SimpleGUI extends FSScrollPane {
 		}
 
 		fileName.append(model.getModelName());
-		if (model.getModelNumber() > 0) {
-			if (model.getModelNumber() < 10) {
-				fileName.append('0');
-			}
-			fileName.append(model.getModelNumber());
-		}
 
 		return fileName.toString();
 	}

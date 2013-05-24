@@ -45,7 +45,7 @@
 
 <#macro heliCurve title curve>
 	<tr>
-		<th class="d2" colspan="5">${title}</th>
+		<th class="d2" colspan="6">${title}</th>
 	</tr>
 	
 	<@reset/>
@@ -53,6 +53,11 @@
 	<tr class="<@d/>">
 		<th align="right">Kurve</th>
 		<td colspan="4" align="left">${curve.smoothing?string("an","aus")}</td>
+		<td rowspan="${curve.point?size+2}" align="center">
+			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="250" height="250" viewbox="-100 -150 200 300">
+				<rect x="-100" y="-150" width="200" height="300" fill="none" stroke="black" stroke-width="1" stroke-dasharray="10,10" />
+			</svg>
+		</td>
 	</tr>
 
 	<tr>

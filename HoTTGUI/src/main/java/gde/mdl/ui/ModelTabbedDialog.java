@@ -1,4 +1,5 @@
 package gde.mdl.ui;
+
 import gde.report.Report;
 
 import java.lang.reflect.Constructor;
@@ -14,7 +15,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
-	final static Logger log = Logger.getLogger(ModelTabbedDialog.class.getName());
+	final static Logger	log	= Logger.getLogger(ModelTabbedDialog.class.getName());
 
 	private Shell				dialogShell;
 	private CTabFolder	mainTabFolder;
@@ -28,9 +29,9 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 		try {
 			Display display = Display.getDefault();
 			Shell shell = new Shell(display);
-			
+
 			String path = Report.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-			path = path.substring(0, path.indexOf("classes")-1);
+			path = path.substring(0, path.indexOf("classes") - 1);
 			System.setProperty("log.dir", path);
 			log.log(Level.OFF, "log.dir =  " + System.getProperty("log.dir")); //$NON-NLS-1$
 			System.setProperty("mdl.dir", path);//$NON-NLS-1$
@@ -55,7 +56,7 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 	public void open() {
 		try {
 			Shell parent = getParent();
-			dialogShell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+			dialogShell = new Shell(parent, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
 			FillLayout dialogShellLayout = new FillLayout(org.eclipse.swt.SWT.HORIZONTAL);
 			dialogShell.setLayout(dialogShellLayout);
 			dialogShell.setText("Graupner/SJ HoTT MDL Explorer");
@@ -67,13 +68,12 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 				{
 					mainTabFolder = new CTabFolder(mainComposite, SWT.NONE);
 					{
-						if (isUtilityGraphicsTabRequested()) 
-							getUtilityGraphicsTabItem();
+						if (isUtilityGraphicsTabRequested()) getUtilityGraphicsTabItem();
 						//new MdlTabItem(mainTabFolder, SWT.NONE);
 					}
-//						{
-//							new BaseConfiguration(mainTabFolder, mdlViewTabItem);
-//						}
+					//						{
+					//							new BaseConfiguration(mainTabFolder, mdlViewTabItem);
+					//						}
 					mainTabFolder.setSelection(0);
 				}
 				mainComposite.layout();
@@ -92,7 +92,7 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * query if the utility graphics tabulator should be displayed and updated
 	 * @return the value of the property, if property does not exist return false (default behavior of Boolean)
@@ -118,7 +118,7 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 		}
 		return rc;
 	}
-	
+
 	/**
 	 * This function allows to register a device specific CTabItem to the main application tab folder to display device 
 	 * specific curve calculated from point combinations or other specific dialog
@@ -134,13 +134,13 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 			Constructor<?> constructor = c.getDeclaredConstructor(new Class[] { CTabFolder.class, int.class });
 			//log.log(java.util.logging.Level.FINE, "constructor != null -> " + (constructor != null ? "true" : "false")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			if (constructor != null) {
-				inst = constructor.newInstance(new Object[] {mainTabFolder, SWT.NONE});
+				inst = constructor.newInstance(new Object[] { mainTabFolder, SWT.NONE });
 			}
 		}
 		catch (final Throwable t) {
 			t.printStackTrace();
 		}
-		return (CTabItem)inst;
+		return (CTabItem) inst;
 	}
 
 }
