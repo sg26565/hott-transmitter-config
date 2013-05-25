@@ -21,6 +21,7 @@ package gde.gui;
 import freemarker.template.TemplateException;
 import gde.model.BaseModel;
 import gde.report.Report;
+import gde.report.SwingSVGReplacedElementFactory;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -43,9 +44,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
+import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.simple.FSScrollPane;
+import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
-import org.xhtmlrenderer.swing.ScalableXHTMLPanel;
 
 import com.itextpdf.text.DocumentException;
 
@@ -170,17 +172,19 @@ public class SimpleGUI extends FSScrollPane {
 		new SimpleGUI().showInFrame();
 	}
 
-	private final Action							closeAction			= new CloseAction("Close");
-	private final Action							loadAction			= new LoadAction("Load MDL");
-	private BaseModel									model						= null;
-	private final Action							refreshAction		= new RefreshAction("Refresh");
-	private final Action							saveHtmlAction	= new SaveAction("Save HTML", FileType.HTML);
-	private final Action							savePdfAction		= new SaveAction("Save PDF", FileType.PDF);
-	private final Action							saveXmlAction		= new SaveAction("Save XML", FileType.XML);
-	private final ScalableXHTMLPanel	xhtmlPane				= new ScalableXHTMLPanel();
+	private final Action			closeAction			= new CloseAction("Close");
+	private final Action			loadAction			= new LoadAction("Load MDL");
+	private BaseModel					model						= null;
+	private final Action			refreshAction		= new RefreshAction("Refresh");
+	private final Action			saveHtmlAction	= new SaveAction("Save HTML", FileType.HTML);
+	private final Action			savePdfAction		= new SaveAction("Save PDF", FileType.PDF);
+	private final Action			saveXmlAction		= new SaveAction("Save XML", FileType.XML);
+	private final XHTMLPanel	xhtmlPane				= new XHTMLPanel();
 
 	public SimpleGUI() {
-		xhtmlPane.getSharedContext().getTextRenderer().setSmoothingThreshold(10);
+		SharedContext ctx = xhtmlPane.getSharedContext();
+		ctx.getTextRenderer().setSmoothingThreshold(10);
+		ctx.setReplacedElementFactory(new SwingSVGReplacedElementFactory(ctx.getReplacedElementFactory()));
 		setViewportView(xhtmlPane);
 		Report.setSuppressExceptions(true);
 

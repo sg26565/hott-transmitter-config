@@ -31,7 +31,7 @@ import freemarker.template.TemplateModel;
 
 public class FreeMarkerHtmlSafeDirective implements TemplateDirectiveModel {
 	private static class HtmlSafeWriter extends Writer {
-		private final Writer out;
+		private final Writer	out;
 
 		public HtmlSafeWriter(final Writer out) {
 			this.out = out;
@@ -97,8 +97,7 @@ public class FreeMarkerHtmlSafeDirective implements TemplateDirectiveModel {
 	}
 
 	@Override
-	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params, final TemplateModel[] loopVars, final TemplateDirectiveBody body)
-			throws TemplateException, IOException {
+	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params, final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		if (body != null) {
 			body.render(new HtmlSafeWriter(env.getOut()));
 		}

@@ -39,7 +39,7 @@
 							<td align="center" colspan="2">---</td>
 						</#if>
 						<#if point_index==0>
-							<td rowspan="${mixer.curve.point?size}" align="center"><@svg 200 200 mixer.curve.point/></td>									
+							<td rowspan="${mixer.curve.point?size}" align="center"><@svg mixer.curve.point 0.75/></td>									
 						</#if>						
 					</tr>
 				</#list>

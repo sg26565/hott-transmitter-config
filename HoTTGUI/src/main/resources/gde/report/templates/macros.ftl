@@ -14,23 +14,22 @@
 
 <#macro d><#if row=="even">d0<#assign row="odd"/><#else>d1<#assign row="even"/></#if></#macro>
 
-<#macro svg width height points>
+<#macro svg points size=1>
 	<#if points[0].position == 0>
-		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${width}" height="${height}" viewbox="0 -112 100 125">
-			<rect x="0" y="-112" width="100" height="125" fill="none" stroke="darkGrey" stroke-width="1"/>
-			<line x1="0" y1="100" x2="100" y2="100" stroke="darkGrey" stroke-width="1" stroke-dasharray="2,2"/>
-			<line x1="0" y1="0" x2="100" y2="0" stroke="darkGrey" stroke-width="1" stroke-dasharray="2,2"/>
-			<line x1="0" y1="-100" x2="100" y2="-100" stroke="darkGrey" stroke-width="1" stroke-dasharray="2,2"/>
-			<polyline points="<#list points as point><#if point.enabled>${point.position},${-point.value} </#if></#list>" stroke="black" stroke-width="1" fill="none"/>
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${(200*size)?c}" height="${(250*size)?c}">
+			<rect x="0" y="0" width="${(200*size)?c}" height="${(250*size)?c}" fill="none" stroke="darkGrey" stroke-width="2"/>
+			<line x1="0" y1="${(25*size)?c}" x2="${(200*size)?c}" y2="${(25*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<line x1="0" y1="${(225*size)?c}" x2="${(200*size)?c}" y2="${(225*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<polyline points="<#list points as point><#if point.enabled>${point.position*2*size},${(225-point.value*2)*size} </#if></#list>" stroke="black" stroke-width="2" fill="none"/>
 		</svg>
 	<#else>
-		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${width}" height="${height}" viewbox="-100 -125 200 250">
-			<rect x="-100" y="-125" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="-100" y1="100" x2="100" y2="100" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="-100" y1="0" x2="100" y2="0" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="-100" y1="-100" x2="100" y2="-100" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="-125" x2="0" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="<#list points as point><#if point.enabled>${point.position},${-point.value} </#if></#list>" stroke="black" stroke-width="2" fill="none"/>
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${(200*size)?c}" height="${(250*size)?c}">
+			<rect x="0" y="0" width="${(200*size)?c}" height="${(250*size)?c}" fill="none" stroke="darkGrey" stroke-width="2"/>
+			<line x1="0" y1="${(25*size)?c}" x2="${(200*size)?c}" y2="${(25*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<line x1="0" y1="${(125*size)?c}" x2="${(200*size)?c}" y2="${(125*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<line x1="0" y1="${(225*size)?c}" x2="${(200*size)?c}" y2="${(225*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<line x1="${(100*size)?c}" y1="0" x2="${(100*size)?c}" y2="${(250*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<polyline points="<#list points as point><#if point.enabled>${((point.position+100)*size)?c},${((125-point.value)*size)?c} </#if></#list>" stroke="black" stroke-width="2" fill="none"/>
 		</svg>
 	</#if>
 </#macro>
@@ -47,7 +46,7 @@
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="${points?size+1}" align="center"><@svg 150 150 points/></td>
+		<td rowspan="${points?size+1}" align="center"><@svg points/></td>
 	</tr>
 
 	<@reset/>
@@ -74,7 +73,7 @@
 	<tr class="d0">
 		<th align="right">Kurve</th>
 		<td colspan="4" align="left">${curve.smoothing?string("an","aus")}</td>
-		<td rowspan="${curve.point?size+2}" align="center"><@svg 250 250 curve.point/></td>
+		<td rowspan="${curve.point?size+2}" align="center"><@svg curve.point/></td>
 	</tr>
 
 	<tr>
@@ -112,7 +111,7 @@
 	<tr class="<@d/>">
 		<th align="right">Kurve</th>
 		<td colspan="4" align="left">${curve.smoothing?string("an","aus")}</td>
-		<td colspan="4" rowspan="${curve.point?size+2}" align="center"><@svg 250 250 curve.point/></td>
+		<td colspan="4" rowspan="${curve.point?size+2}" align="center"><@svg curve.point/></td>
 	</tr>
 
 	<tr>

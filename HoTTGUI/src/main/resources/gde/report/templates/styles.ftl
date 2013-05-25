@@ -45,6 +45,10 @@
 		-fs-pdf-font-encoding: Identity-H;
 	}
 
+	svg {
+		display: block;
+	}
+
 	body {
 		font-family: Arial;
 	}

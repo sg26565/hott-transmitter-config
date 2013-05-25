@@ -39,6 +39,7 @@ import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
+import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.itextpdf.text.DocumentException;
@@ -64,6 +65,7 @@ public class Report {
 	private static final Configuration						CONFIGURATION;
 	private static final JAXBContext							CTX;
 	private static final TemplateExceptionHandler	CUSTOM_HANDLER;
+	private static final ITextRenderer						ITEXT_RENDERER;
 	private static final Logger										LOG	= Logger.getLogger(Report.class);
 	private static final Marshaller								MARSHALLER;
 
@@ -98,6 +100,10 @@ public class Report {
 		catch (final JAXBException e) {
 			throw new RuntimeException(e);
 		}
+
+		ITEXT_RENDERER = new ITextRenderer();
+		final SharedContext ctx = ITEXT_RENDERER.getSharedContext();
+		ctx.setReplacedElementFactory(new ITextSVGReplacedElementFactory(ctx.getReplacedElementFactory()));
 	}
 
 	public static String generateHTML(final BaseModel model) throws IOException, TemplateException {
@@ -196,10 +202,9 @@ public class Report {
 
 	public static void savePDF(final File file, final String data) throws IOException, DocumentException {
 		final FileOutputStream fos = new FileOutputStream(file);
-		final ITextRenderer renderer = new ITextRenderer();
-		renderer.setDocumentFromString(data);
-		renderer.layout();
-		renderer.createPDF(fos);
+		ITEXT_RENDERER.setDocumentFromString(data);
+		ITEXT_RENDERER.layout();
+		ITEXT_RENDERER.createPDF(fos);
 		fos.close();
 	}
 
