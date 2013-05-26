@@ -20,7 +20,7 @@
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>gde.gui.SimpleGUI</mainClass>
+							<mainClass>gde.mdl.ui.ModelTabbedDialog</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
