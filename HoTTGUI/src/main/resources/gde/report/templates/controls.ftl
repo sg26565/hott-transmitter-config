@@ -25,7 +25,11 @@
 
 				<#list phase.control as control>	
 					<tr class="<@d/>">
-						<td align="center">E${control.number?number+1}</td>
+						<#if helicopterModel?? && control.number?number == 15>
+							<td align="center">Gaslimiter</td>
+						<#else>
+							<td align="center">E${control.number?number+1}</td>
+						</#if>
 						<td align="center">${control.mode}</td>
 						<#if control.inputControl?? && control.inputControl.assignment.name() != "Unassigned">
 							<td align="center" colspan="2"><@switch control.inputControl/></td>
