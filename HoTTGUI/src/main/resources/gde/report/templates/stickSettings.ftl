@@ -14,64 +14,49 @@
 	<@reset/>
 	
 	<tbody>
-		<#if wingedModel??>
+		<#list 0..3 as i>
 			<tr class="<@d/>">
-				<td align="center">Kanal 1</td>
-				<td align="center">${model.stickTrim[0].mode}</td>
-				<td align="center">${model.stickTrim[0].increment}</td>
-				<td align="center">${model.stickTrim[0].timeLow?string("0.0")}s</td>
-				<td align="center">${model.stickTrim[0].timeHigh?string("0.0")}s</td>
+				<#if wingedModel??>
+					<#switch i>
+						<#case 0>	
+							<td align="center">Kanal 1</td>
+							<#break>
+						
+						<#case 1>	
+							<td align="center">Querruder</td>
+							<#break>
+
+						<#case 2>	
+							<td align="center">Höhenruder</td>
+							<#break>
+
+						<#case 3>	
+							<td align="center">Seitenruder</td>
+							<#break>
+					</#switch>
+				<#else>
+					<#switch i>
+						<#case 0>	
+							<td align="center">Pitch/Gas</td>
+							<#break>
+						
+						<#case 1>	
+							<td align="center">Roll</td>
+							<#break>
+
+						<#case 2>	
+							<td align="center">Nick</td>
+							<#break>
+						<#case 3>	
+							<td align="center">Heckrotor</td>
+							<#break>
+					</#switch>
+				</#if>				
+				<td align="center">${model.stickTrim[i].mode}</td>
+				<td align="center">${model.stickTrim[i].increment}</td>
+				<td align="center">${model.stickTrim[i].timeLow?string("0.0")}s</td>
+				<td align="center">${model.stickTrim[i].timeHigh?string("0.0")}s</td>
 			</tr>
-			<tr class="<@d/>">
-				<td align="center">Querruder</td>
-				<td align="center">${model.stickTrim[1].mode}</td>
-				<td align="center">${model.stickTrim[1].increment}</td>
-				<td align="center">${model.stickTrim[1].timeLow?string("0.0")}s</td>
-				<td align="center">${model.stickTrim[1].timeHigh?string("0.0")}s</td>
-			</tr>
-			<tr class="<@d/>">
-				<td align="center">Höhenruder</td>
-				<td align="center">${model.stickTrim[2].mode}</td>
-				<td align="center">${model.stickTrim[2].increment}</td>
-				<td align="center">${model.stickTrim[2].timeLow?string("0.0")}s</td>
-				<td align="center">${model.stickTrim[2].timeHigh?string("0.0")}s</td>
-			</tr>
-			<tr class="<@d/>">
-				<td align="center">Seitenruder</td>
-				<td align="center">${model.stickTrim[3].mode}</td>
-				<td align="center">${model.stickTrim[3].increment}</td>
-				<td align="center">${model.stickTrim[3].timeLow?string("0.0")}s</td>
-				<td align="center">${model.stickTrim[3].timeHigh?string("0.0")}s</td>
-			</tr>
-		<#else>
-			<tr class="<@d/>">
-				<td align="center">Pitch/Gas</td>
-				<td align="center">${model.stickTrim[0].mode}</td>
-				<td align="center">${model.stickTrim[0].increment}</td>
-				<td align="center">${model.stickTrim[0].timeLow?string("0.0")}s</td>
-				<td align="center">${model.stickTrim[0].timeHigh?string("0.0")}s</td>
-			</tr>
-			<tr class="<@d/>">
-				<td align="center">Roll</td>
-				<td align="center">${model.stickTrim[1].mode}</td>
-				<td align="center">${model.stickTrim[1].increment}</td>
-				<td align="center">${model.stickTrim[1].timeLow?string("0.0")}s</td>
-				<td align="center">${model.stickTrim[1].timeHigh?string("0.0")}s</td>
-			</tr>
-			<tr class="<@d/>">
-				<td align="center">Nick</td>
-				<td align="center">${model.stickTrim[2].mode}</td>
-				<td align="center">${model.stickTrim[2].increment}</td>
-				<td align="center">${model.stickTrim[2].timeLow?string("0.0")}s</td>
-				<td align="center">${model.stickTrim[2].timeHigh?string("0.0")}s</td>
-			</tr>
-			<tr class="<@d/>">
-				<td align="center">Heckrotor</td>
-				<td align="center">${model.stickTrim[3].mode}</td>
-				<td align="center">${model.stickTrim[3].increment}</td>
-				<td align="center">${model.stickTrim[3].timeLow?string("0.0")}s</td>
-				<td align="center">${model.stickTrim[3].timeHigh?string("0.0")}s</td>
-			</tr>
-		</#if>
+		</#list>
 	</tbody>			
 </table>
