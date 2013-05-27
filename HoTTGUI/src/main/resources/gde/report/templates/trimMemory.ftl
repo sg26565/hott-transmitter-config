@@ -18,7 +18,6 @@
 		</tr>
 		<tr>
 			<th/>
-			<th align="center">Speicher</th>
 			<th align="center">Knüppel</th>				
 			<th align="center">Speicher</th>
 			<th align="center">Knüppel</th>				
@@ -26,6 +25,7 @@
 			<th align="center">Knüppel</th>				
 			<th align="center">Speicher</th>
 			<th align="center">Knüppel</th>				
+			<th align="center">Speicher</th>
 		</tr>
 	</thead>
 	
@@ -37,23 +37,23 @@
 				<tr class="<@d/>">
 					<td align="center">${phase?string}</td>					
 					<#if wingedModel??>
-						<td align="center">${phase.control[0].trim}%</td>
 						<td align="center">${model.throttleSettings.throttleTrim}%</td>
-						<td align="center">${phase.control[1].trim}%</td>
+						<td align="center">${phase.control[0].trim}%</td>
 						<td align="center">${phase.wingTrim.aileronStickTrim}%</td>
-						<td align="center">${phase.control[2].trim}%</td>
-						<td align="center">${phase.wingTrim.elevatorStickTrim}%</td>
-						<td align="center">${phase.control[3].trim}%</td>
-						<td align="center">${phase.wingTrim.rudderStickTrim}%</td>
-					<#else>
-						<td align="center">${phase.control[0].trim}%</td>
-						<td align="center">${model.throttleSettings.throttleTrim}%</td>
 						<td align="center">${phase.control[1].trim}%</td>
-						<td align="center">${phase.helicopterTrim.rollStickTrim}%</td>
+						<td align="center">${phase.wingTrim.elevatorStickTrim}%</td>
 						<td align="center">${phase.control[2].trim}%</td>
-						<td align="center">${phase.helicopterTrim.nickStickTrim}%</td>
+						<td align="center">${phase.wingTrim.rudderStickTrim}%</td>
 						<td align="center">${phase.control[3].trim}%</td>
+					<#else>
+						<td align="center">${model.throttleSettings.throttleTrim}%</td>
+						<td align="center">${phase.control[0].trim}%</td>
+						<td align="center">${phase.helicopterTrim.rollStickTrim}%</td>
+						<td align="center">${phase.control[1].trim}%</td>
+						<td align="center">${phase.helicopterTrim.nickStickTrim}%</td>
+						<td align="center">${phase.control[2].trim}%</td>
 						<td align="center">${phase.helicopterTrim.tailStickTrim}%</td>
+						<td align="center">${phase.control[3].trim}%</td>
 					</#if>
 				</tr>
 			</#if>

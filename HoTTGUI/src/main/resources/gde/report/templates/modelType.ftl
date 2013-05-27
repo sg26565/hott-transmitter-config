@@ -23,11 +23,11 @@
 			</tr>
 			<tr class="<@d/>">
 				<th align="right">Expo Gaslimit</th>
-				<td align="left">${helicopterModel.expoThrottleLimit}</td>
+				<td align="left">${helicopterModel.expoThrottleLimit}%</td>
 			</tr>
 			<tr class="<@d/>">
 				<th align="right">Gaslimit Warnung</th>
-				<td align="left">${helicopterModel.throttleLimitWarning}</td>
+				<td align="left">${helicopterModel.throttleLimitWarning}%</td>
 			</tr>
 		</tbody>
 	<#else>

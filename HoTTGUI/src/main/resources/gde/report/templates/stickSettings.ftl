@@ -48,29 +48,29 @@
 				<td align="center">Pitch/Gas</td>
 				<td align="center">${model.stickTrim[0].mode}</td>
 				<td align="center">${model.stickTrim[0].increment}</td>
-				<td align="center">${model.stickTrim[0].timeLow?string("0.0")}</td>
-				<td align="center">${model.stickTrim[0].timeHigh?string("0.0")}</td>
+				<td align="center">${model.stickTrim[0].timeLow?string("0.0")}s</td>
+				<td align="center">${model.stickTrim[0].timeHigh?string("0.0")}s</td>
 			</tr>
 			<tr class="<@d/>">
 				<td align="center">Roll</td>
 				<td align="center">${model.stickTrim[1].mode}</td>
 				<td align="center">${model.stickTrim[1].increment}</td>
-				<td align="center">${model.stickTrim[1].timeLow?string("0.0")}</td>
-				<td align="center">${model.stickTrim[1].timeHigh?string("0.0")}</td>
+				<td align="center">${model.stickTrim[1].timeLow?string("0.0")}s</td>
+				<td align="center">${model.stickTrim[1].timeHigh?string("0.0")}s</td>
 			</tr>
 			<tr class="<@d/>">
 				<td align="center">Nick</td>
 				<td align="center">${model.stickTrim[2].mode}</td>
 				<td align="center">${model.stickTrim[2].increment}</td>
-				<td align="center">${model.stickTrim[2].timeLow?string("0.0")}</td>
-				<td align="center">${model.stickTrim[2].timeHigh?string("0.0")}</td>
+				<td align="center">${model.stickTrim[2].timeLow?string("0.0")}s</td>
+				<td align="center">${model.stickTrim[2].timeHigh?string("0.0")}s</td>
 			</tr>
 			<tr class="<@d/>">
 				<td align="center">Heckrotor</td>
 				<td align="center">${model.stickTrim[3].mode}</td>
 				<td align="center">${model.stickTrim[3].increment}</td>
-				<td align="center">${model.stickTrim[3].timeLow?string("0.0")}</td>
-				<td align="center">${model.stickTrim[3].timeHigh?string("0.0")}</td>
+				<td align="center">${model.stickTrim[3].timeLow?string("0.0")}s</td>
+				<td align="center">${model.stickTrim[3].timeHigh?string("0.0")}s</td>
 			</tr>
 		</#if>
 	</tbody>			

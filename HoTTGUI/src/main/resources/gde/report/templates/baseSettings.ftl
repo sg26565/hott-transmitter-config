@@ -57,7 +57,7 @@
 			</tr>	
 			<tr class="<@d/>">
 				<th align="right">Autorotation K1 Position</th>
-				<td align="left"><i>Position:</i> ${helicopterModel.autorotationC1TriggerPosition}</td>
+				<td align="left"><i>Position:</i> ${helicopterModel.autorotationC1TriggerPosition}%</td>
 				<td align="left" colspan="2"><i>Schalter:</i> <@switch model.getSwitch("AutorotationC1")/></td>
 			</tr>
 		</#if>
