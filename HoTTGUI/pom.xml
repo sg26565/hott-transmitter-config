@@ -11,6 +11,7 @@
 	</parent>
 
 	<build>
+		<finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -22,6 +23,9 @@
 							<classpathPrefix>lib/</classpathPrefix>
 							<mainClass>gde.mdl.ui.ModelTabbedDialog</mainClass>
 						</manifest>
+						<manifestEntries>
+							<Implementation-Build>Revision ${buildNumber}</Implementation-Build>
+						</manifestEntries>
 					</archive>
 				</configuration>
 			</plugin>
@@ -63,15 +67,24 @@
 					<projectName>hott-transmitter-config</projectName> <!-- default: ${project.artifactId} -->
 					<uploads>
 						<upload>
-							<file>${project.build.directory}/${project.artifactId}-${project.version}-bin.zip</file>
+							<file>${project.build.directory}/${project.artifactId}-${project.version}-r${buildNumber}-bin.zip</file>
 							<summary>${project.artifactId} version ${project.version}</summary>
 							<labels>
-								<label>Featured</label>
+								<label>Experimental</label>
 								<label>Type-Archive</label>
 							</labels>
 						</upload>
 					</uploads>
 				</configuration>
+				<executions>
+					<execution>
+						<id>upload</id>
+						<phase>install</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
