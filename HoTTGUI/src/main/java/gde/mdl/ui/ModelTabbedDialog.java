@@ -2,6 +2,7 @@ package gde.mdl.ui;
 
 import gde.report.Report;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +31,24 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 			Display display = Display.getDefault();
 			Shell shell = new Shell(display);
 
-			String path = Report.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-			path = path.substring(0, path.indexOf("classes") - 1);
+			File source = new File(Report.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+
+			// if application was packaged as individual class files, find the classes directory
+			if (!source.getName().endsWith(".jar")) {
+				while (!source.getName().equals("classes")) {
+					source = source.getParentFile();
+				}				
+			}
+
+			// get the parent directory containing the jar file or the classes directory
+			source = source.getParentFile();
+
+			// if we are running inside Eclipse in the target directory, step up to the project level
+			if (source.getName().equals("target")) {
+				source = source.getParentFile();
+			}
+
+			String path = source.getAbsolutePath();
 			System.setProperty("log.dir", path);
 			log.log(Level.OFF, "log.dir =  " + System.getProperty("log.dir")); //$NON-NLS-1$
 			System.setProperty("mdl.dir", path);//$NON-NLS-1$
