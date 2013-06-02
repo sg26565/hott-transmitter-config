@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gde.gui;
+package gde.mdl;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +26,7 @@ import javax.xml.bind.JAXBException;
 import com.itextpdf.text.DocumentException;
 
 import freemarker.template.TemplateException;
+import gde.mdl.ui.Launcher;
 import gde.model.BaseModel;
 import gde.report.Report;
 
@@ -34,10 +35,8 @@ import gde.report.Report;
  */
 public class GenerateDemoFiles {
 	public static void main(final String[] args) throws IOException, URISyntaxException, JAXBException, TemplateException, DocumentException {
-		final File mainJar = new File(GenerateDemoFiles.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-		final File programDir = mainJar.getParentFile().getParentFile();
-		System.setProperty("program.dir", programDir.getAbsolutePath());
-
+		Launcher.initSystemProperties();
+		
 		final File dir = new File("demo");
 
 		Report.setSuppressExceptions(false);

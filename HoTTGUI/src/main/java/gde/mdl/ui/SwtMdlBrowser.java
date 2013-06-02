@@ -1,9 +1,5 @@
 package gde.mdl.ui;
 
-import gde.report.Report;
-
-import java.net.URISyntaxException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.swt.SWT;
@@ -59,22 +55,6 @@ public class SwtMdlBrowser extends Composite {
 	* simple UI Window without menu 
 	*/
 	public static void main(String[] args) {
-		try {
-			String path = Report.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-			path = path.substring(0, path.indexOf("classes") - 1); //$NON-NLS-1$
-			System.setProperty("log.dir", path); //$NON-NLS-1$
-			SwtMdlBrowser.log.log(Level.OFF, "log.dir =  " + System.getProperty("log.dir")); //$NON-NLS-1$ //$NON-NLS-2$
-			System.setProperty("mdl.dir", path);//$NON-NLS-1$
-			SwtMdlBrowser.log.log(Level.OFF, "mdl.dir =  " + System.getProperty("mdl.dir")); //$NON-NLS-1$ //$NON-NLS-2$
-			System.setProperty("program.dir", System.getProperty("mdl.dir"));//$NON-NLS-1$ //$NON-NLS-2$
-			SwtMdlBrowser.log.log(Level.OFF, "program.dir =  " + System.getProperty("program.dir")); //$NON-NLS-1$ //$NON-NLS-2$
-			System.setProperty("template.dir", "");//load from classpath //$NON-NLS-1$ //$NON-NLS-2$
-			SwtMdlBrowser.log.log(Level.OFF, "template.dir =  " + System.getProperty("template.dir")); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-		catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-
 		Display display = Display.getDefault();
 		Shell shell = new Shell(display);
 		SwtMdlBrowser inst = new SwtMdlBrowser(shell, SWT.NULL);
@@ -95,5 +75,4 @@ public class SwtMdlBrowser extends Composite {
 			if (!display.readAndDispatch()) display.sleep();
 		}
 	}
-
 }

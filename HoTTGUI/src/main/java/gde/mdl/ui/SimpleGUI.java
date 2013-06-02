@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gde.gui;
+package gde.mdl.ui;
 
 import freemarker.template.TemplateException;
 import gde.model.BaseModel;
@@ -25,9 +25,13 @@ import gde.report.SwingSVGReplacedElementFactory;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 import javax.swing.AbstractAction;
@@ -40,10 +44,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBException;
 
-import org.apache.log4j.Logger;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.simple.FSScrollPane;
 import org.xhtmlrenderer.simple.XHTMLPanel;
@@ -128,47 +132,13 @@ public class SimpleGUI extends FSScrollPane {
 
 	private static final String				LAST_LOAD_DIR			= "lastLoadDir";
 	private static final String				LAST_SAVE_DIR			= "lastSaveDir";
-	private static final Logger				LOG;
-	private static final String				LOG_DIR						= "log.dir";
-	private static final String				MDL_DIR						= "mdl.dir";
+	private static final Logger				LOG								= Logger.getLogger(SimpleGUI.class.getName());
 	private static final Preferences	PREFS							= Preferences.userNodeForPackage(SimpleGUI.class);
-	private static final String				PROGRAM_DIR				= "program.dir";
 	private static final long					serialVersionUID	= 8824399313635999416L;
-	private static final String				TEMPLATE_DIR			= "template.dir";
 
-	static {
-		File mainJar;
-		try {
-			mainJar = new File(Report.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-		}
-		catch (final URISyntaxException e) {
-			throw new RuntimeException(e);
-		}
-
-		final File programDir = mainJar.getParentFile();
-		System.setProperty(PROGRAM_DIR, programDir.getAbsolutePath());
-
-		if (!System.getProperties().containsKey(MDL_DIR)) {
-			System.setProperty(MDL_DIR, System.getProperty(PROGRAM_DIR));
-		}
-
-		if (!System.getProperties().containsKey(LOG_DIR)) {
-			System.setProperty(LOG_DIR, System.getProperty(PROGRAM_DIR));
-		}
-
-		if (!System.getProperties().containsKey(TEMPLATE_DIR)) {
-			System.setProperty(TEMPLATE_DIR, new File(programDir, "templates").getAbsolutePath());
-		}
-
-		LOG = Logger.getLogger(SimpleGUI.class);
-		LOG.debug("main jar location: " + mainJar.getAbsolutePath());
-		LOG.debug("program.dir: " + System.getProperty(PROGRAM_DIR));
-		LOG.debug("log.dir: " + System.getProperty(LOG_DIR));
-		LOG.debug("mdl.dir: " + System.getProperty(MDL_DIR));
-		LOG.debug("templates.dir: " + System.getProperty(TEMPLATE_DIR));
-	}
-
-	public static void main(final String[] args) {
+	public static void main(final String[] args) throws URISyntaxException, SecurityException, IOException {
+		Launcher.initSystemProperties();
+		Launcher.initLogging();
 		new SimpleGUI().showInFrame();
 	}
 
@@ -180,6 +150,7 @@ public class SimpleGUI extends FSScrollPane {
 	private final Action			savePdfAction		= new SaveAction("Save PDF", FileType.PDF);
 	private final Action			saveXmlAction		= new SaveAction("Save XML", FileType.XML);
 	private final XHTMLPanel	xhtmlPane				= new XHTMLPanel();
+	private final JPopupMenu	popupMenu				= new JPopupMenu();
 
 	public SimpleGUI() {
 		SharedContext ctx = xhtmlPane.getSharedContext();
@@ -220,7 +191,7 @@ public class SimpleGUI extends FSScrollPane {
 		fc.setMultiSelectionEnabled(false);
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.setFileFilter(new FileNameExtensionFilter("HoTT Transmitter Model Files", "mdl"));
-		fc.setCurrentDirectory(new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(MDL_DIR))));
+		fc.setCurrentDirectory(new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR))));
 
 		final int result = fc.showOpenDialog(getTopLevelAncestor());
 
@@ -254,7 +225,7 @@ public class SimpleGUI extends FSScrollPane {
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setMultiSelectionEnabled(false);
 		fc.setAcceptAllFileFilterUsed(false);
-		fc.setCurrentDirectory(new File(PREFS.get(LAST_SAVE_DIR, PREFS.get(LAST_LOAD_DIR, System.getProperty(MDL_DIR)))));
+		fc.setCurrentDirectory(new File(PREFS.get(LAST_SAVE_DIR, PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR)))));
 		fc.setFileFilter(new FileNameExtensionFilter(description, extension));
 		fc.setSelectedFile(new File(getFileName(model)));
 
@@ -285,7 +256,7 @@ public class SimpleGUI extends FSScrollPane {
 	}
 
 	private void showError(final Throwable t) {
-		LOG.error("Error", t);
+		LOG.log(Level.SEVERE, "Error", t);
 		JOptionPane.showMessageDialog(getTopLevelAncestor(), t.getClass().getName() + ": " + t.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
@@ -296,6 +267,8 @@ public class SimpleGUI extends FSScrollPane {
 			fileMenu.add(new JMenuItem(saveHtmlAction));
 			fileMenu.add(new JMenuItem(savePdfAction));
 			fileMenu.add(new JMenuItem(saveXmlAction));
+			fileMenu.addSeparator();
+			fileMenu.add(new JMenuItem(refreshAction));
 			fileMenu.addSeparator();
 			fileMenu.add(new JMenuItem(closeAction));
 
@@ -310,6 +283,31 @@ public class SimpleGUI extends FSScrollPane {
 			buttonPanel.add(new JButton(savePdfAction));
 			buttonPanel.add(new JButton(saveXmlAction));
 
+			popupMenu.add(new JMenuItem(loadAction));
+			popupMenu.add(new JMenuItem(saveHtmlAction));
+			popupMenu.add(new JMenuItem(savePdfAction));
+			popupMenu.add(new JMenuItem(saveXmlAction));
+			popupMenu.addSeparator();
+			popupMenu.add(new JMenuItem(refreshAction));
+			popupMenu.addSeparator();
+			popupMenu.add(new JMenuItem(closeAction));
+
+			xhtmlPane.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if (e.isPopupTrigger()) {
+						popupMenu.show(e.getComponent(), e.getX(), e.getY());
+					}
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					if (e.isPopupTrigger()) {
+						popupMenu.show(e.getComponent(), e.getX(), e.getY());
+					}
+				}
+			});
+
 			final JFrame frame = new JFrame("Hott Transmitter Config");
 			frame.setJMenuBar(menubar);
 			frame.setLayout(new BorderLayout());
@@ -318,7 +316,7 @@ public class SimpleGUI extends FSScrollPane {
 			frame.pack();
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
-			frame.setSize(1280, 1024);
+			frame.setSize(800, 600);
 		}
 		catch (final Throwable t) {
 			showError(t);

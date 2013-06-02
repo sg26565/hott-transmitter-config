@@ -207,7 +207,7 @@ public class MdlTabItemComposite extends Composite {
 		final FileDialog fd = new FileDialog(this.getParent().getShell(), SWT.SINGLE);
 		fd.setFilterExtensions(new String[] { "*.mdl" }); //$NON-NLS-1$
 		fd.setFilterNames(new String[] { "HoTT Transmitter Model Files (*.mdl)" }); //$NON-NLS-1$
-		fd.setFilterPath(PREFS.get("lastLoadDir", System.getProperty("mdl.dir")));
+		fd.setFilterPath(PREFS.get("lastLoadDir", System.getProperty(Launcher.MDL_DIR)));
 
 		fd.open();
 		if (fd.getFileName().length() > 4) {
@@ -238,7 +238,7 @@ public class MdlTabItemComposite extends Composite {
 			fileSaveDialog.setText("save PDF"); //$NON-NLS-1$
 			fileSaveDialog.setFilterExtensions(new String[] { "*.pdf", "*.html", "*.xml" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			fileSaveDialog.setFilterNames(new String[] { "Portable Document Format (*.pdf)", "Hypertext Markup Language (*.html)", "Extensible Markup Language (*.xml)" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			fileSaveDialog.setFilterPath(PREFS.get("lastSaveDir", PREFS.get("lastLoadDir", System.getProperty("mdl.dir"))));
+			fileSaveDialog.setFilterPath(PREFS.get("lastSaveDir", PREFS.get("lastLoadDir", System.getProperty(Launcher.MDL_DIR))));
 			fileSaveDialog.setFileName(this.model.getModelName() + ".pdf");
 			fileSaveDialog.open();
 			File file = new File(fileSaveDialog.getFilterPath() + "/" + fileSaveDialog.getFileName()); //$NON-NLS-1$

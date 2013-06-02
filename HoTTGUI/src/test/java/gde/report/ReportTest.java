@@ -20,6 +20,11 @@ package gde.report;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import freemarker.template.TemplateException;
+import gde.mdl.ui.Launcher;
+import gde.model.BaseModel;
+import gde.model.enums.TransmitterType;
+import gde.model.winged.WingedModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,16 +37,10 @@ import javax.xml.bind.JAXBException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import freemarker.template.TemplateException;
-import gde.model.BaseModel;
-import gde.model.enums.TransmitterType;
-import gde.model.winged.WingedModel;
-
 public class ReportTest {
 	@BeforeClass
-	public static void init() throws ClassNotFoundException {
-		// initialize SimpleGUI class
-		Class.forName("gde.gui.SimpleGUI");
+	public static void init() throws URISyntaxException {
+		Launcher.initSystemProperties();
 	}
 
 	@Test

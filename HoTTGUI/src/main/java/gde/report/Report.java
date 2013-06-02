@@ -38,7 +38,6 @@ import javax.xml.bind.SchemaOutputResolver;
 import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.log4j.Logger;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
@@ -50,6 +49,7 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import gde.mdl.ui.Launcher;
 import gde.model.BaseModel;
 import gde.model.CurveMixer;
 import gde.model.LinearMixer;
@@ -66,32 +66,17 @@ public class Report {
 	private static final JAXBContext							CTX;
 	private static final TemplateExceptionHandler	CUSTOM_HANDLER;
 	private static final ITextRenderer						ITEXT_RENDERER;
-	private static final Logger										LOG	= Logger.getLogger(Report.class);
 	private static final Marshaller								MARSHALLER;
 
 	static {
-		final File templateDir = new File(System.getProperty("template.dir"));
-
+		// setup freemarker
 		CONFIGURATION = new Configuration();
 		CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8");
-		if (templateDir.exists() && templateDir.isDirectory()) {
-			LOG.debug("using dir for template loading");
-			try {
-				CONFIGURATION.setDirectoryForTemplateLoading(templateDir);
-			}
-			catch (final IOException e) {
-				LOG.error("using classpath for template loading due to error", e);
-				CONFIGURATION.setClassForTemplateLoading(Report.class, "templates");
-			}
-		}
-		else {
-			LOG.debug("using classpath for template loading");
-			CONFIGURATION.setClassForTemplateLoading(Report.class, "templates");
-		}
-
+		CONFIGURATION.setClassForTemplateLoading(Report.class, "templates");
 		CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
 		CUSTOM_HANDLER = new FreeMarkerExceptionHandler();
 
+		// setup JAXB
 		try {
 			CTX = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class, LinearMixer.class, CurveMixer.class);
 			MARSHALLER = CTX.createMarshaller();
@@ -101,6 +86,7 @@ public class Report {
 			throw new RuntimeException(e);
 		}
 
+		// setup flyingsaucer
 		ITEXT_RENDERER = new ITextRenderer();
 		final SharedContext ctx = ITEXT_RENDERER.getSharedContext();
 		ctx.setReplacedElementFactory(new ITextSVGReplacedElementFactory(ctx.getReplacedElementFactory()));
@@ -182,8 +168,7 @@ public class Report {
 		rootMap.put("model", model);
 		rootMap.put("hex", new FreeMarkerHexConverter());
 		rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective());
-		rootMap.put("programDir", new File(System.getProperty("program.dir")).toURI().toURL().toString());
-		rootMap.put("templateDir", new File(System.getProperty("template.dir")).toURI().toURL().toString());
+		rootMap.put("programDir", new File(System.getProperty(Launcher.PROGRAM_DIR)).toURI().toURL().toString());
 		if (model instanceof WingedModel) {
 			rootMap.put("wingedModel", model);
 		}

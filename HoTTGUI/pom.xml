@@ -14,29 +14,37 @@
 		<finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
 		<plugins>
 			<plugin>
-				<artifactId>maven-jar-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
 				<configuration>
-					<archive>
-						<manifest>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>gde.mdl.ui.ModelTabbedDialog</mainClass>
-						</manifest>
-						<manifestEntries>
-							<Implementation-Build>Revision ${buildNumber}</Implementation-Build>
-						</manifestEntries>
-					</archive>
+					<minimizeJar>true</minimizeJar>
+					<filters>
+						<filter>
+							<artifact>org.apache.xmlgraphics:batik-css</artifact>
+							<includes>
+								<include>org/apache/batik/css/**</include>
+							</includes>
+						</filter>
+						<filter>
+							<artifact>org.apache.xmlgraphics:batik-codec</artifact>
+							<includes>
+								<include>org/apache/batik/ext/awt/image/codec/png/**</include>
+								<include>org/apache/batik/ext/awt/image/codec/util/**</include>
+							</includes>
+						</filter>
+					</filters>
+					<transformers>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+							<mainClass>gde.mdl.ui.Launcher</mainClass>
+						</transformer>
+					</transformers>
 				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>copy</id>
 						<phase>package</phase>
 						<goals>
-							<goal>copy-dependencies</goal>
+							<goal>shade</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -62,9 +70,9 @@
 				<groupId>com.googlecode.maven-gcu-plugin</groupId>
 				<artifactId>maven-gcu-plugin</artifactId>
 				<configuration>
-					<serverId>googlecode</serverId> <!-- default: googlecode -->
-					<failsOnError>true</failsOnError> <!-- default: false -->
-					<projectName>hott-transmitter-config</projectName> <!-- default: ${project.artifactId} -->
+					<serverId>googlecode</serverId>
+					<failsOnError>true</failsOnError>
+					<projectName>hott-transmitter-config</projectName>
 					<uploads>
 						<upload>
 							<file>${project.build.directory}/${project.artifactId}-${project.version}-r${buildNumber}-bin.zip</file>
@@ -105,11 +113,6 @@
 			<artifactId>HoTTDecoder</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-		</dependency>
-		<dependency>
 			<groupId>org.xhtmlrenderer</groupId>
 			<artifactId>flying-saucer-pdf-itext5</artifactId>
 		</dependency>
@@ -138,6 +141,7 @@
 			<groupId>org.eclipse.swt</groupId>
 			<artifactId>swt-gtk-linux-x86_64</artifactId>
 			<version>4.2.2</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

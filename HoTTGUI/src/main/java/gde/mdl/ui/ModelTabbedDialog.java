@@ -1,11 +1,6 @@
 package gde.mdl.ui;
 
-import gde.report.Report;
-
-import java.io.File;
 import java.lang.reflect.Constructor;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -16,7 +11,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
-	final static Logger	log	= Logger.getLogger(ModelTabbedDialog.class.getName());
+	//final static Logger	log	= Logger.getLogger(ModelTabbedDialog.class.getName());
 
 	private Shell				dialogShell;
 	private CTabFolder	mainTabFolder;
@@ -27,43 +22,10 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 	 * inside a new Shell.
 	 */
 	public static void main(String[] args) {
-		try {
 			Display display = Display.getDefault();
 			Shell shell = new Shell(display);
-
-			File source = new File(Report.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-
-			// if application was packaged as individual class files, find the classes directory
-			if (!source.getName().endsWith(".jar")) {
-				while (!source.getName().equals("classes")) {
-					source = source.getParentFile();
-				}				
-			}
-
-			// get the parent directory containing the jar file or the classes directory
-			source = source.getParentFile();
-
-			// if we are running inside Eclipse in the target directory, step up to the project level
-			if (source.getName().equals("target")) {
-				source = source.getParentFile();
-			}
-
-			String path = source.getAbsolutePath();
-			System.setProperty("log.dir", path);
-			log.log(Level.OFF, "log.dir =  " + System.getProperty("log.dir")); //$NON-NLS-1$
-			System.setProperty("mdl.dir", path);//$NON-NLS-1$
-			log.log(Level.OFF, "mdl.dir =  " + System.getProperty("mdl.dir")); //$NON-NLS-1$
-			System.setProperty("program.dir", System.getProperty("mdl.dir"));//$NON-NLS-1$
-			log.log(Level.OFF, "program.dir =  " + System.getProperty("program.dir")); //$NON-NLS-1$
-			System.setProperty("template.dir", "");//load from classpath //$NON-NLS-1$
-			log.log(Level.OFF, "template.dir =  " + System.getProperty("template.dir")); //$NON-NLS-1$
-
 			ModelTabbedDialog inst = new ModelTabbedDialog(shell, SWT.NULL);
 			inst.open();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public ModelTabbedDialog(Shell parent, int style) {

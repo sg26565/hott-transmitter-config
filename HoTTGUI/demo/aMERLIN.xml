@@ -132,14 +132,14 @@
         </channel>
     </channels>
     <channelMappings>
-        <channelMapping inputChannel="0" outputChannel="0"/>
-        <channelMapping inputChannel="1" outputChannel="1"/>
-        <channelMapping inputChannel="2" outputChannel="2"/>
-        <channelMapping inputChannel="3" outputChannel="3"/>
-        <channelMapping inputChannel="4" outputChannel="4"/>
-        <channelMapping inputChannel="5" outputChannel="5"/>
-        <channelMapping inputChannel="6" outputChannel="6"/>
-        <channelMapping inputChannel="7" outputChannel="7"/>
+        <channelMapping outputChannel="0" inputChannel="0"/>
+        <channelMapping outputChannel="1" inputChannel="1"/>
+        <channelMapping outputChannel="2" inputChannel="2"/>
+        <channelMapping outputChannel="3" inputChannel="3"/>
+        <channelMapping outputChannel="4" inputChannel="4"/>
+        <channelMapping outputChannel="5" inputChannel="5"/>
+        <channelMapping outputChannel="6" inputChannel="6"/>
+        <channelMapping outputChannel="7" inputChannel="7"/>
     </channelMappings>
     <clocks>
         <clock number="0">
@@ -193,7 +193,7 @@
     <modelNumber>0</modelNumber>
     <modelType>Winged</modelType>
     <phases>
-        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="0">
+        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="-1">
             <controls>
                 <control number="4">
                     <inputControl>InputControl_5</inputControl>
@@ -362,7 +362,7 @@
                 </wingMixer>
             </wingMixers>
         </phase>
-        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="1">
+        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="0">
             <dualRates>
                 <dualRate function="Aileron">
                     <values>75</values>
@@ -404,7 +404,7 @@
                 <rudderStickTrim>0</rudderStickTrim>
             </wingTrim>
         </phase>
-        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="2">
+        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="1">
             <dualRates>
                 <dualRate function="Aileron">
                     <values>100</values>
@@ -447,7 +447,7 @@
                 <rudderStickTrim>0</rudderStickTrim>
             </wingTrim>
         </phase>
-        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="3">
+        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="2">
             <dualRates>
                 <dualRate function="Aileron">
                     <values>100</values>
@@ -490,7 +490,7 @@
                 <rudderStickTrim>0</rudderStickTrim>
             </wingTrim>
         </phase>
-        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="4">
+        <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="3">
             <dualRates>
                 <dualRate function="Aileron">
                     <values>100</values>
