@@ -1,3 +1,12 @@
+<#assign show=false/>
+<#list model.freeMixer as mixer>
+	<#if mixer.fromChannel.number != "0" && mixer.toChannel.number != "0" && mixer_index &gt;= 8>
+		<#assign show=true/>
+		<#break>
+	</#if>
+</#list>
+
+<#if show>
 <table>
 	<caption>Kurvenmischer</caption>
 	
@@ -20,7 +29,7 @@
 	
 	<tbody>
 		<#list model.freeMixer as mixer>
-			<#if mixer_index &gt;= 8>
+			<#if mixer.fromChannel.number != "0" && mixer.toChannel.number != "0" && mixer_index &gt;= 8>
 				<#list mixer.curve.point as point>
 					<tr class="<@d/>">
 						<#if point_index==0>
@@ -47,3 +56,4 @@
 		</#list>
 	</tbody>		
 </table>
+</#if>

@@ -1,4 +1,13 @@
 <#if model.logicalSwitch??>
+<#assign show=false/>
+<#list model.logicalSwitch as sw>
+	<#if sw.switch[0].assignment.name() != "Unassigned" && sw.switch[1].assignment.name() != "Unassigned">
+		<#assign show=true/>
+		<#break>
+	</#if>
+</#list>
+
+<#if show>
 	<table>
 		<caption>logische Schalter</caption>
 		
@@ -15,13 +24,16 @@
 		
 		<tbody>
 			<#list model.logicalSwitch as sw>
+				<#if sw.switch[0].assignment.name() != "Unassigned" && sw.switch[1].assignment.name() != "Unassigned">
 				<tr class="<@d/>">
 					<td align="center">L${sw_index+1}</td>
 					<td align="center"><@switch sw.switch[0]/></td>
 					<td align="center">${sw.mode}</td>
 					<td align="center"><@switch sw.switch[1]/></td>
 				</tr>
+				</#if>
 			</#list>
 		</tbody>
 	</table>
+</#if>
 </#if>

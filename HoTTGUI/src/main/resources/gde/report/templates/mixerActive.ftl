@@ -1,3 +1,12 @@
+<#assign show=false/>
+<#list model.freeMixer as mixer>
+	<#if mixer.fromChannel.number != "0" && mixer.toChannel.number != "0">
+		<#assign show=true/>
+		<#break>
+	</#if>
+</#list>
+
+<#if show>
 <table>
 	<caption>MIX aktiv / Phase</caption>
 	
@@ -17,6 +26,7 @@
 	
 	<tbody>
 		<#list model.freeMixer as mixer>
+			<#if mixer.fromChannel.number != "0" && mixer.toChannel.number != "0">
 			<tr class="<@d/>">
 				<#if mixer_index < 8>
 					<td align="right">LinearMix ${mixer.number?number+1}</td>
@@ -30,6 +40,8 @@
 					</#if>
 				</#list>
 			</tr>
+			</#if>
 		</#list>
 	</tbody>
 </table>
+</#if>

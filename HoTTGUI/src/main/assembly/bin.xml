@@ -10,11 +10,13 @@
 		<fileSet>
 			<directory>${project.basedir}</directory>
 			<outputDirectory>/</outputDirectory>
+			<filtered>true</filtered>
 			<includes>
 				<include>README*</include>
 				<include>LICENSE*</include>
 				<include>NOTICE*</include>
 				<include>COPYING*</include>
+				<include>*.cmd</include>
 			</includes>
 		</fileSet>
 		<fileSet>

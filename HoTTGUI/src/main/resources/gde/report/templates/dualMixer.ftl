@@ -1,3 +1,12 @@
+<#assign show=false/>
+<#list model.dualMixer as mix>
+	<#if mix.channel??>
+		<#assign show=true/>
+		<#break>
+	</#if>
+</#list>
+
+<#if show>
 <table>
 	<caption>Kreuzmischer</caption>
 	
@@ -14,12 +23,15 @@
 	
 	<tbody>
 		<#list model.dualMixer as mix>
+			<#if mix.channel??>
 			<tr class="<@d/>">
 				<td align="center">Mischer ${mix_index+1}</td>
 				<td align="center">&uarr;<#if mix.channel??>${mix.channel[0].number?number+1}<#else>??</#if>&uarr;</td>
 				<td align="center">&uarr;<#if mix.channel??>${mix.channel[1].number?number+1}<#else>??</#if>&darr;</td>
 				<td align="center">${mix.diff}%</td>
 			</tr>
+			</#if>
 		</#list>
 	</tbody>
 </table>
+</#if>

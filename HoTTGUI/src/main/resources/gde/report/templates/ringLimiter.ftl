@@ -1,3 +1,12 @@
+<#assign show=false/>
+<#list model.ringLimiter as limit>
+	<#if limit.enabled>
+		<#assign show=true/>
+		<#break>
+	</#if>
+</#list>
+
+<#if show>
 <table>
 	<caption>Ringbegrenzer</caption>
 	
@@ -25,17 +34,20 @@
 	
 	<tbody>
 		<#list model.ringLimiter as limit>
-			<tr class="<@d/>">
-				<td align="center">${limit.inputChannel[0].number?number+1}</td>
-				<td align="center">${limit.inputChannel[1].number?number+1}</td>
-				<td align="center">${limit.outputChannel[0].number?number+1}</td>
-				<td align="center">${limit.outputChannel[1].number?number+1}</td>
-				<td align="center">${limit.enabled?string("aktiv","inaktiv")}</td>
-				<td align="center">${limit.limit[0]}%</td>
-				<td align="center">${limit.limit[1]}%</td>
-				<td align="center">${limit.offset[0]}%</td>
-				<td align="center">${limit.offset[1]}%</td>
-			</tr>
+			<#if limit.enabled>
+				<tr class="<@d/>">
+					<td align="center">${limit.inputChannel[0].number?number+1}</td>
+					<td align="center">${limit.inputChannel[1].number?number+1}</td>
+					<td align="center">${limit.outputChannel[0].number?number+1}</td>
+					<td align="center">${limit.outputChannel[1].number?number+1}</td>
+					<td align="center">${limit.enabled?string("aktiv","inaktiv")}</td>
+					<td align="center">${limit.limit[0]}%</td>
+					<td align="center">${limit.limit[1]}%</td>
+					<td align="center">${limit.offset[0]}%</td>
+					<td align="center">${limit.offset[1]}%</td>
+				</tr>
+			</#if>
 		</#list>
 	</tbody>
 </table>
+</#if>

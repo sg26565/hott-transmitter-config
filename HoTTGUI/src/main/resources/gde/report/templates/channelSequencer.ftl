@@ -1,3 +1,12 @@
+<#assign show=false/>
+<#list model.channelSequencer.sequence as seq>
+	<#if seq.enabled>
+		<#assign show=true/>
+		<#break>
+	</#if>
+</#list>
+
+<#if show>
 <table>
 	<caption>Kanal Sequenzer</caption>
 	
@@ -18,6 +27,7 @@
 
 	<tbody>
 		<#list model.channelSequencer.sequence as seq>
+			<#if seq.enabled>
 			<tr class="<@d/>">
 				<td align="center">Kanal ${seq.outputChannel.number}</td>
 				<td align="center">${seq.enabled?string("aktiv","inaktiv")}</td>
@@ -32,6 +42,7 @@
 					<td align="center" colspan="${model.channelSequencer.maxStep+1}" class="d0"/>
 				</#if>
 			</tr>
+			</#if>
 		</#list>
 		
 		<tr class="<@d/>">
@@ -40,3 +51,4 @@
 		</tr>
 	</tbody>
 </table>
+</#if>

@@ -1,3 +1,12 @@
+<#assign show=false/>
+<#list model.multichannel as multi>
+	<#if multi.enabled>
+		<#assign show=true/>
+		<#break>
+	</#if>
+</#list>
+
+<#if show>
 <table>
 	<caption>Multikanal</caption>
 
@@ -19,6 +28,7 @@
 
 	<tbody>
 		<#list model.multichannel as multi>
+			<#if multi.enabled>
 			<#list multi.control as control>
 			
 				<#-- skip extra controls for four channel module -->			
@@ -52,6 +62,8 @@
 					<td align="center">${control.travelHigh}%</td>
 				</tr>
 			</#list>
+			</#if>
 		</#list>
 	</tbody>
 </table>
+</#if>
