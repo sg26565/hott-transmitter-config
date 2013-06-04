@@ -2,6 +2,7 @@ package gde.mdl.ui;
 
 import gde.model.BaseModel;
 import gde.report.Report;
+import gde.report.SWTSVGReplacedElementFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,11 +30,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
+import org.xhtmlrenderer.layout.SharedContext;
+import org.xhtmlrenderer.simple.SWTXHTMLRenderer;
+import org.xhtmlrenderer.simple.xhtml.XhtmlNamespaceHandler;
 
 public class MdlTabItemComposite extends Composite {
 	private static final Preferences	PREFS	= Preferences.userNodeForPackage(MdlTabItemComposite.class);
 
-	private Browser										browser;
+	private Composite									browser;
 	private Button										saveMdlButton;
 	private MenuItem									saveMdlMenuItem;
 	private Label											mdlVersionLabel;
@@ -122,7 +126,17 @@ public class MdlTabItemComposite extends Composite {
 			});
 		}
 		{
-			this.browser = new Browser(this, SWT.BORDER);
+			if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
+				// org.eclipse.swt.browser.Browser does not support SVG on Windows
+				SWTXHTMLRenderer renderer = new SWTXHTMLRenderer(this, SWT.BORDER);
+				SharedContext ctx = renderer.getSharedContext();
+				ctx.getTextRenderer().setSmoothingThreshold(10);
+				ctx.setReplacedElementFactory(new SWTSVGReplacedElementFactory(ctx.getReplacedElementFactory()));
+				this.browser = renderer;
+			}
+			else {
+				this.browser = new Browser(this, SWT.BORDER);
+			}
 			GridData viewTextLData = new GridData();
 			viewTextLData.grabExcessHorizontalSpace = true;
 			viewTextLData.verticalAlignment = GridData.FILL;
@@ -187,16 +201,24 @@ public class MdlTabItemComposite extends Composite {
 
 	private void updateView(boolean isXML) {
 		if (this.model != null) {
+			String data;
 			try {
 				if (isXML) {
-					this.browser.setText(Report.generateXML(this.model));
+					data = Report.generateXML(this.model);
 				}
 				else {
-					this.browser.setText(Report.generateHTML(this.model));
+					data = Report.generateHTML(this.model);
 				}
 			}
 			catch (Exception e) {
-				this.browser.setText(e.getMessage());
+				data = e.getMessage();
+			}
+
+			if (browser instanceof Browser) {
+				((Browser) this.browser).setText(data);
+			}
+			else if (browser instanceof SWTXHTMLRenderer) {
+				((SWTXHTMLRenderer) this.browser).setDocumentFromString(data, "", new XhtmlNamespaceHandler());
 			}
 		}
 

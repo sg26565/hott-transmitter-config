@@ -117,6 +117,10 @@
 			<artifactId>flying-saucer-pdf-itext5</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-swt</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-swing</artifactId>
 			<version>1.7</version>

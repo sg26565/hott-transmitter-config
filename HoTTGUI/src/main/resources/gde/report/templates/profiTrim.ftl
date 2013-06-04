@@ -15,8 +15,7 @@
 	</#list>
 </#if>
 
-<#if show>
-<table>
+<table class="<@u show/>">
 	<caption>Profitrimm</caption>
 
 	<#if wingedModel??>
@@ -64,16 +63,13 @@
 		
 		<tbody>
 			<#list helicopterModel.profiTrim as trim>
-				<#if trim.inputControl.assignment.name() != "Unassigned">
-				<tr class="<@d/>">
+				<tr class="<@d/> <@u trim.inputControl.assignment.name() != "Unassigned"/>">
 					<td align="center"><#if trim.inputControl.assignment.name() == "Unassigned">frei<#else>${trim.inputControl.assignment}</#if></td>
 					<td align="center">${trim.curveType}</td>
 					<td align="center">${trim.point}</td>
 					<td align="center">Phase ${trim.phase.number?number+1}: ${trim.phase.phaseName}</td>
 				</tr>
-				</#if>
 			</#list>
 		</tbody>
 	</#if>
 </table>
-</#if>

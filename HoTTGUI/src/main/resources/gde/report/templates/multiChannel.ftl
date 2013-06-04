@@ -6,8 +6,7 @@
 	</#if>
 </#list>
 
-<#if show>
-<table>
+<table class="<@u show/>">
 	<caption>Multikanal</caption>
 
 	<thead>
@@ -28,7 +27,6 @@
 
 	<tbody>
 		<#list model.multichannel as multi>
-			<#if multi.enabled>
 			<#list multi.control as control>
 			
 				<#-- skip extra controls for four channel module -->			
@@ -36,7 +34,7 @@
 					<#break>
 				</#if>
 				
-				<tr class="<@d/>">
+				<tr class="<@d/> <@u multi.enabled/>">
 					<#if control_index == 0>
 						<td align="center">Multikanal ${multi_index+1}</td>
 						<td align="center">${multi.enabled?string("aktiv","inaktiv")}</td>
@@ -62,8 +60,6 @@
 					<td align="center">${control.travelHigh}%</td>
 				</tr>
 			</#list>
-			</#if>
 		</#list>
 	</tbody>
 </table>
-</#if>

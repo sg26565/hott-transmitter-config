@@ -14,6 +14,8 @@
 
 <#macro d><#if row=="even">d0<#assign row="odd"/><#else>d1<#assign row="even"/></#if></#macro>
 
+<#macro u b><#if b>used<#else>unused</#if></#macro>
+
 <#macro svg points size=1>
 	<#if points[0].position == 0>
 		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${(200*size)?c}" height="${(250*size)?c}">

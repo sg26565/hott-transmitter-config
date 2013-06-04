@@ -87,10 +87,10 @@
 		</tr>
 		<#if model.module.type.name() == "HoTT">
 			<#list model.receiver as receiver>
-				<tr class="<@d/>">
+				<tr class="<@d/> <@u receiver.bound/>">
 					<th class="d2" colspan="4">Empfänger ${receiver.number?number+1}</th>
 				</tr>
-				<tr class="<@d/>">
+				<tr class="<@d/> <@u receiver.bound/>">
 					<th align="right">gebunden</th>
 					<td align="left" colspan="3">${receiver.bound?string("ja","nein")}</td>
 				</tr>

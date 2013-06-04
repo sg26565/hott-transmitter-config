@@ -6,7 +6,7 @@
 			<th/>
 			<th align="center" colspan="2">Dual Rate</th>
 			<th align="center" colspan="2">Expo</th>
-			<th colspan="2">
+			<th colspan="2"/>
 		</tr>
 		<tr>
 			<th/>

@@ -110,4 +110,10 @@
 	tr.d1 td.d0 {
 		background-color: #eee;
 	}
+	
+	.unused {
+		color: #aaa;
+		font-style: italic;
+		text-decoration: line-through; 
+	}
 </style>
