@@ -1,3 +1,4 @@
+<a name="trimMemory"/>
 <table>
 	<caption>Trimmspeicher</caption>
 	

@@ -1,3 +1,4 @@
+<a name="stickTrim"/>
 <table>
 	<caption>Knüppeltrimmung</caption>
 

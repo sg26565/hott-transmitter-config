@@ -1,3 +1,4 @@
+<a name="telemetry"/>
 <table>
 	<caption>Telemetrie</caption>
 	

@@ -6,6 +6,7 @@
 	</#if>
 </#list>
 
+<a name="multiChannel"/>
 <table class="<@u show/>">
 	<caption>Multikanal</caption>
 

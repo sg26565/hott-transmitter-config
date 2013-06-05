@@ -1,3 +1,4 @@
+<a name="controls"/>
 <table>
 	<caption>Gebereinstellungen</caption>
 	

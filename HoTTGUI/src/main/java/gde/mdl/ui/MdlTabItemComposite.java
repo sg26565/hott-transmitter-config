@@ -80,7 +80,7 @@ public class MdlTabItemComposite extends Composite {
 			this.mdlVersionLabel = new Label(this, SWT.CENTER);
 			GridData mdlVersionLabelLData = new GridData();
 			mdlVersionLabelLData.horizontalAlignment = GridData.CENTER;
-			mdlVersionLabelLData.widthHint = 180;
+			//mdlVersionLabelLData.widthHint = 180; // no line wrap
 			mdlVersionLabelLData.heightHint = 26;
 			mdlVersionLabelLData.verticalAlignment = GridData.BEGINNING;
 			mdlVersionLabelLData.grabExcessHorizontalSpace = true;

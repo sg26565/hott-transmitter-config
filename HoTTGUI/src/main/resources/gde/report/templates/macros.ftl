@@ -18,20 +18,32 @@
 
 <#macro svg points size=1>
 	<#if points[0].position == 0>
-		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${(200*size)?c}" height="${(250*size)?c}">
-			<rect x="0" y="0" width="${(200*size)?c}" height="${(250*size)?c}" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="${(25*size)?c}" x2="${(200*size)?c}" y2="${(25*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="${(225*size)?c}" x2="${(200*size)?c}" y2="${(225*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="<#list points as point><#if point.enabled>${point.position*2*size},${(225-point.value*2)*size} </#if></#list>" stroke="black" stroke-width="2" fill="none"/>
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${(200*size+10)?c}" height="${(250*size+10)?c}">
+			<rect x="5" y="5" width="${(200*size)?c}" height="${(250*size)?c}" fill="none" stroke="darkGrey" stroke-width="2"/>
+			<line x1="5" y1="${(25*size+5)?c}" x2="${(200*size+5)?c}" y2="${(25*size+5)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<line x1="5" y1="${(225*size+5)?c}" x2="${(200*size+5)?c}" y2="${(225*size+5)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<polyline points="<#list points as point><#if point.enabled>${(point.position*2*size+5)?c},${((225-point.value*2)*size+5)?c} </#if></#list>" stroke="black" stroke-width="2" fill="none"/>
+			<#list points as point>
+				<#if point.enabled>
+				    <circle cx="${(point.position*2*size+5)?c}" cy="${((225-point.value*2)*size+5)?c}" r="3"/>
+					<text x="${(point.position*2*size+5)?c}" y="${((225-point.value*2)*size+5)?c}" dy="<#if point.value&lt;50>-15<#else>25</#if>" font-size="20" stroke="none" text-anchor="middle">${point.number?number+1}</text>
+				</#if>
+			</#list>
 		</svg>
 	<#else>
-		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${(200*size)?c}" height="${(250*size)?c}">
-			<rect x="0" y="0" width="${(200*size)?c}" height="${(250*size)?c}" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="${(25*size)?c}" x2="${(200*size)?c}" y2="${(25*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="${(125*size)?c}" x2="${(200*size)?c}" y2="${(125*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="${(225*size)?c}" x2="${(200*size)?c}" y2="${(225*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="${(100*size)?c}" y1="0" x2="${(100*size)?c}" y2="${(250*size)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="<#list points as point><#if point.enabled>${((point.position+100)*size)?c},${((125-point.value)*size)?c} </#if></#list>" stroke="black" stroke-width="2" fill="none"/>
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${(200*size+10)?c}" height="${(250*size+10)?c}">
+			<rect x="5" y="5" width="${(200*size)?c}" height="${(250*size)?c}" fill="none" stroke="darkGrey" stroke-width="2"/>
+			<line x1="5" y1="${(25*size+5)?c}" x2="${(200*size+5)?c}" y2="${(25*size+5)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<line x1="5" y1="${(125*size+5)?c}" x2="${(200*size+5)?c}" y2="${(125*size+5)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<line x1="5" y1="${(225*size+5)?c}" x2="${(200*size+5)?c}" y2="${(225*size+5)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<line x1="${(100*size+5)?c}" y1="5" x2="${(100*size+5)?c}" y2="${(250*size+5)?c}" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
+			<polyline points="<#list points as point><#if point.enabled>${((point.position+100)*size+5)?c},${((125-point.value)*size+5)?c} </#if></#list>" stroke="black" stroke-width="2" fill="none"/>
+			<#list points as point>
+				<#if point.enabled>
+				    <circle cx="${((point.position+100)*size+5)?c}" cy="${((125-point.value)*size+5)?c}" r="3"/>
+					<text x="${((point.position+100)*size+5)?c}" y="${((125-point.value)*size+5)?c}" dy="<#if point.value&lt;0>-15<#else>25</#if>" font-size="20" stroke="none" text-anchor="middle">${point.number?number+1}</text>
+				</#if>
+			</#list>
 		</svg>
 	</#if>
 </#macro>
@@ -48,13 +60,13 @@
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="${points?size+1}" align="center"><@svg points/></td>
+		<td rowspan="${points?size+1}" align="center"><@svg points 0.5/></td>
 	</tr>
 
 	<@reset/>
 
 	<#list points as point>
-		<tr class="<@d/>">
+		<tr class="<@d/> <@u point.enabled/>">
 			<td align="center">${point.number?number+1}</td>
 			<td align="center">${point.enabled?string("ja","nein")}</td>
 			<#if point.enabled>
@@ -89,7 +101,7 @@
 	<@reset/>
 
 	<#list curve.point as point>
-		<tr class="<@d/>">
+		<tr class="<@d/> <@u point.enabled/>">
 			<th/>
 			<td align="center">${point.number?number+1}</td>
 			<td align="center">${point.enabled?string("ja","nein")}</td>
@@ -127,7 +139,7 @@
 	<@reset/>
 
 	<#list curve.point as point>
-		<tr class="<@d/>">
+		<tr class="<@d/> <@u point.enabled/>">
 			<th/>
 			<td align="center">${point.number?number+1}</td>
 			<td align="center">${point.enabled?string("ja","nein")}</td>

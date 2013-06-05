@@ -1,3 +1,4 @@
+<a name="outputChannel"/>
 <table>
 	<caption>Senderausgang</caption>
 	

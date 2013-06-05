@@ -1,3 +1,4 @@
+<a name="channel1Curve"/>
 <table>
 	<caption>Kanal 1 Kurve</caption>
 	

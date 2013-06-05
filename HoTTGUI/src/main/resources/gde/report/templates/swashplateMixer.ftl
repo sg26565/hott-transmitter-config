@@ -1,4 +1,5 @@
 <#if helicopterModel??>
+	<a name="swashplateMixer"/>
 	<table>
 		<caption>Taumelscheibenmischer</caption>
 		

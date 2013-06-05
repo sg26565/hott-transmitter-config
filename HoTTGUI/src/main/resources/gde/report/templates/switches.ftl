@@ -1,3 +1,4 @@
+<a name="switches"/>
 <table>
 	<caption>Schalter-/Geberzuordnungen</caption>
 	

@@ -6,6 +6,7 @@
 	</#if>
 </#list>
 
+<a name="channelSequencer"/>
 <table class="<@u show/>">
 
 	<caption>Kanal Sequenzer</caption>

@@ -1,3 +1,4 @@
+<a name="phaseSettings"/>
 <table>
 	<caption>Phaseneinstellungen</caption>
 	

@@ -6,6 +6,7 @@
 	</#if>
 </#list>
 
+<a name="controlSwitches"/>
 <table class="<@u show/>">
 	<caption>Geberschalter</caption>
 	

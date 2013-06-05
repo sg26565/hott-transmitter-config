@@ -15,6 +15,7 @@
 	</#list>
 </#if>
 
+<a name="profiTrim"/>
 <table class="<@u show/>">
 	<caption>Profitrimm</caption>
 

@@ -25,20 +25,46 @@
 		<#include "styles.ftl">
 	</head>
 	<body>
-		<#include "baseSettingsMx16.ftl">
-		<#include "servos.ftl">
-		<#include "controlsMx16.ftl">
-		<#include "drExpoMx16.ftl">
-		<#include "phaseTrimMx16.ftl">
-		<#include "wingMixMx16.ftl">
-		<#include "helicopterMixMx16.ftl">
-		<#include "linearMixer.ftl">
-		<#include "swashplateMixer.ftl">
-		<#include "failSafe.ftl">
-		<#include "telemetry.ftl">
-		<#include "trainerPupil.ftl">
-		<#include "stickTrim.ftl">
-		<#include "switches.ftl">
+		<div id="nav">
+			<ul>
+			<li><a href="#baseSettings">Grundeinstellungen Modell</a></li>
+			<li><a href="#servos">Servoeinstellungen</a></li>		
+			<li><a href="#controls">Gebereinstellungen</a></li>
+			<li><a href="#drExpo">DualRate Expo</a></li>
+			<#if wingedModel??>
+				<li><a href="#phaseTrim">Phasentrimm</a></li>
+				<li><a href="#wingMix">Flächenmischer</a></li>
+			</#if>
+			<#if helicopterModel??>
+			<li><a href="#helicopterMix">Helikoptermix</a></li>
+			</#if>
+			<li><a href="#linearMixer">Linearmischer</a></li>
+			<#if helicopterModel??>
+				<li><a href="#swashplateMixer">Taumelscheibenmischer</a></li>
+			</#if>
+			<li><a href="#failSafe">Fail Safe</a></li>
+			<li><a href="#telemetry">Telemetrie</a></li>		
+			<li><a href="#trainerPupil">Lehrer/Schüler</a></li>
+			<li><a href="#stickTrim">Knüppeltrimmung</a></li>		
+			<li><a href="#switches">Schalter-/Geberzuordnungen</a></li>
+			</ul>
+		</div>
+		<div id="content">
+			<#include "baseSettingsMx16.ftl">
+			<#include "servos.ftl">
+			<#include "controlsMx16.ftl">
+			<#include "drExpoMx16.ftl">
+			<#include "phaseTrimMx16.ftl">
+			<#include "wingMixMx16.ftl">
+			<#include "helicopterMixMx16.ftl">
+			<#include "linearMixer.ftl">
+			<#include "swashplateMixer.ftl">
+			<#include "failSafe.ftl">
+			<#include "telemetry.ftl">
+			<#include "trainerPupil.ftl">
+			<#include "stickTrim.ftl">
+			<#include "switches.ftl">
+		</div>
 	</body>
 </@htmlsafe>
 </html>

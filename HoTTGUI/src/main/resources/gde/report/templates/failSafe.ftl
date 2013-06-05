@@ -1,3 +1,4 @@
+<a name="failSafe"/>
 <table>
 	<caption>Fail Safe</caption>
 

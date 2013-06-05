@@ -1,3 +1,4 @@
+<a name="modelType"/>
 <table>
 	<#if helicopterModel??>
 		<caption>Helicoptertyp</caption>

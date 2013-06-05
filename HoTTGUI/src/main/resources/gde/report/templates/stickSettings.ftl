@@ -1,3 +1,4 @@
+<a name="stickSettings"/>
 <table>
 	<caption>Knüppeleinstellungen</caption>
 	

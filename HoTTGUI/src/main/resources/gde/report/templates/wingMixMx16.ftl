@@ -1,4 +1,5 @@
 <#if wingedModel??>
+	<a name="wingMix"/>
 	<table>
 		<caption>Flächenmix</caption>
 

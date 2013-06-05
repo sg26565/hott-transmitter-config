@@ -1,3 +1,4 @@
+<a name="phaseAssignments"/>
 <table>
 	<caption>Phasenzuweisung</caption>
 	

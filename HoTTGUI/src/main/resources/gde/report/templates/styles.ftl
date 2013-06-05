@@ -30,12 +30,34 @@
 	body {
 		font-size: 9pt;
 	}
+	
+	#nav {
+		visibility: hidden;
+	}
 </style>
 
 <style type="text/css" media="screen">
 	body {
 		font-size: 14pt;
+		min-width: 20 em;
 	}
+	
+	#nav {
+		position: fixed;
+		font-size: 10pt;
+		padding: 0;
+		margin: 0;
+	}
+	
+	#content {
+		margin-left: 12em;
+	}
+	
+	#nav li {
+    	list-style: none;
+    	margin: 0;
+    	padding: 0;
+  	}
 </style>
 
 <style type="text/css" media="all">
@@ -114,6 +136,5 @@
 	.unused {
 		color: #aaa;
 		font-style: italic;
-		text-decoration: line-through; 
 	}
 </style>

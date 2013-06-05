@@ -6,6 +6,7 @@
 	</#if>
 </#list>
 
+<a name="mixerActive"/>
 <table class="<@u show/>">
 	<caption>MIX aktiv / Phase</caption>
 	
