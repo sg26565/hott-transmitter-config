@@ -26,28 +26,7 @@
 	</head>
 	<body>
 		<div id="nav">
-			<ul>
-			<li><a href="#baseSettings">Grundeinstellungen Modell</a></li>
-			<li><a href="#servos">Servoeinstellungen</a></li>		
-			<li><a href="#controls">Gebereinstellungen</a></li>
-			<li><a href="#drExpo">DualRate Expo</a></li>
-			<#if wingedModel??>
-				<li><a href="#phaseTrim">Phasentrimm</a></li>
-				<li><a href="#wingMix">Flächenmischer</a></li>
-			</#if>
-			<#if helicopterModel??>
-			<li><a href="#helicopterMix">Helikoptermix</a></li>
-			</#if>
-			<li><a href="#linearMixer">Linearmischer</a></li>
-			<#if helicopterModel??>
-				<li><a href="#swashplateMixer">Taumelscheibenmischer</a></li>
-			</#if>
-			<li><a href="#failSafe">Fail Safe</a></li>
-			<li><a href="#telemetry">Telemetrie</a></li>		
-			<li><a href="#trainerPupil">Lehrer/Schüler</a></li>
-			<li><a href="#stickTrim">Knüppeltrimmung</a></li>		
-			<li><a href="#switches">Schalter-/Geberzuordnungen</a></li>
-			</ul>
+			<#include "tocMx16.ftl">
 		</div>
 		<div id="content">
 			<#include "baseSettingsMx16.ftl">

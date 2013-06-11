@@ -26,52 +26,7 @@
 	</head>
 	<body>
 		<div id="nav">
-			<ul>
-			<li><a href="#baseSettings">Grundeinstellungen Modell</a></li>
-			<li><a href="#modelType"><#if helicopterModel??>Helicoptertyp<#else>Modelltyp</#if></a></li>
-			<li><a href="#servos">Servoeinstellungen</a></li>		
-			<li><a href="#stickSettings">Knüppeleinstellungen</a></li>
-			<li><a href="#controls">Gebereinstellungen</a></li>
-			<li><a href="#drExpo">DualRate Expo</a></li>
-			<li><a href="#channel1Curve">Kanal 1 Kurve</a></li>
-			<li><a href="#controlSwitches">Geberschalter</a></li>
-			<#if model.logicalSwitch??>
-				<li><a href="#logicalSwitches">logische Schalter</a></li>
-			</#if>
-			<li><a href="#phaseSettings">Phaseneinstellungen</a></li>
-			<li><a href="#phaseAssignments">Phasenzuweisung</a></li>
-			<#if wingedModel??>
-				<li><a href="#phaseTrim">Phasentrimm</a></li>
-			</#if>
-			<li><a href="#nonDelayedChannels">unverzögerte Kanäle</a></li>
-			<li><a href="#timersGeneral">Uhren (allgemein)</a></li>
-			<li><a href="#phaseTimer">Flugphasenuhren</a></li>
-			<#if wingedModel??>
-				<li><a href="#wingMix">Flächenmischer</a></li>
-			</#if>
-			<#if helicopterModel??>
-			<li><a href="#helicopterMix">Helikoptermix</a></li>
-			</#if>
-			<li><a href="#linearMixer">Linearmischer</a></li>
-			<li><a href="#curveMixer">Kurvenmischer</a></li>
-			<li><a href="#mixerActive">MIX aktiv / Phase</a></li>
-			<li><a href="#mixOnlyChannel">Nur MIX Kanal</a></li>
-			<li><a href="#dualMixer">Kreuzmischer</a></li>
-			<#if helicopterModel??>
-				<li><a href="#swashplateMixer">Taumelscheibenmischer</a></li>
-			</#if>
-			<li><a href="#failSafe">Fail Safe</a></li>
-			<li><a href="#trainerPupil">Lehrer/Schüler</a></li>
-			<li><a href="#outputChannel">Senderausgang</a></li>
-			<li><a href="#profiTrim">Profitrimm</a></li>
-			<li><a href="#trimMemory">Trimmspeicher</a></li>
-			<li><a href="#telemetry">Telemetrie</a></li>		
-			<li><a href="#channelSequencer">Kanal Sequenzer</a></li>
-			<li><a href="#multiChannel">Multikanal</a></li>
-			<li><a href="#ringLimiter">Ringbegrenzer</a></li>
-			<li><a href="#mp3Player">MP3-Player</a></li>
-			<li><a href="#switches">Schalter-/Geberzuordnungen</a></li>
-			</ul>
+			<#include "toc.ftl">
 		</div>
 		<div id="content">
 			<#include "baseSettings.ftl">

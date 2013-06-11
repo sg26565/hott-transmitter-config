@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.treichels.hott</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.6-SNAPSHOT</version>
+	<version>0.6</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -16,6 +16,10 @@
 		<module>../HoTTDecoder</module>
 	</modules>
 
+	<organization>
+		<name>Oliver Treichel</name>
+	</organization>
+	
 	<scm>
 		<connection>scm:svn:https://hott-transmitter-config.googlecode.com/svn/trunk/parent/</connection>
 		<url>https://code.google.com/p/hott-transmitter-config/source/browse/trunk/parent/</url>
@@ -52,6 +56,10 @@
 					</execution>
 				</executions>
 				<configuration>
+					<timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss}</timestampFormat>
+					<items>
+						<item>timestamp</item>
+					</items>
 					<doCheck>false</doCheck>
 					<doUpdate>false</doUpdate>
 					<providerImplementations>
@@ -67,7 +75,8 @@
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 						<manifestEntries>
-							<Implementation-Build>Revision ${buildNumber}</Implementation-Build>
+							<Implementation-Build>${buildNumber}</Implementation-Build>
+							<Build-Date>${timestamp}</Build-Date>
 						</manifestEntries>
 					</archive>
 				</configuration>

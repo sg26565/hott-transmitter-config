@@ -169,6 +169,7 @@ public class Report {
 		rootMap.put("hex", new FreeMarkerHexConverter());
 		rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective());
 		rootMap.put("programDir", new File(System.getProperty(Launcher.PROGRAM_DIR)).toURI().toURL().toString());
+		rootMap.put("version", System.getProperty(Launcher.PROGRAM_VERSION,"unknown"));
 		if (model instanceof WingedModel) {
 			rootMap.put("wingedModel", model);
 		}

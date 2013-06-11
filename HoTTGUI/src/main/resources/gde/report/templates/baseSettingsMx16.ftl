@@ -153,7 +153,7 @@
 		<#list model.channelMapping as mapping>
 			<tr class="<@d/>">
 				<th/>
-				<td align="center">S${mapping.inputChannel+1}</td>
+				<td align="center">S${mapping.inputChannel+1}<#if model.channel[mapping.inputChannel].function??> (${model.channel[mapping.inputChannel].function})</#if></td>
 				<td align="center">&rarr;</td>
 				<td align="center">Ausgang ${mapping.outputChannel+1}</td>
 			</tr>

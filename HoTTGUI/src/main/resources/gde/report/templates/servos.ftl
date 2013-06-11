@@ -22,7 +22,7 @@
 		<#list model.channel as channel>
 			<#if !channel.virtual>
 				<tr class="<@d/>">
-					<td align="center">S${channel.number?number+1} <#if channel.function??>(${channel.function})</#if></td>
+					<td align="center">S${channel.number?number+1}<#if channel.function??> (${channel.function})</#if></td>
 					<td align="center"><#if channel.reverse>&larr;<#else>&rarr;</#if></td>
 					<td align="center">${channel.center}%</td>
 					<td align="center">${channel.travelLow}%</td>

@@ -96,8 +96,9 @@ public class MdlTabItemComposite extends Composite {
 				if (classPath.startsWith("jar")) { //$NON-NLS-1$
 					String manifestPath = classPath.substring(0, classPath.lastIndexOf("!") + 1) + "/META-INF/MANIFEST.MF"; //$NON-NLS-1$ //$NON-NLS-2$
 					Manifest manifest = new Manifest(new URL(manifestPath).openStream());
-					version = manifest.getMainAttributes().getValue("Implementation-Version"); //$NON-NLS-1$			
+					version = manifest.getMainAttributes().getValue("Implementation-Version") + "." + manifest.getMainAttributes().getValue("Implementation-Build");
 				}
+				System.setProperty(Launcher.PROGRAM_VERSION, version);
 				this.mdlVersionLabel.setText("Implementation-Version: " + version); //$NON-NLS-1$
 			}
 			catch (IOException e) {

@@ -15,10 +15,11 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class Launcher {
-	private static final Logger	LOG					= Logger.getLogger(Launcher.class.getName());
-	public static final String	LOG_DIR			= "log.dir";
-	public static final String	MDL_DIR			= "mdl.dir";
-	public static final String	PROGRAM_DIR	= "program.dir";
+	private static final Logger	LOG							= Logger.getLogger(Launcher.class.getName());
+	public static final String	LOG_DIR					= "log.dir";
+	public static final String	MDL_DIR					= "mdl.dir";
+	public static final String	PROGRAM_DIR			= "program.dir";
+	public static final String	PROGRAM_VERSION	= "program.version";
 
 	public static void main(final String[] args) throws Exception {
 		initSystemProperties();

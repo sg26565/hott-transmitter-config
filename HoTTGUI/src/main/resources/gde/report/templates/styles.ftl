@@ -6,20 +6,12 @@
 			content: "${model.transmitterType} - ${model.modelName}";
 		}
 	
-		@top-center {
-			content: "erzeugt am ${.now}";
-		}
-	
 		@top-right {
-			content: "Seite " counter(page);
+			content: "${.now}";
 		}
 	
 		@bottom-left {
-			content: "${model.transmitterType} - ${model.modelName}";
-		}
-	
-		@bottom-center {
-			content: "erzeugt am ${.now}";
+			content: "HoTTMdlViewer ${version}";
 		}
 	
 		@bottom-right {
@@ -32,7 +24,7 @@
 	}
 	
 	#nav {
-		visibility: hidden;
+		display: block;
 	}
 </style>
 
@@ -49,15 +41,13 @@
 		margin: 0;
 	}
 	
-	#content {
-		margin-left: 12em;
+	#nav h1 {
+		font-size: 14pt;
 	}
 	
-	#nav li {
-    	list-style: none;
-    	margin: 0;
-    	padding: 0;
-  	}
+	#content {
+		margin-left: 10em;
+	}
 </style>
 
 <style type="text/css" media="all">
@@ -67,6 +57,14 @@
 		-fs-pdf-font-encoding: Identity-H;
 	}
 
+	a[href] {
+		display: block;
+	}
+	
+	a[name] {
+		page-break-after: avoid;
+	}
+	
 	svg {
 		display: block;
 	}
