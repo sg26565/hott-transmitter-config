@@ -51,6 +51,8 @@
 	
 	#content {
 		margin-left: 10em;
+		display: block;
+		overflow: visible;
 	}
 	
 	bookmarks {

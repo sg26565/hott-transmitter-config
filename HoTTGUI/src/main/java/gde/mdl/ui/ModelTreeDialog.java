@@ -87,6 +87,7 @@ public class ModelTreeDialog extends org.eclipse.swt.widgets.Dialog {
 
 	public void open() {
 		try {
+			Launcher.initSystemProperties();
 			Shell parent = getParent();
 			dialogShell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 			dialogShell.setText("Graupner/SJ HoTT MDL Explorer");

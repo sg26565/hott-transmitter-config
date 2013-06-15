@@ -113,25 +113,27 @@ public class Launcher {
 	 * @throws URISyntaxException
 	 */
 	public static void initSystemProperties() throws URISyntaxException {
-		// get the location of this class
-		File source = new File(Launcher.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+		if (!System.getProperties().contains(PROGRAM_DIR)) {
+			// get the location of this class
+			File source = new File(Launcher.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 
-		// if application was packaged as individual class files, find the classes directory
-		if (!source.getName().endsWith(".jar")) {
-			while (!source.getName().equals("classes")) {
-				source = source.getParentFile();
+			// if application was packaged as individual class files, find the classes directory
+			if (!source.getName().endsWith(".jar")) {
+				while (!source.getName().equals("classes")) {
+					source = source.getParentFile();
+				}
 			}
+
+			// get the parent directory containing the jar file or the classes directory
+			File programDir = source.getParentFile();
+
+			// if we are running inside Eclipse in the target directory, step up to the project level
+			if (programDir.getName().equals("target")) {
+				programDir = programDir.getParentFile();
+			}
+
+			System.setProperty(PROGRAM_DIR, programDir.getAbsolutePath());
 		}
-
-		// get the parent directory containing the jar file or the classes directory
-		File programDir = source.getParentFile();
-
-		// if we are running inside Eclipse in the target directory, step up to the project level
-		if (programDir.getName().equals("target")) {
-			programDir = programDir.getParentFile();
-		}
-
-		System.setProperty(PROGRAM_DIR, programDir.getAbsolutePath());
 
 		if (!System.getProperties().containsKey(MDL_DIR)) {
 			System.setProperty(MDL_DIR, System.getProperty(PROGRAM_DIR));

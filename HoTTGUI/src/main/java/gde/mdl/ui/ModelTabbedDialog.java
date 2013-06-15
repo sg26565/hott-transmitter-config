@@ -22,10 +22,10 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 	 * inside a new Shell.
 	 */
 	public static void main(String[] args) {
-			Display display = Display.getDefault();
-			Shell shell = new Shell(display);
-			ModelTabbedDialog inst = new ModelTabbedDialog(shell, SWT.NULL);
-			inst.open();
+		Display display = Display.getDefault();
+		Shell shell = new Shell(display);
+		ModelTabbedDialog inst = new ModelTabbedDialog(shell, SWT.NULL);
+		inst.open();
 	}
 
 	public ModelTabbedDialog(Shell parent, int style) {
@@ -34,6 +34,7 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 
 	public void open() {
 		try {
+			Launcher.initSystemProperties();
 			Shell parent = getParent();
 			dialogShell = new Shell(parent, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
 			FillLayout dialogShellLayout = new FillLayout(org.eclipse.swt.SWT.HORIZONTAL);
