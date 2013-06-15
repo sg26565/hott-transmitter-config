@@ -1,6 +1,5 @@
-<a name="timersGeneral"/>
 <table>
-	<caption>Uhren (allgemein)</caption>
+	<caption><a name="timersGeneral"/>Uhren (allgemein)</caption>
 	
 	<thead>
 		<tr>

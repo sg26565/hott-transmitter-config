@@ -5,10 +5,8 @@
 		<#break>
 	</#if>
 </#list>
-
-<a name="dualMixer"/>
 <table class="<@u show/>">
-	<caption>Kreuzmischer</caption>
+	<caption><a name="dualMixer"/>Kreuzmischer</caption>
 	
 	<thead>
 		<tr>

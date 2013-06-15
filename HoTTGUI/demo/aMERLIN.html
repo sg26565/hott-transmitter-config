@@ -28,20 +28,12 @@
 			content: "mx-16 - MERLIN";
 		}
 	
-		@top-center {
-			content: "erzeugt am 02.06.2013 19:24:19";
-		}
-	
 		@top-right {
-			content: "Seite " counter(page);
+			content: "15.06.2013 18:04:51";
 		}
 	
 		@bottom-left {
-			content: "mx-16 - MERLIN";
-		}
-	
-		@bottom-center {
-			content: "erzeugt am 02.06.2013 19:24:19";
+			content: "HoTTMdlViewer unknown";
 		}
 	
 		@bottom-right {
@@ -52,11 +44,43 @@
 	body {
 		font-size: 9pt;
 	}
+	
+	#nav {
+		display: none;
+	}
 </style>
 
 <style type="text/css" media="screen">
 	body {
 		font-size: 14pt;
+		min-width: 40 em;
+	}
+	
+	#nav {
+		position: fixed;
+		font-size: 10pt;
+		padding: 0;
+		margin: 0;
+	}
+	
+	#nav a[href] {
+		display: block;
+	}
+	
+	#nav h1 {
+		font-size: 14pt;
+	}
+	
+	#content {
+		margin-left: 10em;
+	}
+	
+	bookmarks {
+		display: none;
+	}
+	
+	a.i1 {
+		margin-left: 1em;
 	}
 </style>
 
@@ -66,11 +90,7 @@
 		-fs-pdf-font-embed: embed;
 		-fs-pdf-font-encoding: Identity-H;
 	}
-
-	svg {
-		display: block;
-	}
-
+	
 	body {
 		font-family: Arial;
 	}
@@ -127,15 +147,58 @@
 		background-color: #bbb;
 		font-size: large;
 		text-align: center;
+		page-break-before: auto;
 	}
 	
 	tr.d1 td.d0 {
 		background-color: #eee;
 	}
-</style>	</head>
+	
+	.unused {
+		color: #aaa;
+		font-style: italic;
+	}
+</style><bookmarks>
+	<bookmark href="#baseSettings" name="Grundeinstellungen Modell"/>
+	<bookmark href="#servos" name="Servoeinstellungen"/>		
+	<bookmark href="#controls" name="Gebereinstellungen"/>
+	<bookmark href="#drExpo0" name="DualRate Expo">
+						<bookmark href="#drExpo0" name="Phase 1: Normal"/>
+				<bookmark href="#drExpo1" name="Phase 2: Start"/>
+				<bookmark href="#drExpo2" name="Phase 3: Speed"/>
+				<bookmark href="#drExpo3" name="Phase 4: Landung"/>
+	</bookmark>
+		<bookmark href="#phaseTrim" name="Phasentrimm"/>
+		<bookmark href="#wingMix" name="Fl&auml;chenmischer"/>
+	<bookmark href="#linearMixer" name="Linearmischer"/>
+	<bookmark href="#failSafe" name="Fail Safe"/>
+	<bookmark href="#telemetry" name="Telemetrie"/>		
+	<bookmark href="#trainerPupil" name="Lehrer/Sch&uuml;ler"/>
+	<bookmark href="#stickTrim" name="Kn&uuml;ppeltrimmung"/>		
+	<bookmark href="#switches" name="Schalter-/Geberzuordnungen"/>
+</bookmarks>	</head>
 	<body>
+		<div id="nav">
+<h1>Inhaltsverzeichnis</h1>
+<a href="#baseSettings">Grundeinstellungen Modell</a>
+<a href="#servos">Servoeinstellungen</a>		
+<a href="#controls">Gebereinstellungen</a>
+<div>DualRate Expo</div>
+		<a class="i1" href="#drExpo0">Phase 1: Normal"</a>
+		<a class="i1" href="#drExpo1">Phase 2: Start"</a>
+		<a class="i1" href="#drExpo2">Phase 3: Speed"</a>
+		<a class="i1" href="#drExpo3">Phase 4: Landung"</a>
+	<a href="#phaseTrim">Phasentrimm</a>
+	<a href="#wingMix">Fl&auml;chenmischer</a>
+<a href="#linearMixer">Linearmischer</a>
+<a href="#failSafe">Fail Safe</a>
+<a href="#telemetry">Telemetrie</a>		
+<a href="#trainerPupil">Lehrer/Sch&uuml;ler</a>
+<a href="#stickTrim">Kn&uuml;ppeltrimmung</a>		
+<a href="#switches">Schalter-/Geberzuordnungen</a>		</div>
+		<div id="content">
 <table>
-	<caption>Grundeinstellungen</caption>
+	<caption><a name="baseSettings"/>Grundeinstellungen</caption>
 
 		
 	<tbody>
@@ -266,31 +329,31 @@ invers</td>
 
 			<tr class="d0">
 				<th/>
-				<td align="center">S1</td>
+				<td align="center">S1 (Gas)</td>
 				<td align="center">&rarr;</td>
 				<td align="center">Ausgang 1</td>
 			</tr>
 			<tr class="d1">
 				<th/>
-				<td align="center">S2</td>
+				<td align="center">S2 (Querruder)</td>
 				<td align="center">&rarr;</td>
 				<td align="center">Ausgang 2</td>
 			</tr>
 			<tr class="d0">
 				<th/>
-				<td align="center">S3</td>
+				<td align="center">S3 (H&ouml;henruder)</td>
 				<td align="center">&rarr;</td>
 				<td align="center">Ausgang 3</td>
 			</tr>
 			<tr class="d1">
 				<th/>
-				<td align="center">S4</td>
+				<td align="center">S4 (Seitenruder)</td>
 				<td align="center">&rarr;</td>
 				<td align="center">Ausgang 4</td>
 			</tr>
 			<tr class="d0">
 				<th/>
-				<td align="center">S5</td>
+				<td align="center">S5 (Querruder)</td>
 				<td align="center">&rarr;</td>
 				<td align="center">Ausgang 5</td>
 			</tr>
@@ -323,7 +386,7 @@ invers</td>
 		</tr>
 	</tbody>
 </table><table>
-	<caption>Servoeinstellungen</caption>
+	<caption><a name="servos"/>Servoeinstellungen</caption>
 	
 	<thead>
 		<tr>
@@ -338,56 +401,56 @@ invers</td>
 	
 	<tbody>
 				<tr class="d0">
-					<td align="center">S1 </td>
+					<td align="center">S1 (Gas)</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d1">
-					<td align="center">S2 </td>
+					<td align="center">S2 (Querruder)</td>
 					<td align="center">&larr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d0">
-					<td align="center">S3 </td>
+					<td align="center">S3 (H&ouml;henruder)</td>
 					<td align="center">&larr;</td>
 					<td align="center">0%</td>
 					<td align="center">150%</td>
 					<td align="center">150%</td>
 				</tr>
 				<tr class="d1">
-					<td align="center">S4 </td>
+					<td align="center">S4 (Seitenruder)</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">150%</td>
 					<td align="center">150%</td>
 				</tr>
 				<tr class="d0">
-					<td align="center">S5 </td>
+					<td align="center">S5 (Querruder)</td>
 					<td align="center">&larr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d1">
-					<td align="center">S6 </td>
+					<td align="center">S6</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d0">
-					<td align="center">S7 </td>
+					<td align="center">S7</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d1">
-					<td align="center">S8 </td>
+					<td align="center">S8</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
@@ -395,7 +458,7 @@ invers</td>
 				</tr>
 	</tbody>
 </table><table>
-	<caption>Gebereinstellungen</caption>
+	<caption><a name="controls"/>Gebereinstellungen</caption>
 	
 	<thead>
 		<tr>
@@ -441,23 +504,21 @@ invers</td>
 				<td align="center">100%</td>
 			</tr>
 	</tbody>
-</table><table>
-	<caption>DualRate Expo</caption>
-	
-	<thead>
-		<tr>
-			<th/>
-			<th align="center">Dual Rate</th>
-			<th align="center">Expo</th>
-			<th align="center">Schalter</th>
-		</tr>
-	</thead>
-	
-	<tbody>
-						<tr>
-					<th class="d2" colspan="4">Phase 1: Normal</th>
+</table>		<table>
+			<caption><a name="drExpo0"/>DualRate Expo - Phase 1: Normal</caption>
+			
+			<thead>
+				<tr>
+					<th/>
+					<th align="center">Dual Rate</th>
+					<th align="center">Expo</th>
+					<th align="center">Schalter</th>
+					<th align="center">aus</th>
+					<th align="center">an</th>
 				</tr>
-
+			</thead>
+			
+			<tbody>
 
 					<tr class="d0">			  	
 						<th align="right">Querruder</th>
@@ -465,6 +526,12 @@ invers</td>
 							<td align="center">50% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAC+ElEQVR42u3cvY3qQBSGYSS2ARpAkIGgBCQIKYMSTExCDAk0QQuQQQ+QUgAiIYB4r3UtIa8x9tg+tufnPal3pdWzc+Y7mLEbv5RQNSCAEkooqcyUDS1ruVzq+YelUGr4D/cpdVyGUEIJJZQUlFBCCSWUJDiULlIu/xZXE66yKmlwKElwCkoooYSSBIcSSiihhBJKY+r5fEIp4zgYDIIDI1AWKs/zJpNJv9+HslCdz+ef/3W5XKAs1Nq9Xs9fkvP5nASXae3X6wWlTGszV4q1NpRirQ2lWGvzaUestaEUa20oxVobymx1u92+tTaUme9Z+I7D4fCztUnwPFvk/X7/9jNQFt0ioRTbIqFUdUzdIqHM5piwRZLgwo5Qpo8+io5Q5h99oBQbfaBM6ev9ft9ut1VGHxI8PWcURx8oUxy73e7hcMjhCGXOuQfK+M2x0+kUd3SaMrI5FnR0NMHDi7HI5ug0ZRhRajE6RxlBFFyMrlD6gsfjcbValYpoLWXAt9lswoKlItqQ4G+1d0X4AsH1en06ncpDNIwyrDadTmPVInzb7bYCQVXKWp7499Vms9k0VBG1TqharVag9i7/dxeLhbtvKfi2wcWuNR83UKty0ene4J8JG1F7V1iN53aSBr26NjizKT+n5WoS1irKCj5yOEEZvhNjGWJ1lCXdiXGOUvy2oKMJLvKdCZRi35m4Tlmeo1uUgt89OU3ped54PB6NRiU5upLgwYGbZrO52+2snHgqolQ/awylas64th4lKUvNa4coq3e0M8HznTWGMn70yXHWGMr40SfHWWModRl9rKJUeRKVBFeirGWLtJCyri3SNsqE93BAmY0y4T0cUGag1KS1jU9wfVrbeEp9WttsSq1S22BK3VLbYEpSW4aSgVyMkoFcjJLWFqC8Xq/+ZVpbgPLxePiXNWxtzqJDCSWUUEJJgkMJJZRQUiQ4lPZR1vKWAkOvsippcChJcApKKKGEkgSHEkoooYRSF0pKvZIoqfyLFAIoobS3/gEMfEiSHspv7AAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
 					<tr class="d1">			  	
 						<th align="right">H&ouml;henruder</th>
@@ -472,6 +539,12 @@ normal</td>
 							<td align="center">50% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAC+ElEQVR42u3cvY3qQBSGYSS2ARpAkIGgBCQIKYMSTExCDAk0QQuQQQ+QUgAiIYB4r3UtIa8x9tg+tufnPal3pdWzc+Y7mLEbv5RQNSCAEkooqcyUDS1ruVzq+YelUGr4D/cpdVyGUEIJJZQUlFBCCSWUJDiULlIu/xZXE66yKmlwKElwCkoooYSSBIcSSiihhBJKY+r5fEIp4zgYDIIDI1AWKs/zJpNJv9+HslCdz+ef/3W5XKAs1Nq9Xs9fkvP5nASXae3X6wWlTGszV4q1NpRirQ2lWGvzaUestaEUa20oxVobymx1u92+tTaUme9Z+I7D4fCztUnwPFvk/X7/9jNQFt0ioRTbIqFUdUzdIqHM5piwRZLgwo5Qpo8+io5Q5h99oBQbfaBM6ev9ft9ut1VGHxI8PWcURx8oUxy73e7hcMjhCGXOuQfK+M2x0+kUd3SaMrI5FnR0NMHDi7HI5ug0ZRhRajE6RxlBFFyMrlD6gsfjcbValYpoLWXAt9lswoKlItqQ4G+1d0X4AsH1en06ncpDNIwyrDadTmPVInzb7bYCQVXKWp7499Vms9k0VBG1TqharVag9i7/dxeLhbtvKfi2wcWuNR83UKty0ene4J8JG1F7V1iN53aSBr26NjizKT+n5WoS1irKCj5yOEEZvhNjGWJ1lCXdiXGOUvy2oKMJLvKdCZRi35m4Tlmeo1uUgt89OU3ped54PB6NRiU5upLgwYGbZrO52+2snHgqolQ/awylas64th4lKUvNa4coq3e0M8HznTWGMn70yXHWGMr40SfHWWModRl9rKJUeRKVBFeirGWLtJCyri3SNsqE93BAmY0y4T0cUGag1KS1jU9wfVrbeEp9WttsSq1S22BK3VLbYEpSW4aSgVyMkoFcjJLWFqC8Xq/+ZVpbgPLxePiXNWxtzqJDCSWUUEJJgkMJJZRQUiQ4lPZR1vKWAkOvsippcChJcApKKKGEkgSHEkoooYRSF0pKvZIoqfyLFAIoobS3/gEMfEiSHspv7AAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
 					<tr class="d0">			  	
 						<th align="right">Seitenruder</th>
@@ -479,11 +552,30 @@ normal</td>
 							<td align="center">50% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAC+ElEQVR42u3cvY3qQBSGYSS2ARpAkIGgBCQIKYMSTExCDAk0QQuQQQ+QUgAiIYB4r3UtIa8x9tg+tufnPal3pdWzc+Y7mLEbv5RQNSCAEkooqcyUDS1ruVzq+YelUGr4D/cpdVyGUEIJJZQUlFBCCSWUJDiULlIu/xZXE66yKmlwKElwCkoooYSSBIcSSiihhBJKY+r5fEIp4zgYDIIDI1AWKs/zJpNJv9+HslCdz+ef/3W5XKAs1Nq9Xs9fkvP5nASXae3X6wWlTGszV4q1NpRirQ2lWGvzaUestaEUa20oxVobymx1u92+tTaUme9Z+I7D4fCztUnwPFvk/X7/9jNQFt0ioRTbIqFUdUzdIqHM5piwRZLgwo5Qpo8+io5Q5h99oBQbfaBM6ev9ft9ut1VGHxI8PWcURx8oUxy73e7hcMjhCGXOuQfK+M2x0+kUd3SaMrI5FnR0NMHDi7HI5ug0ZRhRajE6RxlBFFyMrlD6gsfjcbValYpoLWXAt9lswoKlItqQ4G+1d0X4AsH1en06ncpDNIwyrDadTmPVInzb7bYCQVXKWp7499Vms9k0VBG1TqharVag9i7/dxeLhbtvKfi2wcWuNR83UKty0ene4J8JG1F7V1iN53aSBr26NjizKT+n5WoS1irKCj5yOEEZvhNjGWJ1lCXdiXGOUvy2oKMJLvKdCZRi35m4Tlmeo1uUgt89OU3ped54PB6NRiU5upLgwYGbZrO52+2snHgqolQ/awylas64th4lKUvNa4coq3e0M8HznTWGMn70yXHWGMr40SfHWWModRl9rKJUeRKVBFeirGWLtJCyri3SNsqE93BAmY0y4T0cUGag1KS1jU9wfVrbeEp9WttsSq1S22BK3VLbYEpSW4aSgVyMkoFcjJLWFqC8Xq/+ZVpbgPLxePiXNWxtzqJDCSWUUEJJgkMJJZRQUiQ4lPZR1vKWAkOvsippcChJcApKKKGEkgSHEkoooYRSF0pKvZIoqfyLFAIoobS3/gEMfEiSHspv7AAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="drExpo1"/>DualRate Expo - Phase 2: Start</caption>
+			
+			<thead>
 				<tr>
-					<th class="d2" colspan="4">Phase 2: Start</th>
+					<th/>
+					<th align="center">Dual Rate</th>
+					<th align="center">Expo</th>
+					<th align="center">Schalter</th>
+					<th align="center">aus</th>
+					<th align="center">an</th>
 				</tr>
-
+			</thead>
+			
+			<tbody>
 
 					<tr class="d0">			  	
 						<th align="right">Querruder</th>
@@ -491,6 +583,12 @@ normal</td>
 							<td align="center">0% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
 					<tr class="d1">			  	
 						<th align="right">H&ouml;henruder</th>
@@ -498,6 +596,12 @@ normal</td>
 							<td align="center">0% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
 					<tr class="d0">			  	
 						<th align="right">Seitenruder</th>
@@ -505,11 +609,30 @@ normal</td>
 							<td align="center">0% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="drExpo2"/>DualRate Expo - Phase 3: Speed</caption>
+			
+			<thead>
 				<tr>
-					<th class="d2" colspan="4">Phase 3: Speed</th>
+					<th/>
+					<th align="center">Dual Rate</th>
+					<th align="center">Expo</th>
+					<th align="center">Schalter</th>
+					<th align="center">aus</th>
+					<th align="center">an</th>
 				</tr>
-
+			</thead>
+			
+			<tbody>
 
 					<tr class="d0">			  	
 						<th align="right">Querruder</th>
@@ -517,6 +640,12 @@ normal</td>
 							<td align="center">0% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
 					<tr class="d1">			  	
 						<th align="right">H&ouml;henruder</th>
@@ -524,6 +653,12 @@ normal</td>
 							<td align="center">0% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
 					<tr class="d0">			  	
 						<th align="right">Seitenruder</th>
@@ -531,11 +666,30 @@ normal</td>
 							<td align="center">0% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="drExpo3"/>DualRate Expo - Phase 4: Landung</caption>
+			
+			<thead>
 				<tr>
-					<th class="d2" colspan="4">Phase 4: Landung</th>
+					<th/>
+					<th align="center">Dual Rate</th>
+					<th align="center">Expo</th>
+					<th align="center">Schalter</th>
+					<th align="center">aus</th>
+					<th align="center">an</th>
 				</tr>
-
+			</thead>
+			
+			<tbody>
 
 					<tr class="d0">			  	
 						<th align="right">Querruder</th>
@@ -543,6 +697,12 @@ normal</td>
 							<td align="center">0% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
 					<tr class="d1">			  	
 						<th align="right">H&ouml;henruder</th>
@@ -550,6 +710,12 @@ normal</td>
 							<td align="center">0% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
 					<tr class="d0">			  	
 						<th align="right">Seitenruder</th>
@@ -557,11 +723,17 @@ normal</td>
 							<td align="center">0% / 0%</td>
 						<td align="center">		Schalter 2
 normal</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
 					</tr>
-	</tbody>
-</table>
+			</tbody>
+		</table>
 	<table>
-		<caption>Phasentrimm</caption>
+		<caption><a name="phaseTrim"/>Phasentrimm</caption>
 		
 		<thead>
 			<tr>
@@ -601,7 +773,7 @@ normal</td>
 		</tbody>
 	</table>
 	<table>
-		<caption>Fl&auml;chenmix</caption>
+		<caption><a name="wingMix"/>Fl&auml;chenmix</caption>
 
 		<thead>
 			<tr class="d0">
@@ -686,8 +858,8 @@ normal</td>
 				</tr>
 		</tbody>
 	</table>
-<table>
-	<caption>Linearmischer</caption>
+<table class="unused">
+	<caption><a name="linearMixer"/>Linearmischer</caption>
 	
 	<thead>
 		<tr>
@@ -702,9 +874,9 @@ normal</td>
 		</tr>
 	</thead>
 	
-		
+	
 	<tbody>	
-				<tr class="d0">
+				<tr class="d0 unused">
 					<td align="center">LinearMix 1</td>
 					<td align="center">Normal</td>
 					<td align="center">0 &rarr; 0</td>
@@ -713,18 +885,9 @@ normal</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
-					<td align="center">
-						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="125">
-							<rect x="0" y="0" width="100" height="125" fill="none" stroke="darkGrey" stroke-width="2"/>
-							<line x1="0" y1="12.5" x2="100" y2="12.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="62.5" x2="100" y2="62.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="112.5" x2="100" y2="112.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="50" y1="0" x2="50" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<polyline points="0,62.5 100,62.5" stroke="black" stroke-width="2" fill="none"/>	
-						</svg>
-					</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
 				</tr>
-				<tr class="d1">
+				<tr class="d1 unused">
 					<td align="center">LinearMix 2</td>
 					<td align="center">Normal</td>
 					<td align="center">0 &rarr; 0</td>
@@ -733,18 +896,9 @@ normal</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
-					<td align="center">
-						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="125">
-							<rect x="0" y="0" width="100" height="125" fill="none" stroke="darkGrey" stroke-width="2"/>
-							<line x1="0" y1="12.5" x2="100" y2="12.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="62.5" x2="100" y2="62.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="112.5" x2="100" y2="112.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="50" y1="0" x2="50" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<polyline points="0,62.5 100,62.5" stroke="black" stroke-width="2" fill="none"/>	
-						</svg>
-					</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
 				</tr>
-				<tr class="d0">
+				<tr class="d0 unused">
 					<td align="center">LinearMix 3</td>
 					<td align="center">Normal</td>
 					<td align="center">0 &rarr; 0</td>
@@ -753,20 +907,11 @@ normal</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
-					<td align="center">
-						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="125">
-							<rect x="0" y="0" width="100" height="125" fill="none" stroke="darkGrey" stroke-width="2"/>
-							<line x1="0" y1="12.5" x2="100" y2="12.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="62.5" x2="100" y2="62.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="112.5" x2="100" y2="112.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="50" y1="0" x2="50" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<polyline points="0,62.5 100,62.5" stroke="black" stroke-width="2" fill="none"/>	
-						</svg>
-					</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
 				</tr>
 	</tbody>
 </table><table>
-	<caption>Fail Safe</caption>
+	<caption><a name="failSafe"/>Fail Safe</caption>
 
 		
 	<tbody>
@@ -817,7 +962,7 @@ normal</td>
 		</tr>
 	</tbody>
 </table><table>
-	<caption>Telemetrie</caption>
+	<caption><a name="telemetry"/>Telemetrie</caption>
 	
 		
 	<tbody>
@@ -854,7 +999,7 @@ normal</td>
 	</tbody>
 </table>
 <table>
-	<caption>Lehrer/Sch&uuml;ler</caption>
+	<caption><a name="trainerPupil"/>Lehrer/Sch&uuml;ler</caption>
 			
 		
 	<tbody>
@@ -916,7 +1061,7 @@ normal</td>
 		</tr>
 	</tbody>
 </table><table>
-	<caption>Kn&uuml;ppeltrimmung</caption>
+	<caption><a name="stickTrim"/>Kn&uuml;ppeltrimmung</caption>
 
 	<thead>
 		<tr>
@@ -960,7 +1105,7 @@ normal</td>
 				</tr>
 	</tbody>
 </table><table>
-	<caption>Schalter-/Geberzuordnungen</caption>
+	<caption><a name="switches"/>Schalter-/Geberzuordnungen</caption>
 	
 	<thead>
 		<tr>
@@ -1015,6 +1160,6 @@ normal</td>
 					<td align="center">Geber</td>
 				</tr>
 	</tbody>
-</table>
+</table>		</div>
 	</body>
 </html>

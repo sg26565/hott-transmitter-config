@@ -1,16 +1,15 @@
 <#if helicopterModel??>
 	<#list helicopterModel.phase as phase>
 		<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
-			<a name="helicopterMix"/>
 			<table>
-				<caption>Helimix - ${phase?string}</caption>
+				<caption><a name="helicopterMix${phase.number}"/>Helimix - ${phase?string}</caption>
 	
 				<@reset/>
 					
 				<tbody>
-					<@curve "Pitchkurve" phase.helicopterMixer.pitchCurve.point/>
-					<@curve "Gaskurve (K1 -> Gas)" phase.helicopterMixer.throttleCurve.point/>
-					<@curve "Heckrotorkurve (K1 -> Heck)" phase.helicopterMixer.tailCurve.point/>
+					<@curve "Pitchkurve" phase.helicopterMixer.pitchCurve/>
+					<@curve "Gaskurve (K1 -> Gas)" phase.helicopterMixer.throttleCurve/>
+					<@curve "Heckrotorkurve (K1 -> Heck)" phase.helicopterMixer.tailCurve/>
 					<tr class="<@d/>">
 						<th align="right">Gyro</th>
 						<td align="left" colspan="4">${phase.gyroGain}%</td>

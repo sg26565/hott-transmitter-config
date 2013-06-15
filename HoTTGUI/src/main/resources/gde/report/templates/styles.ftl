@@ -24,14 +24,14 @@
 	}
 	
 	#nav {
-		display: block;
+		display: none;
 	}
 </style>
 
 <style type="text/css" media="screen">
 	body {
 		font-size: 14pt;
-		min-width: 20 em;
+		min-width: 40 em;
 	}
 	
 	#nav {
@@ -41,12 +41,24 @@
 		margin: 0;
 	}
 	
+	#nav a[href] {
+		display: block;
+	}
+	
 	#nav h1 {
 		font-size: 14pt;
 	}
 	
 	#content {
 		margin-left: 10em;
+	}
+	
+	bookmarks {
+		display: none;
+	}
+	
+	a.i1 {
+		margin-left: 1em;
 	}
 </style>
 
@@ -56,19 +68,7 @@
 		-fs-pdf-font-embed: embed;
 		-fs-pdf-font-encoding: Identity-H;
 	}
-
-	a[href] {
-		display: block;
-	}
 	
-	a[name] {
-		page-break-after: avoid;
-	}
-	
-	svg {
-		display: block;
-	}
-
 	body {
 		font-family: Arial;
 	}
@@ -125,6 +125,7 @@
 		background-color: #bbb;
 		font-size: large;
 		text-align: center;
+		page-break-before: auto;
 	}
 	
 	tr.d1 td.d0 {

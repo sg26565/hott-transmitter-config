@@ -1,9 +1,8 @@
 <#if wingedModel??>
-	<a name="wingMix"/>
 	<#list model.phase as phase>
 		<#if phase.phaseType.name() != "Unused">
 			<table>
-				<caption>Flächenmischer - ${phase?string}</caption>
+				<caption><a name="wingMix${phase.number}"/>Flächenmischer - ${phase?string}</caption>
 				
 				<tbody>
 					<tr>

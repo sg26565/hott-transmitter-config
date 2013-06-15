@@ -1,12 +1,11 @@
-<a name="channel1Curve"/>
-<table>
-	<caption>Kanal 1 Kurve</caption>
-	
-	<tbody>
-		<#list model.phase as phase>
-			<#if phase.phaseType.name() != "Unused">
+<#list model.phase as phase>
+	<#if phase.phaseType.name() != "Unused">
+		<table>
+			<caption><a name="channel1Curve${phase.number}"/>Kanal 1 Kurve - ${phase?string}</caption>
+			
+			<tbody>
 				<@heliCurve phase?string, phase.channel1Curve/>
-			</#if>
-		</#list>
-	</tbody>
-</table>
+			</tbody>
+		</table>
+	</#if>
+</#list>

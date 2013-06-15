@@ -5,11 +5,9 @@
 		<#break>
 	</#if>
 </#list>
-
-<a name="channelSequencer"/>
 <table class="<@u show/>">
 
-	<caption>Kanal Sequenzer</caption>
+	<caption><a name="channelSequencer"/>Kanal Sequenzer</caption>
 	
 	<thead>
 		<tr>

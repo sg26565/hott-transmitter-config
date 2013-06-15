@@ -1,7 +1,6 @@
-<a name="modelType"/>
 <table>
 	<#if helicopterModel??>
-		<caption>Helicoptertyp</caption>
+		<caption><a name="modelType"/>Helicoptertyp</caption>
 	
 		<@reset/>
 		
@@ -32,7 +31,7 @@
 			</tr>
 		</tbody>
 	<#else>
-		<caption>Modelltyp</caption>
+		<caption><a name="modelType"/>Modelltyp</caption>
 
 		<@reset/>
 		

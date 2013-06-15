@@ -132,14 +132,14 @@
         </channel>
     </channels>
     <channelMappings>
-        <channelMapping outputChannel="0" inputChannel="0"/>
-        <channelMapping outputChannel="1" inputChannel="1"/>
-        <channelMapping outputChannel="2" inputChannel="2"/>
-        <channelMapping outputChannel="3" inputChannel="3"/>
-        <channelMapping outputChannel="4" inputChannel="4"/>
-        <channelMapping outputChannel="5" inputChannel="5"/>
-        <channelMapping outputChannel="6" inputChannel="6"/>
-        <channelMapping outputChannel="7" inputChannel="7"/>
+        <channelMapping inputChannel="0" outputChannel="0"/>
+        <channelMapping inputChannel="1" outputChannel="1"/>
+        <channelMapping inputChannel="2" outputChannel="2"/>
+        <channelMapping inputChannel="3" outputChannel="3"/>
+        <channelMapping inputChannel="4" outputChannel="4"/>
+        <channelMapping inputChannel="5" outputChannel="5"/>
+        <channelMapping inputChannel="6" outputChannel="6"/>
+        <channelMapping inputChannel="7" outputChannel="7"/>
     </channelMappings>
     <clocks>
         <clock number="0">
@@ -163,6 +163,26 @@
             <switch>Mixer_1</switch>
             <toChannel>0</toChannel>
             <type>Linear</type>
+            <curve>
+                <points>
+                    <point number="0">
+                        <enabled>true</enabled>
+                        <position>-100</position>
+                        <value>0</value>
+                    </point>
+                    <point number="1">
+                        <enabled>true</enabled>
+                        <position>0</position>
+                        <value>0</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <position>100</position>
+                        <value>0</value>
+                    </point>
+                </points>
+                <smoothing>false</smoothing>
+            </curve>
             <offset>0</offset>
             <travelHigh>0</travelHigh>
             <travelLow>0</travelLow>
@@ -173,6 +193,26 @@
             <switch>Mixer_2</switch>
             <toChannel>0</toChannel>
             <type>Linear</type>
+            <curve>
+                <points>
+                    <point number="0">
+                        <enabled>true</enabled>
+                        <position>-100</position>
+                        <value>0</value>
+                    </point>
+                    <point number="1">
+                        <enabled>true</enabled>
+                        <position>0</position>
+                        <value>0</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <position>100</position>
+                        <value>0</value>
+                    </point>
+                </points>
+                <smoothing>false</smoothing>
+            </curve>
             <offset>0</offset>
             <travelHigh>0</travelHigh>
             <travelLow>0</travelLow>
@@ -183,6 +223,26 @@
             <switch>Mixer_3</switch>
             <toChannel>0</toChannel>
             <type>Linear</type>
+            <curve>
+                <points>
+                    <point number="0">
+                        <enabled>true</enabled>
+                        <position>-100</position>
+                        <value>0</value>
+                    </point>
+                    <point number="1">
+                        <enabled>true</enabled>
+                        <position>0</position>
+                        <value>0</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <position>100</position>
+                        <value>0</value>
+                    </point>
+                </points>
+                <smoothing>false</smoothing>
+            </curve>
             <offset>0</offset>
             <travelHigh>0</travelHigh>
             <travelLow>0</travelLow>
@@ -241,40 +301,44 @@
                     <trim>0</trim>
                 </control>
             </controls>
-            <dualRates>
-                <dualRate function="Roll">
-                    <switch>Dr_Expo_Roll</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </dualRate>
-                <dualRate function="Nick">
-                    <switch>Dr_Expo_Nick</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </dualRate>
-                <dualRate function="TailRotor">
-                    <switch>Dr_Expo_TailRotor</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </dualRate>
-            </dualRates>
-            <expos>
-                <expo function="Roll">
-                    <switch>Dr_Expo_Roll</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Nick">
-                    <switch>Dr_Expo_Nick</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="TailRotor">
-                    <switch>Dr_Expo_TailRotor</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-            </expos>
+            <dualRateExpos>
+                <dualRateExpo>
+                    <dualRate function="Roll">
+                        <switch>Dr_Expo_Roll</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </dualRate>
+                    <expo function="Roll">
+                        <switch>Dr_Expo_Roll</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Nick">
+                        <switch>Dr_Expo_Nick</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </dualRate>
+                    <expo function="Nick">
+                        <switch>Dr_Expo_Nick</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="TailRotor">
+                        <switch>Dr_Expo_TailRotor</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </dualRate>
+                    <expo function="TailRotor">
+                        <switch>Dr_Expo_TailRotor</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+            </dualRateExpos>
             <motorOn>false</motorOn>
             <phaseName>Global</phaseName>
             <phaseSwitchTime>0.0</phaseSwitchTime>
@@ -284,34 +348,38 @@
             <gyroSuppression>0</gyroSuppression>
         </phase>
         <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterPhase" number="0">
-            <dualRates>
-                <dualRate function="Roll">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Nick">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="TailRotor">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-            </dualRates>
-            <expos>
-                <expo function="Roll">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Nick">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="TailRotor">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-            </expos>
+            <dualRateExpos>
+                <dualRateExpo>
+                    <dualRate function="Roll">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Roll">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Nick">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Nick">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="TailRotor">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="TailRotor">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+            </dualRateExpos>
             <motorOn>false</motorOn>
             <phaseName>Normal</phaseName>
             <phaseSwitchTime>0.0</phaseSwitchTime>
@@ -428,34 +496,38 @@
             </helicopterTrim>
         </phase>
         <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterPhase" number="1">
-            <dualRates>
-                <dualRate function="Roll">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Nick">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="TailRotor">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-            </dualRates>
-            <expos>
-                <expo function="Roll">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Nick">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="TailRotor">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-            </expos>
+            <dualRateExpos>
+                <dualRateExpo>
+                    <dualRate function="Roll">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Roll">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Nick">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Nick">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="TailRotor">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="TailRotor">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+            </dualRateExpos>
             <motorOn>false</motorOn>
             <phaseName>Schwebeflug</phaseName>
             <phaseSwitch>Phase_2</phaseSwitch>
@@ -573,34 +645,38 @@
             </helicopterTrim>
         </phase>
         <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterPhase" number="2">
-            <dualRates>
-                <dualRate function="Roll">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Nick">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="TailRotor">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-            </dualRates>
-            <expos>
-                <expo function="Roll">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Nick">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="TailRotor">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-            </expos>
+            <dualRateExpos>
+                <dualRateExpo>
+                    <dualRate function="Roll">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Roll">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Nick">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Nick">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="TailRotor">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="TailRotor">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+            </dualRateExpos>
             <motorOn>false</motorOn>
             <phaseName>Akro 3D</phaseName>
             <phaseSwitch>Phase_3</phaseSwitch>
@@ -718,34 +794,38 @@
             </helicopterTrim>
         </phase>
         <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="helicopterPhase" number="3">
-            <dualRates>
-                <dualRate function="Roll">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Nick">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="TailRotor">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-            </dualRates>
-            <expos>
-                <expo function="Roll">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Nick">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="TailRotor">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-            </expos>
+            <dualRateExpos>
+                <dualRateExpo>
+                    <dualRate function="Roll">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Roll">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Nick">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Nick">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="TailRotor">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="TailRotor">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+            </dualRateExpos>
             <motorOn>false</motorOn>
             <phaseName>Autorotation</phaseName>
             <phaseSwitch>Autorotation</phaseSwitch>

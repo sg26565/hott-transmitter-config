@@ -1,6 +1,5 @@
-<a name="phaseSettings"/>
 <table>
-	<caption>Phaseneinstellungen</caption>
+	<caption><a name="phaseSettings"/>Phaseneinstellungen</caption>
 	
 	<thead>
 		<tr>

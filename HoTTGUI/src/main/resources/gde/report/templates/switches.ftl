@@ -1,6 +1,5 @@
-<a name="switches"/>
 <table>
-	<caption>Schalter-/Geberzuordnungen</caption>
+	<caption><a name="switches"/>Schalter-/Geberzuordnungen</caption>
 	
 	<thead>
 		<tr>

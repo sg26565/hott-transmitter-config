@@ -1,6 +1,5 @@
-<a name="stickSettings"/>
 <table>
-	<caption>Knüppeleinstellungen</caption>
+	<caption><a name="stickSettings"/>Knüppeleinstellungen</caption>
 	
 	<thead>
 		<tr>

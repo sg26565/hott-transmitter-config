@@ -6,10 +6,8 @@
 			<#break>
 		</#if>
 	</#list>
-
-	<a name="logicalSwitches"/>
 	<table class="<@u show/>">
-		<caption>logische Schalter</caption>
+		<caption><a name="logicalSwitches"/>logische Schalter</caption>
 		
 		<thead>
 			<tr>

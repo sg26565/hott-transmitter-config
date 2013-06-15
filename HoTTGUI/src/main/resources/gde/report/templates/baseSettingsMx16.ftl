@@ -1,6 +1,5 @@
-<a name="baseSettings"/>
 <table>
-	<caption>Grundeinstellungen</caption>
+	<caption><a name="baseSettings"/>Grundeinstellungen</caption>
 
 	<@reset/>
 	

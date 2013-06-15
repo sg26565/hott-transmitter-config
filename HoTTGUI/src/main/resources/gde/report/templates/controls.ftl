@@ -1,27 +1,22 @@
-<a name="controls"/>
-<table>
-	<caption>Gebereinstellungen</caption>
-	
-	<thead>
-		<tr>
-			<th align="center">Eingang</th>
-			<th align="center">Typ</th>
-			<th align="center" colspan="2">Geber</th>
-			<th align="center">Offset</th>
-			<th align="center">Weg -</th>
-			<th align="center">Weg +</th>
-			<th align="center">Zeit -</th>
-			<th align="center">Zeit +</th>
-		</tr>
-	</thead>
-
-	<tbody>
-		<#list model.phase as phase>
-			<#if phase.phaseType.name() != "Unused">
+<#list model.phase as phase>
+	<#if phase.phaseType.name() != "Unused">
+		<table>
+			<caption><a name="controls${phase.number}"/>Gebereinstellungen - ${phase?string}</caption>
+			
+			<thead>
 				<tr>
-					<th class="d2" colspan="9">${phase?string}</th>
+					<th align="center">Eingang</th>
+					<th align="center">Typ</th>
+					<th align="center" colspan="2">Geber</th>
+					<th align="center">Offset</th>
+					<th align="center">Weg -</th>
+					<th align="center">Weg +</th>
+					<th align="center">Zeit -</th>
+					<th align="center">Zeit +</th>
 				</tr>
-
+			</thead>
+		
+			<tbody>
 				<@reset/>
 
 				<#list phase.control as control>	
@@ -47,7 +42,7 @@
 						<td align="center">${control.timeHigh?string("0.0")}s</td>
 					</tr>
 				</#list>
-			</#if>
-		</#list>
-	</tbody>
-</table>
+			</tbody>
+		</table>
+	</#if>
+</#list>

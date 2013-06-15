@@ -1,2 +1,2 @@
 @echo off
-start /D "%~dp0" /B javaw -cp ${project.build.finalName}.jar gde.mdl.ui.Launcher
+start /D "%~dp0" /B javaw.exe -cp HoTTMdlViewer.jar gde.mdl.ui.Launcher

@@ -28,20 +28,12 @@
 			content: "mx-16 - T3";
 		}
 	
-		@top-center {
-			content: "erzeugt am 02.06.2013 19:23:59";
-		}
-	
 		@top-right {
-			content: "Seite " counter(page);
+			content: "15.06.2013 18:04:34";
 		}
 	
 		@bottom-left {
-			content: "mx-16 - T3";
-		}
-	
-		@bottom-center {
-			content: "erzeugt am 02.06.2013 19:23:59";
+			content: "HoTTMdlViewer unknown";
 		}
 	
 		@bottom-right {
@@ -52,11 +44,43 @@
 	body {
 		font-size: 9pt;
 	}
+	
+	#nav {
+		display: none;
+	}
 </style>
 
 <style type="text/css" media="screen">
 	body {
 		font-size: 14pt;
+		min-width: 40 em;
+	}
+	
+	#nav {
+		position: fixed;
+		font-size: 10pt;
+		padding: 0;
+		margin: 0;
+	}
+	
+	#nav a[href] {
+		display: block;
+	}
+	
+	#nav h1 {
+		font-size: 14pt;
+	}
+	
+	#content {
+		margin-left: 10em;
+	}
+	
+	bookmarks {
+		display: none;
+	}
+	
+	a.i1 {
+		margin-left: 1em;
 	}
 </style>
 
@@ -66,11 +90,7 @@
 		-fs-pdf-font-embed: embed;
 		-fs-pdf-font-encoding: Identity-H;
 	}
-
-	svg {
-		display: block;
-	}
-
+	
 	body {
 		font-family: Arial;
 	}
@@ -127,15 +147,67 @@
 		background-color: #bbb;
 		font-size: large;
 		text-align: center;
+		page-break-before: auto;
 	}
 	
 	tr.d1 td.d0 {
 		background-color: #eee;
 	}
-</style>	</head>
+	
+	.unused {
+		color: #aaa;
+		font-style: italic;
+	}
+</style><bookmarks>
+	<bookmark href="#baseSettings" name="Grundeinstellungen Modell"/>
+	<bookmark href="#servos" name="Servoeinstellungen"/>		
+	<bookmark href="#controls" name="Gebereinstellungen"/>
+	<bookmark href="#drExpo0" name="DualRate Expo">
+						<bookmark href="#drExpo0" name="Phase 1: Normal"/>
+				<bookmark href="#drExpo1" name="Phase 2: Schwebeflug"/>
+				<bookmark href="#drExpo2" name="Phase 3: Akro 3D"/>
+				<bookmark href="#drExpo3" name="Phase 4: Autorotation"/>
+	</bookmark>
+		<bookmark href="#helicopterMix0" name="Helikoptermix">
+					<bookmark href="#helicopterMix0" name="Phase 1: Normal"/>
+					<bookmark href="#helicopterMix1" name="Phase 2: Schwebeflug"/>
+					<bookmark href="#helicopterMix2" name="Phase 3: Akro 3D"/>
+					<bookmark href="#helicopterMix3" name="Phase 4: Autorotation"/>
+		</bookmark>
+	<bookmark href="#linearMixer" name="Linearmischer"/>
+		<bookmark href="#swashplateMixer" name="Taumelscheibenmischer"/>
+	<bookmark href="#failSafe" name="Fail Safe"/>
+	<bookmark href="#telemetry" name="Telemetrie"/>		
+	<bookmark href="#trainerPupil" name="Lehrer/Sch&uuml;ler"/>
+	<bookmark href="#stickTrim" name="Kn&uuml;ppeltrimmung"/>		
+	<bookmark href="#switches" name="Schalter-/Geberzuordnungen"/>
+</bookmarks>	</head>
 	<body>
+		<div id="nav">
+<h1>Inhaltsverzeichnis</h1>
+<a href="#baseSettings">Grundeinstellungen Modell</a>
+<a href="#servos">Servoeinstellungen</a>		
+<a href="#controls">Gebereinstellungen</a>
+<div>DualRate Expo</div>
+		<a class="i1" href="#drExpo0">Phase 1: Normal"</a>
+		<a class="i1" href="#drExpo1">Phase 2: Schwebeflug"</a>
+		<a class="i1" href="#drExpo2">Phase 3: Akro 3D"</a>
+		<a class="i1" href="#drExpo3">Phase 4: Autorotation"</a>
+	<div>Helikoptermix</div>
+			<a class="i1" href="#helicopterMix0">Phase 1: Normal"</a>
+			<a class="i1" href="#helicopterMix1">Phase 2: Schwebeflug"</a>
+			<a class="i1" href="#helicopterMix2">Phase 3: Akro 3D"</a>
+			<a class="i1" href="#helicopterMix3">Phase 4: Autorotation"</a>
+<a href="#linearMixer">Linearmischer</a>
+	<a href="#swashplateMixer">Taumelscheibenmischer</a>
+<a href="#failSafe">Fail Safe</a>
+<a href="#telemetry">Telemetrie</a>		
+<a href="#trainerPupil">Lehrer/Sch&uuml;ler</a>
+<a href="#stickTrim">Kn&uuml;ppeltrimmung</a>		
+<a href="#switches">Schalter-/Geberzuordnungen</a>		</div>
+		<div id="content">
 <table>
-	<caption>Grundeinstellungen</caption>
+	<caption><a name="baseSettings"/>Grundeinstellungen</caption>
 
 		
 	<tbody>
@@ -319,7 +391,7 @@ invers</td>
 		</tr>
 	</tbody>
 </table><table>
-	<caption>Servoeinstellungen</caption>
+	<caption><a name="servos"/>Servoeinstellungen</caption>
 	
 	<thead>
 		<tr>
@@ -334,56 +406,56 @@ invers</td>
 	
 	<tbody>
 				<tr class="d0">
-					<td align="center">S1 </td>
+					<td align="center">S1</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d1">
-					<td align="center">S2 </td>
+					<td align="center">S2</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d0">
-					<td align="center">S3 </td>
+					<td align="center">S3</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d1">
-					<td align="center">S4 </td>
+					<td align="center">S4</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d0">
-					<td align="center">S5 </td>
+					<td align="center">S5</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d1">
-					<td align="center">S6 </td>
+					<td align="center">S6</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d0">
-					<td align="center">S7 </td>
+					<td align="center">S7</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
 					<td align="center">100%</td>
 				</tr>
 				<tr class="d1">
-					<td align="center">S8 </td>
+					<td align="center">S8</td>
 					<td align="center">&rarr;</td>
 					<td align="center">0%</td>
 					<td align="center">100%</td>
@@ -391,7 +463,7 @@ invers</td>
 				</tr>
 	</tbody>
 </table><table>
-	<caption>Gebereinstellungen</caption>
+	<caption><a name="controls"/>Gebereinstellungen</caption>
 	
 	<thead>
 		<tr>
@@ -445,49 +517,21 @@ invers</td>
 				<td align="center">100%</td>
 			</tr>
 	</tbody>
-</table><table>
-	<caption>DualRate Expo</caption>
-	
-	<thead>
-		<tr>
-			<th/>
-			<th align="center">Dual Rate</th>
-			<th align="center">Expo</th>
-			<th align="center">Schalter</th>
-		</tr>
-	</thead>
-	
-	<tbody>
-						<tr>
-					<th class="d2" colspan="4">Phase 1: Normal</th>
-				</tr>
-
-
-					<tr class="d0">			  	
-						<th align="right">Roll</th>
-							<td align="center">100%</td>
-							<td align="center">0%</td>
-						<td align="center">		---
-</td>
-					</tr>
-					<tr class="d1">			  	
-						<th align="right">Nick</th>
-							<td align="center">100%</td>
-							<td align="center">0%</td>
-						<td align="center">		---
-</td>
-					</tr>
-					<tr class="d0">			  	
-						<th align="right">Heckrotor</th>
-							<td align="center">100%</td>
-							<td align="center">0%</td>
-						<td align="center">		---
-</td>
-					</tr>
+</table>		<table>
+			<caption><a name="drExpo0"/>DualRate Expo - Phase 1: Normal</caption>
+			
+			<thead>
 				<tr>
-					<th class="d2" colspan="4">Phase 2: Schwebeflug</th>
+					<th/>
+					<th align="center">Dual Rate</th>
+					<th align="center">Expo</th>
+					<th align="center">Schalter</th>
+					<th align="center">aus</th>
+					<th align="center">an</th>
 				</tr>
-
+			</thead>
+			
+			<tbody>
 
 					<tr class="d0">			  	
 						<th align="right">Roll</th>
@@ -495,6 +539,11 @@ invers</td>
 							<td align="center">0%</td>
 						<td align="center">		---
 </td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
 					</tr>
 					<tr class="d1">			  	
 						<th align="right">Nick</th>
@@ -502,6 +551,11 @@ invers</td>
 							<td align="center">0%</td>
 						<td align="center">		---
 </td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
 					</tr>
 					<tr class="d0">			  	
 						<th align="right">Heckrotor</th>
@@ -509,11 +563,29 @@ invers</td>
 							<td align="center">0%</td>
 						<td align="center">		---
 </td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
 					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="drExpo1"/>DualRate Expo - Phase 2: Schwebeflug</caption>
+			
+			<thead>
 				<tr>
-					<th class="d2" colspan="4">Phase 3: Akro 3D</th>
+					<th/>
+					<th align="center">Dual Rate</th>
+					<th align="center">Expo</th>
+					<th align="center">Schalter</th>
+					<th align="center">aus</th>
+					<th align="center">an</th>
 				</tr>
-
+			</thead>
+			
+			<tbody>
 
 					<tr class="d0">			  	
 						<th align="right">Roll</th>
@@ -521,6 +593,11 @@ invers</td>
 							<td align="center">0%</td>
 						<td align="center">		---
 </td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
 					</tr>
 					<tr class="d1">			  	
 						<th align="right">Nick</th>
@@ -528,6 +605,11 @@ invers</td>
 							<td align="center">0%</td>
 						<td align="center">		---
 </td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
 					</tr>
 					<tr class="d0">			  	
 						<th align="right">Heckrotor</th>
@@ -535,11 +617,29 @@ invers</td>
 							<td align="center">0%</td>
 						<td align="center">		---
 </td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
 					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="drExpo2"/>DualRate Expo - Phase 3: Akro 3D</caption>
+			
+			<thead>
 				<tr>
-					<th class="d2" colspan="4">Phase 4: Autorotation</th>
+					<th/>
+					<th align="center">Dual Rate</th>
+					<th align="center">Expo</th>
+					<th align="center">Schalter</th>
+					<th align="center">aus</th>
+					<th align="center">an</th>
 				</tr>
-
+			</thead>
+			
+			<tbody>
 
 					<tr class="d0">			  	
 						<th align="right">Roll</th>
@@ -547,6 +647,11 @@ invers</td>
 							<td align="center">0%</td>
 						<td align="center">		---
 </td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
 					</tr>
 					<tr class="d1">			  	
 						<th align="right">Nick</th>
@@ -554,6 +659,11 @@ invers</td>
 							<td align="center">0%</td>
 						<td align="center">		---
 </td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
 					</tr>
 					<tr class="d0">			  	
 						<th align="right">Heckrotor</th>
@@ -561,11 +671,70 @@ invers</td>
 							<td align="center">0%</td>
 						<td align="center">		---
 </td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
 					</tr>
-	</tbody>
-</table>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="drExpo3"/>DualRate Expo - Phase 4: Autorotation</caption>
+			
+			<thead>
+				<tr>
+					<th/>
+					<th align="center">Dual Rate</th>
+					<th align="center">Expo</th>
+					<th align="center">Schalter</th>
+					<th align="center">aus</th>
+					<th align="center">an</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+
+					<tr class="d0">			  	
+						<th align="right">Roll</th>
+							<td align="center">100%</td>
+							<td align="center">0%</td>
+						<td align="center">		---
+</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
+					</tr>
+					<tr class="d1">			  	
+						<th align="right">Nick</th>
+							<td align="center">100%</td>
+							<td align="center">0%</td>
+						<td align="center">		---
+</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
+					</tr>
+					<tr class="d0">			  	
+						<th align="right">Heckrotor</th>
+							<td align="center">100%</td>
+							<td align="center">0%</td>
+						<td align="center">		---
+</td>
+							<td align="center">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+							</td>
+							<td align="center">
+							</td>
+					</tr>
+			</tbody>
+		</table>
 			<table>
-				<caption>Helimix - Phase 1: Normal</caption>
+				<caption><a name="helicopterMix0"/>Helimix - Phase 1: Normal</caption>
 	
 					
 				<tbody>
@@ -578,41 +747,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="125" x2="200" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="100" y1="0" x2="100" y2="250" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,81 100,175 200,107 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAG70lEQVR42u2cS0hUXxzHK1/4ytdoIm40WyRIqZC1EZNBKFFQKwIhNy1s4cJCBDHRVS4GxMDAB7YQHEFBA6OXC18gWCiUIgqKINOIylAoKmn6/+aBYf4zc+ftzJ253++iZO655977md85v8eccy+cUh7SBSIgSqIkSspplBdkqebmZnnemB2UMvzCgVKOZkiUREmUREkRJVESJVESJT04USoRZfP/xaM2jtIqOcCJkh6cIkqiJEqipAcnSqIkSqJ0B6U8RZTK9uD37t1jPOQuyqWlJbVabbl+g3IaJQ7cunWLKD2AsqKiwmAwEKUngyEZovTXuJIoiZIoiZIome2cP8rt7e3BwUEc7uvr0+v1JOUiyqmpKZVKZVytHhUV9eXLF8Jyjqywx+TkZLO1/6BJ23QapRjXlsJIJyBLGXNCsy0n//5ra2uzivLVq1f04JYaHh4GnMePH/ulVcoKZUNDA+B0dnZanytNfY7QxYsXP3/+TJSWKi4uBp/IyMiQkBC1Wr21tWXuwWNjY40cg4KC8G9cXNzMzAxRmqmkpAReen19vb+/H5QqKiqsxJVarRbH3r59u7a2Vl5eLvz42NgYUVrV379/gSgsLEwycRR/HB8fV1VViaYjIyN03FIoY2Ji7KCETk5Oampq8ElwcDADI6Nyc3PDw8O/ffsmXHl9fb19lEKNjY3CC3V0dJDj6dmPYIWFhRis0dHRtbW1R0dHjqKENBqN3CJNmWY7dlFCXV1dly5dMrVnJctq6ceJhS4DAwOIpNCguroaM65iPbhU6ce5NUOjo6OYcdGmsrLSOEcoCqWN0o/Ty6/Gx8cx3aJZaWnpwcGB0lDaSLJdWcn29evXhIQEtIQj293dVRRKG6UfFxcFLiwspKSkoHFeXp7BYFAOyt7eXk9apdDq6mpaWhraZ2VlKaRIjKzPsu4j5sqNjQ23lqrqdLrMzEyckpGRgfQ+gCH++vXryZMnAlxOTs7ly5dNOX748OHU/VW/Ozs7SKRwVmpqKtKAgOT46dMnPB2eMSIi4vXr18inTUs/sEen40op/f79Oz8/HycmJibOzc0FEsS9vT0E0cL67ty5s7KyYoOVZ9ai7+/v379/X5RJpqenA4Pj5ORkeno6Hio0NLS1tfX4+Ng2K48t6//z58+jR4/EKPj48aNfe3DEy8+fPxeJcnZ29o8fP6wn3ee3QwLZ5NOnT8XXODQ05KcoZ2dnr1+/LkqLTU1NMBHJ+sV5v6UAcwquga8UU7Jnez7voy/PBIK4f0QmyER8/5aClpYWUeJsb2/3F6v8/v37zZs3hRG8ePHCkZzYS1ugABEo0Ruwyhwl/AnSPkxKuNurV69OTU05eKL3dpNhgItfLjGFy9ZNLy8v3759W4Q7z549Q/Tj+Lle3ZgH5yO+bbgjL5c47QqRNoaOqBkiAnfhR39v73FEYITwCN0iVLLhDb0spLl3794VxlhVVYW80IVOfLBdFEE7Qnf0jDAewbzPOXZ3d4uS65UrV969e+dyP77ZeYuEEmklOkeKiUTTVxB//vwpsjLo4cOHSKXd6c1nm5iXlpZEUSA3N3dnZ8f7Hry/vz8uLg43EB8fr9Vq3e/Ql/vBMUNlZGSIAFin03nNGGF9Dx48EMZYXFwM2/RItz7eWq/X67OysnCVtLS01dVVL3AcGRlJSkrCFTE/9vT0eLBn37+lwGAw5OXl4UIpKSkLCws2Wi4uLhYWFiJeCQsLKygokCorSMm0Xot+PF6clsULH3Z3d/FsuFZCQgJSXalmZWVl4Dg7Owv7FdGf45ewrNd6/Cnk8u6Mw8PD0tJSMe7Gx8dtN37//j1aIi1xpGfb9doARAkdHR1VVlbiijC90dFRqWai/nrt2rXNzU27fdqt1wYmytOzEqewoJCQkIGBAak2nZ2dVlfSm8rBem3AohSqr68X1a2uri4pmqbray3leL02wFFC/1Y3nEmj0UihVKlUlodAzaxe67V7lu8rmzo6OkSJs7GxUXxy48YNTKPz8/MY+/i8oaHB7BQX6rWKQAn19fUJ+6qpqUH4YlxfGxkZWVdXZ9rS5XqtUlCK5ATsRO1Lyv+6U69VEEpobGwsKioKd1JeXo5UfXBwsKioSKyvdb9eqyyU0MzMjKjiiHXGQhjmYmZ0p16rOJTQxMSECBLNlJiY6E69VokopdbXvnnzRiZ36Dco5b+12u+tUj772vwGpdWt1WJ9LVE6LbOt1cb1tUTpom1qtVq1Wm26vpYoXRffQE2URBnAKOUpoiRKoiRKih6cKImSKImSKImSHpwiSqIkSqKkBydKP0Ep/3cJyOcorZIDnCjpwSmiJEqiJEp6cKIkSqIkSqKUC0rKcdlCSblupERAlEQZuPoPJMYuZs1OPyIAAAAASUVORK5CYII="/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">-100%</td>
 				<td align="center">44%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">-50%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -627,39 +788,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,225 100,173 200,25 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,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"/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">50%</td>
 				<td align="center">26%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -674,41 +829,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="125" x2="200" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="100" y1="0" x2="100" y2="250" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,125 100,93 200,125 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAEg0lEQVR42u2cTyh0XxjHr4TGn1AWlA3lT1koIjuTpJCFWFhRViyRlFJ27MRuoiwUyoKNFEtspGYhyUKJBVHKhoXG+/v+um/3nd/Mdb0z947fHT7fFXPuPeeZz33OeZ77dM4Yv5BHMkAASlCCEiWM0vClZmdn/WnYJyh9+MCF0o9uCEpQghKUCJSgBCUoQUkEB+VPRDn7X9Hq0IpXMsFBSQRHoAQlKEFJBAclKEEJSlCCkggOSlCCEpSgRKAEZZTOz8/b2toCgUBOTk4wGDw7OwNlkurt7RXHk5OTq6srGVZeXg5Kt9rd3ZVhLS0toHSlyspKWVVVVXV/fw9KV4pEIqFQSIYNDAyA0gOaMkzBB5TeoCwpKQFlkqqvr1cED4fDm5ubMmx6ehqUSeri4kJ5peZ1Xl7e5OQkKTpvO/7Q4+Pj1tZWR0fH2tra3d0dKJPU4eGhQo11Ci4/P//g4ACUyfhjaWlpzJlC0fSPb6YNSs1r2xOamunpgdInent7GxkZsUU5PDysVj9GIV9Z8/LysrOzMzg4WFxc7HB0WK26Rlfqev+i7Ozs/Po5/vz8vL6+3t/fr/zR4lVbW5ubmxsDMTs7u7q62vpX1+su3asevszap6cn21PhRnQ+3N7eHn9iPHV6eHhYXl7WwxMgc9yMjIzm5ub5+fnLy0szghcVFUXHnL29PX2u1rm5uaamJl1vIe7q6lJv6jPVZm9vb9vWVozoRVRf4wtQ3tzcLC4utra2ZmZmmsPpj2AwuLS0dHt7Gx/HNzY29IxXV1fjW9WV7tK90V2pZ/WvphTZr/dXDRQKhT5E2dfXZ7luKiywXCl6tsqVVlZWxMv53k83usgZ1Y96sxxc0lga0XRwD9Xd3W2uLVlZWXrG1jyw/+0MDwcOh8MzMzN1dXVuFri/3zNku+xqdNkgSzz5Rj09PUp4r6+vNZA6lwumEGUkEjk6OhofH6+oqIgOu0NDQwq7r6+viXaYxPYrjRKfDMieiYkJ2fb+/u6eaUwV1UuUSvf29/eVD0a/pZSVlY2OjuqFz00y6GYnm8bV6LJBllhWyULZKWvdWGWiLCws9AylbTJoPv/j42NPnr8nkiWyR1bFzJVEU9TGxsZAIHB6emqG8qmpKbcov2BVSp3crOBWFbWgoGBsbMzy64Tn8qfJYHrJwxTViKkMmvWC+OpLQslgOiqhFNWWleFcGXSTDKapPk1RP2JlfFQZVEc1NTX/79uuJxHc88qA2NlWUQ2HyqDLZDDdUTqnqPFV1H9RLiws2DY3NDTEpF0//FcKREP5qS0rTX8jLerV/jls4sDq91oZvY5a898/odk/KB1Y/YngtpVBFK+PWBkxlUG12VYGUXwVNYYVuzOSFxtdQAnKbxbBQQlKUIISlERwUIISgRKUoCSCgxKUoAQlKIngoAQlKBEoQUkEByUoQQlKUCJQghKUoAQlERyUoAQlKEEJSiI4KEEJSlAiIjgovwfKH/47BAm14pVMcFASwREoQQlKUBLBQQlKUIISlH5Bif5eTihR8k4KAlCC8vvqH3govMvg3vfUAAAAAElFTkSuQmCC"/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">-100%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">32%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -729,7 +876,7 @@ invers</td>
 				</tbody>
 			</table>
 			<table>
-				<caption>Helimix - Phase 2: Schwebeflug</caption>
+				<caption><a name="helicopterMix1"/>Helimix - Phase 2: Schwebeflug</caption>
 	
 					
 				<tbody>
@@ -742,41 +889,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="125" x2="200" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="100" y1="0" x2="100" y2="250" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,225 100,125 200,25 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAEAUlEQVR42u3dP0szQRAG8KBICFFMkcLCSkilYCGIZQjXiFhIGr+GhQip7FJYWKeyCBghRSqxsLQTwUIlNoGAhf8gXyAE34GAb4zhTtfZu5ndZyrlmuXH7D27wo2pDxRTpUAASlDqr16vl/paoDSsVqtFfLu7uxFdmRJZh4eHia/hk6hSqdCvtVotmlJgIxClnMVsbW2RUjabnZmZCYLg7e0NlIa1vb29sLDQ7XZPT0+Jq1wug/KvNRgMiCudToOSh3J+fl4TpahaW1vLZDI3NzfDKD84OAClYbXb7VKpRPt6bm5ub2+v3++D0vJtB5Q/qff392azSVb1ev35+RmUhnV1dZXP5z+P7rOzs5eXl0hwk36kQ+XYRYg0qTdB+bsa7uvvRTs99X3Ro4WnY0+Pj48nUlarVXSlta4EZeShcnp6+vu78unpCQn+i3p9fV1eXiaiUU1yvLi4wGHIxHFlZeXx8bHRaNDPJycn1I84Vxo6/v8D5VcrUBo6gpLNUStlUgke4ghKNkdQsjmCks0RlGyOSHA2R1CyOYKSzRGUbI6gZHNEgrM5gpLNEZRsjqBkcwQlmyMSnM3Rd0pGR68peR39pWR39JTShqOPCW7J0TtKe45+UVp19IjStqMvlDE4epHg8Ti6Txmbo+OUcToqo3x4eCiVSplMJp1OF4vFu7s7OY7KKHd2dsjx+vq60+nQwhYXF+U4at3g5+fntLCNjQ05jiopl5aWaFWFQuHl5UWOo0rKwWBQq9UmTv5I0FHrBh+bByDBUTdlPp+X46iMcnV1lRL89vb27OyMFlapVOQ4KqP8nAeQzWb39/dFOaq/7chx1Ec5nAdwdHRUr9fptiPHURnl2DyAqakpOY6aKCfOAyDN+/t7IStUQxny5bUOSvnzAIIgELJmdKV/GzxkHgAoTc6PE+cBgNLkHD6cB1CtVkfnAYBS331GMaUiR9GUuhzlUoY7ypyqKpEysh9BybavQcn2fgQlW86A0qm8FkrpgKMISjcck6d0xjFhSpcck6T8iyMSnK0fQcm2r0HJ9n4EJVvO+E7pWF4nRum8Y0yUPjjGQemJo3VKfxztUtpz9CvBrfajR5S297UvlDG8H72gjCdn3Kf0Kq9/TQnHuCnhGE25ubkZucfhGEHZbreDIBj7Z/dwNKGkB+vr6+GUSTkqS/Byudzr9UIoE+xHrYehiZTJ7mt3KBN/PzpCKSFnXKBEXvNQwpHntgNHc8rhPIDh95jS5gFoohQ+D0ANpfx5AGoSXP6X12oo5c8DkPkUXWn5XTmaOQLnAWi67VCC53I5sfMA9J0rG40GPRY4D0DrxRFGoAQlKJHgoAQlKEEJSg5K1M8rjBJl3qQgACUo3a1/qaDw41QuqWgAAAAASUVORK5CYII="/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">-100%</td>
 				<td align="center">-100%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -791,39 +930,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,225 100,125 200,25 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAD4klEQVR42u3dMUsrQRAH8KBICFG0SGFhJVgpWAhiKeGaIBaSxq+RQoRUdiksrFNZBIxgYSUpLO1ESKESG0GwUCPkC0h4byDgS84kZ/bN3s3s/v+VYRGWH7O3u4GbpP4gTEmBAJSg1J9Op5MaDCgNc3l5SXz7+/sRVZlCRuSbqFwu08dqtRpNibobn52dHVLKZrMzMzNBELTbbVAaZnd3d3Fx8eXl5ezsjLiKxSIo/zfdbpe40uk0KHko5+fnQWmYjY2NTCZzd3fX28oPDw9BaZhWq5XP52ldz83NlUqlr68vUFq+7YDyN/n8/Ly4uCCrWq329vYGSsPc3Nzkcrnvo/vs7Oz19TUoTeqRDpWhixBpUm2CcrL01vXP0EoPwx0NBqOh0ZOTk6GUlUoFVWmtKkEZeaicnp7++ax8fX0F5QT5+PhYXV0lon5Ncmw0GtjBTRzX1taenp7q9Tr9fXp6SvWIc6Wh478vKAetQGnoCEo2R1CyOYKSzRGUbI6gZHMEJZsjKNkcQcnmCEo2R1CyOYKSzRGUbI6gZHMEJZsjKNkcQcnmCEo2R98pGR29puR19JeS3dFTShuOPlJacvSO0p6jX5RWHT2itO3oC2UMjl5QxuPoPmVsjo5TxumojPLx8TGfz2cymXQ6vb29fX9/L8dRGeXe3h453t7ePj8/08SWlpbkOGpd4FdXVzSxra0tOY4qKZeXl2lWKysr7+/vchxVUna73Wq1OrTzR4KOWhd4qB+ABEfdlLlcTo6jMsr19XXawZvN5vn5OU2sXC7LcVRG+d0PIJvNHhwciHJUf9uR46iPstcP4Pj4uFar0W1HjqMyylA/gKmpKTmOmiiH9gMgzYeHByEzVEM55s1rUE6WMf0AQImqTO5QOaofAChNzo9D+wGA0uQc3usHQM/H/n4AoNR3n1FMqchRNKUuR7mU6hyFUmp0lEip1FEcpV5HWZSqHQVRaneUQumAowhKNxyTp3TGMWFKlxyTpHTMMTFK9xyToXTSMQFKVx3jpnTYMVZKtx3jo3TeMSZKHxzjoPTE0TqlP452Kb1ytEjpm6MtSg8drVD66chP6a0jM6XPjtGUcIybEo7RlIVCIXKNwzGCstVqBUEQ+rF7OJpQ0sDm5uZ4Sjj+irJYLHY6nTGUcJz4MDSUEo48lHDkoYQjDyUceSjhyHPbgaM5Za8fQO99TGn9ADRRCu8HoIZSfj8ANZTy37xWQzmqH0AQBKF/PhqM56OoSsvPyv49R2A/AGU7+MLCgth+APrOlfV6nYYF9gPQenGEEShBCUoElKAEJSgRDkrk9xlHiZgXKQhACUp38xf6HH2b9r3GtwAAAABJRU5ErkJggg=="/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">50%</td>
 				<td align="center">50%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -838,41 +971,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="125" x2="200" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="100" y1="0" x2="100" y2="250" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,125 100,125 200,125 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAC3ElEQVR42u3bsaupcRzH8WeRhBgMBpMyG5SMkkUyIPJvGKQs12YwmE0GhTKYZDDapAySSSkDUf4B6d7vyck5xznce89xen7Pve/P+pzh08v393yfJ4f2kzwoGgRQQgkl+WtKTcmUy2U1i/2GUsEPXChVHEMooYQSSgIllFBCCSUbHMr/kbL8Nly9c5Wp5IBDyQYnUEIJJZRscCihhBJKKKFkg0MJJZRQQskGhxJKKKGEkg0OJZQESiihZINDCSWUUELJBteHknxeFoLvoozFYuqc8fl8HolELBaL2WwOh8Oz2UyFVofD4cNfhb+oLRaLaDT6/hfjOiaZTIrjeDxeLpfSyuPxqNCq1+tJmVwud3Mq5XIwGFSK8pJ+vy+tQqGQCmVKpZKUqdfrNynT6fRldJVy9Hq9Usnn8223WxX6xONx6WO1Wk0mk5zj3W5382FINcrT6SQj8OGZ0iWJRMLtdq9Wq1arJa1kBA1DedaUVrJ8VG5lJEqXy6VgK4fDYQBKv98vG3w6nXY6HWkl93sVWgUCAWk1mUzOq7xYLBqAUp7P5LlSTpDc4wuFgmqt7HZ7Pp8/Ho+87Xzb285+v+92uzKSzWZzs9ko0u/cqlqtKtjqyuqZcjQayU398iZks9mGw6HujY3VSjsby4PS1Xul/IW+U2C4Vk+U51l9H3kF/qFfMpmMgVrJSX+irNVqGvlaKpXKvalMpVJl/ZLNZg3U6nkq5fy/vo9ezv96vdb3rmSsVi8b3Ol0vr42GAxU2JUGavXmubLdbsu1RqOh7yd/NQXSSu5ECra6suIbxy+83vDlLZRQPiL8dwaUUEIJJZRscCihhBJKwgaHEkoooYQSSjY4gRJKKKFkg0MJJZRQQgklGxxKKKGEEko2OJRQQgkllGxwKKEkUEIJJRscysdSXv2SnKt3rjKVHHAo2eAESiihhJINDiWUUEIJpSqU5M9zj5J8fkghgBLKfze/ALkCHDV6IrTGAAAAAElFTkSuQmCC"/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">-100%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -893,7 +1018,7 @@ invers</td>
 				</tbody>
 			</table>
 			<table>
-				<caption>Helimix - Phase 3: Akro 3D</caption>
+				<caption><a name="helicopterMix2"/>Helimix - Phase 3: Akro 3D</caption>
 	
 					
 				<tbody>
@@ -906,41 +1031,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="125" x2="200" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="100" y1="0" x2="100" y2="250" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,225 100,125 200,25 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAEAUlEQVR42u3dP0szQRAG8KBICFFMkcLCSkilYCGIZQjXiFhIGr+GhQip7FJYWKeyCBghRSqxsLQTwUIlNoGAhf8gXyAE34GAb4zhTtfZu5ndZyrlmuXH7D27wo2pDxRTpUAASlDqr16vl/paoDSsVqtFfLu7uxFdmRJZh4eHia/hk6hSqdCvtVotmlJgIxClnMVsbW2RUjabnZmZCYLg7e0NlIa1vb29sLDQ7XZPT0+Jq1wug/KvNRgMiCudToOSh3J+fl4TpahaW1vLZDI3NzfDKD84OAClYbXb7VKpRPt6bm5ub2+v3++D0vJtB5Q/qff392azSVb1ev35+RmUhnV1dZXP5z+P7rOzs5eXl0hwk36kQ+XYRYg0qTdB+bsa7uvvRTs99X3Ro4WnY0+Pj48nUlarVXSlta4EZeShcnp6+vu78unpCQn+i3p9fV1eXiaiUU1yvLi4wGHIxHFlZeXx8bHRaNDPJycn1I84Vxo6/v8D5VcrUBo6gpLNUStlUgke4ghKNkdQsjmCks0RlGyOSHA2R1CyOYKSzRGUbI6gZHNEgrM5gpLNEZRsjqBkcwQlmyMSnM3Rd0pGR68peR39pWR39JTShqOPCW7J0TtKe45+UVp19IjStqMvlDE4epHg8Ti6Txmbo+OUcToqo3x4eCiVSplMJp1OF4vFu7s7OY7KKHd2dsjx+vq60+nQwhYXF+U4at3g5+fntLCNjQ05jiopl5aWaFWFQuHl5UWOo0rKwWBQq9UmTv5I0FHrBh+bByDBUTdlPp+X46iMcnV1lRL89vb27OyMFlapVOQ4KqP8nAeQzWb39/dFOaq/7chx1Ec5nAdwdHRUr9fptiPHURnl2DyAqakpOY6aKCfOAyDN+/t7IStUQxny5bUOSvnzAIIgELJmdKV/GzxkHgAoTc6PE+cBgNLkHD6cB1CtVkfnAYBS331GMaUiR9GUuhzlUoY7ypyqKpEysh9BybavQcn2fgQlW86A0qm8FkrpgKMISjcck6d0xjFhSpcck6T8iyMSnK0fQcm2r0HJ9n4EJVvO+E7pWF4nRum8Y0yUPjjGQemJo3VKfxztUtpz9CvBrfajR5S297UvlDG8H72gjCdn3Kf0Kq9/TQnHuCnhGE25ubkZucfhGEHZbreDIBj7Z/dwNKGkB+vr6+GUSTkqS/Byudzr9UIoE+xHrYehiZTJ7mt3KBN/PzpCKSFnXKBEXvNQwpHntgNHc8rhPIDh95jS5gFoohQ+D0ANpfx5AGoSXP6X12oo5c8DkPkUXWn5XTmaOQLnAWi67VCC53I5sfMA9J0rG40GPRY4D0DrxRFGoAQlKJHgoAQlKEEJSg5K1M8rjBJl3qQgACUo3a1/qaDw41QuqWgAAAAASUVORK5CYII="/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">-100%</td>
 				<td align="center">-100%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -955,39 +1072,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,225 100,125 200,25 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAD4klEQVR42u3dMUsrQRAH8KBICFG0SGFhJVgpWAhiKeGaIBaSxq+RQoRUdiksrFNZBIxgYSUpLO1ESKESG0GwUCPkC0h4byDgS84kZ/bN3s3s/v+VYRGWH7O3u4GbpP4gTEmBAJSg1J9Op5MaDCgNc3l5SXz7+/sRVZlCRuSbqFwu08dqtRpNibobn52dHVLKZrMzMzNBELTbbVAaZnd3d3Fx8eXl5ezsjLiKxSIo/zfdbpe40uk0KHko5+fnQWmYjY2NTCZzd3fX28oPDw9BaZhWq5XP52ldz83NlUqlr68vUFq+7YDyN/n8/Ly4uCCrWq329vYGSsPc3Nzkcrnvo/vs7Oz19TUoTeqRDpWhixBpUm2CcrL01vXP0EoPwx0NBqOh0ZOTk6GUlUoFVWmtKkEZeaicnp7++ax8fX0F5QT5+PhYXV0lon5Ncmw0GtjBTRzX1taenp7q9Tr9fXp6SvWIc6Wh478vKAetQGnoCEo2R1CyOYKSzRGUbI6gZHMEJZsjKNkcQcnmCEo2R1CyOYKSzRGUbI6gZHMEJZsjKNkcQcnmCEo2R98pGR29puR19JeS3dFTShuOPlJacvSO0p6jX5RWHT2itO3oC2UMjl5QxuPoPmVsjo5TxumojPLx8TGfz2cymXQ6vb29fX9/L8dRGeXe3h453t7ePj8/08SWlpbkOGpd4FdXVzSxra0tOY4qKZeXl2lWKysr7+/vchxVUna73Wq1OrTzR4KOWhd4qB+ABEfdlLlcTo6jMsr19XXawZvN5vn5OU2sXC7LcVRG+d0PIJvNHhwciHJUf9uR46iPstcP4Pj4uFar0W1HjqMyylA/gKmpKTmOmiiH9gMgzYeHByEzVEM55s1rUE6WMf0AQImqTO5QOaofAChNzo9D+wGA0uQc3usHQM/H/n4AoNR3n1FMqchRNKUuR7mU6hyFUmp0lEip1FEcpV5HWZSqHQVRaneUQumAowhKNxyTp3TGMWFKlxyTpHTMMTFK9xyToXTSMQFKVx3jpnTYMVZKtx3jo3TeMSZKHxzjoPTE0TqlP452Kb1ytEjpm6MtSg8drVD66chP6a0jM6XPjtGUcIybEo7RlIVCIXKNwzGCstVqBUEQ+rF7OJpQ0sDm5uZ4Sjj+irJYLHY6nTGUcJz4MDSUEo48lHDkoYQjDyUceSjhyHPbgaM5Za8fQO99TGn9ADRRCu8HoIZSfj8ANZTy37xWQzmqH0AQBKF/PhqM56OoSsvPyv49R2A/AGU7+MLCgth+APrOlfV6nYYF9gPQenGEEShBCUoElKAEJSgRDkrk9xlHiZgXKQhACUp38xf6HH2b9r3GtwAAAABJRU5ErkJggg=="/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">50%</td>
 				<td align="center">50%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -1002,41 +1113,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="125" x2="200" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="100" y1="0" x2="100" y2="250" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,125 100,171 200,125 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAFk0lEQVR42u2cSyi0XxzH3acxbkWRUJTbLChTWEoiYSGFYsGWDYtJzYYFiQULNrNhQS7JqJHIZcNOCklWRExEiYVbzLz/79v597zzzoznHXPhGb7flZxnnuf3+8w5v9/5nXOeCfpF+UhBRECUREmU1IdRBilSPT09yjTsHygV+IUDpRK7IVESJVESJUWUREmUREmUzOBE+RNR9vwttsq0sldygBMlMzhFlERJlETJDE6UREmUREmURMkMTpRESZRESZTM4ERJlERJlETJDE6UREkRJVESJTM4URIlURIlUTKDfw1KynOyROAvlJWVlRzj8rq9vXX5VvgfakdHR2VlZc5vjFMOWlhYAKLGxsZ3eyWaCwsLlYlSURncYDAAkdFofBdlXV2d1HWJUkZVVVVApNFowsPDMY6vr6/fnQwRpbxqamqSkpJOT0+npqbACl2QKL2V1WoFK5VKRZS+QRkbGxtIKBUlnU6nVqt3dnZEKu/q6iJKD4VZY2lpKcZ1dHR0Z2fn6+srqx2/VTs3Nzdzc3PokhMTE5eXl0QjI5es/ke5tbWVkJAgVUJRUVFra2tE5lLvsQoSjDFRcqgrcYVy+qZyMrgMq98oRV91FnovUTpIhtVvlMPDwy6bURU5u/TDf6XgPVb9/f1yvTI7O9tsNttsNvZKCBxAIycnR65XYvzbx1Gh4OBg8YdWqx0bG3t5efmxKOE7COTm5jqQsY+V5+fnfzJ4XFycfZvJZEJnTktLE/9JTk4eGBi4v7//Ucn67u4OXsN3AQE0wGR1ddWB1fLysuO8cnp6Gm3j4+NgLP6JqTy6bl5envhYTEyMXq+3WCzfHuLFxQU8hb/CcRCYnJyUChuXrNzdcVxZWUG1JO4bERHR0tJyeHj4LSHCL3gHH4Wz8Bq+uy5vvNm8RQ1fX18fGhoqQkZ1dfXm5ua3gQhf4JEIhfCxoaEB/spVit7vgx8fH7e3t0dGRorvrbi4eH5+3mq1BihBWA77i4qKhDvwC96dnJz8u+j21ZECxIvu7m4p9WdmZhqNxqenpwCCCGthMywXLsAXTBXgl7vrF749nfHw8DA6OpqRkSGsSUxM7O3tvb299VXYQqhSq9UqlaqkpOTg4MBXEGEh7IS1wmzYDy8eHx8/thTkj4Mub29vMzMzOp1Omh90dHScnZ156XBtbS04bm9vI6TgtikpKd5DhFWwDRYKU2Hz7Ows7PdkVc2vZ4Y2NjYqKiqElWFhYU1NTXt7e977v7S0JIKyNzeBJbAHVgnzYCes9WqB8hOOX+3v7zc3N/vKaBE9ENGurq48u8P6+rr9FwzbYKH3bn7eSTbnoYQg4MFQQoZFcnB5IMKdsFNQUODbsPMFKKUA39fXJwX49PR0BHgkq4/StN8mdScZjoyM4FlSMoQNvkqGX4bSftqRlZUlTTswkXJ/2iFQ4lNuTtHi4+PFg/BEPPf5+dkfTn3lUVUQMZlMyB7CT2RnTIaRnd+7Pj8/H9fs7u5inOJ6g8EgXzi0tbXheqlwwLP8Wjgo4tSvQ4mGYtRliSZtk2o0Gr1er7RyVkEHqDEDb21ttV84EKtV7gvX2y+y4G6fuciiuLPoFovFYTlrYmLCfjlrbm6uvLzcfptUIUt/Cj3Wf39/Pzg46LzI6rBNajabh4aGUlNTpQVpfOqrFqQV/YaEWPrXarWCVEhIiJK3SQLgZRObzba4uCjtpThv3qFVCZt3AfPejsw2qUIsDBiUyj/oEDAoXW4pi21SovywnLeUPzrxJMq/+ub09DTio/02KVF6Lr55S5RESZRESZQ/XkRJlERJlBQzOFESJVESJVESJTM4RZRESZREyQxOlAGCkr9D4H4reyUHOFEyg1NESZRESZTM4ERJlERJlESpFJSU+5JDSXneSYmAKIny++o/RkWe1LdKbhcAAAAASUVORK5CYII="/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">-100%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">-46%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -1057,7 +1160,7 @@ invers</td>
 				</tbody>
 			</table>
 			<table>
-				<caption>Helimix - Phase 4: Autorotation</caption>
+				<caption><a name="helicopterMix3"/>Helimix - Phase 4: Autorotation</caption>
 	
 					
 				<tbody>
@@ -1070,41 +1173,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="125" x2="200" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="100" y1="0" x2="100" y2="250" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,225 100,125 200,25 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAEAUlEQVR42u3dP0szQRAG8KBICFFMkcLCSkilYCGIZQjXiFhIGr+GhQip7FJYWKeyCBghRSqxsLQTwUIlNoGAhf8gXyAE34GAb4zhTtfZu5ndZyrlmuXH7D27wo2pDxRTpUAASlDqr16vl/paoDSsVqtFfLu7uxFdmRJZh4eHia/hk6hSqdCvtVotmlJgIxClnMVsbW2RUjabnZmZCYLg7e0NlIa1vb29sLDQ7XZPT0+Jq1wug/KvNRgMiCudToOSh3J+fl4TpahaW1vLZDI3NzfDKD84OAClYbXb7VKpRPt6bm5ub2+v3++D0vJtB5Q/qff392azSVb1ev35+RmUhnV1dZXP5z+P7rOzs5eXl0hwk36kQ+XYRYg0qTdB+bsa7uvvRTs99X3Ro4WnY0+Pj48nUlarVXSlta4EZeShcnp6+vu78unpCQn+i3p9fV1eXiaiUU1yvLi4wGHIxHFlZeXx8bHRaNDPJycn1I84Vxo6/v8D5VcrUBo6gpLNUStlUgke4ghKNkdQsjmCks0RlGyOSHA2R1CyOYKSzRGUbI6gZHNEgrM5gpLNEZRsjqBkcwQlmyMSnM3Rd0pGR68peR39pWR39JTShqOPCW7J0TtKe45+UVp19IjStqMvlDE4epHg8Ti6Txmbo+OUcToqo3x4eCiVSplMJp1OF4vFu7s7OY7KKHd2dsjx+vq60+nQwhYXF+U4at3g5+fntLCNjQ05jiopl5aWaFWFQuHl5UWOo0rKwWBQq9UmTv5I0FHrBh+bByDBUTdlPp+X46iMcnV1lRL89vb27OyMFlapVOQ4KqP8nAeQzWb39/dFOaq/7chx1Ec5nAdwdHRUr9fptiPHURnl2DyAqakpOY6aKCfOAyDN+/t7IStUQxny5bUOSvnzAIIgELJmdKV/GzxkHgAoTc6PE+cBgNLkHD6cB1CtVkfnAYBS331GMaUiR9GUuhzlUoY7ypyqKpEysh9BybavQcn2fgQlW86A0qm8FkrpgKMISjcck6d0xjFhSpcck6T8iyMSnK0fQcm2r0HJ9n4EJVvO+E7pWF4nRum8Y0yUPjjGQemJo3VKfxztUtpz9CvBrfajR5S297UvlDG8H72gjCdn3Kf0Kq9/TQnHuCnhGE25ubkZucfhGEHZbreDIBj7Z/dwNKGkB+vr6+GUSTkqS/Byudzr9UIoE+xHrYehiZTJ7mt3KBN/PzpCKSFnXKBEXvNQwpHntgNHc8rhPIDh95jS5gFoohQ+D0ANpfx5AGoSXP6X12oo5c8DkPkUXWn5XTmaOQLnAWi67VCC53I5sfMA9J0rG40GPRY4D0DrxRFGoAQlKJHgoAQlKEEJSg5K1M8rjBJl3qQgACUo3a1/qaDw41QuqWgAAAAASUVORK5CYII="/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">-100%</td>
 				<td align="center">-100%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -1119,39 +1214,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,215 100,125 200,25 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAEd0lEQVR42u3du0vzYBQG8HqppdSiQ0EHJy+TgkNFHKUUQcRBugj6T4iK0MnNQdS5k0OxVRycRNDRTRQHlTpYEASv4OKm1HwHCv16s7Wvb5tz8j7PpGRI+HGSPCnkjctCNMUFAlCCUn7e399dhQGlYg4ODohvdna2ylS6kB+SI4pGo/RvLBarTom5q5ypqSlS8vl8brc7HA6/vr6CUjHT09Pd3d339/eJRIK4IpEIKP+aTCZDXB6PB5R6KDs6OkCpmGAw6PV6z8/Ps7fylZUVUComlUqFQiE6r/1+/8LCwtfXFyjr/LQDyt/k7e1tf3+frOLx+NPTEygVc3p6GggEctW9vb395OQElCrzSKWy6EGINGk2QVlbsud1aehML4ZbLQy2Fm3d2toqS7m2toaprNtUgrJqqWxpaSm9Vj48PICyhry8vAwODhJRviY5Hh0d4Q6u4jg0NHR7e5tMJunv7e1tmkf0SkXH/z9QFlqBUtERlNocQanNEZTaHEGpzRGU2hxBqc0RlNocQanNEZTaHEGpzRGU2hxBqc0RlNocQanNEZTaHEGpzRGU2hxNp9ToaDSlXkdzKbU7GkpZD0cTKevkaBxl/RzNoqyro0GU9XY0hbIBjkZQNsbR+ZQNc3Q4ZSMdhVHe3NyEQiGv1+vxeMbHx6+urvg4CqOcmZkhx7Ozs3Q6TQfW09PDx1HqCX54eEgHNjY2xsdRJGVvby8d1cDAwPPzMx9HkZSZTCYWi5Vd+cNGR6kneNF6ABwcZVMGAgE+jsIoh4eH6Q5+eXm5u7tLBxaNRvk4CqPMrQfg8/mWl5dZOYp/2uHjKI8yux7A+vp6PB6npx0+jsIoi9YDaG5u5uMoibLsegCkeX19zeQIxVBWePMalLWlwnoAoMRU2kfZ1NRUdj0AUNaQnZ0dt9tNB9PW1la6HgAof5uNjY3sPC4tLVHvSSaTdH3MXw8AlNXz/f29uLhIx0CUm5ubFu/wpfz8/Jybm8ue1IlEwmIfppQfHx8TExO0d7/fn13iDJSKP1IEg0HadVdX18XFhSUk7Cjv7u76+vpov/39/el02pITXpQ0gzSJtNORkRGaTUtUGFEeHx/TlZH2SFdJulZa0sKFMlfC5+fn6d5tCQwLyvwSTl3SkhmbKWWVcL6U4ko4U0qJJZwjpdASzo5SbgnnRSm6hDOilF7CuVA6oISzoHRGCbeZ0kkl3E5Kh5Vw2yidV8LtoXRkCbeB0qklvNGUDi7hf6JECbeH0vEl/E+Uk5OTvzzHTSjhipSpVCocDhd9ddjwEq5ISRtGR0erUhpVwhUpI5FI7nvsKOF6ytBPlAaW8LpQmlnC9VMaW8I1U5pcwnVSGl7CtT3toIQrUuZ/qPnx8RElXJGy6MXM1tZWlHAVyrIvZtI87u3twas2Sv6vwImh5P9iJqbSyGtl/j2H4YuZwu7gnZ2dbF/MlNcrSz/UjKg/7awWBlsrbMVHYhr4cwaMQAlKUCKgBCUoQYmAEpSgBGVFSuT3qUSJqA8pCEAJSufmH0JGjhh+FKkaAAAAAElFTkSuQmCC"/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">5%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">50%</td>
 				<td align="center">50%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -1166,41 +1255,33 @@ invers</td>
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="6" align="center">		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="250">
-			<rect x="0" y="0" width="200" height="250" fill="none" stroke="darkGrey" stroke-width="2"/>
-			<line x1="0" y1="25" x2="200" y2="25" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="125" x2="200" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="0" y1="225" x2="200" y2="225" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<line x1="100" y1="0" x2="100" y2="250" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-			<polyline points="0,125 100,125 200,125 " stroke="black" stroke-width="2" fill="none"/>
-		</svg>
-</td>
+		<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAC3ElEQVR42u3bsaupcRzH8WeRhBgMBpMyG5SMkkUyIPJvGKQs12YwmE0GhTKYZDDapAySSSkDUf4B6d7vyck5xznce89xen7Pve/P+pzh08v393yfJ4f2kzwoGgRQQgkl+WtKTcmUy2U1i/2GUsEPXChVHEMooYQSSgIllFBCCSUbHMr/kbL8Nly9c5Wp5IBDyQYnUEIJJZRscCihhBJKKKFkg0MJJZRQQskGhxJKKKGEkg0OJZQESiihZINDCSWUUELJBteHknxeFoLvoozFYuqc8fl8HolELBaL2WwOh8Oz2UyFVofD4cNfhb+oLRaLaDT6/hfjOiaZTIrjeDxeLpfSyuPxqNCq1+tJmVwud3Mq5XIwGFSK8pJ+vy+tQqGQCmVKpZKUqdfrNynT6fRldJVy9Hq9Usnn8223WxX6xONx6WO1Wk0mk5zj3W5382FINcrT6SQj8OGZ0iWJRMLtdq9Wq1arJa1kBA1DedaUVrJ8VG5lJEqXy6VgK4fDYQBKv98vG3w6nXY6HWkl93sVWgUCAWk1mUzOq7xYLBqAUp7P5LlSTpDc4wuFgmqt7HZ7Pp8/Ho+87Xzb285+v+92uzKSzWZzs9ko0u/cqlqtKtjqyuqZcjQayU398iZks9mGw6HujY3VSjsby4PS1Xul/IW+U2C4Vk+U51l9H3kF/qFfMpmMgVrJSX+irNVqGvlaKpXKvalMpVJl/ZLNZg3U6nkq5fy/vo9ezv96vdb3rmSsVi8b3Ol0vr42GAxU2JUGavXmubLdbsu1RqOh7yd/NQXSSu5ECra6suIbxy+83vDlLZRQPiL8dwaUUEIJJZRscCihhBJKwgaHEkoooYQSSjY4gRJKKKFkg0MJJZRQQgklGxxKKKGEEko2OJRQQgkllGxwKKEkUEIJJRscysdSXv2SnKt3rjKVHHAo2eAESiihhJINDiWUUEIJpSqU5M9zj5J8fkghgBLKfze/ALkCHDV6IrTGAAAAAElFTkSuQmCC"/></td>
 	</tr>
 
 
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">1</td>
 			<td align="center">ja</td>
 				<td align="center">-100%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">2</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">3</td>
 			<td align="center">ja</td>
 				<td align="center">0%</td>
 				<td align="center">0%</td>
 		</tr>
-		<tr class="d1">
+		<tr class="d1 unused">
 			<td align="center">4</td>
 			<td align="center">nein</td>
 				<td colspan="2"/>
 		</tr>
-		<tr class="d0">
+		<tr class="d0 used">
 			<td align="center">5</td>
 			<td align="center">ja</td>
 				<td align="center">100%</td>
@@ -1220,8 +1301,8 @@ invers</td>
 					</tr>
 				</tbody>
 			</table>
-<table>
-	<caption>Linearmischer</caption>
+<table class="unused">
+	<caption><a name="linearMixer"/>Linearmischer</caption>
 	
 	<thead>
 		<tr>
@@ -1236,9 +1317,9 @@ invers</td>
 		</tr>
 	</thead>
 	
-		
+	
 	<tbody>	
-				<tr class="d0">
+				<tr class="d0 unused">
 					<td align="center">LinearMix 1</td>
 					<td align="center">Normal</td>
 					<td align="center">0 &rarr; 0</td>
@@ -1247,18 +1328,9 @@ invers</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
-					<td align="center">
-						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="125">
-							<rect x="0" y="0" width="100" height="125" fill="none" stroke="darkGrey" stroke-width="2"/>
-							<line x1="0" y1="12.5" x2="100" y2="12.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="62.5" x2="100" y2="62.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="112.5" x2="100" y2="112.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="50" y1="0" x2="50" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<polyline points="0,62.5 100,62.5" stroke="black" stroke-width="2" fill="none"/>	
-						</svg>
-					</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
 				</tr>
-				<tr class="d1">
+				<tr class="d1 unused">
 					<td align="center">LinearMix 2</td>
 					<td align="center">Normal</td>
 					<td align="center">0 &rarr; 0</td>
@@ -1267,18 +1339,9 @@ invers</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
-					<td align="center">
-						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="125">
-							<rect x="0" y="0" width="100" height="125" fill="none" stroke="darkGrey" stroke-width="2"/>
-							<line x1="0" y1="12.5" x2="100" y2="12.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="62.5" x2="100" y2="62.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="112.5" x2="100" y2="112.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="50" y1="0" x2="50" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<polyline points="0,62.5 100,62.5" stroke="black" stroke-width="2" fill="none"/>	
-						</svg>
-					</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
 				</tr>
-				<tr class="d0">
+				<tr class="d0 unused">
 					<td align="center">LinearMix 3</td>
 					<td align="center">Normal</td>
 					<td align="center">0 &rarr; 0</td>
@@ -1287,20 +1350,11 @@ invers</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
 					<td align="center">0%</td>
-					<td align="center">
-						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="125">
-							<rect x="0" y="0" width="100" height="125" fill="none" stroke="darkGrey" stroke-width="2"/>
-							<line x1="0" y1="12.5" x2="100" y2="12.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="62.5" x2="100" y2="62.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="112.5" x2="100" y2="112.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="50" y1="0" x2="50" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<polyline points="0,62.5 100,62.5" stroke="black" stroke-width="2" fill="none"/>	
-						</svg>
-					</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
 				</tr>
 	</tbody>
 </table>	<table>
-		<caption>Taumelscheibenmischer</caption>
+		<caption><a name="swashplateMixer"/>Taumelscheibenmischer</caption>
 		
 		
 		<tbody>
@@ -1319,7 +1373,7 @@ invers</td>
 		</tbody>
 	</table>
 <table>
-	<caption>Fail Safe</caption>
+	<caption><a name="failSafe"/>Fail Safe</caption>
 
 		
 	<tbody>
@@ -1370,7 +1424,7 @@ invers</td>
 		</tr>
 	</tbody>
 </table><table>
-	<caption>Telemetrie</caption>
+	<caption><a name="telemetry"/>Telemetrie</caption>
 	
 		
 	<tbody>
@@ -1407,7 +1461,7 @@ invers</td>
 	</tbody>
 </table>
 <table>
-	<caption>Lehrer/Sch&uuml;ler</caption>
+	<caption><a name="trainerPupil"/>Lehrer/Sch&uuml;ler</caption>
 			
 		
 	<tbody>
@@ -1469,7 +1523,7 @@ invers</td>
 		</tr>
 	</tbody>
 </table><table>
-	<caption>Kn&uuml;ppeltrimmung</caption>
+	<caption><a name="stickTrim"/>Kn&uuml;ppeltrimmung</caption>
 
 	<thead>
 		<tr>
@@ -1513,7 +1567,7 @@ invers</td>
 				</tr>
 	</tbody>
 </table><table>
-	<caption>Schalter-/Geberzuordnungen</caption>
+	<caption><a name="switches"/>Schalter-/Geberzuordnungen</caption>
 	
 	<thead>
 		<tr>
@@ -1580,6 +1634,6 @@ invers</td>
 					<td align="center">Geber</td>
 				</tr>
 	</tbody>
-</table>
+</table>		</div>
 	</body>
 </html>

@@ -5,10 +5,8 @@
 		<#break>
 	</#if>
 </#list>
-
-<a name="curveMixer"/>
 <table class="<@u show/>">
-	<caption>Kurvenmischer</caption>
+	<caption><a name="curveMixer"/>Kurvenmischer</caption>
 	
 	<thead>
 		<tr class="d0">
@@ -31,7 +29,7 @@
 		<#list model.freeMixer as mixer>
 			<#if mixer_index &gt;= 8>
 				<#list mixer.curve.point as point>
-					<tr class="<@d/> <@u mixer.fromChannel.number != "0" && mixer.toChannel.number != "0"/>">
+					<tr class="<@d/> <@u mixer.fromChannel.number != "0" && mixer.toChannel.number != "0" && point.enabled/>">
 						<#if point_index==0>
 							<td rowspan="${mixer.curve.point?size}" align="center" valign="top">KurvenMix ${mixer.number?number+1}</td>
 							<td rowspan="${mixer.curve.point?size}" align="center" valign="top">${mixer.inputType}</td>
@@ -48,7 +46,7 @@
 							<td align="center" colspan="2">---</td>
 						</#if>
 						<#if point_index==0>
-							<td rowspan="${mixer.curve.point?size}" align="center"><@svg mixer.curve.point 0.75/></td>									
+							<td rowspan="${mixer.curve.point?size}" align="center"><img src="${mixer.curve.getImageSource(0.5)}"/></td>									
 						</#if>						
 					</tr>
 				</#list>

@@ -5,10 +5,8 @@
 		<#break>
 	</#if>
 </#list>
-
-<a name="controlSwitches"/>
 <table class="<@u show/>">
-	<caption>Geberschalter</caption>
+	<caption><a name="controlSwitches"/>Geberschalter</caption>
 	
 	<thead>
 		<tr>

@@ -1,6 +1,5 @@
-<a name="failSafe"/>
 <table>
-	<caption>Fail Safe</caption>
+	<caption><a name="failSafe"/>Fail Safe</caption>
 
 	<@reset/>
 	

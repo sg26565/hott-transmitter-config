@@ -1,6 +1,5 @@
-<a name="trimMemory"/>
 <table>
-	<caption>Trimmspeicher</caption>
+	<caption><a name="trimMemory"/>Trimmspeicher</caption>
 	
 	<thead>
 		<tr>

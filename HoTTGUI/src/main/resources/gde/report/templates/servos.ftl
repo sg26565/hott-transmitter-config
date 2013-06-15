@@ -1,6 +1,5 @@
-<a name="servos"/>
 <table>
-	<caption>Servoeinstellungen</caption>
+	<caption><a name="servos"/>Servoeinstellungen</caption>
 	
 	<thead>
 		<tr>

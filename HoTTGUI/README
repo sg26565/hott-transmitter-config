@@ -1,9 +1,0 @@
-Release History:
-
-v0.4:
-	- Fixed: Special characters in PDF are missing
-	- Fixed: Removed channel 7 and 8 for mx-12
-	- New: New XHTML rendering component that provides better support for CSS
-	- New: Applied CSS to the Report to make it easier readable
-	- New: Separate Save buttons for HTML, XML and PDF
-	

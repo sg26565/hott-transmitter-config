@@ -5,10 +5,8 @@
 		<#break>
 	</#if>
 </#list>
-
-<a name="multiChannel"/>
 <table class="<@u show/>">
-	<caption>Multikanal</caption>
+	<caption><a name="multiChannel"/>Multikanal</caption>
 
 	<thead>
 		<tr>

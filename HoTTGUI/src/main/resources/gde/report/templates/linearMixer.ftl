@@ -5,10 +5,8 @@
 		<#break>
 	</#if>
 </#list>
-
-<a name="linearMixer"/>
 <table class="<@u show/>">
-	<caption>Linearmischer</caption>
+	<caption><a name="linearMixer"/>Linearmischer</caption>
 	
 	<thead>
 		<tr>
@@ -36,16 +34,7 @@
 					<td align="center">${mixer.travelLow}%</td>
 					<td align="center">${mixer.travelHigh}%</td>
 					<td align="center">${mixer.offset}%</td>
-					<td align="center">
-						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="125">
-							<rect x="0" y="0" width="100" height="125" fill="none" stroke="darkGrey" stroke-width="2"/>
-							<line x1="0" y1="12.5" x2="100" y2="12.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="62.5" x2="100" y2="62.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="0" y1="112.5" x2="100" y2="112.5" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<line x1="50" y1="0" x2="50" y2="125" stroke="darkGrey" stroke-width="2" stroke-dasharray="4,4"/>
-							<polyline points="0,${((125-mixer.travelLow-mixer.offset)/2)?c} 100,${((125-mixer.travelHigh-mixer.offset)/2)?c}" stroke="black" stroke-width="2" fill="none"/>	
-						</svg>
-					</td>
+					<td align="center"><img src="${mixer.curve.getImageSource(0.25,false)}"/></td>
 				</tr>
 			</#if>
 		</#list>

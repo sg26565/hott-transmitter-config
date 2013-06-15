@@ -1,6 +1,5 @@
-<a name="stickTrim"/>
 <table>
-	<caption>Knüppeltrimmung</caption>
+	<caption><a name="stickTrim"/>Knüppeltrimmung</caption>
 
 	<thead>
 		<tr>

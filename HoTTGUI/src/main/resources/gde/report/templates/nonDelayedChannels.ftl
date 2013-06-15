@@ -1,6 +1,5 @@
-<a name="nonDelayedChannels"/>
 <table>
-	<caption>unverzögerte Kanäle</caption>
+	<caption><a name="nonDelayedChannels"/>unverzögerte Kanäle</caption>
 	
 	<thead>
 		<tr>

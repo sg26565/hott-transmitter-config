@@ -5,10 +5,8 @@
 		<#break>
 	</#if>
 </#list>
-
-<a name="ringLimiter"/>
 <table class="<@u show/>">
-	<caption>Ringbegrenzer</caption>
+	<caption><a name="ringLimiter"/>Ringbegrenzer</caption>
 	
 	<thead>
 		<tr>

@@ -1,6 +1,5 @@
-<a name="phaseTimer"/>
 <table>
-	<caption>Flugphasenuhren</caption>
+	<caption><a name="phaseTimer"/>Flugphasenuhren</caption>
 	
 	<thead>
 		<tr>

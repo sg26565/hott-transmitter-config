@@ -14,10 +14,8 @@
 		</#if>
 	</#list>
 </#if>
-
-<a name="profiTrim"/>
 <table class="<@u show/>">
-	<caption>Profitrimm</caption>
+	<caption><a name="profiTrim"/>Profitrimm</caption>
 
 	<#if wingedModel??>
 		<thead>	

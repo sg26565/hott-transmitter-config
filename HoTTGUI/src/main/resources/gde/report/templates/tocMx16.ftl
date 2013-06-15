@@ -2,13 +2,23 @@
 <a href="#baseSettings">Grundeinstellungen Modell</a>
 <a href="#servos">Servoeinstellungen</a>		
 <a href="#controls">Gebereinstellungen</a>
-<a href="#drExpo">DualRate Expo</a>
+<div>DualRate Expo</div>
+<#list model.phase as phase>
+	<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
+		<a class="i1" href="#drExpo${phase.number}">${phase?string}"</a>
+	</#if>
+</#list>
 <#if wingedModel??>
 	<a href="#phaseTrim">Phasentrimm</a>
 	<a href="#wingMix">Flächenmischer</a>
 </#if>
 <#if helicopterModel??>
-<a href="#helicopterMix">Helikoptermix</a>
+	<div>Helikoptermix</div>
+	<#list model.phase as phase>
+		<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
+			<a class="i1" href="#helicopterMix${phase.number}">${phase?string}"</a>
+		</#if>
+	</#list>
 </#if>
 <a href="#linearMixer">Linearmischer</a>
 <#if helicopterModel??>

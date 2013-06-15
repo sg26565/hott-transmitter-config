@@ -1,6 +1,5 @@
-<a name="mixOnlyChannel"/>
 <table>
-	<caption>Nur MIX Kanal</caption>
+	<caption><a name="mixOnlyChannel"/>Nur MIX Kanal</caption>
 	
 	<thead>
 		<tr>

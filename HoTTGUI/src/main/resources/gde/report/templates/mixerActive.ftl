@@ -5,10 +5,8 @@
 		<#break>
 	</#if>
 </#list>
-
-<a name="mixerActive"/>
 <table class="<@u show/>">
-	<caption>MIX aktiv / Phase</caption>
+	<caption><a name="mixerActive"/>MIX aktiv / Phase</caption>
 	
 	<thead>
 		<tr>

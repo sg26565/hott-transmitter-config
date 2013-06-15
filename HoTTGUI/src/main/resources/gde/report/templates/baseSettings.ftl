@@ -1,6 +1,5 @@
-<a name="baseSettings"/>
 <table>
-	<caption>Grundeinstellungen Modell</caption>
+	<caption><a name="baseSettings"/>Grundeinstellungen Modell</caption>
 	
 	<@reset/>
 	

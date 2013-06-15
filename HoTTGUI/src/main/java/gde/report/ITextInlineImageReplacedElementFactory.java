@@ -17,14 +17,7 @@
  */
 package gde.report;
 
-import java.io.ByteArrayOutputStream;
-
-import org.apache.batik.transcoder.Transcoder;
-import org.apache.batik.transcoder.TranscoderInput;
-import org.apache.batik.transcoder.TranscoderOutput;
-import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGDocument;
 import org.xhtmlrenderer.extend.ReplacedElement;
 import org.xhtmlrenderer.extend.ReplacedElementFactory;
 import org.xhtmlrenderer.extend.UserAgentCallback;
@@ -33,27 +26,34 @@ import org.xhtmlrenderer.pdf.ITextFSImage;
 import org.xhtmlrenderer.pdf.ITextImageElement;
 import org.xhtmlrenderer.pdf.ITextReplacedElement;
 import org.xhtmlrenderer.render.BlockBox;
+import org.xhtmlrenderer.simple.extend.FormSubmissionListener;
 
 import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.codec.Base64;
 
 /**
  * @author oli@treichels.de
  */
-public class ITextSVGReplacedElementFactory extends BaseSVGReplacedElementFactory {
-	public ITextSVGReplacedElementFactory(final ReplacedElementFactory other) {
-		super(other);
+public class ITextInlineImageReplacedElementFactory implements ReplacedElementFactory {
+	private static final String	PREFIX	= "data:image/png;base64,";
+
+	private final ReplacedElementFactory	other;
+
+	public ITextInlineImageReplacedElementFactory(final ReplacedElementFactory other) {
+		this.other = other;
 	}
 
 	@Override
 	public ReplacedElement createReplacedElement(final LayoutContext c, final BlockBox box, final UserAgentCallback uac, final int cssWidth, final int cssHeight) {
 		final Element elem = box.getElement();
 
-		if (elem == null || !elem.getNodeName().equals("svg")) {
-			return super.createReplacedElement(c, box, uac, cssWidth, cssHeight);
+		// check if we have an inline png image
+		if (!(elem != null && elem.getNodeName().equals("img") && elem.hasAttribute("src") && elem.getAttribute("src").startsWith(PREFIX))) {
+			return other.createReplacedElement(c, box, uac, cssWidth, cssHeight);
 		}
 
-		float width = -1;
-		float height = -1;
+		int width = 0;
+		int height = 0;
 
 		if (cssWidth > 0) {
 			width = cssWidth;
@@ -62,26 +62,29 @@ public class ITextSVGReplacedElementFactory extends BaseSVGReplacedElementFactor
 			height = cssHeight;
 		}
 
-		String val = elem.getAttribute("width");
-		if (val != null && val.length() > 0) {
-			width = Float.valueOf(val).intValue();
+		if (elem.hasAttribute("width")) {
+			width = Integer.parseInt(elem.getAttribute("width"));
 		}
-		val = elem.getAttribute("height");
-		if (val != null && val.length() > 0) {
-			height = Float.valueOf(val).intValue();
+		
+		if (elem.hasAttribute("height")) {
+			height = Integer.parseInt(elem.getAttribute("height"));
 		}
 
-		final String data = getString(elem);
-		SVGDocument doc = getSVGDocument(data);
-		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		final TranscoderInput input = new TranscoderInput(doc);
-		final TranscoderOutput output = new TranscoderOutput(os);
-		final Transcoder t = new PNGTranscoder();
-
+		String inlineData = elem.getAttribute("src").substring(PREFIX.length()); // strip leading "data:image/png;base64,"
+		
 		try {
-			t.transcode(input, output);
-			final Image image = Image.getInstance(os.toByteArray());
+			final Image image = Image.getInstance(Base64.decode(inlineData));
+			
+			if (width == 0) {
+				width = (int) image.getWidth();
+			}
+			
+			if (height == 0) {
+				height= (int) image.getHeight();
+			}
+			
 			image.scaleAbsolute(width * 16, height * 16);
+			
 			final ITextFSImage fsImage = new ITextFSImage(image);
 			final ITextReplacedElement element = new ITextImageElement(fsImage);
 			return element;
@@ -89,5 +92,20 @@ public class ITextSVGReplacedElementFactory extends BaseSVGReplacedElementFactor
 		catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public void remove(final Element e) {
+		other.remove(e);
+	}
+
+	@Override
+	public void reset() {
+		other.reset();
+	}
+
+	@Override
+	public void setFormSubmissionListener(final FormSubmissionListener listener) {
+		other.setFormSubmissionListener(listener);
 	}
 }

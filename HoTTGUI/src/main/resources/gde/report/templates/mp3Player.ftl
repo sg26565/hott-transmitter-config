@@ -1,6 +1,5 @@
-<a name="mp3Player"/>
 <table>
-	<caption>MP3-Player</caption>
+	<caption><a name="mp3Player"/>MP3-Player</caption>
 	
 	<@reset/>
 

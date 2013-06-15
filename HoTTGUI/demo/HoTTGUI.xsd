@@ -188,17 +188,10 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="dualRates" minOccurs="0">
+      <xs:element name="dualRateExpos" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="dualRate" type="dualRate" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="expos" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="expo" type="expo" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="dualRateExpo" type="dualRateExpo" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -261,6 +254,13 @@
       <xs:element name="type" type="switchType" minOccurs="0"/>
     </xs:sequence>
     <xs:attribute name="id" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="dualRateExpo">
+    <xs:sequence>
+      <xs:element name="dualRate" type="dualRate" minOccurs="0"/>
+      <xs:element name="expo" type="expo" minOccurs="0"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="dualRate">
@@ -689,7 +689,7 @@
 
   <xs:complexType name="linearMixer">
     <xs:complexContent>
-      <xs:extension base="freeMixer">
+      <xs:extension base="curveMixer">
         <xs:sequence>
           <xs:element name="offset" type="xs:int"/>
           <xs:element name="travelHigh" type="xs:int"/>

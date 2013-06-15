@@ -8,6 +8,7 @@
             <center>0</center>
             <failSafeMode>Position</failSafeMode>
             <failSafePosition>-100</failSafePosition>
+            <function>Throttle</function>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
             <mixOnly>false</mixOnly>
@@ -21,6 +22,7 @@
             <center>0</center>
             <failSafeMode>Position</failSafeMode>
             <failSafePosition>0</failSafePosition>
+            <function>Aileron</function>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
             <mixOnly>false</mixOnly>
@@ -34,6 +36,7 @@
             <center>0</center>
             <failSafeMode>Position</failSafeMode>
             <failSafePosition>0</failSafePosition>
+            <function>Elevator</function>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
             <mixOnly>false</mixOnly>
@@ -47,6 +50,7 @@
             <center>0</center>
             <failSafeMode>Position</failSafeMode>
             <failSafePosition>0</failSafePosition>
+            <function>Rudder</function>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
             <mixOnly>false</mixOnly>
@@ -60,6 +64,7 @@
             <center>0</center>
             <failSafeMode>Position</failSafeMode>
             <failSafePosition>0</failSafePosition>
+            <function>Aileron</function>
             <limitHigh>0</limitHigh>
             <limitLow>0</limitLow>
             <mixOnly>false</mixOnly>
@@ -132,14 +137,14 @@
         </channel>
     </channels>
     <channelMappings>
-        <channelMapping outputChannel="0" inputChannel="0"/>
-        <channelMapping outputChannel="1" inputChannel="1"/>
-        <channelMapping outputChannel="2" inputChannel="2"/>
-        <channelMapping outputChannel="3" inputChannel="3"/>
-        <channelMapping outputChannel="4" inputChannel="4"/>
-        <channelMapping outputChannel="5" inputChannel="5"/>
-        <channelMapping outputChannel="6" inputChannel="6"/>
-        <channelMapping outputChannel="7" inputChannel="7"/>
+        <channelMapping inputChannel="0" outputChannel="0"/>
+        <channelMapping inputChannel="1" outputChannel="1"/>
+        <channelMapping inputChannel="2" outputChannel="2"/>
+        <channelMapping inputChannel="3" outputChannel="3"/>
+        <channelMapping inputChannel="4" outputChannel="4"/>
+        <channelMapping inputChannel="5" outputChannel="5"/>
+        <channelMapping inputChannel="6" outputChannel="6"/>
+        <channelMapping inputChannel="7" outputChannel="7"/>
     </channelMappings>
     <clocks>
         <clock number="0">
@@ -163,6 +168,26 @@
             <switch>Mixer_1</switch>
             <toChannel>0</toChannel>
             <type>Linear</type>
+            <curve>
+                <points>
+                    <point number="0">
+                        <enabled>true</enabled>
+                        <position>-100</position>
+                        <value>0</value>
+                    </point>
+                    <point number="1">
+                        <enabled>true</enabled>
+                        <position>0</position>
+                        <value>0</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <position>100</position>
+                        <value>0</value>
+                    </point>
+                </points>
+                <smoothing>false</smoothing>
+            </curve>
             <offset>0</offset>
             <travelHigh>0</travelHigh>
             <travelLow>0</travelLow>
@@ -173,6 +198,26 @@
             <switch>Mixer_2</switch>
             <toChannel>0</toChannel>
             <type>Linear</type>
+            <curve>
+                <points>
+                    <point number="0">
+                        <enabled>true</enabled>
+                        <position>-100</position>
+                        <value>0</value>
+                    </point>
+                    <point number="1">
+                        <enabled>true</enabled>
+                        <position>0</position>
+                        <value>0</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <position>100</position>
+                        <value>0</value>
+                    </point>
+                </points>
+                <smoothing>false</smoothing>
+            </curve>
             <offset>0</offset>
             <travelHigh>0</travelHigh>
             <travelLow>0</travelLow>
@@ -183,6 +228,26 @@
             <switch>Mixer_3</switch>
             <toChannel>0</toChannel>
             <type>Linear</type>
+            <curve>
+                <points>
+                    <point number="0">
+                        <enabled>true</enabled>
+                        <position>-100</position>
+                        <value>0</value>
+                    </point>
+                    <point number="1">
+                        <enabled>true</enabled>
+                        <position>0</position>
+                        <value>0</value>
+                    </point>
+                    <point number="2">
+                        <enabled>true</enabled>
+                        <position>100</position>
+                        <value>0</value>
+                    </point>
+                </points>
+                <smoothing>false</smoothing>
+            </curve>
             <offset>0</offset>
             <travelHigh>0</travelHigh>
             <travelLow>0</travelLow>
@@ -241,40 +306,44 @@
                     <trim>0</trim>
                 </control>
             </controls>
-            <dualRates>
-                <dualRate function="Aileron">
-                    <switch>Dr_Expo_Aileron</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </dualRate>
-                <dualRate function="Elevator">
-                    <switch>Dr_Expo_Elevator</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </dualRate>
-                <dualRate function="Rudder">
-                    <switch>Dr_Expo_Rudder</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </dualRate>
-            </dualRates>
-            <expos>
-                <expo function="Aileron">
-                    <switch>Dr_Expo_Aileron</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Elevator">
-                    <switch>Dr_Expo_Elevator</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Rudder">
-                    <switch>Dr_Expo_Rudder</switch>
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-            </expos>
+            <dualRateExpos>
+                <dualRateExpo>
+                    <dualRate function="Aileron">
+                        <switch>Dr_Expo_Aileron</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </dualRate>
+                    <expo function="Aileron">
+                        <switch>Dr_Expo_Aileron</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Elevator">
+                        <switch>Dr_Expo_Elevator</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </dualRate>
+                    <expo function="Elevator">
+                        <switch>Dr_Expo_Elevator</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Rudder">
+                        <switch>Dr_Expo_Rudder</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </dualRate>
+                    <expo function="Rudder">
+                        <switch>Dr_Expo_Rudder</switch>
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+            </dualRateExpos>
             <motorOn>false</motorOn>
             <phaseName>Global</phaseName>
             <phaseSwitchTime>0.0</phaseSwitchTime>
@@ -363,34 +432,38 @@
             </wingMixers>
         </phase>
         <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="0">
-            <dualRates>
-                <dualRate function="Aileron">
-                    <values>75</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Elevator">
-                    <values>75</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Rudder">
-                    <values>75</values>
-                    <values>100</values>
-                </dualRate>
-            </dualRates>
-            <expos>
-                <expo function="Aileron">
-                    <values>50</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Elevator">
-                    <values>50</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Rudder">
-                    <values>50</values>
-                    <values>0</values>
-                </expo>
-            </expos>
+            <dualRateExpos>
+                <dualRateExpo>
+                    <dualRate function="Aileron">
+                        <values>75</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Aileron">
+                        <values>50</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Elevator">
+                        <values>75</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Elevator">
+                        <values>50</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Rudder">
+                        <values>75</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Rudder">
+                        <values>50</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+            </dualRateExpos>
             <motorOn>false</motorOn>
             <phaseName>Normal</phaseName>
             <phaseSwitchTime>0.0</phaseSwitchTime>
@@ -405,34 +478,38 @@
             </wingTrim>
         </phase>
         <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="1">
-            <dualRates>
-                <dualRate function="Aileron">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Elevator">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Rudder">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-            </dualRates>
-            <expos>
-                <expo function="Aileron">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Elevator">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Rudder">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-            </expos>
+            <dualRateExpos>
+                <dualRateExpo>
+                    <dualRate function="Aileron">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Aileron">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Elevator">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Elevator">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Rudder">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Rudder">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+            </dualRateExpos>
             <motorOn>false</motorOn>
             <phaseName>Start</phaseName>
             <phaseSwitch>Phase_2</phaseSwitch>
@@ -448,34 +525,38 @@
             </wingTrim>
         </phase>
         <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="2">
-            <dualRates>
-                <dualRate function="Aileron">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Elevator">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Rudder">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-            </dualRates>
-            <expos>
-                <expo function="Aileron">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Elevator">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Rudder">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-            </expos>
+            <dualRateExpos>
+                <dualRateExpo>
+                    <dualRate function="Aileron">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Aileron">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Elevator">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Elevator">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Rudder">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Rudder">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+            </dualRateExpos>
             <motorOn>false</motorOn>
             <phaseName>Speed</phaseName>
             <phaseSwitch>Phase_3</phaseSwitch>
@@ -491,34 +572,38 @@
             </wingTrim>
         </phase>
         <phase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="wingedPhase" number="3">
-            <dualRates>
-                <dualRate function="Aileron">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Elevator">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-                <dualRate function="Rudder">
-                    <values>100</values>
-                    <values>100</values>
-                </dualRate>
-            </dualRates>
-            <expos>
-                <expo function="Aileron">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Elevator">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-                <expo function="Rudder">
-                    <values>0</values>
-                    <values>0</values>
-                </expo>
-            </expos>
+            <dualRateExpos>
+                <dualRateExpo>
+                    <dualRate function="Aileron">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Aileron">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Elevator">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Elevator">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+                <dualRateExpo>
+                    <dualRate function="Rudder">
+                        <values>100</values>
+                        <values>100</values>
+                    </dualRate>
+                    <expo function="Rudder">
+                        <values>0</values>
+                        <values>0</values>
+                    </expo>
+                </dualRateExpo>
+            </dualRateExpos>
             <motorOn>false</motorOn>
             <phaseName>Landung</phaseName>
             <phaseSwitch>Phase_4</phaseSwitch>

@@ -1,9 +1,8 @@
 <#if helicopterModel??>
 	<#list helicopterModel.phase as phase>
 		<#if phase.phaseType.name() != "Unused">
-			<a name="helicopterMix"/>
 			<table>
-				<caption>Helikoptermix - ${phase?string}</caption>
+				<caption><a name="helicopterMix${phase.number}"/>Helikoptermix - ${phase?string}</caption>
 				
 				<tbody>
 					<@heliCurve "Pitchkurve" phase.helicopterMixer.pitchCurve/>

@@ -30,8 +30,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 public abstract class Phase {
 	private Curve				channel1Curve;
 	private Control[]		control;
-	private DualRate[]	dualRate;
-	private Expo[]			expo;
+	private DualRateExpo[] dualRateExpo;
 	private boolean			motorOn;
 	private String			number;
 	private String			phaseName;
@@ -39,24 +38,17 @@ public abstract class Phase {
 	private double			phaseSwitchTime;
 	private Clock				phaseTimer;
 	private PhaseType		phaseType;
-
 	public Curve getChannel1Curve() {
 		return channel1Curve;
 	}
-
 	@XmlElementWrapper(name = "controls")
 	public Control[] getControl() {
 		return control;
 	}
 
-	@XmlElementWrapper(name = "dualRates")
-	public DualRate[] getDualRate() {
-		return dualRate;
-	}
-
-	@XmlElementWrapper(name = "expos")
-	public Expo[] getExpo() {
-		return expo;
+	@XmlElementWrapper(name = "dualRateExpos")
+	public DualRateExpo[] getDualRateExpo() {
+		return dualRateExpo;
 	}
 
 	@XmlAttribute
@@ -99,12 +91,8 @@ public abstract class Phase {
 		control = controls;
 	}
 
-	public void setDualRate(final DualRate[] dualRate) {
-		this.dualRate = dualRate;
-	}
-
-	public void setExpo(final Expo[] expo) {
-		this.expo = expo;
+	public void setDualRateExpo(DualRateExpo[] dualRateExpo) {
+		this.dualRateExpo = dualRateExpo;
 	}
 
 	public void setMotorOn(final boolean motorOn) {

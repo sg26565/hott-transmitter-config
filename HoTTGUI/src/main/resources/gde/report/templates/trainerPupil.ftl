@@ -1,6 +1,5 @@
-<a name="trainerPupil"/>
 <table>
-	<caption>Lehrer/Schüler</caption>
+	<caption><a name="trainerPupil"/>Lehrer/Schüler</caption>
 			
 	<@reset/>
 	

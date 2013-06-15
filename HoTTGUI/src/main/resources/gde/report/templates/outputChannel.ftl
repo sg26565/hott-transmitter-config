@@ -1,6 +1,5 @@
-<a name="outputChannel"/>
 <table>
-	<caption>Senderausgang</caption>
+	<caption><a name="outputChannel"/>Senderausgang</caption>
 	
 	<thead>
 		<tr>

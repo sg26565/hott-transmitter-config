@@ -19,7 +19,7 @@
 	<organization>
 		<name>Oliver Treichel</name>
 	</organization>
-	
+
 	<scm>
 		<connection>scm:svn:https://hott-transmitter-config.googlecode.com/svn/trunk/parent/</connection>
 		<url>https://code.google.com/p/hott-transmitter-config/source/browse/trunk/parent/</url>
@@ -215,9 +215,14 @@
 				<version>9.0.2</version>
 			</dependency>
 			<dependency>
-				<groupId>org.xhtmlrenderer</groupId>
-				<artifactId>flying-saucer-swt</artifactId>
-				<version>9.0.2</version>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.7</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-math3</artifactId>
+				<version>3.1.1</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

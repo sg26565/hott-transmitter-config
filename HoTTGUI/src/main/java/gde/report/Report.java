@@ -65,7 +65,6 @@ public class Report {
 	private static final Configuration						CONFIGURATION;
 	private static final JAXBContext							CTX;
 	private static final TemplateExceptionHandler	CUSTOM_HANDLER;
-	private static final ITextRenderer						ITEXT_RENDERER;
 	private static final Marshaller								MARSHALLER;
 
 	static {
@@ -85,11 +84,6 @@ public class Report {
 		catch (final JAXBException e) {
 			throw new RuntimeException(e);
 		}
-
-		// setup flyingsaucer
-		ITEXT_RENDERER = new ITextRenderer();
-		final SharedContext ctx = ITEXT_RENDERER.getSharedContext();
-		ctx.setReplacedElementFactory(new ITextSVGReplacedElementFactory(ctx.getReplacedElementFactory()));
 	}
 
 	public static String generateHTML(final BaseModel model) throws IOException, TemplateException {
@@ -187,10 +181,16 @@ public class Report {
 	}
 
 	public static void savePDF(final File file, final String data) throws IOException, DocumentException {
+		// setup flyingsaucer
+		final ITextRenderer renderer = new ITextRenderer();
+		final SharedContext ctx = renderer.getSharedContext();
 		final FileOutputStream fos = new FileOutputStream(file);
-		ITEXT_RENDERER.setDocumentFromString(data);
-		ITEXT_RENDERER.layout();
-		ITEXT_RENDERER.createPDF(fos);
+
+		ctx.setReplacedElementFactory(new ITextInlineImageReplacedElementFactory(ctx.getReplacedElementFactory()));
+		
+		renderer.setDocumentFromString(data);
+		renderer.layout();
+		renderer.createPDF(fos);
 		fos.close();
 	}
 

@@ -1,6 +1,5 @@
-<a name="phaseAssignments"/>
 <table>
-	<caption>Phasenzuweisung</caption>
+	<caption><a name="phaseAssignments"/>Phasenzuweisung</caption>
 	
 	<thead>
 		<tr>

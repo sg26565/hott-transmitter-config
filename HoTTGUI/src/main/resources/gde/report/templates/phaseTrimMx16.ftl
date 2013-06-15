@@ -1,7 +1,6 @@
 <#if wingedModel??>
-	<a name="phaseTrim"/>
 	<table>
-		<caption>Phasentrimm</caption>
+		<caption><a name="phaseTrim"/>Phasentrimm</caption>
 		
 		<thead>
 			<tr>
