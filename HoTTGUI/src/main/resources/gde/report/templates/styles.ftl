@@ -23,7 +23,7 @@
 		font-size: 9pt;
 	}
 	
-	#nav {
+	div.navigation {
 		display: none;
 	}
 </style>
@@ -31,35 +31,31 @@
 <style type="text/css" media="screen">
 	body {
 		font-size: 14pt;
-		min-width: 40 em;
+		padding: 0;
+		margin-top: 0;
 	}
 	
-	#nav {
+	div.navigation {
 		position: fixed;
 		font-size: 10pt;
 		padding: 0;
 		margin: 0;
 	}
 	
-	#nav a[href] {
+	.navigation a[href] {
 		display: block;
 	}
 	
-	#nav h1 {
+	.navigation h1 {
 		font-size: 14pt;
+		margin-top: 0;
 	}
 	
-	#content {
+	div.data {
 		margin-left: 10em;
-		display: block;
-		overflow: visible;
 	}
 	
-	bookmarks {
-		display: none;
-	}
-	
-	a.i1 {
+	.navigation a.i1 {
 		margin-left: 1em;
 	}
 </style>
@@ -82,18 +78,19 @@
 		border-color: black;
 		border-width: 2px;
 		empty-cells: show;
-		margin: 0px;
-		padding: 0px;
+		margin: 0;
+		padding: 0;
 		white-space: nowrap;
 		page-break-inside: avoid;
+		margin-bottom: 1em;
 	}
 	
 	table caption {
 		text-align: left;
 		font-size: x-large;
-		font-style: oblique;
+		font-style: italic;
 		font-weight: bold;
-		margin-top: 1em;
+		margin-top: 0;
 	}
 	
 	td {
@@ -102,7 +99,7 @@
 		border-width: 1px;
 		border-color: white;
 		padding: 2px;
-		margin: 0px;
+		margin: 0;
 	}
 	
 	th {
@@ -112,7 +109,7 @@
 		border-width: 1px;
 		border-color: white;
 		padding: 2px;
-		margin: 0px;
+		margin: 0;
 	}
 	
 	tr.d0 td {
