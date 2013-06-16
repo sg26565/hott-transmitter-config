@@ -249,13 +249,13 @@ public class MdlTabItemComposite extends Composite {
 			PREFS.put("lastSaveDir", file.getParentFile().getAbsolutePath());
 
 			try {
-				String data = this.browser.getText();
-//				if (file.getName().endsWith(".xml")) { //$NON-NLS-1$
-//					data = Report.generateXML(this.model);
-//				}
-//				else {
-//					data = Report.generateHTML(this.model);
-//				}
+				String data;
+				if (file.getName().endsWith(".xml")) { //$NON-NLS-1$
+					data = Report.generateXML(this.model);
+				}
+				else {
+					data = Report.generateHTML(this.model);
+				}
 
 				if (file.getName().endsWith(".pdf")) { //$NON-NLS-1$
 					Report.savePDF(file, data);
