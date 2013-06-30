@@ -10,7 +10,12 @@
 		<relativePath>../parent</relativePath>
 	</parent>
 
+	<properties>
+		<swtPath>${project.basedir}/${project.parent.relativePath}/swt</swtPath>
+	</properties>
+
 	<name>HoTT Transmitter Config - Data Model</name>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -25,7 +30,7 @@
 			<artifactId>swt</artifactId>
 			<version>unknown</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/${parent.relativePath}/swt/${swtJar}</systemPath>
+			<systemPath>${swtPath}/${swtJar}</systemPath>
 		</dependency>
 	</dependencies>
 </project>

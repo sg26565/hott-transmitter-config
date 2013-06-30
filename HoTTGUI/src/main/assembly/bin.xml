@@ -23,7 +23,7 @@
 			</includes>
 		</fileSet>
 		<fileSet>
-			<directory>${project.basedir}/${parent.relativePath}/swt</directory>
+			<directory>${swtPath}</directory>
 			<outputDirectory>swt</outputDirectory>
 			<includes>
 				<include>*.jar</include>

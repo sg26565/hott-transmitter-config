@@ -10,6 +10,10 @@
 		<relativePath>../parent</relativePath>
 	</parent>
 
+	<properties>
+		<swtPath>${project.basedir}/${project.parent.relativePath}/swt</swtPath>
+	</properties>
+
 	<build>
 		<finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
 		<plugins>
@@ -114,7 +118,7 @@
 			<artifactId>swt</artifactId>
 			<version>unknown</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/${parent.relativePath}/swt/${swtJar}</systemPath>
+			<systemPath>${swtPath}/${swtJar}</systemPath>
 		</dependency>
 	</dependencies>
 </project>
