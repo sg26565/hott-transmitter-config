@@ -63,7 +63,6 @@ public class Curve {
 			g = new GC(image);
 			g.setAntialias(SWT.ON);
 			g.setTextAntialias(SWT.ON);
-			g.setAdvanced(true);
 
 			// clear background
 			g.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
