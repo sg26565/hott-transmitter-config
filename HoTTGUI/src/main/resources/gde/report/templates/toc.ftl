@@ -66,5 +66,7 @@
 <a href="#channelSequencer">Kanal Sequenzer</a>
 <a href="#multiChannel">Multikanal</a>
 <a href="#ringLimiter">Ringbegrenzer</a>
-<a href="#mp3Player">MP3-Player</a>
+<#if model.transmitterType.name() != "mx20">
+	<a href="#mp3Player">MP3-Player</a>
+</#if>
 <a href="#switches">Schalter-/Geberzuordnungen</a>

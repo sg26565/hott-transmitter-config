@@ -10,10 +10,21 @@
 		<relativePath>../parent</relativePath>
 	</parent>
 
+	<properties>
+		<swtPath>${project.basedir}/${project.parent.relativePath}/swt</swtPath>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>swt</artifactId>
+			<version>unknown</version>
+			<scope>system</scope>
+			<systemPath>${swtPath}/${swtJar}</systemPath>
 		</dependency>
 	</dependencies>
 </project>

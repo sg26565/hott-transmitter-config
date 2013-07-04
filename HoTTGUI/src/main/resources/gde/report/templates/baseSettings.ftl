@@ -67,24 +67,26 @@
 			<td align="left"><i>Limit:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
 			<td align="left"><i>Schalter:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>							
 		</tr>
-		<#if helicopterModel??>
+		<#if model.transmitterType.name() != "mx20">
+			<#if helicopterModel??>
+				<tr class="<@d/>">
+					<th align="right">Markierung</th>
+					<td align="left" colspan="3"><@switch model.getSwitch("MarkerKey")/></td>
+				</tr>
+			</#if>
 			<tr class="<@d/>">
-				<th align="right">Markierung</th>
-				<td align="left" colspan="3"><@switch model.getSwitch("MarkerKey")/></td>
+				<th align="right">Einschaltwarnung</th>
+				<td align="left" colspan="3"><@switch model.getSwitch("PowerWarning")/></td>
+			</tr>
+			<tr class="<@d/>">
+				<th align="right">Auto Trimm</th>
+				<td align="left" colspan="3"><@switch model.getSwitch("AutoTrim")/></td>
+			</tr>
+			<tr class="<@d/>">
+				<th align="right">Auto rücksetzen Uhr</th>
+				<td align="left" colspan="3">${model.autoTimerReset?string("ja","nein")}</td>
 			</tr>
 		</#if>
-		<tr class="<@d/>">
-			<th align="right">Einschaltwarnung</th>
-			<td align="left" colspan="3"><@switch model.getSwitch("PowerWarning")/></td>
-		</tr>
-		<tr class="<@d/>">
-			<th align="right">Auto Trimm</th>
-			<td align="left" colspan="3"><@switch model.getSwitch("AutoTrim")/></td>
-		</tr>
-		<tr class="<@d/>">
-			<th align="right">Auto rücksetzen Uhr</th>
-			<td align="left" colspan="3">${model.autoTimerReset?string("ja","nein")}</td>
-		</tr>
 		<#if model.module.type.name() == "HoTT">
 			<#list model.receiver as receiver>
 				<tr class="<@d/> <@u receiver.bound/>">

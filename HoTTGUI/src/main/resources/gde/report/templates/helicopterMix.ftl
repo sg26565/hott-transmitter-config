@@ -46,6 +46,10 @@
 						<td align="left" colspan="5">${phase.gyroSuppression}%</td>
 					</tr>	
 					<tr class="<@d/>">
+						<th align="right">Gyro offset</th>
+						<td align="left" colspan="5">${phase.gyroGain}%</td>
+					</tr>	
+					<tr class="<@d/>">
 						<th align="right">Taumelscheibendrehung</th>
 						<td align="left" colspan="5">${phase.helicopterMixer.swashplateRotation}&deg;</td>
 					</tr>	

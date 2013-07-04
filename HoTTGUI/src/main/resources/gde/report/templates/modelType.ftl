@@ -25,10 +25,12 @@
 				<th align="right">Expo Gaslimit</th>
 				<td align="left">${helicopterModel.expoThrottleLimit}%</td>
 			</tr>
-			<tr class="<@d/>">
-				<th align="right">Gaslimit Warnung</th>
-				<td align="left">${helicopterModel.throttleLimitWarning}%</td>
-			</tr>
+			<#if model.transmitterType.name() != "mx20">
+				<tr class="<@d/>">
+					<th align="right">Gaslimit Warnung</th>
+					<td align="left">${helicopterModel.throttleLimitWarning}%</td>
+				</tr>
+			</#if>
 		</tbody>
 	<#else>
 		<caption><a name="modelType"/>Modelltyp</caption>

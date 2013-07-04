@@ -71,6 +71,8 @@
 	<bookmark href="#channelSequencer" name="Kanal Sequenzer"/>
 	<bookmark href="#multiChannel" name="Multikanal"/>
 	<bookmark href="#ringLimiter" name="Ringbegrenzer"/>
-	<bookmark href="#mp3Player" name="MP3-Player"/>
+	<#if model.transmitterType.name() != "mx20">
+		<bookmark href="#mp3Player" name="MP3-Player"/>
+	</#if>
 	<bookmark href="#switches" name="Schalter-/Geberzuordnungen"/>
 </bookmarks>
