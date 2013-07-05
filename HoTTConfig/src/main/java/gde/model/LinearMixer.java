@@ -54,24 +54,24 @@ public class LinearMixer extends CurveMixer {
 	}
 
 	private void updateCurve() {
-		Curve curve = new Curve();
-		CurvePoint[] points = new CurvePoint[3];
+		final Curve curve = new Curve();
+		final CurvePoint[] points = new CurvePoint[3];
 
 		for (int i = 0; i < 3; i++) {
-			CurvePoint p = new CurvePoint();
+			final CurvePoint p = new CurvePoint();
 			p.setNumber(i);
-			p.setEnabled(true);				
+			p.setEnabled(true);
 			points[i] = p;
 		}
-		
+
 		points[0].setPosition(-100);
-		points[1].setPosition(0);
+		points[1].setPosition(getOffset());
 		points[2].setPosition(100);
-		
-		points[0].setValue(getTravelLow()+getOffset());
-		points[1].setValue(getOffset());
-		points[2].setValue(getTravelHigh()+getOffset());
-		
+
+		points[0].setValue((int) (-getTravelLow()*(1.0f+getOffset()/100.0f)));
+		points[1].setValue(0);
+		points[2].setValue((int) (getTravelHigh()*(1.0f-getOffset()/100.0f)));
+
 		curve.setPoint(points);
 		setCurve(curve);
 	}
