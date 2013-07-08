@@ -25,6 +25,44 @@ public class DualRateExpo {
 	DualRate	dualRate;
 	Expo			expo;
 
+	public Curve[] getCurve() {
+		final Curve[] curve = new Curve[4];
+
+		for (int i = 0; i < 4; i++) {
+			final CurvePoint[] points = new CurvePoint[5];
+			curve[i] = new Curve();
+			curve[i].setPoint(points);
+			curve[i].setSmoothing(true);
+
+			for (int j = 0; j < 5; j++) {
+				final CurvePoint p = new CurvePoint();
+				p.setNumber(j);
+				p.setEnabled(true);
+				points[j] = p;
+			}
+
+			final int dr = getDualRate().getValues()[i / 2];
+			final int expo = (int) (getExpo().getValues()[i % 2] / 3f);
+
+			points[0].setPosition(-100);
+			points[0].setValue(-dr);
+
+			points[1].setPosition(-50);
+			points[1].setValue((-50 + expo) * dr / 100);
+
+			points[2].setPosition(0);
+			points[2].setValue(0);
+
+			points[3].setPosition(50);
+			points[3].setValue((50 - expo) * dr / 100);
+
+			points[4].setPosition(100);
+			points[4].setValue(dr);
+		}
+
+		return curve;
+	}
+
 	public DualRate getDualRate() {
 		return dualRate;
 	}
@@ -33,49 +71,11 @@ public class DualRateExpo {
 		return expo;
 	}
 
-	public void setDualRate(DualRate dualRate) {
+	public void setDualRate(final DualRate dualRate) {
 		this.dualRate = dualRate;
 	}
 
-	public void setExpo(Expo expo) {
+	public void setExpo(final Expo expo) {
 		this.expo = expo;
-	}
-
-	public Curve[] getCurve() {
-		Curve[] curve = new Curve[4];
-
-		for (int i = 0; i < 4; i++) {
-			CurvePoint[] points = new CurvePoint[5];
-			curve[i] = new Curve();
-			curve[i].setPoint(points);
-			curve[i].setSmoothing(true);
-
-			for (int j = 0; j < 5; j++) {
-				CurvePoint p = new CurvePoint();
-				p.setNumber(j);
-				p.setEnabled(true);
-				points[j] = p;
-			}
-
-			int dr = getDualRate().getValues()[i / 2];
-			int expo = getExpo().getValues()[i % 2] / 4;
-
-			points[0].setPosition(-100);
-			points[0].setValue(-dr);
-
-			points[1].setPosition(-50 - expo);
-			points[1].setValue(-dr / 2 + expo);
-
-			points[2].setPosition(0);
-			points[2].setValue(0);
-
-			points[3].setPosition(50 + expo);
-			points[3].setValue(dr / 2 - expo);
-
-			points[4].setPosition(100);
-			points[4].setValue(dr);
-		}
-
-		return curve;
 	}
 }
