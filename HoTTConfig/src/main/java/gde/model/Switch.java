@@ -35,7 +35,6 @@ public class Switch {
 	private SwitchFunction		function;
 	private int								number;
 	private Object[]					qualifier;
-	private SwitchType				type;
 
 	public SwitchAssignment getAssignment() {
 		return assignment;
@@ -87,7 +86,7 @@ public class Switch {
 	}
 
 	public SwitchType getType() {
-		return type;
+		return getAssignment() == null ? SwitchType.Unknown : getAssignment().getType();
 	}
 
 	public void setAssignment(final SwitchAssignment assigment) {
@@ -108,9 +107,5 @@ public class Switch {
 
 	public void setQualifier(final Object[] qualifier) {
 		this.qualifier = qualifier;
-	}
-
-	public void setType(final SwitchType type) {
-		this.type = type;
 	}
 }

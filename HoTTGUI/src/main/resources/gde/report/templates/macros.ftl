@@ -2,11 +2,7 @@
 	<#if sw.assignment.name() == "Unassigned">
 		---
 	<#else>
-		${sw.assignment}
-		<#switch sw.direction>
-			<#case 2>normal<#break>				
-			<#case 1>invers<#break>
-		</#switch>
+		${sw.assignment}<#if sw.direction == 1> (invers)</#if>
 	</#if>
 </#macro>
 

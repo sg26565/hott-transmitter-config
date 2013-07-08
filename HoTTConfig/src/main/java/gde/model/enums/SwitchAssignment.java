@@ -20,7 +20,43 @@ package gde.model.enums;
 import java.util.ResourceBundle;
 
 public enum SwitchAssignment {
-	DG1, DG2, DG3, DG4, DG5, FX, FXi, G1, G2, G3, G4, G5, G6, G7, G8, GB1, GB10, GB2, GB3, GB4, GB5, GB6, GB7, GB8, GB9, Gi1, Gi2, Gi3, Gi4, Gi5, Gi6, Gi7, Gi8, L1, L2, L3, L4, L5, L6, L7, L8, Li1, Li2, Li3, Li4, Li5, Li6, Li7, Li8, SD1, SD2, SR1, SR2, SR3, SW1, SW10, SW11, SW12, SW13, SW14, SW15, SW16, SW2, SW3, SW4, SW5, SW6, SW7, SW8, SW9, TR1, TR2, TR3, TR4, UG1, UG2, Unassigned, Unknown;
+	DG1(SwitchType.InputControl,false), DG2(SwitchType.InputControl,false), DG3(SwitchType.InputControl,false), DG4(SwitchType.InputControl,false), DG5(SwitchType.InputControl,false),
+	FX(SwitchType.Fixed,true), FXi(SwitchType.Fixed,true),
+	G1(SwitchType.ControlSwitch,true), G2(SwitchType.ControlSwitch,true), G3(SwitchType.ControlSwitch,true), G4(SwitchType.ControlSwitch,true),
+	G5(SwitchType.ControlSwitch,true), G6(SwitchType.ControlSwitch,true), G7(SwitchType.ControlSwitch,true), G8(SwitchType.ControlSwitch,true),
+	GB1(SwitchType.InputControl,false), GB10(SwitchType.InputControl,false), GB2(SwitchType.InputControl,false), GB3(SwitchType.InputControl,false), GB4(SwitchType.InputControl,false),
+	GB5(SwitchType.InputControl,false), GB6(SwitchType.InputControl,false), GB7(SwitchType.InputControl,false), GB8(SwitchType.InputControl,false), GB9(SwitchType.InputControl,false),
+	Gi1(SwitchType.ControlSwitch,true), Gi2(SwitchType.ControlSwitch,true), Gi3(SwitchType.ControlSwitch,true), Gi4(SwitchType.ControlSwitch,true),
+	Gi5(SwitchType.ControlSwitch,true), Gi6(SwitchType.ControlSwitch,true),	Gi7(SwitchType.ControlSwitch,true), Gi8(SwitchType.ControlSwitch,true),
+	L1(SwitchType.LogicalSwitch,true), L2(SwitchType.LogicalSwitch,true), L3(SwitchType.LogicalSwitch,true), L4(SwitchType.LogicalSwitch,true),
+	L5(SwitchType.LogicalSwitch,true), L6(SwitchType.LogicalSwitch,true), L7(SwitchType.LogicalSwitch,true), L8(SwitchType.LogicalSwitch,true),
+	Li1(SwitchType.LogicalSwitch,true), Li2(SwitchType.LogicalSwitch,true), Li3(SwitchType.LogicalSwitch,true), Li4(SwitchType.LogicalSwitch,true),
+	Li5(SwitchType.LogicalSwitch,true), Li6(SwitchType.LogicalSwitch,true), Li7(SwitchType.LogicalSwitch,true),	Li8(SwitchType.LogicalSwitch,true),
+	SD1(SwitchType.InputControl,false), SD2(SwitchType.InputControl,false),
+	SR1(SwitchType.InputControl,false), SR2(SwitchType.InputControl,false), SR3(SwitchType.InputControl,false),
+	SW1(SwitchType.ToggleSwitch,false), SW10(SwitchType.ToggleSwitch,false), SW11(SwitchType.ToggleSwitch,false), SW12(SwitchType.ToggleSwitch,false),
+	SW13(SwitchType.ToggleSwitch,false), SW14(SwitchType.ToggleSwitch,false), SW15(SwitchType.ToggleSwitch,false), SW16(SwitchType.ToggleSwitch,false),
+	SW2(SwitchType.ToggleSwitch,false), SW3(SwitchType.ToggleSwitch,false), SW4(SwitchType.ToggleSwitch,false), SW5(SwitchType.ToggleSwitch,false),
+	SW6(SwitchType.ToggleSwitch,false), SW7(SwitchType.ToggleSwitch,false), SW8(SwitchType.ToggleSwitch,false), SW9(SwitchType.ToggleSwitch,false),
+	TR1(SwitchType.InputControl,false), TR2(SwitchType.InputControl,false), TR3(SwitchType.InputControl,false), TR4(SwitchType.InputControl,false),
+	UG1(SwitchType.ToggleSwitch,false), UG2(SwitchType.ToggleSwitch,false),
+	Unassigned(SwitchType.Unknown,true), Unknown(SwitchType.Unknown,false);
+
+	private final SwitchType type;
+	private final boolean	unidirectional;
+
+	private SwitchAssignment(final SwitchType type, final boolean unidirectional) {
+		this.type = type;
+		this.unidirectional = unidirectional;
+	}
+
+	public SwitchType getType() {
+		return type;
+	}
+
+	public boolean isUnidirectional() {
+		return unidirectional;
+	}
 
 	/** @return the locale-dependent message */
 	@Override
