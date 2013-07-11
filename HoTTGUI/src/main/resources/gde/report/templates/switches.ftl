@@ -3,8 +3,12 @@
 	
 	<thead>
 		<tr>
-			<th align="center">Funktion</th>
-			<th align="center">Schalter/Geber</th>
+			<th align="center" rowspan="2" valign="top">Funktion</th>
+			<th align="center" colspan="3">Schalter/Geber</th>
+		</tr>
+		<tr style="font-size: small;">
+			<th align="center">ID</th>
+			<th align="center">Name</th>
 			<th align="center">Typ</th>
 		</tr>
 	</thead>
@@ -16,6 +20,7 @@
 			<#if sw?? && sw.assignment?? && sw.assignment.name() != "Unassigned">
 				<tr class="<@d/>">
 					<td align="center">${sw.id}</td>
+					<td align="center">${sw.assignment.name()}</td>
 					<td align="center"><@switch sw/></td>
 					<td align="center">${sw.type}</td>
 				</tr>

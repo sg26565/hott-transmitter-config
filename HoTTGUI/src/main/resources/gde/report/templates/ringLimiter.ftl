@@ -12,11 +12,11 @@
 		<tr>
 			<th align="center" colspan="2">Eingang</th>
 			<th align="center" colspan="2">Ausgang</th>
-			<th align="center" rowspan="2" valign="bottom">aktiv?</th>
+			<th align="center" rowspan="2" valign="top">aktiv?</th>
 			<th align="center" colspan="2">Limit</th>
 			<th align="center" colspan="2">Offset</th>
 		</tr>
-		<tr>
+		<tr style="font-size: small;">
 			<th align="center">X</th>
 			<th align="center">Y</th>
 			<th align="center">X</th>

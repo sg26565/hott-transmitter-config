@@ -2,7 +2,27 @@
 	<#if sw.assignment.name() == "Unassigned">
 		---
 	<#else>
-		${sw.assignment}<#if sw.direction == 1> (invers)</#if>
+		<#switch sw.type.name()>
+			<#case "ToggleSwitch">
+				<#switch sw.direction>
+					<#case 1><span style="text-decoration: overline;"><#break>
+					<#case 2><span><#break>			
+				</#switch>
+					${sw.assignment}
+				</span>
+				<#break>
+			
+			<#case "InputControl">
+				${sw.assignment}
+				<#switch sw.direction>
+					<#case 0>&rarr;<#break>			
+					<#case 1>&larr;<#break>
+				</#switch>
+				<#break>
+			
+			<#default>
+				${sw.assignment}						
+		</#switch>
 	</#if>
 </#macro>
 

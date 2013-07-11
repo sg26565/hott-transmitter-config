@@ -16,7 +16,7 @@
 				<th align="center" colspan="2">Heckrotor</th>
 			</#if>
 		</tr>
-		<tr>
+		<tr style="font-size: small;">
 			<th/>
 			<th align="center">Knüppel</th>				
 			<th align="center">Speicher</th>
