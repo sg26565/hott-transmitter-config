@@ -15,31 +15,37 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class Launcher {
-	private static final Logger	LOG							= Logger.getLogger(Launcher.class.getName());
 	public static final String	LOG_DIR					= "log.dir";
 	public static final String	MDL_DIR					= "mdl.dir";
 	public static final String	PROGRAM_DIR			= "program.dir";
 	public static final String	PROGRAM_VERSION	= "program.version";
 
-	public static void main(final String[] args) throws Exception {
-		initSystemProperties();
-		initLogging();
-		initSwt();
-		startApplication();
-	}
-
 	/**
-	 * Start the application.
+	 * Initialize logfile.
 	 * 
-	 * @throws ClassNotFoundException
-	 * @throws NoSuchMethodException
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
+	 * @throws SecurityException
+	 * @throws IOException
 	 */
-	public static void startApplication() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		Class<?> mainDialog = Class.forName("gde.mdl.ui.SwtMdlBrowser");
-		Method main = mainDialog.getMethod("main", String[].class);
-		main.invoke(null, new Object[] { new String[] {} });
+	public static void initLogging() throws SecurityException, IOException {
+		final Logger global = Logger.getLogger("");
+
+		// remove console handler
+		for (final Handler handler : global.getHandlers()) {
+			global.removeHandler(handler);
+		}
+
+		// Setup logfile
+		final Handler handler = new FileHandler(System.getProperty(LOG_DIR) + "/HoTTGUI.log");
+		handler.setLevel(Level.INFO);
+		handler.setFormatter(new SimpleFormatter());
+
+		global.addHandler(handler);
+		global.setLevel(Level.INFO);
+
+		final Logger logger = Logger.getLogger(Launcher.class.getName());
+		logger.log(Level.INFO, "program.dir =  " + System.getProperty(PROGRAM_DIR));
+		logger.log(Level.INFO, "mdl.dir =  " + System.getProperty(MDL_DIR));
+		logger.log(Level.INFO, "log.dir =  " + System.getProperty(LOG_DIR));
 	}
 
 	/**
@@ -57,7 +63,7 @@ public class Launcher {
 			// check if swt is already in the classpath
 			Class.forName("org.eclipse.swt.widgets.Dialog");
 		}
-		catch (ClassNotFoundException e) {
+		catch (final ClassNotFoundException e) {
 			// nope - we need to add it
 
 			//determine correct swt jar
@@ -81,30 +87,11 @@ public class Launcher {
 
 			// add swt to classpath
 			// Note: this is a hack. Not all platforms may use URLClassLoader as standard
-			URLClassLoader classLoader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
-			Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { URL.class });
+			final URLClassLoader classLoader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
+			final Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { URL.class });
 			method.setAccessible(true);
 			method.invoke(classLoader, new Object[] { swtJar.toURI().toURL() });
 		}
-	}
-
-	/**
-	 * Initialize logfile.
-	 * 
-	 * @throws SecurityException
-	 * @throws IOException
-	 */
-	public static void initLogging() throws SecurityException, IOException {
-		// Setup logfile
-		Handler handler = new FileHandler(System.getProperty(LOG_DIR) + "/HoTTGUI.log");
-		handler.setLevel(Level.INFO);
-		handler.setFormatter(new SimpleFormatter());
-		LOG.addHandler(handler);
-		LOG.setLevel(Level.INFO);
-
-		LOG.log(Level.INFO, "program.dir =  " + System.getProperty(PROGRAM_DIR));
-		LOG.log(Level.INFO, "mdl.dir =  " + System.getProperty(MDL_DIR));
-		LOG.log(Level.INFO, "log.dir =  " + System.getProperty(LOG_DIR));
 	}
 
 	/**
@@ -142,5 +129,26 @@ public class Launcher {
 		if (!System.getProperties().containsKey(LOG_DIR)) {
 			System.setProperty(LOG_DIR, System.getProperty(PROGRAM_DIR));
 		}
+	}
+
+	public static void main(final String[] args) throws Exception {
+		initSystemProperties();
+		initLogging();
+		initSwt();
+		startApplication();
+	}
+
+	/**
+	 * Start the application.
+	 * 
+	 * @throws ClassNotFoundException
+	 * @throws NoSuchMethodException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	public static void startApplication() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+		final Class<?> mainDialog = Class.forName("gde.mdl.ui.SwtMdlBrowser");
+		final Method main = mainDialog.getMethod("main", String[].class);
+		main.invoke(null, new Object[] { new String[] {} });
 	}
 }

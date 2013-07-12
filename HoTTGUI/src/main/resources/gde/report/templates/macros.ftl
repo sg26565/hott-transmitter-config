@@ -4,14 +4,13 @@
 	<#else>
 		<#switch sw.type.name()>
 			<#case "ToggleSwitch">
-				<#switch sw.direction>
-					<#case 1><span style="text-decoration: overline;"><#break>
-					<#case 2><span><#break>			
-				</#switch>
+				<#if sw.direction==1>
+					<span style="text-decoration: overline;">${sw.assignment}</span>
+				<#else>
 					${sw.assignment}
-				</span>
+				</#if>
 				<#break>
-			
+							
 			<#case "InputControl">
 				${sw.assignment}
 				<#switch sw.direction>
