@@ -16,7 +16,7 @@
 			<th align="center" colspan="2">Limit</th>
 			<th align="center" colspan="2">Offset</th>
 		</tr>
-		<tr style="font-size: small;">
+		<tr style="font-size: 75%;">
 			<th align="center">X</th>
 			<th align="center">Y</th>
 			<th align="center">X</th>

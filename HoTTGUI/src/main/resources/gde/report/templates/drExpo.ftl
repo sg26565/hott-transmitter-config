@@ -8,12 +8,12 @@
 					<th/>
 					<th align="center" colspan="2">Dual Rate</th>
 					<th align="center" colspan="2">Expo</th>
-					<th align="center" style="font-size: small;">DR aus</td>						
-					<th align="center" style="font-size: small;">DR aus</th>						
-					<th align="center" style="font-size: small;">DR an</th>						
-					<th align="center" style="font-size: small;">DR an</th>						
+					<th align="center" style="font-size: 75%;">DR aus</th>						
+					<th align="center" style="font-size: 75%;">DR aus</th>						
+					<th align="center" style="font-size: 75%;">DR an</th>						
+					<th align="center" style="font-size: 75%;">DR an</th>						
 				</tr>
-				<tr style="font-size: small;">
+				<tr style="font-size: 75%;">
 					<th/>
 					<th align="center">Schalter</th>
 					<th align="center">Wert</th>

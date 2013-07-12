@@ -6,7 +6,7 @@
 			<th align="center" rowspan="2" valign="top">Funktion</th>
 			<th align="center" colspan="3">Schalter/Geber</th>
 		</tr>
-		<tr style="font-size: small;">
+		<tr style="font-size: 75%;">
 			<th align="center">ID</th>
 			<th align="center">Name</th>
 			<th align="center">Typ</th>
