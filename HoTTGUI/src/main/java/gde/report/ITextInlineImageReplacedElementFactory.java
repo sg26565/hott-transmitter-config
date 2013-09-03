@@ -35,77 +35,78 @@ import com.itextpdf.text.pdf.codec.Base64;
  * @author oli@treichels.de
  */
 public class ITextInlineImageReplacedElementFactory implements ReplacedElementFactory {
-	private static final String	PREFIX	= "data:image/png;base64,";
+  private static final String          PREFIX = "data:image/png;base64,";
 
-	private final ReplacedElementFactory	other;
+  private final ReplacedElementFactory other;
 
-	public ITextInlineImageReplacedElementFactory(final ReplacedElementFactory other) {
-		this.other = other;
-	}
+  public ITextInlineImageReplacedElementFactory(final ReplacedElementFactory other) {
+    this.other = other;
+  }
 
-	@Override
-	public ReplacedElement createReplacedElement(final LayoutContext c, final BlockBox box, final UserAgentCallback uac, final int cssWidth, final int cssHeight) {
-		final Element elem = box.getElement();
+  @Override
+  public ReplacedElement createReplacedElement(final LayoutContext c, final BlockBox box, final UserAgentCallback uac, final int cssWidth, final int cssHeight) {
+    final Element elem = box.getElement();
 
-		// check if we have an inline png image
-		if (!(elem != null && elem.getNodeName().equals("img") && elem.hasAttribute("src") && elem.getAttribute("src").startsWith(PREFIX))) {
-			return other.createReplacedElement(c, box, uac, cssWidth, cssHeight);
-		}
+    // check if we have an inline png image
+    if (!(elem != null && elem.getNodeName().equals("img") && elem.hasAttribute("src") && elem.getAttribute("src").startsWith(PREFIX))) {
+      return other.createReplacedElement(c, box, uac, cssWidth, cssHeight);
+    }
 
-		int width = 0;
-		int height = 0;
+    int width = 0;
+    int height = 0;
 
-		if (cssWidth > 0) {
-			width = cssWidth;
-		}
-		if (cssHeight > 0) {
-			height = cssHeight;
-		}
+    if (cssWidth > 0) {
+      width = cssWidth;
+    }
+    if (cssHeight > 0) {
+      height = cssHeight;
+    }
 
-		if (elem.hasAttribute("width")) {
-			width = Integer.parseInt(elem.getAttribute("width"));
-		}
-		
-		if (elem.hasAttribute("height")) {
-			height = Integer.parseInt(elem.getAttribute("height"));
-		}
+    if (elem.hasAttribute("width")) {
+      width = Integer.parseInt(elem.getAttribute("width"));
+    }
 
-		String inlineData = elem.getAttribute("src").substring(PREFIX.length()); // strip leading "data:image/png;base64,"
-		
-		try {
-			final Image image = Image.getInstance(Base64.decode(inlineData));
-			
-			if (width == 0) {
-				width = (int) image.getWidth();
-			}
-			
-			if (height == 0) {
-				height= (int) image.getHeight();
-			}
-			
-			image.scaleAbsolute(width * 16, height * 16);
-			
-			final ITextFSImage fsImage = new ITextFSImage(image);
-			final ITextReplacedElement element = new ITextImageElement(fsImage);
-			return element;
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    if (elem.hasAttribute("height")) {
+      height = Integer.parseInt(elem.getAttribute("height"));
+    }
 
-	@Override
-	public void remove(final Element e) {
-		other.remove(e);
-	}
+    final String inlineData = elem.getAttribute("src").substring(PREFIX.length()); // strip
+                                                                                   // leading
+                                                                                   // "data:image/png;base64,"
 
-	@Override
-	public void reset() {
-		other.reset();
-	}
+    try {
+      final Image image = Image.getInstance(Base64.decode(inlineData));
 
-	@Override
-	public void setFormSubmissionListener(final FormSubmissionListener listener) {
-		other.setFormSubmissionListener(listener);
-	}
+      if (width == 0) {
+        width = (int) image.getWidth();
+      }
+
+      if (height == 0) {
+        height = (int) image.getHeight();
+      }
+
+      image.scaleAbsolute(width * 16, height * 16);
+
+      final ITextFSImage fsImage = new ITextFSImage(image);
+      final ITextReplacedElement element = new ITextImageElement(fsImage);
+      return element;
+    } catch (final Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public void remove(final Element e) {
+    other.remove(e);
+  }
+
+  @Override
+  public void reset() {
+    other.reset();
+  }
+
+  @Override
+  public void setFormSubmissionListener(final FormSubmissionListener listener) {
+    other.setFormSubmissionListener(listener);
+  }
 }

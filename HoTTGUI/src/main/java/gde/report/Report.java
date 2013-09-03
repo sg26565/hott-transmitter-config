@@ -62,144 +62,140 @@ import gde.model.winged.WingedPhase;
  * @author oli@treichels.de
  */
 public class Report {
-	private static final Configuration						CONFIGURATION;
-	private static final JAXBContext							CTX;
-	private static final TemplateExceptionHandler	CUSTOM_HANDLER;
-	private static final Marshaller								MARSHALLER;
+  private static final Configuration            CONFIGURATION;
+  private static final JAXBContext              CTX;
+  private static final TemplateExceptionHandler CUSTOM_HANDLER;
+  private static final Marshaller               MARSHALLER;
 
-	static {
-		// setup freemarker
-		CONFIGURATION = new Configuration();
-		CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8");
-		CONFIGURATION.setClassForTemplateLoading(Report.class, "templates");
-		CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
-		CUSTOM_HANDLER = new FreeMarkerExceptionHandler();
+  static {
+    // setup freemarker
+    CONFIGURATION = new Configuration();
+    CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8");
+    CONFIGURATION.setClassForTemplateLoading(Report.class, "templates");
+    CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
+    CUSTOM_HANDLER = new FreeMarkerExceptionHandler();
 
-		// setup JAXB
-		try {
-			CTX = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class, LinearMixer.class, CurveMixer.class);
-			MARSHALLER = CTX.createMarshaller();
-			MARSHALLER.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-		}
-		catch (final JAXBException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    // setup JAXB
+    try {
+      CTX = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class, LinearMixer.class, CurveMixer.class);
+      MARSHALLER = CTX.createMarshaller();
+      MARSHALLER.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+    } catch (final JAXBException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
-	public static String generateHTML(final BaseModel model) throws IOException, TemplateException {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		final String templateName;
+  public static String generateHTML(final BaseModel model) throws IOException, TemplateException {
+    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    final String templateName;
 
-		switch (model.getTransmitterType()) {
-		case mc16:
-		case mc20:
-		case mc32:
-		case mx20:
-			templateName = "mc-32.xhtml";
-			break;
+    switch (model.getTransmitterType()) {
+    case mc16:
+    case mc20:
+    case mc32:
+    case mx20:
+      templateName = "mc-32.xhtml";
+      break;
 
-		case mx12:
-		case mx16:
-			templateName = "mx-16.xhtml";
-			break;
+    case mx12:
+    case mx16:
+      templateName = "mx-16.xhtml";
+      break;
 
-		default:
-			throw new IOException("Unsupported transmitter type");
-		}
+    default:
+      throw new IOException("Unsupported transmitter type");
+    }
 
-		Report.process(model, baos, templateName);
-		return baos.toString();
-	}
+    Report.process(model, baos, templateName);
+    return baos.toString();
+  }
 
-	public static String generateXML(final BaseModel model) throws JAXBException {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos);
-		return baos.toString();
-	}
+  public static String generateXML(final BaseModel model) throws JAXBException {
+    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    Report.process(model, baos);
+    return baos.toString();
+  }
 
-	public static void generateXsd(final File file) throws IOException {
-		CTX.generateSchema(new SchemaOutputResolver() {
-			@Override
-			public Result createOutput(final String namespaceUri, final String suggestedFileName) throws IOException {
-				final StreamResult result = new StreamResult(file);
-				return result;
-			}
-		});
-	}
+  public static void generateXsd(final File file) throws IOException {
+    CTX.generateSchema(new SchemaOutputResolver() {
+      @Override
+      public Result createOutput(final String namespaceUri, final String suggestedFileName) throws IOException {
+        final StreamResult result = new StreamResult(file);
+        return result;
+      }
+    });
+  }
 
-	public static BaseModel getModel(final File file) throws IOException, URISyntaxException {
-		// decode the model file into the data model
-		return HoTTDecoder.decode(file);
-	}
+  public static BaseModel getModel(final File file) throws IOException, URISyntaxException {
+    // decode the model file into the data model
+    return HoTTDecoder.decode(file);
+  }
 
-	public static BaseModel getModel(final String fileName) throws IOException, URISyntaxException {
-		// lookup the binary model file from the class path
-		final URL url = ClassLoader.getSystemResource(fileName);
-		final File file;
+  public static BaseModel getModel(final String fileName) throws IOException, URISyntaxException {
+    // lookup the binary model file from the class path
+    final URL url = ClassLoader.getSystemResource(fileName);
+    final File file;
 
-		if (url != null) {
-			file = new File(url.toURI());
-		}
-		else {
-			file = new File(fileName);
-		}
+    if (url != null) {
+      file = new File(url.toURI());
+    } else {
+      file = new File(fileName);
+    }
 
-		return getModel(file);
-	}
+    return getModel(file);
+  }
 
-	public static boolean isSuppressExceptions() {
-		return CONFIGURATION.getTemplateExceptionHandler() instanceof FreeMarkerExceptionHandler;
-	}
+  public static boolean isSuppressExceptions() {
+    return CONFIGURATION.getTemplateExceptionHandler() instanceof FreeMarkerExceptionHandler;
+  }
 
-	public static void process(final BaseModel model, final OutputStream out) throws JAXBException {
-		MARSHALLER.marshal(model, out);
-	}
+  public static void process(final BaseModel model, final OutputStream out) throws JAXBException {
+    MARSHALLER.marshal(model, out);
+  }
 
-	public static void process(final BaseModel model, final OutputStream out, final String templateName) throws IOException, TemplateException {
-		final Template template = CONFIGURATION.getTemplate(templateName);
-		final Map<String, Object> rootMap = new HashMap<String, Object>();
+  public static void process(final BaseModel model, final OutputStream out, final String templateName) throws IOException, TemplateException {
+    final Template template = CONFIGURATION.getTemplate(templateName);
+    final Map<String, Object> rootMap = new HashMap<String, Object>();
 
-		rootMap.put("model", model);
-		rootMap.put("hex", new FreeMarkerHexConverter());
-		rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective());
-		rootMap.put("programDir", new File(System.getProperty(Launcher.PROGRAM_DIR)).toURI().toURL().toString());
-		rootMap.put("version", System.getProperty(Launcher.PROGRAM_VERSION,"unknown"));
-		if (model instanceof WingedModel) {
-			rootMap.put("wingedModel", model);
-		}
-		else if (model instanceof HelicopterModel) {
-			rootMap.put("helicopterModel", model);
-		}
+    rootMap.put("model", model);
+    rootMap.put("hex", new FreeMarkerHexConverter());
+    rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective());
+    rootMap.put("programDir", new File(System.getProperty(Launcher.PROGRAM_DIR)).toURI().toURL().toString());
+    rootMap.put("version", System.getProperty(Launcher.PROGRAM_VERSION, "unknown"));
+    if (model instanceof WingedModel) {
+      rootMap.put("wingedModel", model);
+    } else if (model instanceof HelicopterModel) {
+      rootMap.put("helicopterModel", model);
+    }
 
-		template.process(rootMap, new OutputStreamWriter(out, "UTF-8"));
-	}
+    template.process(rootMap, new OutputStreamWriter(out, "UTF-8"));
+  }
 
-	public static void save(final File file, final String data) throws IOException {
-		final FileWriter fw = new FileWriter(file);
-		fw.write(data);
-		fw.close();
-	}
+  public static void save(final File file, final String data) throws IOException {
+    final FileWriter fw = new FileWriter(file);
+    fw.write(data);
+    fw.close();
+  }
 
-	public static void savePDF(final File file, final String data) throws IOException, DocumentException {
-		// setup flyingsaucer
-		final ITextRenderer renderer = new ITextRenderer();
-		final SharedContext ctx = renderer.getSharedContext();
-		final FileOutputStream fos = new FileOutputStream(file);
+  public static void savePDF(final File file, final String data) throws IOException, DocumentException {
+    // setup flyingsaucer
+    final ITextRenderer renderer = new ITextRenderer();
+    final SharedContext ctx = renderer.getSharedContext();
+    final FileOutputStream fos = new FileOutputStream(file);
 
-		ctx.setReplacedElementFactory(new ITextInlineImageReplacedElementFactory(ctx.getReplacedElementFactory()));
-		
-		renderer.setDocumentFromString(data);
-		renderer.layout();
-		renderer.createPDF(fos);
-		fos.close();
-	}
+    ctx.setReplacedElementFactory(new ITextInlineImageReplacedElementFactory(ctx.getReplacedElementFactory()));
 
-	public static void setSuppressExceptions(final boolean suppress) {
-		if (suppress) {
-			CONFIGURATION.setTemplateExceptionHandler(CUSTOM_HANDLER);
-		}
-		else {
-			CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
-		}
-	}
+    renderer.setDocumentFromString(data);
+    renderer.layout();
+    renderer.createPDF(fos);
+    fos.close();
+  }
+
+  public static void setSuppressExceptions(final boolean suppress) {
+    if (suppress) {
+      CONFIGURATION.setTemplateExceptionHandler(CUSTOM_HANDLER);
+    } else {
+      CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
+    }
+  }
 }

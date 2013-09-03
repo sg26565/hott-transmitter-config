@@ -34,27 +34,27 @@ import gde.report.Report;
  * @author oli
  */
 public class GenerateDemoFiles {
-	public static void main(final String[] args) throws IOException, URISyntaxException, JAXBException, TemplateException, DocumentException {
-		Launcher.initSystemProperties();
-		
-		final File dir = new File("demo");
+  public static void main(final String[] args) throws IOException, URISyntaxException, JAXBException, TemplateException, DocumentException {
+    Launcher.initSystemProperties();
 
-		Report.setSuppressExceptions(false);
-		Report.generateXsd(new File(dir, "HoTTGUI.xsd"));
+    final File dir = new File("demo");
 
-		for (final File file : dir.listFiles()) {
-			if (file.getName().endsWith(".mdl")) {
-				final String baseName = file.getName().substring(0, file.getName().length() - 4);
+    Report.setSuppressExceptions(false);
+    Report.generateXsd(new File(dir, "HoTTGUI.xsd"));
 
-				final BaseModel model = Report.getModel(file);
+    for (final File file : dir.listFiles()) {
+      if (file.getName().endsWith(".mdl")) {
+        final String baseName = file.getName().substring(0, file.getName().length() - 4);
 
-				String data = Report.generateXML(model);
-				Report.save(new File(dir, baseName + ".xml"), data);
+        final BaseModel model = Report.getModel(file);
 
-				data = Report.generateHTML(model);
-				Report.save(new File(dir, baseName + ".html"), data);
-				Report.savePDF(new File(dir, baseName + ".pdf"), data);
-			}
-		}
-	}
+        String data = Report.generateXML(model);
+        Report.save(new File(dir, baseName + ".xml"), data);
+
+        data = Report.generateHTML(model);
+        Report.save(new File(dir, baseName + ".html"), data);
+        Report.savePDF(new File(dir, baseName + ".pdf"), data);
+      }
+    }
+  }
 }
