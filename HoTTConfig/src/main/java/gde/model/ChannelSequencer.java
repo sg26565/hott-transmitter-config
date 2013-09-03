@@ -26,52 +26,52 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class ChannelSequencer {
-	private int maxStep;
-	private SequenceStatus powerOffStatus;
-	private Sequence[] sequence;
-	private double[] stepTime;
-	private Switch sw;
+  private int            maxStep;
+  private SequenceStatus powerOffStatus;
+  private Sequence[]     sequence;
+  private double[]       stepTime;
+  private Switch         sw;
 
-	public int getMaxStep() {
-		return maxStep;
-	}
+  public int getMaxStep() {
+    return maxStep;
+  }
 
-	public SequenceStatus getPowerOffStatus() {
-		return powerOffStatus;
-	}
+  public SequenceStatus getPowerOffStatus() {
+    return powerOffStatus;
+  }
 
-	@XmlElementWrapper(name = "sequences")
-	public Sequence[] getSequence() {
-		return sequence;
-	}
+  @XmlElementWrapper(name = "sequences")
+  public Sequence[] getSequence() {
+    return sequence;
+  }
 
-	@XmlElementWrapper(name = "stepTimes")
-	public double[] getStepTime() {
-		return stepTime;
-	}
+  @XmlElementWrapper(name = "stepTimes")
+  public double[] getStepTime() {
+    return stepTime;
+  }
 
-	@XmlIDREF
-	public Switch getSwitch() {
-		return sw;
-	}
+  @XmlIDREF
+  public Switch getSwitch() {
+    return sw;
+  }
 
-	public void setMaxStep(final int maxStep) {
-		this.maxStep = maxStep;
-	}
+  public void setMaxStep(final int maxStep) {
+    this.maxStep = maxStep;
+  }
 
-	public void setPowerOffStatus(final SequenceStatus powerOffStatus) {
-		this.powerOffStatus = powerOffStatus;
-	}
+  public void setPowerOffStatus(final SequenceStatus powerOffStatus) {
+    this.powerOffStatus = powerOffStatus;
+  }
 
-	public void setSequence(final Sequence[] sequence) {
-		this.sequence = sequence;
-	}
+  public void setSequence(final Sequence[] sequence) {
+    this.sequence = sequence;
+  }
 
-	public void setStepTime(final double[] stepTime) {
-		this.stepTime = stepTime;
-	}
+  public void setStepTime(final double[] stepTime) {
+    this.stepTime = stepTime;
+  }
 
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
-	}
+  public void setSwitch(final Switch sw) {
+    this.sw = sw;
+  }
 }

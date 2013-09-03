@@ -24,11 +24,11 @@ import java.util.ResourceBundle;
  * 
  */
 public enum Mp3PlayerMode {
-	AllRound, One, OneRound;
+  AllRound, One, OneRound;
 
-	/** @return the locale-dependent message */
-	@Override
-	public String toString() {
-		return ResourceBundle.getBundle(getClass().getName()).getString(name());
-	}
+  /** @return the locale-dependent message */
+  @Override
+  public String toString() {
+    return ResourceBundle.getBundle(getClass().getName()).getString(name());
+  }
 }

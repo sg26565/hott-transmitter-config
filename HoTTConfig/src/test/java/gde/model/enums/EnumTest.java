@@ -16,44 +16,44 @@ import java.util.Enumeration;
 import org.junit.Test;
 
 public class EnumTest {
-	@Test
-	public void test() throws IOException, URISyntaxException, ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException {
-		final Enumeration<URL> enums = Thread.currentThread().getContextClassLoader().getResources("gde/model/enums");
+  @Test
+  public void test() throws IOException, URISyntaxException, ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException,
+      IllegalArgumentException, InvocationTargetException {
+    final Enumeration<URL> enums = Thread.currentThread().getContextClassLoader().getResources("gde/model/enums");
 
-		while (enums.hasMoreElements()) {
-			final File dir = new File(enums.nextElement().toURI());
+    while (enums.hasMoreElements()) {
+      final File dir = new File(enums.nextElement().toURI());
 
-			if (dir.isDirectory()) {
-				final File[] files = dir.listFiles();
+      if (dir.isDirectory()) {
+        final File[] files = dir.listFiles();
 
-				for (final File file : files) {
-					final String fileName = file.getName();
+        for (final File file : files) {
+          final String fileName = file.getName();
 
-					if (fileName.endsWith(".class")) {
-						final Class<?> clazz = Class.forName("gde.model.enums." + fileName.substring(0, fileName.length() - 6));
+          if (fileName.endsWith(".class")) {
+            final Class<?> clazz = Class.forName("gde.model.enums." + fileName.substring(0, fileName.length() - 6));
 
-						if (clazz.isEnum()) {
-							final Field[] fields = clazz.getDeclaredFields();
-							final Method toStringMethod = clazz.getMethod("toString");
-							final Method nameMethod = clazz.getMethod("name");
+            if (clazz.isEnum()) {
+              final Field[] fields = clazz.getDeclaredFields();
+              final Method toStringMethod = clazz.getMethod("toString");
+              final Method nameMethod = clazz.getMethod("name");
 
-							for (final Field field : fields) {
-								if (field.getName().endsWith("$VALUES") || (field.getModifiers() & Modifier.STATIC) == 0) {
-									continue;
-								}
+              for (final Field field : fields) {
+                if (field.getName().endsWith("$VALUES") || (field.getModifiers() & Modifier.STATIC) == 0) {
+                  continue;
+                }
 
-								final Object object = field.get(null);
-								final String name = (String) nameMethod.invoke(object);
-								final String string = (String) toStringMethod.invoke(object);
+                final Object object = field.get(null);
+                final String name = (String) nameMethod.invoke(object);
+                final String string = (String) toStringMethod.invoke(object);
 
-								assertEquals(field.getName(), name);
-								assertNotNull(string);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                assertEquals(field.getName(), name);
+                assertNotNull(string);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

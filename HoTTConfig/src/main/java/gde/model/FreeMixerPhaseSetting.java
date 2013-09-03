@@ -25,25 +25,25 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class FreeMixerPhaseSetting {
-	private boolean enabled;
-	private Phase phase;
+  private boolean enabled;
+  private Phase   phase;
 
-	@XmlIDREF
-	@XmlAttribute
-	public Phase getPhase() {
-		return phase;
-	}
+  @XmlIDREF
+  @XmlAttribute
+  public Phase getPhase() {
+    return phase;
+  }
 
-	@XmlAttribute
-	public boolean isEnabled() {
-		return enabled;
-	}
+  @XmlAttribute
+  public boolean isEnabled() {
+    return enabled;
+  }
 
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-	}
+  public void setEnabled(final boolean enabled) {
+    this.enabled = enabled;
+  }
 
-	public void setPhase(final Phase phase) {
-		this.phase = phase;
-	}
+  public void setPhase(final Phase phase) {
+    this.phase = phase;
+  }
 }

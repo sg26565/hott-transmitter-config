@@ -25,42 +25,42 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class Sequence {
-	private boolean enabled;
-	private int number;
-	private Channel outputChannel;
-	private int[] stepPosition;
+  private boolean enabled;
+  private int     number;
+  private Channel outputChannel;
+  private int[]   stepPosition;
 
-	@XmlAttribute
-	public int getNumber() {
-		return number;
-	}
+  @XmlAttribute
+  public int getNumber() {
+    return number;
+  }
 
-	@XmlIDREF
-	public Channel getOutputChannel() {
-		return outputChannel;
-	}
+  @XmlIDREF
+  public Channel getOutputChannel() {
+    return outputChannel;
+  }
 
-	public int[] getStepPosition() {
-		return stepPosition;
-	}
+  public int[] getStepPosition() {
+    return stepPosition;
+  }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+  public boolean isEnabled() {
+    return enabled;
+  }
 
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-	}
+  public void setEnabled(final boolean enabled) {
+    this.enabled = enabled;
+  }
 
-	public void setNumber(final int number) {
-		this.number = number;
-	}
+  public void setNumber(final int number) {
+    this.number = number;
+  }
 
-	public void setOutputChannel(final Channel outputChannel) {
-		this.outputChannel = outputChannel;
-	}
+  public void setOutputChannel(final Channel outputChannel) {
+    this.outputChannel = outputChannel;
+  }
 
-	public void setStepPosition(final int[] stepPosition) {
-		this.stepPosition = stepPosition;
-	}
+  public void setStepPosition(final int[] stepPosition) {
+    this.stepPosition = stepPosition;
+  }
 }

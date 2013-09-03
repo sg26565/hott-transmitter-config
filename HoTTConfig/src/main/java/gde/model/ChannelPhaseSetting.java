@@ -25,25 +25,25 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class ChannelPhaseSetting {
-	private boolean nonDelayed;
-	private Phase phase;
+  private boolean nonDelayed;
+  private Phase   phase;
 
-	@XmlIDREF
-	@XmlAttribute
-	public Phase getPhase() {
-		return phase;
-	}
+  @XmlIDREF
+  @XmlAttribute
+  public Phase getPhase() {
+    return phase;
+  }
 
-	@XmlAttribute
-	public boolean isNonDelayed() {
-		return nonDelayed;
-	}
+  @XmlAttribute
+  public boolean isNonDelayed() {
+    return nonDelayed;
+  }
 
-	public void setNonDelayed(final boolean nonDelayed) {
-		this.nonDelayed = nonDelayed;
-	}
+  public void setNonDelayed(final boolean nonDelayed) {
+    this.nonDelayed = nonDelayed;
+  }
 
-	public void setPhase(final Phase phase) {
-		this.phase = phase;
-	}
+  public void setPhase(final Phase phase) {
+    this.phase = phase;
+  }
 }

@@ -25,61 +25,61 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class TrainerConfig {
-	private Collection<Channel> pupilChannel;
-	private long pupilId;
-	private Switch sw;
-	private Collection<Channel> trainerChannel;
-	private long trainerId;
-	private boolean wireless;
+  private Collection<Channel> pupilChannel;
+  private long                pupilId;
+  private Switch              sw;
+  private Collection<Channel> trainerChannel;
+  private long                trainerId;
+  private boolean             wireless;
 
-	@XmlIDREF
-	public Collection<Channel> getPupilChannel() {
-		return pupilChannel;
-	}
+  @XmlIDREF
+  public Collection<Channel> getPupilChannel() {
+    return pupilChannel;
+  }
 
-	public long getPupilId() {
-		return pupilId;
-	}
+  public long getPupilId() {
+    return pupilId;
+  }
 
-	@XmlIDREF
-	public Collection<Channel> getTrainerChannel() {
-		return trainerChannel;
-	}
+  @XmlIDREF
+  public Collection<Channel> getTrainerChannel() {
+    return trainerChannel;
+  }
 
-	public long getTrainerId() {
-		return trainerId;
-	}
+  public long getTrainerId() {
+    return trainerId;
+  }
 
-	@XmlIDREF
-	public Switch getTrainerSwitch() {
-		return sw;
-	}
+  @XmlIDREF
+  public Switch getTrainerSwitch() {
+    return sw;
+  }
 
-	public boolean isWireless() {
-		return wireless;
-	}
+  public boolean isWireless() {
+    return wireless;
+  }
 
-	public void setPupilChannel(final Collection<Channel> pupilChannels) {
-		pupilChannel = pupilChannels;
-	}
+  public void setPupilChannel(final Collection<Channel> pupilChannels) {
+    pupilChannel = pupilChannels;
+  }
 
-	public void setPupilId(final long pupilId) {
-		this.pupilId = pupilId;
-	}
+  public void setPupilId(final long pupilId) {
+    this.pupilId = pupilId;
+  }
 
-	public void setTrainerChannel(final Collection<Channel> trainerChannels) {
-		trainerChannel = trainerChannels;
-	}
+  public void setTrainerChannel(final Collection<Channel> trainerChannels) {
+    trainerChannel = trainerChannels;
+  }
 
-	public void setTrainerId(final long trainerId) {
-		this.trainerId = trainerId;
-	}
+  public void setTrainerId(final long trainerId) {
+    this.trainerId = trainerId;
+  }
 
-	public void setTrainerSwitch(final Switch sw) {
-		this.sw = sw;
-	}
+  public void setTrainerSwitch(final Switch sw) {
+    this.sw = sw;
+  }
 
-	public void setWireless(final boolean wireless) {
-		this.wireless = wireless;
-	}
+  public void setWireless(final boolean wireless) {
+    this.wireless = wireless;
+  }
 }

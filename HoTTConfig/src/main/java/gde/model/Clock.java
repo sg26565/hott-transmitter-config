@@ -29,115 +29,115 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Clock {
-	private int						alarm;
-	private ClockFunction	function;
-	private ClockMode			mode;
-	private String				number;
-	private Switch				sw;
-	private int						timer;
-	private ClockType			type;
-	private int						value;
+  private int           alarm;
+  private ClockFunction function;
+  private ClockMode     mode;
+  private String        number;
+  private Switch        sw;
+  private int           timer;
+  private ClockType     type;
+  private int           value;
 
-	public int getAlarm() {
-		return alarm;
-	}
+  public int getAlarm() {
+    return alarm;
+  }
 
-	public ClockFunction getFunction() {
-		return function;
-	}
+  public ClockFunction getFunction() {
+    return function;
+  }
 
-	public int getMinutes() {
-		return getValue() / 60;
-	}
+  public int getMinutes() {
+    return getValue() / 60;
+  }
 
-	public ClockMode getMode() {
-		return mode;
-	}
+  public ClockMode getMode() {
+    return mode;
+  }
 
-	@XmlAttribute
-	@XmlID
-	public String getNumber() {
-		return number;
-	}
+  @XmlAttribute
+  @XmlID
+  public String getNumber() {
+    return number;
+  }
 
-	public int getSeconds() {
-		return getValue() % 60;
-	}
+  public int getSeconds() {
+    return getValue() % 60;
+  }
 
-	@XmlIDREF
-	public Switch getSwitch() {
-		return sw;
-	}
+  @XmlIDREF
+  public Switch getSwitch() {
+    return sw;
+  }
 
-	public int getTimer() {
-		return timer;
-	}
+  public int getTimer() {
+    return timer;
+  }
 
-	public int getTimerMinutes() {
-		return getTimer() / 60;
-	}
+  public int getTimerMinutes() {
+    return getTimer() / 60;
+  }
 
-	public int getTimerSeconds() {
-		return getTimer() % 60;
-	}
+  public int getTimerSeconds() {
+    return getTimer() % 60;
+  }
 
-	public ClockType getType() {
-		return type;
-	}
+  public ClockType getType() {
+    return type;
+  }
 
-	public int getValue() {
-		return value;
-	}
+  public int getValue() {
+    return value;
+  }
 
-	public void setAlarm(final int alarm) {
-		this.alarm = alarm;
-	}
+  public void setAlarm(final int alarm) {
+    this.alarm = alarm;
+  }
 
-	public void setFunction(final ClockFunction function) {
-		this.function = function;
-	}
+  public void setFunction(final ClockFunction function) {
+    this.function = function;
+  }
 
-	public void setMinutes(final int minutes) {
-		setValue(minutes * 60 + getSeconds());
-	}
+  public void setMinutes(final int minutes) {
+    setValue(minutes * 60 + getSeconds());
+  }
 
-	public void setMode(final ClockMode mode) {
-		this.mode = mode;
-	}
+  public void setMode(final ClockMode mode) {
+    this.mode = mode;
+  }
 
-	public void setNumber(final int number) {
-		this.number = Integer.toString(number);
-	}
+  public void setNumber(final int number) {
+    this.number = Integer.toString(number);
+  }
 
-	public void setNumber(final String number) {
-		this.number = number;
-	}
+  public void setNumber(final String number) {
+    this.number = number;
+  }
 
-	public void setSeconds(final int seconds) {
-		setValue(getMinutes() * 60 + seconds);
-	}
+  public void setSeconds(final int seconds) {
+    setValue(getMinutes() * 60 + seconds);
+  }
 
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
-	}
+  public void setSwitch(final Switch sw) {
+    this.sw = sw;
+  }
 
-	public void setTimer(final int timer) {
-		this.timer = timer;
-	}
+  public void setTimer(final int timer) {
+    this.timer = timer;
+  }
 
-	public void setTimerMinutes(final int minutes) {
-		setTimer(minutes * 60 + getTimerSeconds());
-	}
+  public void setTimerMinutes(final int minutes) {
+    setTimer(minutes * 60 + getTimerSeconds());
+  }
 
-	public void setTimerSeconds(final int seconds) {
-		setTimer(getTimerMinutes() * 60 + seconds);
-	}
+  public void setTimerSeconds(final int seconds) {
+    setTimer(getTimerMinutes() * 60 + seconds);
+  }
 
-	public void setType(final ClockType type) {
-		this.type = type;
-	}
+  public void setType(final ClockType type) {
+    this.type = type;
+  }
 
-	public void setValue(final int value) {
-		this.value = value;
-	}
+  public void setValue(final int value) {
+    this.value = value;
+  }
 }

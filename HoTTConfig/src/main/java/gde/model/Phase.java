@@ -28,107 +28,109 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public abstract class Phase {
-	private Curve				channel1Curve;
-	private Control[]		control;
-	private DualRateExpo[] dualRateExpo;
-	private boolean			motorOn;
-	private String			number;
-	private String			phaseName;
-	private Switch			phaseSwitch;
-	private double			phaseSwitchTime;
-	private Clock				phaseTimer;
-	private PhaseType		phaseType;
-	public Curve getChannel1Curve() {
-		return channel1Curve;
-	}
-	@XmlElementWrapper(name = "controls")
-	public Control[] getControl() {
-		return control;
-	}
+  private Curve          channel1Curve;
+  private Control[]      control;
+  private DualRateExpo[] dualRateExpo;
+  private boolean        motorOn;
+  private String         number;
+  private String         phaseName;
+  private Switch         phaseSwitch;
+  private double         phaseSwitchTime;
+  private Clock          phaseTimer;
+  private PhaseType      phaseType;
 
-	@XmlElementWrapper(name = "dualRateExpos")
-	public DualRateExpo[] getDualRateExpo() {
-		return dualRateExpo;
-	}
+  public Curve getChannel1Curve() {
+    return channel1Curve;
+  }
 
-	@XmlAttribute
-	@XmlID
-	public String getNumber() {
-		return number;
-	}
+  @XmlElementWrapper(name = "controls")
+  public Control[] getControl() {
+    return control;
+  }
 
-	public String getPhaseName() {
-		return phaseName;
-	}
+  @XmlElementWrapper(name = "dualRateExpos")
+  public DualRateExpo[] getDualRateExpo() {
+    return dualRateExpo;
+  }
 
-	@XmlIDREF
-	public Switch getPhaseSwitch() {
-		return phaseSwitch;
-	}
+  @XmlAttribute
+  @XmlID
+  public String getNumber() {
+    return number;
+  }
 
-	public double getPhaseSwitchTime() {
-		return phaseSwitchTime;
-	}
+  public String getPhaseName() {
+    return phaseName;
+  }
 
-	@XmlIDREF
-	public Clock getPhaseTimer() {
-		return phaseTimer;
-	}
+  @XmlIDREF
+  public Switch getPhaseSwitch() {
+    return phaseSwitch;
+  }
 
-	public PhaseType getPhaseType() {
-		return phaseType;
-	}
+  public double getPhaseSwitchTime() {
+    return phaseSwitchTime;
+  }
 
-	public boolean isMotorOn() {
-		return motorOn;
-	}
+  @XmlIDREF
+  public Clock getPhaseTimer() {
+    return phaseTimer;
+  }
 
-	public void setChannel1Curve(final Curve channel1Curve) {
-		this.channel1Curve = channel1Curve;
-	}
+  public PhaseType getPhaseType() {
+    return phaseType;
+  }
 
-	public void setControl(final Control[] controls) {
-		control = controls;
-	}
+  public boolean isMotorOn() {
+    return motorOn;
+  }
 
-	public void setDualRateExpo(DualRateExpo[] dualRateExpo) {
-		this.dualRateExpo = dualRateExpo;
-	}
+  public void setChannel1Curve(final Curve channel1Curve) {
+    this.channel1Curve = channel1Curve;
+  }
 
-	public void setMotorOn(final boolean motorOn) {
-		this.motorOn = motorOn;
-	}
+  public void setControl(final Control[] controls) {
+    control = controls;
+  }
 
-	public void setNumber(final int number) {
-		this.number = Integer.toString(number);
-	}
+  public void setDualRateExpo(final DualRateExpo[] dualRateExpo) {
+    this.dualRateExpo = dualRateExpo;
+  }
 
-	public void setNumber(final String number) {
-		this.number = number;
-	}
+  public void setMotorOn(final boolean motorOn) {
+    this.motorOn = motorOn;
+  }
 
-	public void setPhaseName(final String phaseName) {
-		this.phaseName = phaseName;
-	}
+  public void setNumber(final int number) {
+    this.number = Integer.toString(number);
+  }
 
-	public void setPhaseSwitch(final Switch phaseSwitch) {
-		this.phaseSwitch = phaseSwitch;
-	}
+  public void setNumber(final String number) {
+    this.number = number;
+  }
 
-	public void setPhaseSwitchTime(final double d) {
-		phaseSwitchTime = d;
-	}
+  public void setPhaseName(final String phaseName) {
+    this.phaseName = phaseName;
+  }
 
-	public void setPhaseTimer(final Clock phaseTimer) {
-		this.phaseTimer = phaseTimer;
-	}
+  public void setPhaseSwitch(final Switch phaseSwitch) {
+    this.phaseSwitch = phaseSwitch;
+  }
 
-	public void setPhaseType(final PhaseType phaseType) {
-		this.phaseType = phaseType;
-	}
+  public void setPhaseSwitchTime(final double d) {
+    phaseSwitchTime = d;
+  }
 
-	@Override
-	public String toString() {
-		return String.format("Phase %d: %s", Integer.parseInt(getNumber()) + 1, getPhaseName());
-	}
+  public void setPhaseTimer(final Clock phaseTimer) {
+    this.phaseTimer = phaseTimer;
+  }
+
+  public void setPhaseType(final PhaseType phaseType) {
+    this.phaseType = phaseType;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("Phase %d: %s", Integer.parseInt(getNumber()) + 1, getPhaseName());
+  }
 }

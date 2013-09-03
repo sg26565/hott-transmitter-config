@@ -27,77 +27,75 @@ import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
 public class WingedMixer {
-	private SwitchFunction	function;
-	private Object[]				qualifier;
-	private Switch					sw;
-	private int[]						value;
+  private SwitchFunction function;
+  private Object[]       qualifier;
+  private Switch         sw;
+  private int[]          value;
 
-	public SwitchFunction getFunction() {
-		return function;
-	}
+  public SwitchFunction getFunction() {
+    return function;
+  }
 
-	@XmlID
-	@XmlAttribute
-	public String getId() {
-		final StringBuilder b = new StringBuilder();
+  @XmlID
+  @XmlAttribute
+  public String getId() {
+    final StringBuilder b = new StringBuilder();
 
-		b.append(function.name());
+    b.append(function.name());
 
-		if (qualifier != null) {
-			for (final Object q : qualifier) {
-				b.append("_");
+    if (qualifier != null) {
+      for (final Object q : qualifier) {
+        b.append("_");
 
-				if (q.getClass().isEnum()) {
-					try {
-						final Method m = q.getClass().getMethod("name");
-						b.append(m.invoke(q));
-					}
-					catch (final Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
-				else {
-					b.append(q.toString());
-				}
-			}
-		}
+        if (q.getClass().isEnum()) {
+          try {
+            final Method m = q.getClass().getMethod("name");
+            b.append(m.invoke(q));
+          } catch (final Exception e) {
+            throw new RuntimeException(e);
+          }
+        } else {
+          b.append(q.toString());
+        }
+      }
+    }
 
-		return b.toString();
-	}
+    return b.toString();
+  }
 
-	public Object[] getQualifier() {
-		return qualifier;
-	}
+  public Object[] getQualifier() {
+    return qualifier;
+  }
 
-	@XmlIDREF
-	public Switch getSwitch() {
-		return sw;
-	}
+  @XmlIDREF
+  public Switch getSwitch() {
+    return sw;
+  }
 
-	public int[] getValue() {
-		return value;
-	}
+  public int[] getValue() {
+    return value;
+  }
 
-	public void setFunction(final SwitchFunction function) {
-		this.function = function;
-	}
+  public void setFunction(final SwitchFunction function) {
+    this.function = function;
+  }
 
-	public void setQualifier(final Object[] qualifier) {
-		this.qualifier = qualifier;
-	}
+  public void setQualifier(final Object[] qualifier) {
+    this.qualifier = qualifier;
+  }
 
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
-	}
+  public void setSwitch(final Switch sw) {
+    this.sw = sw;
+  }
 
-	public void setValue(final int value) {
-		final int[] values = new int[1];
-		values[0] = value;
+  public void setValue(final int value) {
+    final int[] values = new int[1];
+    values[0] = value;
 
-		setValue(values);
-	}
+    setValue(values);
+  }
 
-	public void setValue(final int[] value) {
-		this.value = value;
-	}
+  public void setValue(final int[] value) {
+    this.value = value;
+  }
 }

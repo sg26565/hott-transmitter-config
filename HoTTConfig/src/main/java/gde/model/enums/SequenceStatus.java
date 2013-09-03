@@ -22,5 +22,5 @@ package gde.model.enums;
  * 
  */
 public enum SequenceStatus {
-	Dec, Inc;
+  Dec, Inc;
 }

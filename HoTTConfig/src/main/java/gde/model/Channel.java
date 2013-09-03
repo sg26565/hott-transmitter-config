@@ -29,137 +29,137 @@ import javax.xml.bind.annotation.XmlID;
  * @author oli@treichels.de
  */
 public class Channel {
-	private int center;
-	private FailSafeMode failSafeMode;
-	private int failSafePosition;
-	private Function function;
-	private int limitHigh;
-	private int limitLow;
-	private boolean mixOnly;
-	private String number;
-	private ChannelPhaseSetting[] phaseSetting;
-	private boolean reverse;
-	private TrainerMode trainerMode;
-	private int travelHigh;
-	private int travelLow;
-	private boolean virtual = false;
+  private int                   center;
+  private FailSafeMode          failSafeMode;
+  private int                   failSafePosition;
+  private Function              function;
+  private int                   limitHigh;
+  private int                   limitLow;
+  private boolean               mixOnly;
+  private String                number;
+  private ChannelPhaseSetting[] phaseSetting;
+  private boolean               reverse;
+  private TrainerMode           trainerMode;
+  private int                   travelHigh;
+  private int                   travelLow;
+  private boolean               virtual = false;
 
-	public int getCenter() {
-		return center;
-	}
+  public int getCenter() {
+    return center;
+  }
 
-	public FailSafeMode getFailSafeMode() {
-		return failSafeMode;
-	}
+  public FailSafeMode getFailSafeMode() {
+    return failSafeMode;
+  }
 
-	public int getFailSafePosition() {
-		return failSafePosition;
-	}
+  public int getFailSafePosition() {
+    return failSafePosition;
+  }
 
-	public Function getFunction() {
-		return function;
-	}
+  public Function getFunction() {
+    return function;
+  }
 
-	public int getLimitHigh() {
-		return limitHigh;
-	}
+  public int getLimitHigh() {
+    return limitHigh;
+  }
 
-	public int getLimitLow() {
-		return limitLow;
-	}
+  public int getLimitLow() {
+    return limitLow;
+  }
 
-	@XmlAttribute
-	@XmlID
-	public String getNumber() {
-		return number;
-	}
+  @XmlAttribute
+  @XmlID
+  public String getNumber() {
+    return number;
+  }
 
-	@XmlElementWrapper(name = "phaseSettings")
-	public ChannelPhaseSetting[] getPhaseSetting() {
-		return phaseSetting;
-	}
+  @XmlElementWrapper(name = "phaseSettings")
+  public ChannelPhaseSetting[] getPhaseSetting() {
+    return phaseSetting;
+  }
 
-	public TrainerMode getTrainerMode() {
-		return trainerMode;
-	}
+  public TrainerMode getTrainerMode() {
+    return trainerMode;
+  }
 
-	public int getTravelHigh() {
-		return travelHigh;
-	}
+  public int getTravelHigh() {
+    return travelHigh;
+  }
 
-	public int getTravelLow() {
-		return travelLow;
-	}
+  public int getTravelLow() {
+    return travelLow;
+  }
 
-	public boolean isMixOnly() {
-		return mixOnly;
-	}
+  public boolean isMixOnly() {
+    return mixOnly;
+  }
 
-	public boolean isReverse() {
-		return reverse;
-	}
+  public boolean isReverse() {
+    return reverse;
+  }
 
-	public boolean isVirtual() {
-		return virtual;
-	}
+  public boolean isVirtual() {
+    return virtual;
+  }
 
-	public void setCenter(final int center) {
-		this.center = center;
-	}
+  public void setCenter(final int center) {
+    this.center = center;
+  }
 
-	public void setFailSafeMode(final FailSafeMode failSafeMode) {
-		this.failSafeMode = failSafeMode;
-	}
+  public void setFailSafeMode(final FailSafeMode failSafeMode) {
+    this.failSafeMode = failSafeMode;
+  }
 
-	public void setFailSafePosition(final int failSafePosition) {
-		this.failSafePosition = failSafePosition;
-	}
+  public void setFailSafePosition(final int failSafePosition) {
+    this.failSafePosition = failSafePosition;
+  }
 
-	public void setFunction(final Function function) {
-		this.function = function;
-	}
+  public void setFunction(final Function function) {
+    this.function = function;
+  }
 
-	public void setLimitHigh(final int limitHigh) {
-		this.limitHigh = limitHigh;
-	}
+  public void setLimitHigh(final int limitHigh) {
+    this.limitHigh = limitHigh;
+  }
 
-	public void setLimitLow(final int limitLow) {
-		this.limitLow = limitLow;
-	}
+  public void setLimitLow(final int limitLow) {
+    this.limitLow = limitLow;
+  }
 
-	public void setMixOnly(final boolean mixOnly) {
-		this.mixOnly = mixOnly;
-	}
+  public void setMixOnly(final boolean mixOnly) {
+    this.mixOnly = mixOnly;
+  }
 
-	public void setNumber(final int number) {
-		this.number = Integer.toString(number);
-	}
+  public void setNumber(final int number) {
+    this.number = Integer.toString(number);
+  }
 
-	public void setNumber(final String number) {
-		this.number = number;
-	}
+  public void setNumber(final String number) {
+    this.number = number;
+  }
 
-	public void setPhaseSetting(final ChannelPhaseSetting[] delayed) {
-		phaseSetting = delayed;
-	}
+  public void setPhaseSetting(final ChannelPhaseSetting[] delayed) {
+    phaseSetting = delayed;
+  }
 
-	public void setReverse(final boolean reverse) {
-		this.reverse = reverse;
-	}
+  public void setReverse(final boolean reverse) {
+    this.reverse = reverse;
+  }
 
-	public void setTrainerMode(final TrainerMode trainerMode) {
-		this.trainerMode = trainerMode;
-	}
+  public void setTrainerMode(final TrainerMode trainerMode) {
+    this.trainerMode = trainerMode;
+  }
 
-	public void setTravelHigh(final int travelHigh) {
-		this.travelHigh = travelHigh;
-	}
+  public void setTravelHigh(final int travelHigh) {
+    this.travelHigh = travelHigh;
+  }
 
-	public void setTravelLow(final int travelLow) {
-		this.travelLow = travelLow;
-	}
+  public void setTravelLow(final int travelLow) {
+    this.travelLow = travelLow;
+  }
 
-	public void setVirtual(final boolean virtual) {
-		this.virtual = virtual;
-	}
+  public void setVirtual(final boolean virtual) {
+    this.virtual = virtual;
+  }
 }

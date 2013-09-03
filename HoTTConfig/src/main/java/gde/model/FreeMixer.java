@@ -29,77 +29,77 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public abstract class FreeMixer {
-	private Channel fromChannel;
-	private MixerInputType inputType;
-	private String number;
-	private FreeMixerPhaseSetting[] phaseSetting;
-	private Switch sw;
-	private Channel toChannel;
-	private MixerType type;
+  private Channel                 fromChannel;
+  private MixerInputType          inputType;
+  private String                  number;
+  private FreeMixerPhaseSetting[] phaseSetting;
+  private Switch                  sw;
+  private Channel                 toChannel;
+  private MixerType               type;
 
-	@XmlIDREF
-	public Channel getFromChannel() {
-		return fromChannel;
-	}
+  @XmlIDREF
+  public Channel getFromChannel() {
+    return fromChannel;
+  }
 
-	public MixerInputType getInputType() {
-		return inputType;
-	}
+  public MixerInputType getInputType() {
+    return inputType;
+  }
 
-	@XmlAttribute
-	@XmlID
-	public String getNumber() {
-		return number;
-	}
+  @XmlAttribute
+  @XmlID
+  public String getNumber() {
+    return number;
+  }
 
-	@XmlElementWrapper(name = "phaseSettings")
-	public FreeMixerPhaseSetting[] getPhaseSetting() {
-		return phaseSetting;
-	}
+  @XmlElementWrapper(name = "phaseSettings")
+  public FreeMixerPhaseSetting[] getPhaseSetting() {
+    return phaseSetting;
+  }
 
-	@XmlIDREF
-	public Switch getSwitch() {
-		return sw;
-	}
+  @XmlIDREF
+  public Switch getSwitch() {
+    return sw;
+  }
 
-	@XmlIDREF
-	public Channel getToChannel() {
-		return toChannel;
-	}
+  @XmlIDREF
+  public Channel getToChannel() {
+    return toChannel;
+  }
 
-	public MixerType getType() {
-		return type;
-	}
+  public MixerType getType() {
+    return type;
+  }
 
-	public void setFromChannel(final Channel from) {
-		fromChannel = from;
-	}
+  public void setFromChannel(final Channel from) {
+    fromChannel = from;
+  }
 
-	public void setInputType(final MixerInputType inputType) {
-		this.inputType = inputType;
-	}
+  public void setInputType(final MixerInputType inputType) {
+    this.inputType = inputType;
+  }
 
-	public void setNumber(final int number) {
-		this.number = Integer.toString(number);
-	}
+  public void setNumber(final int number) {
+    this.number = Integer.toString(number);
+  }
 
-	public void setNumber(final String number) {
-		this.number = number;
-	}
+  public void setNumber(final String number) {
+    this.number = number;
+  }
 
-	public void setPhaseSetting(final FreeMixerPhaseSetting[] phaseSetting) {
-		this.phaseSetting = phaseSetting;
-	}
+  public void setPhaseSetting(final FreeMixerPhaseSetting[] phaseSetting) {
+    this.phaseSetting = phaseSetting;
+  }
 
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
-	}
+  public void setSwitch(final Switch sw) {
+    this.sw = sw;
+  }
 
-	public void setToChannel(final Channel to) {
-		toChannel = to;
-	}
+  public void setToChannel(final Channel to) {
+    toChannel = to;
+  }
 
-	public void setType(final MixerType type) {
-		this.type = type;
-	}
+  public void setType(final MixerType type) {
+    this.type = type;
+  }
 }

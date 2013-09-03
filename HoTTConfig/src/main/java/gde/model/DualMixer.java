@@ -27,41 +27,41 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class DualMixer {
-	private Channel[]	channel;
-	private int				diff;
-	private int				number;
-	private MixerType	type;
+  private Channel[] channel;
+  private int       diff;
+  private int       number;
+  private MixerType type;
 
-	@XmlIDREF
-	public Channel[] getChannel() {
-		return channel;
-	}
+  @XmlIDREF
+  public Channel[] getChannel() {
+    return channel;
+  }
 
-	public int getDiff() {
-		return diff;
-	}
+  public int getDiff() {
+    return diff;
+  }
 
-	public int getNumber() {
-		return number;
-	}
+  public int getNumber() {
+    return number;
+  }
 
-	public MixerType getType() {
-		return type;
-	}
+  public MixerType getType() {
+    return type;
+  }
 
-	public void setChannel(final Channel[] channel) {
-		this.channel = channel;
-	}
+  public void setChannel(final Channel[] channel) {
+    this.channel = channel;
+  }
 
-	public void setDiff(final int diff) {
-		this.diff = diff;
-	}
+  public void setDiff(final int diff) {
+    this.diff = diff;
+  }
 
-	public void setNumber(final int number) {
-		this.number = number;
-	}
+  public void setNumber(final int number) {
+    this.number = number;
+  }
 
-	public void setType(final MixerType type) {
-		this.type = type;
-	}
+  public void setType(final MixerType type) {
+    this.type = type;
+  }
 }

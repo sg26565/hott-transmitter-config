@@ -24,24 +24,24 @@ import javax.xml.bind.annotation.XmlAttribute;
  * 
  */
 public class ChannelMapping {
-	private int inputChannel;
-	private int outputChannel;
+  private int inputChannel;
+  private int outputChannel;
 
-	@XmlAttribute
-	public int getInputChannel() {
-		return inputChannel;
-	}
+  @XmlAttribute
+  public int getInputChannel() {
+    return inputChannel;
+  }
 
-	@XmlAttribute
-	public int getOutputChannel() {
-		return outputChannel;
-	}
+  @XmlAttribute
+  public int getOutputChannel() {
+    return outputChannel;
+  }
 
-	public void setInputChannel(final int inputChannel) {
-		this.inputChannel = inputChannel;
-	}
+  public void setInputChannel(final int inputChannel) {
+    this.inputChannel = inputChannel;
+  }
 
-	public void setOutputChannel(final int outputChannel) {
-		this.outputChannel = outputChannel;
-	}
+  public void setOutputChannel(final int outputChannel) {
+    this.outputChannel = outputChannel;
+  }
 }

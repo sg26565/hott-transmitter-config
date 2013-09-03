@@ -27,52 +27,52 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class Multichannel {
-	private Control[] control;
-	private boolean enabled;
-	private Channel inputChannel;
-	private MultichannelMode mode;
-	private int number;
+  private Control[]        control;
+  private boolean          enabled;
+  private Channel          inputChannel;
+  private MultichannelMode mode;
+  private int              number;
 
-	@XmlElementWrapper(name = "controls")
-	public Control[] getControl() {
-		return control;
-	}
+  @XmlElementWrapper(name = "controls")
+  public Control[] getControl() {
+    return control;
+  }
 
-	@XmlIDREF
-	public Channel getInputChannel() {
-		return inputChannel;
-	}
+  @XmlIDREF
+  public Channel getInputChannel() {
+    return inputChannel;
+  }
 
-	public MultichannelMode getMode() {
-		return mode;
-	}
+  public MultichannelMode getMode() {
+    return mode;
+  }
 
-	@XmlAttribute
-	public int getNumber() {
-		return number;
-	}
+  @XmlAttribute
+  public int getNumber() {
+    return number;
+  }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+  public boolean isEnabled() {
+    return enabled;
+  }
 
-	public void setControl(final Control[] control) {
-		this.control = control;
-	}
+  public void setControl(final Control[] control) {
+    this.control = control;
+  }
 
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-	}
+  public void setEnabled(final boolean enabled) {
+    this.enabled = enabled;
+  }
 
-	public void setInputChannel(final Channel inputChannel) {
-		this.inputChannel = inputChannel;
-	}
+  public void setInputChannel(final Channel inputChannel) {
+    this.inputChannel = inputChannel;
+  }
 
-	public void setMode(final MultichannelMode mode) {
-		this.mode = mode;
-	}
+  public void setMode(final MultichannelMode mode) {
+    this.mode = mode;
+  }
 
-	public void setNumber(final int number) {
-		this.number = number;
-	}
+  public void setNumber(final int number) {
+    this.number = number;
+  }
 }

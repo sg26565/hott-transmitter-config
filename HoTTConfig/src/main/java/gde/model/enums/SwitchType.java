@@ -23,11 +23,11 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum SwitchType {
-	InputControl, ControlSwitch, Fixed, LogicalSwitch, ToggleSwitch, Unknown;
+  ControlSwitch, Fixed, InputControl, LogicalSwitch, ToggleSwitch, Unknown;
 
-	/** @return the locale-dependent message */
-	@Override
-	public String toString() {
-		return ResourceBundle.getBundle(getClass().getName()).getString(name());
-	}
+  /** @return the locale-dependent message */
+  @Override
+  public String toString() {
+    return ResourceBundle.getBundle(getClass().getName()).getString(name());
+  }
 }

@@ -33,128 +33,128 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class HelicopterModel extends BaseModel {
-	private int autorotationC1TriggerPosition;
-	private Switch autorotationSwitch;
-	private int autorotationTailPosition;
-	private int autorotationThrottlePosition;
-	private int expoThrottleLimit;
-	private Switch markerSwitch;
-	private PitchMin pitchMin;
-	private HelicopterProfiTrim[] profiTrim;
-	private RotorDirection rotorDirection;
-	private boolean swashplateLinearization;
-	private SwashplateMix swashplateMix;
-	private SwashplateType swashplateType;
-	private int throttleLimitWarning;
+  private int                   autorotationC1TriggerPosition;
+  private Switch                autorotationSwitch;
+  private int                   autorotationTailPosition;
+  private int                   autorotationThrottlePosition;
+  private int                   expoThrottleLimit;
+  private Switch                markerSwitch;
+  private PitchMin              pitchMin;
+  private HelicopterProfiTrim[] profiTrim;
+  private RotorDirection        rotorDirection;
+  private boolean               swashplateLinearization;
+  private SwashplateMix         swashplateMix;
+  private SwashplateType        swashplateType;
+  private int                   throttleLimitWarning;
 
-	public HelicopterModel() {
-		super(ModelType.Helicopter);
-	}
+  public HelicopterModel() {
+    super(ModelType.Helicopter);
+  }
 
-	public int getAutorotationC1TriggerPosition() {
-		return autorotationC1TriggerPosition;
-	}
+  public int getAutorotationC1TriggerPosition() {
+    return autorotationC1TriggerPosition;
+  }
 
-	@XmlIDREF
-	public Switch getAutorotationSwitch() {
-		return autorotationSwitch;
-	}
+  @XmlIDREF
+  public Switch getAutorotationSwitch() {
+    return autorotationSwitch;
+  }
 
-	public int getAutorotationTailPosition() {
-		return autorotationTailPosition;
-	}
+  public int getAutorotationTailPosition() {
+    return autorotationTailPosition;
+  }
 
-	public int getAutorotationThrottlePosition() {
-		return autorotationThrottlePosition;
-	}
+  public int getAutorotationThrottlePosition() {
+    return autorotationThrottlePosition;
+  }
 
-	public int getExpoThrottleLimit() {
-		return expoThrottleLimit;
-	}
+  public int getExpoThrottleLimit() {
+    return expoThrottleLimit;
+  }
 
-	@XmlIDREF
-	public Switch getMarkerSwitch() {
-		return markerSwitch;
-	}
+  @XmlIDREF
+  public Switch getMarkerSwitch() {
+    return markerSwitch;
+  }
 
-	public PitchMin getPitchMin() {
-		return pitchMin;
-	}
+  public PitchMin getPitchMin() {
+    return pitchMin;
+  }
 
-	@XmlElementWrapper(name = "profitrims")
-	public HelicopterProfiTrim[] getProfiTrim() {
-		return profiTrim;
-	}
+  @XmlElementWrapper(name = "profitrims")
+  public HelicopterProfiTrim[] getProfiTrim() {
+    return profiTrim;
+  }
 
-	public RotorDirection getRotorDirection() {
-		return rotorDirection;
-	}
+  public RotorDirection getRotorDirection() {
+    return rotorDirection;
+  }
 
-	public SwashplateMix getSwashplateMix() {
-		return swashplateMix;
-	}
+  public SwashplateMix getSwashplateMix() {
+    return swashplateMix;
+  }
 
-	public SwashplateType getSwashplateType() {
-		return swashplateType;
-	}
+  public SwashplateType getSwashplateType() {
+    return swashplateType;
+  }
 
-	public int getThrottleLimitWarning() {
-		return throttleLimitWarning;
-	}
+  public int getThrottleLimitWarning() {
+    return throttleLimitWarning;
+  }
 
-	public boolean isSwashplateLinearization() {
-		return swashplateLinearization;
-	}
+  public boolean isSwashplateLinearization() {
+    return swashplateLinearization;
+  }
 
-	public void setAutorotationC1TriggerPosition(final int autorotationPosition) {
-		autorotationC1TriggerPosition = autorotationPosition;
-	}
+  public void setAutorotationC1TriggerPosition(final int autorotationPosition) {
+    autorotationC1TriggerPosition = autorotationPosition;
+  }
 
-	public void setAutorotationSwitch(final Switch autorotatonSwitch) {
-		autorotationSwitch = autorotatonSwitch;
-	}
+  public void setAutorotationSwitch(final Switch autorotatonSwitch) {
+    autorotationSwitch = autorotatonSwitch;
+  }
 
-	public void setAutorotationTailPosition(final int autorotationTailPosition) {
-		this.autorotationTailPosition = autorotationTailPosition;
-	}
+  public void setAutorotationTailPosition(final int autorotationTailPosition) {
+    this.autorotationTailPosition = autorotationTailPosition;
+  }
 
-	public void setAutorotationThrottlePosition(final int autorotationThrottlePosition) {
-		this.autorotationThrottlePosition = autorotationThrottlePosition;
-	}
+  public void setAutorotationThrottlePosition(final int autorotationThrottlePosition) {
+    this.autorotationThrottlePosition = autorotationThrottlePosition;
+  }
 
-	public void setExpoThrottleLimit(final int expoThrottleLimit) {
-		this.expoThrottleLimit = expoThrottleLimit;
-	}
+  public void setExpoThrottleLimit(final int expoThrottleLimit) {
+    this.expoThrottleLimit = expoThrottleLimit;
+  }
 
-	public void setMarkerSwitch(final Switch markerSwitch) {
-		this.markerSwitch = markerSwitch;
-	}
+  public void setMarkerSwitch(final Switch markerSwitch) {
+    this.markerSwitch = markerSwitch;
+  }
 
-	public void setPitchMin(final PitchMin pitchMin) {
-		this.pitchMin = pitchMin;
-	}
+  public void setPitchMin(final PitchMin pitchMin) {
+    this.pitchMin = pitchMin;
+  }
 
-	public void setProfiTrim(final HelicopterProfiTrim[] profiTrim) {
-		this.profiTrim = profiTrim;
-	}
+  public void setProfiTrim(final HelicopterProfiTrim[] profiTrim) {
+    this.profiTrim = profiTrim;
+  }
 
-	public void setRotorDirection(final RotorDirection rotorDirection) {
-		this.rotorDirection = rotorDirection;
-	}
+  public void setRotorDirection(final RotorDirection rotorDirection) {
+    this.rotorDirection = rotorDirection;
+  }
 
-	public void setSwashplateLinearization(final boolean swashplateLinearization) {
-		this.swashplateLinearization = swashplateLinearization;
-	}
+  public void setSwashplateLinearization(final boolean swashplateLinearization) {
+    this.swashplateLinearization = swashplateLinearization;
+  }
 
-	public void setSwashplateMix(final SwashplateMix swashplateMix) {
-		this.swashplateMix = swashplateMix;
-	}
+  public void setSwashplateMix(final SwashplateMix swashplateMix) {
+    this.swashplateMix = swashplateMix;
+  }
 
-	public void setSwashplateType(final SwashplateType swashplateType) {
-		this.swashplateType = swashplateType;
-	}
+  public void setSwashplateType(final SwashplateType swashplateType) {
+    this.swashplateType = swashplateType;
+  }
 
-	public void setThrottleLimitWarning(final int throttleLimitWarning) {
-		this.throttleLimitWarning = throttleLimitWarning;
-	}
+  public void setThrottleLimitWarning(final int throttleLimitWarning) {
+    this.throttleLimitWarning = throttleLimitWarning;
+  }
 }

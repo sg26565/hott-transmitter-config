@@ -24,11 +24,11 @@ import java.util.ResourceBundle;
  * 
  */
 public enum ClockFunction {
-	FlightTime, FrameTime, ModelTime, MotorTime, StopWatch;
+  FlightTime, FrameTime, ModelTime, MotorTime, StopWatch;
 
-	/** @return the locale-dependent message */
-	@Override
-	public String toString() {
-		return ResourceBundle.getBundle(getClass().getName()).getString(name());
-	}
+  /** @return the locale-dependent message */
+  @Override
+  public String toString() {
+    return ResourceBundle.getBundle(getClass().getName()).getString(name());
+  }
 }

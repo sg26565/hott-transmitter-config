@@ -23,40 +23,40 @@ import gde.model.enums.Mp3PlayerMode;
  * @author oli
  */
 public class Mp3Player {
-	private int album;
-	private Mp3PlayerMode mode;
-	private int track;
-	private int volume;
+  private int           album;
+  private Mp3PlayerMode mode;
+  private int           track;
+  private int           volume;
 
-	public int getAlbum() {
-		return album;
-	}
+  public int getAlbum() {
+    return album;
+  }
 
-	public Mp3PlayerMode getMode() {
-		return mode;
-	}
+  public Mp3PlayerMode getMode() {
+    return mode;
+  }
 
-	public int getTrack() {
-		return track;
-	}
+  public int getTrack() {
+    return track;
+  }
 
-	public int getVolume() {
-		return volume;
-	}
+  public int getVolume() {
+    return volume;
+  }
 
-	public void setAlbum(final int album) {
-		this.album = album;
-	}
+  public void setAlbum(final int album) {
+    this.album = album;
+  }
 
-	public void setMode(final Mp3PlayerMode mode) {
-		this.mode = mode;
-	}
+  public void setMode(final Mp3PlayerMode mode) {
+    this.mode = mode;
+  }
 
-	public void setTrack(final int track) {
-		this.track = track;
-	}
+  public void setTrack(final int track) {
+    this.track = track;
+  }
 
-	public void setVolume(final int volume) {
-		this.volume = volume;
-	}
+  public void setVolume(final int volume) {
+    this.volume = volume;
+  }
 }

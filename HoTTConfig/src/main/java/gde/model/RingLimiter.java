@@ -26,65 +26,65 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class RingLimiter {
-	private boolean enabled;
-	private Channel[] inputChannel;
-	private int[] limit;
-	private int number;
-	private int[] offset;
-	private Channel[] outputChannel;
+  private boolean   enabled;
+  private Channel[] inputChannel;
+  private int[]     limit;
+  private int       number;
+  private int[]     offset;
+  private Channel[] outputChannel;
 
-	@XmlIDREF
-	@XmlElementWrapper(name = "inputChannels")
-	public Channel[] getInputChannel() {
-		return inputChannel;
-	}
+  @XmlIDREF
+  @XmlElementWrapper(name = "inputChannels")
+  public Channel[] getInputChannel() {
+    return inputChannel;
+  }
 
-	@XmlElementWrapper(name = "limits")
-	public int[] getLimit() {
-		return limit;
-	}
+  @XmlElementWrapper(name = "limits")
+  public int[] getLimit() {
+    return limit;
+  }
 
-	@XmlAttribute
-	public int getNumber() {
-		return number;
-	}
+  @XmlAttribute
+  public int getNumber() {
+    return number;
+  }
 
-	@XmlElementWrapper(name = "offsets")
-	public int[] getOffset() {
-		return offset;
-	}
+  @XmlElementWrapper(name = "offsets")
+  public int[] getOffset() {
+    return offset;
+  }
 
-	@XmlIDREF
-	@XmlElementWrapper(name = "outputChannels")
-	public Channel[] getOutputChannel() {
-		return outputChannel;
-	}
+  @XmlIDREF
+  @XmlElementWrapper(name = "outputChannels")
+  public Channel[] getOutputChannel() {
+    return outputChannel;
+  }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+  public boolean isEnabled() {
+    return enabled;
+  }
 
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-	}
+  public void setEnabled(final boolean enabled) {
+    this.enabled = enabled;
+  }
 
-	public void setInputChannel(final Channel[] inputChannel) {
-		this.inputChannel = inputChannel;
-	}
+  public void setInputChannel(final Channel[] inputChannel) {
+    this.inputChannel = inputChannel;
+  }
 
-	public void setLimit(final int[] limit) {
-		this.limit = limit;
-	}
+  public void setLimit(final int[] limit) {
+    this.limit = limit;
+  }
 
-	public void setNumber(final int number) {
-		this.number = number;
-	}
+  public void setNumber(final int number) {
+    this.number = number;
+  }
 
-	public void setOffset(final int[] offset) {
-		this.offset = offset;
-	}
+  public void setOffset(final int[] offset) {
+    this.offset = offset;
+  }
 
-	public void setOutputChannel(final Channel[] outputChannel) {
-		this.outputChannel = outputChannel;
-	}
+  public void setOutputChannel(final Channel[] outputChannel) {
+    this.outputChannel = outputChannel;
+  }
 }

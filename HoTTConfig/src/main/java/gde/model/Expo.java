@@ -26,33 +26,33 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Expo {
-	private Function function;
-	private Switch sw;
-	private int[] values;
+  private Function function;
+  private Switch   sw;
+  private int[]    values;
 
-	@XmlAttribute
-	public Function getFunction() {
-		return function;
-	}
+  @XmlAttribute
+  public Function getFunction() {
+    return function;
+  }
 
-	@XmlIDREF
-	public Switch getSwitch() {
-		return sw;
-	}
+  @XmlIDREF
+  public Switch getSwitch() {
+    return sw;
+  }
 
-	public int[] getValues() {
-		return values;
-	}
+  public int[] getValues() {
+    return values;
+  }
 
-	public void setFunction(final Function function) {
-		this.function = function;
-	}
+  public void setFunction(final Function function) {
+    this.function = function;
+  }
 
-	public void setSwitch(final Switch sw) {
-		this.sw = sw;
-	}
+  public void setSwitch(final Switch sw) {
+    this.sw = sw;
+  }
 
-	public void setValues(final int[] values) {
-		this.values = values;
-	}
+  public void setValues(final int[] values) {
+    this.values = values;
+  }
 }

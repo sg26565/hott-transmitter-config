@@ -24,32 +24,32 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class ControlSwitch extends Switch {
-	private Switch combineSwitch;
-	private boolean enabled;
-	private int position;
+  private Switch  combineSwitch;
+  private boolean enabled;
+  private int     position;
 
-	@XmlIDREF
-	public Switch getCombineSwitch() {
-		return combineSwitch;
-	}
+  @XmlIDREF
+  public Switch getCombineSwitch() {
+    return combineSwitch;
+  }
 
-	public int getPosition() {
-		return position;
-	}
+  public int getPosition() {
+    return position;
+  }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+  public boolean isEnabled() {
+    return enabled;
+  }
 
-	public void setCombineSwitch(final Switch combineSwitch) {
-		this.combineSwitch = combineSwitch;
-	}
+  public void setCombineSwitch(final Switch combineSwitch) {
+    this.combineSwitch = combineSwitch;
+  }
 
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-	}
+  public void setEnabled(final boolean enabled) {
+    this.enabled = enabled;
+  }
 
-	public void setPosition(final int position) {
-		this.position = position;
-	}
+  public void setPosition(final int position) {
+    this.position = position;
+  }
 }

@@ -26,42 +26,42 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class HelicopterProfiTrim {
-	private CurveType				curveType;
-	private Switch					inputControl;
-	private HelicopterPhase	phase;
-	private int							point;
+  private CurveType       curveType;
+  private Switch          inputControl;
+  private HelicopterPhase phase;
+  private int             point;
 
-	public CurveType getCurveType() {
-		return curveType;
-	}
+  public CurveType getCurveType() {
+    return curveType;
+  }
 
-	@XmlIDREF
-	public Switch getInputControl() {
-		return inputControl;
-	}
+  @XmlIDREF
+  public Switch getInputControl() {
+    return inputControl;
+  }
 
-	@XmlIDREF
-	public HelicopterPhase getPhase() {
-		return phase;
-	}
+  @XmlIDREF
+  public HelicopterPhase getPhase() {
+    return phase;
+  }
 
-	public int getPoint() {
-		return point;
-	}
+  public int getPoint() {
+    return point;
+  }
 
-	public void setCurveType(final CurveType curveType) {
-		this.curveType = curveType;
-	}
+  public void setCurveType(final CurveType curveType) {
+    this.curveType = curveType;
+  }
 
-	public void setInputControl(final Switch inputControl) {
-		this.inputControl = inputControl;
-	}
+  public void setInputControl(final Switch inputControl) {
+    this.inputControl = inputControl;
+  }
 
-	public void setPhase(final HelicopterPhase phase) {
-		this.phase = phase;
-	}
+  public void setPhase(final HelicopterPhase phase) {
+    this.phase = phase;
+  }
 
-	public void setPoint(final int point) {
-		this.point = point;
-	}
+  public void setPoint(final int point) {
+    this.point = point;
+  }
 }

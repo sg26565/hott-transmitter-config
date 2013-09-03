@@ -34,83 +34,83 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class WingedModel extends BaseModel {
-	private AileronFlapType		aileronFlapType;
-	private Channel						brakeInputChannel;
-	private int								brakeOffset;
-	private boolean						channel8Delay;
-	private MotorOnC1Type			motorOnC1Type;
-	private WingedProfiTrim[]	profiTrim;
-	private Switch						profiTrimSwitch;
-	private TailType					tailType;
+  private AileronFlapType   aileronFlapType;
+  private Channel           brakeInputChannel;
+  private int               brakeOffset;
+  private boolean           channel8Delay;
+  private MotorOnC1Type     motorOnC1Type;
+  private WingedProfiTrim[] profiTrim;
+  private Switch            profiTrimSwitch;
+  private TailType          tailType;
 
-	public WingedModel() {
-		super(ModelType.Winged);
-	}
+  public WingedModel() {
+    super(ModelType.Winged);
+  }
 
-	public AileronFlapType getAileronFlapType() {
-		return aileronFlapType;
-	}
+  public AileronFlapType getAileronFlapType() {
+    return aileronFlapType;
+  }
 
-	@XmlIDREF
-	public Channel getBrakeInputChannel() {
-		return brakeInputChannel;
-	}
+  @XmlIDREF
+  public Channel getBrakeInputChannel() {
+    return brakeInputChannel;
+  }
 
-	public int getBrakeOffset() {
-		return brakeOffset;
-	}
+  public int getBrakeOffset() {
+    return brakeOffset;
+  }
 
-	public MotorOnC1Type getMotorOnC1Type() {
-		return motorOnC1Type;
-	}
+  public MotorOnC1Type getMotorOnC1Type() {
+    return motorOnC1Type;
+  }
 
-	@XmlElementWrapper(name = "profitrims")
-	public WingedProfiTrim[] getProfiTrim() {
-		return profiTrim;
-	}
+  @XmlElementWrapper(name = "profitrims")
+  public WingedProfiTrim[] getProfiTrim() {
+    return profiTrim;
+  }
 
-	@XmlIDREF
-	public Switch getProfiTrimSwitch() {
-		return profiTrimSwitch;
-	}
+  @XmlIDREF
+  public Switch getProfiTrimSwitch() {
+    return profiTrimSwitch;
+  }
 
-	public TailType getTailType() {
-		return tailType;
-	}
+  public TailType getTailType() {
+    return tailType;
+  }
 
-	public boolean isChannel8Delay() {
-		return channel8Delay;
-	}
+  public boolean isChannel8Delay() {
+    return channel8Delay;
+  }
 
-	public void setAileronFlapType(final AileronFlapType aileronFlapType) {
-		this.aileronFlapType = aileronFlapType;
-	}
+  public void setAileronFlapType(final AileronFlapType aileronFlapType) {
+    this.aileronFlapType = aileronFlapType;
+  }
 
-	public void setBrakeInputChannel(final Channel brakeInputChannel) {
-		this.brakeInputChannel = brakeInputChannel;
-	}
+  public void setBrakeInputChannel(final Channel brakeInputChannel) {
+    this.brakeInputChannel = brakeInputChannel;
+  }
 
-	public void setBrakeOffset(final int brakeOffset) {
-		this.brakeOffset = brakeOffset;
-	}
+  public void setBrakeOffset(final int brakeOffset) {
+    this.brakeOffset = brakeOffset;
+  }
 
-	public void setChannel8Delay(final boolean channel8Delay) {
-		this.channel8Delay = channel8Delay;
-	}
+  public void setChannel8Delay(final boolean channel8Delay) {
+    this.channel8Delay = channel8Delay;
+  }
 
-	public void setMotorOnC1Type(final MotorOnC1Type motorOnC1Type) {
-		this.motorOnC1Type = motorOnC1Type;
-	}
+  public void setMotorOnC1Type(final MotorOnC1Type motorOnC1Type) {
+    this.motorOnC1Type = motorOnC1Type;
+  }
 
-	public void setProfiTrim(final WingedProfiTrim[] profiTrim) {
-		this.profiTrim = profiTrim;
-	}
+  public void setProfiTrim(final WingedProfiTrim[] profiTrim) {
+    this.profiTrim = profiTrim;
+  }
 
-	public void setProfiTrimSwitch(final Switch profiTrimSwitch) {
-		this.profiTrimSwitch = profiTrimSwitch;
-	}
+  public void setProfiTrimSwitch(final Switch profiTrimSwitch) {
+    this.profiTrimSwitch = profiTrimSwitch;
+  }
 
-	public void setTailType(final TailType tailType) {
-		this.tailType = tailType;
-	}
+  public void setTailType(final TailType tailType) {
+    this.tailType = tailType;
+  }
 }

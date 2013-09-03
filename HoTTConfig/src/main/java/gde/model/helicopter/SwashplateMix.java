@@ -21,31 +21,31 @@ package gde.model.helicopter;
  * @author oli@treichels.de
  */
 public class SwashplateMix {
-	private int nickMix;
-	private int pitchMix;
-	private int rollMix;
+  private int nickMix;
+  private int pitchMix;
+  private int rollMix;
 
-	public int getNickMix() {
-		return nickMix;
-	}
+  public int getNickMix() {
+    return nickMix;
+  }
 
-	public int getPitchMix() {
-		return pitchMix;
-	}
+  public int getPitchMix() {
+    return pitchMix;
+  }
 
-	public int getRollMix() {
-		return rollMix;
-	}
+  public int getRollMix() {
+    return rollMix;
+  }
 
-	public void setNickMix(final int nickMix) {
-		this.nickMix = nickMix;
-	}
+  public void setNickMix(final int nickMix) {
+    this.nickMix = nickMix;
+  }
 
-	public void setPitchMix(final int pitchMix) {
-		this.pitchMix = pitchMix;
-	}
+  public void setPitchMix(final int pitchMix) {
+    this.pitchMix = pitchMix;
+  }
 
-	public void setRollMix(final int rollMix) {
-		this.rollMix = rollMix;
-	}
+  public void setRollMix(final int rollMix) {
+    this.rollMix = rollMix;
+  }
 }

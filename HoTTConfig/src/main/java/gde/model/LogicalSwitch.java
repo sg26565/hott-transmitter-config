@@ -27,33 +27,33 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class LogicalSwitch extends Switch {
-	private boolean enabled;
-	private LogicalSwitchMode mode;
-	private Switch[] sw;
+  private boolean           enabled;
+  private LogicalSwitchMode mode;
+  private Switch[]          sw;
 
-	public LogicalSwitchMode getMode() {
-		return mode;
-	}
+  public LogicalSwitchMode getMode() {
+    return mode;
+  }
 
-	@XmlElementWrapper(name = "switches")
-	@XmlIDREF
-	public Switch[] getSwitch() {
-		return sw;
-	}
+  @XmlElementWrapper(name = "switches")
+  @XmlIDREF
+  public Switch[] getSwitch() {
+    return sw;
+  }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+  public boolean isEnabled() {
+    return enabled;
+  }
 
-	public void setEnabled(final boolean enables) {
-		enabled = enables;
-	}
+  public void setEnabled(final boolean enables) {
+    enabled = enables;
+  }
 
-	public void setMode(final LogicalSwitchMode mode) {
-		this.mode = mode;
-	}
+  public void setMode(final LogicalSwitchMode mode) {
+    this.mode = mode;
+  }
 
-	public void setSwitch(final Switch[] switches) {
-		sw = switches;
-	}
+  public void setSwitch(final Switch[] switches) {
+    sw = switches;
+  }
 }

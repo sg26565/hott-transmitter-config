@@ -22,57 +22,57 @@ package gde.model;
  * 
  */
 public class LinearMixer extends CurveMixer {
-	private int	offset;
-	private int	travelHigh;
-	private int	travelLow;
+  private int offset;
+  private int travelHigh;
+  private int travelLow;
 
-	public int getOffset() {
-		return offset;
-	}
+  public int getOffset() {
+    return offset;
+  }
 
-	public int getTravelHigh() {
-		return travelHigh;
-	}
+  public int getTravelHigh() {
+    return travelHigh;
+  }
 
-	public int getTravelLow() {
-		return travelLow;
-	}
+  public int getTravelLow() {
+    return travelLow;
+  }
 
-	public void setOffset(final int offset) {
-		this.offset = offset;
-		updateCurve();
-	}
+  public void setOffset(final int offset) {
+    this.offset = offset;
+    updateCurve();
+  }
 
-	public void setTravelHigh(final int travelHigh) {
-		this.travelHigh = travelHigh;
-		updateCurve();
-	}
+  public void setTravelHigh(final int travelHigh) {
+    this.travelHigh = travelHigh;
+    updateCurve();
+  }
 
-	public void setTravelLow(final int travelLow) {
-		this.travelLow = travelLow;
-		updateCurve();
-	}
+  public void setTravelLow(final int travelLow) {
+    this.travelLow = travelLow;
+    updateCurve();
+  }
 
-	private void updateCurve() {
-		final Curve curve = new Curve();
-		final CurvePoint[] points = new CurvePoint[3];
+  private void updateCurve() {
+    final Curve curve = new Curve();
+    final CurvePoint[] points = new CurvePoint[3];
 
-		for (int i = 0; i < 3; i++) {
-			final CurvePoint p = new CurvePoint();
-			p.setNumber(i);
-			p.setEnabled(true);
-			points[i] = p;
-		}
+    for (int i = 0; i < 3; i++) {
+      final CurvePoint p = new CurvePoint();
+      p.setNumber(i);
+      p.setEnabled(true);
+      points[i] = p;
+    }
 
-		points[0].setPosition(-100);
-		points[1].setPosition(getOffset());
-		points[2].setPosition(100);
+    points[0].setPosition(-100);
+    points[1].setPosition(getOffset());
+    points[2].setPosition(100);
 
-		points[0].setValue((int) (-getTravelLow()*(1.0f+getOffset()/100.0f)));
-		points[1].setValue(0);
-		points[2].setValue((int) (getTravelHigh()*(1.0f-getOffset()/100.0f)));
+    points[0].setValue((int) (-getTravelLow() * (1.0f + getOffset() / 100.0f)));
+    points[1].setValue(0);
+    points[2].setValue((int) (getTravelHigh() * (1.0f - getOffset() / 100.0f)));
 
-		curve.setPoint(points);
-		setCurve(curve);
-	}
+    curve.setPoint(points);
+    setCurve(curve);
+  }
 }

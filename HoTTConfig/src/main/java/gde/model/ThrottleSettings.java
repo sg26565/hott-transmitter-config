@@ -22,26 +22,32 @@ package gde.model;
  */
 public class ThrottleSettings {
 
-	private ThrottleCutOf throttleCutOf;
-	private int throttleLastIdlePosition;
-	private int throttleTrim;
-	public void setThrottleCutOf(final ThrottleCutOf throttleCutOf) {
-		this.throttleCutOf = throttleCutOf;
-	}
-	public void setThrottleLastIdlePosition(final int throttleLastPosition) {
-		throttleLastIdlePosition = throttleLastPosition;
-	}
-	public void setThrottleTrim(final int throttleTrim) {
-		this.throttleTrim = throttleTrim;
-	}
-	public ThrottleCutOf getThrottleCutOf() {
-		return throttleCutOf;
-	}
-	public int getThrottleLastIdlePosition() {
-		return throttleLastIdlePosition;
-	}
-	public int getThrottleTrim() {
-		return throttleTrim;
-	}
+  private ThrottleCutOf throttleCutOf;
+  private int           throttleLastIdlePosition;
+  private int           throttleTrim;
+
+  public ThrottleCutOf getThrottleCutOf() {
+    return throttleCutOf;
+  }
+
+  public int getThrottleLastIdlePosition() {
+    return throttleLastIdlePosition;
+  }
+
+  public int getThrottleTrim() {
+    return throttleTrim;
+  }
+
+  public void setThrottleCutOf(final ThrottleCutOf throttleCutOf) {
+    this.throttleCutOf = throttleCutOf;
+  }
+
+  public void setThrottleLastIdlePosition(final int throttleLastPosition) {
+    throttleLastIdlePosition = throttleLastPosition;
+  }
+
+  public void setThrottleTrim(final int throttleTrim) {
+    this.throttleTrim = throttleTrim;
+  }
 
 }

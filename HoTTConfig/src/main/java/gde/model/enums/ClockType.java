@@ -23,11 +23,11 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum ClockType {
-	CENTER, LapDisplay, LapTimer, PHASE1, PHASE2, PHASE3, ROUND, TOP;
+  CENTER, LapDisplay, LapTimer, PHASE1, PHASE2, PHASE3, ROUND, TOP;
 
-	/** @return the locale-dependent message */
-	@Override
-	public String toString() {
-		return ResourceBundle.getBundle(getClass().getName()).getString(name());
-	}
+  /** @return the locale-dependent message */
+  @Override
+  public String toString() {
+    return ResourceBundle.getBundle(getClass().getName()).getString(name());
+  }
 }

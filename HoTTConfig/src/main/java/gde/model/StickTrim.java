@@ -25,50 +25,50 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author oli
  */
 public class StickTrim {
-	private int channel;
-	private int increment;
-	private TrimMode mode;
-	private int timeHigh;
-	private int timeLow;
+  private int      channel;
+  private int      increment;
+  private TrimMode mode;
+  private int      timeHigh;
+  private int      timeLow;
 
-	@XmlAttribute
-	public int getChannel() {
-		return channel;
-	}
+  @XmlAttribute
+  public int getChannel() {
+    return channel;
+  }
 
-	public int getIncrement() {
-		return increment;
-	}
+  public int getIncrement() {
+    return increment;
+  }
 
-	public TrimMode getMode() {
-		return mode;
-	}
+  public TrimMode getMode() {
+    return mode;
+  }
 
-	public int getTimeHigh() {
-		return timeHigh;
-	}
+  public int getTimeHigh() {
+    return timeHigh;
+  }
 
-	public int getTimeLow() {
-		return timeLow;
-	}
+  public int getTimeLow() {
+    return timeLow;
+  }
 
-	public void setChannel(final int channel) {
-		this.channel = channel;
-	}
+  public void setChannel(final int channel) {
+    this.channel = channel;
+  }
 
-	public void setIncrement(final int increment) {
-		this.increment = increment;
-	}
+  public void setIncrement(final int increment) {
+    this.increment = increment;
+  }
 
-	public void setMode(final TrimMode mode) {
-		this.mode = mode;
-	}
+  public void setMode(final TrimMode mode) {
+    this.mode = mode;
+  }
 
-	public void setTimeHigh(final int timeHigh) {
-		this.timeHigh = timeHigh;
-	}
+  public void setTimeHigh(final int timeHigh) {
+    this.timeHigh = timeHigh;
+  }
 
-	public void setTimeLow(final int timeLow) {
-		this.timeLow = timeLow;
-	}
+  public void setTimeLow(final int timeLow) {
+    this.timeLow = timeLow;
+  }
 }

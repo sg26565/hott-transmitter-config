@@ -27,112 +27,112 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Control {
-	private Switch inputControl;
-	private ControlMode mode;
-	private String number;
-	private int offset;
-	private double timeHigh;
-	private double timeLow;
-	private Switch toggleHighSwitch;
-	private Switch toggleLowSwitch;
-	private int travelHigh;
-	private int travelLow;
-	private int trim;
+  private Switch      inputControl;
+  private ControlMode mode;
+  private String      number;
+  private int         offset;
+  private double      timeHigh;
+  private double      timeLow;
+  private Switch      toggleHighSwitch;
+  private Switch      toggleLowSwitch;
+  private int         travelHigh;
+  private int         travelLow;
+  private int         trim;
 
-	@XmlIDREF
-	public Switch getInputControl() {
-		return inputControl;
-	}
+  @XmlIDREF
+  public Switch getInputControl() {
+    return inputControl;
+  }
 
-	public ControlMode getMode() {
-		return mode;
-	}
+  public ControlMode getMode() {
+    return mode;
+  }
 
-	@XmlAttribute
-	@XmlID
-	public String getNumber() {
-		return number;
-	}
+  @XmlAttribute
+  @XmlID
+  public String getNumber() {
+    return number;
+  }
 
-	public int getOffset() {
-		return offset;
-	}
+  public int getOffset() {
+    return offset;
+  }
 
-	public double getTimeHigh() {
-		return timeHigh;
-	}
+  public double getTimeHigh() {
+    return timeHigh;
+  }
 
-	public double getTimeLow() {
-		return timeLow;
-	}
+  public double getTimeLow() {
+    return timeLow;
+  }
 
-	@XmlIDREF
-	public Switch getToggleHighSwitch() {
-		return toggleHighSwitch;
-	}
+  @XmlIDREF
+  public Switch getToggleHighSwitch() {
+    return toggleHighSwitch;
+  }
 
-	@XmlIDREF
-	public Switch getToggleLowSwitch() {
-		return toggleLowSwitch;
-	}
+  @XmlIDREF
+  public Switch getToggleLowSwitch() {
+    return toggleLowSwitch;
+  }
 
-	public int getTravelHigh() {
-		return travelHigh;
-	}
+  public int getTravelHigh() {
+    return travelHigh;
+  }
 
-	public int getTravelLow() {
-		return travelLow;
-	}
+  public int getTravelLow() {
+    return travelLow;
+  }
 
-	public int getTrim() {
-		return trim;
-	}
+  public int getTrim() {
+    return trim;
+  }
 
-	public void setInputControl(final Switch controlSwitch) {
-		inputControl = controlSwitch;
-	}
+  public void setInputControl(final Switch controlSwitch) {
+    inputControl = controlSwitch;
+  }
 
-	public void setMode(final ControlMode mode) {
-		this.mode = mode;
-	}
+  public void setMode(final ControlMode mode) {
+    this.mode = mode;
+  }
 
-	public void setNumber(final int number) {
-		this.number = Integer.toString(number);
-	}
+  public void setNumber(final int number) {
+    this.number = Integer.toString(number);
+  }
 
-	public void setNumber(final String number) {
-		this.number = number;
-	}
+  public void setNumber(final String number) {
+    this.number = number;
+  }
 
-	public void setOffset(final int offset) {
-		this.offset = offset;
-	}
+  public void setOffset(final int offset) {
+    this.offset = offset;
+  }
 
-	public void setTimeHigh(final double timeHigh) {
-		this.timeHigh = timeHigh;
-	}
+  public void setTimeHigh(final double timeHigh) {
+    this.timeHigh = timeHigh;
+  }
 
-	public void setTimeLow(final double timeLow) {
-		this.timeLow = timeLow;
-	}
+  public void setTimeLow(final double timeLow) {
+    this.timeLow = timeLow;
+  }
 
-	public void setToggleHighSwitch(final Switch leftSwitch) {
-		toggleHighSwitch = leftSwitch;
-	}
+  public void setToggleHighSwitch(final Switch leftSwitch) {
+    toggleHighSwitch = leftSwitch;
+  }
 
-	public void setToggleLowSwitch(final Switch rightSwitch) {
-		toggleLowSwitch = rightSwitch;
-	}
+  public void setToggleLowSwitch(final Switch rightSwitch) {
+    toggleLowSwitch = rightSwitch;
+  }
 
-	public void setTravelHigh(final int travelHigh) {
-		this.travelHigh = travelHigh;
-	}
+  public void setTravelHigh(final int travelHigh) {
+    this.travelHigh = travelHigh;
+  }
 
-	public void setTravelLow(final int travelLow) {
-		this.travelLow = travelLow;
-	}
+  public void setTravelLow(final int travelLow) {
+    this.travelLow = travelLow;
+  }
 
-	public void setTrim(final int trim) {
-		this.trim = trim;
-	}
+  public void setTrim(final int trim) {
+    this.trim = trim;
+  }
 }

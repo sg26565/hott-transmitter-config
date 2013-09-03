@@ -23,41 +23,41 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author oli@treichels.de
  */
 public class CurvePoint {
-	private boolean enabled;
-	private int number;
-	private int position;
-	private int value;
+  private boolean enabled;
+  private int     number;
+  private int     position;
+  private int     value;
 
-	@XmlAttribute
-	public int getNumber() {
-		return number;
-	}
+  @XmlAttribute
+  public int getNumber() {
+    return number;
+  }
 
-	public int getPosition() {
-		return position;
-	}
+  public int getPosition() {
+    return position;
+  }
 
-	public int getValue() {
-		return value;
-	}
+  public int getValue() {
+    return value;
+  }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+  public boolean isEnabled() {
+    return enabled;
+  }
 
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-	}
+  public void setEnabled(final boolean enabled) {
+    this.enabled = enabled;
+  }
 
-	public void setNumber(final int number) {
-		this.number = number;
-	}
+  public void setNumber(final int number) {
+    this.number = number;
+  }
 
-	public void setPosition(final int position) {
-		this.position = position;
-	}
+  public void setPosition(final int position) {
+    this.position = position;
+  }
 
-	public void setValue(final int value) {
-		this.value = value;
-	}
+  public void setValue(final int value) {
+    this.value = value;
+  }
 }

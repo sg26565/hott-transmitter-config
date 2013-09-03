@@ -25,23 +25,23 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class WingedProfiTrim {
-	private boolean	enabled;
-	private Switch	inputControl;
+  private boolean enabled;
+  private Switch  inputControl;
 
-	@XmlIDREF
-	public Switch getInputControl() {
-		return inputControl;
-	}
+  @XmlIDREF
+  public Switch getInputControl() {
+    return inputControl;
+  }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+  public boolean isEnabled() {
+    return enabled;
+  }
 
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-	}
+  public void setEnabled(final boolean enabled) {
+    this.enabled = enabled;
+  }
 
-	public void setInputControl(final Switch inputControl) {
-		this.inputControl = inputControl;
-	}
+  public void setInputControl(final Switch inputControl) {
+    this.inputControl = inputControl;
+  }
 }

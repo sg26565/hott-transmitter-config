@@ -27,52 +27,52 @@ import javax.xml.bind.annotation.XmlElementWrapper;
  * 
  */
 public class WingedPhase extends Phase {
-	private Curve brakeElevatorCurve;
-	private WingedMixer[] brakeMixer;
-	private WingedMixer[] multiFlapMixer;
-	private WingedMixer[] wingMixer;
-	private WingedTrim wingTrim;
+  private Curve         brakeElevatorCurve;
+  private WingedMixer[] brakeMixer;
+  private WingedMixer[] multiFlapMixer;
+  private WingedMixer[] wingMixer;
+  private WingedTrim    wingTrim;
 
-	public Curve getBrakeElevatorCurve() {
-		return brakeElevatorCurve;
-	}
+  public Curve getBrakeElevatorCurve() {
+    return brakeElevatorCurve;
+  }
 
-	@XmlElementWrapper(name = "brakeMixers")
-	public WingedMixer[] getBrakeMixer() {
-		return brakeMixer;
-	}
+  @XmlElementWrapper(name = "brakeMixers")
+  public WingedMixer[] getBrakeMixer() {
+    return brakeMixer;
+  }
 
-	@XmlElementWrapper(name = "multiFlapMixers")
-	public WingedMixer[] getMultiFlapMixer() {
-		return multiFlapMixer;
-	}
+  @XmlElementWrapper(name = "multiFlapMixers")
+  public WingedMixer[] getMultiFlapMixer() {
+    return multiFlapMixer;
+  }
 
-	@XmlElementWrapper(name = "wingMixers")
-	public WingedMixer[] getWingMixer() {
-		return wingMixer;
-	}
+  @XmlElementWrapper(name = "wingMixers")
+  public WingedMixer[] getWingMixer() {
+    return wingMixer;
+  }
 
-	public WingedTrim getWingTrim() {
-		return wingTrim;
-	}
+  public WingedTrim getWingTrim() {
+    return wingTrim;
+  }
 
-	public void setBrakeElevatorCurve(final Curve brakeElevatorCurve) {
-		this.brakeElevatorCurve = brakeElevatorCurve;
-	}
+  public void setBrakeElevatorCurve(final Curve brakeElevatorCurve) {
+    this.brakeElevatorCurve = brakeElevatorCurve;
+  }
 
-	public void setBrakeMixer(final WingedMixer[] brakeMixer) {
-		this.brakeMixer = brakeMixer;
-	}
+  public void setBrakeMixer(final WingedMixer[] brakeMixer) {
+    this.brakeMixer = brakeMixer;
+  }
 
-	public void setMultiFlapMixer(final WingedMixer[] multiFlapMixer) {
-		this.multiFlapMixer = multiFlapMixer;
-	}
+  public void setMultiFlapMixer(final WingedMixer[] multiFlapMixer) {
+    this.multiFlapMixer = multiFlapMixer;
+  }
 
-	public void setWingMixer(final WingedMixer[] wingMixer) {
-		this.wingMixer = wingMixer;
-	}
+  public void setWingMixer(final WingedMixer[] wingMixer) {
+    this.wingMixer = wingMixer;
+  }
 
-	public void setWingTrim(final WingedTrim wingTrim) {
-		this.wingTrim = wingTrim;
-	}
+  public void setWingTrim(final WingedTrim wingTrim) {
+    this.wingTrim = wingTrim;
+  }
 }

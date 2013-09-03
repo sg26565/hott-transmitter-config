@@ -23,94 +23,94 @@ import gde.model.Curve;
  * @author oli@treichels.de
  */
 public class HelicopterMixer {
-	private int		nick2TailMix;
-	private int		nick2ThrottleMix;
-	private Curve	pitchCurve;
-	private int		roll2TailMix;
-	private int		roll2ThrottleMix;
-	private int		swashplateLimit;
-	private int		swashplateRotation;
-	private int		tail2ThrottleMix;
-	private Curve	tailCurve;
-	private Curve	throttleCurve;
+  private int   nick2TailMix;
+  private int   nick2ThrottleMix;
+  private Curve pitchCurve;
+  private int   roll2TailMix;
+  private int   roll2ThrottleMix;
+  private int   swashplateLimit;
+  private int   swashplateRotation;
+  private int   tail2ThrottleMix;
+  private Curve tailCurve;
+  private Curve throttleCurve;
 
-	public int getNick2TailMix() {
-		return nick2TailMix;
-	}
+  public int getNick2TailMix() {
+    return nick2TailMix;
+  }
 
-	public int getNick2ThrottleMix() {
-		return nick2ThrottleMix;
-	}
+  public int getNick2ThrottleMix() {
+    return nick2ThrottleMix;
+  }
 
-	public Curve getPitchCurve() {
-		return pitchCurve;
-	}
+  public Curve getPitchCurve() {
+    return pitchCurve;
+  }
 
-	public int getRoll2TailMix() {
-		return roll2TailMix;
-	}
+  public int getRoll2TailMix() {
+    return roll2TailMix;
+  }
 
-	public int getRoll2ThrottleMix() {
-		return roll2ThrottleMix;
-	}
+  public int getRoll2ThrottleMix() {
+    return roll2ThrottleMix;
+  }
 
-	public int getSwashplateLimit() {
-		return swashplateLimit;
-	}
+  public int getSwashplateLimit() {
+    return swashplateLimit;
+  }
 
-	public int getSwashplateRotation() {
-		return swashplateRotation;
-	}
+  public int getSwashplateRotation() {
+    return swashplateRotation;
+  }
 
-	public int getTail2ThrottleMix() {
-		return tail2ThrottleMix;
-	}
+  public int getTail2ThrottleMix() {
+    return tail2ThrottleMix;
+  }
 
-	public Curve getTailCurve() {
-		return tailCurve;
-	}
+  public Curve getTailCurve() {
+    return tailCurve;
+  }
 
-	public Curve getThrottleCurve() {
-		return throttleCurve;
-	}
+  public Curve getThrottleCurve() {
+    return throttleCurve;
+  }
 
-	public void setNick2TailMix(final int nick2TailMix) {
-		this.nick2TailMix = nick2TailMix;
-	}
+  public void setNick2TailMix(final int nick2TailMix) {
+    this.nick2TailMix = nick2TailMix;
+  }
 
-	public void setNick2ThrottleMix(final int nick2ThrottleMix) {
-		this.nick2ThrottleMix = nick2ThrottleMix;
-	}
+  public void setNick2ThrottleMix(final int nick2ThrottleMix) {
+    this.nick2ThrottleMix = nick2ThrottleMix;
+  }
 
-	public void setPitchCurve(final Curve pitchCurve) {
-		this.pitchCurve = pitchCurve;
-	}
+  public void setPitchCurve(final Curve pitchCurve) {
+    this.pitchCurve = pitchCurve;
+  }
 
-	public void setRoll2TailMix(final int roll2TailMix) {
-		this.roll2TailMix = roll2TailMix;
-	}
+  public void setRoll2TailMix(final int roll2TailMix) {
+    this.roll2TailMix = roll2TailMix;
+  }
 
-	public void setRoll2ThrottleMix(final int roll2ThrottleMix) {
-		this.roll2ThrottleMix = roll2ThrottleMix;
-	}
+  public void setRoll2ThrottleMix(final int roll2ThrottleMix) {
+    this.roll2ThrottleMix = roll2ThrottleMix;
+  }
 
-	public void setSwashplateLimit(final int limit) {
-		swashplateLimit = limit;
-	}
+  public void setSwashplateLimit(final int limit) {
+    swashplateLimit = limit;
+  }
 
-	public void setSwashplateRotation(final int swashplateRotation) {
-		this.swashplateRotation = swashplateRotation;
-	}
+  public void setSwashplateRotation(final int swashplateRotation) {
+    this.swashplateRotation = swashplateRotation;
+  }
 
-	public void setTail2ThrottleMix(final int tail2ThrottleMix) {
-		this.tail2ThrottleMix = tail2ThrottleMix;
-	}
+  public void setTail2ThrottleMix(final int tail2ThrottleMix) {
+    this.tail2ThrottleMix = tail2ThrottleMix;
+  }
 
-	public void setTailCurve(final Curve tailCurve) {
-		this.tailCurve = tailCurve;
-	}
+  public void setTailCurve(final Curve tailCurve) {
+    this.tailCurve = tailCurve;
+  }
 
-	public void setThrottleCurve(final Curve throttleCurve) {
-		this.throttleCurve = throttleCurve;
-	}
+  public void setThrottleCurve(final Curve throttleCurve) {
+    this.throttleCurve = throttleCurve;
+  }
 }

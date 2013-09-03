@@ -23,11 +23,11 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum Function {
-	Aileron, Brake, Delta, Elevator, Flap, Nick, Pitch, Reduction, Roll, Rudder, TailRotor, Throttle, Unknown, VTail;
+  Aileron, Brake, Delta, Elevator, Flap, Nick, Pitch, Reduction, Roll, Rudder, TailRotor, Throttle, Unknown, VTail;
 
-	/** @return the locale-dependent message */
-	@Override
-	public String toString() {
-		return ResourceBundle.getBundle(getClass().getName()).getString(name());
-	}
+  /** @return the locale-dependent message */
+  @Override
+  public String toString() {
+    return ResourceBundle.getBundle(getClass().getName()).getString(name());
+  }
 }

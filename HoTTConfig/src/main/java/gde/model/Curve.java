@@ -40,224 +40,215 @@ import org.eclipse.swt.widgets.Display;
  * 
  */
 public class Curve {
-	private static final String	PREFIX		= "data:image/png;base64,";
+  private static final String PREFIX    = "data:image/png;base64,";
 
-	private CurvePoint[]				point;
-	private boolean							smoothing	= false;
-	private CurveType						type;
+  private CurvePoint[]        point;
+  private boolean             smoothing = false;
+  private CurveType           type;
 
-	public Image getImage(final float scale) {
-		return getImage(scale, true);
-	}
+  public Image getImage(final float scale) {
+    return getImage(scale, true);
+  }
 
-	public Image getImage(final float scale, final boolean description) {
-		// pitch curves start with 0% instead of -100%
-		final boolean pitchCurve = point[0].getPosition() == 0;
+  public Image getImage(final float scale, final boolean description) {
+    // pitch curves start with 0% instead of -100%
+    final boolean pitchCurve = point[0].getPosition() == 0;
 
-		Image image = null;
-		GC g = null;
+    Image image = null;
+    GC g = null;
 
-		try {
-			// 200x250 pixel image with 5 pixel border scaled by factor scale
-			image = new Image(Display.getDefault(), (int) (10 + 200 * scale), (int) (10 + 250 * scale));
-			g = new GC(image);
-			g.setAntialias(SWT.ON);
-			g.setTextAntialias(SWT.ON);
+    try {
+      // 200x250 pixel image with 5 pixel border scaled by factor scale
+      image = new Image(Display.getDefault(), (int) (10 + 200 * scale), (int) (10 + 250 * scale));
+      g = new GC(image);
+      g.setAntialias(SWT.ON);
+      g.setTextAntialias(SWT.ON);
 
-			// clear background
-			g.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
-			g.fillRectangle(0, 0, (int) (10 + 200 * scale), (int) (10 + 250 * scale));
+      // clear background
+      g.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+      g.fillRectangle(0, 0, (int) (10 + 200 * scale), (int) (10 + 250 * scale));
 
-			// outer rectangle
-			g.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_BLACK));
-			g.setLineWidth(1);
-			g.drawRectangle(5, 5, (int) (200 * scale), (int) (250 * scale));
+      // outer rectangle
+      g.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_BLACK));
+      g.setLineWidth(1);
+      g.drawRectangle(5, 5, (int) (200 * scale), (int) (250 * scale));
 
-			g.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_GRAY));
+      g.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_GRAY));
 
-			// +100% horizontal line
-			g.drawLine(5, (int) (5 + 25 * scale), (int) (5 + 200 * scale), (int) (5 + 25 * scale));
+      // +100% horizontal line
+      g.drawLine(5, (int) (5 + 25 * scale), (int) (5 + 200 * scale), (int) (5 + 25 * scale));
 
-			// -100% horizontal line
-			g.drawLine(5, (int) (5 + 225 * scale), (int) (5 + 200 * scale), (int) (5 + 225 * scale));
+      // -100% horizontal line
+      g.drawLine(5, (int) (5 + 225 * scale), (int) (5 + 200 * scale), (int) (5 + 225 * scale));
 
-			if (!pitchCurve) {
-				// 0% horizontal line
-				g.drawLine(5, (int) (5 + 125 * scale), (int) (5 + 200 * scale), (int) (5 + 125 * scale));
+      if (!pitchCurve) {
+        // 0% horizontal line
+        g.drawLine(5, (int) (5 + 125 * scale), (int) (5 + 200 * scale), (int) (5 + 125 * scale));
 
-				// 0% vertical line
-				g.drawLine((int) (5 + 100 * scale), 5, (int) (5 + 100 * scale), (int) (5 + 250 * scale));
-			}
+        // 0% vertical line
+        g.drawLine((int) (5 + 100 * scale), 5, (int) (5 + 100 * scale), (int) (5 + 250 * scale));
+      }
 
-			if (point != null) {
-				g.setFont(new Font(Display.getDefault(), new FontData("Arial", 10, SWT.BOLD)));
-				g.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_BLACK));
+      if (point != null) {
+        g.setFont(new Font(Display.getDefault(), new FontData("Arial", 10, SWT.BOLD)));
+        g.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_BLACK));
 
-				// determine number of enabled curve points
-				int numPoints = 0;
-				for (final CurvePoint p : point) {
-					if (p.isEnabled()) {
-						numPoints++;
-					}
-				}
+        // determine number of enabled curve points
+        int numPoints = 0;
+        for (final CurvePoint p : point) {
+          if (p.isEnabled()) {
+            numPoints++;
+          }
+        }
 
-				final double[] xVals = new double[numPoints];
-				final double[] yVals = new double[numPoints];
-				int i = 0;
+        final double[] xVals = new double[numPoints];
+        final double[] yVals = new double[numPoints];
+        int i = 0;
 
-				// store coordinates
-				for (final CurvePoint p : point) {
-					if (p.isEnabled()) {
-						if (i == 0) {
-							// first point x coordinate is fixed to -100% (0% for pitch curve)
-							xVals[i] = pitchCurve ? 0 : -100;
-						}
-						else if (i == numPoints - 1) {
-							// last point x coordinate is fixed to +100%
-							xVals[i] = 100;
-						}
-						else {
-							xVals[i] = p.getPosition();
-						}
-						yVals[i] = p.getValue();
+        // store coordinates
+        for (final CurvePoint p : point) {
+          if (p.isEnabled()) {
+            if (i == 0) {
+              // first point x coordinate is fixed to -100% (0% for pitch curve)
+              xVals[i] = pitchCurve ? 0 : -100;
+            } else if (i == numPoints - 1) {
+              // last point x coordinate is fixed to +100%
+              xVals[i] = 100;
+            } else {
+              xVals[i] = p.getPosition();
+            }
+            yVals[i] = p.getValue();
 
-						if (description) {
-							int x0;
-							int y0;
+            if (description) {
+              int x0;
+              int y0;
 
-							if (pitchCurve) {
-								x0 = (int) (5 + xVals[i] * 2 * scale);
-								y0 = (int) (5 + (225 - yVals[i] * 2) * scale);
-							}
-							else {
-								x0 = (int) (5 + (100 + xVals[i]) * scale);
-								y0 = (int) (5 + (125 - yVals[i]) * scale);
-							}
+              if (pitchCurve) {
+                x0 = (int) (5 + xVals[i] * 2 * scale);
+                y0 = (int) (5 + (225 - yVals[i] * 2) * scale);
+              } else {
+                x0 = (int) (5 + (100 + xVals[i]) * scale);
+                y0 = (int) (5 + (125 - yVals[i]) * scale);
+              }
 
-							// draw point
-							g.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_BLACK));
-							g.fillOval(x0 - 3, y0 - 3, 6, 6);
-							
-							// draw text
-							g.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
-							g.fillRectangle(x0 - 5, y0 + 3, 9, 13);
-							g.drawText(Integer.toString(p.getNumber() + 1), x0 - 4, y0 + 2, true);
-						}
+              // draw point
+              g.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_BLACK));
+              g.fillOval(x0 - 3, y0 - 3, 6, 6);
 
-						i++;
-					}
-				}
+              // draw text
+              g.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+              g.fillRectangle(x0 - 5, y0 + 3, 9, 13);
+              g.drawText(Integer.toString(p.getNumber() + 1), x0 - 4, y0 + 2, true);
+            }
 
-				g.setLineWidth(2);
+            i++;
+          }
+        }
 
-				if (numPoints > 2 && isSmoothing()) {
-					// use a spline interpolator to smooth the curve
-					final SplineInterpolator s = new SplineInterpolator();
-					final PolynomialSplineFunction function = s.interpolate(xVals, yVals);
+        g.setLineWidth(2);
 
-					int x0 = 5;
-					int y0;
+        if (numPoints > 2 && isSmoothing()) {
+          // use a spline interpolator to smooth the curve
+          final SplineInterpolator s = new SplineInterpolator();
+          final PolynomialSplineFunction function = s.interpolate(xVals, yVals);
 
-					// starting point screen coordinates
-					if (pitchCurve) {
-						y0 = (int) (5 + (225 - yVals[0] * 2) * scale);
-					}
-					else {
-						y0 = (int) (5 + (125 - yVals[0]) * scale);
-					}
+          int x0 = 5;
+          int y0;
 
-					// draw line pixel-by-pixel
-					while (x0 < (int) (4 + 200 * scale)) {
-						int x1 = x0 + 1;
-						int y1;
-						
-						if (pitchCurve) {
-							y1 = (int) (5 + (225 - function.value((x1 - 5) / scale / 2) * 2) * scale);
-						}
-						else {
-							y1 = (int) (5 + (125 - function.value((x1 - 5) / scale - 100)) * scale);
-						}
+          // starting point screen coordinates
+          if (pitchCurve) {
+            y0 = (int) (5 + (225 - yVals[0] * 2) * scale);
+          } else {
+            y0 = (int) (5 + (125 - yVals[0]) * scale);
+          }
 
-						g.drawLine(x0, y0, x1, y1);
+          // draw line pixel-by-pixel
+          while (x0 < (int) (4 + 200 * scale)) {
+            final int x1 = x0 + 1;
+            int y1;
 
-						x0 = x1;
-						y0 = y1;
-					}
-				}
-				else {
-					// draw line segments
-					for (i = 0; i < numPoints - 1; i++) {
-						int x0, y0, x1, y1;
+            if (pitchCurve) {
+              y1 = (int) (5 + (225 - function.value((x1 - 5) / scale / 2) * 2) * scale);
+            } else {
+              y1 = (int) (5 + (125 - function.value((x1 - 5) / scale - 100)) * scale);
+            }
 
-						if (pitchCurve) {
-							x0 = (int) (5 + xVals[i] * 2 * scale);
-							y0 = (int) (5 + (225 - yVals[i] * 2) * scale);
+            g.drawLine(x0, y0, x1, y1);
 
-							x1 = (int) (5 + xVals[i + 1] * 2 * scale);
-							y1 = (int) (5 + (225 - yVals[i + 1] * 2) * scale);
-						}
-						else {
-							x0 = (int) (5 + (100 + xVals[i]) * scale);
-							y0 = (int) (5 + (125 - yVals[i]) * scale);
+            x0 = x1;
+            y0 = y1;
+          }
+        } else {
+          // draw line segments
+          for (i = 0; i < numPoints - 1; i++) {
+            int x0, y0, x1, y1;
 
-							x1 = (int) (5 + (100 + xVals[i + 1]) * scale);
-							y1 = (int) (5 + (125 - yVals[i + 1]) * scale);
-						}
+            if (pitchCurve) {
+              x0 = (int) (5 + xVals[i] * 2 * scale);
+              y0 = (int) (5 + (225 - yVals[i] * 2) * scale);
 
-						g.drawLine(x0, y0, x1, y1);
-					}
-				}
-			}
-		}
-		finally {
-			if (g != null) {
-				g.dispose();
-			}
-		}
+              x1 = (int) (5 + xVals[i + 1] * 2 * scale);
+              y1 = (int) (5 + (225 - yVals[i + 1] * 2) * scale);
+            } else {
+              x0 = (int) (5 + (100 + xVals[i]) * scale);
+              y0 = (int) (5 + (125 - yVals[i]) * scale);
 
-		return image;
-	}
+              x1 = (int) (5 + (100 + xVals[i + 1]) * scale);
+              y1 = (int) (5 + (125 - yVals[i + 1]) * scale);
+            }
 
-	public String getImageSource(final float scale) {
-		return getImageSource(scale, true);
-	}
+            g.drawLine(x0, y0, x1, y1);
+          }
+        }
+      }
+    } finally {
+      if (g != null) {
+        g.dispose();
+      }
+    }
 
-	public String getImageSource(final float scale, final boolean desciption) {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		final ImageLoader imageLoader = new ImageLoader();
-		try {
-			imageLoader.data = new ImageData[] { getImage(scale, desciption).getImageData() };
-			imageLoader.save(baos, SWT.IMAGE_PNG);
-		}
-		catch (final Exception e) {
-			e.printStackTrace();
-		}
-		return PREFIX + Base64.encodeBase64String(baos.toByteArray());
+    return image;
+  }
 
-	}
+  public String getImageSource(final float scale) {
+    return getImageSource(scale, true);
+  }
 
-	@XmlElementWrapper(name = "points")
-	public CurvePoint[] getPoint() {
-		return point;
-	}
+  public String getImageSource(final float scale, final boolean desciption) {
+    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    final ImageLoader imageLoader = new ImageLoader();
+    try {
+      imageLoader.data = new ImageData[] { getImage(scale, desciption).getImageData() };
+      imageLoader.save(baos, SWT.IMAGE_PNG);
+    } catch (final Exception e) {
+      e.printStackTrace();
+    }
+    return PREFIX + Base64.encodeBase64String(baos.toByteArray());
 
-	public CurveType getType() {
-		return type;
-	}
+  }
 
-	public boolean isSmoothing() {
-		return smoothing;
-	}
+  @XmlElementWrapper(name = "points")
+  public CurvePoint[] getPoint() {
+    return point;
+  }
 
-	public void setPoint(final CurvePoint[] point) {
-		this.point = point;
-	}
+  public CurveType getType() {
+    return type;
+  }
 
-	public void setSmoothing(final boolean smoothing) {
-		this.smoothing = smoothing;
-	}
+  public boolean isSmoothing() {
+    return smoothing;
+  }
 
-	public void setType(final CurveType type) {
-		this.type = type;
-	}
+  public void setPoint(final CurvePoint[] point) {
+    this.point = point;
+  }
+
+  public void setSmoothing(final boolean smoothing) {
+    this.smoothing = smoothing;
+  }
+
+  public void setType(final CurveType type) {
+    this.type = type;
+  }
 }

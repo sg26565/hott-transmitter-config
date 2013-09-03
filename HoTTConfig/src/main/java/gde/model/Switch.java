@@ -30,82 +30,80 @@ import javax.xml.bind.annotation.XmlID;
  * @author oli@treichels.de
  */
 public class Switch {
-	private SwitchAssignment	assignment;
-	private int								direction;
-	private SwitchFunction		function;
-	private int								number;
-	private Object[]					qualifier;
+  private SwitchAssignment assignment;
+  private int              direction;
+  private SwitchFunction   function;
+  private int              number;
+  private Object[]         qualifier;
 
-	public SwitchAssignment getAssignment() {
-		return assignment;
-	}
+  public SwitchAssignment getAssignment() {
+    return assignment;
+  }
 
-	public int getDirection() {
-		return direction;
-	}
+  public int getDirection() {
+    return direction;
+  }
 
-	public SwitchFunction getFunction() {
-		return function;
-	}
+  public SwitchFunction getFunction() {
+    return function;
+  }
 
-	@XmlID
-	@XmlAttribute
-	public String getId() {
-		final StringBuilder b = new StringBuilder();
+  @XmlID
+  @XmlAttribute
+  public String getId() {
+    final StringBuilder b = new StringBuilder();
 
-		b.append(function.name());
+    b.append(function.name());
 
-		if (qualifier != null) {
-			for (final Object q : qualifier) {
-				b.append("_");
+    if (qualifier != null) {
+      for (final Object q : qualifier) {
+        b.append("_");
 
-				if (q.getClass().isEnum()) {
-					try {
-						final Method m = q.getClass().getMethod("name");
-						b.append(m.invoke(q));
-					}
-					catch (final Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
-				else {
-					b.append(q.toString());
-				}
-			}
-		}
+        if (q.getClass().isEnum()) {
+          try {
+            final Method m = q.getClass().getMethod("name");
+            b.append(m.invoke(q));
+          } catch (final Exception e) {
+            throw new RuntimeException(e);
+          }
+        } else {
+          b.append(q.toString());
+        }
+      }
+    }
 
-		return b.toString();
-	}
+    return b.toString();
+  }
 
-	public int getNumber() {
-		return number;
-	}
+  public int getNumber() {
+    return number;
+  }
 
-	public Object[] getQualifier() {
-		return qualifier;
-	}
+  public Object[] getQualifier() {
+    return qualifier;
+  }
 
-	public SwitchType getType() {
-		return getAssignment() == null ? SwitchType.Unknown : getAssignment().getType();
-	}
+  public SwitchType getType() {
+    return getAssignment() == null ? SwitchType.Unknown : getAssignment().getType();
+  }
 
-	public void setAssignment(final SwitchAssignment assigment) {
-		assignment = assigment;
-	}
+  public void setAssignment(final SwitchAssignment assigment) {
+    assignment = assigment;
+  }
 
-	public void setDirection(final int position) {
-		direction = position;
-	}
+  public void setDirection(final int position) {
+    direction = position;
+  }
 
-	public void setFunction(final SwitchFunction function) {
-		this.function = function;
-	}
+  public void setFunction(final SwitchFunction function) {
+    this.function = function;
+  }
 
-	public void setNumber(final int number) {
-		this.number = number;
-	}
+  public void setNumber(final int number) {
+    this.number = number;
+  }
 
-	public void setQualifier(final Object[] qualifier) {
-		this.qualifier = qualifier;
-	}
+  public void setQualifier(final Object[] qualifier) {
+    this.qualifier = qualifier;
+  }
 }

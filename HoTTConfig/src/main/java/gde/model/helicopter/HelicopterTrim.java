@@ -17,36 +17,35 @@
  */
 package gde.model.helicopter;
 
-
 /**
  * @author oli@treichels.de
  */
 public class HelicopterTrim {
-	private int nickStickTrim;
-	private int rollStickTrim;
-	private int tailStickTrim;
+  private int nickStickTrim;
+  private int rollStickTrim;
+  private int tailStickTrim;
 
-	public int getNickStickTrim() {
-		return nickStickTrim;
-	}
+  public int getNickStickTrim() {
+    return nickStickTrim;
+  }
 
-	public int getRollStickTrim() {
-		return rollStickTrim;
-	}
+  public int getRollStickTrim() {
+    return rollStickTrim;
+  }
 
-	public int getTailStickTrim() {
-		return tailStickTrim;
-	}
+  public int getTailStickTrim() {
+    return tailStickTrim;
+  }
 
-	public void setNickStickTrim(final int nickStickTrim) {
-		this.nickStickTrim = nickStickTrim;
-	}
+  public void setNickStickTrim(final int nickStickTrim) {
+    this.nickStickTrim = nickStickTrim;
+  }
 
-	public void setRollStickTrim(final int rollStickTrim) {
-		this.rollStickTrim = rollStickTrim;
-	}
+  public void setRollStickTrim(final int rollStickTrim) {
+    this.rollStickTrim = rollStickTrim;
+  }
 
-	public void setTailStickTrim(final int tailStickTrim) {
-		this.tailStickTrim = tailStickTrim;
-	}
+  public void setTailStickTrim(final int tailStickTrim) {
+    this.tailStickTrim = tailStickTrim;
+  }
 }

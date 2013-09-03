@@ -22,13 +22,13 @@ package gde.model;
  * 
  */
 public class CurveMixer extends FreeMixer {
-	private Curve curve;
+  private Curve curve;
 
-	public Curve getCurve() {
-		return curve;
-	}
+  public Curve getCurve() {
+    return curve;
+  }
 
-	public void setCurve(final Curve curve) {
-		this.curve = curve;
-	}
+  public void setCurve(final Curve curve) {
+    this.curve = curve;
+  }
 }

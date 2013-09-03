@@ -24,101 +24,101 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class PhaseAssignment {
-	private Phase[] assignment;
-	private Switch combiCSwitch;
-	private Switch combiDSwitch;
-	private Switch combiESwitch;
-	private Switch combiFSwitch;
-	private Switch priorityASwitch;
-	private Switch priorityBSwitch;
+  private Phase[] assignment;
+  private Switch  combiCSwitch;
+  private Switch  combiDSwitch;
+  private Switch  combiESwitch;
+  private Switch  combiFSwitch;
+  private Switch  priorityASwitch;
+  private Switch  priorityBSwitch;
 
-	@XmlIDREF
-	@XmlElementWrapper(name = "assignments")
-	public Phase[] getAssignment() {
-		return assignment;
-	}
+  @XmlIDREF
+  @XmlElementWrapper(name = "assignments")
+  public Phase[] getAssignment() {
+    return assignment;
+  }
 
-	@XmlIDREF
-	public Switch getCombiCSwitch() {
-		return combiCSwitch;
-	}
+  @XmlIDREF
+  public Switch getCombiCSwitch() {
+    return combiCSwitch;
+  }
 
-	@XmlIDREF
-	public Switch getCombiDSwitch() {
-		return combiDSwitch;
-	}
+  @XmlIDREF
+  public Switch getCombiDSwitch() {
+    return combiDSwitch;
+  }
 
-	@XmlIDREF
-	public Switch getCombiESwitch() {
-		return combiESwitch;
-	}
+  @XmlIDREF
+  public Switch getCombiESwitch() {
+    return combiESwitch;
+  }
 
-	@XmlIDREF
-	public Switch getCombiFSwitch() {
-		return combiFSwitch;
-	}
+  @XmlIDREF
+  public Switch getCombiFSwitch() {
+    return combiFSwitch;
+  }
 
-	public Phase getCombiPhase(final boolean c, final boolean d, final boolean e, final boolean f) {
-		final int number = (c ? 8 : 0) + (d ? 4 : 0) + (e ? 2 : 0) + (f ? 1 : 0);
+  public Phase getCombiPhase(final boolean c, final boolean d, final boolean e, final boolean f) {
+    final int number = (c ? 8 : 0) + (d ? 4 : 0) + (e ? 2 : 0) + (f ? 1 : 0);
 
-		return getCombiPhase(number);
-	}
+    return getCombiPhase(number);
+  }
 
-	public Phase getCombiPhase(final int number) {
-		if (number == 0) {
-			return getNormalPhase();
-		} else {
-			return assignment[number + 2];
-		}
-	}
+  public Phase getCombiPhase(final int number) {
+    if (number == 0) {
+      return getNormalPhase();
+    } else {
+      return assignment[number + 2];
+    }
+  }
 
-	public Phase getNormalPhase() {
-		return assignment[0];
-	}
+  public Phase getNormalPhase() {
+    return assignment[0];
+  }
 
-	public Phase getPriorityAPhase() {
-		return assignment[1];
-	}
+  public Phase getPriorityAPhase() {
+    return assignment[1];
+  }
 
-	@XmlIDREF
-	public Switch getPriorityASwitch() {
-		return priorityASwitch;
-	}
+  @XmlIDREF
+  public Switch getPriorityASwitch() {
+    return priorityASwitch;
+  }
 
-	public Phase getPriorityBPhase() {
-		return assignment[2];
-	}
+  public Phase getPriorityBPhase() {
+    return assignment[2];
+  }
 
-	@XmlIDREF
-	public Switch getPriorityBSwitch() {
-		return priorityBSwitch;
-	}
+  @XmlIDREF
+  public Switch getPriorityBSwitch() {
+    return priorityBSwitch;
+  }
 
-	public void setAssignment(final Phase[] assignment) {
-		this.assignment = assignment;
-	}
+  public void setAssignment(final Phase[] assignment) {
+    this.assignment = assignment;
+  }
 
-	public void setCombiCSwitch(final Switch combiCSwitch) {
-		this.combiCSwitch = combiCSwitch;
-	}
+  public void setCombiCSwitch(final Switch combiCSwitch) {
+    this.combiCSwitch = combiCSwitch;
+  }
 
-	public void setCombiDSwitch(final Switch combiDSwitch) {
-		this.combiDSwitch = combiDSwitch;
-	}
+  public void setCombiDSwitch(final Switch combiDSwitch) {
+    this.combiDSwitch = combiDSwitch;
+  }
 
-	public void setCombiESwitch(final Switch combiESwitch) {
-		this.combiESwitch = combiESwitch;
-	}
+  public void setCombiESwitch(final Switch combiESwitch) {
+    this.combiESwitch = combiESwitch;
+  }
 
-	public void setCombiFSwitch(final Switch combiFSwitch) {
-		this.combiFSwitch = combiFSwitch;
-	}
+  public void setCombiFSwitch(final Switch combiFSwitch) {
+    this.combiFSwitch = combiFSwitch;
+  }
 
-	public void setPriorityASwitch(final Switch priorityASwitch) {
-		this.priorityASwitch = priorityASwitch;
-	}
+  public void setPriorityASwitch(final Switch priorityASwitch) {
+    this.priorityASwitch = priorityASwitch;
+  }
 
-	public void setPriorityBSwitch(final Switch priorityBSwitch) {
-		this.priorityBSwitch = priorityBSwitch;
-	}
+  public void setPriorityBSwitch(final Switch priorityBSwitch) {
+    this.priorityBSwitch = priorityBSwitch;
+  }
 }

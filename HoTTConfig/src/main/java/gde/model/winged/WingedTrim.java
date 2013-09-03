@@ -21,58 +21,58 @@ package gde.model.winged;
  * @author oli@treichels.de
  */
 public class WingedTrim {
-	private int[] aileronPhaseTrim;
-	private int aileronStickTrim;
-	private int elevatorPhaseTrim;
-	private int elevatorStickTrim;
-	private int[] flapPhaseTrim;
-	private int rudderStickTrim;
+  private int[] aileronPhaseTrim;
+  private int   aileronStickTrim;
+  private int   elevatorPhaseTrim;
+  private int   elevatorStickTrim;
+  private int[] flapPhaseTrim;
+  private int   rudderStickTrim;
 
-	public int[] getAileronPhaseTrim() {
-		return aileronPhaseTrim;
-	}
+  public int[] getAileronPhaseTrim() {
+    return aileronPhaseTrim;
+  }
 
-	public int getAileronStickTrim() {
-		return aileronStickTrim;
-	}
+  public int getAileronStickTrim() {
+    return aileronStickTrim;
+  }
 
-	public int getElevatorPhaseTrim() {
-		return elevatorPhaseTrim;
-	}
+  public int getElevatorPhaseTrim() {
+    return elevatorPhaseTrim;
+  }
 
-	public int getElevatorStickTrim() {
-		return elevatorStickTrim;
-	}
+  public int getElevatorStickTrim() {
+    return elevatorStickTrim;
+  }
 
-	public int[] getFlapPhaseTrim() {
-		return flapPhaseTrim;
-	}
+  public int[] getFlapPhaseTrim() {
+    return flapPhaseTrim;
+  }
 
-	public int getRudderStickTrim() {
-		return rudderStickTrim;
-	}
+  public int getRudderStickTrim() {
+    return rudderStickTrim;
+  }
 
-	public void setAileronPhaseTrim(final int[] aileronPhaseTrim) {
-		this.aileronPhaseTrim = aileronPhaseTrim;
-	}
+  public void setAileronPhaseTrim(final int[] aileronPhaseTrim) {
+    this.aileronPhaseTrim = aileronPhaseTrim;
+  }
 
-	public void setAileronStickTrim(final int aileronStickTrim) {
-		this.aileronStickTrim = aileronStickTrim;
-	}
+  public void setAileronStickTrim(final int aileronStickTrim) {
+    this.aileronStickTrim = aileronStickTrim;
+  }
 
-	public void setElevatorPhaseTrim(final int elevatorPhaseTrim) {
-		this.elevatorPhaseTrim = elevatorPhaseTrim;
-	}
+  public void setElevatorPhaseTrim(final int elevatorPhaseTrim) {
+    this.elevatorPhaseTrim = elevatorPhaseTrim;
+  }
 
-	public void setElevatorStickTrim(final int elevtorStickTrim) {
-		this.elevatorStickTrim = elevtorStickTrim;
-	}
+  public void setElevatorStickTrim(final int elevtorStickTrim) {
+    elevatorStickTrim = elevtorStickTrim;
+  }
 
-	public void setFlapPhaseTrim(final int[] flapPhaseTrim) {
-		this.flapPhaseTrim = flapPhaseTrim;
-	}
+  public void setFlapPhaseTrim(final int[] flapPhaseTrim) {
+    this.flapPhaseTrim = flapPhaseTrim;
+  }
 
-	public void setRudderStickTrim(final int rudderStickTrim) {
-		this.rudderStickTrim = rudderStickTrim;
-	}
+  public void setRudderStickTrim(final int rudderStickTrim) {
+    this.rudderStickTrim = rudderStickTrim;
+  }
 }
