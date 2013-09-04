@@ -25,6 +25,30 @@ public class SwashplateMix {
   private int pitchMix;
   private int rollMix;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final SwashplateMix other = (SwashplateMix) obj;
+    if (nickMix != other.nickMix) {
+      return false;
+    }
+    if (pitchMix != other.pitchMix) {
+      return false;
+    }
+    if (rollMix != other.rollMix) {
+      return false;
+    }
+    return true;
+  }
+
   public int getNickMix() {
     return nickMix;
   }
@@ -35,6 +59,16 @@ public class SwashplateMix {
 
   public int getRollMix() {
     return rollMix;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + nickMix;
+    result = prime * result + pitchMix;
+    result = prime * result + rollMix;
+    return result;
   }
 
   public void setNickMix(final int nickMix) {

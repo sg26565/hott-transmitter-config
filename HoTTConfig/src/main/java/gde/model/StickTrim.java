@@ -31,6 +31,36 @@ public class StickTrim {
   private int      timeHigh;
   private int      timeLow;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final StickTrim other = (StickTrim) obj;
+    if (channel != other.channel) {
+      return false;
+    }
+    if (increment != other.increment) {
+      return false;
+    }
+    if (mode != other.mode) {
+      return false;
+    }
+    if (timeHigh != other.timeHigh) {
+      return false;
+    }
+    if (timeLow != other.timeLow) {
+      return false;
+    }
+    return true;
+  }
+
   @XmlAttribute
   public int getChannel() {
     return channel;
@@ -50,6 +80,18 @@ public class StickTrim {
 
   public int getTimeLow() {
     return timeLow;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + channel;
+    result = prime * result + increment;
+    result = prime * result + (mode == null ? 0 : mode.hashCode());
+    result = prime * result + timeHigh;
+    result = prime * result + timeLow;
+    return result;
   }
 
   public void setChannel(final int channel) {

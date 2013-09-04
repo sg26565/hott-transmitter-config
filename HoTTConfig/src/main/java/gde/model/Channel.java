@@ -21,6 +21,8 @@ import gde.model.enums.FailSafeMode;
 import gde.model.enums.Function;
 import gde.model.enums.TrainerMode;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlID;
@@ -43,6 +45,67 @@ public class Channel {
   private int                   travelHigh;
   private int                   travelLow;
   private boolean               virtual = false;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final Channel other = (Channel) obj;
+    if (center != other.center) {
+      return false;
+    }
+    if (failSafeMode != other.failSafeMode) {
+      return false;
+    }
+    if (failSafePosition != other.failSafePosition) {
+      return false;
+    }
+    if (function != other.function) {
+      return false;
+    }
+    if (limitHigh != other.limitHigh) {
+      return false;
+    }
+    if (limitLow != other.limitLow) {
+      return false;
+    }
+    if (mixOnly != other.mixOnly) {
+      return false;
+    }
+    if (number == null) {
+      if (other.number != null) {
+        return false;
+      }
+    } else if (!number.equals(other.number)) {
+      return false;
+    }
+    if (!Arrays.equals(phaseSetting, other.phaseSetting)) {
+      return false;
+    }
+    if (reverse != other.reverse) {
+      return false;
+    }
+    if (trainerMode != other.trainerMode) {
+      return false;
+    }
+    if (travelHigh != other.travelHigh) {
+      return false;
+    }
+    if (travelLow != other.travelLow) {
+      return false;
+    }
+    if (virtual != other.virtual) {
+      return false;
+    }
+    return true;
+  }
 
   public int getCenter() {
     return center;
@@ -89,6 +152,27 @@ public class Channel {
 
   public int getTravelLow() {
     return travelLow;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + center;
+    result = prime * result + (failSafeMode == null ? 0 : failSafeMode.hashCode());
+    result = prime * result + failSafePosition;
+    result = prime * result + (function == null ? 0 : function.hashCode());
+    result = prime * result + limitHigh;
+    result = prime * result + limitLow;
+    result = prime * result + (mixOnly ? 1231 : 1237);
+    result = prime * result + (number == null ? 0 : number.hashCode());
+    result = prime * result + Arrays.hashCode(phaseSetting);
+    result = prime * result + (reverse ? 1231 : 1237);
+    result = prime * result + (trainerMode == null ? 0 : trainerMode.hashCode());
+    result = prime * result + travelHigh;
+    result = prime * result + travelLow;
+    result = prime * result + (virtual ? 1231 : 1237);
+    return result;
   }
 
   public boolean isMixOnly() {

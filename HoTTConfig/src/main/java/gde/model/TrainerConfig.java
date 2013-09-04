@@ -32,6 +32,51 @@ public class TrainerConfig {
   private long                trainerId;
   private boolean             wireless;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final TrainerConfig other = (TrainerConfig) obj;
+    if (pupilChannel == null) {
+      if (other.pupilChannel != null) {
+        return false;
+      }
+    } else if (!pupilChannel.equals(other.pupilChannel)) {
+      return false;
+    }
+    if (pupilId != other.pupilId) {
+      return false;
+    }
+    if (sw == null) {
+      if (other.sw != null) {
+        return false;
+      }
+    } else if (!sw.equals(other.sw)) {
+      return false;
+    }
+    if (trainerChannel == null) {
+      if (other.trainerChannel != null) {
+        return false;
+      }
+    } else if (!trainerChannel.equals(other.trainerChannel)) {
+      return false;
+    }
+    if (trainerId != other.trainerId) {
+      return false;
+    }
+    if (wireless != other.wireless) {
+      return false;
+    }
+    return true;
+  }
+
   @XmlIDREF
   public Collection<Channel> getPupilChannel() {
     return pupilChannel;
@@ -53,6 +98,19 @@ public class TrainerConfig {
   @XmlIDREF
   public Switch getTrainerSwitch() {
     return sw;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (pupilChannel == null ? 0 : pupilChannel.hashCode());
+    result = prime * result + (int) (pupilId ^ pupilId >>> 32);
+    result = prime * result + (sw == null ? 0 : sw.hashCode());
+    result = prime * result + (trainerChannel == null ? 0 : trainerChannel.hashCode());
+    result = prime * result + (int) (trainerId ^ trainerId >>> 32);
+    result = prime * result + (wireless ? 1231 : 1237);
+    return result;
   }
 
   public boolean isWireless() {

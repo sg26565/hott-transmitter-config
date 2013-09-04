@@ -28,9 +28,43 @@ public class WingedProfiTrim {
   private boolean enabled;
   private Switch  inputControl;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final WingedProfiTrim other = (WingedProfiTrim) obj;
+    if (enabled != other.enabled) {
+      return false;
+    }
+    if (inputControl == null) {
+      if (other.inputControl != null) {
+        return false;
+      }
+    } else if (!inputControl.equals(other.inputControl)) {
+      return false;
+    }
+    return true;
+  }
+
   @XmlIDREF
   public Switch getInputControl() {
     return inputControl;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (enabled ? 1231 : 1237);
+    result = prime * result + (inputControl == null ? 0 : inputControl.hashCode());
+    return result;
   }
 
   public boolean isEnabled() {

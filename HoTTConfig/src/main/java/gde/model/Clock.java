@@ -38,6 +38,53 @@ public class Clock {
   private ClockType     type;
   private int           value;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final Clock other = (Clock) obj;
+    if (alarm != other.alarm) {
+      return false;
+    }
+    if (function != other.function) {
+      return false;
+    }
+    if (mode != other.mode) {
+      return false;
+    }
+    if (number == null) {
+      if (other.number != null) {
+        return false;
+      }
+    } else if (!number.equals(other.number)) {
+      return false;
+    }
+    if (sw == null) {
+      if (other.sw != null) {
+        return false;
+      }
+    } else if (!sw.equals(other.sw)) {
+      return false;
+    }
+    if (timer != other.timer) {
+      return false;
+    }
+    if (type != other.type) {
+      return false;
+    }
+    if (value != other.value) {
+      return false;
+    }
+    return true;
+  }
+
   public int getAlarm() {
     return alarm;
   }
@@ -87,6 +134,21 @@ public class Clock {
 
   public int getValue() {
     return value;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + alarm;
+    result = prime * result + (function == null ? 0 : function.hashCode());
+    result = prime * result + (mode == null ? 0 : mode.hashCode());
+    result = prime * result + (number == null ? 0 : number.hashCode());
+    result = prime * result + (sw == null ? 0 : sw.hashCode());
+    result = prime * result + timer;
+    result = prime * result + (type == null ? 0 : type.hashCode());
+    result = prime * result + value;
+    return result;
   }
 
   public void setAlarm(final int alarm) {

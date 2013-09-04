@@ -39,6 +39,70 @@ public class Control {
   private int         travelLow;
   private int         trim;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final Control other = (Control) obj;
+    if (inputControl == null) {
+      if (other.inputControl != null) {
+        return false;
+      }
+    } else if (!inputControl.equals(other.inputControl)) {
+      return false;
+    }
+    if (mode != other.mode) {
+      return false;
+    }
+    if (number == null) {
+      if (other.number != null) {
+        return false;
+      }
+    } else if (!number.equals(other.number)) {
+      return false;
+    }
+    if (offset != other.offset) {
+      return false;
+    }
+    if (Double.doubleToLongBits(timeHigh) != Double.doubleToLongBits(other.timeHigh)) {
+      return false;
+    }
+    if (Double.doubleToLongBits(timeLow) != Double.doubleToLongBits(other.timeLow)) {
+      return false;
+    }
+    if (toggleHighSwitch == null) {
+      if (other.toggleHighSwitch != null) {
+        return false;
+      }
+    } else if (!toggleHighSwitch.equals(other.toggleHighSwitch)) {
+      return false;
+    }
+    if (toggleLowSwitch == null) {
+      if (other.toggleLowSwitch != null) {
+        return false;
+      }
+    } else if (!toggleLowSwitch.equals(other.toggleLowSwitch)) {
+      return false;
+    }
+    if (travelHigh != other.travelHigh) {
+      return false;
+    }
+    if (travelLow != other.travelLow) {
+      return false;
+    }
+    if (trim != other.trim) {
+      return false;
+    }
+    return true;
+  }
+
   @XmlIDREF
   public Switch getInputControl() {
     return inputControl;
@@ -86,6 +150,27 @@ public class Control {
 
   public int getTrim() {
     return trim;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (inputControl == null ? 0 : inputControl.hashCode());
+    result = prime * result + (mode == null ? 0 : mode.hashCode());
+    result = prime * result + (number == null ? 0 : number.hashCode());
+    result = prime * result + offset;
+    long temp;
+    temp = Double.doubleToLongBits(timeHigh);
+    result = prime * result + (int) (temp ^ temp >>> 32);
+    temp = Double.doubleToLongBits(timeLow);
+    result = prime * result + (int) (temp ^ temp >>> 32);
+    result = prime * result + (toggleHighSwitch == null ? 0 : toggleHighSwitch.hashCode());
+    result = prime * result + (toggleLowSwitch == null ? 0 : toggleLowSwitch.hashCode());
+    result = prime * result + travelHigh;
+    result = prime * result + travelLow;
+    result = prime * result + trim;
+    return result;
   }
 
   public void setInputControl(final Switch controlSwitch) {

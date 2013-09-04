@@ -19,6 +19,8 @@ package gde.model;
 
 import gde.model.enums.SequenceStatus;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -31,6 +33,40 @@ public class ChannelSequencer {
   private Sequence[]     sequence;
   private double[]       stepTime;
   private Switch         sw;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final ChannelSequencer other = (ChannelSequencer) obj;
+    if (maxStep != other.maxStep) {
+      return false;
+    }
+    if (powerOffStatus != other.powerOffStatus) {
+      return false;
+    }
+    if (!Arrays.equals(sequence, other.sequence)) {
+      return false;
+    }
+    if (!Arrays.equals(stepTime, other.stepTime)) {
+      return false;
+    }
+    if (sw == null) {
+      if (other.sw != null) {
+        return false;
+      }
+    } else if (!sw.equals(other.sw)) {
+      return false;
+    }
+    return true;
+  }
 
   public int getMaxStep() {
     return maxStep;
@@ -53,6 +89,18 @@ public class ChannelSequencer {
   @XmlIDREF
   public Switch getSwitch() {
     return sw;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + maxStep;
+    result = prime * result + (powerOffStatus == null ? 0 : powerOffStatus.hashCode());
+    result = prime * result + Arrays.hashCode(sequence);
+    result = prime * result + Arrays.hashCode(stepTime);
+    result = prime * result + (sw == null ? 0 : sw.hashCode());
+    return result;
   }
 
   public void setMaxStep(final int maxStep) {

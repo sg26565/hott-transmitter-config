@@ -19,6 +19,8 @@ package gde.model;
 
 import gde.model.enums.PhaseType;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlID;
@@ -38,6 +40,71 @@ public abstract class Phase {
   private double         phaseSwitchTime;
   private Clock          phaseTimer;
   private PhaseType      phaseType;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final Phase other = (Phase) obj;
+    if (channel1Curve == null) {
+      if (other.channel1Curve != null) {
+        return false;
+      }
+    } else if (!channel1Curve.equals(other.channel1Curve)) {
+      return false;
+    }
+    if (!Arrays.equals(control, other.control)) {
+      return false;
+    }
+    if (!Arrays.equals(dualRateExpo, other.dualRateExpo)) {
+      return false;
+    }
+    if (motorOn != other.motorOn) {
+      return false;
+    }
+    if (number == null) {
+      if (other.number != null) {
+        return false;
+      }
+    } else if (!number.equals(other.number)) {
+      return false;
+    }
+    if (phaseName == null) {
+      if (other.phaseName != null) {
+        return false;
+      }
+    } else if (!phaseName.equals(other.phaseName)) {
+      return false;
+    }
+    if (phaseSwitch == null) {
+      if (other.phaseSwitch != null) {
+        return false;
+      }
+    } else if (!phaseSwitch.equals(other.phaseSwitch)) {
+      return false;
+    }
+    if (Double.doubleToLongBits(phaseSwitchTime) != Double.doubleToLongBits(other.phaseSwitchTime)) {
+      return false;
+    }
+    if (phaseTimer == null) {
+      if (other.phaseTimer != null) {
+        return false;
+      }
+    } else if (!phaseTimer.equals(other.phaseTimer)) {
+      return false;
+    }
+    if (phaseType != other.phaseType) {
+      return false;
+    }
+    return true;
+  }
 
   public Curve getChannel1Curve() {
     return channel1Curve;
@@ -79,6 +146,25 @@ public abstract class Phase {
 
   public PhaseType getPhaseType() {
     return phaseType;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (channel1Curve == null ? 0 : channel1Curve.hashCode());
+    result = prime * result + Arrays.hashCode(control);
+    result = prime * result + Arrays.hashCode(dualRateExpo);
+    result = prime * result + (motorOn ? 1231 : 1237);
+    result = prime * result + (number == null ? 0 : number.hashCode());
+    result = prime * result + (phaseName == null ? 0 : phaseName.hashCode());
+    result = prime * result + (phaseSwitch == null ? 0 : phaseSwitch.hashCode());
+    long temp;
+    temp = Double.doubleToLongBits(phaseSwitchTime);
+    result = prime * result + (int) (temp ^ temp >>> 32);
+    result = prime * result + (phaseTimer == null ? 0 : phaseTimer.hashCode());
+    result = prime * result + (phaseType == null ? 0 : phaseType.hashCode());
+    return result;
   }
 
   public boolean isMotorOn() {

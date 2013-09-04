@@ -17,6 +17,8 @@
  */
 package gde.model;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -31,6 +33,66 @@ public class PhaseAssignment {
   private Switch  combiFSwitch;
   private Switch  priorityASwitch;
   private Switch  priorityBSwitch;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final PhaseAssignment other = (PhaseAssignment) obj;
+    if (!Arrays.equals(assignment, other.assignment)) {
+      return false;
+    }
+    if (combiCSwitch == null) {
+      if (other.combiCSwitch != null) {
+        return false;
+      }
+    } else if (!combiCSwitch.equals(other.combiCSwitch)) {
+      return false;
+    }
+    if (combiDSwitch == null) {
+      if (other.combiDSwitch != null) {
+        return false;
+      }
+    } else if (!combiDSwitch.equals(other.combiDSwitch)) {
+      return false;
+    }
+    if (combiESwitch == null) {
+      if (other.combiESwitch != null) {
+        return false;
+      }
+    } else if (!combiESwitch.equals(other.combiESwitch)) {
+      return false;
+    }
+    if (combiFSwitch == null) {
+      if (other.combiFSwitch != null) {
+        return false;
+      }
+    } else if (!combiFSwitch.equals(other.combiFSwitch)) {
+      return false;
+    }
+    if (priorityASwitch == null) {
+      if (other.priorityASwitch != null) {
+        return false;
+      }
+    } else if (!priorityASwitch.equals(other.priorityASwitch)) {
+      return false;
+    }
+    if (priorityBSwitch == null) {
+      if (other.priorityBSwitch != null) {
+        return false;
+      }
+    } else if (!priorityBSwitch.equals(other.priorityBSwitch)) {
+      return false;
+    }
+    return true;
+  }
 
   @XmlIDREF
   @XmlElementWrapper(name = "assignments")
@@ -92,6 +154,20 @@ public class PhaseAssignment {
   @XmlIDREF
   public Switch getPriorityBSwitch() {
     return priorityBSwitch;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.hashCode(assignment);
+    result = prime * result + (combiCSwitch == null ? 0 : combiCSwitch.hashCode());
+    result = prime * result + (combiDSwitch == null ? 0 : combiDSwitch.hashCode());
+    result = prime * result + (combiESwitch == null ? 0 : combiESwitch.hashCode());
+    result = prime * result + (combiFSwitch == null ? 0 : combiFSwitch.hashCode());
+    result = prime * result + (priorityASwitch == null ? 0 : priorityASwitch.hashCode());
+    result = prime * result + (priorityBSwitch == null ? 0 : priorityBSwitch.hashCode());
+    return result;
   }
 
   public void setAssignment(final Phase[] assignment) {

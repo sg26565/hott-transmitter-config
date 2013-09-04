@@ -20,6 +20,8 @@ package gde.model.winged;
 import gde.model.Curve;
 import gde.model.Phase;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlElementWrapper;
 
 /**
@@ -32,6 +34,44 @@ public class WingedPhase extends Phase {
   private WingedMixer[] multiFlapMixer;
   private WingedMixer[] wingMixer;
   private WingedTrim    wingTrim;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final WingedPhase other = (WingedPhase) obj;
+    if (brakeElevatorCurve == null) {
+      if (other.brakeElevatorCurve != null) {
+        return false;
+      }
+    } else if (!brakeElevatorCurve.equals(other.brakeElevatorCurve)) {
+      return false;
+    }
+    if (!Arrays.equals(brakeMixer, other.brakeMixer)) {
+      return false;
+    }
+    if (!Arrays.equals(multiFlapMixer, other.multiFlapMixer)) {
+      return false;
+    }
+    if (!Arrays.equals(wingMixer, other.wingMixer)) {
+      return false;
+    }
+    if (wingTrim == null) {
+      if (other.wingTrim != null) {
+        return false;
+      }
+    } else if (!wingTrim.equals(other.wingTrim)) {
+      return false;
+    }
+    return true;
+  }
 
   public Curve getBrakeElevatorCurve() {
     return brakeElevatorCurve;
@@ -54,6 +94,18 @@ public class WingedPhase extends Phase {
 
   public WingedTrim getWingTrim() {
     return wingTrim;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + (brakeElevatorCurve == null ? 0 : brakeElevatorCurve.hashCode());
+    result = prime * result + Arrays.hashCode(brakeMixer);
+    result = prime * result + Arrays.hashCode(multiFlapMixer);
+    result = prime * result + Arrays.hashCode(wingMixer);
+    result = prime * result + (wingTrim == null ? 0 : wingTrim.hashCode());
+    return result;
   }
 
   public void setBrakeElevatorCurve(final Curve brakeElevatorCurve) {

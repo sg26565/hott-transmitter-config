@@ -24,6 +24,8 @@ import gde.model.enums.PitchMin;
 import gde.model.enums.RotorDirection;
 import gde.model.enums.SwashplateType;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -49,6 +51,72 @@ public class HelicopterModel extends BaseModel {
 
   public HelicopterModel() {
     super(ModelType.Helicopter);
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final HelicopterModel other = (HelicopterModel) obj;
+    if (autorotationC1TriggerPosition != other.autorotationC1TriggerPosition) {
+      return false;
+    }
+    if (autorotationSwitch == null) {
+      if (other.autorotationSwitch != null) {
+        return false;
+      }
+    } else if (!autorotationSwitch.equals(other.autorotationSwitch)) {
+      return false;
+    }
+    if (autorotationTailPosition != other.autorotationTailPosition) {
+      return false;
+    }
+    if (autorotationThrottlePosition != other.autorotationThrottlePosition) {
+      return false;
+    }
+    if (expoThrottleLimit != other.expoThrottleLimit) {
+      return false;
+    }
+    if (markerSwitch == null) {
+      if (other.markerSwitch != null) {
+        return false;
+      }
+    } else if (!markerSwitch.equals(other.markerSwitch)) {
+      return false;
+    }
+    if (pitchMin != other.pitchMin) {
+      return false;
+    }
+    if (!Arrays.equals(profiTrim, other.profiTrim)) {
+      return false;
+    }
+    if (rotorDirection != other.rotorDirection) {
+      return false;
+    }
+    if (swashplateLinearization != other.swashplateLinearization) {
+      return false;
+    }
+    if (swashplateMix == null) {
+      if (other.swashplateMix != null) {
+        return false;
+      }
+    } else if (!swashplateMix.equals(other.swashplateMix)) {
+      return false;
+    }
+    if (swashplateType != other.swashplateType) {
+      return false;
+    }
+    if (throttleLimitWarning != other.throttleLimitWarning) {
+      return false;
+    }
+    return true;
   }
 
   public int getAutorotationC1TriggerPosition() {
@@ -100,6 +168,26 @@ public class HelicopterModel extends BaseModel {
 
   public int getThrottleLimitWarning() {
     return throttleLimitWarning;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + autorotationC1TriggerPosition;
+    result = prime * result + (autorotationSwitch == null ? 0 : autorotationSwitch.hashCode());
+    result = prime * result + autorotationTailPosition;
+    result = prime * result + autorotationThrottlePosition;
+    result = prime * result + expoThrottleLimit;
+    result = prime * result + (markerSwitch == null ? 0 : markerSwitch.hashCode());
+    result = prime * result + (pitchMin == null ? 0 : pitchMin.hashCode());
+    result = prime * result + Arrays.hashCode(profiTrim);
+    result = prime * result + (rotorDirection == null ? 0 : rotorDirection.hashCode());
+    result = prime * result + (swashplateLinearization ? 1231 : 1237);
+    result = prime * result + (swashplateMix == null ? 0 : swashplateMix.hashCode());
+    result = prime * result + (swashplateType == null ? 0 : swashplateType.hashCode());
+    result = prime * result + throttleLimitWarning;
+    return result;
   }
 
   public boolean isSwashplateLinearization() {

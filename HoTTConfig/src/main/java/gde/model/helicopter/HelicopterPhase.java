@@ -30,6 +30,44 @@ public class HelicopterPhase extends Phase {
   private HelicopterMixer helicopterMixer;
   private HelicopterTrim  helicopterTrim;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final HelicopterPhase other = (HelicopterPhase) obj;
+    if (channel8Value != other.channel8Value) {
+      return false;
+    }
+    if (gyroGain != other.gyroGain) {
+      return false;
+    }
+    if (gyroSuppression != other.gyroSuppression) {
+      return false;
+    }
+    if (helicopterMixer == null) {
+      if (other.helicopterMixer != null) {
+        return false;
+      }
+    } else if (!helicopterMixer.equals(other.helicopterMixer)) {
+      return false;
+    }
+    if (helicopterTrim == null) {
+      if (other.helicopterTrim != null) {
+        return false;
+      }
+    } else if (!helicopterTrim.equals(other.helicopterTrim)) {
+      return false;
+    }
+    return true;
+  }
+
   public int getChannel8Value() {
     return channel8Value;
   }
@@ -48,6 +86,18 @@ public class HelicopterPhase extends Phase {
 
   public HelicopterTrim getHelicopterTrim() {
     return helicopterTrim;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + channel8Value;
+    result = prime * result + gyroGain;
+    result = prime * result + gyroSuppression;
+    result = prime * result + (helicopterMixer == null ? 0 : helicopterMixer.hashCode());
+    result = prime * result + (helicopterTrim == null ? 0 : helicopterTrim.hashCode());
+    return result;
   }
 
   public void setChannel8Value(final int channel8Value) {

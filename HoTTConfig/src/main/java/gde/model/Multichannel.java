@@ -19,6 +19,8 @@ package gde.model;
 
 import gde.model.enums.MultichannelMode;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
@@ -32,6 +34,40 @@ public class Multichannel {
   private Channel          inputChannel;
   private MultichannelMode mode;
   private int              number;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final Multichannel other = (Multichannel) obj;
+    if (!Arrays.equals(control, other.control)) {
+      return false;
+    }
+    if (enabled != other.enabled) {
+      return false;
+    }
+    if (inputChannel == null) {
+      if (other.inputChannel != null) {
+        return false;
+      }
+    } else if (!inputChannel.equals(other.inputChannel)) {
+      return false;
+    }
+    if (mode != other.mode) {
+      return false;
+    }
+    if (number != other.number) {
+      return false;
+    }
+    return true;
+  }
 
   @XmlElementWrapper(name = "controls")
   public Control[] getControl() {
@@ -50,6 +86,18 @@ public class Multichannel {
   @XmlAttribute
   public int getNumber() {
     return number;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.hashCode(control);
+    result = prime * result + (enabled ? 1231 : 1237);
+    result = prime * result + (inputChannel == null ? 0 : inputChannel.hashCode());
+    result = prime * result + (mode == null ? 0 : mode.hashCode());
+    result = prime * result + number;
+    return result;
   }
 
   public boolean isEnabled() {

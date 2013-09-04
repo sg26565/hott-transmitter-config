@@ -34,6 +34,63 @@ public class HelicopterMixer {
   private Curve tailCurve;
   private Curve throttleCurve;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final HelicopterMixer other = (HelicopterMixer) obj;
+    if (nick2TailMix != other.nick2TailMix) {
+      return false;
+    }
+    if (nick2ThrottleMix != other.nick2ThrottleMix) {
+      return false;
+    }
+    if (pitchCurve == null) {
+      if (other.pitchCurve != null) {
+        return false;
+      }
+    } else if (!pitchCurve.equals(other.pitchCurve)) {
+      return false;
+    }
+    if (roll2TailMix != other.roll2TailMix) {
+      return false;
+    }
+    if (roll2ThrottleMix != other.roll2ThrottleMix) {
+      return false;
+    }
+    if (swashplateLimit != other.swashplateLimit) {
+      return false;
+    }
+    if (swashplateRotation != other.swashplateRotation) {
+      return false;
+    }
+    if (tail2ThrottleMix != other.tail2ThrottleMix) {
+      return false;
+    }
+    if (tailCurve == null) {
+      if (other.tailCurve != null) {
+        return false;
+      }
+    } else if (!tailCurve.equals(other.tailCurve)) {
+      return false;
+    }
+    if (throttleCurve == null) {
+      if (other.throttleCurve != null) {
+        return false;
+      }
+    } else if (!throttleCurve.equals(other.throttleCurve)) {
+      return false;
+    }
+    return true;
+  }
+
   public int getNick2TailMix() {
     return nick2TailMix;
   }
@@ -72,6 +129,23 @@ public class HelicopterMixer {
 
   public Curve getThrottleCurve() {
     return throttleCurve;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + nick2TailMix;
+    result = prime * result + nick2ThrottleMix;
+    result = prime * result + (pitchCurve == null ? 0 : pitchCurve.hashCode());
+    result = prime * result + roll2TailMix;
+    result = prime * result + roll2ThrottleMix;
+    result = prime * result + swashplateLimit;
+    result = prime * result + swashplateRotation;
+    result = prime * result + tail2ThrottleMix;
+    result = prime * result + (tailCurve == null ? 0 : tailCurve.hashCode());
+    result = prime * result + (throttleCurve == null ? 0 : throttleCurve.hashCode());
+    return result;
   }
 
   public void setNick2TailMix(final int nick2TailMix) {

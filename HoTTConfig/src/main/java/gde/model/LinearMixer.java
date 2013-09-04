@@ -26,6 +26,30 @@ public class LinearMixer extends CurveMixer {
   private int travelHigh;
   private int travelLow;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final LinearMixer other = (LinearMixer) obj;
+    if (offset != other.offset) {
+      return false;
+    }
+    if (travelHigh != other.travelHigh) {
+      return false;
+    }
+    if (travelLow != other.travelLow) {
+      return false;
+    }
+    return true;
+  }
+
   public int getOffset() {
     return offset;
   }
@@ -36,6 +60,16 @@ public class LinearMixer extends CurveMixer {
 
   public int getTravelLow() {
     return travelLow;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + offset;
+    result = prime * result + travelHigh;
+    result = prime * result + travelLow;
+    return result;
   }
 
   public void setOffset(final int offset) {

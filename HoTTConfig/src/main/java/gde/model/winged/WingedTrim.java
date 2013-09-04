@@ -17,6 +17,8 @@
  */
 package gde.model.winged;
 
+import java.util.Arrays;
+
 /**
  * @author oli@treichels.de
  */
@@ -27,6 +29,39 @@ public class WingedTrim {
   private int   elevatorStickTrim;
   private int[] flapPhaseTrim;
   private int   rudderStickTrim;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final WingedTrim other = (WingedTrim) obj;
+    if (!Arrays.equals(aileronPhaseTrim, other.aileronPhaseTrim)) {
+      return false;
+    }
+    if (aileronStickTrim != other.aileronStickTrim) {
+      return false;
+    }
+    if (elevatorPhaseTrim != other.elevatorPhaseTrim) {
+      return false;
+    }
+    if (elevatorStickTrim != other.elevatorStickTrim) {
+      return false;
+    }
+    if (!Arrays.equals(flapPhaseTrim, other.flapPhaseTrim)) {
+      return false;
+    }
+    if (rudderStickTrim != other.rudderStickTrim) {
+      return false;
+    }
+    return true;
+  }
 
   public int[] getAileronPhaseTrim() {
     return aileronPhaseTrim;
@@ -50,6 +85,19 @@ public class WingedTrim {
 
   public int getRudderStickTrim() {
     return rudderStickTrim;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.hashCode(aileronPhaseTrim);
+    result = prime * result + aileronStickTrim;
+    result = prime * result + elevatorPhaseTrim;
+    result = prime * result + elevatorStickTrim;
+    result = prime * result + Arrays.hashCode(flapPhaseTrim);
+    result = prime * result + rudderStickTrim;
+    return result;
   }
 
   public void setAileronPhaseTrim(final int[] aileronPhaseTrim) {

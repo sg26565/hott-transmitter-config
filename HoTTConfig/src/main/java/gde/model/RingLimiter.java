@@ -17,6 +17,8 @@
  */
 package gde.model;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
@@ -32,6 +34,39 @@ public class RingLimiter {
   private int       number;
   private int[]     offset;
   private Channel[] outputChannel;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final RingLimiter other = (RingLimiter) obj;
+    if (enabled != other.enabled) {
+      return false;
+    }
+    if (!Arrays.equals(inputChannel, other.inputChannel)) {
+      return false;
+    }
+    if (!Arrays.equals(limit, other.limit)) {
+      return false;
+    }
+    if (number != other.number) {
+      return false;
+    }
+    if (!Arrays.equals(offset, other.offset)) {
+      return false;
+    }
+    if (!Arrays.equals(outputChannel, other.outputChannel)) {
+      return false;
+    }
+    return true;
+  }
 
   @XmlIDREF
   @XmlElementWrapper(name = "inputChannels")
@@ -58,6 +93,19 @@ public class RingLimiter {
   @XmlElementWrapper(name = "outputChannels")
   public Channel[] getOutputChannel() {
     return outputChannel;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (enabled ? 1231 : 1237);
+    result = prime * result + Arrays.hashCode(inputChannel);
+    result = prime * result + Arrays.hashCode(limit);
+    result = prime * result + number;
+    result = prime * result + Arrays.hashCode(offset);
+    result = prime * result + Arrays.hashCode(outputChannel);
+    return result;
   }
 
   public boolean isEnabled() {

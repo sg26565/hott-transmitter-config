@@ -25,6 +25,35 @@ public class DualRateExpo {
   DualRate dualRate;
   Expo     expo;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final DualRateExpo other = (DualRateExpo) obj;
+    if (dualRate == null) {
+      if (other.dualRate != null) {
+        return false;
+      }
+    } else if (!dualRate.equals(other.dualRate)) {
+      return false;
+    }
+    if (expo == null) {
+      if (other.expo != null) {
+        return false;
+      }
+    } else if (!expo.equals(other.expo)) {
+      return false;
+    }
+    return true;
+  }
+
   public Curve[] getCurve() {
     final Curve[] curve = new Curve[4];
 
@@ -69,6 +98,15 @@ public class DualRateExpo {
 
   public Expo getExpo() {
     return expo;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (dualRate == null ? 0 : dualRate.hashCode());
+    result = prime * result + (expo == null ? 0 : expo.hashCode());
+    return result;
   }
 
   public void setDualRate(final DualRate dualRate) {

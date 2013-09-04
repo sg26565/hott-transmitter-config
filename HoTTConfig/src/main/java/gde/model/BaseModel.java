@@ -24,6 +24,8 @@ import gde.model.enums.StickMode;
 import gde.model.enums.TransmitterType;
 import gde.model.enums.Vendor;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -74,6 +76,165 @@ public class BaseModel {
 
   public BaseModel(final ModelType modelType) {
     this.modelType = modelType;
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final BaseModel other = (BaseModel) obj;
+    if (appVersion != other.appVersion) {
+      return false;
+    }
+    if (autoTimerReset != other.autoTimerReset) {
+      return false;
+    }
+    if (autoTrimSwitch == null) {
+      if (other.autoTrimSwitch != null) {
+        return false;
+      }
+    } else if (!autoTrimSwitch.equals(other.autoTrimSwitch)) {
+      return false;
+    }
+    if (bound != other.bound) {
+      return false;
+    }
+    if (!Arrays.equals(channel, other.channel)) {
+      return false;
+    }
+    if (!Arrays.equals(channelMapping, other.channelMapping)) {
+      return false;
+    }
+    if (channelSequencer == null) {
+      if (other.channelSequencer != null) {
+        return false;
+      }
+    } else if (!channelSequencer.equals(other.channelSequencer)) {
+      return false;
+    }
+    if (!Arrays.equals(clock, other.clock)) {
+      return false;
+    }
+    if (!Arrays.equals(controlSwitch, other.controlSwitch)) {
+      return false;
+    }
+    if (dscOutputType != other.dscOutputType) {
+      return false;
+    }
+    if (!Arrays.equals(dualMixer, other.dualMixer)) {
+      return false;
+    }
+    if (extPpmType != other.extPpmType) {
+      return false;
+    }
+    if (Double.doubleToLongBits(failSafeDelay) != Double.doubleToLongBits(other.failSafeDelay)) {
+      return false;
+    }
+    if (failSafeSettingCheck != other.failSafeSettingCheck) {
+      return false;
+    }
+    if (!Arrays.equals(freeMixer, other.freeMixer)) {
+      return false;
+    }
+    if (!Arrays.equals(logicalSwitch, other.logicalSwitch)) {
+      return false;
+    }
+    if (memoryVersion != other.memoryVersion) {
+      return false;
+    }
+    if (modelName == null) {
+      if (other.modelName != null) {
+        return false;
+      }
+    } else if (!modelName.equals(other.modelName)) {
+      return false;
+    }
+    if (modelNumber != other.modelNumber) {
+      return false;
+    }
+    if (modelType != other.modelType) {
+      return false;
+    }
+    if (module == null) {
+      if (other.module != null) {
+        return false;
+      }
+    } else if (!module.equals(other.module)) {
+      return false;
+    }
+    if (mp3Player == null) {
+      if (other.mp3Player != null) {
+        return false;
+      }
+    } else if (!mp3Player.equals(other.mp3Player)) {
+      return false;
+    }
+    if (!Arrays.equals(multichannel, other.multichannel)) {
+      return false;
+    }
+    if (!Arrays.equals(phase, other.phase)) {
+      return false;
+    }
+    if (phaseAssignment == null) {
+      if (other.phaseAssignment != null) {
+        return false;
+      }
+    } else if (!phaseAssignment.equals(other.phaseAssignment)) {
+      return false;
+    }
+    if (!Arrays.equals(receiver, other.receiver)) {
+      return false;
+    }
+    if (!Arrays.equals(ringLimiter, other.ringLimiter)) {
+      return false;
+    }
+    if (stickMode != other.stickMode) {
+      return false;
+    }
+    if (!Arrays.equals(stickTrim, other.stickTrim)) {
+      return false;
+    }
+    if (!Arrays.equals(sw, other.sw)) {
+      return false;
+    }
+    if (telemetry == null) {
+      if (other.telemetry != null) {
+        return false;
+      }
+    } else if (!telemetry.equals(other.telemetry)) {
+      return false;
+    }
+    if (throttleSettings == null) {
+      if (other.throttleSettings != null) {
+        return false;
+      }
+    } else if (!throttleSettings.equals(other.throttleSettings)) {
+      return false;
+    }
+    if (trainerConfig == null) {
+      if (other.trainerConfig != null) {
+        return false;
+      }
+    } else if (!trainerConfig.equals(other.trainerConfig)) {
+      return false;
+    }
+    if (transmitterId != other.transmitterId) {
+      return false;
+    }
+    if (transmitterType != other.transmitterType) {
+      return false;
+    }
+    if (vendor != other.vendor) {
+      return false;
+    }
+    return true;
   }
 
   public int getAppVersion() {
@@ -232,6 +393,51 @@ public class BaseModel {
 
   public Vendor getVendor() {
     return vendor;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + appVersion;
+    result = prime * result + (autoTimerReset ? 1231 : 1237);
+    result = prime * result + (autoTrimSwitch == null ? 0 : autoTrimSwitch.hashCode());
+    result = prime * result + (bound ? 1231 : 1237);
+    result = prime * result + Arrays.hashCode(channel);
+    result = prime * result + Arrays.hashCode(channelMapping);
+    result = prime * result + (channelSequencer == null ? 0 : channelSequencer.hashCode());
+    result = prime * result + Arrays.hashCode(clock);
+    result = prime * result + Arrays.hashCode(controlSwitch);
+    result = prime * result + (dscOutputType == null ? 0 : dscOutputType.hashCode());
+    result = prime * result + Arrays.hashCode(dualMixer);
+    result = prime * result + (extPpmType == null ? 0 : extPpmType.hashCode());
+    long temp;
+    temp = Double.doubleToLongBits(failSafeDelay);
+    result = prime * result + (int) (temp ^ temp >>> 32);
+    result = prime * result + (failSafeSettingCheck ? 1231 : 1237);
+    result = prime * result + Arrays.hashCode(freeMixer);
+    result = prime * result + Arrays.hashCode(logicalSwitch);
+    result = prime * result + memoryVersion;
+    result = prime * result + (modelName == null ? 0 : modelName.hashCode());
+    result = prime * result + modelNumber;
+    result = prime * result + (modelType == null ? 0 : modelType.hashCode());
+    result = prime * result + (module == null ? 0 : module.hashCode());
+    result = prime * result + (mp3Player == null ? 0 : mp3Player.hashCode());
+    result = prime * result + Arrays.hashCode(multichannel);
+    result = prime * result + Arrays.hashCode(phase);
+    result = prime * result + (phaseAssignment == null ? 0 : phaseAssignment.hashCode());
+    result = prime * result + Arrays.hashCode(receiver);
+    result = prime * result + Arrays.hashCode(ringLimiter);
+    result = prime * result + (stickMode == null ? 0 : stickMode.hashCode());
+    result = prime * result + Arrays.hashCode(stickTrim);
+    result = prime * result + Arrays.hashCode(sw);
+    result = prime * result + (telemetry == null ? 0 : telemetry.hashCode());
+    result = prime * result + (throttleSettings == null ? 0 : throttleSettings.hashCode());
+    result = prime * result + (trainerConfig == null ? 0 : trainerConfig.hashCode());
+    result = prime * result + (int) (transmitterId ^ transmitterId >>> 32);
+    result = prime * result + (transmitterType == null ? 0 : transmitterType.hashCode());
+    result = prime * result + (vendor == null ? 0 : vendor.hashCode());
+    return result;
   }
 
   public boolean isAutoTimerReset() {

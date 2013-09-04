@@ -24,8 +24,38 @@ package gde.model;
 public class CurveMixer extends FreeMixer {
   private Curve curve;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final CurveMixer other = (CurveMixer) obj;
+    if (curve == null) {
+      if (other.curve != null) {
+        return false;
+      }
+    } else if (!curve.equals(other.curve)) {
+      return false;
+    }
+    return true;
+  }
+
   public Curve getCurve() {
     return curve;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + (curve == null ? 0 : curve.hashCode());
+    return result;
   }
 
   public void setCurve(final Curve curve) {

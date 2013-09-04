@@ -19,6 +19,8 @@ package gde.model;
 
 import gde.model.enums.LogicalSwitchMode;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -31,6 +33,30 @@ public class LogicalSwitch extends Switch {
   private LogicalSwitchMode mode;
   private Switch[]          sw;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final LogicalSwitch other = (LogicalSwitch) obj;
+    if (enabled != other.enabled) {
+      return false;
+    }
+    if (mode != other.mode) {
+      return false;
+    }
+    if (!Arrays.equals(sw, other.sw)) {
+      return false;
+    }
+    return true;
+  }
+
   public LogicalSwitchMode getMode() {
     return mode;
   }
@@ -39,6 +65,16 @@ public class LogicalSwitch extends Switch {
   @XmlIDREF
   public Switch[] getSwitch() {
     return sw;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + (enabled ? 1231 : 1237);
+    result = prime * result + (mode == null ? 0 : mode.hashCode());
+    result = prime * result + Arrays.hashCode(sw);
+    return result;
   }
 
   public boolean isEnabled() {

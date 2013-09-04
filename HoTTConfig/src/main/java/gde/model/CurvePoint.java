@@ -28,6 +28,33 @@ public class CurvePoint {
   private int     position;
   private int     value;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final CurvePoint other = (CurvePoint) obj;
+    if (enabled != other.enabled) {
+      return false;
+    }
+    if (number != other.number) {
+      return false;
+    }
+    if (position != other.position) {
+      return false;
+    }
+    if (value != other.value) {
+      return false;
+    }
+    return true;
+  }
+
   @XmlAttribute
   public int getNumber() {
     return number;
@@ -39,6 +66,17 @@ public class CurvePoint {
 
   public int getValue() {
     return value;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (enabled ? 1231 : 1237);
+    result = prime * result + number;
+    result = prime * result + position;
+    result = prime * result + value;
+    return result;
   }
 
   public boolean isEnabled() {

@@ -27,6 +27,34 @@ public class ThrottleCutOf {
   private Switch sw;
   private int    threshold;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final ThrottleCutOf other = (ThrottleCutOf) obj;
+    if (position != other.position) {
+      return false;
+    }
+    if (sw == null) {
+      if (other.sw != null) {
+        return false;
+      }
+    } else if (!sw.equals(other.sw)) {
+      return false;
+    }
+    if (threshold != other.threshold) {
+      return false;
+    }
+    return true;
+  }
+
   public int getPosition() {
     return position;
   }
@@ -38,6 +66,16 @@ public class ThrottleCutOf {
 
   public int getThreshold() {
     return threshold;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + position;
+    result = prime * result + (sw == null ? 0 : sw.hashCode());
+    result = prime * result + threshold;
+    return result;
   }
 
   public void setPosition(final int position) {

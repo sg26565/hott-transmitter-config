@@ -28,10 +28,44 @@ public class ChannelPhaseSetting {
   private boolean nonDelayed;
   private Phase   phase;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final ChannelPhaseSetting other = (ChannelPhaseSetting) obj;
+    if (nonDelayed != other.nonDelayed) {
+      return false;
+    }
+    if (phase == null) {
+      if (other.phase != null) {
+        return false;
+      }
+    } else if (!phase.equals(other.phase)) {
+      return false;
+    }
+    return true;
+  }
+
   @XmlIDREF
   @XmlAttribute
   public Phase getPhase() {
     return phase;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (nonDelayed ? 1231 : 1237);
+    result = prime * result + (phase == null ? 0 : phase.hashCode());
+    return result;
   }
 
   @XmlAttribute

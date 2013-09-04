@@ -25,6 +25,30 @@ public class HelicopterTrim {
   private int rollStickTrim;
   private int tailStickTrim;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final HelicopterTrim other = (HelicopterTrim) obj;
+    if (nickStickTrim != other.nickStickTrim) {
+      return false;
+    }
+    if (rollStickTrim != other.rollStickTrim) {
+      return false;
+    }
+    if (tailStickTrim != other.tailStickTrim) {
+      return false;
+    }
+    return true;
+  }
+
   public int getNickStickTrim() {
     return nickStickTrim;
   }
@@ -35,6 +59,16 @@ public class HelicopterTrim {
 
   public int getTailStickTrim() {
     return tailStickTrim;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + nickStickTrim;
+    result = prime * result + rollStickTrim;
+    result = prime * result + tailStickTrim;
+    return result;
   }
 
   public void setNickStickTrim(final int nickStickTrim) {

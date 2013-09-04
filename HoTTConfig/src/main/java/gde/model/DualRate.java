@@ -19,6 +19,8 @@ package gde.model;
 
 import gde.model.enums.Function;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -29,6 +31,34 @@ public class DualRate {
   private Function function;
   private Switch   sw;
   private int[]    values;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final DualRate other = (DualRate) obj;
+    if (function != other.function) {
+      return false;
+    }
+    if (sw == null) {
+      if (other.sw != null) {
+        return false;
+      }
+    } else if (!sw.equals(other.sw)) {
+      return false;
+    }
+    if (!Arrays.equals(values, other.values)) {
+      return false;
+    }
+    return true;
+  }
 
   @XmlAttribute
   public Function getFunction() {
@@ -42,6 +72,16 @@ public class DualRate {
 
   public int[] getValues() {
     return values;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (function == null ? 0 : function.hashCode());
+    result = prime * result + (sw == null ? 0 : sw.hashCode());
+    result = prime * result + Arrays.hashCode(values);
+    return result;
   }
 
   public void setFunction(final Function function) {

@@ -21,10 +21,37 @@ package gde.model;
  * @author oli
  */
 public class ThrottleSettings {
-
   private ThrottleCutOf throttleCutOf;
   private int           throttleLastIdlePosition;
   private int           throttleTrim;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final ThrottleSettings other = (ThrottleSettings) obj;
+    if (throttleCutOf == null) {
+      if (other.throttleCutOf != null) {
+        return false;
+      }
+    } else if (!throttleCutOf.equals(other.throttleCutOf)) {
+      return false;
+    }
+    if (throttleLastIdlePosition != other.throttleLastIdlePosition) {
+      return false;
+    }
+    if (throttleTrim != other.throttleTrim) {
+      return false;
+    }
+    return true;
+  }
 
   public ThrottleCutOf getThrottleCutOf() {
     return throttleCutOf;
@@ -36,6 +63,16 @@ public class ThrottleSettings {
 
   public int getThrottleTrim() {
     return throttleTrim;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (throttleCutOf == null ? 0 : throttleCutOf.hashCode());
+    result = prime * result + throttleLastIdlePosition;
+    result = prime * result + throttleTrim;
+    return result;
   }
 
   public void setThrottleCutOf(final ThrottleCutOf throttleCutOf) {

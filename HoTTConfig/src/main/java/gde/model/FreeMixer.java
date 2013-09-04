@@ -20,6 +20,8 @@ package gde.model;
 import gde.model.enums.MixerInputType;
 import gde.model.enums.MixerType;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlID;
@@ -36,6 +38,58 @@ public abstract class FreeMixer {
   private Switch                  sw;
   private Channel                 toChannel;
   private MixerType               type;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final FreeMixer other = (FreeMixer) obj;
+    if (fromChannel == null) {
+      if (other.fromChannel != null) {
+        return false;
+      }
+    } else if (!fromChannel.equals(other.fromChannel)) {
+      return false;
+    }
+    if (inputType != other.inputType) {
+      return false;
+    }
+    if (number == null) {
+      if (other.number != null) {
+        return false;
+      }
+    } else if (!number.equals(other.number)) {
+      return false;
+    }
+    if (!Arrays.equals(phaseSetting, other.phaseSetting)) {
+      return false;
+    }
+    if (sw == null) {
+      if (other.sw != null) {
+        return false;
+      }
+    } else if (!sw.equals(other.sw)) {
+      return false;
+    }
+    if (toChannel == null) {
+      if (other.toChannel != null) {
+        return false;
+      }
+    } else if (!toChannel.equals(other.toChannel)) {
+      return false;
+    }
+    if (type != other.type) {
+      return false;
+    }
+    return true;
+  }
 
   @XmlIDREF
   public Channel getFromChannel() {
@@ -69,6 +123,20 @@ public abstract class FreeMixer {
 
   public MixerType getType() {
     return type;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (fromChannel == null ? 0 : fromChannel.hashCode());
+    result = prime * result + (inputType == null ? 0 : inputType.hashCode());
+    result = prime * result + (number == null ? 0 : number.hashCode());
+    result = prime * result + Arrays.hashCode(phaseSetting);
+    result = prime * result + (sw == null ? 0 : sw.hashCode());
+    result = prime * result + (toChannel == null ? 0 : toChannel.hashCode());
+    result = prime * result + (type == null ? 0 : type.hashCode());
+    return result;
   }
 
   public void setFromChannel(final Channel from) {

@@ -25,6 +25,8 @@ import gde.model.enums.ModelType;
 import gde.model.enums.MotorOnC1Type;
 import gde.model.enums.TailType;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -45,6 +47,53 @@ public class WingedModel extends BaseModel {
 
   public WingedModel() {
     super(ModelType.Winged);
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final WingedModel other = (WingedModel) obj;
+    if (aileronFlapType != other.aileronFlapType) {
+      return false;
+    }
+    if (brakeInputChannel == null) {
+      if (other.brakeInputChannel != null) {
+        return false;
+      }
+    } else if (!brakeInputChannel.equals(other.brakeInputChannel)) {
+      return false;
+    }
+    if (brakeOffset != other.brakeOffset) {
+      return false;
+    }
+    if (channel8Delay != other.channel8Delay) {
+      return false;
+    }
+    if (motorOnC1Type != other.motorOnC1Type) {
+      return false;
+    }
+    if (!Arrays.equals(profiTrim, other.profiTrim)) {
+      return false;
+    }
+    if (profiTrimSwitch == null) {
+      if (other.profiTrimSwitch != null) {
+        return false;
+      }
+    } else if (!profiTrimSwitch.equals(other.profiTrimSwitch)) {
+      return false;
+    }
+    if (tailType != other.tailType) {
+      return false;
+    }
+    return true;
   }
 
   public AileronFlapType getAileronFlapType() {
@@ -76,6 +125,21 @@ public class WingedModel extends BaseModel {
 
   public TailType getTailType() {
     return tailType;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + (aileronFlapType == null ? 0 : aileronFlapType.hashCode());
+    result = prime * result + (brakeInputChannel == null ? 0 : brakeInputChannel.hashCode());
+    result = prime * result + brakeOffset;
+    result = prime * result + (channel8Delay ? 1231 : 1237);
+    result = prime * result + (motorOnC1Type == null ? 0 : motorOnC1Type.hashCode());
+    result = prime * result + Arrays.hashCode(profiTrim);
+    result = prime * result + (profiTrimSwitch == null ? 0 : profiTrimSwitch.hashCode());
+    result = prime * result + (tailType == null ? 0 : tailType.hashCode());
+    return result;
   }
 
   public boolean isChannel8Delay() {

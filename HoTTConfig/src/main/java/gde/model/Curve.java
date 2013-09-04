@@ -20,6 +20,7 @@ package gde.model;
 import gde.model.enums.CurveType;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
 
 import javax.xml.bind.annotation.XmlElementWrapper;
 
@@ -45,6 +46,30 @@ public class Curve {
   private CurvePoint[]        point;
   private boolean             smoothing = false;
   private CurveType           type;
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final Curve other = (Curve) obj;
+    if (!Arrays.equals(point, other.point)) {
+      return false;
+    }
+    if (smoothing != other.smoothing) {
+      return false;
+    }
+    if (type != other.type) {
+      return false;
+    }
+    return true;
+  }
 
   public Image getImage(final float scale) {
     return getImage(scale, true);
@@ -234,6 +259,16 @@ public class Curve {
 
   public CurveType getType() {
     return type;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.hashCode(point);
+    result = prime * result + (smoothing ? 1231 : 1237);
+    result = prime * result + (type == null ? 0 : type.hashCode());
+    return result;
   }
 
   public boolean isSmoothing() {

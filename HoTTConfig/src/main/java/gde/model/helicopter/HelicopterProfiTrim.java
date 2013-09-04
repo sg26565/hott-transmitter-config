@@ -31,6 +31,41 @@ public class HelicopterProfiTrim {
   private HelicopterPhase phase;
   private int             point;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final HelicopterProfiTrim other = (HelicopterProfiTrim) obj;
+    if (curveType != other.curveType) {
+      return false;
+    }
+    if (inputControl == null) {
+      if (other.inputControl != null) {
+        return false;
+      }
+    } else if (!inputControl.equals(other.inputControl)) {
+      return false;
+    }
+    if (phase == null) {
+      if (other.phase != null) {
+        return false;
+      }
+    } else if (!phase.equals(other.phase)) {
+      return false;
+    }
+    if (point != other.point) {
+      return false;
+    }
+    return true;
+  }
+
   public CurveType getCurveType() {
     return curveType;
   }
@@ -47,6 +82,17 @@ public class HelicopterProfiTrim {
 
   public int getPoint() {
     return point;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (curveType == null ? 0 : curveType.hashCode());
+    result = prime * result + (inputControl == null ? 0 : inputControl.hashCode());
+    result = prime * result + (phase == null ? 0 : phase.hashCode());
+    result = prime * result + point;
+    return result;
   }
 
   public void setCurveType(final CurveType curveType) {
