@@ -21,10 +21,8 @@ import gde.model.Curve;
 
 /**
  * @author oli@treichels.de
- *
+ * 
  */
 public interface CurveImageGenerator {
-
   public abstract String getImageSource(Curve curve, float scale, boolean description);
-
 }
