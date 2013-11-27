@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.treichels.hott</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.6</version>
+	<version>0.7</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -12,7 +12,8 @@
 
 	<modules>
 		<module>../HoTTConfig</module>
-		<module>../HoTTGUI</module>
+		<module>../HoTTGUI-Swing</module>
+		<module>../HoTTGUI-SWT</module>
 		<module>../HoTTDecoder</module>
 	</modules>
 
@@ -195,7 +196,7 @@
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
-				<artifactId>HoTTGUI</artifactId>
+				<artifactId>HoTTGUI-Swing</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
