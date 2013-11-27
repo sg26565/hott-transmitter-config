@@ -100,5 +100,29 @@
 			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTTGUI-Swing</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTTConfig</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTTDecoder</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-pdf-itext5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
 	</dependencies>
 </project>
