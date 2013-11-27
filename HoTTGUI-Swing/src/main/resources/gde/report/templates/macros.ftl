@@ -43,7 +43,7 @@
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="${curve.point?size+1}" align="center"><img src="${curve.getImageSource(0.5)}"/></td>
+		<td rowspan="${curve.point?size+1}" align="center"><img src="${png.getImageSource(curve,0.5,true)}"/></td>
 	</tr>
 
 	<@reset/>
@@ -70,7 +70,7 @@
 	<tr class="d0">
 		<th align="right">Kurve</th>
 		<td colspan="4" align="left">${curve.smoothing?string("an","aus")}</td>
-		<td rowspan="${curve.point?size+2}" align="center"><img src="${curve.getImageSource(1.0)}"/></td>
+		<td rowspan="${curve.point?size+2}" align="center"><img src="${png.getImageSource(curve,1.0,true)}"/></td>
 	</tr>
 
 	<tr>
@@ -108,7 +108,7 @@
 	<tr class="<@d/>">
 		<th align="right">Kurve</th>
 		<td colspan="4" align="left">${curve.smoothing?string("an","aus")}</td>
-		<td colspan="4" rowspan="${curve.point?size+2}" align="center"><img src="${curve.getImageSource(1.0)}"/></td>
+		<td colspan="4" rowspan="${curve.point?size+2}" align="center"><img src="${png.getImageSource(curve,1.0,false)}"/></td>
 	</tr>
 
 	<tr>

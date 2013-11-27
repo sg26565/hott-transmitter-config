@@ -46,7 +46,7 @@
 							<td align="center" colspan="2">---</td>
 						</#if>
 						<#if point_index==0>
-							<td rowspan="${mixer.curve.point?size}" align="center"><img src="${mixer.curve.getImageSource(0.5)}"/></td>									
+							<td rowspan="${mixer.curve.point?size}" align="center"><img src="${png.getImageSource(mixer.curve,0.5,true)}"/></td>									
 						</#if>						
 					</tr>
 				</#list>

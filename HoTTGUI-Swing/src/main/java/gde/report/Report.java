@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ServiceLoader;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -49,7 +50,7 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
-import gde.mdl.ui.Launcher;
+import gde.mdl.ui.swing.Launcher;
 import gde.model.BaseModel;
 import gde.model.CurveMixer;
 import gde.model.LinearMixer;
@@ -66,6 +67,7 @@ public class Report {
   private static final JAXBContext              CTX;
   private static final TemplateExceptionHandler CUSTOM_HANDLER;
   private static final Marshaller               MARSHALLER;
+  private static final CurveImageGenerator      CURVE_IMAGE_GENERATOR;
 
   static {
     // setup freemarker
@@ -83,6 +85,10 @@ public class Report {
     } catch (final JAXBException e) {
       throw new RuntimeException(e);
     }
+
+    // setup CurveImageGenerator
+    final ServiceLoader<CurveImageGenerator> loader = ServiceLoader.load(CurveImageGenerator.class);
+    CURVE_IMAGE_GENERATOR = loader.iterator().next();
   }
 
   public static String generateHTML(final BaseModel model) throws IOException, TemplateException {
@@ -159,6 +165,7 @@ public class Report {
 
     rootMap.put("model", model);
     rootMap.put("hex", new FreeMarkerHexConverter());
+    rootMap.put("png", CURVE_IMAGE_GENERATOR);
     rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective());
     rootMap.put("programDir", new File(System.getProperty(Launcher.PROGRAM_DIR)).toURI().toURL().toString());
     rootMap.put("version", System.getProperty(Launcher.PROGRAM_VERSION, "unknown"));

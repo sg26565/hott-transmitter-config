@@ -26,12 +26,12 @@ import javax.xml.bind.JAXBException;
 import com.itextpdf.text.DocumentException;
 
 import freemarker.template.TemplateException;
-import gde.mdl.ui.Launcher;
+import gde.mdl.ui.swing.Launcher;
 import gde.model.BaseModel;
 import gde.report.Report;
 
 /**
- * @author oli
+ * @author oli@treichels.de
  */
 public class GenerateDemoFiles {
   public static void main(final String[] args) throws IOException, URISyntaxException, JAXBException, TemplateException, DocumentException {

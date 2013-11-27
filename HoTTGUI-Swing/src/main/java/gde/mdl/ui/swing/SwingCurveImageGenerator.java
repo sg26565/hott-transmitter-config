@@ -15,22 +15,24 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package gde.mdl.ui.swing;
 
-package gde.report;
+import gde.model.Curve;
+import gde.report.CurveImageGenerator;
 
-import java.util.List;
+/**
+ * @author oli@treichels.de
+ */
+public class SwingCurveImageGenerator implements CurveImageGenerator {
 
-import freemarker.template.TemplateMethodModel;
-import freemarker.template.TemplateModelException;
-
-public class FreeMarkerHexConverter implements TemplateMethodModel {
+  /*
+   * (non-Javadoc)
+   * 
+   * @see gde.report.CurveImageGenerator#getImageSource(gde.model.Curve, float,
+   * boolean)
+   */
   @Override
-  public Object exec(@SuppressWarnings("rawtypes") final List args) throws TemplateModelException {
-    if (args == null || args.size() != 1) {
-      throw new TemplateModelException("Wrong number of arguments");
-    }
-
-    final long number = Long.parseLong((String) args.get(0));
-    return Long.toHexString(number).toUpperCase();
+  public String getImageSource(final Curve curve, final float scale, final boolean description) {
+    return "";
   }
 }

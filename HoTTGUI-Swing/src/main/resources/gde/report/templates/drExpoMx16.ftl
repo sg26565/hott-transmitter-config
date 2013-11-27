@@ -36,7 +36,7 @@
 						<#list 0..1 as j>
 							<td align="center">
 								<#if j&lt;max>
-									<img src="${phase.dualRateExpo[i].getCurve()[j*3].getImageSource(0.5,false)}"/>
+									<img src="${png.getImageSource(phase.dualRateExpo[i].getCurve()[j*3],0.5,false)}"/>
 								</#if>
 							</td>
 						</#list>

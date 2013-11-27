@@ -10,7 +10,7 @@
 		<file>
 			<source>${project.build.directory}/${project.build.finalName}.jar</source>
 			<outputDirectory>/</outputDirectory>
-			<destName>HoTTMdlViewer.jar</destName>
+			<destName>HoTTMdlViewer-Swing.jar</destName>
 		</file>
 	</files>
 	<fileSets>
@@ -20,13 +20,6 @@
 			<includes>
 				<include>COPYING*</include>
 				<include>*.cmd</include>
-			</includes>
-		</fileSet>
-		<fileSet>
-			<directory>${swtPath}</directory>
-			<outputDirectory>swt</outputDirectory>
-			<includes>
-				<include>*.jar</include>
 			</includes>
 		</fileSet>
 		<fileSet>

@@ -21,7 +21,7 @@ package gde.report;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import freemarker.template.TemplateException;
-import gde.mdl.ui.Launcher;
+import gde.mdl.ui.swing.Launcher;
 import gde.model.BaseModel;
 import gde.model.enums.TransmitterType;
 import gde.model.winged.WingedModel;

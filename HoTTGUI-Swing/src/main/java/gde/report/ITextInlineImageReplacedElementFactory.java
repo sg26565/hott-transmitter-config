@@ -49,7 +49,8 @@ public class ITextInlineImageReplacedElementFactory implements ReplacedElementFa
 
     // check if we have an inline png image
     if (!(elem != null && elem.getNodeName().equals("img") && elem.hasAttribute("src") && elem.getAttribute("src").startsWith(PREFIX))) {
-      return other.createReplacedElement(c, box, uac, cssWidth, cssHeight);
+      return null; // other.createReplacedElement(c, box, uac, cssWidth,
+                   // cssHeight);
     }
 
     int width = 0;

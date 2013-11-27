@@ -1,20 +1,37 @@
-package gde.mdl.ui;
+/**
+ *  HoTT Transmitter Config
+ *  Copyright (C) 2013  Oliver Treichel
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package gde.mdl.ui.swing;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * @author oli@treichels.de
+ */
 public class Launcher {
+
   public static final String LOG_DIR         = "log.dir";
   public static final String MDL_DIR         = "mdl.dir";
   public static final String PROGRAM_DIR     = "program.dir";
@@ -29,7 +46,7 @@ public class Launcher {
   public static void initLogging() throws SecurityException, IOException {
     final Logger global = Logger.getLogger("");
 
-    // remove console handler
+    // remove console handler - we don't run from a command line
     for (final Handler handler : global.getHandlers()) {
       global.removeHandler(handler);
     }
@@ -49,51 +66,6 @@ public class Launcher {
   }
 
   /**
-   * Initialize SWT. Make sure that the correct SWT library is in the classpath.
-   * 
-   * @throws MalformedURLException
-   * @throws SecurityException
-   * @throws NoSuchMethodException
-   * @throws IllegalArgumentException
-   * @throws IllegalAccessException
-   * @throws InvocationTargetException
-   */
-  public static void initSwt() throws MalformedURLException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
-      InvocationTargetException {
-    try {
-      // check if swt is already in the classpath
-      Class.forName("org.eclipse.swt.widgets.Dialog");
-    } catch (final ClassNotFoundException e) {
-      // nope - we need to add it
-
-      // determine correct swt jar
-      String osName = System.getProperty("os.name").toLowerCase();
-      if (osName.startsWith("linux")) {
-        osName = "linux";
-      } else if (osName.startsWith("windows")) {
-        osName = "windows";
-      } else if (osName.startsWith("mac")) {
-        osName = "mac";
-      }
-
-      final String osArch = System.getProperty("os.arch").toLowerCase();
-      final String swtJarName = String.format("swt-%s-%s.jar", osName, osArch);
-      final File swtJar = new File(new File(System.getProperty(PROGRAM_DIR), "swt"), swtJarName);
-      if (!swtJar.exists() || !swtJar.isFile()) {
-        throw new RuntimeException("SWT library is missing: " + swtJar.getAbsolutePath());
-      }
-
-      // add swt to classpath
-      // Note: this is a hack. Not all platforms may use URLClassLoader as
-      // standard
-      final URLClassLoader classLoader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
-      final Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { URL.class });
-      method.setAccessible(true);
-      method.invoke(classLoader, new Object[] { swtJar.toURI().toURL() });
-    }
-  }
-
-  /**
    * Initialize system properties.
    * 
    * @throws URISyntaxException
@@ -103,8 +75,8 @@ public class Launcher {
       // get the location of this class
       File source = new File(Launcher.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 
-      // if application was packaged as individual class files, find the classes
-      // directory
+      // if application was packaged as individual class files, find the
+      // classes directory
       if (!source.getName().endsWith(".jar")) {
         while (!source.getName().equals("classes")) {
           source = source.getParentFile();
@@ -136,8 +108,7 @@ public class Launcher {
   public static void main(final String[] args) throws Exception {
     initSystemProperties();
     initLogging();
-    initSwt();
-    startApplication();
+    startSwingApplication();
   }
 
   /**
@@ -148,9 +119,7 @@ public class Launcher {
    * @throws IllegalAccessException
    * @throws InvocationTargetException
    */
-  public static void startApplication() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-    final Class<?> mainDialog = Class.forName("gde.mdl.ui.SwtMdlBrowser");
-    final Method main = mainDialog.getMethod("main", String[].class);
-    main.invoke(null, new Object[] { new String[] {} });
+  public static void startSwingApplication() {
+    new SimpleGUI().showInFrame();
   }
 }

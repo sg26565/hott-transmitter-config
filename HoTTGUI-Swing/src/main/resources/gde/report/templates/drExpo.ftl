@@ -53,7 +53,7 @@
 							<#list 0..1 as expo>
 								<td align="center">
 									<#if dr&lt;max_dr && expo&lt;max_expo>
-										<img src="${phase.dualRateExpo[i].getCurve()[dr*2+expo].getImageSource(0.5,false)}"/>
+										<img src="${png.getImageSource(phase.dualRateExpo[i].getCurve()[dr*2+expo],0.5,false)}"/>
 									</#if>
 								</td>
 							</#list>
