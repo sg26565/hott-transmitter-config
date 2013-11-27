@@ -6,6 +6,99 @@
 	<parent>
 		<groupId>de.treichels.hott</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.6</version>
+		<version>0.7</version>
+		<relativePath>../parent</relativePath>
 	</parent>
+
+	<properties>
+		<swtPath>${project.basedir}/${project.parent.relativePath}/swt</swtPath>
+	</properties>
+
+	<build>
+		<finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<configuration>
+					<minimizeJar>true</minimizeJar>
+					<transformers>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+							<mainClass>gde.mdl.ui.swt.Launcher</mainClass>
+						</transformer>
+					</transformers>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/bin.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>assemble</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.googlecode.maven-gcu-plugin</groupId>
+				<artifactId>maven-gcu-plugin</artifactId>
+				<configuration>
+					<serverId>googlecode</serverId>
+					<failsOnError>true</failsOnError>
+					<projectName>hott-transmitter-config</projectName>
+					<uploads>
+						<upload>
+							<file>${project.build.directory}/${project.artifactId}-${project.version}-r${buildNumber}-bin.zip</file>
+							<summary>${project.artifactId} version ${project.version}</summary>
+							<labels>
+								<label>Experimental</label>
+								<label>Type-Archive</label>
+							</labels>
+						</upload>
+					</uploads>
+				</configuration>
+				<executions>
+					<execution>
+						<id>upload</id>
+						<phase>install</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<name>HoTT Transmitter Config - SWT Graphical User Interface</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>swt</artifactId>
+			<version>unknown</version>
+			<scope>system</scope>
+			<systemPath>${swtPath}/${swtJar}</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTTGUI-Swing</artifactId>
+		</dependency>
+	</dependencies>
 </project>
