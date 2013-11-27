@@ -25,12 +25,5 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.eclipse</groupId>
-			<artifactId>swt</artifactId>
-			<version>unknown</version>
-			<scope>system</scope>
-			<systemPath>${swtPath}/${swtJar}</systemPath>
-		</dependency>
 	</dependencies>
 </project>
