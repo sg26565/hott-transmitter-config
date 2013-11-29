@@ -18,7 +18,7 @@
  **************************************************************************************/
 package gde.mdl.ui.swt;
 
-import gde.report.HTML.HTMLReport;
+import gde.report.html.HTMLReport;
 
 import java.util.logging.Logger;
 

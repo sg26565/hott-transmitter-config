@@ -2,7 +2,7 @@ package gde.mdl.ui.swt;
 
 import gde.mdl.ui.swing.Launcher;
 import gde.model.BaseModel;
-import gde.report.HTML.HTMLReport;
+import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;
 import gde.report.xml.XMLReport;
 
