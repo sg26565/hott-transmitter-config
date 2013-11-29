@@ -28,15 +28,21 @@ import java.net.URISyntaxException;
 
 import javax.xml.bind.JAXBException;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.treichels.hott.HoTTDecoder;
 import freemarker.template.TemplateException;
 import gde.model.BaseModel;
 import gde.model.enums.TransmitterType;
-import gde.report.html.HTMLReport;
 
 public class ReportTest {
+  @BeforeClass
+  public static void setup() {
+    System.setProperty("program.dir", "/tmp");
+    System.setProperty("program.version", "0.test");
+  }
+
   @Test
   public void testMc20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
     final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc20").toURI());
