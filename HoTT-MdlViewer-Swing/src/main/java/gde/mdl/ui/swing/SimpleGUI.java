@@ -20,7 +20,6 @@ package gde.mdl.ui.swing;
 
 import gde.model.BaseModel;
 import gde.report.html.HTMLReport;
-import gde.report.pdf.ITextInlineImageReplacedElementFactory;
 import gde.report.pdf.PDFReport;
 import gde.report.xml.XMLReport;
 
@@ -150,7 +149,7 @@ public class SimpleGUI extends FSScrollPane {
   public SimpleGUI() {
     final SharedContext ctx = xhtmlPane.getSharedContext();
     ctx.getTextRenderer().setSmoothingThreshold(10);
-    ctx.setReplacedElementFactory(new ITextInlineImageReplacedElementFactory(ctx.getReplacedElementFactory()));
+    ctx.setReplacedElementFactory(new InlineImageReplacedElementFactory());
     setViewportView(xhtmlPane);
     HTMLReport.setSuppressExceptions(true);
 
