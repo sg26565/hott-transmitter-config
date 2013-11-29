@@ -15,22 +15,26 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package gde.report.html;
 
-package gde.report.HTML;
+import java.io.IOException;
+import java.io.Writer;
 
-import java.util.List;
+import freemarker.core.Environment;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
 
-import freemarker.template.TemplateMethodModel;
-import freemarker.template.TemplateModelException;
-
-public class FreeMarkerHexConverter implements TemplateMethodModel {
+/**
+ * @author oli@treichels.de
+ * 
+ */
+public class FreeMarkerExceptionHandler implements TemplateExceptionHandler {
   @Override
-  public Object exec(@SuppressWarnings("rawtypes") final List args) throws TemplateModelException {
-    if (args == null || args.size() != 1) {
-      throw new TemplateModelException("Wrong number of arguments");
+  public void handleTemplateException(final TemplateException e, final Environment env, final Writer out) throws TemplateException {
+    try {
+      out.write("[ERROR: " + e.getMessage() + "]");
+    } catch (final IOException e1) {
+      throw new TemplateException("Failed to print error message. Cause: " + e1, env);
     }
-
-    final long number = Long.parseLong((String) args.get(0));
-    return Long.toHexString(number).toUpperCase();
   }
 }
