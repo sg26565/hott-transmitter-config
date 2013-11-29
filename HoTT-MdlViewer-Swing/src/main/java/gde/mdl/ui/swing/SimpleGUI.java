@@ -18,7 +18,6 @@
 
 package gde.mdl.ui.swing;
 
-import freemarker.template.TemplateException;
 import gde.model.BaseModel;
 import gde.report.ITextInlineImageReplacedElementFactory;
 import gde.report.Report;
@@ -176,7 +175,7 @@ public class SimpleGUI extends FSScrollPane {
     return fileName.toString();
   }
 
-  public void load() throws IOException, URISyntaxException, TemplateException {
+  public void load() throws IOException, URISyntaxException {
     final JFileChooser fc = new JFileChooser();
     fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
     fc.setMultiSelectionEnabled(false);
@@ -199,13 +198,13 @@ public class SimpleGUI extends FSScrollPane {
     }
   }
 
-  public void refresh() throws IOException, TemplateException {
+  public void refresh() throws IOException {
     if (model != null) {
       xhtmlPane.setDocumentFromString(Report.generateHTML(model), "", new XhtmlNamespaceHandler());
     }
   }
 
-  public void save(final FileType fileType) throws IOException, DocumentException, TemplateException, JAXBException {
+  public void save(final FileType fileType) throws IOException, DocumentException, JAXBException {
     if (model == null) {
       return;
     }

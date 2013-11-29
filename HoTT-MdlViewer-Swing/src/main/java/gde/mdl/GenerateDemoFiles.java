@@ -17,6 +17,10 @@
  */
 package gde.mdl;
 
+import gde.mdl.ui.swing.Launcher;
+import gde.model.BaseModel;
+import gde.report.Report;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -25,16 +29,11 @@ import javax.xml.bind.JAXBException;
 
 import com.itextpdf.text.DocumentException;
 
-import freemarker.template.TemplateException;
-import gde.mdl.ui.swing.Launcher;
-import gde.model.BaseModel;
-import gde.report.Report;
-
 /**
  * @author oli@treichels.de
  */
 public class GenerateDemoFiles {
-  public static void main(final String[] args) throws IOException, URISyntaxException, JAXBException, TemplateException, DocumentException {
+  public static void main(final String[] args) throws IOException, URISyntaxException, JAXBException, DocumentException {
     Launcher.initSystemProperties();
 
     final File dir = new File("demo");
