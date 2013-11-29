@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gde.report.HTML;
+package gde.report.html;
 
 import java.io.CharArrayWriter;
 import java.io.IOException;
