@@ -19,7 +19,7 @@
 package gde.mdl.ui.swing;
 
 import gde.model.BaseModel;
-import gde.report.HTML.HTMLReport;
+import gde.report.html.HTMLReport;
 import gde.report.pdf.ITextInlineImageReplacedElementFactory;
 import gde.report.pdf.PDFReport;
 import gde.report.xml.XMLReport;
