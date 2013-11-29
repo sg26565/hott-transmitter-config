@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>HoTTGUI-SWT</artifactId>
+	<artifactId>HoTT-MdlViewer-SWT</artifactId>
 
 	<parent>
 		<groupId>de.treichels.hott</groupId>
@@ -98,23 +98,15 @@
 		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTTGUI-Swing</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
+			<artifactId>HoTT-MdlViewer-Swing</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTTConfig</artifactId>
+			<artifactId>HoTT-Model</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTTDecoder</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.xhtmlrenderer</groupId>
-			<artifactId>flying-saucer-pdf-itext5</artifactId>
+			<artifactId>HoTT-Decoder</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
