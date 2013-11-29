@@ -37,6 +37,8 @@ import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 
 /**
+ * Generate offline PNG image using Swing.
+ * 
  * @author oli@treichels.de
  */
 public class SwingCurveImageGenerator implements CurveImageGenerator {

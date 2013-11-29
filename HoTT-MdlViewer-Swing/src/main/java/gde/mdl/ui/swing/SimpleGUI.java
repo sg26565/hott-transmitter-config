@@ -19,8 +19,10 @@
 package gde.mdl.ui.swing;
 
 import gde.model.BaseModel;
-import gde.report.ITextInlineImageReplacedElementFactory;
-import gde.report.Report;
+import gde.report.HTML.HTMLReport;
+import gde.report.pdf.ITextInlineImageReplacedElementFactory;
+import gde.report.pdf.PDFReport;
+import gde.report.xml.XMLReport;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -53,6 +55,8 @@ import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 
 import com.itextpdf.text.DocumentException;
+
+import de.treichels.hott.HoTTDecoder;
 
 public class SimpleGUI extends FSScrollPane {
   private final class CloseAction extends AbstractAction {
@@ -140,6 +144,7 @@ public class SimpleGUI extends FSScrollPane {
   private final Action             savePdfAction    = new SaveAction("Save PDF", FileType.PDF);
   private final Action             saveXmlAction    = new SaveAction("Save XML", FileType.XML);
   private final XHTMLPanel         xhtmlPane        = new XHTMLPanel();
+
   private final JPopupMenu         popupMenu        = new JPopupMenu();
 
   public SimpleGUI() {
@@ -147,7 +152,7 @@ public class SimpleGUI extends FSScrollPane {
     ctx.getTextRenderer().setSmoothingThreshold(10);
     ctx.setReplacedElementFactory(new ITextInlineImageReplacedElementFactory(ctx.getReplacedElementFactory()));
     setViewportView(xhtmlPane);
-    Report.setSuppressExceptions(true);
+    HTMLReport.setSuppressExceptions(true);
 
     saveHtmlAction.setEnabled(false);
     savePdfAction.setEnabled(false);
@@ -189,7 +194,7 @@ public class SimpleGUI extends FSScrollPane {
       final File file = fc.getSelectedFile();
       PREFS.put(LAST_LOAD_DIR, file.getParentFile().getAbsolutePath());
 
-      model = Report.getModel(file);
+      model = HoTTDecoder.decode(file);
       saveHtmlAction.setEnabled(true);
       savePdfAction.setEnabled(true);
       saveXmlAction.setEnabled(true);
@@ -200,7 +205,7 @@ public class SimpleGUI extends FSScrollPane {
 
   public void refresh() throws IOException {
     if (model != null) {
-      xhtmlPane.setDocumentFromString(Report.generateHTML(model), "", new XhtmlNamespaceHandler());
+      xhtmlPane.setDocumentFromString(HTMLReport.generateHTML(model), "", new XhtmlNamespaceHandler());
     }
   }
 
@@ -231,15 +236,15 @@ public class SimpleGUI extends FSScrollPane {
 
       switch (fileType) {
       case XML:
-        Report.save(file, Report.generateXML(model));
+        HTMLReport.save(file, XMLReport.generateXML(model));
         break;
 
       case HTML:
-        Report.save(file, Report.generateHTML(model));
+        HTMLReport.save(file, HTMLReport.generateHTML(model));
         break;
 
       case PDF:
-        Report.savePDF(file, Report.generateHTML(model));
+        PDFReport.save(file, HTMLReport.generateHTML(model));
         break;
       }
     }

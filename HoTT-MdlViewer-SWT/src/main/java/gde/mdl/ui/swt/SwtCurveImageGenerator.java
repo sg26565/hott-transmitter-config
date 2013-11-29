@@ -36,8 +36,9 @@ import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * @author oli
+ * Generate offline PNG image using SWT.
  * 
+ * @author oli
  */
 public class SwtCurveImageGenerator implements CurveImageGenerator {
   private static final String PREFIX = "data:image/png;base64,";
@@ -202,8 +203,11 @@ public class SwtCurveImageGenerator implements CurveImageGenerator {
     return image;
   }
 
-  /* (non-Javadoc)
-   * @see gde.mdl.ui.CurveImageGenerator#getImageSource(gde.model.Curve, float, boolean)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see gde.mdl.ui.CurveImageGenerator#getImageSource(gde.model.Curve, float,
+   * boolean)
    */
   @Override
   public String getImageSource(final Curve curve, final float scale, final boolean description) {

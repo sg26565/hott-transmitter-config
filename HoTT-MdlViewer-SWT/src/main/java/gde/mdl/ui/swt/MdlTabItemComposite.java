@@ -2,9 +2,12 @@ package gde.mdl.ui.swt;
 
 import gde.mdl.ui.swing.Launcher;
 import gde.model.BaseModel;
-import gde.report.Report;
+import gde.report.HTML.HTMLReport;
+import gde.report.pdf.PDFReport;
+import gde.report.xml.XMLReport;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.jar.Manifest;
@@ -31,6 +34,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 
+import de.treichels.hott.HoTTDecoder;
+
 public class MdlTabItemComposite extends Composite {
   private static final Preferences PREFS = Preferences.userNodeForPackage(MdlTabItemComposite.class);
 
@@ -53,7 +58,7 @@ public class MdlTabItemComposite extends Composite {
     final FontData fontData = parent.getFont().getFontData()[0];
     fontData.setHeight(fontData.getHeight() - 1);
     font = SWTResourceManager.getFont(SwtMdlBrowser.WIDGET_FONT_NAME, SwtMdlBrowser.WIDGET_FONT_SIZE, SWT.NORMAL);
-    Report.setSuppressExceptions(false);
+    HTMLReport.setSuppressExceptions(false);
     {
       loadMdlButton = new Button(this, SWT.PUSH | SWT.CENTER);
       final GridData loadMdlButtonLData = new GridData();
@@ -197,7 +202,7 @@ public class MdlTabItemComposite extends Composite {
       if (file.exists() && file.canRead()) {
         PREFS.put("lastLoadDir", file.getParentFile().getAbsolutePath());
         try {
-          model = Report.getModel(file);
+          model = HoTTDecoder.decode(file);
           saveMdlButton.setEnabled(true);
           saveMdlMenuItem.setEnabled(true);
           reloadMenuItem.setEnabled(true);
@@ -229,15 +234,17 @@ public class MdlTabItemComposite extends Composite {
       try {
         String data;
         if (file.getName().endsWith(".xml")) { //$NON-NLS-1$
-          data = Report.generateXML(model);
+          data = XMLReport.generateXML(model);
         } else {
-          data = Report.generateHTML(model);
+          data = HTMLReport.generateHTML(model);
         }
 
         if (file.getName().endsWith(".pdf")) { //$NON-NLS-1$
-          Report.savePDF(file, data);
+          PDFReport.save(file, data);
         } else {
-          Report.save(file, data);
+          final FileWriter fw = new FileWriter(file);
+          fw.write(data);
+          fw.close();
         }
       } catch (final Throwable e) {
         MdlTabItem.log.log(Level.WARNING, e.getMessage(), e);
@@ -250,9 +257,9 @@ public class MdlTabItemComposite extends Composite {
       String data;
       try {
         if (isXML) {
-          data = Report.generateXML(model);
+          data = XMLReport.generateXML(model);
         } else {
-          data = Report.generateHTML(model);
+          data = HTMLReport.generateHTML(model);
         }
       } catch (final Exception e) {
         data = e.getMessage();

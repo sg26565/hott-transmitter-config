@@ -18,7 +18,7 @@
  **************************************************************************************/
 package gde.mdl.ui.swt;
 
-import gde.report.Report;
+import gde.report.HTML.HTMLReport;
 
 import java.util.logging.Logger;
 
@@ -57,7 +57,7 @@ public class MdlTabItem extends CTabItem {
 		this.font = new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE, SWT.NORMAL));
 		this.setFont(new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE + 1, SWT.NORMAL)));
 		this.setText("MDL Viewer"); //$NON-NLS-1$
-		Report.setSuppressExceptions(true);
+		HTMLReport.setSuppressExceptions(true);
 		this.open(parent);
 	}
 
@@ -72,7 +72,7 @@ public class MdlTabItem extends CTabItem {
 		this.setFont(new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE + 1, SWT.NORMAL)));
 		this.setFont(this.font);
 		this.setText("MDL Viewer"); //$NON-NLS-1$
-		Report.setSuppressExceptions(true);
+		HTMLReport.setSuppressExceptions(true);
 		this.open(parent);
 	}
 

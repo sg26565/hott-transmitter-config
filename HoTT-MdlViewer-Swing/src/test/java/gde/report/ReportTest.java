@@ -24,167 +24,98 @@ import freemarker.template.TemplateException;
 import gde.mdl.ui.swing.Launcher;
 import gde.model.BaseModel;
 import gde.model.enums.TransmitterType;
-import gde.model.winged.WingedModel;
+import gde.report.HTML.HTMLReport;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 import javax.xml.bind.JAXBException;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.treichels.hott.HoTTDecoder;
+
 public class ReportTest {
-	@BeforeClass
-	public static void init() throws URISyntaxException {
-		Launcher.initSystemProperties();
-	}
+  @BeforeClass
+  public static void init() throws URISyntaxException {
+    Launcher.initSystemProperties();
+  }
 
-	@Test
-	public void testGetModelClassPath() throws IOException, URISyntaxException, TemplateException {
-		final BaseModel model = Report.getModel("gde/report/models/mx16/aMERLIN.mdl");
+  @Test
+  public void testMc20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+    final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mc20").toURI());
 
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos, "test.ftl");
-		assertEquals("Name: MERLIN", baos.toString());
-	}
+    for (final File file : dir.listFiles()) {
+      final BaseModel model = HoTTDecoder.decode(file);
 
-	@Test
-	public void testGetModelFile() throws URISyntaxException, IOException, TemplateException {
-		final URL url = ClassLoader.getSystemResource("gde/report/models/mx16/aMERLIN.mdl");
-		final File file = new File(url.toURI());
-		final BaseModel model = Report.getModel(file);
+      assertEquals(TransmitterType.mc20, model.getTransmitterType());
 
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos, "test.ftl");
-		assertEquals("Name: MERLIN", baos.toString());
-	}
+      final ByteArrayOutputStream out = new ByteArrayOutputStream();
+      HTMLReport.process(model, out, "mc-32.xhtml");
+      assertTrue(out.size() > 0);
+    }
+  }
 
-	@Test
-	public void testGetModelFilePath() throws IOException, URISyntaxException, TemplateException {
-		final URL url = ClassLoader.getSystemResource("gde/report/models/mx16/aMERLIN.mdl");
-		final File file = new File(url.toURI());
-		final BaseModel model = Report.getModel(file.getAbsolutePath());
+  @Test
+  public void testMc32Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+    final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mc32").toURI());
 
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos, "test.ftl");
-		assertEquals("Name: MERLIN", baos.toString());
-	}
+    for (final File file : dir.listFiles()) {
+      final BaseModel model = HoTTDecoder.decode(file);
 
-	@Test
-	public void testMc20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mc20").toURI());
+      assertEquals(TransmitterType.mc32, model.getTransmitterType());
 
-		for (final File file : dir.listFiles()) {
-			final BaseModel model = Report.getModel(file);
+      final ByteArrayOutputStream out = new ByteArrayOutputStream();
+      HTMLReport.process(model, out, "mc-32.xhtml");
+      assertTrue(out.size() > 0);
+    }
+  }
 
-			assertEquals(TransmitterType.mc20, model.getTransmitterType());
+  @Test
+  public void testMx12Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+    final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx12").toURI());
 
-			final ByteArrayOutputStream out = new ByteArrayOutputStream();
-			Report.process(model, out);
-			assertTrue(out.size() > 0);
+    for (final File file : dir.listFiles()) {
+      final BaseModel model = HoTTDecoder.decode(file);
 
-			out.reset();
-			Report.process(model, out, "mc-32.xhtml");
-			assertTrue(out.size() > 0);
-		}
-	}
+      assertEquals(TransmitterType.mx12, model.getTransmitterType());
 
-	@Test
-	public void testMc32Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mc32").toURI());
+      final ByteArrayOutputStream out = new ByteArrayOutputStream();
+      HTMLReport.process(model, out, "mx-16.xhtml");
+      assertTrue(out.size() > 0);
+    }
+  }
 
-		for (final File file : dir.listFiles()) {
-			final BaseModel model = Report.getModel(file);
+  @Test
+  public void testMx16Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+    final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx16").toURI());
 
-			assertEquals(TransmitterType.mc32, model.getTransmitterType());
+    for (final File file : dir.listFiles()) {
+      final BaseModel model = HoTTDecoder.decode(file);
 
-			final ByteArrayOutputStream out = new ByteArrayOutputStream();
-			Report.process(model, out);
-			assertTrue(out.size() > 0);
+      assertEquals(TransmitterType.mx16, model.getTransmitterType());
 
-			out.reset();
-			Report.process(model, out, "mc-32.xhtml");
-			assertTrue(out.size() > 0);
-		}
-	}
+      final ByteArrayOutputStream out = new ByteArrayOutputStream();
+      HTMLReport.process(model, out, "mx-16.xhtml");
+      assertTrue(out.size() > 0);
+    }
+  }
 
-	@Test
-	public void testMx12Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx12").toURI());
+  @Test
+  public void testMx20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+    final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx20").toURI());
 
-		for (final File file : dir.listFiles()) {
-			final BaseModel model = Report.getModel(file);
+    for (final File file : dir.listFiles()) {
+      final BaseModel model = HoTTDecoder.decode(file);
 
-			assertEquals(TransmitterType.mx12, model.getTransmitterType());
+      assertEquals(TransmitterType.mx20, model.getTransmitterType());
 
-			final ByteArrayOutputStream out = new ByteArrayOutputStream();
-			Report.process(model, out);
-			assertTrue(out.size() > 0);
-
-			out.reset();
-			Report.process(model, out, "mx-16.xhtml");
-			assertTrue(out.size() > 0);
-		}
-	}
-
-	@Test
-	public void testMx16Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx16").toURI());
-
-		for (final File file : dir.listFiles()) {
-			final BaseModel model = Report.getModel(file);
-
-			assertEquals(TransmitterType.mx16, model.getTransmitterType());
-
-			final ByteArrayOutputStream out = new ByteArrayOutputStream();
-			Report.process(model, out);
-			assertTrue(out.size() > 0);
-
-			out.reset();
-			Report.process(model, out, "mx-16.xhtml");
-			assertTrue(out.size() > 0);
-		}
-	}
-
-	@Test
-	public void testMx20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-		final File dir = new File(ClassLoader.getSystemResource("gde/report/models/mx20").toURI());
-
-		for (final File file : dir.listFiles()) {
-			final BaseModel model = Report.getModel(file);
-
-			assertEquals(TransmitterType.mx20, model.getTransmitterType());
-
-			final ByteArrayOutputStream out = new ByteArrayOutputStream();
-			Report.process(model, out);
-			assertTrue(out.size() > 0);
-
-			out.reset();
-			Report.process(model, out, "mc-32.xhtml");
-			assertTrue(out.size() > 0);
-		}
-	}
-
-	@Test
-	public void testProcessTemplate() throws TemplateException, IOException {
-		final BaseModel model = new WingedModel();
-		model.setModelName("testModel1");
-
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos, "test.ftl");
-	}
-
-	@Test
-	public void testProcessXML() throws IOException, JAXBException {
-		final BaseModel model = new WingedModel();
-		model.setModelName("testModel1");
-
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Report.process(model, baos);
-		assertTrue(baos.toString().contains("<modelName>testModel1</modelName>"));
-	}
+      final ByteArrayOutputStream out = new ByteArrayOutputStream();
+      HTMLReport.process(model, out, "mc-32.xhtml");
+      assertTrue(out.size() > 0);
+    }
+  }
 }

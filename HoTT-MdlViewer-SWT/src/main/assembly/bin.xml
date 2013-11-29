@@ -10,7 +10,7 @@
 		<file>
 			<source>${project.build.directory}/${project.build.finalName}.jar</source>
 			<outputDirectory>/</outputDirectory>
-			<destName>HoTTMdlViewer-SWT.jar</destName>
+			<destName>HoTT-MdlViewer-SWT.jar</destName>
 		</file>
 	</files>
 	<fileSets>
@@ -28,10 +28,6 @@
 			<includes>
 				<include>*.jar</include>
 			</includes>
-		</fileSet>
-		<fileSet>
-			<directory>${project.basedir}/demo</directory>
-			<outputDirectory>demo</outputDirectory>
 		</fileSet>
 		<fileSet>
 			<directory>${project.basedir}/fonts</directory>
