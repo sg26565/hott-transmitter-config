@@ -11,7 +11,7 @@
 	</parent>
 
 	<properties>
-		<swtPath>${project.basedir}/${project.parent.relativePath}/swt</swtPath>
+		<swtPath>${project.basedir}/swt</swtPath>
 	</properties>
 
 	<build>

@@ -302,7 +302,7 @@ public class SimpleGUI extends FSScrollPane {
         }
       });
 
-      final JFrame frame = new JFrame("Hott Transmitter Config");
+      final JFrame frame = new JFrame("Hott Transmitter Config - " + System.getProperty(Launcher.PROGRAM_VERSION));
       frame.setJMenuBar(menubar);
       frame.setLayout(new BorderLayout());
       frame.add(buttonPanel, BorderLayout.SOUTH);

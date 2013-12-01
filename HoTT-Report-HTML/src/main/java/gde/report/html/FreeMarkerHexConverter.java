@@ -20,17 +20,18 @@ package gde.report.html;
 
 import java.util.List;
 
-import freemarker.template.TemplateMethodModel;
+import freemarker.template.SimpleScalar;
+import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
 
-public class FreeMarkerHexConverter implements TemplateMethodModel {
+public class FreeMarkerHexConverter implements TemplateMethodModelEx {
   @Override
   public Object exec(@SuppressWarnings("rawtypes") final List args) throws TemplateModelException {
     if (args == null || args.size() != 1) {
       throw new TemplateModelException("Wrong number of arguments");
     }
 
-    final long number = Long.parseLong((String) args.get(0));
+    final long number = Long.parseLong(((SimpleScalar) args.get(0)).toString());
     return Long.toHexString(number).toUpperCase();
   }
 }

@@ -1,6 +1,5 @@
 package gde.mdl.ui.swt;
 
-import gde.mdl.ui.swing.Launcher;
 import gde.model.BaseModel;
 import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;
@@ -8,9 +7,6 @@ import gde.report.xml.XMLReport;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URL;
-import java.util.jar.Manifest;
 import java.util.logging.Level;
 import java.util.prefs.Preferences;
 
@@ -89,23 +85,7 @@ public class MdlTabItemComposite extends Composite {
       mdlVersionLabel.setLayoutData(mdlVersionLabelLData);
       mdlVersionLabel.setBackground(new Color(Display.getDefault(), 250, 249, 211));
       mdlVersionLabel.setFont(font);
-      String version = "?"; //$NON-NLS-1$
-      try {
-        @SuppressWarnings("rawtypes")
-        final Class clazz = MdlTabItem.class;
-        final String className = clazz.getSimpleName() + ".class"; //$NON-NLS-1$
-        final String classPath = clazz.getResource(className).toString();
-        if (classPath.startsWith("jar")) { //$NON-NLS-1$
-          final String manifestPath = classPath.substring(0, classPath.lastIndexOf("!") + 1) + "/META-INF/MANIFEST.MF"; //$NON-NLS-1$ //$NON-NLS-2$
-          final Manifest manifest = new Manifest(new URL(manifestPath).openStream());
-          version = manifest.getMainAttributes().getValue("Implementation-Version") + "." + manifest.getMainAttributes().getValue("Implementation-Build");
-        }
-        System.setProperty(Launcher.PROGRAM_VERSION, version);
-        mdlVersionLabel.setText("Implementation-Version: " + version); //$NON-NLS-1$
-      } catch (final IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+      mdlVersionLabel.setText("Implementation-Version: " + System.getProperty(gde.mdl.ui.swing.Launcher.PROGRAM_VERSION)); //$NON-NLS-1$
     }
     {
       saveMdlButton = new Button(this, SWT.PUSH | SWT.CENTER);
@@ -194,7 +174,7 @@ public class MdlTabItemComposite extends Composite {
     final FileDialog fd = new FileDialog(getParent().getShell(), SWT.SINGLE);
     fd.setFilterExtensions(new String[] { "*.mdl" }); //$NON-NLS-1$
     fd.setFilterNames(new String[] { "HoTT Transmitter Model Files (*.mdl)" }); //$NON-NLS-1$
-    fd.setFilterPath(PREFS.get("lastLoadDir", System.getProperty(Launcher.MDL_DIR)));
+    fd.setFilterPath(PREFS.get("lastLoadDir", System.getProperty(gde.mdl.ui.swing.Launcher.MDL_DIR)));
 
     fd.open();
     if (fd.getFileName().length() > 4) {
@@ -225,7 +205,7 @@ public class MdlTabItemComposite extends Composite {
       fileSaveDialog.setFilterExtensions(new String[] { "*.pdf", "*.html", "*.xml" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       fileSaveDialog.setFilterNames(new String[] {
           "Portable Document Format (*.pdf)", "Hypertext Markup Language (*.html)", "Extensible Markup Language (*.xml)" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-      fileSaveDialog.setFilterPath(PREFS.get("lastSaveDir", PREFS.get("lastLoadDir", System.getProperty(Launcher.MDL_DIR))));
+      fileSaveDialog.setFilterPath(PREFS.get("lastSaveDir", PREFS.get("lastLoadDir", System.getProperty(gde.mdl.ui.swing.Launcher.MDL_DIR))));
       fileSaveDialog.setFileName(model.getModelName() + ".pdf");
       fileSaveDialog.open();
       final File file = new File(fileSaveDialog.getFilterPath() + "/" + fileSaveDialog.getFileName()); //$NON-NLS-1$

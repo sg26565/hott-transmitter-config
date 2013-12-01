@@ -21,6 +21,10 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -69,18 +73,36 @@ public class Launcher {
    * Initialize system properties.
    * 
    * @throws URISyntaxException
+   * @throws IOException
    */
-  public static void initSystemProperties() throws URISyntaxException {
-    if (!System.getProperties().contains(PROGRAM_DIR)) {
-      // get the location of this class
-      File source = new File(Launcher.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+  public static void initSystemProperties() throws URISyntaxException, IOException {
+    // get the location of this class
+    final URL url = Launcher.class.getProtectionDomain().getCodeSource().getLocation();
+    File source = new File(url.toURI());
 
-      // if application was packaged as individual class files, find the
-      // classes directory
-      if (!source.getName().endsWith(".jar")) {
-        while (!source.getName().equals("classes")) {
-          source = source.getParentFile();
+    if (source.getName().endsWith(".jar")) {
+      // read program version from manifest
+      JarFile jarFile = null;
+      try {
+        jarFile = new JarFile(source);
+        final Manifest manifest = jarFile.getManifest();
+        final Attributes attributes = manifest.getMainAttributes();
+        final String version = attributes.getValue("Implementation-Version") + "." + attributes.getValue("Implementation-Build");
+        System.setProperty(Launcher.PROGRAM_VERSION, version);
+      } finally {
+        if (jarFile != null) {
+          jarFile.close();
         }
+      }
+    } else {
+      if (!System.getProperties().containsKey(PROGRAM_VERSION)) {
+        System.setProperty(Launcher.PROGRAM_VERSION, "unknown");
+      }
+
+      // application was packaged as individual class files, find the classes
+      // directory
+      while (!source.getName().equals("classes")) {
+        source = source.getParentFile();
       }
 
       // get the parent directory containing the jar file or the classes
