@@ -72,7 +72,7 @@
 				<executions>
 					<execution>
 						<id>upload</id>
-						<phase>install</phase>
+						<phase>deploy</phase>
 						<goals>
 							<goal>upload</goal>
 						</goals>

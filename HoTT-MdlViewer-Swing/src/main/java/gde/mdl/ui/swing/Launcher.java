@@ -104,19 +104,19 @@ public class Launcher {
       while (!source.getName().equals("classes")) {
         source = source.getParentFile();
       }
-
-      // get the parent directory containing the jar file or the classes
-      // directory
-      File programDir = source.getParentFile();
-
-      // if we are running inside Eclipse in the target directory, step up to
-      // the project level
-      if (programDir.getName().equals("target")) {
-        programDir = programDir.getParentFile();
-      }
-
-      System.setProperty(PROGRAM_DIR, programDir.getAbsolutePath());
     }
+
+    // get the parent directory containing the jar file or the classes
+    // directory
+    File programDir = source.getParentFile();
+
+    // if we are running inside Eclipse in the target directory, step up to
+    // the project level
+    if (programDir.getName().equals("target")) {
+      programDir = programDir.getParentFile();
+    }
+
+    System.setProperty(PROGRAM_DIR, programDir.getAbsolutePath());
 
     if (!System.getProperties().containsKey(MDL_DIR)) {
       System.setProperty(MDL_DIR, System.getProperty(PROGRAM_DIR));
