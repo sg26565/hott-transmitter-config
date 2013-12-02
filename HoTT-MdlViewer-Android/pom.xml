@@ -2,45 +2,38 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.treichels.hott</groupId>
 	<artifactId>HoTT-MdlViewer-Android</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<packaging>apk</packaging>
 	<name>HoTT-MdlViewer-Android</name>
+
+	<parent>
+		<groupId>de.treichels.hott</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.7</version>
+		<relativePath>../parent</relativePath>
+	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform.version>19</platform.version>
-		<android.plugin.version>3.5.3</android.plugin.version>
 		<android.sdk.path>/home/oli/android-sdk-linux</android.sdk.path>
 	</properties>
 
 	<dependencies>
-	<!-- <dependency> -->
-	<!-- <groupId>com.google.android</groupId> -->
-	<!-- <artifactId>android</artifactId> -->
-	<!-- <version>${platform.version}</version> -->
-	<!-- <scope>system</scope> -->
-	<!-- <systemPath>${android.sdk.path}/platforms/android-${platform.version}/android.jar</systemPath> -->
-	<!-- </dependency> -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<version>${platform.version}</version>
+			<scope>system</scope>
+			<systemPath>${android.sdk.path}/platforms/android-${platform.version}/android.jar</systemPath>
+		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Report-HTML</artifactId>
-			<version>0.7</version>
 		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-					<artifactId>android-maven-plugin</artifactId>
-					<version>${android.plugin.version}</version>
-					<extensions>true</extensions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
