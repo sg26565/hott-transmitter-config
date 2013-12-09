@@ -1,62 +1,62 @@
 <h1>Inhaltsverzeichnis</h1>
 <a href="#baseSettings">Grundeinstellungen Modell</a>
-<a href="#modelType"><#if helicopterModel??>Helicoptertyp<#else>Modelltyp</#if></a>
+<a href="#modelType">#if ($model.modelType.name() == "Helicopter")Helikoptertyp#{else}Modelltyp#end</a>
 <a href="#servos">Servoeinstellungen</a>		
 <a href="#stickSettings">Knüppeleinstellungen</a>
 <div>Gebereinstellungen</div>
-<#list model.phase as phase>
-	<#if phase.phaseType.name() != "Unused">
-		<a class="i1" href="#controls${phase.number}">${phase?string}</a>
-	</#if>
-</#list>
+#foreach ($phase in $model.phase)
+	#if ($phase.phaseType.name() != "Unused")
+		<a class="i1" href="#controls${phase.number}">${phase}</a>
+	#end
+#end
 <div>DualRate Expo</div>
-<#list model.phase as phase>
-	<#if phase.phaseType.name() != "Unused">
-		<a class="i1" href="#drExpo${phase.number}">${phase?string}</a>
-	</#if>
-</#list>
+#foreach ($phase in $model.phase)
+	#if ($phase.phaseType.name() != "Unused")
+		<a class="i1" href="#drExpo${phase.number}">${phase}</a>
+	#end
+#end
 <div>Kanal 1 Kurve</div>
-<#list model.phase as phase>
-	<#if phase.phaseType.name() != "Unused">
-		<a class="i1" href="#channel1Curve${phase.number}">${phase?string}</a>
-	</#if>
-</#list>
+#foreach ($phase in $model.phase)
+	#if ($phase.phaseType.name() != "Unused")
+		<a class="i1" href="#channel1Curve${phase.number}">${phase}</a>
+	#end
+#end
 <a href="#controlSwitches">Geberschalter</a>
-<#if model.logicalSwitch??>
+#if ($model.logicalSwitch != $null)
 	<a href="#logicalSwitches">logische Schalter</a>
-</#if>
+#end
 <a href="#phaseSettings">Phaseneinstellungen</a>
 <a href="#phaseAssignments">Phasenzuweisung</a>
-<#if wingedModel??>
+#if ($model.modelType.name() == "Winged")
 	<a href="#phaseTrim">Phasentrimm</a>
-</#if>
+#end
 <a href="#nonDelayedChannels">unverzögerte Kanäle</a>
 <a href="#timersGeneral">Uhren (allgemein)</a>
 <a href="#phaseTimer">Flugphasenuhren</a>
-<#if wingedModel??>
+#if ($model.modelType.name() == "Winged")
 	<div>Flächenmischer</div>
-	<#list model.phase as phase>
-		<#if phase.phaseType.name() != "Unused">
-			<a class="i1" href="#wingMix${phase.number}">${phase?string}</a>
-		</#if>
-	</#list>
-</#if>
-<#if helicopterModel??>
+	#foreach ($phase in $model.phase)
+		#if ($phase.phaseType.name() != "Unused")
+			<a class="i1" href="#wingMix${phase.number}">${phase}</a>
+		#end
+	#end
+#end
+#if ($model.modelType.name() == "Helicopter")
 	<div>Helikoptermix</div>
-	<#list model.phase as phase>
-		<#if phase.phaseType.name() != "Unused">
-			<a class="i1" href="#helicopterMix${phase.number}">${phase?string}</a>
-		</#if>
-	</#list>
-</#if>
+	#foreach ($phase in $model.phase)
+		#if ($phase.phaseType.name() != "Unused")
+			<a class="i1" href="#helicopterMix${phase.number}">${phase}</a>
+		#end
+	#end
+#end
 <a href="#linearMixer">Linearmischer</a>
 <a href="#curveMixer">Kurvenmischer</a>
 <a href="#mixerActive">MIX aktiv / Phase</a>
 <a href="#mixOnlyChannel">Nur MIX Kanal</a>
 <a href="#dualMixer">Kreuzmischer</a>
-<#if helicopterModel??>
+#if ($model.modelType.name() == "Helicopter")
 	<a href="#swashplateMixer">Taumelscheibenmischer</a>
-</#if>
+#end
 <a href="#failSafe">Fail Safe</a>
 <a href="#trainerPupil">Lehrer/Schüler</a>
 <a href="#outputChannel">Senderausgang</a>
@@ -66,7 +66,7 @@
 <a href="#channelSequencer">Kanal Sequenzer</a>
 <a href="#multiChannel">Multikanal</a>
 <a href="#ringLimiter">Ringbegrenzer</a>
-<#if model.transmitterType.name() != "mx20">
+#if ($model.transmitterType.name() != "mx20")
 	<a href="#mp3Player">MP3-Player</a>
-</#if>
+#end
 <a href="#switches">Schalter-/Geberzuordnungen</a>

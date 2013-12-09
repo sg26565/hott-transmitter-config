@@ -18,50 +18,57 @@
 
 package gde.report.html;
 
-import java.io.ByteArrayOutputStream;
+import gde.model.BaseModel;
+import gde.report.CurveImageGenerator;
+import gde.report.ReportException;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ServiceLoader;
 
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateExceptionHandler;
-import gde.model.BaseModel;
-import gde.model.helicopter.HelicopterModel;
-import gde.model.winged.WingedModel;
-import gde.report.CurveImageGenerator;
-import gde.report.ReportException;
+import org.apache.velocity.Template;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.context.Context;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.ResourceNotFoundException;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.tools.ToolManager;
 
 /**
  * @author oli@treichels.de
  */
 public class HTMLReport {
-  private static final Configuration            CONFIGURATION;
-  private static final TemplateExceptionHandler CUSTOM_HANDLER;
-  private static final CurveImageGenerator      CURVE_IMAGE_GENERATOR;
+  private static final String  MX_16_TEMPLATE_NAME = "mx-16.xhtml";
+  private static final String  MC_32_TEMPLATE_NAME = "mc-32.xhtml";
+  private static final Context CTX;
 
   static {
-    // setup freemarker
-    CONFIGURATION = new Configuration();
-    CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8");
-    CONFIGURATION.setClassForTemplateLoading(HTMLReport.class, "templates");
-    CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
-    CUSTOM_HANDLER = new FreeMarkerExceptionHandler();
+    Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "class");
+    Velocity.setProperty("class.resource.loader.class", TemplateLoader.class.getName());
+    try {
+      Velocity.init();
+    } catch (final Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    final ToolManager manager = new ToolManager();
+    manager.autoConfigure(true);
+    CTX = manager.createContext();
+    CTX.put("hex", new HexConverter());
+    CTX.put("programDir", System.getProperty("program.dir"));
+    CTX.put("version", System.getProperty("program.version", "unknown"));
 
     // setup CurveImageGenerator
     final ServiceLoader<CurveImageGenerator> loader = ServiceLoader.load(CurveImageGenerator.class);
-    CURVE_IMAGE_GENERATOR = loader.iterator().next();
+    final CurveImageGenerator generator = loader.iterator().next();
+    CTX.put("png", generator);
   }
 
   public static String generateHTML(final BaseModel model) throws IOException, ReportException {
-    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final String templateName;
 
     switch (model.getTransmitterType()) {
@@ -69,56 +76,47 @@ public class HTMLReport {
     case mc20:
     case mc32:
     case mx20:
-      templateName = "mc-32.xhtml";
+      templateName = MC_32_TEMPLATE_NAME;
       break;
 
     case mx12:
     case mx16:
-      templateName = "mx-16.xhtml";
+      templateName = MX_16_TEMPLATE_NAME;
       break;
 
     default:
       throw new IOException("Unsupported transmitter type");
     }
 
+    CTX.put("model", model);
+
+    final StringWriter sw = new StringWriter();
+    final Writer w = new HtmlSafeWriter(sw);
+
+    Template template;
     try {
-      final Template template = HTMLReport.CONFIGURATION.getTemplate(templateName);
-      final Map<String, Object> rootMap = new HashMap<String, Object>();
-
-      rootMap.put("model", model);
-      rootMap.put("hex", new FreeMarkerHexConverter());
-      rootMap.put("png", HTMLReport.CURVE_IMAGE_GENERATOR);
-      rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective());
-      rootMap.put("programDir", new File(System.getProperty("program.dir")).toURI().toURL().toString());
-      rootMap.put("version", System.getProperty("program.version", "unknown"));
-      if (model instanceof WingedModel) {
-        rootMap.put("wingedModel", model);
-      } else if (model instanceof HelicopterModel) {
-        rootMap.put("helicopterModel", model);
-      }
-
-      template.process(rootMap, new OutputStreamWriter(baos, "UTF-8"));
-    } catch (final TemplateException e) {
-      throw new ReportException(e);
+      template = Velocity.getTemplate(templateName, "UTF-8");
+      template.merge(CTX, w);
+    } catch (final ResourceNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (final ParseErrorException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (final Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      w.close();
+      sw.close();
     }
-    return baos.toString();
-  }
 
-  public static boolean isSuppressExceptions() {
-    return CONFIGURATION.getTemplateExceptionHandler() instanceof FreeMarkerExceptionHandler;
+    return sw.toString();
   }
 
   public static void save(final File file, final String html) throws IOException {
     final FileWriter fw = new FileWriter(file);
     fw.write(html);
     fw.close();
-  }
-
-  public static void setSuppressExceptions(final boolean suppress) {
-    if (suppress) {
-      CONFIGURATION.setTemplateExceptionHandler(CUSTOM_HANDLER);
-    } else {
-      CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
-    }
   }
 }

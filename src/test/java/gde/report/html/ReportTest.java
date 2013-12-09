@@ -21,6 +21,8 @@ package gde.report.html;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import gde.model.BaseModel;
+import gde.model.enums.TransmitterType;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,9 +34,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.treichels.hott.HoTTDecoder;
-import freemarker.template.TemplateException;
-import gde.model.BaseModel;
-import gde.model.enums.TransmitterType;
 
 public class ReportTest {
   @BeforeClass
@@ -44,7 +43,7 @@ public class ReportTest {
   }
 
   @Test
-  public void testMc20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+  public void testMc20Models() throws URISyntaxException, IOException, JAXBException {
     final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc20").toURI());
 
     for (final File file : dir.listFiles()) {
@@ -59,7 +58,7 @@ public class ReportTest {
   }
 
   @Test
-  public void testMc32Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+  public void testMc32Models() throws URISyntaxException, IOException, JAXBException {
     final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc32").toURI());
 
     for (final File file : dir.listFiles()) {
@@ -74,7 +73,7 @@ public class ReportTest {
   }
 
   @Test
-  public void testMx12Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+  public void testMx12Models() throws URISyntaxException, IOException, JAXBException {
     final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx12").toURI());
 
     for (final File file : dir.listFiles()) {
@@ -89,7 +88,7 @@ public class ReportTest {
   }
 
   @Test
-  public void testMx16Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+  public void testMx16Models() throws URISyntaxException, IOException, JAXBException {
     final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx16").toURI());
 
     for (final File file : dir.listFiles()) {
@@ -104,7 +103,7 @@ public class ReportTest {
   }
 
   @Test
-  public void testMx20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+  public void testMx20Models() throws URISyntaxException, IOException, JAXBException {
     final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx20").toURI());
 
     for (final File file : dir.listFiles()) {

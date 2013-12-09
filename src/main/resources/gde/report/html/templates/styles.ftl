@@ -7,7 +7,7 @@
 		}
 	
 		@top-right {
-			content: "${.now}";
+			content: "$date";
 		}
 	
 		@bottom-left {
@@ -62,7 +62,7 @@
 
 <style type="text/css" media="all">
 	@font-face {
-		src: url('${programDir}/fonts/Arial.ttf');
+		src: url('${programDir}fonts/Arial.ttf');
 		-fs-pdf-font-embed: embed;
 		-fs-pdf-font-encoding: Identity-H;
 	}
