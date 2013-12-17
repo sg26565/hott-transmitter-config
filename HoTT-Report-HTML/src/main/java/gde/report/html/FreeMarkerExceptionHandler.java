@@ -15,11 +15,26 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gde.report.html;
 
-public class HexConverter {
-  public String toHexString(final long number) {
-    return Long.toHexString(number).toUpperCase();
+import java.io.IOException;
+import java.io.Writer;
+
+import freemarker.core.Environment;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
+
+/**
+ * @author oli@treichels.de
+ * 
+ */
+public class FreeMarkerExceptionHandler implements TemplateExceptionHandler {
+  @Override
+  public void handleTemplateException(final TemplateException e, final Environment env, final Writer out) throws TemplateException {
+    try {
+      out.write("[ERROR: " + e.getMessage() + "]");
+    } catch (final IOException e1) {
+      throw new TemplateException("Failed to print error message. Cause: " + e1, env);
+    }
   }
 }
