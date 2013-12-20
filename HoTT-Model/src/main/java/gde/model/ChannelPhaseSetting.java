@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  * 
  */
-public class ChannelPhaseSetting {
+public class ChannelPhaseSetting extends AbstractBase {
   private boolean nonDelayed;
   private Phase   phase;
 

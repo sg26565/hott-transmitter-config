@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli@treichels.de
  */
-public class Expo {
+public class Expo extends AbstractBase {
   private Function function;
   private Switch   sw;
   private int[]    values;

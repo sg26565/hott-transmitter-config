@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli
  */
-public class Multichannel {
+public class Multichannel extends AbstractBase {
   private Control[]        control;
   private boolean          enabled;
   private Channel          inputChannel;

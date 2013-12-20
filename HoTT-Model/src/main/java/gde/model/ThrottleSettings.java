@@ -20,7 +20,7 @@ package gde.model;
 /**
  * @author oli
  */
-public class ThrottleSettings {
+public class ThrottleSettings extends AbstractBase {
   private ThrottleCutOf throttleCutOf;
   private int           throttleLastIdlePosition;
   private int           throttleTrim;

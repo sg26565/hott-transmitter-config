@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli@treichels.de
  */
-public class Control {
+public class Control extends AbstractBase {
   private Switch      inputControl;
   private ControlMode mode;
   private String      number;

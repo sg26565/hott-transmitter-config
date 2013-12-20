@@ -22,7 +22,7 @@ import gde.model.enums.HFModuleType;
 /**
  * @author oli@treichels.de
  */
-public class HFModule {
+public class HFModule extends AbstractBase {
   private HFModuleType type;
 
   @Override

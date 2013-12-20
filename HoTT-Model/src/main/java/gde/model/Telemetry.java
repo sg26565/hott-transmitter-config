@@ -24,7 +24,7 @@ import java.util.Collection;
 /**
  * @author oli
  */
-public class Telemetry {
+public class Telemetry extends AbstractBase {
   private SensorType             currentSensor;
   private int                    currentSensorPage;
   private Collection<SensorType> selectedSensor;

@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
  * @author oli
  * 
  */
-public class Curve {
+public class Curve extends AbstractBase {
   private CurvePoint[] point;
   private boolean      smoothing = false;
   private CurveType    type;

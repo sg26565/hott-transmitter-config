@@ -17,12 +17,13 @@
  */
 package gde.model.helicopter;
 
+import gde.model.AbstractBase;
 import gde.model.Curve;
 
 /**
  * @author oli@treichels.de
  */
-public class HelicopterMixer {
+public class HelicopterMixer extends AbstractBase {
   private int   nick2TailMix;
   private int   nick2ThrottleMix;
   private Curve pitchCurve;

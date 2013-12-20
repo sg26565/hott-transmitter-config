@@ -17,10 +17,12 @@
  */
 package gde.model.helicopter;
 
+import gde.model.AbstractBase;
+
 /**
  * @author oli@treichels.de
  */
-public class SwashplateMix {
+public class SwashplateMix extends AbstractBase {
   private int nickMix;
   private int pitchMix;
   private int rollMix;

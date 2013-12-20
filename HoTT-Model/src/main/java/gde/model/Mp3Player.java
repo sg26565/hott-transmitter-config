@@ -22,7 +22,7 @@ import gde.model.enums.Mp3PlayerMode;
 /**
  * @author oli
  */
-public class Mp3Player {
+public class Mp3Player extends AbstractBase {
   private int           album;
   private Mp3PlayerMode mode;
   private int           track;

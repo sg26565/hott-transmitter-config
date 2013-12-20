@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlID;
 /**
  * @author oli
  */
-public class Receiver {
+public class Receiver extends AbstractBase {
   private boolean          bound;
   private ChannelMapping[] channelMapping;
   private String           number;

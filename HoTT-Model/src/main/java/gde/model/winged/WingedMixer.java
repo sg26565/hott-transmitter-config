@@ -17,6 +17,7 @@
  */
 package gde.model.winged;
 
+import gde.model.AbstractBase;
 import gde.model.Switch;
 import gde.model.enums.SwitchFunction;
 
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
-public class WingedMixer {
+public class WingedMixer extends AbstractBase {
   private SwitchFunction function;
   private Object[]       qualifier;
   private Switch         sw;

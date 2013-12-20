@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli
  */
-public class ChannelSequencer {
+public class ChannelSequencer extends AbstractBase {
   private int            maxStep;
   private SequenceStatus powerOffStatus;
   private Sequence[]     sequence;

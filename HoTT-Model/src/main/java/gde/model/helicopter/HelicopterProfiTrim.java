@@ -17,6 +17,7 @@
  */
 package gde.model.helicopter;
 
+import gde.model.AbstractBase;
 import gde.model.Switch;
 import gde.model.enums.CurveType;
 
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli
  */
-public class HelicopterProfiTrim {
+public class HelicopterProfiTrim extends AbstractBase {
   private CurveType       curveType;
   private Switch          inputControl;
   private HelicopterPhase phase;

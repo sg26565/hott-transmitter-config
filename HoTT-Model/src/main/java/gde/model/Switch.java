@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlID;
 /**
  * @author oli@treichels.de
  */
-public class Switch {
+public class Switch extends AbstractBase {
   private SwitchAssignment assignment;
   private int              direction;
   private SwitchFunction   function;

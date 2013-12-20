@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli@treichels.de
  */
-public class Clock {
+public class Clock extends AbstractBase {
   private int           alarm;
   private ClockFunction function;
   private ClockMode     mode;

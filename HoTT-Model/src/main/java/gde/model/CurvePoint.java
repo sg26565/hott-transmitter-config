@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 /**
  * @author oli@treichels.de
  */
-public class CurvePoint {
+public class CurvePoint extends AbstractBase {
   private boolean enabled;
   private int     number;
   private int     position;

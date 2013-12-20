@@ -17,10 +17,12 @@
  */
 package gde.model.helicopter;
 
+import gde.model.AbstractBase;
+
 /**
  * @author oli@treichels.de
  */
-public class HelicopterTrim {
+public class HelicopterTrim extends AbstractBase {
   private int nickStickTrim;
   private int rollStickTrim;
   private int tailStickTrim;

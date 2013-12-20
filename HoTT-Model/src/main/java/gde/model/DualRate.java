@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli@treichels.de
  */
-public class DualRate {
+public class DualRate extends AbstractBase {
   private Function function;
   private Switch   sw;
   private int[]    values;

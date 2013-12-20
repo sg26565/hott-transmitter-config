@@ -21,7 +21,7 @@ package gde.model;
  * @author oli
  * 
  */
-public class DualRateExpo {
+public class DualRateExpo extends AbstractBase {
   DualRate dualRate;
   Expo     expo;
 

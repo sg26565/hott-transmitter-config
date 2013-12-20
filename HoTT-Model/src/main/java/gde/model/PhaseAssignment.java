@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli
  */
-public class PhaseAssignment {
+public class PhaseAssignment extends AbstractBase {
   private Phase[] assignment;
   private Switch  combiCSwitch;
   private Switch  combiDSwitch;

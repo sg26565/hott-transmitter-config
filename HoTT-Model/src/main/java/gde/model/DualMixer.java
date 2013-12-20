@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  * @author oli
  */
-public class DualMixer {
+public class DualMixer extends AbstractBase {
   private Channel[] channel;
   private int       diff;
   private int       number;

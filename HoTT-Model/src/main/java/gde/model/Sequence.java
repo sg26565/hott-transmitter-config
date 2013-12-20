@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  * 
  */
-public class Sequence {
+public class Sequence extends AbstractBase {
   private boolean enabled;
   private int     number;
   private Channel outputChannel;

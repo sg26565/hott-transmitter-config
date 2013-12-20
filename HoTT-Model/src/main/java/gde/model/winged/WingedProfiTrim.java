@@ -17,6 +17,7 @@
  */
 package gde.model.winged;
 
+import gde.model.AbstractBase;
 import gde.model.Switch;
 
 import javax.xml.bind.annotation.XmlIDREF;
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli
  */
-public class WingedProfiTrim {
+public class WingedProfiTrim extends AbstractBase {
   private boolean enabled;
   private Switch  inputControl;
 

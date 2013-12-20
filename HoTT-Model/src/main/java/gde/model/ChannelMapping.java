@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author oli
  * 
  */
-public class ChannelMapping {
+public class ChannelMapping extends AbstractBase {
   private int inputChannel;
   private int outputChannel;
 

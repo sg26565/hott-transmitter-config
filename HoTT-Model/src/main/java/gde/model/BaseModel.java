@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli@treichels.de
  */
-public class BaseModel {
+public class BaseModel extends AbstractBase {
   private int              appVersion;
   private boolean          autoTimerReset;
   private Switch           autoTrimSwitch;

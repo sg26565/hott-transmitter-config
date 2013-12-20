@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  * 
  */
-public class RingLimiter {
+public class RingLimiter extends AbstractBase {
   private boolean   enabled;
   private Channel[] inputChannel;
   private int[]     limit;

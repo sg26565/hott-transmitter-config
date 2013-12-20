@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  * 
  */
-public class FreeMixerPhaseSetting {
+public class FreeMixerPhaseSetting extends AbstractBase {
   private boolean enabled;
   private Phase   phase;
 

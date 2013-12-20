@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 /**
  * @author oli
  */
-public class StickTrim {
+public class StickTrim extends AbstractBase {
   private int      channel;
   private int      increment;
   private TrimMode mode;

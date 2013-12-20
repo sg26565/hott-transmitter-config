@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlID;
 /**
  * @author oli@treichels.de
  */
-public class Channel {
+public class Channel extends AbstractBase {
   private int                   center;
   private FailSafeMode          failSafeMode;
   private int                   failSafePosition;

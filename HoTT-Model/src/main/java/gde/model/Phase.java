@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli@treichels.de
  */
-public abstract class Phase {
+public abstract class Phase extends AbstractBase {
   private Curve          channel1Curve;
   private Control[]      control;
   private DualRateExpo[] dualRateExpo;

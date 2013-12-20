@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 /**
  * @author oli@treichels.de
  */
-public class ThrottleCutOf {
+public class ThrottleCutOf extends AbstractBase {
   private int    position;
   private Switch sw;
   private int    threshold;

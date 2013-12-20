@@ -17,12 +17,14 @@
  */
 package gde.model.winged;
 
+import gde.model.AbstractBase;
+
 import java.util.Arrays;
 
 /**
  * @author oli@treichels.de
  */
-public class WingedTrim {
+public class WingedTrim extends AbstractBase {
   private int[] aileronPhaseTrim;
   private int   aileronStickTrim;
   private int   elevatorPhaseTrim;
