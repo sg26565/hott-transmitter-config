@@ -16,7 +16,6 @@
 		<dependency>
 			<groupId>com.madrobot</groupId>
 			<artifactId>madrobotbeans</artifactId>
-			<version>0.1</version>
 		</dependency>
 	</dependencies>
 </project>
