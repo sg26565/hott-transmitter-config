@@ -20,13 +20,12 @@
 	</properties>
 
 	<dependencies>
-		<!-- <dependency> -->
-		<!-- <groupId>com.google.android</groupId> -->
-		<!-- <artifactId>android</artifactId> -->
-		<!-- <version>${platform.version}</version> -->
-		<!-- <scope>system</scope> -->
-		<!-- <systemPath>${android.sdk.path}/platforms/android-${platform.version}/android.jar</systemPath> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<version>${platform.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Decoder</artifactId>
@@ -34,6 +33,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<version>3.8</version><!--$NO-MVN-MAN-VER$-->
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
