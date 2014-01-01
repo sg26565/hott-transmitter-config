@@ -20,18 +20,29 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-			<version>${platform.version}</version>
-			<scope>system</scope>
-			<systemPath>${android.sdk.path}/platforms/android-${platform.version}/android.jar</systemPath>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>com.google.android</groupId> -->
+		<!-- <artifactId>android</artifactId> -->
+		<!-- <version>${platform.version}</version> -->
+		<!-- <scope>system</scope> -->
+		<!-- <systemPath>${android.sdk.path}/platforms/android-${platform.version}/android.jar</systemPath> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTT-Report-HTML</artifactId>
+			<artifactId>HoTT-Decoder</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.treichels.binding</groupId>
+			<artifactId>binding</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
@@ -46,4 +57,18 @@
 			</plugin>
 		</plugins>
 	</build>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>1.6.1</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>2.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>

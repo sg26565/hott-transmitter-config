@@ -3,6 +3,12 @@
 
     <string name="app_name">HoTT MdlViewer</string>
     <string name="action_settings">Settings</string>
-    <string name="ok_button">Ok</string>
+    <string name="ok_button">OK</string>
+    <string name="vendor">Hersteller</string>
+    <string name="transmitterType">Sendertyp</string>
+    <string name="transmitterId">Sender ID</string>
+    <string name="appVersion">Firmware Version</string>
+    <string name="version">Version</string>
+    <string name="memoryVersion">Dateiversion</string>
 
 </resources>
