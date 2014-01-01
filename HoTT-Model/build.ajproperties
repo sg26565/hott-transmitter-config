@@ -1,6 +1,7 @@
 src.includes = src/main/java/,\
                src/test/java/,\
                src/main/resources/,\
-               src/test/resources/
+               src/test/resources/,\
+               src/main/aspect/
 src.excludes = src/main/resources/**,\
                src/test/resources/**
