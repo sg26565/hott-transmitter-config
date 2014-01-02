@@ -19,32 +19,35 @@ import com.swtxml.util.types.SimpleTypes;
 
 public class EventForeignAttribute implements IAttributeDefinition, ITagScope {
 
-	public EventForeignAttribute(String name) {
-		super();
-		this.name = name;
-	}
+  private final String name;
 
-	private String name;
+  public EventForeignAttribute(final String name) {
+    super();
+    this.name = name;
+  }
 
-	public String getName() {
-		return name;
-	}
+  @Override
+  public String getName() {
+    return name;
+  }
 
-	public IType<?> getType() {
-		return SimpleTypes.STRING;
-	}
+  @Override
+  public IType<?> getType() {
+    return SimpleTypes.STRING;
+  }
 
-	public boolean isAllowedIn(ITagDefinition tagDefinition) {
-		if (!(tagDefinition instanceof WidgetTag)) {
-			return false;
-		}
+  @Override
+  @SuppressWarnings("deprecation")
+  public boolean isAllowedIn(final ITagDefinition tagDefinition) {
+    if (!(tagDefinition instanceof WidgetTag)) {
+      return false;
+    }
 
-		return SwtEvents.getNamespace().getEvents().getWidgetEvent(
-				((WidgetTag) tagDefinition).getWidgetClass(), name) != null;
-	}
+    return SwtEvents.getNamespace().getEvents().getWidgetEvent(((WidgetTag) tagDefinition).getWidgetClass(), name) != null;
+  }
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + "[" + getName() + "]";
-	}
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "[" + getName() + "]";
+  }
 }

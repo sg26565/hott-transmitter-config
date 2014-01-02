@@ -29,62 +29,59 @@ import com.swtxml.util.parser.ParseException;
 
 public class WidgetRegistry {
 
-	private Map<String, String[]> widgetStylesByClassName = new HashMap<String, String[]>();
+  private final Map<String, String[]> widgetStylesByClassName = new HashMap<String, String[]>();
 
-	public WidgetRegistry() {
-		String widgetClasses = ResourceUtils.toString(ResourceUtils.getClassResource(this
-				.getClass(), "txt"));
-		for (String line : StringUtils.split(widgetClasses, "\n")) {
-			String[] parts = StringUtils.split(line, '=');
-			String className = parts[0].trim();
-			String[] allowedStyles = (parts.length > 1) ? StringUtils.split(parts[1].trim(), ", ")
-					: new String[] {};
-			widgetStylesByClassName.put(className, allowedStyles);
-		}
-	}
+  public WidgetRegistry() {
+    final String widgetClasses = ResourceUtils.toString(ResourceUtils.getClassResource(this.getClass(), "txt"));
+    for (final String line : StringUtils.split(widgetClasses, "\n")) {
+      final String[] parts = StringUtils.split(line, '=');
+      final String className = parts[0].trim();
+      final String[] allowedStyles = parts.length > 1 ? StringUtils.split(parts[1].trim(), ", ") : new String[] {};
+      widgetStylesByClassName.put(className, allowedStyles);
+    }
+  }
 
-	public Collection<String> getWidgetClassNames() {
-		return widgetStylesByClassName.keySet();
-	}
+  public Class<?> getAllowedParentType(final Class<? extends Widget> type) {
+    final Constructor<?> constructor = getWidgetConstructor(type);
+    return constructor.getParameterTypes()[0];
 
-	public Collection<String> getAllowedStylesFor(Class<?> widgetClass) {
-		Set<String> allowedStyles = new HashSet<String>();
-		do {
-			String[] styles = widgetStylesByClassName.get(widgetClass.getName());
-			if (styles == null) {
-				throw new ParseException("Unknown widget super class: " + widgetClass);
-			}
-			allowedStyles.addAll(Arrays.asList(styles));
-			widgetClass = widgetClass.getSuperclass();
-		} while (widgetClass.getSuperclass() != null && !Object.class.equals(widgetClass));
-		return allowedStyles;
-	}
+  }
 
-	@SuppressWarnings("unchecked")
-	public Class<? extends Widget> getWidgetClass(String className) {
-		try {
-			return (Class<? extends Widget>) Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			throw new DefinitionException(e);
-		}
-	}
+  public Collection<String> getAllowedStylesFor(Class<?> widgetClass) {
+    final Set<String> allowedStyles = new HashSet<String>();
+    do {
+      final String[] styles = widgetStylesByClassName.get(widgetClass.getName());
+      if (styles == null) {
+        throw new ParseException("Unknown widget super class: " + widgetClass);
+      }
+      allowedStyles.addAll(Arrays.asList(styles));
+      widgetClass = widgetClass.getSuperclass();
+    } while (widgetClass.getSuperclass() != null && !Object.class.equals(widgetClass));
+    return allowedStyles;
+  }
 
-	@SuppressWarnings("unchecked")
-	public Constructor getWidgetConstructor(Class<? extends Widget> widgetClass) {
-		return CollectionUtils.find(Arrays.asList(widgetClass.getConstructors()),
-				new IFilter<Constructor>() {
+  @SuppressWarnings("unchecked")
+  public Class<? extends Widget> getWidgetClass(final String className) {
+    try {
+      return (Class<? extends Widget>) Class.forName(className);
+    } catch (final ClassNotFoundException e) {
+      throw new DefinitionException(e);
+    }
+  }
 
-					public boolean match(Constructor constructor) {
-						return (constructor.getParameterTypes().length == 2 && constructor
-								.getParameterTypes()[1] == Integer.TYPE);
-					}
+  public Collection<String> getWidgetClassNames() {
+    return widgetStylesByClassName.keySet();
+  }
 
-				});
-	}
+  @SuppressWarnings("rawtypes")
+  public Constructor getWidgetConstructor(final Class<? extends Widget> widgetClass) {
+    return CollectionUtils.find(Arrays.asList(widgetClass.getConstructors()), new IFilter<Constructor>() {
 
-	public Class<?> getAllowedParentType(Class<? extends Widget> type) {
-		Constructor<?> constructor = getWidgetConstructor(type);
-		return constructor.getParameterTypes()[0];
+      @Override
+      public boolean match(final Constructor constructor) {
+        return constructor.getParameterTypes().length == 2 && constructor.getParameterTypes()[1] == Integer.TYPE;
+      }
 
-	}
+    });
+  }
 }

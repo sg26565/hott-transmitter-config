@@ -23,80 +23,78 @@ import com.swtxml.util.reflector.ReflectorException;
 
 public class CollectionUtils {
 
-	/**
-	 * Returns the first element from iterable for which filter.match(element)
-	 * returned true.
-	 */
-	public static <A> A find(Iterable<? extends A> iterable, IFilter<A> filter) {
-		for (A a : iterable) {
-			if (filter.match(a)) {
-				return a;
-			}
-		}
-		return null;
-	}
+  /**
+   * Returns a new collection containing the result from function.apply(element)
+   * for all elements from collection.
+   */
+  @SuppressWarnings("unchecked")
+  public static <FROM, TO> Collection<TO> collect(final Collection<? extends FROM> collection, final IFunction<FROM, TO> function) {
+    final Collection<TO> resultList = createCollection(collection);
+    for (final FROM a : collection) {
+      resultList.add(function.apply(a));
+    }
+    return resultList;
+  }
 
-	/**
-	 * Returns a new collection containing all elements from collection for
-	 * which filter.match(element) returned true.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <A> Collection<A> select(Collection<? extends A> collection, IFilter<A> filter) {
-		Collection<A> resultList = createCollection(collection);
-		for (A a : collection) {
-			if (filter.match(a)) {
-				resultList.add(a);
-			}
-		}
-		return resultList;
-	}
+  /**
+   * Returns a new list containing the result from function.apply(element) for
+   * all elements from list.
+   */
+  public static <FROM, TO> List<TO> collect(final List<? extends FROM> list, final IFunction<FROM, TO> function) {
+    final List<TO> resultList = new ArrayList<TO>();
+    for (final FROM a : list) {
+      resultList.add(function.apply(a));
+    }
+    return resultList;
+  }
 
-	/**
-	 * Returns a new collection containing the result from
-	 * function.apply(element) for all elements from collection.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <FROM, TO> Collection<TO> collect(Collection<? extends FROM> collection,
-			IFunction<FROM, TO> function) {
-		Collection<TO> resultList = createCollection(collection);
-		for (FROM a : collection) {
-			resultList.add(function.apply(a));
-		}
-		return resultList;
-	}
+  @SuppressWarnings("rawtypes")
+  private static Collection createCollection(final Collection original) {
+    if (original instanceof Set) {
+      return new HashSet();
+    }
+    if (original instanceof Collection) {
+      return new ArrayList();
+    }
+    throw new ReflectorException("Unknown collection type: " + original.getClass());
+  }
 
-	/**
-	 * Returns a new list containing the result from function.apply(element) for
-	 * all elements from list.
-	 */
-	public static <FROM, TO> List<TO> collect(List<? extends FROM> list,
-			IFunction<FROM, TO> function) {
-		List<TO> resultList = new ArrayList<TO>();
-		for (FROM a : list) {
-			resultList.add(function.apply(a));
-		}
-		return resultList;
-	}
+  /**
+   * Returns the first element from iterable for which filter.match(element)
+   * returned true.
+   */
+  public static <A> A find(final Iterable<? extends A> iterable, final IFilter<A> filter) {
+    for (final A a : iterable) {
+      if (filter.match(a)) {
+        return a;
+      }
+    }
+    return null;
+  }
 
-	/**
-	 * Returns a comma-separated String of the collection toString values
-	 * alphabetically sorted by value.
-	 */
-	public static String sortedToString(Collection<?> collection) {
-		List<String> strings = new ArrayList<String>(collect(collection, Functions.TO_STRING));
-		Collections.sort(strings);
-		return StringUtils.join(strings, ", ");
-	}
+  /**
+   * Returns a new collection containing all elements from collection for which
+   * filter.match(element) returned true.
+   */
+  @SuppressWarnings("unchecked")
+  public static <A> Collection<A> select(final Collection<? extends A> collection, final IFilter<A> filter) {
+    final Collection<A> resultList = createCollection(collection);
+    for (final A a : collection) {
+      if (filter.match(a)) {
+        resultList.add(a);
+      }
+    }
+    return resultList;
+  }
 
-	@SuppressWarnings("unchecked")
-	private static Collection createCollection(Collection original) {
-		if (original instanceof Set) {
-			return new HashSet();
-		}
-		if (original instanceof Collection) {
-			return new ArrayList();
-		}
-		throw new ReflectorException("Unknown collection type: " + original.getClass());
-	}
+  /**
+   * Returns a comma-separated String of the collection toString values
+   * alphabetically sorted by value.
+   */
+  public static String sortedToString(final Collection<?> collection) {
+    final List<String> strings = new ArrayList<String>(collect(collection, Functions.TO_STRING));
+    Collections.sort(strings);
+    return StringUtils.join(strings, ", ");
+  }
 
 }

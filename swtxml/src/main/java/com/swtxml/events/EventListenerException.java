@@ -10,22 +10,23 @@
  *******************************************************************************/
 package com.swtxml.events;
 
+@SuppressWarnings("serial")
 public class EventListenerException extends RuntimeException {
 
-	public EventListenerException() {
-		super();
-	}
+  public EventListenerException() {
+    super();
+  }
 
-	public EventListenerException(String message, Throwable cause) {
-		super(message, cause);
-	}
+  public EventListenerException(final String message) {
+    super(message);
+  }
 
-	public EventListenerException(String message) {
-		super(message);
-	}
+  public EventListenerException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
 
-	public EventListenerException(Throwable cause) {
-		super(cause);
-	}
+  public EventListenerException(final Throwable cause) {
+    super(cause);
+  }
 
 }

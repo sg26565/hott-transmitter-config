@@ -10,21 +10,21 @@
  *******************************************************************************/
 package com.swtxml.util.parser;
 
+@SuppressWarnings("serial")
 public class ParseException extends RuntimeException {
 
-	public ParseException() {
-	}
+  public ParseException() {}
 
-	public ParseException(String message) {
-		super(message);
-	}
+  public ParseException(final String message) {
+    super(message);
+  }
 
-	public ParseException(Throwable cause) {
-		super(cause);
-	}
+  public ParseException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
 
-	public ParseException(String message, Throwable cause) {
-		super(message, cause);
-	}
+  public ParseException(final Throwable cause) {
+    super(cause);
+  }
 
 }

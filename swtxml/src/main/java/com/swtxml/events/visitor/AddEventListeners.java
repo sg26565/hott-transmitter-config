@@ -54,6 +54,7 @@ public class AddEventListeners implements ITagVisitor {
    */
   void setupListener(final Widget widget, final String eventName, final String responderMethodName) {
 
+    @SuppressWarnings("deprecation")
     final WidgetEventListenerMethod event = namespace.getEvents().getWidgetEvent(widget.getClass(), eventName);
     assertNotNull(String.format("No event %s in %s found!", eventName, widget.getClass()), event);
 
@@ -67,6 +68,7 @@ public class AddEventListeners implements ITagVisitor {
     event.addListenerToWidget(widget, listener);
   }
 
+  @Override
   public void visit(final Tag tag) {
     final Collection<IAttributeDefinition> events = tag.getAttributes(namespace);
     if (!events.isEmpty()) {

@@ -12,24 +12,21 @@ package com.swtxml.util.reflector;
 
 import java.lang.reflect.InvocationTargetException;
 
+@SuppressWarnings("serial")
 public class ReflectorException extends RuntimeException {
 
-	public ReflectorException() {
-	}
+  public ReflectorException() {}
 
-	public ReflectorException(String message) {
-		super(message);
-	}
+  public ReflectorException(final String message) {
+    super(message);
+  }
 
-	public ReflectorException(Throwable cause) {
-		super((cause instanceof InvocationTargetException) ? ((InvocationTargetException) cause)
-				.getTargetException() : cause);
-	}
+  public ReflectorException(final String message, final Throwable cause) {
+    super(message, cause instanceof InvocationTargetException ? ((InvocationTargetException) cause).getTargetException() : cause);
+  }
 
-	public ReflectorException(String message, Throwable cause) {
-		super(message,
-				(cause instanceof InvocationTargetException) ? ((InvocationTargetException) cause)
-						.getTargetException() : cause);
-	}
+  public ReflectorException(final Throwable cause) {
+    super(cause instanceof InvocationTargetException ? ((InvocationTargetException) cause).getTargetException() : cause);
+  }
 
 }

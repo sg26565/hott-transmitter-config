@@ -10,22 +10,23 @@
  *******************************************************************************/
 package com.swtxml.definition;
 
+@SuppressWarnings("serial")
 public class DefinitionException extends RuntimeException {
 
-	public DefinitionException() {
-		super();
-	}
+  public DefinitionException() {
+    super();
+  }
 
-	public DefinitionException(String message, Throwable cause) {
-		super(message, cause);
-	}
+  public DefinitionException(final String message) {
+    super(message);
+  }
 
-	public DefinitionException(String message) {
-		super(message);
-	}
+  public DefinitionException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
 
-	public DefinitionException(Throwable cause) {
-		super(cause);
-	}
+  public DefinitionException(final Throwable cause) {
+    super(cause);
+  }
 
 }
