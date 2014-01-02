@@ -101,6 +101,7 @@ public class MdlViewerActivity extends Activity {
     return true;
   }
 
+  @SuppressWarnings("unused")
   private void showError(final Throwable t) {
     showMessage(t.getClass().getSimpleName(), t.getLocalizedMessage(), true);
   }

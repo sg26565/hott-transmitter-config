@@ -104,6 +104,10 @@ public class HTMLReport {
     return baos.toString();
   }
 
+  public static Configuration getConfiguration() {
+    return CONFIGURATION;
+  }
+
   public static boolean isSuppressExceptions() {
     return CONFIGURATION.getTemplateExceptionHandler() instanceof FreeMarkerExceptionHandler;
   }
