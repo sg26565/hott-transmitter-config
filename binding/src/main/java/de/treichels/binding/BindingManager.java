@@ -110,6 +110,27 @@ public class BindingManager {
     return value;
   }
 
+  /**
+   * @param binding
+   * @param valueFormatter
+   * @return Value
+   * @throws IntrospectionException
+   * @throws InvocationTargetException
+   * @throws IllegalArgumentException
+   * @throws IllegalAccessException
+   */
+  public Object getValueFromBinding(final String binding, final ValueFormatter valueFormatter) throws IllegalAccessException, IllegalArgumentException,
+      InvocationTargetException, IntrospectionException {
+    Object result = getValueFromBinding(binding);
+
+    if (valueFormatter != null) {
+      result = valueFormatter.format(result);
+    }
+
+    return result;
+
+  }
+
   public boolean hasBinding(final String name) {
     return beans.containsKey(name);
   }
