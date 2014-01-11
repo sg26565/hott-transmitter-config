@@ -24,6 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -57,7 +58,13 @@ public class HTMLReport {
 
     // setup CurveImageGenerator
     final ServiceLoader<CurveImageGenerator> loader = ServiceLoader.load(CurveImageGenerator.class);
-    CURVE_IMAGE_GENERATOR = loader.iterator().next();
+    final Iterator<CurveImageGenerator> iterator = loader.iterator();
+
+    if (iterator.hasNext()) {
+      CURVE_IMAGE_GENERATOR = loader.iterator().next();
+    } else {
+      CURVE_IMAGE_GENERATOR = new DummyCurveImageGenerator();
+    }
   }
 
   public static String generateHTML(final BaseModel model) throws IOException, ReportException {
@@ -89,7 +96,7 @@ public class HTMLReport {
       rootMap.put("hex", new FreeMarkerHexConverter());
       rootMap.put("png", HTMLReport.CURVE_IMAGE_GENERATOR);
       rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective());
-      rootMap.put("programDir", new File(System.getProperty("program.dir")).toURI().toURL().toString());
+      rootMap.put("programDir", new File(System.getProperty("program.dir", ".")).toURI().toURL().toString());
       rootMap.put("version", System.getProperty("program.version", "unknown"));
       if (model instanceof WingedModel) {
         rootMap.put("wingedModel", model);
