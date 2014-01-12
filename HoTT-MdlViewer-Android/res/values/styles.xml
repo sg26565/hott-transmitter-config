@@ -12,9 +12,4 @@
         -->
     </style>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <item name="android:textSize">20sp</item>
-    </style>
-
 </resources>

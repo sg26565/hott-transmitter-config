@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HoTT MdlViewer</string>
+    <string name="action_load_mdl">Lade MDL Datei</string>
+    <string name="action_load">Laden</string>
+    <string name="action_reload_mdl">Aktualisieren</string>
+    <string name="action_reload">Aktualisieren</string>
+    <string name="msg_loading">Ladevorgang ... bitte warten.</string>
+    <string name="msg_select_mdl">Bitte eine MDL Datei auswählen.</string>
+    <string name="msg_invalid_file_name">Ungültiger Dateiname: \&quot;%s\&quot;!</string>
+    <string name="msg_error">Es ist ein Fehler aufgetreten</string>
+    <string name="bookmark_baseSettings">Grundeinstellungen Modell</string>
+    <string name="bookmark_modelType">Modelltyp</string><string name="bookmark_helicopterType">Helicoptertyp</string>
+<string name="bookmark_servos">Servoeinstellungen</string>
+    <string name="bookmark_stickSettings">Knüppeleinstellungen</string>
+    <string name="bookmark_controls0">Gebereinstellungen</string>
+    <string name="bookmark_drExpo0">DualRate Expo</string>
+    <string name="bookmark_channel1Curve0">Kanal 1 Kurve</string>
+    <string name="bookmark_controlSwitches">Geberschalter</string>
+    <string name="bookmark_logicalSwitches">logische Schalter</string>
+    <string name="bookmark_phaseSettings">Phaseneinstellungen</string>
+    <string name="bookmark_phaseAssignments">Phasenzuweisung</string>
+    <string name="bookmark_phaseTrim">Phasentrimm</string>
+    <string name="bookmark_nonDelayedChannels">unverzögerte Kanäle</string>
+    <string name="bookmark_timersGeneral">Uhren (allgemein)</string>
+    <string name="bookmark_phaseTimer">Flugphasenuhren</string>
+    <string name="bookmark_wingMix0">Flächenmischer</string>
+    <string name="bookmark_helicopterMix0">Helikoptermix</string>
+    <string name="bookmark_linearMixer">Linearmischer</string>
+    <string name="bookmark_curveMixer">Kurvenmischer</string>
+    <string name="bookmark_mixerActive">MIX aktiv / Phase</string>
+    <string name="bookmark_mixOnlyChannel">Nur MIX Kanal</string>
+    <string name="bookmark_dualMixer">Kreuzmischer</string>
+    <string name="bookmark_swashplateMixer">Taumelscheibenmischer</string>
+    <string name="bookmark_failSafe">Fail Safe</string>
+    <string name="bookmark_trainerPupil">Lehrer/Schüler</string>
+    <string name="bookmark_outputChannel">Senderausgang</string>
+    <string name="bookmark_profiTrim">Profitrimm</string>
+    <string name="bookmark_trimMemory">Trimmspeicher</string>
+    <string name="bookmark_telemetry">Telemetrie</string>
+    <string name="bookmark_channelSequencer">Kanal Sequenzer</string>
+    <string name="bookmark_multiChannel">Multikanal</string>
+    <string name="bookmark_ringLimiter">Ringbegrenzer</string>
+    <string name="bookmark_mp3Player">MP3-Player</string>
+    <string name="bookmark_switches">Schalter-/Geberzuordnungen</string>
+
+</resources>
