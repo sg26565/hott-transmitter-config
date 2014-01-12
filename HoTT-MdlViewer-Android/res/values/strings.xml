@@ -46,5 +46,5 @@
     <string name="bookmark_ringLimiter">Ring Limiter</string>
     <string name="bookmark_mp3Player">MP3 Player</string>
     <string name="bookmark_switches">Switches</string>
-
+    <string name="action_print_pdf">Print PDF</string><string name="action_print">Print</string>
 </resources>

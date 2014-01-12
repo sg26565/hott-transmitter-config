@@ -11,8 +11,9 @@
     <string name="msg_invalid_file_name">Ungültiger Dateiname: \&quot;%s\&quot;!</string>
     <string name="msg_error">Es ist ein Fehler aufgetreten</string>
     <string name="bookmark_baseSettings">Grundeinstellungen Modell</string>
-    <string name="bookmark_modelType">Modelltyp</string><string name="bookmark_helicopterType">Helicoptertyp</string>
-<string name="bookmark_servos">Servoeinstellungen</string>
+    <string name="bookmark_modelType">Modelltyp</string>
+    <string name="bookmark_helicopterType">Helicoptertyp</string>
+    <string name="bookmark_servos">Servoeinstellungen</string>
     <string name="bookmark_stickSettings">Knüppeleinstellungen</string>
     <string name="bookmark_controls0">Gebereinstellungen</string>
     <string name="bookmark_drExpo0">DualRate Expo</string>
@@ -44,5 +45,7 @@
     <string name="bookmark_ringLimiter">Ringbegrenzer</string>
     <string name="bookmark_mp3Player">MP3-Player</string>
     <string name="bookmark_switches">Schalter-/Geberzuordnungen</string>
+    <string name="action_print_pdf">als PDF Drucken</string>
+    <string name="action_print">Drucken</string>
 
 </resources>

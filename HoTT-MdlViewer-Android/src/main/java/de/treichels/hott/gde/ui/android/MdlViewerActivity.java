@@ -5,18 +5,24 @@ import gde.model.enums.ModelType;
 import gde.report.ReportException;
 import gde.report.html.HTMLReport;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.print.PrintManager;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -27,13 +33,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Toast;
+
+import com.lamerman.FileDialog;
+import com.lamerman.SelectionMode;
+
 import de.treichels.hott.HoTTDecoder;
 
 public class MdlViewerActivity extends Activity {
-  private static final int    READ_REQUEST_CODE = 42;
-  private static final String TAG               = MdlViewerActivity.class.getSimpleName();
-  private Uri                 uri               = null;
-  private BaseModel           model             = null;
+  private static final int    READ_REQUEST_CODE        = 42;
+  private static final int    READ_REQUEST_CODE_LEGACY = 4711;
+  private static final String TAG                      = MdlViewerActivity.class.getSimpleName();
+  private Uri                 uri                      = null;
+  private BaseModel           model                    = null;
   private WebView             webView;
 
   /**
@@ -45,22 +56,27 @@ public class MdlViewerActivity extends Activity {
   private String getHtml() {
     String fileName = null;
 
-    // The query, since it only applies to a single document, will only return
-    // one row. There's no need to filter, sort, or select fields, since we want
-    // all fields for one document.
-    final Cursor cursor = getContentResolver().query(uri, null, null, null, null, null);
+    if (uri.getScheme().equals(android.content.ContentResolver.SCHEME_CONTENT)) {
+      // The query, since it only applies to a single document, will only return
+      // one row. There's no need to filter, sort, or select fields, since we
+      // want
+      // all fields for one document.
+      final Cursor cursor = getContentResolver().query(uri, null, null, null, null, null);
 
-    try {
-      // moveToFirst() returns false if the cursor has 0 rows. Very handy for
-      // "if there's anything to look at, look at it" conditionals.
-      if (cursor != null && cursor.moveToFirst()) {
+      try {
+        // moveToFirst() returns false if the cursor has 0 rows. Very handy for
+        // "if there's anything to look at, look at it" conditionals.
+        if (cursor != null && cursor.moveToFirst()) {
 
-        // Note it's called "Display Name". This is
-        // provider-specific, and might not necessarily be the file name.
-        fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+          // Note it's called "Display Name". This is
+          // provider-specific, and might not necessarily be the file name.
+          fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+        }
+      } finally {
+        cursor.close();
       }
-    } finally {
-      cursor.close();
+    } else {
+      fileName = uri.getLastPathSegment();
     }
 
     Log.i(TAG, "File Name: " + fileName);
@@ -105,22 +121,41 @@ public class MdlViewerActivity extends Activity {
    */
   @Override
   public void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
-    // The ACTION_OPEN_DOCUMENT intent was sent with the request code
-    // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
-    // response to some other intent, and the code below shouldn't run at all.
+    if (resultCode == Activity.RESULT_OK && resultData != null) {
+      switch (requestCode) {
+      case READ_REQUEST_CODE:
+        // The document selected by the user won't be returned in the intent.
+        // Instead, a URI to that document will be contained in the return
+        // intent provided to this method as a parameter. Pull that URI using
+        // resultData.getData().
+        uri = resultData.getData();
+        break;
 
-    if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK && resultData != null) {
-      // The document selected by the user won't be returned in the intent.
-      // Instead, a URI to that document will be contained in the return intent
-      // provided to this method as a parameter.
-      // Pull that URI using resultData.getData().
-      uri = resultData.getData();
+      case READ_REQUEST_CODE_LEGACY:
+        final String filePath = resultData.getStringExtra(FileDialog.RESULT_PATH);
+        final URI javaNetURI = new File(filePath).toURI();
+        // convert java.net.URI to android.net.Uri
+        uri = new Uri.Builder().scheme(javaNetURI.getScheme()).encodedAuthority(javaNetURI.getRawAuthority()).encodedPath(javaNetURI.getRawPath())
+            .query(javaNetURI.getRawQuery()).fragment(javaNetURI.getRawFragment()).build();
+        break;
+      }
+
       Log.i(TAG, "Uri: " + uri.toString());
 
       updateUI(null);
     }
   }
 
+  /**
+   * Handle selections form the context menu.
+   * 
+   * <b>Note:</b> This method relies on
+   * {@link WebView#evaluateJavascript(String, android.webkit.ValueCallback)},
+   * which is only available on Android 4.4 and newer.
+   * 
+   * @param item
+   *          The menu item that was selected.
+   */
   @TargetApi(19)
   @Override
   public boolean onContextItemSelected(final MenuItem item) {
@@ -276,12 +311,23 @@ public class MdlViewerActivity extends Activity {
     }
   }
 
+  /**
+   * Create the context menu to navigate in the document.
+   * 
+   * <b>Note:</b> This method relies on
+   * {@link WebView#evaluateJavascript(String, android.webkit.ValueCallback)},
+   * which is only available on Android 4.4 and newer.
+   * 
+   * @param item
+   *          The menu item that was selected.
+   */
+  @TargetApi(19)
   @Override
   public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
 
     // only do this, if we have a model loaded
-    if (model != null) {
+    if (model != null && Build.VERSION.SDK_INT >= 19) {
       // load menu from xml
       getMenuInflater().inflate(R.menu.context_menu, menu);
 
@@ -378,26 +424,45 @@ public class MdlViewerActivity extends Activity {
     toast.setGravity(Gravity.CENTER, 0, 0);
     toast.show();
 
-    // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
-    // browser.
-    final Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+    final Intent intent;
 
-    // Filter to only show results that can be "opened", such as a
-    // file (as opposed to a list of contacts or timezones)
-    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    if (Build.VERSION.SDK_INT >= 19) {
+      // use the Storage Access Framework of Android 4.4 or newer
+      intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+      intent.addCategory(Intent.CATEGORY_OPENABLE);
+      intent.setType("*/*");
 
-    // Filter to show only images, using the image MIME data type.
-    // If one wanted to search for ogg vorbis files, the type would be
-    // "audio/ogg".
-    // To search for all documents available via installed storage providers,
-    // it would be "*/*".
-    intent.setType("*/*");
+      startActivityForResult(intent, READ_REQUEST_CODE);
+    } else {
+      // fall-back for older andriod versions
+      intent = new Intent(getBaseContext(), FileDialog.class);
+      intent.putExtra(FileDialog.START_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
+      intent.putExtra(FileDialog.CAN_SELECT_DIR, false);
+      intent.putExtra(FileDialog.SELECTION_MODE, SelectionMode.MODE_OPEN);
+      intent.putExtra(FileDialog.FORMAT_FILTER, new String[] { "mdl" });
 
-    startActivityForResult(intent, READ_REQUEST_CODE);
+      startActivityForResult(intent, READ_REQUEST_CODE_LEGACY);
+    }
+  }
+
+  /**
+   * Create a PDF version of the document. Only support on Android 4.4 and
+   * newer.
+   * 
+   * @param menuItem
+   *          unused
+   */
+  @TargetApi(19)
+  public void print(final MenuItem menuItem) {
+    final PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
+    printManager.print("HoTTMdlViewer - " + model.getModelName(), webView.createPrintDocumentAdapter(), null);
   }
 
   /**
    * Update WebView in a background thread without blocking the UI thread.
+   * 
+   * @param menuItem
+   *          unused
    */
   public void updateUI(final MenuItem menuItem) {
     // tell user to be patient
