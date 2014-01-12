@@ -60,7 +60,7 @@
 	}
 </style>
 
-<style type="text/css" media="screen (max-width: 70em)">
+<style type="text/css" media="(max-width: 80em)">
 	body {
 		font-size: 9pt;
 		padding: 0;
