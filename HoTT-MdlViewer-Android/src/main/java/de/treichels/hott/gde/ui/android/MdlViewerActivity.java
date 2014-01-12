@@ -53,6 +53,7 @@ public class MdlViewerActivity extends Activity {
    * @param uri
    * @return
    */
+  @SuppressLint("NewApi")
   private String getHtml() {
     String fileName = null;
 
@@ -480,7 +481,7 @@ public class MdlViewerActivity extends Activity {
           runOnUiThread(new Runnable() {
             @Override
             public void run() {
-              webView.loadData(html, null, null);
+              webView.loadData(html, "text/html", "UTF-8");
               setTitle(model.getModelName());
               toast.cancel();
             }
@@ -490,7 +491,7 @@ public class MdlViewerActivity extends Activity {
           final AlertDialog.Builder builder = new AlertDialog.Builder(MdlViewerActivity.this);
           builder.setTitle(R.string.msg_error);
           builder.setMessage(e.getLocalizedMessage());
-          builder.setPositiveButton(R.string.button_ok, null);
+          builder.setPositiveButton(android.R.string.ok, null);
 
           // access to View elements needs to be done in the UI thread
           runOnUiThread(new Runnable() {

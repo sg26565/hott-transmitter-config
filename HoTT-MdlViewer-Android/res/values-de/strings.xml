@@ -6,7 +6,7 @@
     <string name="action_load">Laden</string>
     <string name="action_reload_mdl">Aktualisieren</string>
     <string name="action_reload">Aktualisieren</string>
-    <string name="msg_loading">Ladevorgang ... bitte warten.</string>
+    <string name="msg_loading">Ladevorgang &#8230; bitte warten.</string>
     <string name="msg_select_mdl">Bitte eine MDL Datei auswählen.</string>
     <string name="msg_invalid_file_name">Ungültiger Dateiname: \&quot;%s\&quot;!</string>
     <string name="msg_error">Es ist ein Fehler aufgetreten</string>

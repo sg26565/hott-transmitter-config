@@ -41,7 +41,7 @@
 		padding: 0;
 		margin: 0;
 	}
-	
+
 	.navigation a[href] {
 		display: block;
 	}
@@ -60,7 +60,13 @@
 	}
 </style>
 
-<style type="text/css" media="(max-width: 70em)">
+<style type="text/css" media="screen (max-width: 70em)">
+	body {
+		font-size: 9pt;
+		padding: 0;
+		margin-top: 0;
+	}
+
 	div.navigation {
 		display: none;
 	}

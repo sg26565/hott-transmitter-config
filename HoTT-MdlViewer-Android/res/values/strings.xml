@@ -6,11 +6,10 @@
     <string name="action_load">Load</string>
     <string name="action_reload_mdl">Reload MDL file</string>
     <string name="action_reload">Reload</string>
-    <string name="msg_loading">Loading ... please wait.</string>
+    <string name="msg_loading">Loading &#8230; please wait.</string>
     <string name="msg_select_mdl">Please select a MDL file.</string>
-    <string name="msg_error">An error occured</string>
+    <string name="msg_error">An error occurred</string>
     <string name="msg_invalid_file_name">Invalid file name: \&quot;%s\&quot;!</string>
-    <string name="button_ok">Ok</string>
     <string name="bookmark_baseSettings">Base Settings</string>
     <string name="bookmark_modelType">Model Type</string>
     <string name="bookmark_helicopterType">Helicopter Type</string>
@@ -46,5 +45,7 @@
     <string name="bookmark_ringLimiter">Ring Limiter</string>
     <string name="bookmark_mp3Player">MP3 Player</string>
     <string name="bookmark_switches">Switches</string>
-    <string name="action_print_pdf">Print PDF</string><string name="action_print">Print</string>
+    <string name="action_print_pdf">Print PDF</string>
+    <string name="action_print">Print</string>
+
 </resources>
