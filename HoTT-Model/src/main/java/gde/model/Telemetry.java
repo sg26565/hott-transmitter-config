@@ -25,6 +25,8 @@ import java.util.Collection;
  * @author oli
  */
 public class Telemetry extends AbstractBase {
+  private static final long      serialVersionUID = 1L;
+
   private SensorType             currentSensor;
   private int                    currentSensorPage;
   private Collection<SensorType> selectedSensor;

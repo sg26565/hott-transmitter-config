@@ -28,9 +28,11 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class DualRate extends AbstractBase {
-  private Function function;
-  private Switch   sw;
-  private int[]    values;
+  private static final long serialVersionUID = 1L;
+
+  private Function          function;
+  private Switch            sw;
+  private int[]             values;
 
   @Override
   public boolean equals(final Object obj) {

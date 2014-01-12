@@ -25,8 +25,10 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class ChannelPhaseSetting extends AbstractBase {
-  private boolean nonDelayed;
-  private Phase   phase;
+  private static final long serialVersionUID = 1L;
+
+  private boolean           nonDelayed;
+  private Phase             phase;
 
   @Override
   public boolean equals(final Object obj) {

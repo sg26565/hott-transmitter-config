@@ -35,6 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class HelicopterModel extends BaseModel {
+  private static final long     serialVersionUID = 1L;
+
   private int                   autorotationC1TriggerPosition;
   private Switch                autorotationSwitch;
   private int                   autorotationTailPosition;

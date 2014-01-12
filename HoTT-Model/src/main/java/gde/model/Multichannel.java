@@ -29,11 +29,13 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class Multichannel extends AbstractBase {
-  private Control[]        control;
-  private boolean          enabled;
-  private Channel          inputChannel;
-  private MultichannelMode mode;
-  private int              number;
+  private static final long serialVersionUID = 1L;
+
+  private Control[]         control;
+  private boolean           enabled;
+  private Channel           inputChannel;
+  private MultichannelMode  mode;
+  private int               number;
 
   @Override
   public boolean equals(final Object obj) {

@@ -20,14 +20,17 @@ package gde.model;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 
 /**
  * Abstract base class with support for bound properties.
  * 
  * @author oli@treichels.de
  */
-public abstract class AbstractBase {
-  private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+public abstract class AbstractBase implements Serializable {
+  private static final long           serialVersionUID = 1L;
+
+  private final PropertyChangeSupport support          = new PropertyChangeSupport(this);
 
   public void addPropertyChangeListener(final PropertyChangeListener listener) {
     support.addPropertyChangeListener(listener);

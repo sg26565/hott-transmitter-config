@@ -23,10 +23,12 @@ import gde.model.enums.Mp3PlayerMode;
  * @author oli
  */
 public class Mp3Player extends AbstractBase {
-  private int           album;
-  private Mp3PlayerMode mode;
-  private int           track;
-  private int           volume;
+  private static final long serialVersionUID = 1L;
+
+  private int               album;
+  private Mp3PlayerMode     mode;
+  private int               track;
+  private int               volume;
 
   @Override
   public boolean equals(final Object obj) {

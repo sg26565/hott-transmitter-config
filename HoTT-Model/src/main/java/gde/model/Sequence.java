@@ -27,10 +27,12 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class Sequence extends AbstractBase {
-  private boolean enabled;
-  private int     number;
-  private Channel outputChannel;
-  private int[]   stepPosition;
+  private static final long serialVersionUID = 1L;
+
+  private boolean           enabled;
+  private int               number;
+  private Channel           outputChannel;
+  private int[]             stepPosition;
 
   @Override
   public boolean equals(final Object obj) {

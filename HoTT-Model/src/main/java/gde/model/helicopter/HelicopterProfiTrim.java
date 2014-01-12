@@ -27,10 +27,12 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class HelicopterProfiTrim extends AbstractBase {
-  private CurveType       curveType;
-  private Switch          inputControl;
-  private HelicopterPhase phase;
-  private int             point;
+  private static final long serialVersionUID = 1L;
+
+  private CurveType         curveType;
+  private Switch            inputControl;
+  private HelicopterPhase   phase;
+  private int               point;
 
   @Override
   public boolean equals(final Object obj) {

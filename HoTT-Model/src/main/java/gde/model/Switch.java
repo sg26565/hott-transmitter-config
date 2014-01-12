@@ -31,11 +31,13 @@ import javax.xml.bind.annotation.XmlID;
  * @author oli@treichels.de
  */
 public class Switch extends AbstractBase {
-  private SwitchAssignment assignment;
-  private int              direction;
-  private SwitchFunction   function;
-  private int              number;
-  private Object[]         qualifier;
+  private static final long serialVersionUID = 1L;
+
+  private SwitchAssignment  assignment;
+  private int               direction;
+  private SwitchFunction    function;
+  private int               number;
+  private Object[]          qualifier;
 
   @Override
   public boolean equals(final Object obj) {

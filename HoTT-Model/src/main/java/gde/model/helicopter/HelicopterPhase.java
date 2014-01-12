@@ -24,11 +24,13 @@ import gde.model.Phase;
  * 
  */
 public class HelicopterPhase extends Phase {
-  private int             channel8Value;
-  private int             gyroGain;
-  private int             gyroSuppression;
-  private HelicopterMixer helicopterMixer;
-  private HelicopterTrim  helicopterTrim;
+  private static final long serialVersionUID = 1L;
+
+  private int               channel8Value;
+  private int               gyroGain;
+  private int               gyroSuppression;
+  private HelicopterMixer   helicopterMixer;
+  private HelicopterTrim    helicopterTrim;
 
   @Override
   public boolean equals(final Object obj) {

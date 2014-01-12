@@ -24,16 +24,18 @@ import gde.model.Curve;
  * @author oli@treichels.de
  */
 public class HelicopterMixer extends AbstractBase {
-  private int   nick2TailMix;
-  private int   nick2ThrottleMix;
-  private Curve pitchCurve;
-  private int   roll2TailMix;
-  private int   roll2ThrottleMix;
-  private int   swashplateLimit;
-  private int   swashplateRotation;
-  private int   tail2ThrottleMix;
-  private Curve tailCurve;
-  private Curve throttleCurve;
+  private static final long serialVersionUID = 1L;
+
+  private int               nick2TailMix;
+  private int               nick2ThrottleMix;
+  private Curve             pitchCurve;
+  private int               roll2TailMix;
+  private int               roll2ThrottleMix;
+  private int               swashplateLimit;
+  private int               swashplateRotation;
+  private int               tail2ThrottleMix;
+  private Curve             tailCurve;
+  private Curve             throttleCurve;
 
   @Override
   public boolean equals(final Object obj) {

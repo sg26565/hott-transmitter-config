@@ -28,9 +28,11 @@ import javax.xml.bind.annotation.XmlElementWrapper;
  * 
  */
 public class Curve extends AbstractBase {
-  private CurvePoint[] point;
-  private boolean      smoothing = false;
-  private CurveType    type;
+  private static final long serialVersionUID = 1L;
+
+  private CurvePoint[]      point;
+  private boolean           smoothing        = false;
+  private CurveType         type;
 
   @Override
   public boolean equals(final Object obj) {

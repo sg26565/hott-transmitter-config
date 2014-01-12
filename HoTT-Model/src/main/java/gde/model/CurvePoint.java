@@ -23,10 +23,12 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author oli@treichels.de
  */
 public class CurvePoint extends AbstractBase {
-  private boolean enabled;
-  private int     number;
-  private int     position;
-  private int     value;
+  private static final long serialVersionUID = 1L;
+
+  private boolean           enabled;
+  private int               number;
+  private int               position;
+  private int               value;
 
   @Override
   public boolean equals(final Object obj) {

@@ -25,11 +25,13 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author oli
  */
 public class StickTrim extends AbstractBase {
-  private int      channel;
-  private int      increment;
-  private TrimMode mode;
-  private int      timeHigh;
-  private int      timeLow;
+  private static final long serialVersionUID = 1L;
+
+  private int               channel;
+  private int               increment;
+  private TrimMode          mode;
+  private int               timeHigh;
+  private int               timeLow;
 
   @Override
   public boolean equals(final Object obj) {

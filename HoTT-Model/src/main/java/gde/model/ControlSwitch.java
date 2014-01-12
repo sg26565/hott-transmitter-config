@@ -24,9 +24,11 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class ControlSwitch extends Switch {
-  private Switch  combineSwitch;
-  private boolean enabled;
-  private int     position;
+  private static final long serialVersionUID = 1L;
+
+  private Switch            combineSwitch;
+  private boolean           enabled;
+  private int               position;
 
   @Override
   public boolean equals(final Object obj) {

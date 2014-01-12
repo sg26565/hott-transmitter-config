@@ -28,11 +28,13 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class ChannelSequencer extends AbstractBase {
-  private int            maxStep;
-  private SequenceStatus powerOffStatus;
-  private Sequence[]     sequence;
-  private double[]       stepTime;
-  private Switch         sw;
+  private static final long serialVersionUID = 1L;
+
+  private int               maxStep;
+  private SequenceStatus    powerOffStatus;
+  private Sequence[]        sequence;
+  private double[]          stepTime;
+  private Switch            sw;
 
   @Override
   public boolean equals(final Object obj) {

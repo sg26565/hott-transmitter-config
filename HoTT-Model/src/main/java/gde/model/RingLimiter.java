@@ -28,12 +28,14 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class RingLimiter extends AbstractBase {
-  private boolean   enabled;
-  private Channel[] inputChannel;
-  private int[]     limit;
-  private int       number;
-  private int[]     offset;
-  private Channel[] outputChannel;
+  private static final long serialVersionUID = 1L;
+
+  private boolean           enabled;
+  private Channel[]         inputChannel;
+  private int[]             limit;
+  private int               number;
+  private int[]             offset;
+  private Channel[]         outputChannel;
 
   @Override
   public boolean equals(final Object obj) {

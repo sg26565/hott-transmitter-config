@@ -29,10 +29,12 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class DualMixer extends AbstractBase {
-  private Channel[] channel;
-  private int       diff;
-  private int       number;
-  private MixerType type;
+  private static final long serialVersionUID = 1L;
+
+  private Channel[]         channel;
+  private int               diff;
+  private int               number;
+  private MixerType         type;
 
   @Override
   public boolean equals(final Object obj) {

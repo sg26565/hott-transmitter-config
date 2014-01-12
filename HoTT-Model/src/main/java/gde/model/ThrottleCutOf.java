@@ -23,9 +23,11 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class ThrottleCutOf extends AbstractBase {
-  private int    position;
-  private Switch sw;
-  private int    threshold;
+  private static final long serialVersionUID = 1L;
+
+  private int               position;
+  private Switch            sw;
+  private int               threshold;
 
   @Override
   public boolean equals(final Object obj) {

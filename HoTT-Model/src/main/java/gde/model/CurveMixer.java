@@ -22,7 +22,9 @@ package gde.model;
  * 
  */
 public class CurveMixer extends FreeMixer {
-  private Curve curve;
+  private static final long serialVersionUID = 1L;
+
+  private Curve             curve;
 
   @Override
   public boolean equals(final Object obj) {

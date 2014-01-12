@@ -25,12 +25,14 @@ import java.util.Arrays;
  * @author oli@treichels.de
  */
 public class WingedTrim extends AbstractBase {
-  private int[] aileronPhaseTrim;
-  private int   aileronStickTrim;
-  private int   elevatorPhaseTrim;
-  private int   elevatorStickTrim;
-  private int[] flapPhaseTrim;
-  private int   rudderStickTrim;
+  private static final long serialVersionUID = 1L;
+
+  private int[]             aileronPhaseTrim;
+  private int               aileronStickTrim;
+  private int               elevatorPhaseTrim;
+  private int               elevatorStickTrim;
+  private int[]             flapPhaseTrim;
+  private int               rudderStickTrim;
 
   @Override
   public boolean equals(final Object obj) {

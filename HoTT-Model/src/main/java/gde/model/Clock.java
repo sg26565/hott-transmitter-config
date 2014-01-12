@@ -29,14 +29,16 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Clock extends AbstractBase {
-  private int           alarm;
-  private ClockFunction function;
-  private ClockMode     mode;
-  private String        number;
-  private Switch        sw;
-  private int           timer;
-  private ClockType     type;
-  private int           value;
+  private static final long serialVersionUID = 1L;
+
+  private int               alarm;
+  private ClockFunction     function;
+  private ClockMode         mode;
+  private String            number;
+  private Switch            sw;
+  private int               timer;
+  private ClockType         type;
+  private int               value;
 
   @Override
   public boolean equals(final Object obj) {

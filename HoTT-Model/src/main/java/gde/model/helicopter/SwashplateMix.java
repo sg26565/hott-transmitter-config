@@ -23,9 +23,11 @@ import gde.model.AbstractBase;
  * @author oli@treichels.de
  */
 public class SwashplateMix extends AbstractBase {
-  private int nickMix;
-  private int pitchMix;
-  private int rollMix;
+  private static final long serialVersionUID = 1L;
+
+  private int               nickMix;
+  private int               pitchMix;
+  private int               rollMix;
 
   @Override
   public boolean equals(final Object obj) {

@@ -29,11 +29,13 @@ import javax.xml.bind.annotation.XmlElementWrapper;
  * 
  */
 public class WingedPhase extends Phase {
-  private Curve         brakeElevatorCurve;
-  private WingedMixer[] brakeMixer;
-  private WingedMixer[] multiFlapMixer;
-  private WingedMixer[] wingMixer;
-  private WingedTrim    wingTrim;
+  private static final long serialVersionUID = 1L;
+
+  private Curve             brakeElevatorCurve;
+  private WingedMixer[]     brakeMixer;
+  private WingedMixer[]     multiFlapMixer;
+  private WingedMixer[]     wingMixer;
+  private WingedTrim        wingTrim;
 
   @Override
   public boolean equals(final Object obj) {

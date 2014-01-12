@@ -24,8 +24,10 @@ import javax.xml.bind.annotation.XmlAttribute;
  * 
  */
 public class ChannelMapping extends AbstractBase {
-  private int inputChannel;
-  private int outputChannel;
+  private static final long serialVersionUID = 1L;
+
+  private int               inputChannel;
+  private int               outputChannel;
 
   @Override
   public boolean equals(final Object obj) {

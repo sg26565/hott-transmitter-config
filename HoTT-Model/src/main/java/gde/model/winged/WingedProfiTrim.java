@@ -26,8 +26,10 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class WingedProfiTrim extends AbstractBase {
-  private boolean enabled;
-  private Switch  inputControl;
+  private static final long serialVersionUID = 1L;
+
+  private boolean           enabled;
+  private Switch            inputControl;
 
   @Override
   public boolean equals(final Object obj) {

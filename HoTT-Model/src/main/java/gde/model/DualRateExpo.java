@@ -22,8 +22,10 @@ package gde.model;
  * 
  */
 public class DualRateExpo extends AbstractBase {
-  DualRate dualRate;
-  Expo     expo;
+  private static final long serialVersionUID = 1L;
+
+  private DualRate          dualRate;
+  private Expo              expo;
 
   @Override
   public boolean equals(final Object obj) {

@@ -23,7 +23,9 @@ import gde.model.enums.HFModuleType;
  * @author oli@treichels.de
  */
 public class HFModule extends AbstractBase {
-  private HFModuleType type;
+  private static final long serialVersionUID = 1L;
+
+  private HFModuleType      type;
 
   @Override
   public boolean equals(final Object obj) {

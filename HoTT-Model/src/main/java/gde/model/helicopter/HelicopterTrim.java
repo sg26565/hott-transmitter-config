@@ -23,9 +23,11 @@ import gde.model.AbstractBase;
  * @author oli@treichels.de
  */
 public class HelicopterTrim extends AbstractBase {
-  private int nickStickTrim;
-  private int rollStickTrim;
-  private int tailStickTrim;
+  private static final long serialVersionUID = 1L;
+
+  private int               nickStickTrim;
+  private int               rollStickTrim;
+  private int               tailStickTrim;
 
   @Override
   public boolean equals(final Object obj) {

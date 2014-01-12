@@ -27,17 +27,19 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class Control extends AbstractBase {
-  private Switch      inputControl;
-  private ControlMode mode;
-  private String      number;
-  private int         offset;
-  private double      timeHigh;
-  private double      timeLow;
-  private Switch      toggleHighSwitch;
-  private Switch      toggleLowSwitch;
-  private int         travelHigh;
-  private int         travelLow;
-  private int         trim;
+  private static final long serialVersionUID = 1L;
+
+  private Switch            inputControl;
+  private ControlMode       mode;
+  private String            number;
+  private int               offset;
+  private double            timeHigh;
+  private double            timeLow;
+  private Switch            toggleHighSwitch;
+  private Switch            toggleLowSwitch;
+  private int               travelHigh;
+  private int               travelLow;
+  private int               trim;
 
   @Override
   public boolean equals(final Object obj) {

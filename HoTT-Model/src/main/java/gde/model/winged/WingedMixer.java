@@ -29,10 +29,12 @@ import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
 public class WingedMixer extends AbstractBase {
-  private SwitchFunction function;
-  private Object[]       qualifier;
-  private Switch         sw;
-  private int[]          value;
+  private static final long serialVersionUID = 1L;
+
+  private SwitchFunction    function;
+  private Object[]          qualifier;
+  private Switch            sw;
+  private int[]             value;
 
   @Override
   public boolean equals(final Object obj) {

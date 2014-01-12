@@ -22,9 +22,11 @@ package gde.model;
  * 
  */
 public class LinearMixer extends CurveMixer {
-  private int offset;
-  private int travelHigh;
-  private int travelLow;
+  private static final long serialVersionUID = 1L;
+
+  private int               offset;
+  private int               travelHigh;
+  private int               travelLow;
 
   @Override
   public boolean equals(final Object obj) {

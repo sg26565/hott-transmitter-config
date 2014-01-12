@@ -29,6 +29,8 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class LogicalSwitch extends Switch {
+  private static final long serialVersionUID = 1L;
+
   private boolean           enabled;
   private LogicalSwitchMode mode;
   private Switch[]          sw;

@@ -30,16 +30,18 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public abstract class Phase extends AbstractBase {
-  private Curve          channel1Curve;
-  private Control[]      control;
-  private DualRateExpo[] dualRateExpo;
-  private boolean        motorOn;
-  private String         number;
-  private String         phaseName;
-  private Switch         phaseSwitch;
-  private double         phaseSwitchTime;
-  private Clock          phaseTimer;
-  private PhaseType      phaseType;
+  private static final long serialVersionUID = 1L;
+
+  private Curve             channel1Curve;
+  private Control[]         control;
+  private DualRateExpo[]    dualRateExpo;
+  private boolean           motorOn;
+  private String            number;
+  private String            phaseName;
+  private Switch            phaseSwitch;
+  private double            phaseSwitchTime;
+  private Clock             phaseTimer;
+  private PhaseType         phaseType;
 
   @Override
   public boolean equals(final Object obj) {

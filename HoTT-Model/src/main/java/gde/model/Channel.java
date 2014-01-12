@@ -31,6 +31,8 @@ import javax.xml.bind.annotation.XmlID;
  * @author oli@treichels.de
  */
 public class Channel extends AbstractBase {
+  private static final long     serialVersionUID = 1L;
+
   private int                   center;
   private FailSafeMode          failSafeMode;
   private int                   failSafePosition;
@@ -44,7 +46,7 @@ public class Channel extends AbstractBase {
   private TrainerMode           trainerMode;
   private int                   travelHigh;
   private int                   travelLow;
-  private boolean               virtual = false;
+  private boolean               virtual          = false;
 
   @Override
   public boolean equals(final Object obj) {

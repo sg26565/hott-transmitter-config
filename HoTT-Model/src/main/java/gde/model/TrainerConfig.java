@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class TrainerConfig extends AbstractBase {
+  private static final long   serialVersionUID = 1L;
+
   private Collection<Channel> pupilChannel;
   private long                pupilId;
   private Switch              sw;

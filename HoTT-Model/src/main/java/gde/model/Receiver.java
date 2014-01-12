@@ -27,11 +27,13 @@ import javax.xml.bind.annotation.XmlID;
  * @author oli
  */
 public class Receiver extends AbstractBase {
-  private boolean          bound;
-  private ChannelMapping[] channelMapping;
-  private String           number;
-  private long             rfid;
-  private boolean          telemetry;
+  private static final long serialVersionUID = 1L;
+
+  private boolean           bound;
+  private ChannelMapping[]  channelMapping;
+  private String            number;
+  private long              rfid;
+  private boolean           telemetry;
 
   @Override
   public boolean equals(final Object obj) {

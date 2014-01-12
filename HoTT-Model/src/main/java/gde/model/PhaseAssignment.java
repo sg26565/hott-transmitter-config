@@ -26,13 +26,15 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli
  */
 public class PhaseAssignment extends AbstractBase {
-  private Phase[] assignment;
-  private Switch  combiCSwitch;
-  private Switch  combiDSwitch;
-  private Switch  combiESwitch;
-  private Switch  combiFSwitch;
-  private Switch  priorityASwitch;
-  private Switch  priorityBSwitch;
+  private static final long serialVersionUID = 1L;
+
+  private Phase[]           assignment;
+  private Switch            combiCSwitch;
+  private Switch            combiDSwitch;
+  private Switch            combiESwitch;
+  private Switch            combiFSwitch;
+  private Switch            priorityASwitch;
+  private Switch            priorityBSwitch;
 
   @Override
   public boolean equals(final Object obj) {

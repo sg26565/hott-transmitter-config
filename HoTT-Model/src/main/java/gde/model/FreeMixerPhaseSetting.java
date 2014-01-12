@@ -25,8 +25,10 @@ import javax.xml.bind.annotation.XmlIDREF;
  * 
  */
 public class FreeMixerPhaseSetting extends AbstractBase {
-  private boolean enabled;
-  private Phase   phase;
+  private static final long serialVersionUID = 1L;
+
+  private boolean           enabled;
+  private Phase             phase;
 
   @Override
   public boolean equals(final Object obj) {

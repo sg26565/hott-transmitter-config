@@ -21,9 +21,11 @@ package gde.model;
  * @author oli
  */
 public class ThrottleSettings extends AbstractBase {
-  private ThrottleCutOf throttleCutOf;
-  private int           throttleLastIdlePosition;
-  private int           throttleTrim;
+  private static final long serialVersionUID = 1L;
+
+  private ThrottleCutOf     throttleCutOf;
+  private int               throttleLastIdlePosition;
+  private int               throttleTrim;
 
   @Override
   public boolean equals(final Object obj) {
