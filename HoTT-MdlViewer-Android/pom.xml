@@ -44,10 +44,10 @@
 			<groupId>com.madrobot</groupId>
 			<artifactId>madrobotbeans</artifactId>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>de.treichels.binding</groupId> -->
-<!-- 			<artifactId>binding</artifactId> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

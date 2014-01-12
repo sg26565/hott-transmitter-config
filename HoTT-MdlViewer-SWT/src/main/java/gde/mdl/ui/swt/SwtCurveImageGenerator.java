@@ -41,8 +41,6 @@ import org.eclipse.swt.widgets.Display;
  * @author oli
  */
 public class SwtCurveImageGenerator implements CurveImageGenerator {
-  private static final String PREFIX = "data:image/png;base64,";
-
   private Image getImage(final Curve curve, final float scale, final boolean description) {
     // pitch curves start with 0% instead of -100%
     final boolean pitchCurve = curve.getPoint()[0].getPosition() == 0;

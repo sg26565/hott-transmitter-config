@@ -24,5 +24,7 @@ import gde.model.Curve;
  * 
  */
 public interface CurveImageGenerator {
-  public abstract String getImageSource(Curve curve, float scale, boolean description);
+  public static final String PREFIX = "data:image/png;base64,";
+
+  public abstract String getImageSource(final Curve curve, final float scale, final boolean description);
 }

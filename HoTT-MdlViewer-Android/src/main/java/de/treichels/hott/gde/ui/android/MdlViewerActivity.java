@@ -91,6 +91,7 @@ public class MdlViewerActivity extends Activity {
 
     // convert to HTML
     try {
+      HTMLReport.setCurveImageGenerator(new AndroidCurveImageGenerator());
       return HTMLReport.generateHTML(model);
     } catch (final ReportException e) {
       throw new RuntimeException(e);

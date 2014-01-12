@@ -42,8 +42,6 @@ import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
  * @author oli@treichels.de
  */
 public class SwingCurveImageGenerator implements CurveImageGenerator {
-  private static final String PREFIX = "data:image/png;base64,";
-
   private BufferedImage getImage(final Curve curve, final float scale, final boolean description) {
     final boolean pitchCurve = curve.getPoint()[0].getPosition() == 0;
 

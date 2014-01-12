@@ -44,9 +44,9 @@ import gde.report.ReportException;
  * @author oli@treichels.de
  */
 public class HTMLReport {
-  private static final Configuration            CONFIGURATION;
-  private static final TemplateExceptionHandler CUSTOM_HANDLER;
-  private static final CurveImageGenerator      CURVE_IMAGE_GENERATOR;
+  private static final Configuration      CONFIGURATION;
+  private static TemplateExceptionHandler CUSTOM_EXCEPTION_HANDLER;
+  private static CurveImageGenerator      CURVE_IMAGE_GENERATOR;
 
   static {
     // setup freemarker
@@ -54,7 +54,7 @@ public class HTMLReport {
     CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8");
     CONFIGURATION.setClassForTemplateLoading(HTMLReport.class, "templates");
     CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
-    CUSTOM_HANDLER = new FreeMarkerExceptionHandler();
+    CUSTOM_EXCEPTION_HANDLER = new FreeMarkerExceptionHandler();
 
     // setup CurveImageGenerator
     final ServiceLoader<CurveImageGenerator> loader = ServiceLoader.load(CurveImageGenerator.class);
@@ -115,6 +115,14 @@ public class HTMLReport {
     return CONFIGURATION;
   }
 
+  public static CurveImageGenerator getCurveImageGenerator() {
+    return CURVE_IMAGE_GENERATOR;
+  }
+
+  public static TemplateExceptionHandler getCustomHandler() {
+    return CUSTOM_EXCEPTION_HANDLER;
+  }
+
   public static boolean isSuppressExceptions() {
     return CONFIGURATION.getTemplateExceptionHandler() instanceof FreeMarkerExceptionHandler;
   }
@@ -125,9 +133,17 @@ public class HTMLReport {
     fw.close();
   }
 
+  public static void setCurveImageGenerator(final CurveImageGenerator generator) {
+    CURVE_IMAGE_GENERATOR = generator;
+  }
+
+  public static void setCustomHandler(final TemplateExceptionHandler handler) {
+    CUSTOM_EXCEPTION_HANDLER = handler;
+  }
+
   public static void setSuppressExceptions(final boolean suppress) {
     if (suppress) {
-      CONFIGURATION.setTemplateExceptionHandler(CUSTOM_HANDLER);
+      CONFIGURATION.setTemplateExceptionHandler(CUSTOM_EXCEPTION_HANDLER);
     } else {
       CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
     }
