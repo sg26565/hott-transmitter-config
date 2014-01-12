@@ -60,6 +60,16 @@
 	}
 </style>
 
+<style type="text/css" media="(max-width: 70em)">
+	div.navigation {
+		display: none;
+	}
+
+	div.data {
+		margin-left: 0em;
+	}
+</style>
+
 <style type="text/css" media="all">
 	@font-face {
 		src: url('${programDir}/fonts/Arial.ttf');
