@@ -6,8 +6,11 @@ import gde.report.ReportException;
 import gde.report.html.HTMLReport;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.net.URI;
 
 import android.annotation.SuppressLint;
@@ -39,7 +42,7 @@ import com.lamerman.SelectionMode;
 
 import de.treichels.hott.HoTTDecoder;
 
-public class MdlViewerActivity extends Activity {
+public class MdlViewerActivity extends Activity implements UncaughtExceptionHandler {
   private static final int    READ_REQUEST_CODE        = 42;
   private static final int    READ_REQUEST_CODE_LEGACY = 4711;
   private static final String TAG                      = MdlViewerActivity.class.getSimpleName();
@@ -282,6 +285,8 @@ public class MdlViewerActivity extends Activity {
   public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    Thread.setDefaultUncaughtExceptionHandler(this);
+
     webView = new WebView(this);
     webView.getSettings().setBuiltInZoomControls(true);
     webView.getSettings().setJavaScriptEnabled(true);
@@ -399,6 +404,26 @@ public class MdlViewerActivity extends Activity {
     return true;
   }
 
+  @Override
+  public boolean onOptionsItemSelected(final MenuItem item) {
+    switch (item.getItemId()) {
+    case R.id.action_load:
+      performFileSearch(item);
+      return true;
+
+    case R.id.action_reload:
+      updateUI(item);
+      return true;
+
+    case R.id.action_print:
+      print(item);
+      return true;
+
+    default:
+      return super.onOptionsItemSelected(item);
+    }
+  }
+
   /**
    * Activity will be stopped. Save state.
    */
@@ -419,7 +444,7 @@ public class MdlViewerActivity extends Activity {
   /**
    * Fires an intent to spin up the "file chooser" UI and select a file.
    */
-  @TargetApi(19)
+  @SuppressLint("InlinedApi")
   public void performFileSearch(final MenuItem menuItem) {
     final Toast toast = Toast.makeText(getApplicationContext(), R.string.msg_select_mdl, Toast.LENGTH_SHORT);
     toast.setGravity(Gravity.CENTER, 0, 0);
@@ -457,6 +482,28 @@ public class MdlViewerActivity extends Activity {
   public void print(final MenuItem menuItem) {
     final PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
     printManager.print("HoTTMdlViewer - " + model.getModelName(), webView.createPrintDocumentAdapter(), null);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * java.lang.Thread.UncaughtExceptionHandler#uncaughtException(java.lang.Thread
+   * , java.lang.Throwable)
+   */
+  @Override
+  public void uncaughtException(final Thread thread, final Throwable ex) {
+    final File downloadDir = Environment.getDownloadCacheDirectory();
+
+    if (downloadDir.exists() && downloadDir.isDirectory()) {
+      try {
+        final PrintStream ps = new PrintStream(new File(downloadDir, MdlViewerActivity.class.getName() + "_Exception.log"));
+        ex.printStackTrace(ps);
+        ps.close();
+      } catch (final FileNotFoundException e) {
+        // ignore
+      }
+    }
   }
 
   /**

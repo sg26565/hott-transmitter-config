@@ -46,8 +46,10 @@ import android.util.Base64;
 public class AndroidCurveImageGenerator implements CurveImageGenerator {
   private Bitmap getBitmap(final Curve curve, final float scale, final boolean description) {
     final boolean pitchCurve = curve.getPoint()[0].getPosition() == 0;
+    final float scale1 = scale * 0.75f; // smaller images on the android
+                                        // platform
 
-    final Bitmap image = Bitmap.createBitmap((int) (10 + 200 * scale), (int) (10 + 250 * scale), Bitmap.Config.ARGB_8888);
+    final Bitmap image = Bitmap.createBitmap((int) (10 + 200 * scale1), (int) (10 + 250 * scale1), Bitmap.Config.ARGB_8888);
     final Canvas canvas = new Canvas(image);
 
     final Paint backgroundPaint = new Paint();
@@ -80,14 +82,14 @@ public class AndroidCurveImageGenerator implements CurveImageGenerator {
     textPaint.setTextAlign(Align.CENTER);
     textPaint.setStyle(Style.FILL);
 
-    canvas.drawRect(0, 0, 10 + 200 * scale, 10 + 250 * scale, backgroundPaint);
-    canvas.drawRect(5, 5, 5 + 200 * scale, 5 + 250 * scale, forgroundPaint);
+    canvas.drawRect(0, 0, 10 + 200 * scale1, 10 + 250 * scale1, backgroundPaint);
+    canvas.drawRect(5, 5, 5 + 200 * scale1, 5 + 250 * scale1, forgroundPaint);
 
-    canvas.drawLine(5, 5 + 25 * scale, 5 + 200 * scale, 5 + 25 * scale, helpLinePaint);
-    canvas.drawLine(5, 5 + 225 * scale, 5 + 200 * scale, 5 + 225 * scale, helpLinePaint);
+    canvas.drawLine(5, 5 + 25 * scale1, 5 + 200 * scale1, 5 + 25 * scale1, helpLinePaint);
+    canvas.drawLine(5, 5 + 225 * scale1, 5 + 200 * scale1, 5 + 225 * scale1, helpLinePaint);
     if (!pitchCurve) {
-      canvas.drawLine(5, 5 + 125 * scale, 5 + 200 * scale, 5 + 125 * scale, helpLinePaint);
-      canvas.drawLine(5 + 100 * scale, 5, 5 + 100 * scale, 5 + 250 * scale, helpLinePaint);
+      canvas.drawLine(5, 5 + 125 * scale1, 5 + 200 * scale1, 5 + 125 * scale1, helpLinePaint);
+      canvas.drawLine(5 + 100 * scale1, 5, 5 + 100 * scale1, 5 + 250 * scale1, helpLinePaint);
     }
 
     if (curve.getPoint() != null) {
@@ -117,15 +119,15 @@ public class AndroidCurveImageGenerator implements CurveImageGenerator {
             float x0;
             float y0;
             if (pitchCurve) {
-              x0 = (float) (5 + xVals[i] * 2 * scale);
-              y0 = (float) (5 + (225 - yVals[i] * 2) * scale);
+              x0 = (float) (5 + xVals[i] * 2 * scale1);
+              y0 = (float) (5 + (225 - yVals[i] * 2) * scale1);
             } else {
-              x0 = (float) (5 + (100 + xVals[i]) * scale);
-              y0 = (float) (5 + (125 - yVals[i]) * scale);
+              x0 = (float) (5 + (100 + xVals[i]) * scale1);
+              y0 = (float) (5 + (125 - yVals[i]) * scale1);
             }
 
             canvas.drawPoint(x0, y0, pointPaint);
-            if (y0 < 5 + 125 * scale) {
+            if (y0 < 5 + 125 * scale1) {
               canvas.drawRect(x0 - 4, y0 + 5, x0 + 3, y0 + 18, backgroundPaint);
               canvas.drawText(Integer.toString(p.getNumber() + 1), x0 - 1, y0 + 16, textPaint);
             } else {
@@ -145,18 +147,18 @@ public class AndroidCurveImageGenerator implements CurveImageGenerator {
         float x0 = 5;
         float y0;
         if (pitchCurve) {
-          y0 = (float) (5 + (225 - yVals[0] * 2) * scale);
+          y0 = (float) (5 + (225 - yVals[0] * 2) * scale1);
         } else {
-          y0 = (float) (5 + (125 - yVals[0]) * scale);
+          y0 = (float) (5 + (125 - yVals[0]) * scale1);
         }
 
-        while (x0 < 4 + 200 * scale) {
+        while (x0 < 4 + 200 * scale1) {
           final float x1 = x0 + 1;
           float y1;
           if (pitchCurve) {
-            y1 = (float) (5 + (225 - function.value((x1 - 5) / scale / 2) * 2) * scale);
+            y1 = (float) (5 + (225 - function.value((x1 - 5) / scale1 / 2) * 2) * scale1);
           } else {
-            y1 = (float) (5 + (125 - function.value((x1 - 5) / scale - 100)) * scale);
+            y1 = (float) (5 + (125 - function.value((x1 - 5) / scale1 - 100)) * scale1);
           }
 
           canvas.drawLine(x0, y0, x1, y1, curvePaint);
@@ -169,17 +171,17 @@ public class AndroidCurveImageGenerator implements CurveImageGenerator {
           float x0, y0, x1, y1;
 
           if (pitchCurve) {
-            x0 = (float) (5 + xVals[i] * 2 * scale);
-            y0 = (float) (5 + (225 - yVals[i] * 2) * scale);
+            x0 = (float) (5 + xVals[i] * 2 * scale1);
+            y0 = (float) (5 + (225 - yVals[i] * 2) * scale1);
 
-            x1 = (float) (5 + xVals[i + 1] * 2 * scale);
-            y1 = (float) (5 + (225 - yVals[i + 1] * 2) * scale);
+            x1 = (float) (5 + xVals[i + 1] * 2 * scale1);
+            y1 = (float) (5 + (225 - yVals[i + 1] * 2) * scale1);
           } else {
-            x0 = (float) (5 + (100 + xVals[i]) * scale);
-            y0 = (float) (5 + (125 - yVals[i]) * scale);
+            x0 = (float) (5 + (100 + xVals[i]) * scale1);
+            y0 = (float) (5 + (125 - yVals[i]) * scale1);
 
-            x1 = (float) (5 + (100 + xVals[i + 1]) * scale);
-            y1 = (float) (5 + (125 - yVals[i + 1]) * scale);
+            x1 = (float) (5 + (100 + xVals[i + 1]) * scale1);
+            y1 = (float) (5 + (125 - yVals[i + 1]) * scale1);
           }
 
           canvas.drawLine(x0, y0, x1, y1, curvePaint);
