@@ -30,7 +30,6 @@ import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -446,9 +445,7 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
    */
   @SuppressLint("InlinedApi")
   public void performFileSearch(final MenuItem menuItem) {
-    final Toast toast = Toast.makeText(getApplicationContext(), R.string.msg_select_mdl, Toast.LENGTH_SHORT);
-    toast.setGravity(Gravity.CENTER, 0, 0);
-    toast.show();
+    Toast.makeText(getApplicationContext(), R.string.msg_select_mdl, Toast.LENGTH_SHORT).show();
 
     final Intent intent;
 
