@@ -11,12 +11,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.Thread.UncaughtExceptionHandler;
-import java.net.URI;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.print.PrintManager;
 import android.provider.OpenableColumns;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -35,19 +34,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Toast;
-
-import com.lamerman.FileDialog;
-import com.lamerman.SelectionMode;
-
 import de.treichels.hott.HoTTDecoder;
 
 public class MdlViewerActivity extends Activity implements UncaughtExceptionHandler {
-  private static final int    READ_REQUEST_CODE        = 42;
-  private static final int    READ_REQUEST_CODE_LEGACY = 4711;
-  private static final String TAG                      = MdlViewerActivity.class.getSimpleName();
-  private Uri                 uri                      = null;
-  private BaseModel           model                    = null;
-  private WebView             webView;
+  private static final int READ_REQUEST_CODE = 42;
+  private Uri              uri               = null;
+  private BaseModel        model             = null;
+  private WebView          webView;
 
   /**
    * Read a MDL file and convert it to HTML.
@@ -59,11 +52,10 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
   private String getHtml() {
     String fileName = null;
 
-    if (uri.getScheme().equals(android.content.ContentResolver.SCHEME_CONTENT)) {
+    if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
       // The query, since it only applies to a single document, will only return
       // one row. There's no need to filter, sort, or select fields, since we
-      // want
-      // all fields for one document.
+      // want all fields for one document.
       final Cursor cursor = getContentResolver().query(uri, null, null, null, null, null);
 
       try {
@@ -71,24 +63,39 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
         // "if there's anything to look at, look at it" conditionals.
         if (cursor != null && cursor.moveToFirst()) {
 
-          // Note it's called "Display Name". This is
-          // provider-specific, and might not necessarily be the file name.
+          // Note it's called "Display Name". This is provider-specific, and
+          // might not necessarily be the file name.
           fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
         }
       } finally {
         cursor.close();
       }
-    } else {
+    } else if (ContentResolver.SCHEME_FILE.equals(uri.getScheme())) {
       fileName = uri.getLastPathSegment();
+    } else {
+      // unknown scheme
+      throw new IllegalArgumentException(getResources().getString(R.string.msg_unsupported_uri, uri));
     }
-
-    Log.i(TAG, "File Name: " + fileName);
 
     if (fileName == null || !fileName.endsWith(".mdl")) {
       throw new IllegalArgumentException(getResources().getString(R.string.msg_invalid_file_name, fileName));
     }
 
-    final ModelType modelType = fileName.charAt(0) == 'a' ? ModelType.Winged : ModelType.Helicopter;
+    // check model type
+    ModelType modelType;
+    switch (fileName.charAt(0)) {
+    case 'a':
+      modelType = ModelType.Winged;
+      break;
+
+    case 'h':
+      modelType = ModelType.Helicopter;
+      break;
+
+    default:
+      throw new IllegalArgumentException(getResources().getString(R.string.msg_invalid_file_type, fileName.charAt(0)));
+    }
+
     final String modelName = fileName.substring(1, fileName.length() - 4);
 
     // decode file
@@ -124,27 +131,8 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
    */
   @Override
   public void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
-    if (resultCode == Activity.RESULT_OK && resultData != null) {
-      switch (requestCode) {
-      case READ_REQUEST_CODE:
-        // The document selected by the user won't be returned in the intent.
-        // Instead, a URI to that document will be contained in the return
-        // intent provided to this method as a parameter. Pull that URI using
-        // resultData.getData().
-        uri = resultData.getData();
-        break;
-
-      case READ_REQUEST_CODE_LEGACY:
-        final String filePath = resultData.getStringExtra(FileDialog.RESULT_PATH);
-        final URI javaNetURI = new File(filePath).toURI();
-        // convert java.net.URI to android.net.Uri
-        uri = new Uri.Builder().scheme(javaNetURI.getScheme()).encodedAuthority(javaNetURI.getRawAuthority()).encodedPath(javaNetURI.getRawPath())
-            .query(javaNetURI.getRawQuery()).fragment(javaNetURI.getRawFragment()).build();
-        break;
-      }
-
-      Log.i(TAG, "Uri: " + uri.toString());
-
+    if (resultCode == Activity.RESULT_OK && resultData != null && requestCode == READ_REQUEST_CODE) {
+      uri = resultData.getData();
       updateUI(null);
     }
   }
@@ -292,7 +280,13 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
     setContentView(webView);
     registerForContextMenu(webView);
 
-    if (savedInstanceState != null) {
+    final Intent intent = getIntent();
+    if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
+      uri = intent.getData();
+      updateUI(null);
+    }
+
+    if (uri == null && savedInstanceState != null) {
       webView.restoreState(savedInstanceState);
 
       if (savedInstanceState.containsKey("model")) {
@@ -443,29 +437,16 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
   /**
    * Fires an intent to spin up the "file chooser" UI and select a file.
    */
-  @SuppressLint("InlinedApi")
   public void performFileSearch(final MenuItem menuItem) {
     Toast.makeText(getApplicationContext(), R.string.msg_select_mdl, Toast.LENGTH_SHORT).show();
 
-    final Intent intent;
+    Intent intent;
 
-    if (Build.VERSION.SDK_INT >= 19) {
-      // use the Storage Access Framework of Android 4.4 or newer
-      intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-      intent.addCategory(Intent.CATEGORY_OPENABLE);
-      intent.setType("*/*");
+    intent = new Intent(Intent.ACTION_GET_CONTENT);
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    intent.setType("*/*");
 
-      startActivityForResult(intent, READ_REQUEST_CODE);
-    } else {
-      // fall-back for older andriod versions
-      intent = new Intent(getBaseContext(), FileDialog.class);
-      intent.putExtra(FileDialog.START_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
-      intent.putExtra(FileDialog.CAN_SELECT_DIR, false);
-      intent.putExtra(FileDialog.SELECTION_MODE, SelectionMode.MODE_OPEN);
-      intent.putExtra(FileDialog.FORMAT_FILTER, new String[] { "mdl" });
-
-      startActivityForResult(intent, READ_REQUEST_CODE_LEGACY);
-    }
+    startActivityForResult(intent, READ_REQUEST_CODE);
   }
 
   /**
@@ -510,6 +491,11 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
    *          unused
    */
   public void updateUI(final MenuItem menuItem) {
+    if (uri == null) {
+      // nothing to do
+      return;
+    }
+
     // tell user to be patient
     final Toast toast = Toast.makeText(this, R.string.msg_loading, Toast.LENGTH_LONG);
     toast.show();
@@ -545,6 +531,8 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
               builder.create().show();
             }
           });
+
+          uncaughtException(Thread.currentThread(), e);
         }
 
         return null;

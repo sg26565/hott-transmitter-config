@@ -18,13 +18,69 @@
         android:label="@string/app_name"
         android:theme="@style/AppBaseTheme" >
         <activity android:name=".MdlViewerActivity" >
+
+            <!-- Start activity via launcher -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name="com.lamerman.FileDialog" >
+
+            <!-- Start activity from file browser or Google Drive -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <!-- the pattern matching of intent-filter is rather limited, therefore we need to watch out for multiple periods in the path -->
+                <!-- one period in path -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\.mdl"
+                    android:scheme="file" />
+
+                <!-- two periods in path -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\..*\\.mdl"
+                    android:scheme="file" />
+
+                <!-- three periods in path -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\..*\\..*\\.mdl"
+                    android:scheme="file" />
+
+                <!-- four periods in path -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\..*\\..*\\..*\\.mdl"
+                    android:scheme="file" />
+
+                <!-- five periods in path -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\..*\\..*\\..*\\..*\\.mdl"
+                    android:scheme="file" />
+            </intent-filter>
+
+            <!-- Start activity via content provider (e.g. Downloads) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <!-- Note: there is no file extension when using a content provider -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:scheme="content" />
+            </intent-filter>
         </activity>
     </application>
 

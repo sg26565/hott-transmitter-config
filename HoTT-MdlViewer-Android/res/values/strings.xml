@@ -10,6 +10,8 @@
     <string name="msg_select_mdl">Please select a MDL file.</string>
     <string name="msg_error">An error occurred</string>
     <string name="msg_invalid_file_name">Invalid file name: \&quot;%s\&quot;!</string>
+    <string name="msg_invalid_file_type">Invalid model type: \&quot;%s\&quot;!</string>
+    <string name="msg_unsupported_uri">Unsupported source: \&quot;%s\&quot;!</string>
     <string name="bookmark_baseSettings">Base Settings</string>
     <string name="bookmark_modelType">Model Type</string>
     <string name="bookmark_helicopterType">Helicopter Type</string>
