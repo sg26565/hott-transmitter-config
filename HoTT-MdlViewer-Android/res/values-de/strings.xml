@@ -12,42 +12,45 @@
     <string name="msg_invalid_file_type">Ungültiger Modelltyp: \&quot;%s\&quot;!</string>
     <string name="msg_unsupported_uri">Nicht unterstützte Quelle: \&quot;%s\&quot;!</string>
     <string name="msg_error">Es ist ein Fehler aufgetreten</string>
-    <string name="bookmark_baseSettings">Grundeinstellungen Modell</string>
-    <string name="bookmark_modelType">Modelltyp</string>
-    <string name="bookmark_helicopterType">Helicoptertyp</string>
-    <string name="bookmark_servos">Servoeinstellungen</string>
-    <string name="bookmark_stickSettings">Knüppeleinstellungen</string>
-    <string name="bookmark_controls0">Gebereinstellungen</string>
-    <string name="bookmark_drExpo0">DualRate Expo</string>
-    <string name="bookmark_channel1Curve0">Kanal 1 Kurve</string>
-    <string name="bookmark_controlSwitches">Geberschalter</string>
-    <string name="bookmark_logicalSwitches">logische Schalter</string>
-    <string name="bookmark_phaseSettings">Phaseneinstellungen</string>
-    <string name="bookmark_phaseAssignments">Phasenzuweisung</string>
-    <string name="bookmark_phaseTrim">Phasentrimm</string>
-    <string name="bookmark_nonDelayedChannels">unverzögerte Kanäle</string>
-    <string name="bookmark_timersGeneral">Uhren (allgemein)</string>
-    <string name="bookmark_phaseTimer">Flugphasenuhren</string>
-    <string name="bookmark_wingMix0">Flächenmischer</string>
-    <string name="bookmark_helicopterMix0">Helikoptermix</string>
-    <string name="bookmark_linearMixer">Linearmischer</string>
-    <string name="bookmark_curveMixer">Kurvenmischer</string>
-    <string name="bookmark_mixerActive">MIX aktiv / Phase</string>
-    <string name="bookmark_mixOnlyChannel">Nur MIX Kanal</string>
-    <string name="bookmark_dualMixer">Kreuzmischer</string>
-    <string name="bookmark_swashplateMixer">Taumelscheibenmischer</string>
-    <string name="bookmark_failSafe">Fail Safe</string>
-    <string name="bookmark_trainerPupil">Lehrer/Schüler</string>
-    <string name="bookmark_outputChannel">Senderausgang</string>
-    <string name="bookmark_profiTrim">Profitrimm</string>
-    <string name="bookmark_trimMemory">Trimmspeicher</string>
-    <string name="bookmark_telemetry">Telemetrie</string>
-    <string name="bookmark_channelSequencer">Kanal Sequenzer</string>
-    <string name="bookmark_multiChannel">Multikanal</string>
-    <string name="bookmark_ringLimiter">Ringbegrenzer</string>
-    <string name="bookmark_mp3Player">MP3-Player</string>
-    <string name="bookmark_switches">Schalter-/Geberzuordnungen</string>
     <string name="action_print_pdf">als PDF Drucken</string>
     <string name="action_print">Drucken</string>
+
+    <string-array name="bookmarks">
+        <item>Grundeinstellungen Modell</item>
+        <item>Modelltyp</item>
+        <item>Helicoptertyp</item>
+        <item>Servoeinstellungen</item>
+        <item>Knüppeleinstellungen</item>
+        <item>Gebereinstellungen</item>
+        <item>DualRate Expo</item>
+        <item>Kanal 1 Kurve</item>
+        <item>Geberschalter</item>
+        <item>logische Schalter</item>
+        <item>Phaseneinstellungen</item>
+        <item>Phasenzuweisung</item>
+        <item>Phasentrimm</item>
+        <item>unverzögerte Kanäle</item>
+        <item>Uhren (allgemein)</item>
+        <item>Flugphasenuhren</item>
+        <item>Flächenmischer</item>
+        <item>Helikoptermix</item>
+        <item>Linearmischer</item>
+        <item>Kurvenmischer</item>
+        <item>MIX aktiv / Phase</item>
+        <item>Nur MIX Kanal</item>
+        <item>Kreuzmischer</item>
+        <item>Taumelscheibenmischer</item>
+        <item>Fail Safe</item>
+        <item>Lehrer/Schüler</item>
+        <item>Senderausgang</item>
+        <item>Profitrimm</item>
+        <item>Trimmspeicher</item>
+        <item>Telemetrie</item>
+        <item>Kanal Sequenzer</item>
+        <item>Multikanal</item>
+        <item>Ringbegrenzer</item>
+        <item>MP3-Player</item>
+        <item>Schalter-/Geberzuordnungen</item>
+    </string-array>
 
 </resources>
