@@ -1,5 +1,5 @@
 <table>
-	<caption><a name="controls"/>Gebereinstellungen</caption>
+	<caption><a name="controls0"/>Gebereinstellungen</caption>
 	
 	<thead>
 		<tr>

@@ -1,6 +1,6 @@
 <#if wingedModel??>
 	<table>
-		<caption><a name="wingMix"/>Flächenmix</caption>
+		<caption><a name="wingMix0"/>Flächenmix</caption>
 
 		<thead>
 			<tr class="<@d/>">

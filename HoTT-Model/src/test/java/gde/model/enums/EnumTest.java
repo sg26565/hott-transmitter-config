@@ -39,7 +39,8 @@ public class EnumTest {
               final Method nameMethod = clazz.getMethod("name");
 
               for (final Field field : fields) {
-                if (field.getName().endsWith("$VALUES") || (field.getModifiers() & Modifier.STATIC) == 0) {
+                if ((field.getModifiers() & Modifier.STATIC & Modifier.PUBLIC) == 0) {
+                  // skip non-public, non-static fields
                   continue;
                 }
 

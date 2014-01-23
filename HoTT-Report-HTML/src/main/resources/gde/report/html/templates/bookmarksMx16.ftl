@@ -1,7 +1,7 @@
 <bookmarks>
 	<bookmark href="#baseSettings" name="Grundeinstellungen Modell"/>
 	<bookmark href="#servos" name="Servoeinstellungen"/>		
-	<bookmark href="#controls" name="Gebereinstellungen"/>
+	<bookmark href="#controls0" name="Gebereinstellungen"/>
 	<bookmark href="#drExpo0" name="DualRate Expo">
 		<#list model.phase as phase>
 			<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
@@ -11,7 +11,7 @@
 	</bookmark>
 	<#if wingedModel??>
 		<bookmark href="#phaseTrim" name="Phasentrimm"/>
-		<bookmark href="#wingMix" name="Flächenmischer"/>
+		<bookmark href="#wingMix0" name="Flächenmischer"/>
 	</#if>
 	<#if helicopterModel??>
 		<bookmark href="#helicopterMix0" name="Helikoptermix">

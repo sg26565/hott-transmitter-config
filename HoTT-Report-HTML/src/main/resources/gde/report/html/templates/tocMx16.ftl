@@ -1,7 +1,7 @@
 <h1>Inhaltsverzeichnis</h1>
 <a href="#baseSettings">Grundeinstellungen Modell</a>
 <a href="#servos">Servoeinstellungen</a>		
-<a href="#controls">Gebereinstellungen</a>
+<a href="#controls0">Gebereinstellungen</a>
 <div>DualRate Expo</div>
 <#list model.phase as phase>
 	<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
@@ -10,7 +10,7 @@
 </#list>
 <#if wingedModel??>
 	<a href="#phaseTrim">Phasentrimm</a>
-	<a href="#wingMix">Flächenmischer</a>
+	<a href="#wingMix0">Flächenmischer</a>
 </#if>
 <#if helicopterModel??>
 	<div>Helikoptermix</div>
