@@ -1,4 +1,4 @@
-package de.treichels.hott.gde.ui.android;
+package de.treichels.hott.ui.android;
 
 import gde.model.BaseModel;
 import gde.model.enums.ModelType;
