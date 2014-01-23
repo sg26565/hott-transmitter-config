@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HoTT MdlViewer</string>
+    <string name="action_load_mdl">Load MDL file</string>
+    <string name="action_load">Load</string>
+    <string name="action_reload_mdl">Reload MDL file</string>
+    <string name="action_reload">Reload</string>
+    <string name="msg_loading">Loading &#8230; please wait.</string>
+    <string name="msg_select_mdl">Please select a MDL file.</string>
+    <string name="msg_error">An error occurred</string>
+    <string name="msg_invalid_file_name">Invalid file name: \&quot;%s\&quot;!</string>
+    <string name="msg_invalid_file_type">Invalid model type: \&quot;%s\&quot;!</string>
+    <string name="msg_unsupported_uri">Unsupported source: \&quot;%s\&quot;!</string>
+    <string name="bookmark_baseSettings">Base Settings</string>
+    <string name="bookmark_modelType">Model Type</string>
+    <string name="bookmark_helicopterType">Helicopter Type</string>
+    <string name="bookmark_servos">Servo Settings</string>
+    <string name="bookmark_stickSettings">Stick Settings</string>
+    <string name="bookmark_controls0">Control Settings</string>
+    <string name="bookmark_drExpo0">DualRate Expo</string>
+    <string name="bookmark_channel1Curve0">Channel 1 Curve</string>
+    <string name="bookmark_controlSwitches">Control Switches</string>
+    <string name="bookmark_logicalSwitches">Logical Switches</string>
+    <string name="bookmark_phaseSettings">Phase Settings</string>
+    <string name="bookmark_phaseAssignments">Phase Assignments</string>
+    <string name="bookmark_phaseTrim">Phase Trim</string>
+    <string name="bookmark_nonDelayedChannels">Non-delayed Channels</string>
+    <string name="bookmark_timersGeneral">Timers (general)</string>
+    <string name="bookmark_phaseTimer">Phase Timers</string>
+    <string name="bookmark_wingMix0">Wing Mixers</string>
+    <string name="bookmark_helicopterMix0">Helicopter Mixers</string>
+    <string name="bookmark_linearMixer">Linear Mixers</string>
+    <string name="bookmark_curveMixer">Curve Mixers</string>
+    <string name="bookmark_mixerActive">MIX active / Phase</string>
+    <string name="bookmark_mixOnlyChannel">Mix-only Channels</string>
+    <string name="bookmark_dualMixer">Dual Mixers</string>
+    <string name="bookmark_swashplateMixer">Swashplate Mixer</string>
+    <string name="bookmark_failSafe">Fail Safe</string>
+    <string name="bookmark_trainerPupil">Trainer/Pupil</string>
+    <string name="bookmark_outputChannel">Output Channel Mapping</string>
+    <string name="bookmark_profiTrim">Profi Trim</string>
+    <string name="bookmark_trimMemory">Tim Memory</string>
+    <string name="bookmark_telemetry">Telemetry</string>
+    <string name="bookmark_channelSequencer">Channel Sequencer</string>
+    <string name="bookmark_multiChannel">Multi Channel</string>
+    <string name="bookmark_ringLimiter">Ring Limiter</string>
+    <string name="bookmark_mp3Player">MP3 Player</string>
+    <string name="bookmark_switches">Switches</string>
+    <string name="action_print_pdf">Print PDF</string>
+    <string name="action_print">Print</string>
+
+    <string-array name="bookmarks">
+        <item>Base Settings</item>
+        <item>Model Type</item>
+        <item>Helicopter Type</item>
+        <item>Servo Settings</item>
+        <item>Stick Settings</item>
+        <item>Control Settings</item>
+        <item>DualRate Expo</item>
+        <item>Channel 1 Curve</item>
+        <item>Control Switches</item>
+        <item>Logical Switches</item>
+        <item>Phase Settings</item>
+        <item>Phase Assignments</item>
+        <item>Phase Trim</item>
+        <item>Non-delayed Channels</item>
+        <item>Timers (general)</item>
+        <item>Phase Timers</item>
+        <item>Wing Mixers</item>
+        <item>Helicopter Mixers</item>
+        <item>Linear Mixers</item>
+        <item>Curve Mixers</item>
+        <item>MIX active / Phase</item>
+        <item>Mix-only Channels</item>
+        <item>Dual Mixers</item>
+        <item>Swashplate Mixer</item>
+        <item>Fail Safe</item>
+        <item>Trainer/Pupil</item>
+        <item>Output Channel Mapping</item>
+        <item>Profi Trim</item>
+        <item>Tim Memory</item>
+        <item>Telemetry</item>
+        <item>Channel Sequencer</item>
+        <item>Multi Channel</item>
+        <item>Ring Limiter</item>
+        <item>MP3 Player</item>
+        <item>Switches<string></string></item>
+    </string-array>
+
+</resources>

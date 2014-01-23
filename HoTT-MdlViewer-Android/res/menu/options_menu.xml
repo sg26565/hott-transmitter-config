@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_load"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_load_mdl"
+        android:titleCondensed="@string/action_load"/>
+    <item
+        android:id="@+id/action_reload"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_reload_mdl"
+        android:titleCondensed="@string/action_reload"/>
+
+</menu>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.treichels.hott.gde.ui.android"
+    android:versionCode="1"
+    android:versionName="0.7" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppBaseTheme" >
+        <activity android:name=".MdlViewerActivity" >
+
+            <!-- Start activity via launcher -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Start activity from file browser or Google Drive -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <!-- the pattern matching of intent-filter is rather limited, therefore we need to watch out for multiple periods in the path -->
+                <!-- one period in path -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\.mdl"
+                    android:scheme="file" />
+
+                <!-- two periods in path -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\..*\\.mdl"
+                    android:scheme="file" />
+
+                <!-- three periods in path -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\..*\\..*\\.mdl"
+                    android:scheme="file" />
+
+                <!-- four periods in path -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\..*\\..*\\..*\\.mdl"
+                    android:scheme="file" />
+
+                <!-- five periods in path -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:pathPattern=".*\\..*\\..*\\..*\\..*\\.mdl"
+                    android:scheme="file" />
+            </intent-filter>
+
+            <!-- Start activity via content provider (e.g. Downloads) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <!-- Note: there is no file extension when using a content provider -->
+                <data
+                    android:host="*"
+                    android:mimeType="application/octet-stream"
+                    android:scheme="content" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
