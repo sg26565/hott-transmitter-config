@@ -15,42 +15,4 @@
     <string name="action_print_pdf">als PDF Drucken</string>
     <string name="action_print">Drucken</string>
 
-    <string-array name="bookmarks">
-        <item>Grundeinstellungen Modell</item>
-        <item>Modelltyp</item>
-        <item>Helicoptertyp</item>
-        <item>Servoeinstellungen</item>
-        <item>Knüppeleinstellungen</item>
-        <item>Gebereinstellungen</item>
-        <item>DualRate Expo</item>
-        <item>Kanal 1 Kurve</item>
-        <item>Geberschalter</item>
-        <item>logische Schalter</item>
-        <item>Phaseneinstellungen</item>
-        <item>Phasenzuweisung</item>
-        <item>Phasentrimm</item>
-        <item>unverzögerte Kanäle</item>
-        <item>Uhren (allgemein)</item>
-        <item>Flugphasenuhren</item>
-        <item>Flächenmischer</item>
-        <item>Helikoptermix</item>
-        <item>Linearmischer</item>
-        <item>Kurvenmischer</item>
-        <item>MIX aktiv / Phase</item>
-        <item>Nur MIX Kanal</item>
-        <item>Kreuzmischer</item>
-        <item>Taumelscheibenmischer</item>
-        <item>Fail Safe</item>
-        <item>Lehrer/Schüler</item>
-        <item>Senderausgang</item>
-        <item>Profitrimm</item>
-        <item>Trimmspeicher</item>
-        <item>Telemetrie</item>
-        <item>Kanal Sequenzer</item>
-        <item>Multikanal</item>
-        <item>Ringbegrenzer</item>
-        <item>MP3-Player</item>
-        <item>Schalter-/Geberzuordnungen</item>
-    </string-array>
-
 </resources>

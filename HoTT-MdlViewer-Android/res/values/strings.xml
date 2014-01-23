@@ -15,42 +15,4 @@
     <string name="action_print_pdf">Print PDF</string>
     <string name="action_print">Print</string>
 
-    <string-array name="bookmarks">
-        <item>Base Settings</item>
-        <item>Model Type</item>
-        <item>Helicopter Type</item>
-        <item>Servo Settings</item>
-        <item>Stick Settings</item>
-        <item>Control Settings</item>
-        <item>DualRate Expo</item>
-        <item>Channel 1 Curve</item>
-        <item>Control Switches</item>
-        <item>Logical Switches</item>
-        <item>Phase Settings</item>
-        <item>Phase Assignments</item>
-        <item>Phase Trim</item>
-        <item>Non-delayed Channels</item>
-        <item>Timers (general)</item>
-        <item>Phase Timers</item>
-        <item>Wing Mixers</item>
-        <item>Helicopter Mixers</item>
-        <item>Linear Mixers</item>
-        <item>Curve Mixers</item>
-        <item>MIX active / Phase</item>
-        <item>Mix-only Channels</item>
-        <item>Dual Mixers</item>
-        <item>Swashplate Mixer</item>
-        <item>Fail Safe</item>
-        <item>Trainer/Pupil</item>
-        <item>Output Channel Mapping</item>
-        <item>Profi Trim</item>
-        <item>Tim Memory</item>
-        <item>Telemetry</item>
-        <item>Channel Sequencer</item>
-        <item>Multi Channel</item>
-        <item>Ring Limiter</item>
-        <item>MP3 Player</item>
-        <item>Switches<string></string></item>
-    </string-array>
-
 </resources>
