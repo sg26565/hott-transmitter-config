@@ -2,6 +2,7 @@ package de.treichels.hott.ui.android;
 
 import gde.model.BaseModel;
 import gde.model.enums.ModelType;
+import gde.model.enums.Section;
 import gde.report.ReportException;
 import gde.report.html.HTMLReport;
 
@@ -27,20 +28,24 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.print.PrintManager;
 import android.provider.OpenableColumns;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 import de.treichels.hott.HoTTDecoder;
 
-public class MdlViewerActivity extends Activity implements UncaughtExceptionHandler {
-  private static final int READ_REQUEST_CODE = 42;
-  private Uri              uri               = null;
-  private BaseModel        model             = null;
-  private WebView          webView;
+public class MdlViewerActivity extends Activity implements UncaughtExceptionHandler, ListView.OnItemClickListener {
+  private static final int READ_REQUEST_CODE    = 42;
+  private static boolean   NAVIGATION_SUPPORTED = Build.VERSION.SDK_INT >= 19;
+  private Uri              uri                  = null;
+  private BaseModel        model                = null;
+  private WebView          webView              = null;
+  private DrawerLayout     drawerLayout         = null;
+  private ListView         drawer               = null;
 
   /**
    * Read a MDL file and convert it to HTML.
@@ -138,127 +143,6 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
   }
 
   /**
-   * Handle selections form the context menu.
-   * 
-   * <b>Note:</b> This method relies on
-   * {@link WebView#evaluateJavascript(String, android.webkit.ValueCallback)},
-   * which is only available on Android 4.4 and newer.
-   * 
-   * @param item
-   *          The menu item that was selected.
-   */
-  @TargetApi(19)
-  @Override
-  public boolean onContextItemSelected(final MenuItem item) {
-    switch (item.getItemId()) {
-    case R.id.bookmark_baseSettings:
-      webView.evaluateJavascript("location.hash='#baseSettings'", null);
-      return true;
-    case R.id.bookmark_modelType:
-      webView.evaluateJavascript("location.hash='#modelType'", null);
-      return true;
-    case R.id.bookmark_servos:
-      webView.evaluateJavascript("location.hash='#servos'", null);
-      return true;
-    case R.id.bookmark_stickSettings:
-      webView.evaluateJavascript("location.hash='#stickSettings'", null);
-      return true;
-    case R.id.bookmark_controls0:
-      webView.evaluateJavascript("location.hash='#controls0'", null);
-      return true;
-    case R.id.bookmark_drExpo0:
-      webView.evaluateJavascript("location.hash='#drExpo0'", null);
-      return true;
-    case R.id.bookmark_channel1Curve0:
-      webView.evaluateJavascript("location.hash='#channel1Curve0'", null);
-      return true;
-    case R.id.bookmark_controlSwitches:
-      webView.evaluateJavascript("location.hash='#controlSwitches'", null);
-      return true;
-    case R.id.bookmark_logicalSwitches:
-      webView.evaluateJavascript("location.hash='#logicalSwitches'", null);
-      return true;
-    case R.id.bookmark_phaseSettings:
-      webView.evaluateJavascript("location.hash='#phaseSettings'", null);
-      return true;
-    case R.id.bookmark_phaseAssignments:
-      webView.evaluateJavascript("location.hash='#phaseAssignments'", null);
-      return true;
-    case R.id.bookmark_phaseTrim:
-      webView.evaluateJavascript("location.hash='#phaseTrim'", null);
-      return true;
-    case R.id.bookmark_nonDelayedChannels:
-      webView.evaluateJavascript("location.hash='#nonDelayedChannels'", null);
-      return true;
-    case R.id.bookmark_timersGeneral:
-      webView.evaluateJavascript("location.hash='#timersGeneral'", null);
-      return true;
-    case R.id.bookmark_phaseTimer:
-      webView.evaluateJavascript("location.hash='#phaseTimer'", null);
-      return true;
-    case R.id.bookmark_wingMix0:
-      webView.evaluateJavascript("location.hash='#wingMix0'", null);
-      return true;
-    case R.id.bookmark_helicopterMix0:
-      webView.evaluateJavascript("location.hash='#helicopterMix0'", null);
-      return true;
-    case R.id.bookmark_linearMixer:
-      webView.evaluateJavascript("location.hash='#linearMixer'", null);
-      return true;
-    case R.id.bookmark_curveMixer:
-      webView.evaluateJavascript("location.hash='#curveMixer'", null);
-      return true;
-    case R.id.bookmark_mixerActive:
-      webView.evaluateJavascript("location.hash='#mixerActive'", null);
-      return true;
-    case R.id.bookmark_mixOnlyChannel:
-      webView.evaluateJavascript("location.hash='#mixOnlyChannel'", null);
-      return true;
-    case R.id.bookmark_dualMixer:
-      webView.evaluateJavascript("location.hash='#dualMixer'", null);
-      return true;
-    case R.id.bookmark_swashplateMixer:
-      webView.evaluateJavascript("location.hash='#swashplateMixer'", null);
-      return true;
-    case R.id.bookmark_failSafe:
-      webView.evaluateJavascript("location.hash='#failSafe'", null);
-      return true;
-    case R.id.bookmark_trainerPupil:
-      webView.evaluateJavascript("location.hash='#trainerPupil'", null);
-      return true;
-    case R.id.bookmark_outputChannel:
-      webView.evaluateJavascript("location.hash='#outputChannel'", null);
-      return true;
-    case R.id.bookmark_profiTrim:
-      webView.evaluateJavascript("location.hash='#profiTrim'", null);
-      return true;
-    case R.id.bookmark_trimMemory:
-      webView.evaluateJavascript("location.hash='#trimMemory'", null);
-      return true;
-    case R.id.bookmark_telemetry:
-      webView.evaluateJavascript("location.hash='#telemetry'", null);
-      return true;
-    case R.id.bookmark_channelSequencer:
-      webView.evaluateJavascript("location.hash='#channelSequencer'", null);
-      return true;
-    case R.id.bookmark_multiChannel:
-      webView.evaluateJavascript("location.hash='#multiChannel'", null);
-      return true;
-    case R.id.bookmark_ringLimiter:
-      webView.evaluateJavascript("location.hash='#ringLimiter'", null);
-      return true;
-    case R.id.bookmark_mp3Player:
-      webView.evaluateJavascript("location.hash='#mp3Player'", null);
-      return true;
-    case R.id.bookmark_switches:
-      webView.evaluateJavascript("location.hash='#switches'", null);
-      return true;
-    default:
-      return super.onContextItemSelected(item);
-    }
-  }
-
-  /**
    * Called when the activity is first created.
    * 
    * @param savedInstanceState
@@ -274,28 +158,28 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
 
     Thread.setDefaultUncaughtExceptionHandler(this);
 
-    webView = new WebView(this);
+    setContentView(R.layout.main);
+    webView = (WebView) findViewById(R.id.webwiew);
     webView.getSettings().setBuiltInZoomControls(true);
-    webView.getSettings().setJavaScriptEnabled(true);
-    setContentView(webView);
-    registerForContextMenu(webView);
 
+    if (NAVIGATION_SUPPORTED) {
+      webView.getSettings().setJavaScriptEnabled(true);
+      registerForContextMenu(webView);
+
+      drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+      drawer = (ListView) findViewById(R.id.drawer);
+      drawer.setOnItemClickListener(this);
+    }
+
+    // check if we were started via an intent
     final Intent intent = getIntent();
     if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
       uri = intent.getData();
       updateUI(null);
     }
 
+    // restore from saved state
     if (uri == null && savedInstanceState != null) {
-      webView.restoreState(savedInstanceState);
-
-      if (savedInstanceState.containsKey("model")) {
-        model = (BaseModel) savedInstanceState.getSerializable("model");
-        if (model != null) {
-          setTitle(model.getModelName());
-        }
-      }
-
       if (savedInstanceState.containsKey("uri")) {
         final String uriString = savedInstanceState.getString("uri");
         if (uriString != null) {
@@ -304,89 +188,12 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
       }
     }
 
-    // first start, no saved state
     if (uri == null) {
+      // first start, no saved state, no intent
       performFileSearch(null);
-    }
-  }
-
-  /**
-   * Create the context menu to navigate in the document.
-   * 
-   * <b>Note:</b> This method relies on
-   * {@link WebView#evaluateJavascript(String, android.webkit.ValueCallback)},
-   * which is only available on Android 4.4 and newer.
-   * 
-   * @param item
-   *          The menu item that was selected.
-   */
-  @TargetApi(19)
-  @Override
-  public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
-    super.onCreateContextMenu(menu, v, menuInfo);
-
-    // only do this, if we have a model loaded
-    if (model != null && Build.VERSION.SDK_INT >= 19) {
-      // load menu from xml
-      getMenuInflater().inflate(R.menu.context_menu, menu);
-
-      switch (model.getModelType()) {
-      case Helicopter:
-        // rename menu item
-        menu.findItem(R.id.bookmark_modelType).setTitle(R.string.bookmark_helicopterType);
-
-        // disable wing mixers
-        menu.findItem(R.id.bookmark_phaseTrim).setVisible(false);
-        menu.findItem(R.id.bookmark_wingMix0).setVisible(false);
-        break;
-
-      case Winged:
-        // disable helicopter mixers
-        menu.findItem(R.id.bookmark_helicopterMix0).setVisible(false);
-        menu.findItem(R.id.bookmark_swashplateMixer).setVisible(false);
-        break;
-
-      default:
-        break;
-      }
-
-      // disable logical switches
-      if (model.getLogicalSwitch() == null) {
-        menu.findItem(R.id.bookmark_logicalSwitches).setVisible(false);
-      }
-
-      // disable unsupported features
-      switch (model.getTransmitterType()) {
-      case mx12:
-      case mx16:
-        menu.findItem(R.id.bookmark_modelType).setVisible(false);
-        menu.findItem(R.id.bookmark_stickSettings).setVisible(false);
-        menu.findItem(R.id.bookmark_channel1Curve0).setVisible(false);
-        menu.findItem(R.id.bookmark_controlSwitches).setVisible(false);
-        menu.findItem(R.id.bookmark_phaseSettings).setVisible(false);
-        menu.findItem(R.id.bookmark_phaseAssignments).setVisible(false);
-        menu.findItem(R.id.bookmark_nonDelayedChannels).setVisible(false);
-        menu.findItem(R.id.bookmark_timersGeneral).setVisible(false);
-        menu.findItem(R.id.bookmark_phaseTimer).setVisible(false);
-        menu.findItem(R.id.bookmark_curveMixer).setVisible(false);
-        menu.findItem(R.id.bookmark_mixerActive).setVisible(false);
-        menu.findItem(R.id.bookmark_mixOnlyChannel).setVisible(false);
-        menu.findItem(R.id.bookmark_dualMixer).setVisible(false);
-        menu.findItem(R.id.bookmark_outputChannel).setVisible(false);
-        menu.findItem(R.id.bookmark_profiTrim).setVisible(false);
-        menu.findItem(R.id.bookmark_trimMemory).setVisible(false);
-        menu.findItem(R.id.bookmark_channelSequencer).setVisible(false);
-        menu.findItem(R.id.bookmark_multiChannel).setVisible(false);
-        menu.findItem(R.id.bookmark_ringLimiter).setVisible(false);
-        // falls through
-
-      case mx20:
-        menu.findItem(R.id.bookmark_mp3Player).setVisible(false);
-        break;
-
-      default:
-        break;
-      }
+    } else {
+      // refresh
+      updateUI(null);
     }
   }
 
@@ -395,6 +202,22 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.options_menu, menu);
     return true;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget
+   * .AdapterView, android.view.View, int, long)
+   */
+  @TargetApi(19)
+  @Override
+  public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+    drawerLayout.closeDrawer(drawer);
+
+    final Section section = Section.values()[(int) id];
+    webView.evaluateJavascript("location.hash='#" + section.name() + "'", null);
   }
 
   @Override
@@ -423,11 +246,6 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
   @Override
   protected void onSaveInstanceState(final Bundle outState) {
     super.onSaveInstanceState(outState);
-    webView.saveState(outState);
-
-    if (model != null) {
-      outState.putSerializable("model", model);
-    }
 
     if (uri != null) {
       outState.putString("uri", uri.toString());
@@ -513,6 +331,11 @@ public class MdlViewerActivity extends Activity implements UncaughtExceptionHand
             public void run() {
               webView.loadData(html, "text/html", "UTF-8");
               setTitle(model.getModelName());
+
+              if (NAVIGATION_SUPPORTED) {
+                drawer.setAdapter(new SectionAdapter(MdlViewerActivity.this, model.getModelType(), model.getTransmitterType()));
+              }
+
               toast.cancel();
             }
           });
