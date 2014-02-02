@@ -5,13 +5,9 @@ import gnu.io.UnsupportedCommOperationException;
 import java.io.IOException;
 import java.util.List;
 
-import de.treichels.hott.internal.ClearScreen;
-import de.treichels.hott.internal.CloseScreen;
-import de.treichels.hott.internal.HoTTSerialPort;
-import de.treichels.hott.internal.QueryTxInfo;
-import de.treichels.hott.internal.QueryTxInfo.Response;
-import de.treichels.hott.internal.ResetScreen;
-import de.treichels.hott.internal.WriteScreen;
+import de.treichels.hott.HoTTTransmitter;
+import de.treichels.hott.SerialPortDefaultImpl;
+import de.treichels.hott.TxInfo;
 
 public class SerialTest {
   private static void dump(final byte[] data) {
@@ -41,7 +37,7 @@ public class SerialTest {
 
   public static void main(final String[] args) throws NoSuchPortException, UnsupportedCommOperationException, IOException, PortInUseException,
       InterruptedException {
-    final List<String> ports = HoTTSerialPort.getAvailablePorts();
+    final List<String> ports = SerialPortDefaultImpl.getAvailablePorts();
 
     System.out.println(ports);
 
@@ -110,34 +106,23 @@ public class SerialTest {
     // }
     // }
 
-    HoTTSerialPort port = null;
     try {
-      port = new HoTTSerialPort(ports.get(0));
-      final QueryTxInfo.Response response = (Response) port.doCommand(new QueryTxInfo());
-      dump(response.getData());
+      HoTTTransmitter.setSerialPortImpl(new SerialPortDefaultImpl(ports.get(0)));
+      final TxInfo info = HoTTTransmitter.getTxInfo();
 
-      System.out.println(response.getResponseCode());
-      System.out.println(response.getTransmitterType());
-      System.out.println(response.getAppVersion());
-      System.out.println(response.getMemoryVersion());
-      System.out.println(response.getYear());
-      System.out.println(response.getName());
-      System.out.println(response.getVendor());
+      System.out.println(info.getTransmitterType());
+      System.out.println(info.getAppVersion());
+      System.out.println(info.getMemoryVersion());
+      System.out.println(info.getYear());
+      System.out.println(info.getName());
+      System.out.println(info.getVendor());
 
-      port.doCommand(new ClearScreen());
-      port.doCommand(new ResetScreen());
-      port.doCommand(new WriteScreen(0, "---------------------"));
-      port.doCommand(new WriteScreen(1, "* This is a test.   *"));
-      port.doCommand(new WriteScreen(2, "*  This is a test.  *"));
-      port.doCommand(new WriteScreen(3, "*   This is a test. *"));
-      port.doCommand(new WriteScreen(4, "*    This is a test.*"));
-      port.doCommand(new WriteScreen(5, "---------------------"));
-      Thread.sleep(10000);
-      port.doCommand(new CloseScreen());
+      HoTTTransmitter.writeScreen(new String[] { "---------------------", "* This is a test.   *", "*  This is a test.  *", "*   This is a test. *",
+          "*    This is a test.*", "---------------------" });
+      Thread.sleep(5000);
+      HoTTTransmitter.closeScreen();
     } finally {
-      if (port != null) {
-        port.close();
-      }
+      HoTTTransmitter.closeConnection();
     }
   }
 }
