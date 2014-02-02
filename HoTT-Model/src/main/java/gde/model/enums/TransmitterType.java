@@ -23,7 +23,27 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum TransmitterType {
-  mc16, mc20, mc32, mx12, mx16, mx20, mz12, mz18, mz24;
+  mc16(16004600), mc20(16004300), mc32(16004100), mx12(16003600), mx16(16003300), mx20(16003700), mz12(-1), mz18(-2), mz24(16005200);
+
+  public static TransmitterType forProductCode(final int productCode) {
+    for (final TransmitterType t : TransmitterType.values()) {
+      if (productCode == t.productCode) {
+        return t;
+      }
+    }
+
+    return null;
+  }
+
+  private final int productCode;
+
+  private TransmitterType(final int productCode) {
+    this.productCode = productCode;
+  }
+
+  public int getProductCode() {
+    return productCode;
+  }
 
   /** @return the locale-dependent message */
   @Override

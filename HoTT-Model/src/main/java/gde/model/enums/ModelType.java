@@ -23,7 +23,27 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum ModelType {
-  Helicopter, Unknown, Winged;
+  Helicopter(0), Unknown(-1), Winged(1);
+
+  public static ModelType forId(final int id) {
+    for (final ModelType t : ModelType.values()) {
+      if (id == t.id) {
+        return t;
+      }
+    }
+
+    return Unknown;
+  }
+
+  private final int id;
+
+  private ModelType(final int id) {
+    this.id = id;
+  }
+
+  public int getId() {
+    return id;
+  }
 
   /** @return the locale-dependent message */
   @Override
