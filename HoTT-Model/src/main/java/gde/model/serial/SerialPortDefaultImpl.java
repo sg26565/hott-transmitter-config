@@ -1,0 +1,138 @@
+/**
+ *  HoTT Transmitter Config
+ *  Copyright (C) 2013  Oliver Treichel
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package gde.model.serial;
+
+import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+import gnu.io.UnsupportedCommOperationException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
+/**
+ * @author oli
+ * 
+ */
+public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
+  private static final int WRITE_BUFFER_SIZE = 2064;
+  private static final int READ_BUFFER_SIZE  = 2064;
+
+  public static List<String> getAvailablePorts() {
+    final List<String> result = new ArrayList<String>();
+
+    @SuppressWarnings("unchecked")
+    final Enumeration<CommPortIdentifier> enumeration = CommPortIdentifier.getPortIdentifiers();
+
+    while (enumeration.hasMoreElements()) {
+      final CommPortIdentifier identifier = enumeration.nextElement();
+      if (identifier.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+        result.add(identifier.getName());
+      }
+    }
+
+    return result;
+  }
+
+  private final String name;
+
+  private SerialPort   port = null;
+
+  /**
+   * @param name
+   */
+  public SerialPortDefaultImpl(final String name) {
+    super();
+    this.name = name;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.treichels.hott.internal.HoTTSerialPort#close()
+   */
+  @Override
+  public void close() {
+    port.close();
+    port = null;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.treichels.hott.internal.HoTTSerialPort#getInputStream()
+   */
+  @Override
+  public InputStream getInputStream() throws IOException {
+    return port.getInputStream();
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.treichels.hott.internal.HoTTSerialPort#getOutputStream()
+   */
+  @Override
+  public OutputStream getOutputStream() throws IOException {
+    return port.getOutputStream();
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.treichels.hott.SerialPort#isOpen()
+   */
+  @Override
+  public boolean isOpen() {
+    return port != null;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.treichels.hott.SerialPort#open()
+   */
+  @Override
+  public void open() throws IOException {
+    try {
+      final CommPortIdentifier identifier = CommPortIdentifier.getPortIdentifier(name);
+      port = (SerialPort) identifier.open(SerialPortDefaultImpl.class.getName(), 1000);
+      port.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+      port.setDTR(false);
+      port.setRTS(false);
+      port.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
+      port.setInputBufferSize(READ_BUFFER_SIZE);
+      port.setOutputBufferSize(WRITE_BUFFER_SIZE);
+    } catch (final NoSuchPortException e) {
+      throw new IOException(e);
+    } catch (final PortInUseException e) {
+      throw new IOException(e);
+    } catch (final UnsupportedCommOperationException e) {
+      throw new IOException(e);
+    }
+  }
+}

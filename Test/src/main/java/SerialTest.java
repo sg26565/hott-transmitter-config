@@ -1,3 +1,6 @@
+import gde.model.serial.SerialPortDefaultImpl;
+import gde.model.serial.TxInfo;
+import gde.model.winged.WingedModel;
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
 import gnu.io.UnsupportedCommOperationException;
@@ -5,9 +8,8 @@ import gnu.io.UnsupportedCommOperationException;
 import java.io.IOException;
 import java.util.List;
 
+import de.treichels.hott.HoTTDecoder;
 import de.treichels.hott.HoTTTransmitter;
-import de.treichels.hott.SerialPortDefaultImpl;
-import de.treichels.hott.TxInfo;
 
 public class SerialTest {
   private static void dump(final byte[] data) {
@@ -41,21 +43,6 @@ public class SerialTest {
 
     System.out.println(ports);
 
-    // WingedModel model = (WingedModel) HoTTDecoder.decode(ports.get(0), 0);
-    // System.out.printf("ModelName: %s, TransmitterId: 0x%x, MemoryVersion: %d\n",
-    // model.getModelName(), model.getTransmitterId(),
-    // model.getMemoryVersion());
-    //
-    // model = (WingedModel) HoTTDecoder.decode(ports.get(0), 19);
-    // System.out.printf("ModelName: %s, TransmitterId: 0x%x, MemoryVersion: %d\n",
-    // model.getModelName(), model.getTransmitterId(),
-    // model.getMemoryVersion());
-
-    // model = (WingedModel) HoTTDecoder.decode(ports.get(0), 19);
-    // System.out.printf("ModelName: %s, TransmitterId: 0x%x, MemoryVersion: %d\n",
-    // model.getModelName(), model.getTransmitterId(),
-    // model.getMemoryVersion());
-
     // HoTTSerialPort port = null;
     // try {
     // port = new HoTTSerialPort(ports.get(0));
@@ -72,39 +59,6 @@ public class SerialTest {
     // }
     // }
     //
-    // final ReadModelInformation cmd = new ReadModelInformation();
-    // cmd.setModelNumber(19);
-    // final ReadModelInformation.Response modelInformation =
-    // (ReadModelInformation.Response) port.doCommand(cmd);
-    //
-    // if (modelInformation.getModelType() != ModelType.Unknown) {
-    // System.out.printf("%d: %s, %d, %s, %s\n", 20,
-    // modelInformation.getTransmitterType(), modelInformation.getVersion(),
-    // modelInformation.getModelType(),
-    // modelInformation.getModelName());
-    // }
-    //
-    // final ReadModelMemory cmd2 = new ReadModelMemory();
-    // final byte[] modelData = new byte[12288];
-    // for (int i = 0; i < 6; i++) {
-    // final int offset = 2048 * i;
-    // cmd2.setAddress(offset);
-    // final BaseResponse response = port.doCommand(cmd2);
-    // System.arraycopy(response.getData(), 0, modelData, offset,
-    // response.getLen());
-    // }
-    //
-    // final ByteArrayInputStream is = new ByteArrayInputStream(modelData);
-    // final WingedModel model = (WingedModel)
-    // HoTTDecoder.decode(modelInformation.getModelType(),
-    // modelInformation.getModelName(), is);
-    // System.out.printf("TransmitterId: 0x%x, MemoryVersion: %d\n",
-    // model.getTransmitterId(), model.getMemoryVersion());
-    // } finally {
-    // if (port != null) {
-    // port.close();
-    // }
-    // }
 
     try {
       HoTTTransmitter.setSerialPortImpl(new SerialPortDefaultImpl(ports.get(0)));
@@ -117,8 +71,23 @@ public class SerialTest {
       System.out.println(info.getName());
       System.out.println(info.getVendor());
 
-      HoTTTransmitter.writeScreen(new String[] { "---------------------", "* This is a test.   *", "*  This is a test.  *", "*   This is a test. *",
-          "*    This is a test.*", "---------------------" });
+      final int[] positions = HoTTTransmitter.servoPositions();
+      for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 8; j++) {
+          System.out.printf(" %d", positions[i * 8 + j]);
+        }
+        System.out.println();
+      }
+
+      WingedModel model = (WingedModel) HoTTDecoder.decodeMemory(0);
+      System.out.printf("ModelName: %s, TransmitterId: 0x%x, MemoryVersion: %d\n", model.getModelName(), model.getTransmitterId(), model.getMemoryVersion());
+
+      model = (WingedModel) HoTTDecoder.decodeMemory(19);
+      System.out.printf("ModelName: %s, TransmitterId: 0x%x, MemoryVersion: %d\n", model.getModelName(), model.getTransmitterId(), model.getMemoryVersion());
+
+      HoTTTransmitter.writeScreen(new String[] { "a234567890123456789012345678901234567890", "b234567890123456789012345678901234567890",
+          "c234567890123456789012345678901234567890", "d234567890123456789012345678901234567890", "e234567890123456789012345678901234567890",
+          "f234567890123456789012345678901234567890" });
       Thread.sleep(5000);
       HoTTTransmitter.closeScreen();
     } finally {

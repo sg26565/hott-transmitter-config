@@ -48,7 +48,7 @@ public class ReportTest {
     final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc20").toURI());
 
     for (final File file : dir.listFiles()) {
-      final BaseModel model = HoTTDecoder.decode(file);
+      final BaseModel model = HoTTDecoder.decodeFile(file);
 
       assertEquals(TransmitterType.mc20, model.getTransmitterType());
 
@@ -63,7 +63,7 @@ public class ReportTest {
     final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc32").toURI());
 
     for (final File file : dir.listFiles()) {
-      final BaseModel model = HoTTDecoder.decode(file);
+      final BaseModel model = HoTTDecoder.decodeFile(file);
 
       assertEquals(TransmitterType.mc32, model.getTransmitterType());
 
@@ -78,7 +78,7 @@ public class ReportTest {
     final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx12").toURI());
 
     for (final File file : dir.listFiles()) {
-      final BaseModel model = HoTTDecoder.decode(file);
+      final BaseModel model = HoTTDecoder.decodeFile(file);
 
       assertEquals(TransmitterType.mx12, model.getTransmitterType());
 
@@ -93,7 +93,7 @@ public class ReportTest {
     final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx16").toURI());
 
     for (final File file : dir.listFiles()) {
-      final BaseModel model = HoTTDecoder.decode(file);
+      final BaseModel model = HoTTDecoder.decodeFile(file);
 
       assertEquals(TransmitterType.mx16, model.getTransmitterType());
 
@@ -108,7 +108,7 @@ public class ReportTest {
     final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx20").toURI());
 
     for (final File file : dir.listFiles()) {
-      final BaseModel model = HoTTDecoder.decode(file);
+      final BaseModel model = HoTTDecoder.decodeFile(file);
 
       assertEquals(TransmitterType.mx20, model.getTransmitterType());
 

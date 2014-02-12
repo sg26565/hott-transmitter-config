@@ -182,7 +182,7 @@ public class MdlTabItemComposite extends Composite {
       if (file.exists() && file.canRead()) {
         PREFS.put("lastLoadDir", file.getParentFile().getAbsolutePath());
         try {
-          model = HoTTDecoder.decode(file);
+          model = HoTTDecoder.decodeFile(file);
           saveMdlButton.setEnabled(true);
           saveMdlMenuItem.setEnabled(true);
           reloadMenuItem.setEnabled(true);

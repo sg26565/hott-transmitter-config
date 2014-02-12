@@ -109,7 +109,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     InputStream is = null;
     try {
       is = getContentResolver().openInputStream(uri);
-      model = HoTTDecoder.decode(modelType, modelName, is);
+      model = HoTTDecoder.decodeStream(modelType, modelName, is);
     } catch (final IOException e) {
       throw new RuntimeException(e);
     } finally {

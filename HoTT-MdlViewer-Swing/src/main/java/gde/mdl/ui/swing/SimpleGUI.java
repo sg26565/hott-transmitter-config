@@ -193,7 +193,7 @@ public class SimpleGUI extends FSScrollPane {
       final File file = fc.getSelectedFile();
       PREFS.put(LAST_LOAD_DIR, file.getParentFile().getAbsolutePath());
 
-      model = HoTTDecoder.decode(file);
+      model = HoTTDecoder.decodeFile(file);
       saveHtmlAction.setEnabled(true);
       savePdfAction.setEnabled(true);
       saveXmlAction.setEnabled(true);
