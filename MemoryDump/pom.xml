@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>HoTT-Model</artifactId>
+	<artifactId>MemoryDump</artifactId>
 
 	<parent>
 		<groupId>de.treichels.hott</groupId>
@@ -14,30 +14,28 @@
 		<url>https://code.google.com/p/hott-transmitter-config/source/browse/</url>
 	</scm>
 
-	<name>HoTT Data Model</name>
-
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.5</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
 				<configuration>
-					<complianceLevel>1.6</complianceLevel>
-					<ajdtBuildDefFile>build.ajproperties</ajdtBuildDefFile>
+					<minimizeJar>true</minimizeJar>
+					<createDependencyReducedPom>false</createDependencyReducedPom>
+					<shadedArtifactAttached>true</shadedArtifactAttached>
+					<finalName>${project.build.finalName}-shaded</finalName>
+					<transformers>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+							<mainClass>gde.mdl.ui.swing.Launcher</mainClass>
+						</transformer>
+					</transformers>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjtools</artifactId>
-						<version>1.7.4</version>
-					</dependency>
-				</dependencies>
 				<executions>
 					<execution>
+						<phase>package</phase>
 						<goals>
-							<goal>compile</goal>
-							<goal>test-compile</goal>
+							<goal>shade</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -47,9 +45,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>1.7.4</version>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTT-Decoder</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>gnu.io.RXTXcomm</groupId>

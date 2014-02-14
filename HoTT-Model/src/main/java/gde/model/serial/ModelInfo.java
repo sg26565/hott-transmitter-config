@@ -17,63 +17,48 @@
  */
 package gde.model.serial;
 
+import gde.model.enums.ModelType;
 import gde.model.enums.TransmitterType;
 
 import java.io.Serializable;
 
 /**
- * @author oli@treichels.de
+ * @author oli
  * 
  */
-public final class TxInfo implements Serializable {
+public class ModelInfo implements Serializable {
   private static final long     serialVersionUID = 1L;
 
+  private final int             modelNumber;
+  private final String          modelName;
+  private final ModelType       modelType;
   private final TransmitterType transmitterType;
-  private final int             appVersion;
-  private final int             memoryVersion;
-  private final int             year;
-  private final String          name;
-  private final String          vendor;
 
   /**
-   * @param transmitterType
-   * @param appVersion
-   * @param memoryVersion
-   * @param year
-   * @param name
-   * @param vendor
+   * @param modelNumber
+   * @param modelName
+   * @param modelType
    */
-  public TxInfo(final TransmitterType transmitterType, final int appVersion, final int memoryVersion, final int year, final String name, final String vendor) {
-    super();
+  public ModelInfo(final int modelNumber, final String modelName, final ModelType modelType, final TransmitterType transmitterType) {
+    this.modelNumber = modelNumber;
+    this.modelName = modelName;
+    this.modelType = modelType;
     this.transmitterType = transmitterType;
-    this.appVersion = appVersion;
-    this.memoryVersion = memoryVersion;
-    this.year = year;
-    this.name = name;
-    this.vendor = vendor;
   }
 
-  public int getAppVersion() {
-    return appVersion;
+  public String getModelName() {
+    return modelName;
   }
 
-  public int getMemoryVersion() {
-    return memoryVersion;
+  public int getModelNumber() {
+    return modelNumber;
   }
 
-  public String getName() {
-    return name;
+  public ModelType getModelType() {
+    return modelType;
   }
 
   public TransmitterType getTransmitterType() {
     return transmitterType;
-  }
-
-  public String getVendor() {
-    return vendor;
-  }
-
-  public int getYear() {
-    return year;
   }
 }

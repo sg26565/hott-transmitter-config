@@ -9,8 +9,12 @@
 		<groupId>de.treichels.hott</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.7</version>
-		<relativePath>../parent</relativePath>
 	</parent>
+
+	<scm>
+		<connection>scm:git:https://code.google.com/p/hott-transmitter-config/</connection>
+		<url>https://code.google.com/p/hott-transmitter-config/source/browse/</url>
+	</scm>
 
 	<dependencies>
 		<dependency>

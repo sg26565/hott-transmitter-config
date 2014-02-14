@@ -2,13 +2,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>HoTT-MdlViewer-SWT</artifactId>
+	<name>HoTT MdlViewer for PC/Mac with SWT Graphical User Interface</name>
 
 	<parent>
 		<groupId>de.treichels.hott</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.7</version>
-		<relativePath>../parent</relativePath>
 	</parent>
+
+	<scm>
+		<connection>scm:git:https://code.google.com/p/hott-transmitter-config/</connection>
+		<url>https://code.google.com/p/hott-transmitter-config/source/browse/</url>
+	</scm>
 
 	<properties>
 		<swtPath>${project.basedir}/swt</swtPath>
@@ -58,38 +63,8 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>com.googlecode.maven-gcu-plugin</groupId>
-				<artifactId>maven-gcu-plugin</artifactId>
-				<configuration>
-					<serverId>googlecode</serverId>
-					<failsOnError>true</failsOnError>
-					<projectName>hott-transmitter-config</projectName>
-					<uploads>
-						<upload>
-							<file>${project.build.directory}/${project.artifactId}-${project.version}-r${buildNumber}-bin.zip</file>
-							<summary>${project.artifactId} version ${project.version}</summary>
-							<labels>
-								<label>Experimental</label>
-								<label>Type-Archive</label>
-							</labels>
-						</upload>
-					</uploads>
-				</configuration>
-				<executions>
-					<execution>
-						<id>upload</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>upload</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
-
-	<name>HoTT Transmitter Config - SWT Graphical User Interface</name>
 
 	<dependencies>
 		<dependency>
