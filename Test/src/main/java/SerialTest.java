@@ -9,7 +9,6 @@ import java.util.List;
 import de.treichels.hott.HoTTTransmitter;
 import de.treichels.hott.internal.BaseCommand;
 import de.treichels.hott.internal.HoTTSerialPort;
-import de.treichels.hott.internal.ReadTransmitterMemory;
 
 public class SerialTest {
   public static void main(final String[] args) throws NoSuchPortException, UnsupportedCommOperationException, IOException, PortInUseException,
@@ -35,9 +34,9 @@ public class SerialTest {
       // test(new BaseCommand(0x00, 0x11, 0));
 
       // test(new PrepareListMdl());
-      for (int i = 0; i < 512; i++) {
-        test(new ReadTransmitterMemory(0x800 * i));
-      }
+      // for (int i = 0; i < 512; i++) {
+      // test(new ReadTransmitterMemory(0x800 * i));
+      // }
     } finally {
       HoTTTransmitter.closeConnection();
     }
