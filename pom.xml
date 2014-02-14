@@ -11,15 +11,15 @@
 	</properties>
 
 	<modules>
-		<module>../binding</module>
-		<module>../HoTT-Model</module>
-		<module>../HoTT-Decoder</module>
-		<module>../HoTT-Report-HTML</module>
-		<module>../HoTT-Report-PDF</module>
-		<module>../HoTT-Report-XML</module>
-		<module>../HoTT-MdlViewer-Swing</module>
-		<module>../HoTT-MdlViewer-SWT</module>
-		<module>../HoTT-MdlViewer-Android</module>
+		<module>binding</module>
+		<module>HoTT-Model</module>
+		<module>../hottdecoder/HoTT-Decoder</module>
+		<module>HoTT-Report-HTML</module>
+		<module>HoTT-Report-PDF</module>
+		<module>HoTT-Report-XML</module>
+		<module>HoTT-MdlViewer-Swing</module>
+		<module>HoTT-MdlViewer-SWT</module>
+		<module>HoTT-MdlViewer-Android</module>
 	</modules>
 
 	<organization>
@@ -27,8 +27,8 @@
 	</organization>
 
 	<scm>
-		<connection>scm:svn:https://hott-transmitter-config.googlecode.com/svn/trunk/parent/</connection>
-		<url>https://code.google.com/p/hott-transmitter-config/source/browse/trunk/parent/</url>
+		<connection>scm:git:https://code.google.com/p/hott-transmitter-config/</connection>
+		<url>https://code.google.com/p/hott-transmitter-config/source/browse/</url>
 	</scm>
 
 	<issueManagement>
