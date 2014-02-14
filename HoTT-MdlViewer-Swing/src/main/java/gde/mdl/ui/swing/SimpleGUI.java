@@ -18,11 +18,6 @@
 
 package gde.mdl.ui.swing;
 
-import gde.model.BaseModel;
-import gde.report.html.HTMLReport;
-import gde.report.pdf.PDFReport;
-import gde.report.xml.XMLReport;
-
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -56,6 +51,11 @@ import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import com.itextpdf.text.DocumentException;
 
 import de.treichels.hott.HoTTDecoder;
+import freemarker.ext.beans.JavaBeansIntrospector;
+import gde.model.BaseModel;
+import gde.report.html.HTMLReport;
+import gde.report.pdf.PDFReport;
+import gde.report.xml.XMLReport;
 
 public class SimpleGUI extends FSScrollPane {
   private final class CloseAction extends AbstractAction {
@@ -129,22 +129,25 @@ public class SimpleGUI extends FSScrollPane {
     }
   }
 
-  private static final String      LAST_LOAD_DIR    = "lastLoadDir";
-  private static final String      LAST_SAVE_DIR    = "lastSaveDir";
-  private static final Logger      LOG              = Logger.getLogger(SimpleGUI.class.getName());
-  private static final Preferences PREFS            = Preferences.userNodeForPackage(SimpleGUI.class);
-  private static final long        serialVersionUID = 8824399313635999416L;
+  @SuppressWarnings("unused")
+  private Class<JavaBeansIntrospector> class1;
 
-  private final Action             closeAction      = new CloseAction("Close");
-  private final Action             loadAction       = new LoadAction("Load MDL");
-  private BaseModel                model            = null;
-  private final Action             refreshAction    = new RefreshAction("Refresh");
-  private final Action             saveHtmlAction   = new SaveAction("Save HTML", FileType.HTML);
-  private final Action             savePdfAction    = new SaveAction("Save PDF", FileType.PDF);
-  private final Action             saveXmlAction    = new SaveAction("Save XML", FileType.XML);
-  private final XHTMLPanel         xhtmlPane        = new XHTMLPanel();
+  private static final String          LAST_LOAD_DIR    = "lastLoadDir";
+  private static final String          LAST_SAVE_DIR    = "lastSaveDir";
+  private static final Logger          LOG              = Logger.getLogger(SimpleGUI.class.getName());
+  private static final Preferences     PREFS            = Preferences.userNodeForPackage(SimpleGUI.class);
+  private static final long            serialVersionUID = 8824399313635999416L;
 
-  private final JPopupMenu         popupMenu        = new JPopupMenu();
+  private final Action                 closeAction      = new CloseAction("Close");
+  private final Action                 loadAction       = new LoadAction("Load MDL");
+  private BaseModel                    model            = null;
+  private final Action                 refreshAction    = new RefreshAction("Refresh");
+  private final Action                 saveHtmlAction   = new SaveAction("Save HTML", FileType.HTML);
+  private final Action                 savePdfAction    = new SaveAction("Save PDF", FileType.PDF);
+  private final Action                 saveXmlAction    = new SaveAction("Save XML", FileType.XML);
+  private final XHTMLPanel             xhtmlPane        = new XHTMLPanel();
+
+  private final JPopupMenu             popupMenu        = new JPopupMenu();
 
   public SimpleGUI() {
     final SharedContext ctx = xhtmlPane.getSharedContext();

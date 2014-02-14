@@ -7,6 +7,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import freemarker.ext.beans.JavaBeansIntrospector;
+
 public class Launcher extends gde.mdl.ui.swing.Launcher {
   /**
    * Initialize SWT. Make sure that the correct SWT library is in the classpath.
@@ -81,4 +83,7 @@ public class Launcher extends gde.mdl.ui.swing.Launcher {
     final Method main = mainDialog.getMethod("main", String[].class);
     main.invoke(null, new Object[] { new String[] {} });
   }
+
+  @SuppressWarnings("unused")
+  private Class<JavaBeansIntrospector> class1;
 }

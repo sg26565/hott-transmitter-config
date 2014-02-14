@@ -17,32 +17,13 @@
  */
 package de.treichels.hott;
 
-import gde.model.serial.SerialPortDefaultImpl;
-
 import java.io.IOException;
-import java.util.List;
-
-import de.treichels.hott.internal.BaseResponse;
-import de.treichels.hott.internal.HoTTSerialPort;
-import de.treichels.hott.internal.ReadTransmitterMemory;
-import de.treichels.hott.internal.Util;
 
 /**
  * @author oli@treichels.de
  */
 public class MemoryDump {
   public static void main(final String[] args) throws IOException {
-    final List<String> ports = SerialPortDefaultImpl.getAvailablePorts();
-    System.out.printf("Bitte seriellen port eingeben  %s: ", ports);
-
-    final String port = System.console().readLine();
-
-    HoTTTransmitter.setSerialPortImpl(new SerialPortDefaultImpl(port));
-
-    for (int i = 0; i < 512; i++) {
-      final int address = 0x800 * i;
-      final BaseResponse response = HoTTSerialPort.getInstance().doCommand(new ReadTransmitterMemory(address));
-      System.out.print(Util.dumpData(response.getData(), address));
-    }
+    HoTTTransmitter.memoryDump();
   }
 }

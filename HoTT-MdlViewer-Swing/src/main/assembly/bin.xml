@@ -8,7 +8,7 @@
 	</formats>
 	<files>
 		<file>
-			<source>${project.build.directory}/${project.build.finalName}-shaded.jar</source>
+			<source>${project.build.directory}/${project.build.finalName}.jar</source>
 			<outputDirectory>/</outputDirectory>
 			<destName>HoTT-MdlViewer-Swing.jar</destName>
 		</file>
