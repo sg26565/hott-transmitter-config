@@ -36,25 +36,9 @@
 			<version>3.2.4.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>de.treichels.swtxml</groupId>
-			<artifactId>swtxml</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>de.treichels.spring</groupId>
 			<artifactId>spring-swt</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.x5dev</groupId>
-			<artifactId>chunk-templates</artifactId>
-			<version>2.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.12.2</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
@@ -63,7 +47,6 @@
 		<dependency>
 			<groupId>gnu.io.RXTXcomm</groupId>
 			<artifactId>RXTXcomm</artifactId>
-			<version>2.2pre2</version>
 		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>

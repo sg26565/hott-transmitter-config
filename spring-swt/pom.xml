@@ -9,6 +9,5 @@
 		<groupId>de.treichels.hott</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.7</version>
-		<relativePath>../parent</relativePath>
 	</parent>
 </project>
