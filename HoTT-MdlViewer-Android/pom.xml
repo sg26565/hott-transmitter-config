@@ -4,12 +4,17 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>HoTT-MdlViewer-Android</artifactId>
 	<packaging>apk</packaging>
+<<<<<<< HEAD
 	<name>HoTT MdlViewer for Android</name>
+=======
+	<name>HoTT-MdlViewer-Android</name>
+>>>>>>> 79c76c652c9c873cce14b45b76bcd01813c19f34
 
 	<parent>
 		<groupId>de.treichels.hott</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.7</version>
+<<<<<<< HEAD
 	</parent>
 
 	<scm>
@@ -17,12 +22,18 @@
 		<url>https://code.google.com/p/hott-transmitter-config/source/browse/</url>
 	</scm>
 
+=======
+		<relativePath>../parent</relativePath>
+	</parent>
+
+>>>>>>> 79c76c652c9c873cce14b45b76bcd01813c19f34
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform.version>19</platform.version>
 		<android.sdk.path>/home/oli/android-sdk-linux</android.sdk.path>
 	</properties>
 
+<<<<<<< HEAD
 	<repositories>
 		<repository>
 			<id>google</id>
@@ -34,13 +45,18 @@
 		</repository>
 	</repositories>
 
+=======
+>>>>>>> 79c76c652c9c873cce14b45b76bcd01813c19f34
 	<dependencies>
 		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
 			<version>${platform.version}</version>
 			<scope>provided</scope>
+<<<<<<< HEAD
 <!-- 			<systemPath>${android.sdk.path}/platforms/android-${platform.version}/android.jar</systemPath> -->
+=======
+>>>>>>> 79c76c652c9c873cce14b45b76bcd01813c19f34
 		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
@@ -64,11 +80,14 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math3</artifactId>
 		</dependency>
+<<<<<<< HEAD
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>support-v4</artifactId>
 			<version>19.0.1</version>
 		</dependency>
+=======
+>>>>>>> 79c76c652c9c873cce14b45b76bcd01813c19f34
 	</dependencies>
 
 	<build>
