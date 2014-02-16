@@ -5,6 +5,7 @@ Prerequisites:
 - install Apache Ivy (2.3.0 or later)
 - install Apache Ant (1.9.2 or later)
 - install git (1.8.3 or later)
+- install settings.xml in ${HOME}/.m2
 
 Clone repositories
 - git clone https://code.google.com/p/hott-transmitter-config/
