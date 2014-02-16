@@ -20,6 +20,7 @@
 
 	<dependencies>
 		<dependency>
+<<<<<<< HEAD
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math3</artifactId>
 		</dependency>
@@ -44,6 +45,8 @@
 		<dependency>
 =======
 >>>>>>> b32db13... 
+=======
+>>>>>>> a5a9516... fixed merge
 			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Model</artifactId>
 		</dependency>
