@@ -29,6 +29,7 @@
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
+			<classifier>android</classifier>
 		</dependency>
 	</dependencies>
 </project>

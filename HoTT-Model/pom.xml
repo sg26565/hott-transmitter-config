@@ -49,12 +49,10 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>1.7.4</version>
 		</dependency>
 		<dependency>
 			<groupId>gnu.io.RXTXcomm</groupId>
 			<artifactId>RXTXcomm</artifactId>
-			<version>2.2pre2</version>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
