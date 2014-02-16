@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_load"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_load_mdl"
+        android:titleCondensed="@string/action_load"/>
+    <item
+        android:id="@+id/action_reload"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_reload_mdl"
+        android:titleCondensed="@string/action_reload"/>
+
+    <!-- printing is onyl supported on Anroid 4.4 and above -->
+    <item
+        android:id="@+id/action_print"
+        android:showAsAction="never"
+        android:title="@string/action_print_pdf"
+        android:titleCondensed="@string/action_print"/>
+
+</menu>
