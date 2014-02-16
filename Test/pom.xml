@@ -24,6 +24,7 @@
 			<artifactId>commons-math3</artifactId>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
 			<groupId>org.eclipse</groupId>
 			<artifactId>swt</artifactId>
 			<version>unknown</version>
@@ -41,6 +42,8 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+=======
+>>>>>>> b32db13... 
 			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Model</artifactId>
 		</dependency>
