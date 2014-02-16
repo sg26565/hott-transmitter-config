@@ -15,9 +15,12 @@ Build and install Freemarker into local Maven repository
 - cd freemarker
 - ant update-deps
 - ant
-- mvn install:install-file -Dfile=build/freemarker.jar -DartifactId=freemarker -DgroupId=org.freemarker -Dpackaging=jar -Dversion=3.2.20_android
+- mvn install:install-file -Dfile=build/freemarker.jar -DartifactId=freemarker -DgroupId=org.freemarker -Dpackaging=jar -Dversion=2.3.20 -Dclassifier=android
 - cd ..
 
-Build
+Install android.jar into local Maven repository
+- mvn install:install-file -Dfile=android-sdk-linux/platforms/android-19/android.jar -DartifactId=android -DgroupId=com.google.android -Dpackaging=jar -Dversion=19
+
+Build and install application
 - cd hott-transmitter-config
 - mvn install
