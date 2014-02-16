@@ -17,13 +17,133 @@
  */
 package de.treichels.hott;
 
+import gde.model.serial.SerialPortDefaultImpl;
+import gde.util.Util;
+import gnu.io.RXTXCommDriver;
+
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 
 /**
  * @author oli@treichels.de
  */
 public class MemoryDump {
+  @SuppressWarnings("unused")
+  private static RXTXCommDriver driver;
+
   public static void main(final String[] args) throws IOException {
-    HoTTTransmitter.memoryDump();
+    final JComboBox<String> comboBox = new JComboBox<String>();
+    final JButton dumpButton = new JButton("dump");
+    final JButton saveButton = new JButton("save");
+    final JPanel panel = new JPanel();
+    final JTextArea textArea = new JTextArea();
+    final JScrollPane scrollPane = new JScrollPane(textArea);
+    final JFrame frame = new JFrame("HoTT Transmitter Memory Dump");
+
+    for (final String s : SerialPortDefaultImpl.getAvailablePorts()) {
+      comboBox.addItem(s);
+    }
+
+    dumpButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(final ActionEvent arg0) {
+        final String port = (String) comboBox.getSelectedItem();
+
+        if (port != null && port.length() > 0) {
+          dumpButton.setEnabled(false);
+          saveButton.setEnabled(false);
+          HoTTTransmitter.setSerialPortImpl(new SerialPortDefaultImpl(port));
+
+          new Thread(new Runnable() {
+            @Override
+            public void run() {
+              try {
+                try {
+                  textArea.setText("");
+
+                  for (int i = 0; i < 512; i++) {
+                    final int address = 0x800 * i;
+                    final byte[] data = HoTTTransmitter.memoryDump(address);
+                    final String text = Util.dumpData(data, address);
+                    textArea.append(text);
+                    textArea.setCaretPosition(textArea.getText().length());
+                  }
+                } finally {
+                  HoTTTransmitter.closeConnection();
+                  dumpButton.setEnabled(true);
+                  saveButton.setEnabled(true);
+                }
+              } catch (final IOException e) {
+                throw new RuntimeException(e);
+              }
+            }
+          }).start();
+        }
+      }
+    });
+
+    saveButton.setEnabled(false);
+    saveButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(final ActionEvent evt) {
+        final String extension = "txt";
+        final String description = "Text Files";
+        final JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setMultiSelectionEnabled(false);
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.setFileFilter(new FileNameExtensionFilter(description, extension));
+
+        final int result = fc.showSaveDialog(frame);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+          File file = fc.getSelectedFile();
+          if (!file.getName().endsWith(".txt")) {
+            file = new File(file.getAbsoluteFile() + ".txt");
+          }
+
+          FileWriter writer;
+          try {
+            writer = new FileWriter(file);
+            writer.write(textArea.getText());
+            writer.close();
+          } catch (final IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+      }
+    });
+
+    panel.add(new JLabel("Serial Port:"));
+    panel.add(comboBox);
+    panel.add(dumpButton);
+    panel.add(saveButton);
+
+    textArea.setEditable(false);
+    textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+
+    frame.setLayout(new BorderLayout());
+    frame.add(panel, BorderLayout.NORTH);
+    frame.add(scrollPane, BorderLayout.CENTER);
+    frame.pack();
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setVisible(true);
+    frame.setSize(800, 600);
   }
 }
