@@ -3,8 +3,8 @@ ANDROID_SDK=${HOME}/android-sdk-linux
 
 # Clone repositories
 git clone https://code.google.com/p/hott-transmitter-config/
-git clone https://code.google.com/p/hott-transmitter-config.freemarker/ freemarker --branch 2.3-android
 git clone https://git.assembla.com/hottdecoder.git/
+git clone https://code.google.com/p/hott-transmitter-config.freemarker/ freemarker --branch 2.3-android
 
 # Build and install Freemarker into local Maven repository
 cd freemarker
