@@ -39,7 +39,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-
 /**
  * @author oli@treichels.de
  */
@@ -49,8 +48,8 @@ public class MemoryDump {
 
   public static void main(final String[] args) throws IOException {
     final JComboBox<String> comboBox = new JComboBox<String>();
-    final JButton dumpButton = new JButton("dump");
-    final JButton saveButton = new JButton("save");
+    final JButton dumpButton = new JButton("Dump");
+    final JButton saveButton = new JButton("Save");
     final JPanel panel = new JPanel();
     final JTextArea textArea = new JTextArea();
     final JScrollPane scrollPane = new JScrollPane(textArea);
