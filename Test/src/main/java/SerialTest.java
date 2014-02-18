@@ -1,3 +1,4 @@
+import gde.model.serial.ModelInfo;
 import gde.model.serial.SerialPortDefaultImpl;
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
@@ -9,7 +10,6 @@ import java.util.List;
 import de.treichels.hott.HoTTTransmitter;
 import de.treichels.hott.internal.BaseCommand;
 import de.treichels.hott.internal.HoTTSerialPort;
-import de.treichels.hott.internal.ReadTransmitterMemory;
 
 public class SerialTest {
   public static void main(final String[] args) throws NoSuchPortException, UnsupportedCommOperationException, IOException, PortInUseException,
@@ -43,7 +43,21 @@ public class SerialTest {
       // test(new ReadTransmitterMemory(0x202c, 20 + 20 * 9));
 
       // mc-32
-      test(new ReadTransmitterMemory(0x200d, 80 + 80 * 13));
+      // test(new ReadTransmitterMemory(0x200d, 80 + 80 * 13));
+
+      final ModelInfo[] modelInfos = HoTTTransmitter.getAllModelInfos();
+      for (final ModelInfo info : modelInfos) {
+        System.out.printf("%d: %s (%s)\n", info.getModelNumber(), info.getModelName(), info.getModelType());
+
+        final byte[] data1 = HoTTTransmitter.getModelData(info);
+        final byte[] data2 = HoTTTransmitter.getModelData(info.getModelNumber());
+
+        for (int i = 0; i < data1.length; i++) {
+          if (data1[i] != data2[i]) {
+            System.out.printf("mismatch at 0x%04x: %d <> %d\n", i, data1[i], data2[i]);
+          }
+        }
+      }
     } finally {
       HoTTTransmitter.closeConnection();
     }
