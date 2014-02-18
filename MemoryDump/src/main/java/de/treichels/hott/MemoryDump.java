@@ -65,7 +65,7 @@ public class MemoryDump {
 
           while (rc != ResponseCode.ACK && dumpThread != null) {
             try {
-              rc = HoTTTransmitter.memoryDump(address, data);
+              rc = HoTTTransmitter.readMemoryBlock(address, data);
             } catch (final IOException e) {
               rc = ResponseCode.ERROR;
             }
