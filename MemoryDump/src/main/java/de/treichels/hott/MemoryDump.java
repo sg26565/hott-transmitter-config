@@ -17,6 +17,7 @@
  */
 package de.treichels.hott;
 
+import gde.model.serial.ResponseCode;
 import gde.model.serial.SerialPortDefaultImpl;
 import gde.util.Util;
 import gnu.io.RXTXCommDriver;
@@ -43,91 +44,152 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author oli@treichels.de
  */
 public class MemoryDump {
+  private final class DumpThread extends Thread {
+    @Override
+    public void run() {
+      try {
+        dumpButton.setText("Abort Dump");
+        saveButton.setEnabled(false);
+
+        textArea.setText("");
+        messageArea.setText("Starting dump ... (.=OK B=Transmitter Busy C=CRC Error E=I/O Error N=Not Acknowledged)");
+
+        final byte[] data = new byte[0x800];
+
+        for (int i = 0; dumpThread != null && i < 512; i++) {
+          ResponseCode rc = ResponseCode.NACK;
+          final int address = 0x800 * i;
+          if (i % 128 == 0) {
+            messageArea.append("\n");
+          }
+
+          while (rc != ResponseCode.ACK && dumpThread != null) {
+            try {
+              rc = HoTTTransmitter.memoryDump(address, data);
+            } catch (final IOException e) {
+              rc = ResponseCode.ERROR;
+            }
+
+            switch (rc) {
+            case ACK:
+              final String text = Util.dumpData(data, address);
+              textArea.append(text);
+              textArea.setCaretPosition(textArea.getText().length());
+              messageArea.append(".");
+              continue;
+
+            case BUSY:
+              messageArea.append("B");
+              break;
+
+            case CRC_ERROR:
+              messageArea.append("C");
+              break;
+
+            case ERROR:
+              messageArea.append("E");
+              break;
+
+            case NACK:
+              messageArea.append("N");
+              break;
+            }
+
+            Thread.sleep(500);
+          }
+        }
+      } catch (final InterruptedException e) {
+        throw new RuntimeException(e);
+      } finally {
+        try {
+          HoTTTransmitter.closeConnection();
+        } catch (final IOException e) {
+          throw new RuntimeException(e);
+        }
+
+        dumpButton.setText("Start Dump");
+        saveButton.setEnabled(true);
+
+        messageArea.append("\ndone.");
+      }
+    }
+  }
+
+  private final class SaveButtonActionListener implements ActionListener {
+    @Override
+    public void actionPerformed(final ActionEvent evt) {
+      final String extension = "txt";
+      final String description = "Text Files";
+      final JFileChooser fc = new JFileChooser();
+      fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+      fc.setMultiSelectionEnabled(false);
+      fc.setAcceptAllFileFilterUsed(false);
+      fc.setFileFilter(new FileNameExtensionFilter(description, extension));
+
+      final int result = fc.showSaveDialog(frame);
+
+      if (result == JFileChooser.APPROVE_OPTION) {
+        File file = fc.getSelectedFile();
+        if (!file.getName().endsWith(".txt")) {
+          file = new File(file.getAbsoluteFile() + ".txt");
+        }
+
+        FileWriter writer;
+        try {
+          writer = new FileWriter(file);
+          writer.write(textArea.getText());
+          writer.close();
+        } catch (final IOException e) {
+          throw new RuntimeException(e);
+        }
+      }
+    }
+  }
+
+  private final class StartButtonActionListener implements ActionListener {
+    @Override
+    public void actionPerformed(final ActionEvent arg0) {
+      final String port = (String) comboBox.getSelectedItem();
+
+      if (dumpThread == null) {
+        if (port != null && port.length() > 0) {
+          HoTTTransmitter.setSerialPortImpl(new SerialPortDefaultImpl(port));
+          dumpThread = new DumpThread();
+          dumpThread.start();
+        }
+      } else {
+        dumpThread = null;
+      }
+
+    }
+  }
+
   @SuppressWarnings("unused")
   private static RXTXCommDriver driver;
 
-  public static void main(final String[] args) throws IOException {
-    final JComboBox<String> comboBox = new JComboBox<String>();
-    final JButton dumpButton = new JButton("Dump");
-    final JButton saveButton = new JButton("Save");
-    final JPanel panel = new JPanel();
-    final JTextArea textArea = new JTextArea();
-    final JScrollPane scrollPane = new JScrollPane(textArea);
-    final JFrame frame = new JFrame("HoTT Transmitter Memory Dump");
+  public static void main(final String[] args) {
+    new MemoryDump().showDialog();
+  }
 
+  private final JComboBox<String> comboBox          = new JComboBox<String>();
+  private final JButton           dumpButton        = new JButton("Start Dump");
+  private final JButton           saveButton        = new JButton("Save");
+  private final JPanel            panel             = new JPanel();
+  private final JTextArea         textArea          = new JTextArea();
+  private final JScrollPane       textScrollPane    = new JScrollPane(textArea);
+  private final JTextArea         messageArea       = new JTextArea();
+  private final JScrollPane       messageScrollPane = new JScrollPane(messageArea);
+  private final JFrame            frame             = new JFrame("HoTT Transmitter Memory Dump");
+  private DumpThread              dumpThread        = null;
+
+  private void showDialog() {
     for (final String s : SerialPortDefaultImpl.getAvailablePorts()) {
       comboBox.addItem(s);
     }
 
-    dumpButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(final ActionEvent arg0) {
-        final String port = (String) comboBox.getSelectedItem();
-
-        if (port != null && port.length() > 0) {
-          dumpButton.setEnabled(false);
-          saveButton.setEnabled(false);
-          HoTTTransmitter.setSerialPortImpl(new SerialPortDefaultImpl(port));
-
-          new Thread(new Runnable() {
-            @Override
-            public void run() {
-              try {
-                try {
-                  textArea.setText("");
-
-                  for (int i = 0; i < 512; i++) {
-                    final int address = 0x800 * i;
-                    final byte[] data = HoTTTransmitter.memoryDump(address);
-                    final String text = Util.dumpData(data, address);
-                    textArea.append(text);
-                    textArea.setCaretPosition(textArea.getText().length());
-                  }
-                } finally {
-                  HoTTTransmitter.closeConnection();
-                  dumpButton.setEnabled(true);
-                  saveButton.setEnabled(true);
-                }
-              } catch (final IOException e) {
-                throw new RuntimeException(e);
-              }
-            }
-          }).start();
-        }
-      }
-    });
-
+    dumpButton.addActionListener(new StartButtonActionListener());
+    saveButton.addActionListener(new SaveButtonActionListener());
     saveButton.setEnabled(false);
-    saveButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(final ActionEvent evt) {
-        final String extension = "txt";
-        final String description = "Text Files";
-        final JFileChooser fc = new JFileChooser();
-        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fc.setMultiSelectionEnabled(false);
-        fc.setAcceptAllFileFilterUsed(false);
-        fc.setFileFilter(new FileNameExtensionFilter(description, extension));
-
-        final int result = fc.showSaveDialog(frame);
-
-        if (result == JFileChooser.APPROVE_OPTION) {
-          File file = fc.getSelectedFile();
-          if (!file.getName().endsWith(".txt")) {
-            file = new File(file.getAbsoluteFile() + ".txt");
-          }
-
-          FileWriter writer;
-          try {
-            writer = new FileWriter(file);
-            writer.write(textArea.getText());
-            writer.close();
-          } catch (final IOException e) {
-            throw new RuntimeException(e);
-          }
-        }
-      }
-    });
 
     panel.add(new JLabel("Serial Port:"));
     panel.add(comboBox);
@@ -137,9 +199,14 @@ public class MemoryDump {
     textArea.setEditable(false);
     textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
+    messageArea.setEditable(false);
+    messageArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 10));
+    messageArea.setRows(6);
+
     frame.setLayout(new BorderLayout());
     frame.add(panel, BorderLayout.NORTH);
-    frame.add(scrollPane, BorderLayout.CENTER);
+    frame.add(messageScrollPane, BorderLayout.SOUTH);
+    frame.add(textScrollPane, BorderLayout.CENTER);
     frame.pack();
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
