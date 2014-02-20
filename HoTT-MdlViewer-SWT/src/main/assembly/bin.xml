@@ -8,7 +8,7 @@
 	</formats>
 	<files>
 		<file>
-			<source>${project.build.directory}/${project.build.finalName}.jar</source>
+			<source>${project.build.directory}/${project.build.finalName}-shared.jar</source>
 			<outputDirectory>/</outputDirectory>
 			<destName>HoTT-MdlViewer-SWT.jar</destName>
 		</file>

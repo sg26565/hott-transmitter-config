@@ -20,8 +20,11 @@ package gde.report.html;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -64,6 +67,45 @@ public class HTMLReport {
       CURVE_IMAGE_GENERATOR = loader.iterator().next();
     } else {
       CURVE_IMAGE_GENERATOR = new DummyCurveImageGenerator();
+    }
+
+    // extract font file
+    final File file = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf");
+    if (!(file.exists() && file.isFile() && file.canRead())) {
+      InputStream is = null;
+      OutputStream os = null;
+
+      try {
+        is = ClassLoader.getSystemResourceAsStream("Arial.ttf");
+        os = new FileOutputStream(file);
+
+        final byte[] buffer = new byte[1024];
+        while (true) {
+          final int len = is.read(buffer);
+          if (len == -1) {
+            break;
+          }
+          os.write(buffer, 0, len);
+        }
+      } catch (final IOException e) {
+        throw new RuntimeException(e);
+      } finally {
+        if (is != null) {
+          try {
+            is.close();
+          } catch (final IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+
+        if (os != null) {
+          try {
+            os.close();
+          } catch (final IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+      }
     }
   }
 
