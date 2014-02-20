@@ -1,7 +1,7 @@
-package gde.mdl.ui.swt;
+package gde.mdl.ui;
 
-import gde.mdl.ui.swt.composites.BaseConfiguration;
-import gde.mdl.ui.swt.composites.DualExpoConfiguration;
+import gde.mdl.ui.composites.BaseConfiguration;
+import gde.mdl.ui.composites.DualExpoConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;

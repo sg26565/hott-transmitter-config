@@ -16,7 +16,7 @@
     
     Copyright (c) 2013 Winfried Bruegmann
  **************************************************************************************/
-package gde.mdl.ui.swt;
+package gde.mdl.ui;
 
 import gde.report.html.HTMLReport;
 

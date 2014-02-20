@@ -1,4 +1,4 @@
-package gde.mdl.ui.swt;
+package gde.mdl.ui;
 
 import java.util.logging.Logger;
 

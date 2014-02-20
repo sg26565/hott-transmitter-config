@@ -1,4 +1,4 @@
-package gde.mdl.ui.swt.composites;
+package gde.mdl.ui.composites;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;

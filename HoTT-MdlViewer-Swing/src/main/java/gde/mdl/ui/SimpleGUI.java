@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package gde.mdl.ui.swing;
+package gde.mdl.ui;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
