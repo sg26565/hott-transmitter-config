@@ -20,6 +20,7 @@ package gde.model.serial;
 import gde.model.enums.TransmitterType;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * @author oli@treichels.de
@@ -32,45 +33,58 @@ public final class TxInfo implements Serializable {
   private final int             appVersion;
   private final int             memoryVersion;
   private final int             year;
-  private final String          name;
-  private final String          vendor;
+  private final String          transmitterName;
+  private final String          vendorName;
+  private final String          ownerName;
+  private final String[]        customPhaseNames;
 
   /**
    * @param transmitterType
    * @param appVersion
    * @param memoryVersion
    * @param year
-   * @param name
-   * @param vendor
+   * @param transmitterName
+   * @param vendorName
    */
-  public TxInfo(final TransmitterType transmitterType, final int appVersion, final int memoryVersion, final int year, final String name, final String vendor) {
+  public TxInfo(final TransmitterType transmitterType, final int appVersion, final int memoryVersion, final int year, final String transmitterName,
+      final String vendorName, final String ownerName, final String[] customPhaseNames) {
     super();
     this.transmitterType = transmitterType;
     this.appVersion = appVersion;
     this.memoryVersion = memoryVersion;
     this.year = year;
-    this.name = name;
-    this.vendor = vendor;
+    this.transmitterName = transmitterName;
+    this.vendorName = vendorName;
+    this.ownerName = ownerName;
+    this.customPhaseNames = customPhaseNames;
   }
 
   public int getAppVersion() {
     return appVersion;
   }
 
+  public String[] getCustomPhaseNames() {
+    return customPhaseNames;
+  }
+
   public int getMemoryVersion() {
     return memoryVersion;
   }
 
-  public String getName() {
-    return name;
+  public String getOwnerName() {
+    return ownerName;
+  }
+
+  public String getTransmitterName() {
+    return transmitterName;
   }
 
   public TransmitterType getTransmitterType() {
     return transmitterType;
   }
 
-  public String getVendor() {
-    return vendor;
+  public String getVendorName() {
+    return vendorName;
   }
 
   public int getYear() {
@@ -79,7 +93,8 @@ public final class TxInfo implements Serializable {
 
   @Override
   public String toString() {
-    return String.format("TxInfo [transmitterType=%s, appVersion=%s, memoryVersion=%s, year=%s, name=%s, vendor=%s]", transmitterType, appVersion,
-        memoryVersion, year, name, vendor);
+    return String.format(
+        "TxInfo [transmitterType=%s, appVersion=%s, memoryVersion=%s, year=%s, transmitterName=%s, vendorName=%s, ownerName=%s, customPhaseNames=%s]",
+        transmitterType, appVersion, memoryVersion, year, transmitterName, vendorName, ownerName, Arrays.toString(customPhaseNames));
   }
 }
