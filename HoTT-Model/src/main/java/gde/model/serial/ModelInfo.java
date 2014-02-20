@@ -18,6 +18,7 @@
 package gde.model.serial;
 
 import gde.model.enums.ModelType;
+import gde.model.enums.ReceiverType;
 import gde.model.enums.TransmitterType;
 
 import java.io.Serializable;
@@ -34,17 +35,25 @@ public class ModelInfo implements Serializable {
   private final String          modelInfo;
   private final ModelType       modelType;
   private final TransmitterType transmitterType;
+  private final ReceiverType    receiverType;
+  private final int             usedHours;
+  private final int             usedMinutes;
 
-  public ModelInfo(final int modelNumber, final String modelName, final ModelType modelType, final TransmitterType transmitterType) {
-    this(modelNumber, modelName, null, modelType, transmitterType);
+  public ModelInfo(final int modelNumber, final String modelName, final ModelType modelType, final TransmitterType transmitterType,
+      final ReceiverType receiverType) {
+    this(modelNumber, modelName, null, modelType, transmitterType, receiverType, 0, 0);
   }
 
-  public ModelInfo(final int modelNumber, final String modelName, final String modelInfo, final ModelType modelType, final TransmitterType transmitterType) {
+  public ModelInfo(final int modelNumber, final String modelName, final String modelInfo, final ModelType modelType, final TransmitterType transmitterType,
+      final ReceiverType receiverType, final int usedHours, final int usedMinutes) {
     this.modelNumber = modelNumber;
     this.modelName = modelName;
     this.modelInfo = modelInfo;
     this.modelType = modelType;
     this.transmitterType = transmitterType;
+    this.receiverType = receiverType;
+    this.usedHours = usedHours;
+    this.usedMinutes = usedMinutes;
   }
 
   public String getModelInfo() {
@@ -63,7 +72,26 @@ public class ModelInfo implements Serializable {
     return modelType;
   }
 
+  public ReceiverType getReceiverType() {
+    return receiverType;
+  }
+
   public TransmitterType getTransmitterType() {
     return transmitterType;
+  }
+
+  public int getUsedHours() {
+    return usedHours;
+  }
+
+  public int getUsedMinutes() {
+    return usedMinutes;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+        "ModelInfo [modelNumber=%s, modelName=%s, modelInfo=%s, modelType=%s, transmitterType=%s, receiverType=%s, usedHours=%s, usedMinutes=%s]", modelNumber,
+        modelName, modelInfo, modelType, transmitterType, receiverType, usedHours, usedMinutes);
   }
 }

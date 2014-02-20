@@ -76,4 +76,10 @@ public final class TxInfo implements Serializable {
   public int getYear() {
     return year;
   }
+
+  @Override
+  public String toString() {
+    return String.format("TxInfo [transmitterType=%s, appVersion=%s, memoryVersion=%s, year=%s, name=%s, vendor=%s]", transmitterType, appVersion,
+        memoryVersion, year, name, vendor);
+  }
 }

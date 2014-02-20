@@ -20,6 +20,7 @@ package gde.model;
 import gde.model.enums.DSCOutputType;
 import gde.model.enums.ExtPPMType;
 import gde.model.enums.ModelType;
+import gde.model.enums.ReceiverType;
 import gde.model.enums.StickMode;
 import gde.model.enums.TransmitterType;
 import gde.model.enums.Vendor;
@@ -62,6 +63,7 @@ public class BaseModel extends AbstractBase {
   private Phase[]           phase;
   private PhaseAssignment   phaseAssignment;
   private Receiver[]        receiver;
+  private ReceiverType      reveiverType;
   private RingLimiter[]     ringLimiter;
   private StickMode         stickMode;
   private StickTrim[]       stickTrim;
@@ -356,6 +358,10 @@ public class BaseModel extends AbstractBase {
     return receiver;
   }
 
+  public ReceiverType getReveiverType() {
+    return reveiverType;
+  }
+
   @XmlElementWrapper(name = "ringLimiters")
   public RingLimiter[] getRingLimiter() {
     return ringLimiter;
@@ -573,6 +579,10 @@ public class BaseModel extends AbstractBase {
 
   public void setReceiver(final Receiver[] receivers) {
     receiver = receivers;
+  }
+
+  public void setReveiverType(final ReceiverType reveiverType) {
+    this.reveiverType = reveiverType;
   }
 
   public void setRingLimiter(final RingLimiter[] ringLimiter) {
