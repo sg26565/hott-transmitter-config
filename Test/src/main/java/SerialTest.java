@@ -1,24 +1,27 @@
+import gde.model.enums.ModelType;
 import gde.model.serial.ModelInfo;
+import gde.model.serial.SerialPort;
 import gde.model.serial.SerialPortDefaultImpl;
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.UnsupportedCommOperationException;
 
 import java.io.IOException;
 import java.util.List;
 
-import de.treichels.hott.HoTTTransmitter;
+import de.treichels.hott.HoTTSerialPort;
 import de.treichels.hott.internal.BaseCommand;
-import de.treichels.hott.internal.HoTTSerialPort;
 
 public class SerialTest {
-  public static void main(final String[] args) throws NoSuchPortException, UnsupportedCommOperationException, IOException, PortInUseException,
-      InterruptedException {
+  private static SerialPort     portImpl;
+  private static HoTTSerialPort port;
+
+  public static void main(final String[] args) throws Exception {
     final List<String> ports = SerialPortDefaultImpl.getAvailablePorts();
     System.out.println(ports);
 
+    portImpl = new SerialPortDefaultImpl(ports.get(0));
+    port = new HoTTSerialPort(portImpl);
+
     try {
-      HoTTTransmitter.setSerialPortImpl(new SerialPortDefaultImpl(ports.get(0)));
+      port.open();
 
       // test(new FastModeStop());
       // test(new ClearScreen());
@@ -45,26 +48,31 @@ public class SerialTest {
       // mc-32
       // test(new ReadTransmitterMemory(0x200d, 80 + 80 * 13));
 
-      final ModelInfo[] modelInfos = HoTTTransmitter.getAllModelInfos();
+      final ModelInfo[] modelInfos = port.getAllModelInfos();
       for (final ModelInfo info : modelInfos) {
+        if (info.getModelType() == ModelType.Unknown) {
+          continue;
+        }
+
         System.out.printf("%d: %s (%s)\n", info.getModelNumber(), info.getModelName(), info.getModelType());
 
-        final byte[] data1 = HoTTTransmitter.getModelData(info);
-        final byte[] data2 = HoTTTransmitter.getModelData(info.getModelNumber());
+        final byte[] data1 = port.getModelData(info);
+        final byte[] data2 = port.getModelData(info.getModelNumber());
 
         for (int i = 0; i < data1.length; i++) {
           if (data1[i] != data2[i]) {
-            System.out.printf("mismatch at 0x%04x: %d <> %d\n", i, data1[i], data2[i]);
+            System.out.printf("mismatch at 0x%04x: 0x%02x <> 0x%02x\n", i, data1[i], data2[i]);
           }
         }
       }
     } finally {
-      HoTTTransmitter.closeConnection();
+      port.close();
     }
   }
 
+  @SuppressWarnings("unused")
   private static void test(final BaseCommand cmd) throws IOException {
     System.out.println(cmd);
-    System.out.println(HoTTSerialPort.getInstance().doCommand(cmd));
+    System.out.println(port.doCommand(cmd));
   }
 }
