@@ -22,9 +22,5 @@
 				<include>*.cmd</include>
 			</includes>
 		</fileSet>
-		<fileSet>
-			<directory>${project.basedir}/fonts</directory>
-			<outputDirectory>fonts</outputDirectory>
-		</fileSet>
 	</fileSets>
 </assembly>

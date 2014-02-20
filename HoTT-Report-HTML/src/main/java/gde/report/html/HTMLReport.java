@@ -97,6 +97,7 @@ public class HTMLReport {
       rootMap.put("png", HTMLReport.CURVE_IMAGE_GENERATOR);
       rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective());
       rootMap.put("programDir", new File(System.getProperty("program.dir", ".")).toURI().toURL().toString());
+      rootMap.put("tmpdir", System.getProperty("java.io.tmpdir"));
       rootMap.put("version", System.getProperty("program.version", "unknown"));
       if (model instanceof WingedModel) {
         rootMap.put("wingedModel", model);

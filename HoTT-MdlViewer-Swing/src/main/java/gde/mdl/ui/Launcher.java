@@ -18,7 +18,10 @@
 package gde.mdl.ui;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -40,6 +43,34 @@ public class Launcher {
   public static final String MDL_DIR         = "mdl.dir";
   public static final String PROGRAM_DIR     = "program.dir";
   public static final String PROGRAM_VERSION = "program.version";
+
+  public static void extractFont() throws IOException {
+    final File file = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf");
+    InputStream is = null;
+    OutputStream os = null;
+
+    try {
+      is = ClassLoader.getSystemResourceAsStream("Arial.ttf");
+      os = new FileOutputStream(file);
+
+      final byte[] buffer = new byte[1024];
+      while (true) {
+        final int len = is.read(buffer);
+        if (len == -1) {
+          break;
+        }
+        os.write(buffer, 0, len);
+      }
+    } finally {
+      if (is != null) {
+        is.close();
+      }
+
+      if (os != null) {
+        os.close();
+      }
+    }
+  }
 
   /**
    * Initialize logfile.
@@ -130,6 +161,7 @@ public class Launcher {
   public static void main(final String[] args) throws Exception {
     initSystemProperties();
     initLogging();
+    extractFont();
     startSwingApplication();
   }
 

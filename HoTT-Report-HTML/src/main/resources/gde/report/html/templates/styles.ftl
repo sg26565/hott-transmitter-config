@@ -78,7 +78,7 @@
 
 <style type="text/css" media="all">
 	@font-face {
-		src: url('${programDir}/fonts/Arial.ttf');
+		src: url('${tmpdir}/Arial.ttf');
 		-fs-pdf-font-embed: embed;
 		-fs-pdf-font-encoding: Identity-H;
 	}
