@@ -31,19 +31,24 @@ public class ModelInfo implements Serializable {
 
   private final int             modelNumber;
   private final String          modelName;
+  private final String          modelInfo;
   private final ModelType       modelType;
   private final TransmitterType transmitterType;
 
-  /**
-   * @param modelNumber
-   * @param modelName
-   * @param modelType
-   */
   public ModelInfo(final int modelNumber, final String modelName, final ModelType modelType, final TransmitterType transmitterType) {
+    this(modelNumber, modelName, null, modelType, transmitterType);
+  }
+
+  public ModelInfo(final int modelNumber, final String modelName, final String modelInfo, final ModelType modelType, final TransmitterType transmitterType) {
     this.modelNumber = modelNumber;
     this.modelName = modelName;
+    this.modelInfo = modelInfo;
     this.modelType = modelType;
     this.transmitterType = transmitterType;
+  }
+
+  public String getModelInfo() {
+    return modelInfo;
   }
 
   public String getModelName() {

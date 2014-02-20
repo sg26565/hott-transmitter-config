@@ -18,6 +18,7 @@
 package de.treichels.hott;
 
 import gde.model.serial.ResponseCode;
+import gde.model.serial.SerialPort;
 import gde.model.serial.SerialPortDefaultImpl;
 import gde.util.Util;
 import gnu.io.RXTXCommDriver;
@@ -48,69 +49,82 @@ public class MemoryDump {
     @Override
     public void run() {
       try {
+        HoTTSerialPort port = null;
+
+        final String portName = (String) comboBox.getSelectedItem();
+        if (portName == null || portName.length() == 0) {
+          return;
+        }
+
+        final SerialPort portImpl = new SerialPortDefaultImpl(portName);
+        port = new HoTTSerialPort(portImpl);
+
         dumpButton.setText("Abort Dump");
         saveButton.setEnabled(false);
 
         textArea.setText("");
         messageArea.setText("Starting dump ... (.=OK B=Transmitter Busy C=CRC Error E=I/O Error N=Not Acknowledged)");
 
-        final byte[] data = new byte[0x800];
+        try {
+          port.open();
+          final byte[] data = new byte[0x800];
 
-        for (int i = 0; dumpThread != null && i < 512; i++) {
-          ResponseCode rc = ResponseCode.NACK;
-          final int address = 0x800 * i;
-          if (i % 128 == 0) {
-            messageArea.append("\n");
-          }
-
-          while (rc != ResponseCode.ACK && dumpThread != null) {
-            try {
-              rc = HoTTTransmitter.readMemoryBlock(address, data);
-            } catch (final IOException e) {
-              rc = ResponseCode.ERROR;
+          for (int i = 0; dumpThread != null && i < 512; i++) {
+            ResponseCode rc = ResponseCode.NACK;
+            final int address = 0x800 * i;
+            if (i % 128 == 0) {
+              messageArea.append("\n");
             }
 
-            switch (rc) {
-            case ACK:
-              final String text = Util.dumpData(data, address);
-              textArea.append(text);
-              textArea.setCaretPosition(textArea.getText().length());
-              messageArea.append(".");
-              continue;
+            while (rc != ResponseCode.ACK && dumpThread != null) {
+              try {
+                rc = port.readMemoryBlock(address, data);
+              } catch (final IOException e) {
+                rc = ResponseCode.ERROR;
+              }
 
-            case BUSY:
-              messageArea.append("B");
-              break;
+              switch (rc) {
+              case ACK:
+                final String text = Util.dumpData(data, address);
+                textArea.append(text);
+                textArea.setCaretPosition(textArea.getText().length());
+                messageArea.append(".");
+                continue;
 
-            case CRC_ERROR:
-              messageArea.append("C");
-              break;
+              case BUSY:
+                messageArea.append("B");
+                break;
 
-            case ERROR:
-              messageArea.append("E");
-              break;
+              case CRC_ERROR:
+                messageArea.append("C");
+                break;
 
-            case NACK:
-              messageArea.append("N");
-              break;
+              case ERROR:
+                messageArea.append("E");
+                break;
+
+              case NACK:
+                messageArea.append("N");
+                break;
+              }
+
+              Thread.sleep(500);
             }
-
-            Thread.sleep(500);
           }
+        } finally {
+          if (port != null) {
+            port.close();
+          }
+
+          dumpButton.setText("Start Dump");
+          saveButton.setEnabled(true);
+
+          messageArea.append("\ndone.");
         }
       } catch (final InterruptedException e) {
         throw new RuntimeException(e);
-      } finally {
-        try {
-          HoTTTransmitter.closeConnection();
-        } catch (final IOException e) {
-          throw new RuntimeException(e);
-        }
-
-        dumpButton.setText("Start Dump");
-        saveButton.setEnabled(true);
-
-        messageArea.append("\ndone.");
+      } catch (final IOException e) {
+        throw new RuntimeException(e);
       }
     }
   }
@@ -149,18 +163,12 @@ public class MemoryDump {
   private final class StartButtonActionListener implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent arg0) {
-      final String port = (String) comboBox.getSelectedItem();
-
       if (dumpThread == null) {
-        if (port != null && port.length() > 0) {
-          HoTTTransmitter.setSerialPortImpl(new SerialPortDefaultImpl(port));
-          dumpThread = new DumpThread();
-          dumpThread.start();
-        }
+        dumpThread = new DumpThread();
+        dumpThread.start();
       } else {
         dumpThread = null;
       }
-
     }
   }
 

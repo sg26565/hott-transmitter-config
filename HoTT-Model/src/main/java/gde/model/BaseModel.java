@@ -52,6 +52,7 @@ public class BaseModel extends AbstractBase {
   private FreeMixer[]       freeMixer;
   private LogicalSwitch[]   logicalSwitch;
   private int               memoryVersion;
+  private String            modelInfo;
   private String            modelName;
   private int               modelNumber;
   private ModelType         modelType;
@@ -149,6 +150,13 @@ public class BaseModel extends AbstractBase {
       return false;
     }
     if (memoryVersion != other.memoryVersion) {
+      return false;
+    }
+    if (modelInfo == null) {
+      if (other.modelInfo != null) {
+        return false;
+      }
+    } else if (!modelInfo.equals(other.modelInfo)) {
       return false;
     }
     if (modelName == null) {
@@ -305,6 +313,10 @@ public class BaseModel extends AbstractBase {
     return memoryVersion;
   }
 
+  public String getModelInfo() {
+    return modelInfo;
+  }
+
   public String getModelName() {
     return modelName;
   }
@@ -420,6 +432,7 @@ public class BaseModel extends AbstractBase {
     result = prime * result + Arrays.hashCode(freeMixer);
     result = prime * result + Arrays.hashCode(logicalSwitch);
     result = prime * result + memoryVersion;
+    result = prime * result + (modelInfo == null ? 0 : modelInfo.hashCode());
     result = prime * result + (modelName == null ? 0 : modelName.hashCode());
     result = prime * result + modelNumber;
     result = prime * result + (modelType == null ? 0 : modelType.hashCode());
@@ -520,6 +533,10 @@ public class BaseModel extends AbstractBase {
 
   public void setMemoryVersion(final int memoryVersion) {
     this.memoryVersion = memoryVersion;
+  }
+
+  public void setModelInfo(final String modelInfo) {
+    this.modelInfo = modelInfo;
   }
 
   public void setModelName(final String modelName) {
