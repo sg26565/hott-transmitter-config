@@ -17,17 +17,20 @@
  */
 package gde.model.serial;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author oli@treichels.de
  */
-public class FileInfo {
-  private final String   name;
-  private final String   shortName;
-  private final int      size;
-  private final Date     modifyDate;
-  private final FileType type;
+public class FileInfo implements Serializable, Comparable<String> {
+  private static final long serialVersionUID = 1L;
+
+  private final String      name;
+  private final String      shortName;
+  private final int         size;
+  private final Date        modifyDate;
+  private final FileType    type;
 
   /**
    * @param name
@@ -42,6 +45,33 @@ public class FileInfo {
     this.size = size;
     this.modifyDate = modifyDate;
     this.type = type;
+  }
+
+  @Override
+  public int compareTo(final String other) {
+    return getName().compareTo(other);
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final FileInfo other = (FileInfo) obj;
+    if (name == null) {
+      if (other.name != null) {
+        return false;
+      }
+    } else if (!name.equals(other.name)) {
+      return false;
+    }
+    return true;
   }
 
   public Date getModifyDate() {
@@ -62,6 +92,14 @@ public class FileInfo {
 
   public FileType getType() {
     return type;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (name == null ? 0 : name.hashCode());
+    return result;
   }
 
   @Override
