@@ -1,4 +1,4 @@
-import gde.model.serial.FileInfo;
+import gde.model.serial.FileMode;
 import gde.model.serial.FileType;
 import gde.model.serial.SerialPort;
 import gde.model.serial.SerialPortDefaultImpl;
@@ -13,6 +13,9 @@ import de.treichels.hott.internal.ChangeDir;
 import de.treichels.hott.internal.GetFileInfo;
 import de.treichels.hott.internal.ListDir;
 import de.treichels.hott.internal.ListDir.Response;
+import de.treichels.hott.internal.ReadFile;
+import de.treichels.hott.internal.StartFileXfer;
+import de.treichels.hott.internal.StopFileXfer;
 
 public class SerialTest {
   private static SerialPort     portImpl;
@@ -120,7 +123,7 @@ public class SerialTest {
     // reader.readLine();
     // }
 
-    // test(new PreparteFileTransfer());
+    // test(new PrepareFileTransfer());
     // test(new SelectSDCard());
 
     // test(new ChangeDir("/"));
@@ -166,12 +169,34 @@ public class SerialTest {
     // test(new ChangeDir("/Models/mc-32"));
     // test(new ListDir());
     // test(new GetFileInfo("/Models/mc-32"));
-    System.out.println(port.getFileInfo("/Models/mc-32/aMerlin.mdl"));
-    System.out.println(port.getFileInfo("/Models"));
-    System.out.println(port.listDir("/Models"));
-    for (final FileInfo fileInfo : port.listDir("/Models/mc-32")) {
-      System.out.println(fileInfo);
-    }
+    // System.out.println(port.getFileInfo("/Models/mc-32/aMerlin.mdl"));
+    // for (final FileInfo fileInfo : port.listDir("/Models/mx-16")) {
+    // System.out.println(fileInfo);
+    // }
+
+    // test(new DeleteFile("/Models/mx-16/ht3.mdl"));
+
+    // test(new MakeDir("/test"));
+    // test(new MakeDir("/test/a"));
+    // test(new MakeDir("/test/a/b"));
+    //
+    // list("/");
+
+    // test(new DeleteFile("/test/a/b"));
+    // test(new DeleteFile("/test/a"));
+    // test(new DeleteFile("/test"));
+    //
+    // list("/Models");
+
+    System.out.println(port.getFileInfo("/Models/mx-16/aMERLIN.mdl"));
+    // test(new SelectSDCard());
+    // test(new PrepareFileTransfer());
+    test(new StartFileXfer("/Models/mx-16/aMERLIN.mdl", FileMode.Read));
+    test(new ReadFile(0x800));
+    test(new ReadFile(0x800));
+    test(new ReadFile(0x800));
+    test(new ReadFile(0x800));
+    test(new StopFileXfer());
   }
 
   private static void test(final BaseCommand cmd) throws IOException {
