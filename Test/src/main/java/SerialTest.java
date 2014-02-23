@@ -1,18 +1,52 @@
+import gde.model.serial.FileInfo;
+import gde.model.serial.FileType;
 import gde.model.serial.SerialPort;
 import gde.model.serial.SerialPortDefaultImpl;
-import gde.model.serial.TxInfo;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.treichels.hott.HoTTSerialPort;
 import de.treichels.hott.internal.BaseCommand;
+import de.treichels.hott.internal.ChangeDir;
+import de.treichels.hott.internal.GetFileInfo;
+import de.treichels.hott.internal.ListDir;
+import de.treichels.hott.internal.ListDir.Response;
 
 public class SerialTest {
   private static SerialPort     portImpl;
   private static HoTTSerialPort port;
+
+  private static void list(final String path) throws IOException {
+    port.doCommand(new ChangeDir(path));
+
+    final List<String> subdirs = new ArrayList<String>();
+    System.out.printf("\nContents of %s:\n", path);
+    while (true) {
+      final ListDir.Response response = (Response) port.doCommand(new ListDir());
+      if (response.getLen() == 0) {
+        break;
+      }
+
+      System.out.printf("%1$-4s %2$c %3$tF %3$tT %4$s\n", response.getFileType(), response.getData()[1], response.getModifyDate(), response.getName());
+
+      final String name = path + (path.endsWith("/") ? "" : "/") + response.getName();
+
+      if (response.getFileType() == FileType.Dir) {
+        subdirs.add(name);
+      }
+
+      if (response.getFileType() == FileType.Dir || response.getData()[1] == 'A') {
+        final GetFileInfo.Response response2 = (GetFileInfo.Response) port.doCommand(new GetFileInfo(name));
+        System.out.printf("%2$6d %1$tF %1$tT %3$s\n", response2.getModifyDate(), response2.getSize(), response2.getName());
+      }
+    }
+
+    for (final String subdir : subdirs) {
+      list(subdir);
+    }
+  }
 
   public static void main(final String[] args) throws Exception {
     final List<String> ports = SerialPortDefaultImpl.getAvailablePorts();
@@ -65,27 +99,81 @@ public class SerialTest {
     // }
     // }
 
-    final TxInfo info = port.getTxInfo();
-    System.out.println(info);
+    // final TxInfo info = port.getTxInfo();
+    // System.out.println(info);
+    //
+    // final byte[] data1 = port.readMemory(0, 0x3000);
+    //
+    // final BufferedReader reader = new BufferedReader(new
+    // InputStreamReader(System.in));
+    // while (true) {
+    // final byte[] data2 = port.readMemory(0, 0x3000);
+    //
+    // for (int i = 0; i < data1.length; i++) {
+    // if (data1[i] != data2[i]) {
+    // System.out.printf("mismatch at 0x%04x: 0x%02x <> 0x%02x\n", i, data1[i],
+    // data2[i]);
+    // }
+    // }
+    //
+    // System.out.println("ok");
+    // reader.readLine();
+    // }
 
-    final byte[] data1 = port.readMemory(0, 0x3000);
+    // test(new PreparteFileTransfer());
+    // test(new SelectSDCard());
 
-    final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    while (true) {
-      final byte[] data2 = port.readMemory(0, 0x3000);
+    // test(new ChangeDir("/"));
+    // while (true) {
+    // final ListDir.Response response = (Response) port.doCommand(new
+    // ListDir());
+    // if (response.getLen() == 0) {
+    // break;
+    // }
+    //
+    // System.out.printf("%1$-4s %2$c %3$tF %3$tT %4$s\n",
+    // response.getFileType(), response.getData()[1], response.getModifyDate(),
+    // response.getName());
+    // }
+    //
+    // test(new ChangeDir("/Models"));
+    // while (true) {
+    // final ListDir.Response response = (Response) port.doCommand(new
+    // ListDir());
+    // if (response.getLen() == 0) {
+    // break;
+    // }
+    //
+    // System.out.printf("%1$-4s %2$c %3$tF %3$tT %4$s\n",
+    // response.getFileType(), response.getData()[1], response.getModifyDate(),
+    // response.getName());
+    // }
+    //
+    // test(new ChangeDir("/Models/mc-32"));
+    // while (true) {
+    // final ListDir.Response response = (Response) port.doCommand(new
+    // ListDir());
+    // if (response.getLen() == 0) {
+    // break;
+    // }
+    //
+    // System.out.printf("%1$-4s %2$c %3$tF %3$tT %4$s\n",
+    // response.getFileType(), response.getData()[1], response.getModifyDate(),
+    // response.getName());
+    // }
 
-      for (int i = 0; i < data1.length; i++) {
-        if (data1[i] != data2[i]) {
-          System.out.printf("mismatch at 0x%04x: 0x%02x <> 0x%02x\n", i, data1[i], data2[i]);
-        }
-      }
-
-      System.out.println("ok");
-      reader.readLine();
+    // list("/");
+    // test(new ChangeDir("/Models/mc-32"));
+    // test(new ListDir());
+    // test(new GetFileInfo("/Models/mc-32"));
+    System.out.println(port.getFileInfo("/Models/mc-32/aMerlin.mdl"));
+    System.out.println(port.getFileInfo("/Models"));
+    System.out.println(port.listDir("/Models"));
+    for (final FileInfo fileInfo : port.listDir("/Models/mc-32")) {
+      System.out.println(fileInfo);
     }
   }
 
-  @SuppressWarnings("unused")
   private static void test(final BaseCommand cmd) throws IOException {
     System.out.println(cmd);
     System.out.println(port.doCommand(cmd));
