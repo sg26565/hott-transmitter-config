@@ -26,11 +26,31 @@ import java.util.Date;
 public class FileInfo implements Serializable, Comparable<String> {
   private static final long serialVersionUID = 1L;
 
+  private final String      dir;
   private final String      name;
   private final String      shortName;
   private final int         size;
   private final Date        modifyDate;
   private final FileType    type;
+
+  public FileInfo(final String path, final String shortName, final int size, final Date modifyDate, final FileType type) {
+    final int pos = path.lastIndexOf('/');
+    if (pos == -1) {
+      dir = "/";
+      name = path;
+      this.shortName = shortName;
+      this.size = size;
+      this.modifyDate = modifyDate;
+      this.type = type;
+    } else {
+      dir = path.substring(0, pos);
+      name = path.substring(pos + 1);
+      this.shortName = shortName;
+      this.size = size;
+      this.modifyDate = modifyDate;
+      this.type = type;
+    }
+  }
 
   /**
    * @param name
@@ -39,7 +59,8 @@ public class FileInfo implements Serializable, Comparable<String> {
    * @param modifyDate
    * @param type
    */
-  public FileInfo(final String name, final String shortName, final int size, final Date modifyDate, final FileType type) {
+  public FileInfo(final String dir, final String name, final String shortName, final int size, final Date modifyDate, final FileType type) {
+    this.dir = dir;
     this.name = name;
     this.shortName = shortName;
     this.size = size;
@@ -74,12 +95,20 @@ public class FileInfo implements Serializable, Comparable<String> {
     return true;
   }
 
+  public String getDir() {
+    return dir;
+  }
+
   public Date getModifyDate() {
     return modifyDate;
   }
 
   public String getName() {
     return name;
+  }
+
+  public String getPath() {
+    return getDir() + (getDir().endsWith("/") ? "" : "/") + getName();
   }
 
   public String getShortName() {
