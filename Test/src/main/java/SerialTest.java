@@ -9,6 +9,7 @@ import gde.model.serial.TxInfo;
 import gde.util.Util;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +24,19 @@ public class SerialTest {
   private static void fileReadWriteTest() throws IOException {
     port.createDir("/test");
     port.changeDir("/test");
-    port.writeFile("/test/foo", "Hello, World!".getBytes(), FileMode.Create);
+    ByteArrayInputStream in = new ByteArrayInputStream("Hello, World!".getBytes());
+    port.writeFile("/test/foo", in, FileMode.Create);
 
-    String hello = new String(port.readFile("/test/foo"));
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    port.readFile("/test/foo", out);
+    String hello = new String(out.toByteArray());
     System.out.println(" read /test/foo: " + hello);
 
-    port.writeFile("/test/foo", "Hola, Mondo!".getBytes());
-    hello = new String(port.readFile("/test/foo"));
+    in = new ByteArrayInputStream("Hola, Mondo!".getBytes());
+    port.writeFile("/test/foo", in);
+    out.reset();
+    port.readFile("/test/foo", out);
+    hello = new String(out.toByteArray());
     System.out.println(" read /test/foo: " + hello);
 
     port.deleteFile("/test/foo");
@@ -68,8 +75,9 @@ public class SerialTest {
 
           final String modelName = fileName.substring(1, fileName.length() - 4);
 
-          final byte[] data = port.readFile(name);
-          final ByteArrayInputStream is = new ByteArrayInputStream(data);
+          final ByteArrayOutputStream out = new ByteArrayOutputStream();
+          port.readFile(name, out);
+          final ByteArrayInputStream is = new ByteArrayInputStream(out.toByteArray());
           final BaseModel model = HoTTDecoder.decodeStream(type, modelName, is);
           if (model.isBound()) {
             System.out.printf("TransmitterID: %#x, ModelName: %s, ReceiverID: %#x\n", model.getTransmitterId(), model.getModelName(),
@@ -123,8 +131,8 @@ public class SerialTest {
   }
 
   private static void readTransmitterMemoryTest() throws IOException {
-    final byte[] data1 = port.readMemory(0, 0x48);
-    System.out.println(Util.dumpData(data1));
+    final byte[] data = port.readMemoryBlock(0, 0x48);
+    System.out.println(Util.dumpData(data));
   }
 
   private static void transmitterInfoTest() throws IOException {

@@ -48,83 +48,76 @@ public class MemoryDump {
   private final class DumpThread extends Thread {
     @Override
     public void run() {
+      HoTTSerialPort port = null;
+
+      final String portName = (String) comboBox.getSelectedItem();
+      if (portName == null || portName.length() == 0) {
+        return;
+      }
+
+      final SerialPort portImpl = new SerialPortDefaultImpl(portName);
+      port = new HoTTSerialPort(portImpl);
+
+      dumpButton.setText("Abort Dump");
+      saveButton.setEnabled(false);
+
+      textArea.setText("");
+      messageArea.setText("Starting dump ... (.=OK B=Transmitter Busy C=CRC Error E=I/O Error N=Not Acknowledged)");
+
       try {
-        HoTTSerialPort port = null;
+        byte[] data = null;
 
-        final String portName = (String) comboBox.getSelectedItem();
-        if (portName == null || portName.length() == 0) {
-          return;
-        }
+        for (int i = 0; dumpThread != null && i < 512; i++) {
+          ResponseCode rc = ResponseCode.NACK;
 
-        final SerialPort portImpl = new SerialPortDefaultImpl(portName);
-        port = new HoTTSerialPort(portImpl);
+          final int address = 0x800 * i;
+          if (i % 128 == 0) {
+            messageArea.append("\n");
+          }
 
-        dumpButton.setText("Abort Dump");
-        saveButton.setEnabled(false);
-
-        textArea.setText("");
-        messageArea.setText("Starting dump ... (.=OK B=Transmitter Busy C=CRC Error E=I/O Error N=Not Acknowledged)");
-
-        try {
-          port.open();
-          final byte[] data = new byte[0x800];
-
-          for (int i = 0; dumpThread != null && i < 512; i++) {
-            ResponseCode rc = ResponseCode.NACK;
-            final int address = 0x800 * i;
-            if (i % 128 == 0) {
-              messageArea.append("\n");
-            }
-
-            while (rc != ResponseCode.ACK && dumpThread != null) {
-              try {
-                rc = port.readMemoryBlock(address, data);
-              } catch (final IOException e) {
+          while (rc != ResponseCode.ACK && dumpThread != null) {
+            try {
+              data = port.readMemoryBlock(address, 0x800);
+              rc = ResponseCode.ACK;
+            } catch (final IOException e) {
+              if (e instanceof HoTTSerialPortException) {
+                rc = ((HoTTSerialPortException) e).getResponseCode();
+              } else {
                 rc = ResponseCode.ERROR;
               }
+            }
 
-              switch (rc) {
-              case ACK:
-                final String text = Util.dumpData(data, address);
-                textArea.append(text);
-                textArea.setCaretPosition(textArea.getText().length());
-                messageArea.append(".");
-                continue;
+            switch (rc) {
+            case ACK:
+              final String text = Util.dumpData(data, address);
+              textArea.append(text);
+              textArea.setCaretPosition(textArea.getText().length());
+              messageArea.append(".");
+              continue;
 
-              case BUSY:
-                messageArea.append("B");
-                break;
+            case BUSY:
+              messageArea.append("B");
+              break;
 
-              case CRC_ERROR:
-                messageArea.append("C");
-                break;
+            case CRC_ERROR:
+              messageArea.append("C");
+              break;
 
-              case ERROR:
-                messageArea.append("E");
-                break;
+            case ERROR:
+              messageArea.append("E");
+              break;
 
-              case NACK:
-                messageArea.append("N");
-                break;
-              }
-
-              Thread.sleep(500);
+            case NACK:
+              messageArea.append("N");
+              break;
             }
           }
-        } finally {
-          if (port != null) {
-            port.close();
-          }
-
-          dumpButton.setText("Start Dump");
-          saveButton.setEnabled(true);
-
-          messageArea.append("\ndone.");
         }
-      } catch (final InterruptedException e) {
-        throw new RuntimeException(e);
-      } catch (final IOException e) {
-        throw new RuntimeException(e);
+      } finally {
+        dumpButton.setText("Start Dump");
+        saveButton.setEnabled(true);
+
+        messageArea.append("\ndone.");
       }
     }
   }
