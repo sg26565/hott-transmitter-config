@@ -16,27 +16,32 @@ import java.util.List;
 
 import de.treichels.hott.HoTTDecoder;
 import de.treichels.hott.HoTTSerialPort;
+import de.treichels.hott.internal.BaseDecoder;
 
 public class SerialTest {
   private static SerialPort     portImpl;
   private static HoTTSerialPort port;
 
   private static void fileReadWriteTest() throws IOException {
-    port.createDir("/test");
+    try {
+      port.createDir("/test");
+    } catch (final IOException e) {
+      // ignore
+    }
     port.changeDir("/test");
-    ByteArrayInputStream in = new ByteArrayInputStream("Hello, World!".getBytes());
+    ByteArrayInputStream in = new ByteArrayInputStream("Hello, World!".getBytes(BaseDecoder.ISO_8859_1));
     port.writeFile("/test/foo", in, FileMode.Create);
 
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     port.readFile("/test/foo", out);
-    String hello = new String(out.toByteArray());
+    String hello = new String(out.toByteArray(), BaseDecoder.ISO_8859_1);
     System.out.println(" read /test/foo: " + hello);
 
-    in = new ByteArrayInputStream("Hola, Mondo!".getBytes());
+    in = new ByteArrayInputStream("Hola, Mondo!".getBytes(BaseDecoder.ISO_8859_1));
     port.writeFile("/test/foo", in);
     out.reset();
     port.readFile("/test/foo", out);
-    hello = new String(out.toByteArray());
+    hello = new String(out.toByteArray(), BaseDecoder.ISO_8859_1);
     System.out.println(" read /test/foo: " + hello);
 
     port.deleteFile("/test/foo");
@@ -48,44 +53,50 @@ public class SerialTest {
     System.out.printf("\nContents of %s:\n", path);
 
     for (final String name : port.listDir(path)) {
-      final FileInfo info = port.getFileInfo(name);
-      System.out.printf("%1$s %2$8d %3$tF %3$tT %4$s\n", info.getType().toString().substring(0, 1), info.getSize(), info.getModifyDate(), info.getName());
+      try {
+        final FileInfo info = port.getFileInfo(name);
+        System.out.printf("%1$s %2$8d %3$tF %3$tT %4$s\n", info.getType().toString().substring(0, 1), info.getSize(), info.getModifyDate(), info.getName());
 
-      switch (info.getType()) {
-      case Dir:
-        subdirs.add(name);
-        break;
+        switch (info.getType()) {
+        case Dir:
+          subdirs.add(name);
+          break;
 
-      case File:
-        final String fileName = info.getName();
-        if (fileName.endsWith(".mdl")) {
-          ModelType type;
-          switch (fileName.charAt(0)) {
-          case 'a':
-            type = ModelType.Winged;
-            break;
+        case File:
+          final String fileName = info.getName();
+          if (fileName.endsWith(".mdl")) {
+            ModelType type;
+            switch (fileName.charAt(0)) {
+            case 'a':
+              type = ModelType.Winged;
+              break;
 
-          case 'h':
-            type = ModelType.Helicopter;
-            break;
+            case 'h':
+              type = ModelType.Helicopter;
+              break;
 
-          default:
-            throw new IOException("invalid model type");
-          }
+            default:
+              throw new IOException("invalid model type");
+            }
 
-          final String modelName = fileName.substring(1, fileName.length() - 4);
+            final String modelName = fileName.substring(1, fileName.length() - 4);
 
-          final ByteArrayOutputStream out = new ByteArrayOutputStream();
-          port.readFile(name, out);
-          final ByteArrayInputStream is = new ByteArrayInputStream(out.toByteArray());
-          final BaseModel model = HoTTDecoder.decodeStream(type, modelName, is);
-          if (model.isBound()) {
-            System.out.printf("TransmitterID: %#x, ModelName: %s, ReceiverID: %#x\n", model.getTransmitterId(), model.getModelName(),
-                model.getReceiver()[0].getRfid());
-          } else {
-            System.out.printf("TransmitterID: %#x, ModelName: %s, unbound\n", model.getTransmitterId(), model.getModelName());
+            final ByteArrayOutputStream out = new ByteArrayOutputStream();
+            port.readFile(name, out);
+            final ByteArrayInputStream is = new ByteArrayInputStream(out.toByteArray());
+            final BaseModel model = HoTTDecoder.decodeStream(type, modelName, is);
+            if (model.isBound()) {
+              System.out.printf("TransmitterID: %#x, ModelName: %s, ReceiverID: %#x\n", model.getTransmitterId(), model.getModelName(),
+                  model.getReceiver()[0].getRfid());
+            } else {
+              System.out.printf("TransmitterID: %#x, ModelName: %s, unbound\n", model.getTransmitterId(), model.getModelName());
+            }
           }
         }
+      } catch (final IOException e) {
+        System.err.println(name);
+        e.printStackTrace();
+        continue;
       }
     }
 
@@ -107,6 +118,10 @@ public class SerialTest {
     readTransmitterMemoryTest();
     fileReadWriteTest();
     list("/");
+
+    for (final String name : port.listDir("/MP3")) {
+      System.out.println(name);
+    }
   }
 
   private static void readModelsFromMemoryTest() throws IOException {
