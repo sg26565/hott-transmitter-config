@@ -54,42 +54,21 @@ public class SectionAdapter extends BaseAdapter {
     }
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.widget.Adapter#getCount()
-   */
   @Override
   public int getCount() {
     return sections.size();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.widget.Adapter#getItem(int)
-   */
   @Override
   public Object getItem(final int position) {
     return sections.get(position).name();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.widget.Adapter#getItemId(int)
-   */
   @Override
   public long getItemId(final int position) {
     return sections.get(position).ordinal();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.widget.Adapter#getView(int, android.view.View,
-   * android.view.ViewGroup)
-   */
   @Override
   public View getView(final int position, final View convertView, final ViewGroup parent) {
     TextView textView;

@@ -201,12 +201,6 @@ public class SwtCurveImageGenerator implements CurveImageGenerator {
     return image;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see gde.mdl.ui.CurveImageGenerator#getImageSource(gde.model.Curve, float,
-   * boolean)
-   */
   @Override
   public String getImageSource(final Curve curve, final float scale, final boolean description) {
     final Image image = getImage(curve, scale, description);

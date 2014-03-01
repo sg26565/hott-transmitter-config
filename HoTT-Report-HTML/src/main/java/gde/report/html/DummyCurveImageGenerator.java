@@ -25,12 +25,6 @@ import gde.report.CurveImageGenerator;
  * 
  */
 public class DummyCurveImageGenerator implements CurveImageGenerator {
-  /*
-   * (non-Javadoc)
-   * 
-   * @see gde.report.CurveImageGenerator#getImageSource(gde.model.Curve, float,
-   * boolean)
-   */
   @Override
   public String getImageSource(final Curve curve, final float scale, final boolean description) {
     return "";

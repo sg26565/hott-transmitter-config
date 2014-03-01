@@ -88,30 +88,12 @@ public class InlineImageReplacedElementFactory implements ReplacedElementFactory
     }
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * org.xhtmlrenderer.extend.ReplacedElementFactory#remove(org.w3c.dom.Element)
-   */
   @Override
   public void remove(final Element e) {}
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.xhtmlrenderer.extend.ReplacedElementFactory#reset()
-   */
   @Override
   public void reset() {}
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * org.xhtmlrenderer.extend.ReplacedElementFactory#setFormSubmissionListener
-   * (org.xhtmlrenderer.simple.extend.FormSubmissionListener)
-   */
   @Override
   public void setFormSubmissionListener(final FormSubmissionListener listener) {}
 }

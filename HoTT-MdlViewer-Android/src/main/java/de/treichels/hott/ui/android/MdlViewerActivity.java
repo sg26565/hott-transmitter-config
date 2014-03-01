@@ -217,13 +217,6 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     return true;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget
-   * .AdapterView, android.view.View, int, long)
-   */
   @Override
   public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
     drawerLayout.closeDrawer(drawer);

@@ -119,9 +119,9 @@ public class SerialTest {
     fileReadWriteTest();
     list("/");
 
-    for (final String name : port.listDir("/MP3")) {
-      System.out.println(name);
-    }
+    // for (final String name : port.listDir("/MP3")) {
+    // System.out.println(name);
+    // }
   }
 
   private static void readModelsFromMemoryTest() throws IOException {

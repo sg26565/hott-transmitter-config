@@ -66,22 +66,12 @@ public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
     this.name = name;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.treichels.hott.internal.HoTTSerialPort#close()
-   */
   @Override
   public void close() {
     port.close();
     port = null;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.treichels.hott.internal.HoTTSerialPort#getInputStream()
-   */
   @Override
   public InputStream getInputStream() throws IOException {
     return port.getInputStream();
@@ -91,31 +81,16 @@ public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
     return name;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.treichels.hott.internal.HoTTSerialPort#getOutputStream()
-   */
   @Override
   public OutputStream getOutputStream() throws IOException {
     return port.getOutputStream();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.treichels.hott.SerialPort#isOpen()
-   */
   @Override
   public boolean isOpen() {
     return port != null;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.treichels.hott.SerialPort#open()
-   */
   @Override
   public void open() throws IOException {
     try {

@@ -175,12 +175,6 @@ public class SwingCurveImageGenerator implements CurveImageGenerator {
     return image;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see gde.report.CurveImageGenerator#getImageSource(gde.model.Curve, float,
-   * boolean)
-   */
   @Override
   public String getImageSource(final Curve curve, final float scale, final boolean description) {
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
