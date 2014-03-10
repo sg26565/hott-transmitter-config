@@ -157,7 +157,7 @@ public class SelectFromSdCardDialog extends JDialog {
               final FileInfo info = port.getFileInfo(name);
               node.add(new FileInfoTreeNode(info));
             }
-          } catch (final IOException e) {
+          } catch (final Exception e) {
             throw new RuntimeException(e);
           }
         }
