@@ -56,6 +56,7 @@ import gde.model.BaseModel;
 import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;
 import gde.report.xml.XMLReport;
+import gnu.io.RXTXCommDriver;
 
 public class SimpleGUI extends FSScrollPane {
   private final class CloseAction extends AbstractAction {
@@ -77,15 +78,21 @@ public class SimpleGUI extends FSScrollPane {
 
   private final class LoadAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
+    private final Source      source;
 
     public LoadAction(final String name) {
+      this(name, Source.File);
+    }
+
+    public LoadAction(final String name, final Source source) {
       super(name);
+      this.source = source;
     }
 
     @Override
     public void actionPerformed(final ActionEvent evt) {
       try {
-        load();
+        load(source);
       } catch (final Throwable t) {
         showError(t);
       }
@@ -129,25 +136,34 @@ public class SimpleGUI extends FSScrollPane {
     }
   }
 
+  public enum Source {
+    File, Memory, SdCard
+  }
+
   @SuppressWarnings("unused")
   private Class<JavaBeansIntrospector> class1;
 
-  private static final String          LAST_LOAD_DIR    = "lastLoadDir";
-  private static final String          LAST_SAVE_DIR    = "lastSaveDir";
-  private static final Logger          LOG              = Logger.getLogger(SimpleGUI.class.getName());
-  private static final Preferences     PREFS            = Preferences.userNodeForPackage(SimpleGUI.class);
-  private static final long            serialVersionUID = 8824399313635999416L;
+  @SuppressWarnings("unused")
+  private static RXTXCommDriver        driver;
 
-  private final Action                 closeAction      = new CloseAction("Close");
-  private final Action                 loadAction       = new LoadAction("Load MDL");
-  private BaseModel                    model            = null;
-  private final Action                 refreshAction    = new RefreshAction("Refresh");
-  private final Action                 saveHtmlAction   = new SaveAction("Save HTML", FileType.HTML);
-  private final Action                 savePdfAction    = new SaveAction("Save PDF", FileType.PDF);
-  private final Action                 saveXmlAction    = new SaveAction("Save XML", FileType.XML);
-  private final XHTMLPanel             xhtmlPane        = new XHTMLPanel();
+  private static final String          LAST_LOAD_DIR        = "lastLoadDir";
+  private static final String          LAST_SAVE_DIR        = "lastSaveDir";
+  private static final Logger          LOG                  = Logger.getLogger(SimpleGUI.class.getName());
+  private static final Preferences     PREFS                = Preferences.userNodeForPackage(SimpleGUI.class);
+  private static final long            serialVersionUID     = 8824399313635999416L;
 
-  private final JPopupMenu             popupMenu        = new JPopupMenu();
+  private final JFrame                 frame                = new JFrame("Hott Transmitter Config - " + System.getProperty(Launcher.PROGRAM_VERSION));
+  private final Action                 closeAction          = new CloseAction("Close");
+  private final Action                 loadFromFileAction   = new LoadAction("Load from File", Source.File);
+  private final Action                 loadFromMemoryAction = new LoadAction("Load from Transmitter Memory", Source.Memory);
+  private final Action                 loadFromSdCardAction = new LoadAction("Load from SD Card", Source.SdCard);
+  private BaseModel                    model                = null;
+  private final Action                 refreshAction        = new RefreshAction("Refresh");
+  private final Action                 saveHtmlAction       = new SaveAction("Save HTML", FileType.HTML);
+  private final Action                 savePdfAction        = new SaveAction("Save PDF", FileType.PDF);
+  private final Action                 saveXmlAction        = new SaveAction("Save XML", FileType.XML);
+  private final XHTMLPanel             xhtmlPane            = new XHTMLPanel();
+  private final JPopupMenu             popupMenu            = new JPopupMenu();
 
   public SimpleGUI() {
     final SharedContext ctx = xhtmlPane.getSharedContext();
@@ -182,7 +198,23 @@ public class SimpleGUI extends FSScrollPane {
     return fileName.toString();
   }
 
-  public void load() throws IOException, URISyntaxException {
+  public void load(final Source source) throws IOException, URISyntaxException {
+    switch (source) {
+    case File:
+      loadFromFile();
+      break;
+
+    case Memory:
+      loadFromMemory();
+      break;
+
+    case SdCard:
+      loafFromSdCard();
+      break;
+    }
+  }
+
+  public void loadFromFile() throws IOException, URISyntaxException {
     final JFileChooser fc = new JFileChooser();
     fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
     fc.setMultiSelectionEnabled(false);
@@ -203,6 +235,21 @@ public class SimpleGUI extends FSScrollPane {
 
       refresh();
     }
+  }
+
+  private void loadFromMemory() throws IOException {
+    final SelectFromMemoryDialog dialog = SelectFromMemoryDialog.showDialog(frame);
+
+    final BaseModel m = dialog.getModel();
+    if (m != null) {
+      model = m;
+      refresh();
+    }
+  }
+
+  private void loafFromSdCard() {
+    // TODO Auto-generated method stub
+
   }
 
   public void refresh() throws IOException {
@@ -260,7 +307,8 @@ public class SimpleGUI extends FSScrollPane {
   public void showInFrame() {
     try {
       final JMenu fileMenu = new JMenu("File");
-      fileMenu.add(new JMenuItem(loadAction));
+      fileMenu.add(new JMenuItem(loadFromFileAction));
+      fileMenu.add(new JMenuItem(loadFromMemoryAction));
       fileMenu.add(new JMenuItem(saveHtmlAction));
       fileMenu.add(new JMenuItem(savePdfAction));
       fileMenu.add(new JMenuItem(saveXmlAction));
@@ -275,12 +323,14 @@ public class SimpleGUI extends FSScrollPane {
       final JPanel buttonPanel = new JPanel();
       buttonPanel.add(new JButton(closeAction));
       buttonPanel.add(new JButton(refreshAction));
-      buttonPanel.add(new JButton(loadAction));
+      buttonPanel.add(new JButton(loadFromFileAction));
+      buttonPanel.add(new JButton(loadFromMemoryAction));
       buttonPanel.add(new JButton(saveHtmlAction));
       buttonPanel.add(new JButton(savePdfAction));
       buttonPanel.add(new JButton(saveXmlAction));
 
-      popupMenu.add(new JMenuItem(loadAction));
+      popupMenu.add(new JMenuItem(loadFromFileAction));
+      popupMenu.add(new JMenuItem(loadFromMemoryAction));
       popupMenu.add(new JMenuItem(saveHtmlAction));
       popupMenu.add(new JMenuItem(savePdfAction));
       popupMenu.add(new JMenuItem(saveXmlAction));
@@ -305,7 +355,6 @@ public class SimpleGUI extends FSScrollPane {
         }
       });
 
-      final JFrame frame = new JFrame("Hott Transmitter Config - " + System.getProperty(Launcher.PROGRAM_VERSION));
       frame.setJMenuBar(menubar);
       frame.setLayout(new BorderLayout());
       frame.add(buttonPanel, BorderLayout.SOUTH);
