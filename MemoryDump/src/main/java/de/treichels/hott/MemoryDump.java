@@ -79,7 +79,7 @@ public class MemoryDump {
             try {
               data = port.readMemoryBlock(address, 0x800);
               rc = ResponseCode.ACK;
-            } catch (final IOException e) {
+            } catch (final Exception e) {
               if (e instanceof HoTTSerialPortException) {
                 rc = ((HoTTSerialPortException) e).getResponseCode();
               } else {
