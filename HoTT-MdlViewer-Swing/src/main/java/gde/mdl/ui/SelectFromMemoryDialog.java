@@ -52,27 +52,20 @@ import de.treichels.hott.HoTTSerialPort;
  */
 public class SelectFromMemoryDialog extends JDialog {
   private class ArrayListModel extends AbstractListModel<String> {
-    private static final long  serialVersionUID = 1L;
-    private final List<String> data             = new ArrayList<String>();
-
-    /**
-     * @param description
-     */
-    public void add(final String description) {
-      final int oldSize = data.size();
-      data.add(description);
-      fireIntervalAdded(this, oldSize, oldSize);
-    }
-
-    public void clear() {
-      final int oldSize = data.size();
-      data.clear();
-      fireContentsChanged(this, 0, oldSize - 1);
-    }
+    private static final long serialVersionUID = 1L;
+    private List<ModelInfo>   data;
 
     @Override
     public String getElementAt(final int index) {
-      return data.get(index);
+      final ModelInfo info = data.get(index);
+
+      return String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', info.getModelName());
+    }
+
+    public int getModelNumerAt(final int index) {
+      final ModelInfo info = data.get(index);
+
+      return info.getModelNumber();
     }
 
     @Override
@@ -80,6 +73,14 @@ public class SelectFromMemoryDialog extends JDialog {
       return data.size();
     }
 
+    public void setData(final ModelInfo[] infos) {
+      data = new ArrayList<ModelInfo>();
+      for (final ModelInfo info : infos) {
+        if (info.getModelType() != ModelType.Unknown) {
+          data.add(info);
+        }
+      }
+    }
   }
 
   private final class PortSelectionListener implements ActionListener {
@@ -87,16 +88,9 @@ public class SelectFromMemoryDialog extends JDialog {
     public void actionPerformed(final ActionEvent arg0) {
       final String portName = (String) comboBox.getSelectedItem();
       if (portName != null && portName.length() > 0) {
-        model.clear();
         port = new HoTTSerialPort(new SerialPortDefaultImpl(portName));
         try {
-          for (final ModelInfo info : port.getAllModelInfos()) {
-            if (info.getModelType() != ModelType.Unknown) {
-              final String description = String.format("%d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a',
-                  info.getModelName());
-              model.add(description);
-            }
-          }
+          model.setData(port.getAllModelInfos());
         } catch (final Exception e) {
           throw new RuntimeException(e);
         }
@@ -193,6 +187,6 @@ public class SelectFromMemoryDialog extends JDialog {
       return null;
     }
 
-    return HoTTDecoder.decodeMemory(port, selectedIndex);
+    return HoTTDecoder.decodeMemory(port, model.getModelNumerAt(selectedIndex));
   }
 }

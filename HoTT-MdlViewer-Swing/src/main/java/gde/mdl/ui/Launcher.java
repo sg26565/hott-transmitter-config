@@ -87,7 +87,7 @@ public class Launcher {
         jarFile = new JarFile(source);
         final Manifest manifest = jarFile.getManifest();
         final Attributes attributes = manifest.getMainAttributes();
-        final String version = attributes.getValue("Implementation-Version") + "." + attributes.getValue("Implementation-Build");
+        final String version = attributes.getValue("Implementation-Version");
         System.setProperty(Launcher.PROGRAM_VERSION, version);
       } finally {
         if (jarFile != null) {
