@@ -80,10 +80,6 @@ public class SimpleGUI extends FSScrollPane {
     private static final long serialVersionUID = 1L;
     private final Source      source;
 
-    public LoadAction(final String name) {
-      this(name, Source.File);
-    }
-
     public LoadAction(final String name, final Source source) {
       super(name);
       this.source = source;
@@ -155,7 +151,7 @@ public class SimpleGUI extends FSScrollPane {
   private final JFrame                 frame                = new JFrame("Hott Transmitter Config - " + System.getProperty(Launcher.PROGRAM_VERSION));
   private final Action                 closeAction          = new CloseAction("Close");
   private final Action                 loadFromFileAction   = new LoadAction("Load from File", Source.File);
-  private final Action                 loadFromMemoryAction = new LoadAction("Load from Transmitter Memory", Source.Memory);
+  private final Action                 loadFromMemoryAction = new LoadAction("Load from Memory", Source.Memory);
   private final Action                 loadFromSdCardAction = new LoadAction("Load from SD Card", Source.SdCard);
   private BaseModel                    model                = null;
   private final Action                 refreshAction        = new RefreshAction("Refresh");
@@ -243,6 +239,11 @@ public class SimpleGUI extends FSScrollPane {
     final BaseModel m = dialog.getModel();
     if (m != null) {
       model = m;
+
+      saveHtmlAction.setEnabled(true);
+      savePdfAction.setEnabled(true);
+      saveXmlAction.setEnabled(true);
+
       refresh();
     }
   }
@@ -309,6 +310,7 @@ public class SimpleGUI extends FSScrollPane {
       final JMenu fileMenu = new JMenu("File");
       fileMenu.add(new JMenuItem(loadFromFileAction));
       fileMenu.add(new JMenuItem(loadFromMemoryAction));
+      fileMenu.add(new JMenuItem(loadFromSdCardAction));
       fileMenu.add(new JMenuItem(saveHtmlAction));
       fileMenu.add(new JMenuItem(savePdfAction));
       fileMenu.add(new JMenuItem(saveXmlAction));
@@ -325,12 +327,14 @@ public class SimpleGUI extends FSScrollPane {
       buttonPanel.add(new JButton(refreshAction));
       buttonPanel.add(new JButton(loadFromFileAction));
       buttonPanel.add(new JButton(loadFromMemoryAction));
+      buttonPanel.add(new JButton(loadFromSdCardAction));
       buttonPanel.add(new JButton(saveHtmlAction));
       buttonPanel.add(new JButton(savePdfAction));
       buttonPanel.add(new JButton(saveXmlAction));
 
       popupMenu.add(new JMenuItem(loadFromFileAction));
       popupMenu.add(new JMenuItem(loadFromMemoryAction));
+      popupMenu.add(new JMenuItem(loadFromSdCardAction));
       popupMenu.add(new JMenuItem(saveHtmlAction));
       popupMenu.add(new JMenuItem(savePdfAction));
       popupMenu.add(new JMenuItem(saveXmlAction));

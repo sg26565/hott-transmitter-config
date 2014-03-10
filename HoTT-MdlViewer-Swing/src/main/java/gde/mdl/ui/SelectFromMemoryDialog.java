@@ -44,8 +44,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import de.treichels.hott.HoTTDecoder;
 import de.treichels.hott.HoTTSerialPort;
-import de.treichels.hott.internal.BaseDecoder;
 
 /**
  * @author oli@treichels.de
@@ -87,9 +87,9 @@ public class SelectFromMemoryDialog extends JDialog {
     public void actionPerformed(final ActionEvent arg0) {
       final String portName = (String) comboBox.getSelectedItem();
       if (portName != null && portName.length() > 0) {
+        model.clear();
+        port = new HoTTSerialPort(new SerialPortDefaultImpl(portName));
         try {
-          model.clear();
-          port = new HoTTSerialPort(new SerialPortDefaultImpl(portName));
           for (final ModelInfo info : port.getAllModelInfos()) {
             if (info.getModelType() != ModelType.Unknown) {
               final String description = String.format("%d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a',
@@ -97,8 +97,8 @@ public class SelectFromMemoryDialog extends JDialog {
               model.add(description);
             }
           }
-        } catch (final IOException e) {
-          e.printStackTrace();
+        } catch (final Exception e) {
+          throw new RuntimeException(e);
         }
       }
     }
@@ -193,6 +193,6 @@ public class SelectFromMemoryDialog extends JDialog {
       return null;
     }
 
-    return BaseDecoder.decode(port, selectedIndex);
+    return HoTTDecoder.decodeMemory(port, selectedIndex);
   }
 }
