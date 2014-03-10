@@ -248,9 +248,19 @@ public class SimpleGUI extends FSScrollPane {
     }
   }
 
-  private void loafFromSdCard() {
-    // TODO Auto-generated method stub
+  private void loafFromSdCard() throws IOException {
+    final SelectFromSdCardDialog dialog = SelectFromSdCardDialog.showDialog(frame);
 
+    final BaseModel m = dialog.getModel();
+    if (m != null) {
+      model = m;
+
+      saveHtmlAction.setEnabled(true);
+      savePdfAction.setEnabled(true);
+      saveXmlAction.setEnabled(true);
+
+      refresh();
+    }
   }
 
   public void refresh() throws IOException {
