@@ -34,7 +34,7 @@ public class Util {
       int addr = 0;
 
       while (addr < len) {
-        sb.append(String.format("0x%04x: ", baseAddress + addr));
+        sb.append(String.format("0x%04x: ", baseAddress + addr)); //$NON-NLS-1$
 
         for (int i = 0; i < 16; i++) {
           if (addr + i < len) {
@@ -54,13 +54,13 @@ public class Util {
               break;
             }
 
-            sb.append(String.format("%02x", data[addr + i]));
+            sb.append(String.format("%02x", data[addr + i])); //$NON-NLS-1$
           } else {
-            sb.append("   ");
+            sb.append("   "); //$NON-NLS-1$
           }
         }
 
-        sb.append("| ");
+        sb.append("| "); //$NON-NLS-1$
 
         for (int i = 0; i < 16; i++) {
           if (addr + i < len) {

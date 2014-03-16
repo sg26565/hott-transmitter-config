@@ -99,7 +99,7 @@ public final class TxInfo implements Serializable {
   @Override
   public String toString() {
     return String.format(
-        "TxInfo [transmitterType=%s, appVersion=%s, memoryVersion=%s, year=%s, transmitterName=%s, vendorName=%s, ownerName=%s, customPhaseNames=%s]",
+        "TxInfo [transmitterType=%s, appVersion=%s, memoryVersion=%s, year=%s, transmitterName=%s, vendorName=%s, ownerName=%s, customPhaseNames=%s]", //$NON-NLS-1$
         transmitterType, appVersion, memoryVersion, year, transmitterName, vendorName, ownerName, Arrays.toString(customPhaseNames));
   }
 }

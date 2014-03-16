@@ -17,6 +17,7 @@
  */
 package gde.mdl.ui;
 
+import gde.messages.Messages;
 import gde.model.BaseModel;
 import gde.model.enums.ModelType;
 import gde.model.serial.ModelInfo;
@@ -59,7 +60,7 @@ public class SelectFromMemoryDialog extends JDialog {
     public String getElementAt(final int index) {
       final ModelInfo info = data.get(index);
 
-      return String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', info.getModelName());
+      return String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', info.getModelName()); //$NON-NLS-1$
     }
 
     public int getModelNumerAt(final int index) {
@@ -109,13 +110,13 @@ public class SelectFromMemoryDialog extends JDialog {
   private final JComboBox<String> comboBox      = new JComboBox<String>();
   private final ArrayListModel    model         = new ArrayListModel();
   private final JList<String>     list          = new JList<String>(model);
-  private final JButton           okButton      = new JButton("Ok");
+  private final JButton           okButton      = new JButton(Messages.getString("Ok")); //$NON-NLS-1$
   private HoTTSerialPort          port;
 
   private int                     selectedIndex = -1;
 
   public SelectFromMemoryDialog(final Frame owner) {
-    super(owner, "Select Model from Memory", true);
+    super(owner, Messages.getString("SelectFromMemoryDialog.Title"), true); //$NON-NLS-1$
 
     for (final String s : SerialPortDefaultImpl.getAvailablePorts()) {
       comboBox.addItem(s);
@@ -125,7 +126,7 @@ public class SelectFromMemoryDialog extends JDialog {
     comboBox.addActionListener(listener);
     listener.actionPerformed(null);
 
-    final JLabel label = new JLabel("Serial Port:");
+    final JLabel label = new JLabel(Messages.getString("SerialPort")); //$NON-NLS-1$
     label.setLabelFor(comboBox);
     final JPanel portPanel = new JPanel();
     portPanel.add(label);
@@ -145,7 +146,7 @@ public class SelectFromMemoryDialog extends JDialog {
     final JScrollPane scrollPane = new JScrollPane(list);
     scrollPane.setPreferredSize(new Dimension(100, 300));
 
-    final JButton cancelButton = new JButton("Cancel");
+    final JButton cancelButton = new JButton(Messages.getString("Cancel")); //$NON-NLS-1$
     cancelButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(final ActionEvent arg0) {

@@ -81,7 +81,7 @@ public class SwtCurveImageGenerator implements CurveImageGenerator {
       }
 
       if (curve.getPoint() != null) {
-        g.setFont(new Font(Display.getDefault(), new FontData("Arial", 10, SWT.BOLD)));
+        g.setFont(new Font(Display.getDefault(), new FontData("Arial", 10, SWT.BOLD))); //$NON-NLS-1$
         g.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_BLACK));
 
         // determine number of enabled curve points

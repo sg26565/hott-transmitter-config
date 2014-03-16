@@ -35,7 +35,7 @@ import com.itextpdf.text.pdf.codec.Base64;
  * @author oli@treichels.de
  */
 public class ITextInlineImageReplacedElementFactory implements ReplacedElementFactory {
-  private static final String          PREFIX = "data:image/png;base64,";
+  private static final String          PREFIX = "data:image/png;base64,"; //$NON-NLS-1$
 
   private final ReplacedElementFactory other;
 
@@ -48,7 +48,7 @@ public class ITextInlineImageReplacedElementFactory implements ReplacedElementFa
     final Element elem = box.getElement();
 
     // check if we have an inline png image
-    if (!(elem != null && elem.getNodeName().equals("img") && elem.hasAttribute("src") && elem.getAttribute("src").startsWith(PREFIX))) {
+    if (!(elem != null && elem.getNodeName().equals("img") && elem.hasAttribute("src") && elem.getAttribute("src").startsWith(PREFIX))) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       return null; // other.createReplacedElement(c, box, uac, cssWidth,
                    // cssHeight);
     }
@@ -63,15 +63,15 @@ public class ITextInlineImageReplacedElementFactory implements ReplacedElementFa
       height = cssHeight;
     }
 
-    if (elem.hasAttribute("width")) {
-      width = Integer.parseInt(elem.getAttribute("width"));
+    if (elem.hasAttribute("width")) { //$NON-NLS-1$
+      width = Integer.parseInt(elem.getAttribute("width")); //$NON-NLS-1$
     }
 
-    if (elem.hasAttribute("height")) {
-      height = Integer.parseInt(elem.getAttribute("height"));
+    if (elem.hasAttribute("height")) { //$NON-NLS-1$
+      height = Integer.parseInt(elem.getAttribute("height")); //$NON-NLS-1$
     }
 
-    final String inlineData = elem.getAttribute("src").substring(PREFIX.length()); // strip
+    final String inlineData = elem.getAttribute("src").substring(PREFIX.length()); // strip //$NON-NLS-1$
                                                                                    // leading
                                                                                    // "data:image/png;base64,"
 

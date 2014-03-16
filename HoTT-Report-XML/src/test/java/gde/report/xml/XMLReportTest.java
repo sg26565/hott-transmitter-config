@@ -35,9 +35,9 @@ public class XMLReportTest {
   @Test
   public void testProcessXML() throws IOException, JAXBException {
     final BaseModel model = new WingedModel();
-    model.setModelName("testModel1");
+    model.setModelName("testModel1"); //$NON-NLS-1$
 
     final String data = XMLReport.generateXML(model);
-    assertTrue(data.contains("<modelName>testModel1</modelName>"));
+    assertTrue(data.contains("<modelName>testModel1</modelName>")); //$NON-NLS-1$
   }
 }

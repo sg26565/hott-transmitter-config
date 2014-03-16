@@ -24,6 +24,8 @@ import java.util.Date;
  * @author oli@treichels.de
  */
 public class FileInfo implements Serializable, Comparable<String> {
+  private static final String EMPTY_STRING     = ""; //$NON-NLS-1$
+  private static final String FORWARD_SLASH = "/"; //$NON-NLS-1$
   private static final long serialVersionUID = 1L;
 
   private final String      dir;
@@ -34,9 +36,9 @@ public class FileInfo implements Serializable, Comparable<String> {
   private final FileType    type;
 
   public FileInfo(final String path, final String shortName, final int size, final Date modifyDate, final FileType type) {
-    final int pos = path.lastIndexOf('/');
+    final int pos = path.lastIndexOf(FORWARD_SLASH);
     if (pos == -1) {
-      dir = "/";
+      dir = FORWARD_SLASH;
       name = path;
       this.shortName = shortName;
       this.size = size;
@@ -108,7 +110,7 @@ public class FileInfo implements Serializable, Comparable<String> {
   }
 
   public String getPath() {
-    return getDir() + (getDir().endsWith("/") ? "" : "/") + getName();
+    return getDir() + (getDir().endsWith(FORWARD_SLASH) ? EMPTY_STRING : FORWARD_SLASH) + getName();
   }
 
   public String getShortName() {
@@ -133,6 +135,6 @@ public class FileInfo implements Serializable, Comparable<String> {
 
   @Override
   public String toString() {
-    return String.format("FileInfo [name=%s, shortName=%s, size=%s, modifyDate=%s, type=%s]", name, shortName, size, modifyDate, type);
+    return String.format("FileInfo [name=%s, shortName=%s, size=%s, modifyDate=%s, type=%s]", name, shortName, size, modifyDate, type); //$NON-NLS-1$
   }
 }

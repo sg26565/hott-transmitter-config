@@ -1,5 +1,6 @@
 package gde.mdl.ui;
 
+import gde.messages.Messages;
 import gde.model.BaseModel;
 import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;
@@ -119,7 +120,7 @@ public class MdlTabItemComposite extends Composite {
 
       final Menu contextMenu = new Menu(browser);
       loadMdlMenuItem = new MenuItem(contextMenu, SWT.NONE);
-      loadMdlMenuItem.setText("Load");
+      loadMdlMenuItem.setText(Messages.getString("Load")); //$NON-NLS-1$
       loadMdlMenuItem.addSelectionListener(new SelectionAdapter() {
         @Override
         public void widgetSelected(final SelectionEvent evt) {
@@ -129,7 +130,7 @@ public class MdlTabItemComposite extends Composite {
       });
 
       saveMdlMenuItem = new MenuItem(contextMenu, SWT.NONE);
-      saveMdlMenuItem.setText("Save");
+      saveMdlMenuItem.setText(Messages.getString("Save")); //$NON-NLS-1$
       saveMdlMenuItem.setEnabled(false);
       saveMdlMenuItem.addSelectionListener(new SelectionAdapter() {
         @Override
@@ -142,7 +143,7 @@ public class MdlTabItemComposite extends Composite {
       new MenuItem(contextMenu, SWT.SEPARATOR);
 
       reloadMenuItem = new MenuItem(contextMenu, SWT.NONE);
-      reloadMenuItem.setText("Reload");
+      reloadMenuItem.setText(Messages.getString("Reload")); //$NON-NLS-1$
       reloadMenuItem.setEnabled(false);
       reloadMenuItem.addSelectionListener(new SelectionAdapter() {
         @Override
@@ -174,13 +175,13 @@ public class MdlTabItemComposite extends Composite {
     final FileDialog fd = new FileDialog(getParent().getShell(), SWT.SINGLE);
     fd.setFilterExtensions(new String[] { "*.mdl" }); //$NON-NLS-1$
     fd.setFilterNames(new String[] { "HoTT Transmitter Model Files (*.mdl)" }); //$NON-NLS-1$
-    fd.setFilterPath(PREFS.get("lastLoadDir", System.getProperty(gde.mdl.ui.Launcher.MDL_DIR)));
+    fd.setFilterPath(PREFS.get("lastLoadDir", System.getProperty(gde.mdl.ui.Launcher.MDL_DIR))); //$NON-NLS-1$
 
     fd.open();
     if (fd.getFileName().length() > 4) {
       final File file = new File(fd.getFilterPath() + "/" + fd.getFileName()); //$NON-NLS-1$
       if (file.exists() && file.canRead()) {
-        PREFS.put("lastLoadDir", file.getParentFile().getAbsolutePath());
+        PREFS.put("lastLoadDir", file.getParentFile().getAbsolutePath()); //$NON-NLS-1$
         try {
           model = HoTTDecoder.decodeFile(file);
           saveMdlButton.setEnabled(true);
@@ -205,11 +206,11 @@ public class MdlTabItemComposite extends Composite {
       fileSaveDialog.setFilterExtensions(new String[] { "*.pdf", "*.html", "*.xml" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       fileSaveDialog.setFilterNames(new String[] {
           "Portable Document Format (*.pdf)", "Hypertext Markup Language (*.html)", "Extensible Markup Language (*.xml)" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-      fileSaveDialog.setFilterPath(PREFS.get("lastSaveDir", PREFS.get("lastLoadDir", System.getProperty(gde.mdl.ui.Launcher.MDL_DIR))));
-      fileSaveDialog.setFileName(model.getModelName() + ".pdf");
+      fileSaveDialog.setFilterPath(PREFS.get("lastSaveDir", PREFS.get("lastLoadDir", System.getProperty(gde.mdl.ui.Launcher.MDL_DIR)))); //$NON-NLS-1$ //$NON-NLS-2$
+      fileSaveDialog.setFileName(model.getModelName() + ".pdf"); //$NON-NLS-1$
       fileSaveDialog.open();
       final File file = new File(fileSaveDialog.getFilterPath() + "/" + fileSaveDialog.getFileName()); //$NON-NLS-1$
-      PREFS.put("lastSaveDir", file.getParentFile().getAbsolutePath());
+      PREFS.put("lastSaveDir", file.getParentFile().getAbsolutePath()); //$NON-NLS-1$
 
       try {
         String data;

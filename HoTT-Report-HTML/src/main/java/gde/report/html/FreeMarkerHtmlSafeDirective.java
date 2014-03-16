@@ -56,35 +56,35 @@ public class FreeMarkerHtmlSafeDirective implements TemplateDirectiveModel {
 
         switch (c) {
         case 'ä':
-          w.write("&auml;");
+          w.write("&auml;"); //$NON-NLS-1$
           break;
 
         case 'ö':
-          w.write("&ouml;");
+          w.write("&ouml;"); //$NON-NLS-1$
           break;
 
         case 'ü':
-          w.write("&uuml;");
+          w.write("&uuml;"); //$NON-NLS-1$
           break;
 
         case 'Ä':
-          w.write("&Auml;");
+          w.write("&Auml;"); //$NON-NLS-1$
           break;
 
         case 'Ö':
-          w.write("&Ouml;");
+          w.write("&Ouml;"); //$NON-NLS-1$
           break;
 
         case 'Ü':
-          w.write("&Uuml;");
+          w.write("&Uuml;"); //$NON-NLS-1$
           break;
 
         case 'ß':
-          w.write("&szlig;");
+          w.write("&szlig;"); //$NON-NLS-1$
           break;
 
         case '€':
-          w.write("&euro;");
+          w.write("&euro;"); //$NON-NLS-1$
           break;
 
         default:

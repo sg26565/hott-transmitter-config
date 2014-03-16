@@ -90,11 +90,11 @@ public class Switch extends AbstractBase {
 
     if (qualifier != null) {
       for (final Object q : qualifier) {
-        b.append("_");
+        b.append("_");  //$NON-NLS-1$
 
         if (q.getClass().isEnum()) {
           try {
-            final Method m = q.getClass().getMethod("name");
+            final Method m = q.getClass().getMethod("name");  //$NON-NLS-1$
             b.append(m.invoke(q));
           } catch (final Exception e) {
             throw new RuntimeException(e);
