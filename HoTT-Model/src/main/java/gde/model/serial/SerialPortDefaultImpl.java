@@ -17,6 +17,7 @@
  */
 package gde.model.serial;
 
+import gde.model.HoTTException;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
@@ -73,8 +74,12 @@ public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
   }
 
   @Override
-  public InputStream getInputStream() throws IOException {
-    return port.getInputStream();
+  public InputStream getInputStream() throws HoTTException {
+    try {
+      return port.getInputStream();
+    } catch (final IOException e) {
+      throw new HoTTException(e);
+    }
   }
 
   public String getName() {
@@ -82,8 +87,12 @@ public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
   }
 
   @Override
-  public OutputStream getOutputStream() throws IOException {
-    return port.getOutputStream();
+  public OutputStream getOutputStream() throws HoTTException {
+    try {
+      return port.getOutputStream();
+    } catch (final IOException e) {
+      throw new HoTTException(e);
+    }
   }
 
   @Override
@@ -92,7 +101,7 @@ public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
   }
 
   @Override
-  public void open() throws IOException {
+  public void open() throws HoTTException {
     try {
       final CommPortIdentifier identifier = CommPortIdentifier.getPortIdentifier(name);
       port = (SerialPort) identifier.open(SerialPortDefaultImpl.class.getName(), 1000);
@@ -103,11 +112,11 @@ public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
       port.setInputBufferSize(READ_BUFFER_SIZE);
       port.setOutputBufferSize(WRITE_BUFFER_SIZE);
     } catch (final NoSuchPortException e) {
-      throw new IOException(e);
+      throw new HoTTException(e);
     } catch (final PortInUseException e) {
-      throw new IOException(e);
+      throw new HoTTException(e);
     } catch (final UnsupportedCommOperationException e) {
-      throw new IOException(e);
+      throw new HoTTException(e);
     }
   }
 }

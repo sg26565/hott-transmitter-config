@@ -19,6 +19,7 @@ package gde.mdl.ui;
 
 import gde.messages.Messages;
 import gde.model.BaseModel;
+import gde.model.HoTTException;
 import gde.model.enums.ModelType;
 import gde.model.serial.FileInfo;
 import gde.model.serial.FileType;
@@ -232,7 +233,7 @@ public class SelectFromSdCardDialog extends JDialog {
         break;
 
       default:
-        throw new IOException(Messages.getString("InvalidModelType", typeChar)); //$NON-NLS-1$
+        throw new HoTTException("InvalidModelType", typeChar); //$NON-NLS-1$
       }
 
       final String name = fileName.substring(1, fileName.length() - 4);

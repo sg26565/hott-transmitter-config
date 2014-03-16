@@ -17,6 +17,8 @@
  */
 package gde.model;
 
+import gde.messages.Messages;
+
 import java.io.IOException;
 
 /**
@@ -24,44 +26,27 @@ import java.io.IOException;
  */
 public class HoTTException extends IOException {
   private static final long serialVersionUID = 1L;
-  private String            format           = null;
   private Object[]          args;
 
   public HoTTException() {
     super();
   }
 
-  public HoTTException(final String message) {
-    super(message);
+  public HoTTException(final String message, final Object... args) {
+    this(message, null, args);
   }
 
-  public HoTTException(final String format, final Object... args) {
-    super(String.format(format, args));
-    this.format = format;
+  public HoTTException(final String format, final Throwable cause, final Object... args) {
+    super(format, cause);
     this.args = args;
   }
 
   public HoTTException(final Throwable cause) {
-    super(cause);
-  }
-
-  public HoTTException(final Throwable cause, final String format, final Object... args) {
-    super(String.format(format, args), cause);
-    this.format = format;
-    this.args = args;
+    this(null, cause);
   }
 
   @Override
-  public String getLocalizedMessage() {
-    if (format != null) {
-      final String localizedFormat = localizeString(format);
-      return String.format(localizedFormat, args);
-    } else {
-      return localizeString(getMessage());
-    }
-  }
-
-  private String localizeString(final String text) {
-    return text; // TODO
+  public String getMessage() {
+    return Messages.getString(super.getMessage(), args);
   }
 }

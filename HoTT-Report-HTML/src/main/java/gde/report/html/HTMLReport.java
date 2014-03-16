@@ -37,8 +37,8 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
-import gde.messages.Messages;
 import gde.model.BaseModel;
+import gde.model.HoTTException;
 import gde.model.helicopter.HelicopterModel;
 import gde.model.winged.WingedModel;
 import gde.report.CurveImageGenerator;
@@ -128,7 +128,7 @@ public class HTMLReport {
       break;
 
     default:
-      throw new IOException(Messages.getString("InvalidTransmitterType", model.getTransmitterType())); //$NON-NLS-1$
+      throw new HoTTException("InvalidTransmitterType", model.getTransmitterType()); //$NON-NLS-1$
     }
 
     try {

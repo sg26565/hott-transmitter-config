@@ -1,4 +1,5 @@
 import gde.model.BaseModel;
+import gde.model.HoTTException;
 import gde.model.enums.ModelType;
 import gde.model.serial.FileInfo;
 import gde.model.serial.FileMode;
@@ -66,7 +67,8 @@ public class SerialTest {
           final String fileName = info.getName();
           if (fileName.endsWith(".mdl")) {
             ModelType type;
-            switch (fileName.charAt(0)) {
+            final char typeChar = fileName.charAt(0);
+            switch (typeChar) {
             case 'a':
               type = ModelType.Winged;
               break;
@@ -76,7 +78,7 @@ public class SerialTest {
               break;
 
             default:
-              throw new IOException("invalid model type");
+              throw new HoTTException("InvalidModelType", typeChar);
             }
 
             final String modelName = fileName.substring(1, fileName.length() - 4);
