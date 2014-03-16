@@ -34,7 +34,7 @@ public class BaseConfiguration extends ScrolledComposite {
 	public BaseConfiguration(Composite tabFolder, CTabItem tabItem) {
 	super(tabFolder, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 	tabItem.setControl(this);
-	this.open("");
+	this.open(""); //$NON-NLS-1$
 	baseComposite.layout();
 	}
 	
@@ -63,7 +63,7 @@ public class BaseConfiguration extends ScrolledComposite {
 		}
 		{
 			modellNameLabel = new CLabel(baseComposite, SWT.NONE);
-			modellNameLabel.setText("Modellname");
+			modellNameLabel.setText("Modellname"); //$NON-NLS-1$
 			GridData gridData = new GridData();
 			gridData.widthHint = 175;
 			gridData.heightHint = 22;
@@ -78,7 +78,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			modelNameTextLData.widthHint = 100;
 			modelNameTextLData.heightHint = 16;
 			modelNameText.setLayoutData(modelNameTextLData);
-			modelNameText.setText("Wingo");
+			modelNameText.setText("Wingo"); //$NON-NLS-1$
 		}
 		{
 			infoLabel = new CLabel(baseComposite, SWT.NONE);
@@ -87,7 +87,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			infoLabelLData.heightHint = 22;
 			infoLabelLData.horizontalSpan = 2;
 			infoLabel.setLayoutData(infoLabelLData);
-			infoLabel.setText("Information");
+			infoLabel.setText("Information"); //$NON-NLS-1$
 		}
 		{
 			infoText = new Text(baseComposite, SWT.BORDER);
@@ -96,7 +96,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			infoTextLData.widthHint = 100;
 			infoTextLData.heightHint = 16;
 			infoText.setLayoutData(infoTextLData);
-			infoText.setText("Modell Zusatzinformation");
+			infoText.setText("Modell Zusatzinformation"); //$NON-NLS-1$
 		}
 		{
 			stickModeLabel = new CLabel(baseComposite, SWT.NONE);
@@ -105,7 +105,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			stickModeLabelLData.heightHint = 22;
 			stickModeLabelLData.horizontalSpan = 2;
 			stickModeLabel.setLayoutData(stickModeLabelLData);
-			stickModeLabel.setText("Steueranordnung");
+			stickModeLabel.setText("Steueranordnung"); //$NON-NLS-1$
 		}
 		{
 			controlModeCombo = new CCombo(baseComposite, SWT.BORDER);
@@ -114,7 +114,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			controlModeComboLData.heightHint = 17;
 			controlModeComboLData.horizontalSpan = 4;
 			controlModeCombo.setLayoutData(controlModeComboLData);
-			controlModeCombo.setText("1");
+			controlModeCombo.setText("1"); //$NON-NLS-1$
 		}
 		{
 			modulTypeLabel = new CLabel(baseComposite, SWT.NONE);
@@ -122,7 +122,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			modulTypeLabelLData.widthHint = 105;
 			modulTypeLabelLData.heightHint = 22;
 			modulTypeLabel.setLayoutData(modulTypeLabelLData);
-			modulTypeLabel.setText("Modul");
+			modulTypeLabel.setText("Modul"); //$NON-NLS-1$
 		}
 		{
 			txModuleCombo = new CCombo(baseComposite, SWT.BORDER);
@@ -130,7 +130,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			txModuleComboLData.widthHint = 60;
 			txModuleComboLData.heightHint = 17;
 			txModuleCombo.setLayoutData(txModuleComboLData);
-			txModuleCombo.setText("HoTT");
+			txModuleCombo.setText("HoTT"); //$NON-NLS-1$
 		}
 		{
 			txLabel1 = new CLabel(baseComposite, SWT.CENTER | SWT.EMBEDDED | SWT.BORDER);
@@ -138,7 +138,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			txLabel1LData.widthHint = 29;
 			txLabel1LData.heightHint = 22;
 			txLabel1.setLayoutData(txLabel1LData);
-			txLabel1.setText("geb.");
+			txLabel1.setText("geb."); //$NON-NLS-1$
 		}
 		{
 			txLabel2 = new CLabel(baseComposite, SWT.CENTER | SWT.EMBEDDED | SWT.BORDER);
@@ -146,7 +146,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			txLabel2LData.widthHint = 29;
 			txLabel2LData.heightHint = 22;
 			txLabel2.setLayoutData(txLabel2LData);
-			txLabel2.setText("----");
+			txLabel2.setText("----"); //$NON-NLS-1$
 		}
 		{
 			txLabel3 = new CLabel(baseComposite, SWT.CENTER | SWT.EMBEDDED | SWT.BORDER);
@@ -154,7 +154,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			txLabel3LData1.widthHint = 29;
 			txLabel3LData1.heightHint = 22;
 			txLabel3.setLayoutData(txLabel3LData1);
-			txLabel3.setText("----");
+			txLabel3.setText("----"); //$NON-NLS-1$
 		}
 		{
 			txLabel4 = new CLabel(baseComposite, SWT.CENTER | SWT.EMBEDDED | SWT.BORDER);
@@ -162,7 +162,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			txLabel4LData1.widthHint = 29;
 			txLabel4LData1.heightHint = 22;
 			txLabel4.setLayoutData(txLabel4LData1);
-			txLabel4.setText("----");
+			txLabel4.setText("----"); //$NON-NLS-1$
 		}
 		{
 			receiverLabel = new CLabel(baseComposite, SWT.NONE);
@@ -171,7 +171,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			receiverLabelLData.heightHint = 22;
 			receiverLabelLData.horizontalSpan = 2;
 			receiverLabel.setLayoutData(receiverLabelLData);
-			receiverLabel.setText("Empfänger Ausgang");
+			receiverLabel.setText("Empfänger Ausgang"); //$NON-NLS-1$
 		}
 		{
 			txLabel1 = new CLabel(baseComposite, SWT.CENTER | SWT.EMBEDDED | SWT.BORDER);
@@ -179,7 +179,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			txLabel1LData.widthHint = 29;
 			txLabel1LData.heightHint = 22;
 			txLabel1.setLayoutData(txLabel1LData);
-			txLabel1.setText("E08");
+			txLabel1.setText("E08"); //$NON-NLS-1$
 		}
 		{
 			txLabel2 = new CLabel(baseComposite, SWT.CENTER | SWT.EMBEDDED | SWT.BORDER);
@@ -187,7 +187,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			txLabel2LData.widthHint = 29;
 			txLabel2LData.heightHint = 22;
 			txLabel2.setLayoutData(txLabel2LData);
-			txLabel2.setText("n/v");
+			txLabel2.setText("n/v"); //$NON-NLS-1$
 		}
 		{
 			txLabel3 = new CLabel(baseComposite, SWT.CENTER | SWT.EMBEDDED | SWT.BORDER);
@@ -195,7 +195,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			txLabel3LData1.widthHint = 29;
 			txLabel3LData1.heightHint = 22;
 			txLabel3.setLayoutData(txLabel3LData1);
-			txLabel3.setText("n/v");
+			txLabel3.setText("n/v"); //$NON-NLS-1$
 		}
 		{
 			txLabel4 = new CLabel(baseComposite, SWT.CENTER | SWT.EMBEDDED | SWT.BORDER);
@@ -203,7 +203,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			txLabel4LData1.widthHint = 29;
 			txLabel4LData1.heightHint = 22;
 			txLabel4.setLayoutData(txLabel4LData1);
-			txLabel4.setText("n/v");
+			txLabel4.setText("n/v"); //$NON-NLS-1$
 		}
 		{
 			dscOutputLabel = new CLabel(baseComposite, SWT.NONE);
@@ -212,7 +212,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			dscOutputLabelLData.heightHint = 22;
 			dscOutputLabelLData.horizontalSpan = 2;
 			dscOutputLabel.setLayoutData(dscOutputLabelLData);
-			dscOutputLabel.setText("DSC-Ausgang");
+			dscOutputLabel.setText("DSC-Ausgang"); //$NON-NLS-1$
 		}
 		{
 			controlModeCombo = new CCombo(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -221,7 +221,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			controlModeTextLData.heightHint = 17;
 			controlModeTextLData.horizontalSpan = 4;
 			controlModeCombo.setLayoutData(controlModeTextLData);
-			controlModeCombo.setText("PPM10");
+			controlModeCombo.setText("PPM10"); //$NON-NLS-1$
 		}
 		{
 			powerWarningLabel = new CLabel(baseComposite, SWT.NONE);
@@ -230,7 +230,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			powerWarningLabelLData.heightHint = 22;
 			powerWarningLabelLData.horizontalSpan = 2;
 			powerWarningLabel.setLayoutData(powerWarningLabelLData);
-			powerWarningLabel.setText("Einschaltwarnung");
+			powerWarningLabel.setText("Einschaltwarnung"); //$NON-NLS-1$
 		}
 		{
 			powerWarningCombo = new CCombo(baseComposite, SWT.BORDER);
@@ -239,7 +239,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			powerWarningComboLData.widthHint = 60;
 			powerWarningComboLData.heightHint = 17;
 			powerWarningCombo.setLayoutData(powerWarningComboLData);
-			powerWarningCombo.setText("G1");
+			powerWarningCombo.setText("G1"); //$NON-NLS-1$
 		}
 		{
 			autoTrimLabel = new CLabel(baseComposite, SWT.NONE);
@@ -248,7 +248,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			autoTrimLabelLData.heightHint = 22;
 			autoTrimLabelLData.horizontalSpan = 2;
 			autoTrimLabel.setLayoutData(autoTrimLabelLData);
-			autoTrimLabel.setText("Auto-Trimm");
+			autoTrimLabel.setText("Auto-Trimm"); //$NON-NLS-1$
 		}
 		{
 			autoTrimCombo = new CCombo(baseComposite, SWT.BORDER);
@@ -257,7 +257,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			autoTrimComboLData.widthHint = 60;
 			autoTrimComboLData.heightHint = 17;
 			autoTrimCombo.setLayoutData(autoTrimComboLData);
-			autoTrimCombo.setText("ON");
+			autoTrimCombo.setText("ON"); //$NON-NLS-1$
 		}
 		{
 			clockResetLabel = new CLabel(baseComposite, SWT.NONE);
@@ -266,7 +266,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			clockResetLabelLData.heightHint = 22;
 			clockResetLabelLData.horizontalSpan = 2;
 			clockResetLabel.setLayoutData(clockResetLabelLData);
-			clockResetLabel.setText("Auto rücksetzen Uhr");
+			clockResetLabel.setText("Auto rücksetzen Uhr"); //$NON-NLS-1$
 		}
 		{
 			autoResetClockCombo = new CCombo(baseComposite, SWT.BORDER);
@@ -275,7 +275,7 @@ public class BaseConfiguration extends ScrolledComposite {
 			autoResetClockComboLData.widthHint = 60;
 			autoResetClockComboLData.heightHint = 17;
 			autoResetClockCombo.setLayoutData(autoResetClockComboLData);
-			autoResetClockCombo.setText("ON");
+			autoResetClockCombo.setText("ON"); //$NON-NLS-1$
 		}
 	}
 

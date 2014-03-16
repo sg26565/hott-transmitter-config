@@ -40,9 +40,9 @@ public aspect PropertyChangeAspect {
       // get old value from getter method
       final String getMethodName;
       if (newValue instanceof Boolean) {
-        getMethodName = "is" + setMethodName.substring(3);
+        getMethodName = "is" + setMethodName.substring(3); //$NON-NLS-1$
       } else {
-        getMethodName = "get" + setMethodName.substring(3);
+        getMethodName = "get" + setMethodName.substring(3); //$NON-NLS-1$
       }
 
       final Object oldValue;

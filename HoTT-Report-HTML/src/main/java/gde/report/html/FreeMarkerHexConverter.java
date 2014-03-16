@@ -22,12 +22,13 @@ import java.util.List;
 
 import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
+import gde.messages.Messages;
 
 public class FreeMarkerHexConverter implements TemplateMethodModelEx {
   @Override
   public Object exec(@SuppressWarnings("rawtypes") final List args) throws TemplateModelException {
     if (args == null || args.size() != 1) {
-      throw new TemplateModelException("Wrong number of arguments");
+      throw new TemplateModelException(Messages.getString("InvalidNumberOfArguments")); //$NON-NLS-1$
     }
 
     final long number = Long.parseLong(args.get(0).toString());

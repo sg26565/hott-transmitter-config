@@ -36,10 +36,10 @@ import android.widget.Toast;
 import de.treichels.hott.HoTTDecoder;
 
 public class MdlViewerActivity extends Activity implements ListView.OnItemClickListener {
-  private static final String MDL_MIME_TYPE      = "application/octet-stream";
-  private static final String FILE_EXTENSION_MDL = ".mdl";
-  private static final String SAVED_STATE_URI    = MdlViewerActivity.class.getName() + ".URI";
-  private static final String CACHE_FILE_NAME    = "MdlViewer.html";
+  private static final String MDL_MIME_TYPE      = "application/octet-stream"; //$NON-NLS-1$
+  private static final String FILE_EXTENSION_MDL = ".mdl"; //$NON-NLS-1$
+  private static final String SAVED_STATE_URI    = MdlViewerActivity.class.getName() + ".URI"; //$NON-NLS-1$
+  private static final String CACHE_FILE_NAME    = "MdlViewer.html"; //$NON-NLS-1$
   private static final int    READ_REQUEST_CODE  = 42;
 
   private Uri                 uri                = null;
@@ -222,7 +222,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     drawerLayout.closeDrawer(drawer);
 
     final Section section = Section.values()[(int) id];
-    webView.loadUrl(loadUrl + "#" + section.name());
+    webView.loadUrl(loadUrl + "#" + section.name()); //$NON-NLS-1$
   }
 
   @Override
@@ -282,7 +282,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   @TargetApi(19)
   public void print(final MenuItem menuItem) {
     final PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
-    printManager.print("HoTTMdlViewer - " + model.getModelName(), webView.createPrintDocumentAdapter(), null);
+    printManager.print("HoTTMdlViewer - " + model.getModelName(), webView.createPrintDocumentAdapter(), null); //$NON-NLS-1$
   }
 
   /**

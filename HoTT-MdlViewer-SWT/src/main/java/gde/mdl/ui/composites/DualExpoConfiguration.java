@@ -35,7 +35,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 	public DualExpoConfiguration(Composite tabFolder, CTabItem tabItem) {
 	super(tabFolder, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 	tabItem.setControl(this);
-	this.open("");
+	this.open(""); //$NON-NLS-1$
 	baseComposite.layout();
 	}
 	
@@ -68,7 +68,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrLabelLData.widthHint = 53;
 			qrLabelLData.heightHint = 22;
 			qrLabel.setLayoutData(qrLabelLData);
-			qrLabel.setText("QR [%]");
+			qrLabel.setText("QR [%]"); //$NON-NLS-1$
 		}
 		{
 			qrDualText1 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -77,7 +77,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrDualText1LData.widthHint = 25;
 			qrDualText1LData.heightHint = 16;
 			qrDualText1.setLayoutData(qrDualText1LData);
-			qrDualText1.setText("60");
+			qrDualText1.setText("60"); //$NON-NLS-1$
 		}
 		{
 			qrExpoText1 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -86,7 +86,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrExpoText1LData.widthHint = 25;
 			qrExpoText1LData.heightHint = 16;
 			qrExpoText1.setLayoutData(qrExpoText1LData);
-			qrExpoText1.setText("50");
+			qrExpoText1.setText("50"); //$NON-NLS-1$
 		}
 		{
 			qrDualText2 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -95,7 +95,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrDualText2LData.widthHint = 25;
 			qrDualText2LData.heightHint = 16;
 			qrDualText2.setLayoutData(qrDualText2LData);
-			qrDualText2.setText("40");
+			qrDualText2.setText("40"); //$NON-NLS-1$
 		}
 		{
 			qrExpoText2 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -104,7 +104,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrExpoText2LData.widthHint = 25;
 			qrExpoText2LData.heightHint = 16;
 			qrExpoText2.setLayoutData(qrExpoText2LData);
-			qrExpoText2.setText("20");
+			qrExpoText2.setText("20"); //$NON-NLS-1$
 		}
 		{
 			qrDualText3 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -113,7 +113,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrDualText3LData.widthHint = 25;
 			qrDualText3LData.heightHint = 16;
 			qrDualText3.setLayoutData(qrDualText3LData);
-			qrDualText3.setText("30");
+			qrDualText3.setText("30"); //$NON-NLS-1$
 		}
 		{
 			qrExpoText3 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -122,19 +122,19 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrExpoText3LData.widthHint = 25;
 			qrExpoText3LData.heightHint = 16;
 			qrExpoText3.setLayoutData(qrExpoText3LData);
-			qrExpoText3.setText("10");
+			qrExpoText3.setText("10"); //$NON-NLS-1$
 		}
 		{
 			qrDualCombo = new CCombo(baseComposite, SWT.BORDER);
 			GridData qrDualComboLData = new GridData();
 			qrDualCombo.setLayoutData(qrDualComboLData);
-			qrDualCombo.setText(" 4 |");
+			qrDualCombo.setText(" 4 |"); //$NON-NLS-1$
 		}
 		{
 			qrExpoCombo = new CCombo(baseComposite, SWT.BORDER);
 			GridData qrExpoComboLData = new GridData();
 			qrExpoCombo.setLayoutData(qrExpoComboLData);
-			qrExpoCombo.setText("---");
+			qrExpoCombo.setText("---"); //$NON-NLS-1$
 		}
 		{
 			hrLabel = new CLabel(baseComposite, SWT.NONE);
@@ -142,7 +142,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			hrLabelLData.widthHint = 53;
 			hrLabelLData.heightHint = 22;
 			hrLabel.setLayoutData(hrLabelLData);
-			hrLabel.setText("HR [%]");
+			hrLabel.setText("HR [%]"); //$NON-NLS-1$
 		}
 		{
 			qrDualText1 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -151,7 +151,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrDualText1LData.widthHint = 25;
 			qrDualText1LData.heightHint = 16;
 			qrDualText1.setLayoutData(qrDualText1LData);
-			qrDualText1.setText("60");
+			qrDualText1.setText("60"); //$NON-NLS-1$
 		}
 		{
 			qrExpoText1 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -160,7 +160,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrExpoText1LData.widthHint = 25;
 			qrExpoText1LData.heightHint = 16;
 			qrExpoText1.setLayoutData(qrExpoText1LData);
-			qrExpoText1.setText("50");
+			qrExpoText1.setText("50"); //$NON-NLS-1$
 		}
 		{
 			qrDualText2 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -169,7 +169,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrDualText2LData.widthHint = 25;
 			qrDualText2LData.heightHint = 16;
 			qrDualText2.setLayoutData(qrDualText2LData);
-			qrDualText2.setText("40");
+			qrDualText2.setText("40"); //$NON-NLS-1$
 		}
 		{
 			qrExpoText2 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -178,7 +178,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrExpoText2LData.widthHint = 25;
 			qrExpoText2LData.heightHint = 16;
 			qrExpoText2.setLayoutData(qrExpoText2LData);
-			qrExpoText2.setText("20");
+			qrExpoText2.setText("20"); //$NON-NLS-1$
 		}
 		{
 			qrDualText3 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -187,7 +187,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrDualText3LData.widthHint = 25;
 			qrDualText3LData.heightHint = 16;
 			qrDualText3.setLayoutData(qrDualText3LData);
-			qrDualText3.setText("30");
+			qrDualText3.setText("30"); //$NON-NLS-1$
 		}
 		{
 			qrExpoText3 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -196,19 +196,19 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrExpoText3LData.widthHint = 25;
 			qrExpoText3LData.heightHint = 16;
 			qrExpoText3.setLayoutData(qrExpoText3LData);
-			qrExpoText3.setText("10");
+			qrExpoText3.setText("10"); //$NON-NLS-1$
 		}
 		{
 			qrDualCombo = new CCombo(baseComposite, SWT.BORDER);
 			GridData qrDualComboLData = new GridData();
 			qrDualCombo.setLayoutData(qrDualComboLData);
-			qrDualCombo.setText(" 4 |");
+			qrDualCombo.setText(" 4 |"); //$NON-NLS-1$
 		}
 		{
 			qrExpoCombo = new CCombo(baseComposite, SWT.BORDER);
 			GridData qrExpoComboLData = new GridData();
 			qrExpoCombo.setLayoutData(qrExpoComboLData);
-			qrExpoCombo.setText("---");
+			qrExpoCombo.setText("---"); //$NON-NLS-1$
 		}
 		{
 			srLabel = new CLabel(baseComposite, SWT.NONE);
@@ -216,7 +216,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			srLabelLData.widthHint = 53;
 			srLabelLData.heightHint = 22;
 			srLabel.setLayoutData(srLabelLData);
-			srLabel.setText("SR [%]");
+			srLabel.setText("SR [%]"); //$NON-NLS-1$
 		}
 		{
 			qrDualText1 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -225,7 +225,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrDualText1LData.widthHint = 25;
 			qrDualText1LData.heightHint = 16;
 			qrDualText1.setLayoutData(qrDualText1LData);
-			qrDualText1.setText("60");
+			qrDualText1.setText("60"); //$NON-NLS-1$
 		}
 		{
 			qrExpoText1 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -234,7 +234,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrExpoText1LData.widthHint = 25;
 			qrExpoText1LData.heightHint = 16;
 			qrExpoText1.setLayoutData(qrExpoText1LData);
-			qrExpoText1.setText("50");
+			qrExpoText1.setText("50"); //$NON-NLS-1$
 		}
 		{
 			qrDualText2 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -243,7 +243,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrDualText2LData.widthHint = 25;
 			qrDualText2LData.heightHint = 16;
 			qrDualText2.setLayoutData(qrDualText2LData);
-			qrDualText2.setText("40");
+			qrDualText2.setText("40"); //$NON-NLS-1$
 		}
 		{
 			qrExpoText2 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -252,7 +252,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrExpoText2LData.widthHint = 25;
 			qrExpoText2LData.heightHint = 16;
 			qrExpoText2.setLayoutData(qrExpoText2LData);
-			qrExpoText2.setText("20");
+			qrExpoText2.setText("20"); //$NON-NLS-1$
 		}
 		{
 			qrDualText3 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -261,7 +261,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrDualText3LData.widthHint = 25;
 			qrDualText3LData.heightHint = 16;
 			qrDualText3.setLayoutData(qrDualText3LData);
-			qrDualText3.setText("30");
+			qrDualText3.setText("30"); //$NON-NLS-1$
 		}
 		{
 			qrExpoText3 = new Text(baseComposite, SWT.CENTER | SWT.BORDER);
@@ -270,19 +270,19 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			qrExpoText3LData.widthHint = 25;
 			qrExpoText3LData.heightHint = 16;
 			qrExpoText3.setLayoutData(qrExpoText3LData);
-			qrExpoText3.setText("100");
+			qrExpoText3.setText("100"); //$NON-NLS-1$
 		}
 		{
 			qrDualCombo = new CCombo(baseComposite, SWT.BORDER);
 			GridData qrDualComboLData = new GridData();
 			qrDualCombo.setLayoutData(qrDualComboLData);
-			qrDualCombo.setText(" 4 |");
+			qrDualCombo.setText(" 4 |"); //$NON-NLS-1$
 		}
 		{
 			qrExpoCombo = new CCombo(baseComposite, SWT.BORDER);
 			GridData qrExpoComboLData = new GridData();
 			qrExpoCombo.setLayoutData(qrExpoComboLData);
-			qrExpoCombo.setText("---");
+			qrExpoCombo.setText("---"); //$NON-NLS-1$
 		}
 		{
 			spaceLabel = new CLabel(baseComposite, SWT.RIGHT);
@@ -296,56 +296,56 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			GridData dualLabelLData = new GridData();
 			dualLabelLData.horizontalAlignment = GridData.CENTER;
 			dualLabel.setLayoutData(dualLabelLData);
-			dualLabel.setText("Dual");
+			dualLabel.setText("Dual"); //$NON-NLS-1$
 		}
 		{
 			expoLabel = new CLabel(baseComposite, SWT.NONE);
 			GridData expoLabelLData = new GridData();
 			expoLabelLData.horizontalAlignment = GridData.CENTER;
 			expoLabel.setLayoutData(expoLabelLData);
-			expoLabel.setText("Expo");
+			expoLabel.setText("Expo"); //$NON-NLS-1$
 		}
 		{
 			dualLabel = new CLabel(baseComposite, SWT.NONE);
 			GridData dualLabelLData = new GridData();
 			dualLabelLData.horizontalAlignment = GridData.CENTER;
 			dualLabel.setLayoutData(dualLabelLData);
-			dualLabel.setText("Dual");
+			dualLabel.setText("Dual"); //$NON-NLS-1$
 		}
 		{
 			expoLabel = new CLabel(baseComposite, SWT.NONE);
 			GridData expoLabelLData = new GridData();
 			expoLabelLData.horizontalAlignment = GridData.CENTER;
 			expoLabel.setLayoutData(expoLabelLData);
-			expoLabel.setText("Expo");
+			expoLabel.setText("Expo"); //$NON-NLS-1$
 		}
 		{
 			dualLabel = new CLabel(baseComposite, SWT.NONE);
 			GridData dualLabelLData = new GridData();
 			dualLabelLData.horizontalAlignment = GridData.CENTER;
 			dualLabel.setLayoutData(dualLabelLData);
-			dualLabel.setText("Dual");
+			dualLabel.setText("Dual"); //$NON-NLS-1$
 		}
 		{
 			expoLabel = new CLabel(baseComposite, SWT.NONE);
 			GridData expoLabelLData = new GridData();
 			expoLabelLData.horizontalAlignment = GridData.CENTER;
 			expoLabel.setLayoutData(expoLabelLData);
-			expoLabel.setText("Expo");
+			expoLabel.setText("Expo"); //$NON-NLS-1$
 		}
 		{
 			dualLabel = new CLabel(baseComposite, SWT.NONE);
 			GridData dualLabelLData = new GridData();
 			dualLabelLData.horizontalAlignment = GridData.CENTER;
 			dualLabel.setLayoutData(dualLabelLData);
-			dualLabel.setText("Dual");
+			dualLabel.setText("Dual"); //$NON-NLS-1$
 		}
 		{
 			expoLabel = new CLabel(baseComposite, SWT.NONE);
 			GridData expoLabelLData = new GridData();
 			expoLabelLData.horizontalAlignment = GridData.CENTER;
 			expoLabel.setLayoutData(expoLabelLData);
-			expoLabel.setText("Expo");
+			expoLabel.setText("Expo"); //$NON-NLS-1$
 		}
 		{
 			spaceLabel = new CLabel(baseComposite, SWT.RIGHT);
@@ -362,7 +362,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			phaseNormalLabelLData.heightHint = 22;
 			phaseNormalLabelLData.horizontalAlignment = GridData.CENTER;
 			phaseNormalLabel.setLayoutData(phaseNormalLabelLData);
-			phaseNormalLabel.setText("Normal");
+			phaseNormalLabel.setText("Normal"); //$NON-NLS-1$
 		}
 		{
 			phaseLabel2 = new CLabel(baseComposite, SWT.NONE);
@@ -372,7 +372,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			phaseLabel2LData.widthHint = 69;
 			phaseLabel2LData.heightHint = 22;
 			phaseLabel2.setLayoutData(phaseLabel2LData);
-			phaseLabel2.setText("Phase 2");
+			phaseLabel2.setText("Phase 2"); //$NON-NLS-1$
 		}
 		{
 			phaseLabel3 = new CLabel(baseComposite, SWT.NONE);
@@ -382,7 +382,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			phaseLabel3LData.widthHint = 69;
 			phaseLabel3LData.heightHint = 22;
 			phaseLabel3.setLayoutData(phaseLabel3LData);
-			phaseLabel3.setText("Phase 3");
+			phaseLabel3.setText("Phase 3"); //$NON-NLS-1$
 		}
 		{
 			switchLabel = new CLabel(baseComposite, SWT.NONE);
@@ -392,7 +392,7 @@ public class DualExpoConfiguration extends ScrolledComposite {
 			switchLabelLData.widthHint = 69;
 			switchLabelLData.heightHint = 22;
 			switchLabel.setLayoutData(switchLabelLData);
-			switchLabel.setText("Schalter");
+			switchLabel.setText("Schalter"); //$NON-NLS-1$
 		}
 	}
 

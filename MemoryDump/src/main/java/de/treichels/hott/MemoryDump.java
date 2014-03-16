@@ -17,6 +17,7 @@
  */
 package de.treichels.hott;
 
+import gde.messages.Messages;
 import gde.model.serial.ResponseCode;
 import gde.model.serial.SerialPort;
 import gde.model.serial.SerialPortDefaultImpl;
@@ -58,11 +59,11 @@ public class MemoryDump {
       final SerialPort portImpl = new SerialPortDefaultImpl(portName);
       port = new HoTTSerialPort(portImpl);
 
-      dumpButton.setText("Abort Dump");
+      dumpButton.setText(Messages.getString("Abort")); //$NON-NLS-1$
       saveButton.setEnabled(false);
 
-      textArea.setText("");
-      messageArea.setText("Starting dump ... (.=OK B=Transmitter Busy C=CRC Error E=I/O Error N=Not Acknowledged)");
+      textArea.setText(""); //$NON-NLS-1$
+      messageArea.setText(Messages.getString("MemoryDump.StartMessage")); //$NON-NLS-1$
 
       try {
         byte[] data = null;
@@ -72,7 +73,7 @@ public class MemoryDump {
 
           final int address = 0x800 * i;
           if (i % 128 == 0) {
-            messageArea.append("\n");
+            messageArea.append("\n"); //$NON-NLS-1$
           }
 
           while (rc != ResponseCode.ACK && dumpThread != null) {
@@ -92,32 +93,32 @@ public class MemoryDump {
               final String text = Util.dumpData(data, address);
               textArea.append(text);
               textArea.setCaretPosition(textArea.getText().length());
-              messageArea.append(".");
+              messageArea.append("."); //$NON-NLS-1$
               continue;
 
             case BUSY:
-              messageArea.append("B");
+              messageArea.append("B"); //$NON-NLS-1$
               break;
 
             case CRC_ERROR:
-              messageArea.append("C");
+              messageArea.append("C"); //$NON-NLS-1$
               break;
 
             case ERROR:
-              messageArea.append("E");
+              messageArea.append("E"); //$NON-NLS-1$
               break;
 
             case NACK:
-              messageArea.append("N");
+              messageArea.append("N"); //$NON-NLS-1$
               break;
             }
           }
         }
       } finally {
-        dumpButton.setText("Start Dump");
+        dumpButton.setText(Messages.getString("Start")); //$NON-NLS-1$
         saveButton.setEnabled(true);
 
-        messageArea.append("\ndone.");
+        messageArea.append(Messages.getString("MemoryDump.done")); //$NON-NLS-1$
       }
     }
   }
@@ -125,8 +126,8 @@ public class MemoryDump {
   private final class SaveButtonActionListener implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent evt) {
-      final String extension = "txt";
-      final String description = "Text Files";
+      final String extension = "txt"; //$NON-NLS-1$
+      final String description = Messages.getString("MemoryDump.FileDescription"); //$NON-NLS-1$
       final JFileChooser fc = new JFileChooser();
       fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
       fc.setMultiSelectionEnabled(false);
@@ -137,8 +138,8 @@ public class MemoryDump {
 
       if (result == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
-        if (!file.getName().endsWith(".txt")) {
-          file = new File(file.getAbsoluteFile() + ".txt");
+        if (!file.getName().endsWith(".txt")) { //$NON-NLS-1$
+          file = new File(file.getAbsoluteFile() + ".txt"); //$NON-NLS-1$
         }
 
         FileWriter writer;
@@ -173,14 +174,14 @@ public class MemoryDump {
   }
 
   private final JComboBox<String> comboBox          = new JComboBox<String>();
-  private final JButton           dumpButton        = new JButton("Start Dump");
-  private final JButton           saveButton        = new JButton("Save");
+  private final JButton           dumpButton        = new JButton(Messages.getString("Start"));          //$NON-NLS-1$
+  private final JButton           saveButton        = new JButton(Messages.getString("Save"));           //$NON-NLS-1$
   private final JPanel            panel             = new JPanel();
   private final JTextArea         textArea          = new JTextArea();
   private final JScrollPane       textScrollPane    = new JScrollPane(textArea);
   private final JTextArea         messageArea       = new JTextArea();
   private final JScrollPane       messageScrollPane = new JScrollPane(messageArea);
-  private final JFrame            frame             = new JFrame("HoTT Transmitter Memory Dump");
+  private final JFrame            frame             = new JFrame(Messages.getString("MemoryDump.Title")); //$NON-NLS-1$
   private DumpThread              dumpThread        = null;
 
   private void showDialog() {
@@ -192,7 +193,7 @@ public class MemoryDump {
     saveButton.addActionListener(new SaveButtonActionListener());
     saveButton.setEnabled(false);
 
-    panel.add(new JLabel("Serial Port:"));
+    panel.add(new JLabel(Messages.getString("SerialPort"))); //$NON-NLS-1$
     panel.add(comboBox);
     panel.add(dumpButton);
     panel.add(saveButton);

@@ -17,6 +17,7 @@
  */
 package gde.mdl.ui;
 
+import gde.messages.Messages;
 import gde.model.BaseModel;
 import gde.model.enums.ModelType;
 import gde.model.serial.FileInfo;
@@ -86,7 +87,7 @@ public class SelectFromSdCardDialog extends JDialog {
         rootNode.removeAllChildren();
         port = new HoTTSerialPort(new SerialPortDefaultImpl(portName));
         try {
-          for (final String name : port.listDir("/")) {
+          for (final String name : port.listDir("/")) { //$NON-NLS-1$
             final FileInfo info = port.getFileInfo(name);
             rootNode.add(new FileInfoTreeNode(info));
           }
@@ -106,15 +107,15 @@ public class SelectFromSdCardDialog extends JDialog {
   }
 
   private final JComboBox<String>      comboBox = new JComboBox<String>();
-  private final DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("SD Card");
+  private final DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(Messages.getString("SelectFromSdCardDialog.RootNodeLabel")); //$NON-NLS-1$
   private final DefaultTreeModel       model    = new DefaultTreeModel(rootNode);
   private final JTree                  tree     = new JTree(model);
-  private final JButton                okButton = new JButton("Ok");
+  private final JButton                okButton = new JButton(Messages.getString("Ok"));                                                 //$NON-NLS-1$
   private FileInfo                     fileInfo = null;
   private HoTTSerialPort               port;
 
   public SelectFromSdCardDialog(final Frame owner) {
-    super(owner, "Select Model from SD Card", true);
+    super(owner, Messages.getString("SelectFromSdCardDialog.Title"), true); //$NON-NLS-1$
 
     for (final String s : SerialPortDefaultImpl.getAvailablePorts()) {
       comboBox.addItem(s);
@@ -124,7 +125,7 @@ public class SelectFromSdCardDialog extends JDialog {
     comboBox.addActionListener(listener);
     listener.actionPerformed(null);
 
-    final JLabel label = new JLabel("Serial Port:");
+    final JLabel label = new JLabel(Messages.getString("SerialPort")); //$NON-NLS-1$
     label.setLabelFor(comboBox);
     final JPanel portPanel = new JPanel();
     portPanel.add(label);
@@ -167,7 +168,7 @@ public class SelectFromSdCardDialog extends JDialog {
     final JScrollPane scrollPane = new JScrollPane(tree);
     scrollPane.setPreferredSize(new Dimension(100, 300));
 
-    final JButton cancelButton = new JButton("Cancel");
+    final JButton cancelButton = new JButton(Messages.getString("Cancel")); //$NON-NLS-1$
     cancelButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(final ActionEvent arg0) {
@@ -214,13 +215,14 @@ public class SelectFromSdCardDialog extends JDialog {
   public BaseModel getModel() throws IOException {
     BaseModel result = null;
 
-    if (fileInfo != null && fileInfo.getType() == FileType.File && fileInfo.getName().endsWith(".mdl") && fileInfo.getSize() <= 0x3000
+    if (fileInfo != null && fileInfo.getType() == FileType.File && fileInfo.getName().endsWith(".mdl") && fileInfo.getSize() <= 0x3000 //$NON-NLS-1$
         && fileInfo.getSize() >= 0x2000) {
       final String fileName = fileInfo.getName();
 
       // check model type
       ModelType type;
-      switch (fileName.charAt(0)) {
+      final char typeChar = fileName.charAt(0);
+      switch (typeChar) {
       case 'a':
         type = ModelType.Winged;
         break;
@@ -230,7 +232,7 @@ public class SelectFromSdCardDialog extends JDialog {
         break;
 
       default:
-        throw new IOException("invalid model type");
+        throw new IOException(Messages.getString("InvalidModelType", typeChar)); //$NON-NLS-1$
       }
 
       final String name = fileName.substring(1, fileName.length() - 4);

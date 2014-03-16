@@ -1,5 +1,6 @@
 package de.treichels.hott;
 
+import gde.messages.Messages;
 import gde.model.enums.ModelType;
 import gde.model.serial.ModelInfo;
 import gde.model.serial.SerialPortDefaultImpl;
@@ -64,7 +65,7 @@ public class ExportModels {
 
     @Override
     public Component getTableCellEditorComponent(final JTable table, final Object value, final boolean isSelected, final int row, final int column) {
-      final JButton button = new JButton("Save");
+      final JButton button = new JButton(Messages.getString("Save")); //$NON-NLS-1$
       button.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(final ActionEvent evt) {
@@ -87,7 +88,8 @@ public class ExportModels {
 
   private static final class ModelInfoTableModel extends AbstractTableModel {
     private static final long     serialVersionUID = 1L;
-    private static final String[] COLUMNS          = { "#", "Model Type", "Model Name", "Model Info", "Receiver Type", "Usage", "Actions" };
+    private static final String[] COLUMNS          = {
+      Messages.getString("ModelNumber"), Messages.getString("ModelType"), Messages.getString("ModelName"), Messages.getString("ModelInfo"), Messages.getString("ReceiverType"), Messages.getString("Usage"), Messages.getString("Actions") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
     private ModelInfo[]           modelInfos;
 
     @Override
@@ -142,9 +144,9 @@ public class ExportModels {
 
       case 5:
         if (info.getUsedHours() == 0 && info.getUsedMinutes() == 0) {
-          return "-:-";
+          return "-:-"; //$NON-NLS-1$
         } else {
-          return String.format("%02d:%02d", info.getUsedHours(), info.getUsedMinutes());
+          return String.format("%02d:%02d", info.getUsedHours(), info.getUsedMinutes()); //$NON-NLS-1$
         }
 
       default:
@@ -177,7 +179,7 @@ public class ExportModels {
     }
   }
 
-  private static final String      LAST_SAVE_DIR = "lastSaveDir";
+  private static final String      LAST_SAVE_DIR = "lastSaveDir"; //$NON-NLS-1$
   private static final Preferences PREFS         = Preferences.userNodeForPackage(ExportModels.class);
 
   @SuppressWarnings("unused")
@@ -188,9 +190,9 @@ public class ExportModels {
   }
 
   private final JComboBox<String>   comboBox      = new JComboBox<String>();
-  private final JButton             saveAllButton = new JButton("Save All");
+  private final JButton             saveAllButton = new JButton(Messages.getString("SaveAll"));          //$NON-NLS-1$
   private final JPanel              panel         = new JPanel();
-  private final JFrame              frame         = new JFrame("HoTT Transmitter Model Backup");
+  private final JFrame              frame         = new JFrame(Messages.getString("ExportModels.Title")); //$NON-NLS-1$
   private final JLabel              status        = new JLabel();
   private final ModelInfoTableModel tableModel    = new ModelInfoTableModel();
   private final JTable              models        = new JTable(tableModel);
@@ -198,16 +200,16 @@ public class ExportModels {
   private HoTTSerialPort            port          = null;
 
   public void save(final ModelInfo info) throws IOException {
-    final String extension = "mdl";
-    final String description = "Model Configuration Files";
+    final String extension = "mdl"; //$NON-NLS-1$
+    final String description = Messages.getString("MdlFileDescription"); //$NON-NLS-1$
     final JFileChooser fc = new JFileChooser();
     fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
     fc.setMultiSelectionEnabled(false);
     fc.setAcceptAllFileFilterUsed(false);
-    final File dir = new File(PREFS.get(LAST_SAVE_DIR, System.getProperty("user.dir")));
+    final File dir = new File(PREFS.get(LAST_SAVE_DIR, System.getProperty("user.dir"))); //$NON-NLS-1$
     fc.setCurrentDirectory(dir);
     fc.setFileFilter(new FileNameExtensionFilter(description, extension));
-    fc.setSelectedFile(new File(dir, String.format("%c%s.mdl", info.getModelType() == ModelType.Winged ? 'a' : 'h', info.getModelName())));
+    fc.setSelectedFile(new File(dir, String.format("%c%s.mdl", info.getModelType() == ModelType.Winged ? 'a' : 'h', info.getModelName()))); //$NON-NLS-1$
 
     final int result = fc.showSaveDialog(frame);
 
@@ -231,7 +233,7 @@ public class ExportModels {
     final JFileChooser fc = new JFileChooser();
     fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     fc.setMultiSelectionEnabled(false);
-    final File dir = new File(PREFS.get(LAST_SAVE_DIR, System.getProperty("user.dir")));
+    final File dir = new File(PREFS.get(LAST_SAVE_DIR, System.getProperty("user.dir"))); //$NON-NLS-1$
     fc.setCurrentDirectory(dir);
 
     final int result = fc.showSaveDialog(frame);
@@ -242,7 +244,7 @@ public class ExportModels {
 
       frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
       frame.setEnabled(false);
-      final ProgressMonitor monitor = new ProgressMonitor(frame, "Saving models ...", "", 0, tableModel.getRowCount());
+      final ProgressMonitor monitor = new ProgressMonitor(frame, Messages.getString("ExportModels.SavingModels"), "", 0, tableModel.getRowCount()); //$NON-NLS-1$ //$NON-NLS-2$
       monitor.setMillisToDecideToPopup(30);
       monitor.setMillisToPopup(0);
 
@@ -267,10 +269,10 @@ public class ExportModels {
             final char type = info.getModelType() == ModelType.Winged ? 'a' : 'h';
             String name = info.getModelName();
             if (name == null || name.length() == 0) {
-              name = String.format("Model%02d", info.getModelNumber());
+              name = String.format("Model%02d", info.getModelNumber()); //$NON-NLS-1$
             }
 
-            final String fileName = String.format("%c%s.mdl", type, name);
+            final String fileName = String.format("%c%s.mdl", type, name); //$NON-NLS-1$
             FileOutputStream os = null;
             try {
               os = new FileOutputStream(new File(file, fileName));
@@ -304,7 +306,7 @@ public class ExportModels {
     comboBox.addActionListener(listener);
     listener.actionPerformed(null);
 
-    panel.add(new JLabel("Serial Port:"));
+    panel.add(new JLabel(Messages.getString("SerialPort"))); //$NON-NLS-1$
     panel.add(comboBox);
     panel.add(saveAllButton);
 

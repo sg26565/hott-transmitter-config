@@ -37,6 +37,7 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import gde.messages.Messages;
 import gde.model.BaseModel;
 import gde.model.helicopter.HelicopterModel;
 import gde.model.winged.WingedModel;
@@ -54,8 +55,8 @@ public class HTMLReport {
   static {
     // setup freemarker
     CONFIGURATION = new Configuration();
-    CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8");
-    CONFIGURATION.setClassForTemplateLoading(HTMLReport.class, "templates");
+    CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8"); //$NON-NLS-1$
+    CONFIGURATION.setClassForTemplateLoading(HTMLReport.class, "templates"); //$NON-NLS-1$
     CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
     CUSTOM_EXCEPTION_HANDLER = new FreeMarkerExceptionHandler();
 
@@ -70,13 +71,13 @@ public class HTMLReport {
     }
 
     // extract font file
-    final File file = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf");
+    final File file = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf"); //$NON-NLS-1$ //$NON-NLS-2$
     if (!(file.exists() && file.isFile() && file.canRead())) {
       InputStream is = null;
       OutputStream os = null;
 
       try {
-        is = ClassLoader.getSystemResourceAsStream("Arial.ttf");
+        is = ClassLoader.getSystemResourceAsStream("Arial.ttf"); //$NON-NLS-1$
         os = new FileOutputStream(file);
 
         final byte[] buffer = new byte[1024];
@@ -118,36 +119,36 @@ public class HTMLReport {
     case mc20:
     case mc32:
     case mx20:
-      templateName = "mc-32.xhtml";
+      templateName = "mc-32.xhtml"; //$NON-NLS-1$
       break;
 
     case mx12:
     case mx16:
-      templateName = "mx-16.xhtml";
+      templateName = "mx-16.xhtml"; //$NON-NLS-1$
       break;
 
     default:
-      throw new IOException("Unsupported transmitter type");
+      throw new IOException(Messages.getString("InvalidTransmitterType", model.getTransmitterType())); //$NON-NLS-1$
     }
 
     try {
       final Template template = HTMLReport.CONFIGURATION.getTemplate(templateName);
       final Map<String, Object> rootMap = new HashMap<String, Object>();
 
-      rootMap.put("model", model);
-      rootMap.put("hex", new FreeMarkerHexConverter());
-      rootMap.put("png", HTMLReport.CURVE_IMAGE_GENERATOR);
-      rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective());
-      rootMap.put("programDir", new File(System.getProperty("program.dir", ".")).toURI().toURL().toString());
-      rootMap.put("tmpdir", System.getProperty("java.io.tmpdir"));
-      rootMap.put("version", System.getProperty("program.version", "unknown"));
+      rootMap.put("model", model); //$NON-NLS-1$
+      rootMap.put("hex", new FreeMarkerHexConverter()); //$NON-NLS-1$
+      rootMap.put("png", HTMLReport.CURVE_IMAGE_GENERATOR); //$NON-NLS-1$
+      rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective()); //$NON-NLS-1$
+      rootMap.put("programDir", new File(System.getProperty("program.dir", ".")).toURI().toURL().toString()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      rootMap.put("tmpdir", System.getProperty("java.io.tmpdir")); //$NON-NLS-1$ //$NON-NLS-2$
+      rootMap.put("version", System.getProperty("program.version", "unknown")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       if (model instanceof WingedModel) {
-        rootMap.put("wingedModel", model);
+        rootMap.put("wingedModel", model); //$NON-NLS-1$
       } else if (model instanceof HelicopterModel) {
-        rootMap.put("helicopterModel", model);
+        rootMap.put("helicopterModel", model); //$NON-NLS-1$
       }
 
-      template.process(rootMap, new OutputStreamWriter(baos, "UTF-8"));
+      template.process(rootMap, new OutputStreamWriter(baos, "UTF-8")); //$NON-NLS-1$
     } catch (final TemplateException e) {
       throw new ReportException(e);
     }

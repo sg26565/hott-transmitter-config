@@ -52,6 +52,7 @@ import com.itextpdf.text.DocumentException;
 
 import de.treichels.hott.HoTTDecoder;
 import freemarker.ext.beans.JavaBeansIntrospector;
+import gde.messages.Messages;
 import gde.model.BaseModel;
 import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;
@@ -142,22 +143,22 @@ public class SimpleGUI extends FSScrollPane {
   @SuppressWarnings("unused")
   private static RXTXCommDriver        driver;
 
-  private static final String          LAST_LOAD_DIR        = "lastLoadDir";
-  private static final String          LAST_SAVE_DIR        = "lastSaveDir";
+  private static final String          LAST_LOAD_DIR        = "lastLoadDir"; //$NON-NLS-1$
+  private static final String          LAST_SAVE_DIR        = "lastSaveDir"; //$NON-NLS-1$
   private static final Logger          LOG                  = Logger.getLogger(SimpleGUI.class.getName());
   private static final Preferences     PREFS                = Preferences.userNodeForPackage(SimpleGUI.class);
   private static final long            serialVersionUID     = 8824399313635999416L;
 
-  private final JFrame                 frame                = new JFrame("Hott Transmitter Config - " + System.getProperty(Launcher.PROGRAM_VERSION));
-  private final Action                 closeAction          = new CloseAction("Close");
-  private final Action                 loadFromFileAction   = new LoadAction("Load from File", Source.File);
-  private final Action                 loadFromMemoryAction = new LoadAction("Load from Memory", Source.Memory);
-  private final Action                 loadFromSdCardAction = new LoadAction("Load from SD Card", Source.SdCard);
+  private final JFrame                 frame                = new JFrame(Messages.getString("SimpleGUI.Title", System.getProperty(Launcher.PROGRAM_VERSION))); //$NON-NLS-1$
+  private final Action                 closeAction          = new CloseAction(Messages.getString("Close"));                                                   //$NON-NLS-1$
+  private final Action                 loadFromFileAction   = new LoadAction(Messages.getString("LoadFromFile"), Source.File);                                //$NON-NLS-1$
+  private final Action                 loadFromMemoryAction = new LoadAction(Messages.getString("LoadFromMemory"), Source.Memory);                            //$NON-NLS-1$
+  private final Action                 loadFromSdCardAction = new LoadAction(Messages.getString("LoadFromSdCard"), Source.SdCard);                            //$NON-NLS-1$
   private BaseModel                    model                = null;
-  private final Action                 refreshAction        = new RefreshAction("Refresh");
-  private final Action                 saveHtmlAction       = new SaveAction("Save HTML", FileType.HTML);
-  private final Action                 savePdfAction        = new SaveAction("Save PDF", FileType.PDF);
-  private final Action                 saveXmlAction        = new SaveAction("Save XML", FileType.XML);
+  private final Action                 refreshAction        = new RefreshAction(Messages.getString("Refresh"));                                               //$NON-NLS-1$
+  private final Action                 saveHtmlAction       = new SaveAction(Messages.getString("SaveHtml"), FileType.HTML);                                  //$NON-NLS-1$
+  private final Action                 savePdfAction        = new SaveAction(Messages.getString("SavePdf"), FileType.PDF);                                    //$NON-NLS-1$
+  private final Action                 saveXmlAction        = new SaveAction(Messages.getString("SaveXml"), FileType.XML);                                    //$NON-NLS-1$
   private final XHTMLPanel             xhtmlPane            = new XHTMLPanel();
   private final JPopupMenu             popupMenu            = new JPopupMenu();
 
@@ -215,7 +216,7 @@ public class SimpleGUI extends FSScrollPane {
     fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
     fc.setMultiSelectionEnabled(false);
     fc.setAcceptAllFileFilterUsed(false);
-    fc.setFileFilter(new FileNameExtensionFilter("HoTT Transmitter Model Files", "mdl"));
+    fc.setFileFilter(new FileNameExtensionFilter(Messages.getString("MdlFileDescription"), "mdl")); //$NON-NLS-1$ //$NON-NLS-2$
     fc.setCurrentDirectory(new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR))));
 
     final int result = fc.showOpenDialog(getTopLevelAncestor());
@@ -265,7 +266,7 @@ public class SimpleGUI extends FSScrollPane {
 
   public void refresh() throws IOException {
     if (model != null) {
-      xhtmlPane.setDocumentFromString(HTMLReport.generateHTML(model), "", new XhtmlNamespaceHandler());
+      xhtmlPane.setDocumentFromString(HTMLReport.generateHTML(model), "", new XhtmlNamespaceHandler()); //$NON-NLS-1$
     }
   }
 
@@ -275,7 +276,7 @@ public class SimpleGUI extends FSScrollPane {
     }
 
     final String extension = fileType.toString().toLowerCase();
-    final String description = fileType.toString() + " Files";
+    final String description = fileType.toString() + Messages.getString("SimpleGUI._Files"); //$NON-NLS-1$
     final JFileChooser fc = new JFileChooser();
     fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
     fc.setMultiSelectionEnabled(false);
@@ -290,8 +291,8 @@ public class SimpleGUI extends FSScrollPane {
       File file = fc.getSelectedFile();
       PREFS.put(LAST_SAVE_DIR, file.getParentFile().getAbsolutePath());
 
-      if (!file.getName().endsWith("." + fileType)) {
-        file = new File(file.getParentFile(), file.getName() + "." + fileType);
+      if (!file.getName().endsWith("." + fileType)) { //$NON-NLS-1$
+        file = new File(file.getParentFile(), file.getName() + "." + fileType); //$NON-NLS-1$
       }
 
       switch (fileType) {
@@ -311,13 +312,14 @@ public class SimpleGUI extends FSScrollPane {
   }
 
   private void showError(final Throwable t) {
-    LOG.log(Level.SEVERE, "Error", t);
-    JOptionPane.showMessageDialog(getTopLevelAncestor(), t.getClass().getName() + ": " + t.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    LOG.log(Level.SEVERE, Messages.getString("Error"), t); //$NON-NLS-1$
+    JOptionPane
+        .showMessageDialog(getTopLevelAncestor(), t.getClass().getName() + ": " + t.getMessage(), Messages.getString("Error"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   public void showInFrame() {
     try {
-      final JMenu fileMenu = new JMenu("File");
+      final JMenu fileMenu = new JMenu(Messages.getString("File")); //$NON-NLS-1$
       fileMenu.add(new JMenuItem(loadFromFileAction));
       fileMenu.add(new JMenuItem(loadFromMemoryAction));
       fileMenu.add(new JMenuItem(loadFromSdCardAction));

@@ -39,13 +39,13 @@ import gde.model.enums.TransmitterType;
 public class ReportTest {
   @BeforeClass
   public static void setup() {
-    System.setProperty("program.dir", "/tmp");
-    System.setProperty("program.version", "0.test");
+    System.setProperty("program.dir", "/tmp"); //$NON-NLS-1$ //$NON-NLS-2$
+    System.setProperty("program.version", "0.test"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
   public void testMc20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc20").toURI());
+    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc20").toURI()); //$NON-NLS-1$
 
     for (final File file : dir.listFiles()) {
       final BaseModel model = HoTTDecoder.decodeFile(file);
@@ -60,7 +60,7 @@ public class ReportTest {
 
   @Test
   public void testMc32Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc32").toURI());
+    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc32").toURI()); //$NON-NLS-1$
 
     for (final File file : dir.listFiles()) {
       final BaseModel model = HoTTDecoder.decodeFile(file);
@@ -75,7 +75,7 @@ public class ReportTest {
 
   @Test
   public void testMx12Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx12").toURI());
+    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx12").toURI()); //$NON-NLS-1$
 
     for (final File file : dir.listFiles()) {
       final BaseModel model = HoTTDecoder.decodeFile(file);
@@ -90,7 +90,7 @@ public class ReportTest {
 
   @Test
   public void testMx16Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx16").toURI());
+    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx16").toURI()); //$NON-NLS-1$
 
     for (final File file : dir.listFiles()) {
       final BaseModel model = HoTTDecoder.decodeFile(file);
@@ -105,7 +105,7 @@ public class ReportTest {
 
   @Test
   public void testMx20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx20").toURI());
+    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx20").toURI()); //$NON-NLS-1$
 
     for (final File file : dir.listFiles()) {
       final BaseModel model = HoTTDecoder.decodeFile(file);
