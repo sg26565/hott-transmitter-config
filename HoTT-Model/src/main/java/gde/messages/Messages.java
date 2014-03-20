@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 public class Messages {
   private static final String         BUNDLE_NAME     = "gde.messages.messages";              //$NON-NLS-1$
-  private static final String[]       PACKAGE_NAMES   = { "", "gde.model.enums." };
+  private static final String[]       PACKAGE_NAMES   = { "", "gde.model.", "gde.model.enums." };
   private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
   public static String getString(final String key, final Object... args) {
