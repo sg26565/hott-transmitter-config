@@ -1,45 +1,45 @@
 <table>
-	<caption><a name="baseSettings"/>Grundeinstellungen</caption>
+	<caption><a name="baseSettings"/>${m["Section.baseSettings"]}</caption>
 
 	<@reset/>
 	
 	<tbody>
 		<tr class="<@d/>">
-			<th align="right">Hersteller</th>
+			<th align="right">${m["BaseModel.vendor"]}</th>
 			<td align="left" colspan="3">${model.vendor}</td>
 		</tr>
 		<tr class="<@d/>">
-			<th align="right">Sendertyp</th>
+			<th align="right">${m["BaseModel.transmitterType"]}</th>
 			<td align="left" colspan="3">${model.transmitterType}</td>
 		</tr>
 		<tr class="<@d/>">
-			<th align="right">Sender ID</th>
+			<th align="right">${m["BaseModel.transmitterId"]}</th>
 			<td align="left" colspan="3">${hex(model.transmitterId?c)}</td>
 		</tr>
 		<tr class="<@d/>">
-			<th align="right">Firmware Version</th>
+			<th align="right">${m["BaseModel.appVersion"]}</th>
 			<td align="left" colspan="3">${model.appVersion}</td>
 		</tr>
 		<tr class="<@d/>">
-			<th align="right">Datei Version</th>
+			<th align="right">${m["BaseModel.memoryVersion"]}</th>
 			<td align="left" colspan="3">${model.memoryVersion}</td>
 		</tr>
 		<tr class="<@d/>">
-			<th align="right">Modelltyp</th>
+			<th align="right">${m["BaseModel.modelType"]}</th>
 			<td align="left" colspan="3">${model.modelType}</td>
 		</tr>
-		<#if model.modelNumber &gt; 0>
+		<#if model.modelNumber &gt; 0>			
 			<tr class="<@d/>">
-				<th align="right">Modellspeicher</th>
+				<th align="right">${m["BaseModel.modelNumber"]}</th>
 				<td align="left" colspan="3">${model.modelNumber}</td>
 			</tr>
 		</#if>
 		<tr class="<@d/>">
-			<th align="right">Modellname</th>
+			<th align="right">${m["BaseModel.modelName"]}</th>
 			<td align="left" colspan="3">${model.modelName}</td>
 		</tr>
 		<tr class="<@d/>">
-			<th align="right">Steueranordnung</th>
+			<th align="right">${m["BaseModel.stickMode"]}</th>
 			<td align="left" colspan="3">${model.stickMode}</td>
 		</tr>
 		<#if helicopterModel??>
@@ -54,10 +54,10 @@
 			</tr>
 		</#if>
 		<tr class="<@d/>">
-			<th align="right" valign="top">Motor-Stopp</th>
-			<td align="left"><i>Position:</i> ${model.throttleSettings.throttleCutOf.position}%</td>
-			<td align="left"><i>Limit:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
-			<td align="left"><i>Schalter:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>							
+			<th align="right" valign="top">${m["BaseModel.throttleSettings"]}</th>
+			<td align="left"><i>${m["ThrottleCutOf.position"]}:</i> ${model.throttleSettings.throttleCutOf.position}%</td>
+			<td align="left"><i>${m["ThrottleCutOf.threshold"]}:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
+			<td align="left"><i>${m["ThrottleCutOf.switch"]}:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>							
 		</tr>
 		<#if helicopterModel??>
 			<tr class="<@d/>">

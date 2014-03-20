@@ -1,3 +1,11 @@
+<#macro yesno boolean>
+	<#if boolean>
+		${m["BaseModel.yes"]}
+	<#else>
+		${m["BaseModel.no"]}
+	</#if>
+</#macro>
+
 <#macro switch sw>
 	<#if sw.assignment.name() == "Unassigned">
 		---

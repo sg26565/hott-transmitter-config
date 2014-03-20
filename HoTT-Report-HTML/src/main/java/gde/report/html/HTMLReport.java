@@ -147,6 +147,7 @@ public class HTMLReport {
       } else if (model instanceof HelicopterModel) {
         rootMap.put("helicopterModel", model); //$NON-NLS-1$
       }
+      rootMap.put("m", new Messages());
 
       template.process(rootMap, new OutputStreamWriter(baos, "UTF-8")); //$NON-NLS-1$
     } catch (final TemplateException e) {

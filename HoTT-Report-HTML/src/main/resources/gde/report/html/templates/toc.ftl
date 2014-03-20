@@ -1,5 +1,5 @@
 <h1>Inhaltsverzeichnis</h1>
-<a href="#baseSettings">Grundeinstellungen Modell</a>
+<a href="#baseSettings">${m["Section.baseSettings"]}</a>
 <a href="#modelType"><#if helicopterModel??>Helicoptertyp<#else>Modelltyp</#if></a>
 <a href="#servos">Servoeinstellungen</a>		
 <a href="#stickSettings">Knüppeleinstellungen</a>
