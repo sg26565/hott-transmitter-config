@@ -40,6 +40,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -170,7 +171,12 @@ public class MemoryDump {
   private static RXTXCommDriver driver;
 
   public static void main(final String[] args) {
-    new MemoryDump().showDialog();
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        new MemoryDump().showDialog();
+      }
+    });
   }
 
   private final JComboBox<String> comboBox          = new JComboBox<String>();

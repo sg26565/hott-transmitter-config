@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ProgressMonitor;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
@@ -186,7 +187,12 @@ public class ExportModels {
   private static RXTXCommDriver    driver;
 
   public static void main(final String[] args) {
-    new ExportModels().showDialog();
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        new ExportModels().showDialog();
+      }
+    });
   }
 
   private final JComboBox<String>   comboBox      = new JComboBox<String>();
