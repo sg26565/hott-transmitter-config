@@ -170,18 +170,6 @@ public class Launcher {
   /**
    * Start the application.
    * 
-   * @throws ClassNotFoundException
-   * @throws NoSuchMethodException
-   * @throws IllegalAccessException
-   * @throws InvocationTargetException
-   */
-  public static void startSwingApplication() {
-    new SimpleGUI().showInFrame();
-  }
-
-  /**
-   * Start the application.
-   * 
    * @throws IllegalArgumentException
    * 
    * @throws ClassNotFoundException
