@@ -50,7 +50,6 @@ import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 
 import com.itextpdf.text.DocumentException;
 
-import de.treichels.hott.HoTTDecoder;
 import freemarker.ext.beans.JavaBeansIntrospector;
 import gde.messages.Messages;
 import gde.model.BaseModel;
@@ -143,17 +142,15 @@ public class SimpleGUI extends FSScrollPane {
   @SuppressWarnings("unused")
   private static RXTXCommDriver        driver;
 
-  private static final String          LAST_LOAD_DIR        = "lastLoadDir"; //$NON-NLS-1$
+  static final String                  LAST_LOAD_DIR        = "lastLoadDir";                                                                                  //$NON-NLS-1$
   private static final String          LAST_SAVE_DIR        = "lastSaveDir"; //$NON-NLS-1$
   private static final Logger          LOG                  = Logger.getLogger(SimpleGUI.class.getName());
-  private static final Preferences     PREFS                = Preferences.userNodeForPackage(SimpleGUI.class);
+  static final Preferences             PREFS                = Preferences.userNodeForPackage(SimpleGUI.class);
   private static final long            serialVersionUID     = 8824399313635999416L;
 
   private final JFrame                 frame                = new JFrame(Messages.getString("SimpleGUI.Title", System.getProperty(Launcher.PROGRAM_VERSION))); //$NON-NLS-1$
   private final Action                 closeAction          = new CloseAction(Messages.getString("Close"));                                                   //$NON-NLS-1$
-  private final Action                 loadFromFileAction   = new LoadAction(Messages.getString("LoadFromFile"), Source.File);                                //$NON-NLS-1$
-  private final Action                 loadFromMemoryAction = new LoadAction(Messages.getString("LoadFromMemory"), Source.Memory);                            //$NON-NLS-1$
-  private final Action                 loadFromSdCardAction = new LoadAction(Messages.getString("LoadFromSdCard"), Source.SdCard);                            //$NON-NLS-1$
+  private final Action                 loadAction       = new LoadAction(Messages.getString("Load"), Source.File);                                        //$NON-NLS-1$
   private BaseModel                    model                = null;
   private final Action                 refreshAction        = new RefreshAction(Messages.getString("Refresh"));                                               //$NON-NLS-1$
   private final Action                 saveHtmlAction       = new SaveAction(Messages.getString("SaveHtml"), FileType.HTML);                                  //$NON-NLS-1$
@@ -212,20 +209,14 @@ public class SimpleGUI extends FSScrollPane {
   }
 
   public void loadFromFile() throws IOException, URISyntaxException {
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-    fc.setMultiSelectionEnabled(false);
-    fc.setAcceptAllFileFilterUsed(false);
-    fc.setFileFilter(new FileNameExtensionFilter(Messages.getString("MdlFileDescription"), "mdl")); //$NON-NLS-1$ //$NON-NLS-2$
-    fc.setCurrentDirectory(new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR))));
+    final OpenDialog loader = new OpenDialog(frame);
+    loader.setVisible(true);
+    // final ModelLoader dialog = SelectFromFile.showDialog(frame);
 
-    final int result = fc.showOpenDialog(getTopLevelAncestor());
+    final BaseModel m = loader.getModel();
+    if (m != null) {
+      model = m;
 
-    if (result == JFileChooser.APPROVE_OPTION) {
-      final File file = fc.getSelectedFile();
-      PREFS.put(LAST_LOAD_DIR, file.getParentFile().getAbsolutePath());
-
-      model = HoTTDecoder.decodeFile(file);
       saveHtmlAction.setEnabled(true);
       savePdfAction.setEnabled(true);
       saveXmlAction.setEnabled(true);
@@ -235,33 +226,35 @@ public class SimpleGUI extends FSScrollPane {
   }
 
   private void loadFromMemory() throws IOException {
-    final SelectFromMemoryDialog dialog = SelectFromMemoryDialog.showDialog(frame);
-
-    final BaseModel m = dialog.getModel();
-    if (m != null) {
-      model = m;
-
-      saveHtmlAction.setEnabled(true);
-      savePdfAction.setEnabled(true);
-      saveXmlAction.setEnabled(true);
-
-      refresh();
-    }
+    // final ModelLoader loader = new SelectFromMemory();
+    // loader.showDialog(frame);
+    //
+    // final BaseModel m = loader.getModel();
+    // if (m != null) {
+    // model = m;
+    //
+    // saveHtmlAction.setEnabled(true);
+    // savePdfAction.setEnabled(true);
+    // saveXmlAction.setEnabled(true);
+    //
+    // refresh();
+    // }
   }
 
   private void loafFromSdCard() throws IOException {
-    final SelectFromSdCardDialog dialog = SelectFromSdCardDialog.showDialog(frame);
-
-    final BaseModel m = dialog.getModel();
-    if (m != null) {
-      model = m;
-
-      saveHtmlAction.setEnabled(true);
-      savePdfAction.setEnabled(true);
-      saveXmlAction.setEnabled(true);
-
-      refresh();
-    }
+    // final ModelLoader dialog = new SelectFromSdCard();
+    // dialog.showDialog(frame);
+    //
+    // final BaseModel m = dialog.getModel();
+    // if (m != null) {
+    // model = m;
+    //
+    // saveHtmlAction.setEnabled(true);
+    // savePdfAction.setEnabled(true);
+    // saveXmlAction.setEnabled(true);
+    //
+    // refresh();
+    // }
   }
 
   public void refresh() throws IOException {
@@ -314,15 +307,13 @@ public class SimpleGUI extends FSScrollPane {
   private void showError(final Throwable t) {
     LOG.log(Level.SEVERE, Messages.getString("Error"), t); //$NON-NLS-1$
     JOptionPane
-        .showMessageDialog(getTopLevelAncestor(), t.getClass().getName() + ": " + t.getMessage(), Messages.getString("Error"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+    .showMessageDialog(getTopLevelAncestor(), t.getClass().getName() + ": " + t.getMessage(), Messages.getString("Error"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   public void showInFrame() {
     try {
       final JMenu fileMenu = new JMenu(Messages.getString("File")); //$NON-NLS-1$
-      fileMenu.add(new JMenuItem(loadFromFileAction));
-      fileMenu.add(new JMenuItem(loadFromMemoryAction));
-      fileMenu.add(new JMenuItem(loadFromSdCardAction));
+      fileMenu.add(new JMenuItem(loadAction));
       fileMenu.add(new JMenuItem(saveHtmlAction));
       fileMenu.add(new JMenuItem(savePdfAction));
       fileMenu.add(new JMenuItem(saveXmlAction));
@@ -337,16 +328,12 @@ public class SimpleGUI extends FSScrollPane {
       final JPanel buttonPanel = new JPanel();
       buttonPanel.add(new JButton(closeAction));
       buttonPanel.add(new JButton(refreshAction));
-      buttonPanel.add(new JButton(loadFromFileAction));
-      buttonPanel.add(new JButton(loadFromMemoryAction));
-      buttonPanel.add(new JButton(loadFromSdCardAction));
+      buttonPanel.add(new JButton(loadAction));
       buttonPanel.add(new JButton(saveHtmlAction));
       buttonPanel.add(new JButton(savePdfAction));
       buttonPanel.add(new JButton(saveXmlAction));
 
-      popupMenu.add(new JMenuItem(loadFromFileAction));
-      popupMenu.add(new JMenuItem(loadFromMemoryAction));
-      popupMenu.add(new JMenuItem(loadFromSdCardAction));
+      popupMenu.add(new JMenuItem(loadAction));
       popupMenu.add(new JMenuItem(saveHtmlAction));
       popupMenu.add(new JMenuItem(savePdfAction));
       popupMenu.add(new JMenuItem(saveXmlAction));
