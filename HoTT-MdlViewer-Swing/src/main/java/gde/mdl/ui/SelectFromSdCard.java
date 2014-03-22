@@ -30,6 +30,7 @@ import java.io.IOException;
 
 import javax.swing.JComponent;
 import javax.swing.JTree;
+import javax.swing.SwingWorker;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeWillExpandListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -51,6 +52,43 @@ public class SelectFromSdCard extends SelectFromTransmitter {
     @Override
     public void treeWillExpand(final TreeExpansionEvent ev) throws ExpandVetoException {
       expandNode((DefaultMutableTreeNode) ev.getPath().getLastPathComponent());
+    }
+  }
+
+  private final class ExpandWorker extends SwingWorker<Void, FileInfoTreeNode> {
+    private final DefaultMutableTreeNode node;
+
+    private ExpandWorker(final DefaultMutableTreeNode node) {
+      this.node = node;
+    }
+
+    @Override
+    protected Void doInBackground() throws Exception {
+      layerUI.start();
+      tree.setEnabled(false);
+      final String[] names;
+
+      if (node == rootNode) {
+        names = port.listDir("/");
+      } else if (node instanceof FileInfoTreeNode) {
+        names = port.listDir(((FileInfoTreeNode) node).getFileInfo().getPath());
+      } else {
+        names = new String[] {};
+      }
+
+      for (final String name : names) {
+        final FileInfo info = port.getFileInfo(name);
+        node.add(new FileInfoTreeNode(info));
+        model.nodesWereInserted(node, new int[] { node.getChildCount() - 1 });
+      }
+
+      return null;
+    }
+
+    @Override
+    protected void done() {
+      layerUI.stop();
+      tree.setEnabled(true);
     }
   }
 
@@ -81,11 +119,12 @@ public class SelectFromSdCard extends SelectFromTransmitter {
   private final DefaultMutableTreeNode rootNode         = new DefaultMutableTreeNode(Messages.getString("SelectFromSdCard.RootNodeLabel")); //$NON-NLS-1$
   private final DefaultTreeModel       model            = new DefaultTreeModel(rootNode);
   private final JTree                  tree             = new JTree(model);
-  FileInfo                             fileInfo         = null;
+  private FileInfo                     fileInfo         = null;
 
   public SelectFromSdCard() {
     tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     tree.setRootVisible(true);
+    tree.setShowsRootHandles(true);
     tree.addTreeWillExpandListener(new ExpandNodeListener());
 
     initUI();
@@ -95,24 +134,7 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 
   private void expandNode(final DefaultMutableTreeNode node) {
     if (node.getChildCount() == 0) {
-      try {
-        final String[] names;
-
-        if (node == rootNode) {
-          names = port.listDir("/");
-        } else if (node instanceof FileInfoTreeNode) {
-          names = port.listDir(((FileInfoTreeNode) node).getFileInfo().getPath());
-        } else {
-          names = new String[] {};
-        }
-
-        for (final String name : names) {
-          final FileInfo info = port.getFileInfo(name);
-          node.add(new FileInfoTreeNode(info));
-        }
-      } catch (final Exception e) {
-        throw new RuntimeException(e);
-      }
+      new ExpandWorker(node).execute();
     }
   }
 
@@ -163,14 +185,14 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 
   @Override
   public void onOpen() {
+    fileInfo = null;
     final TreePath path = tree.getSelectionPath();
+
     if (path != null) {
       final Object node = path.getLastPathComponent();
 
       if (node != null && node instanceof FileInfoTreeNode) {
         fileInfo = ((FileInfoTreeNode) node).getFileInfo();
-      } else {
-        fileInfo = null;
       }
     }
   }
@@ -179,10 +201,11 @@ public class SelectFromSdCard extends SelectFromTransmitter {
   public void onReload() {
     fileInfo = null;
     rootNode.removeAllChildren();
+    model.reload(rootNode);
+    tree.expandPath(new TreePath(rootNode.getPath()));
 
     if (port != null) {
       expandNode(rootNode);
-      tree.expandRow(0);
     }
   }
 }

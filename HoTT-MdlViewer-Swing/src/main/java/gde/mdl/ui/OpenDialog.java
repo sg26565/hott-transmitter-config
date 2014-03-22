@@ -17,26 +17,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class OpenDialog extends JDialog {
-  private final class NullModelLoader implements ModelLoader {
-    @Override
-    public BaseModel getModel() throws IOException {
-      return null;
-    }
-
-    @Override
-    public void onCancel() {}
-
-    @Override
-    public void onOpen() {}
-
-    @Override
-    public void onReload() {}
-  }
-
   private final class OnCancelListener implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent arg0) {
@@ -55,31 +37,9 @@ public class OpenDialog extends JDialog {
     }
   }
 
-  private final class TabChangeListener implements ChangeListener {
-    @Override
-    public void stateChanged(final ChangeEvent ev) {
-      Component component = tabbedPane.getSelectedComponent();
-
-      if (component == null) {
-        switch (tabbedPane.getSelectedIndex()) {
-        case 1:
-          component = new SelectFromMemory();
-          tabbedPane.setComponentAt(1, component);
-          break;
-
-        case 2:
-          component = new SelectFromSdCard();
-          tabbedPane.setComponentAt(2, component);
-          break;
-        }
-      }
-    }
-  }
-
   private static final long serialVersionUID = 1L;
 
   private final JButton     openButton       = new JButton(Messages.getString("Open"));
-
   private final JButton     cancelButton     = new JButton(Messages.getString("Cancel"));
   private final JTabbedPane tabbedPane       = new JTabbedPane();
 
@@ -87,9 +47,8 @@ public class OpenDialog extends JDialog {
     super(owner, Messages.getString("Load"), true); //$NON-NLS-1$
 
     tabbedPane.addTab(Messages.getString("LoadFromFile"), new SelectFromFile()); //$NON-NLS-1$
-    tabbedPane.addTab(Messages.getString("LoadFromMemory"), null); //$NON-NLS-1$
-    tabbedPane.addTab(Messages.getString("LoadFromSdCard"), null); //$NON-NLS-1$
-    tabbedPane.addChangeListener(new TabChangeListener());
+    tabbedPane.addTab(Messages.getString("LoadFromMemory"), new SelectFromMemory()); //$NON-NLS-1$
+    tabbedPane.addTab(Messages.getString("LoadFromSdCard"), new SelectFromSdCard()); //$NON-NLS-1$
 
     cancelButton.addActionListener(new OnCancelListener());
     openButton.addActionListener(new OnOpenListener());
@@ -118,7 +77,7 @@ public class OpenDialog extends JDialog {
       return (ModelLoader) component;
     }
 
-    return new NullModelLoader();
+    return new ModelLoader();
   }
 
   public BaseModel getModel() throws IOException {

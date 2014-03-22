@@ -7,42 +7,46 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JLayer;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import de.treichels.hott.HoTTSerialPort;
 
-public abstract class SelectFromTransmitter extends JPanel implements ModelLoader {
+public abstract class SelectFromTransmitter extends ModelLoader {
   private final class PortSelectionListener implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent arg0) {
       final String portName = (String) comboBox.getSelectedItem();
-      if (portName != null && portName.length() > 0) {
+      if (portName != null && portName.length() > 0 && portNames.contains(portName)) {
+        SimpleGUI.PREFS.put("portName", portName);
         port = new HoTTSerialPort(new SerialPortDefaultImpl(portName));
         onReload();
       }
     }
   }
 
-  private static final long       serialVersionUID = 1L;
+  private static final long                serialVersionUID = 1L;
 
-  private final JComboBox<String> comboBox         = new JComboBox<String>();
-  protected static HoTTSerialPort port             = null;
+  private static final List<String>        portNames        = SerialPortDefaultImpl.getAvailablePorts();
+  protected HoTTSerialPort                 port             = null;
+  private final JComboBox<String>          comboBox         = new JComboBox<String>();
+  protected final WaitLayerUI<JScrollPane> layerUI          = new WaitLayerUI<JScrollPane>();
 
   protected void initUI() {
-    for (final String s : SerialPortDefaultImpl.getAvailablePorts()) {
+    for (final String s : portNames) {
       comboBox.addItem(s);
     }
-    final String portName = (String) comboBox.getSelectedItem();
-    if (portName != null && portName.length() > 0) {
+    final String portName = SimpleGUI.PREFS.get("portName", (String) comboBox.getSelectedItem());
+    if (portName != null && portName.length() > 0 && portNames.contains(portName)) {
       port = new HoTTSerialPort(new SerialPortDefaultImpl(portName));
     }
-
     final PortSelectionListener listener = new PortSelectionListener();
     comboBox.addActionListener(listener);
 
@@ -56,9 +60,11 @@ public abstract class SelectFromTransmitter extends JPanel implements ModelLoade
     scrollPane.setPreferredSize(new Dimension(100, 300));
     scrollPane.setBorder(BorderFactory.createEtchedBorder());
 
+    final JLayer<JScrollPane> layer = new JLayer<JScrollPane>(scrollPane, layerUI);
+
     setLayout(new BorderLayout());
     add(portPanel, BorderLayout.NORTH);
-    add(scrollPane, BorderLayout.CENTER);
+    add(layer, BorderLayout.CENTER);
 
     setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
   }

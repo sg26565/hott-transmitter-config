@@ -29,6 +29,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingWorker;
 
 import de.treichels.hott.HoTTDecoder;
 
@@ -37,33 +38,62 @@ import de.treichels.hott.HoTTDecoder;
  */
 public class SelectFromMemory extends SelectFromTransmitter {
   private class ArrayListModel extends AbstractListModel<String> {
-    private static final long serialVersionUID = 1L;
-    private List<ModelInfo>   data;
+    private static final long     serialVersionUID = 1L;
+    private final List<ModelInfo> modelInfos       = new ArrayList<ModelInfo>();
+
+    public void addModelInfo(final ModelInfo info) {
+      if (info.getModelType() != ModelType.Unknown) {
+        final int index = getSize();
+        modelInfos.add(info);
+        fireIntervalAdded(this, index, index);
+      }
+    }
+
+    public void clear() {
+      modelInfos.clear();
+    }
 
     @Override
     public String getElementAt(final int index) {
-      final ModelInfo info = data.get(index);
+      final ModelInfo info = modelInfos.get(index);
 
       return String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', info.getModelName()); //$NON-NLS-1$
     }
 
     public int getModelNumerAt(final int index) {
-      final ModelInfo info = data.get(index);
-
-      return info.getModelNumber();
+      return modelInfos.get(index).getModelNumber();
     }
 
     @Override
     public int getSize() {
-      return data == null ? 0 : data.size();
+      return modelInfos.size();
+    }
+  }
+
+  private final class ReloadWorker extends SwingWorker<Void, ModelInfo> {
+    @Override
+    protected Void doInBackground() throws Exception {
+      layerUI.start();
+      list.setEnabled(false);
+      final ModelInfo infos[] = port.getAllModelInfos();
+
+      for (final ModelInfo info : infos) {
+        publish(info);
+      }
+
+      return null;
     }
 
-    public void setData(final ModelInfo[] infos) {
-      data = new ArrayList<ModelInfo>();
-      for (final ModelInfo info : infos) {
-        if (info.getModelType() != ModelType.Unknown) {
-          data.add(info);
-        }
+    @Override
+    protected void done() {
+      layerUI.stop();
+      list.setEnabled(true);
+    }
+
+    @Override
+    protected void process(final List<ModelInfo> chunks) {
+      for (final ModelInfo info : chunks) {
+        model.addModelInfo(info);
       }
     }
   }
@@ -111,13 +141,10 @@ public class SelectFromMemory extends SelectFromTransmitter {
   @Override
   public void onReload() {
     selectedIndex = -1;
+    model.clear();
 
     if (port != null) {
-      try {
-        model.setData(port.getAllModelInfos());
-      } catch (final Exception e) {
-        throw new RuntimeException(e);
-      }
+      new ReloadWorker().execute();
     }
   }
 }

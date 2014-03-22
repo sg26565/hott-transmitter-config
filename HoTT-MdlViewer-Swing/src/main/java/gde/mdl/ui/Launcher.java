@@ -33,6 +33,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import javax.swing.SwingUtilities;
+
 /**
  * @author oli@treichels.de
  */
@@ -145,6 +147,11 @@ public class Launcher {
    * @throws InvocationTargetException
    */
   public static void startSwingApplication() {
-    new SimpleGUI().showInFrame();
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        new SimpleGUI();
+      }
+    });
   }
 }

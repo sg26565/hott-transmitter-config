@@ -4,12 +4,18 @@ import gde.model.BaseModel;
 
 import java.io.IOException;
 
-public interface ModelLoader {
-  public abstract BaseModel getModel() throws IOException;
+import javax.swing.JPanel;
 
-  public void onOpen();
+public class ModelLoader extends JPanel {
+  private static final long serialVersionUID = 1L;
 
-  public void onCancel();
+  public BaseModel getModel() throws IOException {
+    return null;
+  }
 
-  public void onReload();
+  public void onCancel() {};
+
+  public void onOpen() {};
+
+  public void onReload() {};
 }

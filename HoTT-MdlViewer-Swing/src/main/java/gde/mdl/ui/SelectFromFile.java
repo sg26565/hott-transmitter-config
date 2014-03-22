@@ -8,12 +8,11 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.treichels.hott.HoTTDecoder;
 
-public class SelectFromFile extends JPanel implements ModelLoader {
+public class SelectFromFile extends ModelLoader {
   private static final long serialVersionUID = 1L;
 
   private final JFileChooser chooser          = new JFileChooser();
