@@ -60,7 +60,7 @@ public class Launcher {
     }
 
     // Setup logfile
-    final Handler handler = new FileHandler(System.getProperty(LOG_DIR) + "/HoTTGUI.log"); //$NON-NLS-1$
+    final Handler handler = new FileHandler(System.getProperty(LOG_DIR) + "/MdlViewer.log"); //$NON-NLS-1$
     handler.setLevel(Level.INFO);
     handler.setFormatter(new SimpleFormatter());
 

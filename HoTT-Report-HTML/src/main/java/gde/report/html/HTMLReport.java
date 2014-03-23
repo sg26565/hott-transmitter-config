@@ -71,14 +71,14 @@ public class HTMLReport {
     }
 
     // extract font file
-    final File file = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf"); //$NON-NLS-1$ //$NON-NLS-2$
-    if (!(file.exists() && file.isFile() && file.canRead())) {
+    final File fontFfileile = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf"); //$NON-NLS-1$ //$NON-NLS-2$
+    if (!(fontFfileile.exists() && fontFfileile.isFile() && fontFfileile.canRead())) {
       InputStream is = null;
       OutputStream os = null;
 
       try {
         is = ClassLoader.getSystemResourceAsStream("Arial.ttf"); //$NON-NLS-1$
-        os = new FileOutputStream(file);
+        os = new FileOutputStream(fontFfileile);
 
         final byte[] buffer = new byte[1024];
         while (true) {
@@ -140,7 +140,7 @@ public class HTMLReport {
       rootMap.put("png", HTMLReport.CURVE_IMAGE_GENERATOR); //$NON-NLS-1$
       rootMap.put("htmlsafe", new FreeMarkerHtmlSafeDirective()); //$NON-NLS-1$
       rootMap.put("programDir", new File(System.getProperty("program.dir", ".")).toURI().toURL().toString()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-      rootMap.put("tmpdir", System.getProperty("java.io.tmpdir")); //$NON-NLS-1$ //$NON-NLS-2$
+      rootMap.put("fontFile", new File(System.getProperty("java.io.tmpdir"), "Arial.ttf").toURI().toURL().toString()); //$NON-NLS-1$ //$NON-NLS-2$
       rootMap.put("version", System.getProperty("program.version", "unknown")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       if (model instanceof WingedModel) {
         rootMap.put("wingedModel", model); //$NON-NLS-1$
