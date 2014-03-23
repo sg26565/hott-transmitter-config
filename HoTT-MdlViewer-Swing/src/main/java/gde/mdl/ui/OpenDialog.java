@@ -83,4 +83,8 @@ public class OpenDialog extends JDialog {
   public BaseModel getModel() throws IOException {
     return getLoader().getModel();
   }
+
+  public byte[] getModelData() throws IOException {
+    return getLoader().getModelData();
+  }
 }

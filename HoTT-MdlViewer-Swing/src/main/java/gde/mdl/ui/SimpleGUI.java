@@ -31,6 +31,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -90,6 +91,7 @@ public class SimpleGUI {
         loader.setVisible(true);
 
         layerUI.start();
+        modelData = loader.getModelData();
         final BaseModel m = loader.getModel();
         if (m != null) {
           model = m;
@@ -195,6 +197,8 @@ public class SimpleGUI {
           fc.addChoosableFileFilter(new FileNameExtensionFilter(Messages.getString("SimpleGUI.PDF"), "pdf"));
           fc.addChoosableFileFilter(new FileNameExtensionFilter(Messages.getString("SimpleGUI.XML"), "xml"));
           fc.addChoosableFileFilter(new FileNameExtensionFilter(Messages.getString("SimpleGUI.HTML"), "html"));
+          fc.addChoosableFileFilter(new FileNameExtensionFilter(Messages.getString("MdlFileDescription"), "mdl"));
+
           fc.setSelectedFile(new File(getFileName(model)));
 
           final int result = fc.showSaveDialog(frame);
@@ -216,6 +220,16 @@ public class SimpleGUI {
               HTMLReport.save(file, HTMLReport.generateHTML(model));
             } else if ("pdf".equals(extension)) {
               PDFReport.save(file, HTMLReport.generateHTML(model));
+            } else if ("mdl".equals(extension)) {
+              FileOutputStream fos = null;
+              try {
+                fos = new FileOutputStream(file);
+                fos.write(modelData);
+              } finally {
+                if (fos != null) {
+                  fos.close();
+                }
+              }
             }
           }
         }
@@ -248,8 +262,8 @@ public class SimpleGUI {
   private final JFrame                   frame         = new JFrame(Messages.getString("SimpleGUI.Title", System.getProperty(Launcher.PROGRAM_VERSION))); //$NON-NLS-1$
   private final Action                   exitAction    = new ExitAction(Messages.getString("Exit"));                                                     //$NON-NLS-1$
   private final Action                   loadAction    = new LoadAction(Messages.getString("Load"));                                                     //$NON-NLS-1$
-
   private BaseModel                      model         = null;
+  private byte[]                         modelData     = null;
   private final Action                   refreshAction = new RefreshAction(Messages.getString("Refresh"));                                               //$NON-NLS-1$
   private final Action                   saveAction    = new SaveAction(Messages.getString("Save"));                                                     //$NON-NLS-1$
   private final XHTMLPanel               xhtmlPane     = new XHTMLPanel();

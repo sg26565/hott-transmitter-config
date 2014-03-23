@@ -174,6 +174,18 @@ public class SelectFromSdCard extends SelectFromTransmitter {
   }
 
   @Override
+  public byte[] getModelData() throws IOException {
+    if (fileInfo == null || fileInfo.getType() != FileType.File || !fileInfo.getName().endsWith(".mdl") || fileInfo.getSize() > 0x3000 //$NON-NLS-1$
+        || fileInfo.getSize() < 0x2000) {
+      return null;
+    }
+
+    final ByteArrayOutputStream os = new ByteArrayOutputStream();
+    port.readFile(fileInfo.getPath(), os);
+    return os.toByteArray();
+  }
+
+  @Override
   protected JComponent getSelectionComponent() {
     return tree;
   }

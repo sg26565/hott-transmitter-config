@@ -60,6 +60,10 @@ public class SelectFromMemory extends SelectFromTransmitter {
       return String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', info.getModelName()); //$NON-NLS-1$
     }
 
+    public ModelInfo getModelInfoAt(final int index) {
+      return modelInfos.get(index);
+    }
+
     public int getModelNumerAt(final int index) {
       return modelInfos.get(index).getModelNumber();
     }
@@ -121,6 +125,15 @@ public class SelectFromMemory extends SelectFromTransmitter {
     }
 
     return HoTTDecoder.decodeMemory(port, model.getModelNumerAt(selectedIndex));
+  }
+
+  @Override
+  public byte[] getModelData() throws IOException {
+    if (selectedIndex == -1) {
+      return null;
+    }
+
+    return port.getModelData(model.getModelInfoAt(selectedIndex));
   }
 
   @Override

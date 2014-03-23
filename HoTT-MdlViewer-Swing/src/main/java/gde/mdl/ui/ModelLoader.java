@@ -13,6 +13,10 @@ public class ModelLoader extends JPanel {
     return null;
   }
 
+  public byte[] getModelData() throws IOException {
+    return null;
+  }
+
   public void onCancel() {};
 
   public void onOpen() {};

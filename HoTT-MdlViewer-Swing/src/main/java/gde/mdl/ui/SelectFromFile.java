@@ -4,7 +4,9 @@ import gde.messages.Messages;
 import gde.model.BaseModel;
 
 import java.awt.BorderLayout;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
@@ -37,6 +39,29 @@ public class SelectFromFile extends ModelLoader {
     }
 
     return HoTTDecoder.decodeFile(file);
+  }
+
+  @Override
+  public byte[] getModelData() throws IOException {
+    if (file == null) {
+      return null;
+    }
+
+    final ByteArrayOutputStream os = new ByteArrayOutputStream((int) file.length());
+    FileInputStream is = null;
+
+    try {
+      is = new FileInputStream(file);
+      while (is.available() > 0) {
+        os.write(is.read());
+      }
+    } finally {
+      if (is != null) {
+        is.close();
+      }
+    }
+
+    return os.toByteArray();
   }
 
   @Override
