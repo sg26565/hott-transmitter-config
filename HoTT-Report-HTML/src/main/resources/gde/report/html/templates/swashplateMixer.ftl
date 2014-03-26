@@ -1,5 +1,10 @@
 <#if helicopterModel??>
-	<table>
+	<#if helicopterModel.swashplateType.name() == "OneServo">
+		<#assign show=false/>
+	<#else>
+		<#assign show=true/>			
+	</#if>
+	<table class="<@u show/>">
 		<caption><a name="swashplateMixer"/>Taumelscheibenmischer</caption>
 		
 		<@reset/>
