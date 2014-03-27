@@ -35,11 +35,11 @@ public enum SwitchAssignment {
       SwitchType.LogicalSwitch, true), SD1(SwitchType.InputControl, false), SD2(SwitchType.InputControl, false), SR1(SwitchType.InputControl, false), SR2(
       SwitchType.InputControl, false), SR3(SwitchType.InputControl, false), SW1(SwitchType.ToggleSwitch, false), SW10(SwitchType.ToggleSwitch, false), SW11(
       SwitchType.ToggleSwitch, false), SW12(SwitchType.ToggleSwitch, false), SW13(SwitchType.ToggleSwitch, false), SW14(SwitchType.ToggleSwitch, false), SW15(
-      SwitchType.ToggleSwitch, false), SW16(SwitchType.ToggleSwitch, false), SW2(SwitchType.ToggleSwitch, false), SW3(SwitchType.ToggleSwitch, false), SW4(
-      SwitchType.ToggleSwitch, false), SW5(SwitchType.ToggleSwitch, false), SW6(SwitchType.ToggleSwitch, false), SW7(SwitchType.ToggleSwitch, false), SW8(
-      SwitchType.ToggleSwitch, false), SW9(SwitchType.ToggleSwitch, false), TR1(SwitchType.InputControl, false), TR2(SwitchType.InputControl, false), TR3(
-      SwitchType.InputControl, false), TR4(SwitchType.InputControl, false), UG1(SwitchType.ToggleSwitch, false), UG2(SwitchType.ToggleSwitch, false), Unassigned(
-      SwitchType.Unknown, true), Unknown(SwitchType.Unknown, false);
+      SwitchType.ToggleSwitch, false), SW16(SwitchType.ToggleSwitch, false), SW17(SwitchType.ToggleSwitch, false), SW2(SwitchType.ToggleSwitch, false), SW3(
+      SwitchType.ToggleSwitch, false), SW4(SwitchType.ToggleSwitch, false), SW5(SwitchType.ToggleSwitch, false), SW6(SwitchType.ToggleSwitch, false), SW7(
+      SwitchType.ToggleSwitch, false), SW8(SwitchType.ToggleSwitch, false), SW9(SwitchType.ToggleSwitch, false), TR1(SwitchType.InputControl, false), TR2(
+      SwitchType.InputControl, false), TR3(SwitchType.InputControl, false), TR4(SwitchType.InputControl, false), UG1(SwitchType.ToggleSwitch, false), UG2(
+      SwitchType.ToggleSwitch, false), Unassigned(SwitchType.Unknown, true), Unknown(SwitchType.Unknown, false);
 
   private final SwitchType type;
   private final boolean    unidirectional;
