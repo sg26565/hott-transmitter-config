@@ -44,16 +44,16 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>mac amd64</id>
+			<id>mac os x</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 				<os>
 					<family>mac</family>
-					<arch>amd64</arch>
+					<arch>x86_64</arch>
 				</os>
 			</activation>
 			<properties>
-				<swtJar>swt-mac-amd64.jar</swtJar>
+				<swtJar>swt-mac-x86_64.jar</swtJar>
 			</properties>
 		</profile>
 		<profile>

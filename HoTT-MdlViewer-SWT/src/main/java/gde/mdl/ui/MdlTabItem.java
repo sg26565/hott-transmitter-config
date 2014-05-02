@@ -58,6 +58,18 @@ public class MdlTabItem extends CTabItem {
 		this.setFont(new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE + 1, SWT.NORMAL)));
 		this.setText("MDL Viewer"); //$NON-NLS-1$
 		HTMLReport.setSuppressExceptions(true);
+    
+		//check if environment needs to be initialized - loaded within DataExplorer
+  	try {
+  		if (System.getProperty(gde.mdl.ui.Launcher.PROGRAM_VERSION) == null) {
+				Launcher.initSystemProperties();
+				Launcher.initLogging();
+  		}
+		}
+		catch (final Exception e) {
+			e.printStackTrace();
+		}
+  	
 		this.open(parent);
 	}
 
