@@ -19,7 +19,7 @@
 			<outputDirectory>/</outputDirectory>
 			<includes>
 				<include>COPYING*</include>
-				<include>*.cmd</include>
+				<include>HoTTMdlViewer*</include>
 			</includes>
 		</fileSet>
 		<fileSet>
