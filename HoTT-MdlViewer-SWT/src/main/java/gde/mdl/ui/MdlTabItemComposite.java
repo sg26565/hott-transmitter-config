@@ -290,8 +290,8 @@ public class MdlTabItemComposite extends Composite {
                 final String data = HTMLReport.generateHTML(model);
                 PDFReport.save(file, data);
               }
-            } catch (final Throwable e) {
-              MdlTabItem.log.log(Level.WARNING, e.getMessage(), e);
+            } catch (final Throwable t) {
+              showError(t);
             }
           }
         });
