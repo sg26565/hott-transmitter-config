@@ -108,7 +108,7 @@
 	<tr class="<@d/>">
 		<th align="right">Kurve</th>
 		<td colspan="4" align="left">${curve.smoothing?string("an","aus")}</td>
-		<td colspan="4" rowspan="${curve.point?size+2}" align="center"><img src="${png.getImageSource(curve,1.0,false)}"/></td>
+		<td colspan="4" rowspan="${curve.point?size+2}" align="center"><img src="${png.getImageSource(curve,1.0,true)}"/></td>
 	</tr>
 
 	<tr>
