@@ -2,6 +2,7 @@ package gde.mdl.ui;
 
 import freemarker.ext.beans.JavaBeansIntrospector;
 import gde.messages.Messages;
+import gnu.io.RXTXCommDriver;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,9 +22,9 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class Launcher {
-  public static final String LOG_DIR         = "log.dir"; //$NON-NLS-1$
-  public static final String MDL_DIR         = "mdl.dir"; //$NON-NLS-1$
-  public static final String PROGRAM_DIR     = "program.dir"; //$NON-NLS-1$
+  public static final String LOG_DIR         = "log.dir";        //$NON-NLS-1$
+  public static final String MDL_DIR         = "mdl.dir";        //$NON-NLS-1$
+  public static final String PROGRAM_DIR     = "program.dir";    //$NON-NLS-1$
   public static final String PROGRAM_VERSION = "program.version"; //$NON-NLS-1$
 
   /**
@@ -66,7 +67,7 @@ public class Launcher {
    * @throws ClassNotFoundException
    */
   public static void initSwt() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-  MalformedURLException, ClassNotFoundException {
+      MalformedURLException, ClassNotFoundException {
     try {
       // check if swt is already in the classpath
       Class.forName("org.eclipse.swt.widgets.Dialog"); //$NON-NLS-1$
@@ -95,9 +96,9 @@ public class Launcher {
       // standard. Make protected addURL Method available via reflection and
       // invoke it
       final URLClassLoader classLoader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
-      final Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { URL.class }); //$NON-NLS-1$
+      final Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class); //$NON-NLS-1$
       method.setAccessible(true);
-      method.invoke(classLoader, new Object[] { swtJar.toURI().toURL() });
+      method.invoke(classLoader, swtJar.toURI().toURL());
     }
   }
 
@@ -179,7 +180,7 @@ public class Launcher {
    * @throws SecurityException
    */
   public static void startSwtApplication() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException,
-  NoSuchMethodException, SecurityException {
+      NoSuchMethodException, SecurityException {
     // Call main method of SwtMdlBrower via reflection to avoid load time class
     // loading of SWT (which will fail as SWT is not yet on the class path).
     final Class<?> mainDialog = Class.forName("gde.mdl.ui.SwtMdlBrowser"); //$NON-NLS-1$
@@ -189,4 +190,7 @@ public class Launcher {
 
   @SuppressWarnings("unused")
   private Class<JavaBeansIntrospector> class1;
+
+  @SuppressWarnings("unused")
+  private static RXTXCommDriver        driver;
 }

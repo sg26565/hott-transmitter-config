@@ -27,70 +27,51 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * tab item for DataExplorer integration of MDL reading and display purpose
- * this tab item is target to be included in DataExplorer
+ * tab item for DataExplorer integration of MDL reading and display purpose this tab item is target to be included in DataExplorer
  */
 public class MdlTabItem extends CTabItem {
-	final static Logger					log								= Logger.getLogger(MdlTabItem.class.getName());
+  final static Logger         log              = Logger.getLogger(MdlTabItem.class.getName());
 
-	private Composite						tabItemComposite;
+  public static final boolean IS_WINDOWS       = System.getProperty("os.name").toLowerCase().startsWith("windows");                            //$NON-NLS-1$ //$NON-NLS-2$
+  public static final boolean IS_LINUX         = System.getProperty("os.name").toLowerCase().startsWith("linux");                              //$NON-NLS-1$ //$NON-NLS-2$
+  public static final boolean IS_MAC           = System.getProperty("os.name").toLowerCase().startsWith("mac");                                //$NON-NLS-1$ //$NON-NLS-2$
 
-	private Font								font;
+  public final static int     WIDGET_FONT_SIZE = MdlTabItem.IS_MAC ? 12 : (MdlTabItem.IS_LINUX ? 8 : 9) * 96 / Display.getDefault().getDPI().y;
+  public final static String  WIDGET_FONT_NAME = MdlTabItem.IS_WINDOWS ? "Microsoft Sans Serif" : "Sans Serif";                                //$NON-NLS-1$ //$NON-NLS-2$
 
-	public static final boolean	IS_WINDOWS				= System.getProperty("os.name").toLowerCase().startsWith("windows");																//$NON-NLS-1$ //$NON-NLS-2$
-	public static final boolean	IS_LINUX					= System.getProperty("os.name").toLowerCase().startsWith("linux");																	//$NON-NLS-1$ //$NON-NLS-2$
-	public static final boolean	IS_MAC						= System.getProperty("os.name").toLowerCase().startsWith("mac");																		//$NON-NLS-1$ //$NON-NLS-2$
+  /**
+   * @param parent
+   * @param style
+   */
+  public MdlTabItem(final CTabFolder parent, final int style) {
+    this(parent, style, 0);
+  }
 
-	public final static int			WIDGET_FONT_SIZE	= MdlTabItem.IS_MAC ? 12 : ((MdlTabItem.IS_LINUX ? 8 : 9) * 96 / Display.getDefault().getDPI().y);
-	public final static String	WIDGET_FONT_NAME	= MdlTabItem.IS_WINDOWS ? "Microsoft Sans Serif" : "Sans Serif";																		//$NON-NLS-1$ //$NON-NLS-2$
+  /**
+   * @param parent
+   * @param style
+   * @param index
+   */
+  public MdlTabItem(final CTabFolder parent, final int style, final int index) {
+    super(parent, style, index);
+    setFont(new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE + 1, SWT.NORMAL)));
+    setText("MDL Viewer"); //$NON-NLS-1$
+    HTMLReport.setSuppressExceptions(true);
 
-	/**
-	 * @param parent
-	 * @param style
-	 */
-	public MdlTabItem(CTabFolder parent, int style) {
-		super(parent, style);
-		this.font = new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE, SWT.NORMAL));
-		this.setFont(new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE + 1, SWT.NORMAL)));
-		this.setText("MDL Viewer"); //$NON-NLS-1$
-		HTMLReport.setSuppressExceptions(true);
-    
-		//check if environment needs to be initialized - loaded within DataExplorer
-  	try {
-  		if (System.getProperty(gde.mdl.ui.Launcher.PROGRAM_VERSION) == null) {
-				Launcher.initSystemProperties();
-				Launcher.initLogging();
-  		}
-		}
-		catch (final Exception e) {
-			e.printStackTrace();
-		}
-  	
-		this.open(parent);
-	}
+    // check if environment needs to be initialized - loaded within DataExplorer
+    try {
+      if (System.getProperty(gde.mdl.ui.Launcher.PROGRAM_VERSION) == null) {
+        Launcher.initSystemProperties();
+        Launcher.initLogging();
+      }
+    } catch (final Exception e) {
+      e.printStackTrace();
+    }
 
-	/**
-	 * @param parent
-	 * @param style
-	 * @param index
-	 */
-	public MdlTabItem(CTabFolder parent, int style, int index) {
-		super(parent, style, index);
-		this.font = new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE, SWT.NORMAL));
-		this.setFont(new Font(Display.getDefault(), new FontData(MdlTabItem.WIDGET_FONT_NAME, MdlTabItem.WIDGET_FONT_SIZE + 1, SWT.NORMAL)));
-		this.setFont(this.font);
-		this.setText("MDL Viewer"); //$NON-NLS-1$
-		HTMLReport.setSuppressExceptions(true);
-		this.open(parent);
-	}
-
-	public void open(final CTabFolder parent) {
-		this.tabItemComposite = new MdlTabItemComposite(parent);
-		this.setControl(this.tabItemComposite);
-	}
+    setControl(new MdlTabItemComposite(parent));
+  }
 
 }
