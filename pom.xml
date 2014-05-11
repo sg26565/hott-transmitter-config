@@ -270,12 +270,12 @@
 			<dependency>
 				<groupId>org.xhtmlrenderer</groupId>
 				<artifactId>flying-saucer-core</artifactId>
-				<version>9.0.2</version>
+				<version>9.0.6</version>
 			</dependency>
 			<dependency>
 				<groupId>org.xhtmlrenderer</groupId>
 				<artifactId>flying-saucer-pdf-itext5</artifactId>
-				<version>9.0.2</version>
+				<version>9.0.6</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-codec</groupId>
