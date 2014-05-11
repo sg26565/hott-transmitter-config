@@ -272,7 +272,7 @@ public class MdlTabItemComposite extends Composite {
         final File file = new File(fileName);
         PREFS.put(LAST_SAVE_DIR, file.getParentFile().getAbsolutePath());
 
-        new Thread(new Runnable() {
+        BusyIndicator.showWhile(getDisplay(), new Runnable() {
           @Override
           public void run() {
             try {
@@ -294,7 +294,7 @@ public class MdlTabItemComposite extends Composite {
               MdlTabItem.log.log(Level.WARNING, e.getMessage(), e);
             }
           }
-        }).start();
+        });
       }
     }
   }

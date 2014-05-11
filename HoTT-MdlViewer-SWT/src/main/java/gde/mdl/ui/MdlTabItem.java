@@ -63,7 +63,7 @@ public class MdlTabItem extends CTabItem {
 
     // check if environment needs to be initialized - loaded within DataExplorer
     try {
-      if (System.getProperty(gde.mdl.ui.Launcher.PROGRAM_VERSION) == null) {
+      if (System.getProperty(Launcher.PROGRAM_VERSION) == null) {
         Launcher.initSystemProperties();
         Launcher.initLogging();
       }

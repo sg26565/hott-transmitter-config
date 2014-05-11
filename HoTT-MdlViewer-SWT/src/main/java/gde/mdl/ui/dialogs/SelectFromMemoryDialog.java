@@ -3,7 +3,6 @@ package gde.mdl.ui.dialogs;
 import gde.model.enums.ModelType;
 import gde.model.serial.ModelInfo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -36,8 +35,8 @@ public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
         final int index = list.getSelectionIndex();
         final int modelNumber = infos.get(index).getModelNumber();
         model = HoTTDecoder.decodeMemory(port, modelNumber);
-      } catch (final IOException e) {
-        showError(e);
+      } catch (final Throwable t) {
+        showError(t);
       }
     }
   }
@@ -56,8 +55,8 @@ public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
             list.add(String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', info.getModelName())); //$NON-NLS-1$
           }
         }
-      } catch (final IOException e) {
-        showError(e);
+      } catch (final Throwable t) {
+        showError(t);
       }
     }
   }

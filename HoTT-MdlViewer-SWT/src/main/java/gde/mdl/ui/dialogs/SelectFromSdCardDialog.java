@@ -7,7 +7,6 @@ import gde.model.serial.FileType;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
@@ -63,8 +62,8 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
               }
 
             }
-          } catch (final IOException e) {
-            showError(e);
+          } catch (final Throwable t) {
+            showError(t);
           }
         }
       });
@@ -109,8 +108,8 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
             model = HoTTDecoder.decodeStream(type, name, is);
           }
         }
-      } catch (final IOException e) {
-        showError(e);
+      } catch (final Throwable t) {
+        showError(t);
       }
     }
   }
@@ -135,8 +134,8 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
             new TreeItem(treeItem, SWT.NONE);
           }
         }
-      } catch (final IOException e) {
-        showError(e);
+      } catch (final Throwable t) {
+        showError(t);
       }
     }
   }
