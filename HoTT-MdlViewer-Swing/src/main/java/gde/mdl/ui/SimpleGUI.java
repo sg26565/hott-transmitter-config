@@ -19,7 +19,7 @@
 package gde.mdl.ui;
 
 import freemarker.ext.beans.JavaBeansIntrospector;
-import gde.messages.Messages;
+import gde.mdl.messages.Messages;
 import gde.model.BaseModel;
 import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;

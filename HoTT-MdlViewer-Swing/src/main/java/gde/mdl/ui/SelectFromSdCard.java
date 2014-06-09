@@ -17,7 +17,7 @@
  */
 package gde.mdl.ui;
 
-import gde.messages.Messages;
+import gde.mdl.messages.Messages;
 import gde.model.BaseModel;
 import gde.model.HoTTException;
 import gde.model.enums.ModelType;

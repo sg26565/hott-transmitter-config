@@ -22,7 +22,7 @@ import java.util.List;
 
 import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
-import gde.messages.Messages;
+import gde.mdl.messages.Messages;
 
 public class FreeMarkerHexConverter implements TemplateMethodModelEx {
   @Override

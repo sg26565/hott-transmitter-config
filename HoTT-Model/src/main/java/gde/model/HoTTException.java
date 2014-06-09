@@ -17,7 +17,7 @@
  */
 package gde.model;
 
-import gde.messages.Messages;
+import gde.mdl.messages.Messages;
 
 import java.io.IOException;
 

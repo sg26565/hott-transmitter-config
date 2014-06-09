@@ -1,8 +1,8 @@
 package gde.mdl.ui;
 
+import gde.mdl.messages.Messages;
 import gde.mdl.ui.composites.BaseConfiguration;
 import gde.mdl.ui.composites.DualExpoConfiguration;
-import gde.messages.Messages;
 
 import java.util.ArrayList;
 import java.util.List;

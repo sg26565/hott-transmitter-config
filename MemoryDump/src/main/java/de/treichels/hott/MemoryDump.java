@@ -17,7 +17,7 @@
  */
 package de.treichels.hott;
 
-import gde.messages.Messages;
+import gde.mdl.messages.Messages;
 import gde.model.serial.ResponseCode;
 import gde.model.serial.SerialPort;
 import gde.model.serial.SerialPortDefaultImpl;

@@ -2,6 +2,7 @@ package gde.messages;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import gde.mdl.messages.Messages;
 
 import org.junit.Test;
 

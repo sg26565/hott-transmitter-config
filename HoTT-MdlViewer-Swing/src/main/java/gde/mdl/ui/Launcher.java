@@ -17,7 +17,7 @@
  */
 package gde.mdl.ui;
 
-import gde.messages.Messages;
+import gde.mdl.messages.Messages;
 
 import java.io.File;
 import java.io.IOException;

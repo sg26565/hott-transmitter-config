@@ -1,9 +1,9 @@
 package gde.mdl.ui;
 
+import gde.mdl.messages.Messages;
 import gde.mdl.ui.dialogs.SelectFromMemoryDialog;
 import gde.mdl.ui.dialogs.SelectFromSdCardDialog;
 import gde.mdl.ui.dialogs.SelectFromTransmitterDialog;
-import gde.messages.Messages;
 import gde.model.BaseModel;
 import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;

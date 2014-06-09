@@ -1,6 +1,6 @@
 package gde.mdl.ui.dialogs;
 
-import gde.messages.Messages;
+import gde.mdl.messages.Messages;
 import gde.model.BaseModel;
 import gde.model.serial.SerialPortDefaultImpl;
 

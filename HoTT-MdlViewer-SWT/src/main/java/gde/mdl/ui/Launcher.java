@@ -1,7 +1,7 @@
 package gde.mdl.ui;
 
 import freemarker.ext.beans.JavaBeansIntrospector;
-import gde.messages.Messages;
+import gde.mdl.messages.Messages;
 import gnu.io.RXTXCommDriver;
 
 import java.io.File;
