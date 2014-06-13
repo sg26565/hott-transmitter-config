@@ -13,6 +13,6 @@
     <string name="msg_invalid_file_type">Invalid model type: \&quot;%s\&quot;!</string>
     <string name="msg_unsupported_uri">Unsupported source: \&quot;%s\&quot;!</string>
     <string name="action_print_pdf">Print PDF</string>
-    <string name="action_print">Print</string>
-
+    <string name="action_print">Print</string><string name="action_load_from_tx">Load from Transmitter</string>
+    <string name="action_load_from_sd">Load from SD Card</string>
 </resources>
