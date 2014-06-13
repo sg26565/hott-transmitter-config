@@ -68,18 +68,24 @@ public class SelectFromSdCard extends SelectFromTransmitter {
       tree.setEnabled(false);
       final String[] names;
 
-      if (node == rootNode) {
-        names = port.listDir("/");
-      } else if (node instanceof FileInfoTreeNode) {
-        names = port.listDir(((FileInfoTreeNode) node).getFileInfo().getPath());
-      } else {
-        names = new String[] {};
-      }
+      try {
+        port.open();
 
-      for (final String name : names) {
-        final FileInfo info = port.getFileInfo(name);
-        node.add(new FileInfoTreeNode(info));
-        model.nodesWereInserted(node, new int[] { node.getChildCount() - 1 });
+        if (node == rootNode) {
+          names = port.listDir("/");
+        } else if (node instanceof FileInfoTreeNode) {
+          names = port.listDir(((FileInfoTreeNode) node).getFileInfo().getPath());
+        } else {
+          names = new String[] {};
+        }
+
+        for (final String name : names) {
+          final FileInfo info = port.getFileInfo(name);
+          node.add(new FileInfoTreeNode(info));
+          model.nodesWereInserted(node, new int[] { node.getChildCount() - 1 });
+        }
+      } finally {
+        port.close();
       }
 
       return null;
@@ -165,7 +171,14 @@ public class SelectFromSdCard extends SelectFromTransmitter {
       final String name = fileName.substring(1, fileName.length() - 4);
 
       final ByteArrayOutputStream os = new ByteArrayOutputStream();
-      port.readFile(fileInfo.getPath(), os);
+
+      try {
+        port.open();
+        port.readFile(fileInfo.getPath(), os);
+      } finally {
+        port.close();
+      }
+
       final ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
       result = HoTTDecoder.decodeStream(type, name, is);
     }
@@ -181,7 +194,14 @@ public class SelectFromSdCard extends SelectFromTransmitter {
     }
 
     final ByteArrayOutputStream os = new ByteArrayOutputStream();
-    port.readFile(fileInfo.getPath(), os);
+
+    try {
+      port.open();
+      port.readFile(fileInfo.getPath(), os);
+    } finally {
+      port.close();
+    }
+
     return os.toByteArray();
   }
 

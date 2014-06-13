@@ -79,7 +79,14 @@ public class SelectFromMemory extends SelectFromTransmitter {
     protected Void doInBackground() throws Exception {
       layerUI.start();
       list.setEnabled(false);
-      final ModelInfo infos[] = port.getAllModelInfos();
+      final ModelInfo infos[];
+
+      try {
+        port.open();
+        infos = port.getAllModelInfos();
+      } finally {
+        port.close();
+      }
 
       for (final ModelInfo info : infos) {
         publish(info);
@@ -124,7 +131,12 @@ public class SelectFromMemory extends SelectFromTransmitter {
       return null;
     }
 
-    return HoTTDecoder.decodeMemory(port, model.getModelNumerAt(selectedIndex));
+    try {
+      port.open();
+      return HoTTDecoder.decodeMemory(port, model.getModelNumerAt(selectedIndex));
+    } finally {
+      port.close();
+    }
   }
 
   @Override
@@ -133,7 +145,12 @@ public class SelectFromMemory extends SelectFromTransmitter {
       return null;
     }
 
-    return port.getModelData(model.getModelInfoAt(selectedIndex));
+    try {
+      port.open();
+      return port.getModelData(model.getModelInfoAt(selectedIndex));
+    } finally {
+      port.close();
+    }
   }
 
   @Override

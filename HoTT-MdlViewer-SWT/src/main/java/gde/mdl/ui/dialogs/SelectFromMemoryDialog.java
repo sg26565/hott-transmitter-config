@@ -34,7 +34,13 @@ public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
       try {
         final int index = list.getSelectionIndex();
         final int modelNumber = infos.get(index).getModelNumber();
-        model = HoTTDecoder.decodeMemory(port, modelNumber);
+
+        try {
+          port.open();
+          model = HoTTDecoder.decodeMemory(port, modelNumber);
+        } finally {
+          port.close();
+        }
       } catch (final Throwable t) {
         showError(t);
       }
@@ -46,7 +52,14 @@ public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
     @Override
     public void run() {
       try {
-        final ModelInfo[] i = port.getAllModelInfos();
+        final ModelInfo[] i;
+
+        try {
+          port.open();
+          i = port.getAllModelInfos();
+        } finally {
+          port.close();
+        }
 
         list.removeAll();
         for (final ModelInfo info : i) {
