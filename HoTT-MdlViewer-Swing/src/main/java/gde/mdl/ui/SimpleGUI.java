@@ -46,6 +46,7 @@ import javax.swing.JLayer;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -98,6 +99,7 @@ public class SimpleGUI {
         }
       } catch (final Exception e) {
         LOG.log(Level.SEVERE, "error during load", e);
+        JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
       }
       return null;
     }
@@ -133,6 +135,7 @@ public class SimpleGUI {
         }
       } catch (final Exception e) {
         LOG.log(Level.SEVERE, "error during refresh", e);
+        JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
       }
 
       return null;
@@ -235,6 +238,7 @@ public class SimpleGUI {
         }
       } catch (final Exception e) {
         LOG.log(Level.SEVERE, "error during save", e);
+        JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
       }
 
       return null;
