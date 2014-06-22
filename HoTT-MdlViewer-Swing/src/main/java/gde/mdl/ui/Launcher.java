@@ -40,9 +40,9 @@ import javax.swing.SwingUtilities;
  */
 public class Launcher {
 
-  public static final String LOG_DIR         = "log.dir"; //$NON-NLS-1$
-  public static final String MDL_DIR         = "mdl.dir"; //$NON-NLS-1$
-  public static final String PROGRAM_DIR     = "program.dir"; //$NON-NLS-1$
+  public static final String LOG_DIR         = "log.dir";        //$NON-NLS-1$
+  public static final String MDL_DIR         = "mdl.dir";        //$NON-NLS-1$
+  public static final String PROGRAM_DIR     = "program.dir";    //$NON-NLS-1$
   public static final String PROGRAM_VERSION = "program.version"; //$NON-NLS-1$
 
   /**
@@ -91,8 +91,7 @@ public class Launcher {
         jarFile = new JarFile(source);
         final Manifest manifest = jarFile.getManifest();
         final Attributes attributes = manifest.getMainAttributes();
-        final String version = Messages.getString(
-            "Launcher.Version", attributes.getValue("Implementation-Version"), attributes.getValue("Implementation-Build").substring(0, 7)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        final String version = Messages.getString("Launcher.Version", attributes.getValue("Implementation-Version")); //$NON-NLS-1$ //$NON-NLS-2$
         System.setProperty(Launcher.PROGRAM_VERSION, version);
       } finally {
         if (jarFile != null) {
