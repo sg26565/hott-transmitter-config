@@ -11,7 +11,6 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.hardware.usb.UsbDevice;
-import android.util.Log;
 
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
@@ -23,8 +22,8 @@ import de.treichels.hott.HoTTSerialPort;
  * 
  * @author oli
  */
-class GetAllModelsTask extends UsbTask {
-  private final List<String> models = new ArrayList<String>();
+class GetAllModelsTask extends UsbTask<UsbDevice, ModelInfo, List<ModelInfo>> {
+  private final List<ModelInfo> models = new ArrayList<ModelInfo>();
 
   /**
    * @param context
@@ -35,7 +34,7 @@ class GetAllModelsTask extends UsbTask {
 
   @Override
   @SuppressLint("DefaultLocale")
-  protected List<String> doInBackground(final UsbDevice... params) {
+  protected List<ModelInfo> doInBackground(final UsbDevice... params) {
     try {
       final UsbDevice device = params[0];
 
@@ -50,18 +49,13 @@ class GetAllModelsTask extends UsbTask {
         port.close();
         for (final ModelInfo info : infos) {
           if (info.getModelType() != ModelType.Unknown) {
-            final String text = String.format("%2d: %s (%s)", info.getModelNumber(), info.getModelName(), info.getModelType());
-            models.add(text);
-            publishProgress(text);
+            models.add(info);
+            publishProgress(info);
           }
         }
       }
     } catch (final IOException e) {
-      Log.e("performUsbSearch", "getAllModelInfos", e);
-      models.add(e.getMessage());
-      for (final StackTraceElement element : e.getStackTrace()) {
-        models.add(element.toString());
-      }
+      throw new RuntimeException(e);
     }
 
     return models;

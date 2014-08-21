@@ -1,7 +1,5 @@
 package de.treichels.hott.ui.android;
 
-import java.util.List;
-
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,7 +9,7 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.AsyncTask;
 
-public abstract class UsbTask extends AsyncTask<UsbDevice, String, List<String>> {
+public abstract class UsbTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
   final class Unlocker extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, final Intent intent) {

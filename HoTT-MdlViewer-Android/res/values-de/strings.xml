@@ -16,5 +16,6 @@
     <string name="action_print">Drucken</string>
     <string name="action_load_from_tx">Laden vom Sender</string>
     <string name="action_load_from_sd">Laden von SD Karte</string>
+    <string name="usb_device">USB Gerät</string>
 
 </resources>

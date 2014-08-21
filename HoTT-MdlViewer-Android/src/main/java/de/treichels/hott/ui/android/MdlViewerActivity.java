@@ -4,7 +4,6 @@ import gde.model.BaseModel;
 import gde.model.enums.Section;
 
 import java.net.MalformedURLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -16,8 +15,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.print.PrintManager;
@@ -36,15 +33,31 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   public static final String  CACHE_FILE_NAME   = "MdlViewer.html";                          //$NON-NLS-1$
   private static final int    READ_REQUEST_CODE = 42;
 
+  /** Uri of the currently loaded model **/
   private Uri                 uri               = null;
+
+  /** Model data **/
   private BaseModel           model             = null;
+
+  /** Html view **/
   private WebView             webView           = null;
+
+  /** Table of contents container **/
   private DrawerLayout        drawerLayout      = null;
+
+  /** Table of contents list **/
   private ListView            drawer            = null;
+
+  /**
+   * Url to temporary file.
+   * 
+   * This is a ugly workaround, to enable TOC navigation via {@code webView.loadUrl(loadUrl + "#" + section.name());}. It would be more elegant to navigate via
+   * JavaScript calls. However, this is only supported on Anroid 4.4 or higher.
+   **/
   private String              loadUrl           = null;
 
   /**
-   * Handle file selection
+   * Handle file selection in response to a {@link Intent.ACTION_GET_CONTENT} action intent.
    */
   @Override
   public void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
@@ -120,7 +133,9 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   }
 
   /**
-   * Handle toc selection in drawer
+   * Handle toc selection in drawer.
+   * 
+   * Navigate webView to the anchor with the same name as the section in the drawer that was clicked.
    * 
    * @param parent
    * @param view
@@ -136,7 +151,9 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   }
 
   /**
-   * Handle menu selection
+   * Handle menu selection.
+   * 
+   * Launch functionality according to menu item selected.
    * 
    * @param item
    * @return
@@ -157,6 +174,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
       return true;
 
     case R.id.action_load_from_sd:
+      // TODO
       return true;
 
     case R.id.action_load_from_tx:
@@ -181,7 +199,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   }
 
   /**
-   * Fires an intent to spin up the "file chooser" UI and select a file.
+   * Fires an intent to spin up the "file chooser" UI and select a file. Response will be handeled by {@link MdlViewerActivity.onActivityResult()}
    */
   public void performFileSearch(final MenuItem menuItem) {
     Toast.makeText(getApplicationContext(), R.string.msg_select_mdl, Toast.LENGTH_SHORT).show();
@@ -201,17 +219,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
    * @param item
    */
   private void performUsbSearch(final MenuItem item) {
-    final UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
-    final HashMap<String, UsbDevice> devices = manager.getDeviceList();
-    final UsbDevice device = devices.get("/dev/bus/usb/002/002");
-
-    // Perform serarch in background
-    new GetAllModelsTask(this) {
-      @Override
-      protected void onPostExecute(final List<String> result) {
-        showDialog("Models", result);
-      }
-    }.execute(device);
+    new OpenFromMemoryDialog().show(getFragmentManager(), "open_from_tx");
   }
 
   /**
@@ -273,6 +281,10 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
           // done - update UI
           try {
             model = get();
+            webView.loadUrl(loadUrl);
+            setTitle(model.getModelName());
+            drawer.setAdapter(new SectionAdapter(MdlViewerActivity.this, model.getModelType(), model.getTransmitterType()));
+            toast.cancel();
           } catch (InterruptedException | ExecutionException e) {
             // something went wrong - show an error dialog
             final AlertDialog.Builder builder = new AlertDialog.Builder(MdlViewerActivity.this);
@@ -282,11 +294,6 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
             builder.create().show();
             toast.cancel();
           }
-
-          webView.loadUrl(loadUrl);
-          setTitle(model.getModelName());
-          drawer.setAdapter(new SectionAdapter(MdlViewerActivity.this, model.getModelType(), model.getTransmitterType()));
-          toast.cancel();
         }
       }.execute(uri);
     }
