@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
@@ -13,11 +14,12 @@
             android:id="@+id/portSelectorLabel"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:gravity="center_vertical"
             android:labelFor="@+id/portSelector"
             android:text="@string/usb_device"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            tools:ignore="UnusedAttribute" />
 
         <Spinner
             android:id="@id/portSelector"
