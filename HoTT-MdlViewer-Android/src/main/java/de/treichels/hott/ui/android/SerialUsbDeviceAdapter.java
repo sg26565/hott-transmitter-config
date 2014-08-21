@@ -47,7 +47,7 @@ public class SerialUsbDeviceAdapter extends BaseAdapter {
 
     if (convertView == null) {
       final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      view = (TextView) inflater.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
+      view = (TextView) inflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
     } else {
       view = (TextView) convertView;
     }

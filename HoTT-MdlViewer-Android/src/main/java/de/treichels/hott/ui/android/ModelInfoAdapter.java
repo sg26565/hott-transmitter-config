@@ -56,13 +56,13 @@ public class ModelInfoAdapter extends BaseAdapter {
 
     if (convertView == null) {
       final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      view = (TextView) inflater.inflate(android.R.layout.simple_list_item_single_choice, parent, false);
+      view = (TextView) inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
     } else {
       view = (TextView) convertView;
     }
 
     final ModelInfo info = modelInfos.get(position);
-    view.setText(String.format("%2d: %s (%s)", info.getModelNumber(), info.getModelName(), info.getModelType()));
+    view.setText(String.format("%2d: %s (%s)", info.getModelNumber() + 1, info.getModelName(), info.getModelType()));
 
     return view;
   }
