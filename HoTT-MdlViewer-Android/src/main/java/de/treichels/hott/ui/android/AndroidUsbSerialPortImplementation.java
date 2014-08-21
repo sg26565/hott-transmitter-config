@@ -7,23 +7,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.hoho.android.usbserial.driver.UsbSerialDriver;
+import com.hoho.android.usbserial.driver.UsbSerialPort;
 
 public class AndroidUsbSerialPortImplementation implements SerialPort {
-  static final int      IO_TIMEOUT   = 1000;
-  static final int      BUFFER_SIZE  = 2064;
+  static final int     IO_TIMEOUT   = 1000;
+  static final int     BUFFER_SIZE  = 2064;
 
-  final UsbSerialDriver driver;
-  private boolean       open         = false;
-  private InputStream   inputStream  = null;
-  private OutputStream  outputStream = null;
+  final UsbSerialPort  port;
+  private boolean      open         = false;
+  private InputStream  inputStream  = null;
+  private OutputStream outputStream = null;
 
   /**
    * @param device
    * @param interface1
    */
-  public AndroidUsbSerialPortImplementation(final UsbSerialDriver driver) {
-    this.driver = driver;
+  public AndroidUsbSerialPortImplementation(final UsbSerialPort port) {
+    this.port = port;
   }
 
   @Override
@@ -36,7 +36,7 @@ public class AndroidUsbSerialPortImplementation implements SerialPort {
       outputStream.close();
       outputStream = null;
 
-      driver.close();
+      port.close();
       open = false;
     }
   }
@@ -60,12 +60,11 @@ public class AndroidUsbSerialPortImplementation implements SerialPort {
   public void open() throws HoTTException {
     if (!open) {
       try {
-        driver.open();
-        driver.setParameters(115200, UsbSerialDriver.DATABITS_8, UsbSerialDriver.STOPBITS_1, UsbSerialDriver.PARITY_NONE);
+        port.setParameters(115200, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
         open = true;
 
-        inputStream = new UsbSerialDriverInputStream(driver);
-        outputStream = new UsbSerialDriverOutputStream(driver);
+        inputStream = new UsbSerialDriverInputStream(port);
+        outputStream = new UsbSerialDriverOutputStream(port);
       } catch (final IOException e) {
         throw new HoTTException(e);
       }

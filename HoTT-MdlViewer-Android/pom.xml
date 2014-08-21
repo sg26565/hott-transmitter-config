@@ -20,7 +20,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform.version>19</platform.version>
-		<android.sdk.path>/home/oli/android-sdk-linux</android.sdk.path>
 	</properties>
 
 	<repositories>
