@@ -10,10 +10,8 @@ import java.util.concurrent.ExecutionException;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +24,10 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import de.treichels.hott.ui.android.dialogs.OpenFromMemoryDialog;
+import de.treichels.hott.ui.android.html.GenerateHtmlTask;
+import de.treichels.hott.ui.android.html.SectionAdapter;
+import de.treichels.hott.ui.android.usb.UsbUtils;
 
 public class MdlViewerActivity extends Activity implements ListView.OnItemClickListener {
   private static final String MDL_MIME_TYPE     = "application/octet-stream";                //$NON-NLS-1$
@@ -50,7 +52,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
   /**
    * Url to temporary file.
-   * 
+   *
    * This is a ugly workaround, to enable TOC navigation via {@code webView.loadUrl(loadUrl + "#" + section.name());}. It would be more elegant to navigate via
    * JavaScript calls. However, this is only supported on Anroid 4.4 or higher.
    **/
@@ -69,7 +71,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
   /**
    * Called when the activity is first created.
-   * 
+   *
    * @param savedInstanceState
    *          If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
    *          onSaveInstanceState(Bundle). <b>Note: Otherwise it is null.</b>
@@ -121,7 +123,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
   /**
    * Handle menu button
-   * 
+   *
    * @param menu
    * @return
    */
@@ -129,14 +131,20 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   public boolean onCreateOptionsMenu(final Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.options_menu, menu);
+
+    if (!UsbUtils.isUsbHost(this)) {
+      menu.findItem(R.id.action_load_from_sd).setVisible(false);
+      menu.findItem(R.id.action_load_from_tx).setVisible(false);
+    }
+
     return true;
   }
 
   /**
    * Handle toc selection in drawer.
-   * 
+   *
    * Navigate webView to the anchor with the same name as the section in the drawer that was clicked.
-   * 
+   *
    * @param parent
    * @param view
    * @param position
@@ -152,9 +160,9 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
   /**
    * Handle menu selection.
-   * 
+   *
    * Launch functionality according to menu item selected.
-   * 
+   *
    * @param item
    * @return
    */
@@ -215,16 +223,23 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
   /**
    * Select models from transmitter memory
-   * 
+   *
    * @param item
    */
-  private void performUsbSearch(final MenuItem item) {
-    new OpenFromMemoryDialog().show(getFragmentManager(), "open_from_tx");
+  public void performUsbSearch(final MenuItem item) {
+    final DialogFragment dialog = new OpenFromMemoryDialog();
+
+    try {
+      dialog.show(getFragmentManager(), "open_from_tx");
+    } catch (final Exception e) {
+      dialog.dismiss();
+      showDialog(e);
+    }
   }
 
   /**
    * Create a PDF version of the document. Only support on Android 4.4 and newer.
-   * 
+   *
    * @param menuItem
    *          unused
    */
@@ -235,8 +250,22 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   }
 
   /**
+   * Show a simple error dialog.
+   *
+   * @param title
+   * @param messages
+   */
+  private void showDialog(final Exception e) {
+    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle(R.string.msg_error);
+    builder.setMessage(e.getLocalizedMessage());
+    builder.setPositiveButton(android.R.string.ok, null);
+    builder.create().show();
+  }
+
+  /**
    * Show a simple dialog with a title and a list of messages.
-   * 
+   *
    * @param title
    * @param messages
    */
@@ -246,25 +275,21 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
   /**
    * Show a simple dialog with a title and a list of messages.
-   * 
+   *
    * @param title
    * @param messages
    */
   private void showDialog(final String title, final String... messages) {
     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    final Dialog dialog = builder.setTitle(title).setItems(messages, null).setPositiveButton(android.R.string.ok, new OnClickListener() {
-      @Override
-      public void onClick(final DialogInterface dialog, final int which) {
-        dialog.dismiss();
-      }
-    }).create();
-
-    dialog.show();
+    builder.setTitle(title);
+    builder.setItems(messages, null);
+    builder.setPositiveButton(android.R.string.ok, null);
+    builder.create().show();
   }
 
   /**
    * Update WebView in a background thread without blocking the UI thread.
-   * 
+   *
    * @param menuItem
    *          unused
    */
@@ -287,11 +312,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
             toast.cancel();
           } catch (InterruptedException | ExecutionException e) {
             // something went wrong - show an error dialog
-            final AlertDialog.Builder builder = new AlertDialog.Builder(MdlViewerActivity.this);
-            builder.setTitle(R.string.msg_error);
-            builder.setMessage(e.getLocalizedMessage());
-            builder.setPositiveButton(android.R.string.ok, null);
-            builder.create().show();
+            showDialog(e);
             toast.cancel();
           }
         }

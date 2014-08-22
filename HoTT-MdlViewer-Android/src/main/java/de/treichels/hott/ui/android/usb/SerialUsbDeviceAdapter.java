@@ -1,4 +1,4 @@
-package de.treichels.hott.ui.android;
+package de.treichels.hott.ui.android.usb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +13,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+/**
+ * An adapter that holds a list of UsbDevices.
+ *
+ * @author oli
+ */
 public class SerialUsbDeviceAdapter extends BaseAdapter {
   private final UsbManager                 manager;
   private final HashMap<String, UsbDevice> usbDevices;

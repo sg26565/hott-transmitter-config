@@ -1,4 +1,4 @@
-package de.treichels.hott.ui.android;
+package de.treichels.hott.ui.android.usb;
 
 import gde.model.enums.ModelType;
 import gde.model.serial.ModelInfo;
@@ -11,7 +11,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
-import android.hardware.usb.UsbManager;
 
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
@@ -24,7 +23,7 @@ import de.treichels.hott.HoTTSerialPort;
  *
  * @author oli
  */
-class GetAllModelsTask extends UsbTask<UsbDevice, ModelInfo, List<ModelInfo>> {
+public class GetAllModelsTask extends UsbTask<UsbDevice, ModelInfo, List<ModelInfo>> {
   private final List<ModelInfo> models = new ArrayList<ModelInfo>();
 
   /**
@@ -47,14 +46,13 @@ class GetAllModelsTask extends UsbTask<UsbDevice, ModelInfo, List<ModelInfo>> {
       final List<UsbSerialPort> ports = driver.getPorts();
 
       if (ports != null && ports.size() > 0) {
-        final UsbManager manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
         final UsbDeviceConnection connection = manager.openDevice(device);
-
         final SerialPort impl = new AndroidUsbSerialPortImplementation(ports.get(0), connection);
         final HoTTSerialPort port = new HoTTSerialPort(impl);
         port.open();
         final ModelInfo[] infos = port.getAllModelInfos();
         port.close();
+
         for (final ModelInfo info : infos) {
           if (info.getModelType() != ModelType.Unknown) {
             models.add(info);

@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android;
+package de.treichels.hott.ui.android.html;
 
 import gde.model.Curve;
 import gde.model.CurvePoint;

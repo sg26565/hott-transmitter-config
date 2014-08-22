@@ -1,5 +1,11 @@
-package de.treichels.hott.ui.android;
+package de.treichels.hott.ui.android.dialogs;
 
+import de.treichels.hott.ui.android.R;
+import de.treichels.hott.ui.android.R.id;
+import de.treichels.hott.ui.android.R.layout;
+import de.treichels.hott.ui.android.R.string;
+import de.treichels.hott.ui.android.usb.SerialUsbDeviceAdapter;
+import gde.model.serial.ModelInfo;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -40,7 +46,7 @@ public class OpenFromMemoryDialog extends DialogFragment {
     listView.setOnItemSelectedListener(new OnItemSelectedListener() {
       @Override
       public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
-        // TODO Load model
+        final ModelInfo info = (ModelInfo) parent.getItemAtPosition(position);
       }
 
       @Override

@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android;
+package de.treichels.hott.ui.android.html;
 
 import gde.model.enums.ModelType;
 import gde.model.enums.Section;
@@ -24,6 +24,8 @@ import gde.model.enums.TransmitterType;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.treichels.hott.ui.android.R;
+import de.treichels.hott.ui.android.R.layout;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

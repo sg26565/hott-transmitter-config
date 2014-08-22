@@ -1,10 +1,11 @@
-package de.treichels.hott.ui.android;
+package de.treichels.hott.ui.android.dialogs;
 
 import gde.model.serial.ModelInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.treichels.hott.ui.android.usb.GetAllModelsTask;
 import android.content.Context;
 import android.hardware.usb.UsbDevice;
 import android.view.LayoutInflater;

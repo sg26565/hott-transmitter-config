@@ -1,4 +1,4 @@
-package de.treichels.hott.ui.android;
+package de.treichels.hott.ui.android.usb;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -9,6 +9,13 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.AsyncTask;
 
+/**
+ * An abstract {@link AsyncTask} for USB communication.
+ *
+ * This class provides access to the {@link UsbManager} and asks the user for device permissions.
+ *
+ * @author oli
+ */
 public abstract class UsbTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
   final class Unlocker extends BroadcastReceiver {
     @Override
@@ -36,7 +43,7 @@ public abstract class UsbTask<Params, Progress, Result> extends AsyncTask<Params
 
   /**
    * Check that this activity has permission to access the usb device and ask user for permission if necessary.
-   * 
+   *
    * @param device
    */
   protected boolean check4Permission(final UsbDevice device) {

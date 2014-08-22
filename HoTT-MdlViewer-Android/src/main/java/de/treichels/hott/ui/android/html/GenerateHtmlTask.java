@@ -1,4 +1,4 @@
-package de.treichels.hott.ui.android;
+package de.treichels.hott.ui.android.html;
 
 import gde.model.BaseModel;
 import gde.model.enums.ModelType;
@@ -18,6 +18,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.OpenableColumns;
 import de.treichels.hott.HoTTDecoder;
+import de.treichels.hott.ui.android.MdlViewerActivity;
+import de.treichels.hott.ui.android.R;
+import de.treichels.hott.ui.android.R.string;
 
 public class GenerateHtmlTask extends AsyncTask<Uri, Void, BaseModel> {
   private static final String FILE_EXTENSION_MDL = ".mdl"; //$NON-NLS-1$

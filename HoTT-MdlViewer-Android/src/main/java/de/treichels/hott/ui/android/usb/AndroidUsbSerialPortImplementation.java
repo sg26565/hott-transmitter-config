@@ -1,4 +1,4 @@
-package de.treichels.hott.ui.android;
+package de.treichels.hott.ui.android.usb;
 
 import gde.model.HoTTException;
 import gde.model.serial.SerialPort;
@@ -11,6 +11,11 @@ import android.hardware.usb.UsbDeviceConnection;
 
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 
+/**
+ * An adapter that turns a UsbSerialPort into a SerialPort for the HoTTDecoder.
+ *
+ * @author oli
+ */
 public class AndroidUsbSerialPortImplementation implements SerialPort {
   static final int                  IO_TIMEOUT   = 1000;
   static final int                  BUFFER_SIZE  = 2064;
