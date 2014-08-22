@@ -10,7 +10,6 @@ import java.util.concurrent.ExecutionException;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -65,7 +64,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   public void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
     if (resultCode == Activity.RESULT_OK && resultData != null && requestCode == READ_REQUEST_CODE) {
       uri = resultData.getData();
-      updateUI(null);
+      updateUI();
     }
   }
 
@@ -114,10 +113,10 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
     if (uri == null) {
       // first start, no saved state, no intent
-      performFileSearch(null);
+      performFileSearch();
     } else {
       // refresh
-      updateUI(null);
+      updateUI();
     }
   }
 
@@ -133,6 +132,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     getMenuInflater().inflate(R.menu.options_menu, menu);
 
     if (!UsbUtils.isUsbHost(this)) {
+      // disable these menu items as they don't work without USB host mode
       menu.findItem(R.id.action_load_from_sd).setVisible(false);
       menu.findItem(R.id.action_load_from_tx).setVisible(false);
     }
@@ -170,19 +170,19 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   public boolean onOptionsItemSelected(final MenuItem item) {
     switch (item.getItemId()) {
     case R.id.action_load:
-      performFileSearch(item);
+      performFileSearch();
       return true;
 
     case R.id.action_reload:
-      updateUI(item);
+      updateUI();
       return true;
 
     case R.id.action_print:
-      print(item);
+      print();
       return true;
 
     case R.id.action_load_from_sd:
-      // TODO
+      performUsbSearch(item);
       return true;
 
     case R.id.action_load_from_tx:
@@ -209,7 +209,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   /**
    * Fires an intent to spin up the "file chooser" UI and select a file. Response will be handeled by {@link MdlViewerActivity.onActivityResult()}
    */
-  public void performFileSearch(final MenuItem menuItem) {
+  public void performFileSearch() {
     Toast.makeText(getApplicationContext(), R.string.msg_select_mdl, Toast.LENGTH_SHORT).show();
 
     Intent intent;
@@ -227,7 +227,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
    * @param item
    */
   public void performUsbSearch(final MenuItem item) {
-    final DialogFragment dialog = new OpenFromMemoryDialog();
+    final OpenFromMemoryDialog dialog = new OpenFromMemoryDialog();
 
     try {
       dialog.show(getFragmentManager(), "open_from_tx");
@@ -239,12 +239,9 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
   /**
    * Create a PDF version of the document. Only support on Android 4.4 and newer.
-   *
-   * @param menuItem
-   *          unused
    */
   @TargetApi(19)
-  public void print(final MenuItem menuItem) {
+  public void print() {
     final PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
     printManager.print("HoTTMdlViewer - " + model.getModelName(), webView.createPrintDocumentAdapter(), null); //$NON-NLS-1$
   }
@@ -289,11 +286,8 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
   /**
    * Update WebView in a background thread without blocking the UI thread.
-   *
-   * @param menuItem
-   *          unused
    */
-  public void updateUI(final MenuItem menuItem) {
+  public void updateUI() {
     if (uri != null) {
       // tell user to be patient
       final Toast toast = Toast.makeText(this, R.string.msg_loading, Toast.LENGTH_LONG);
