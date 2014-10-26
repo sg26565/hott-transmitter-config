@@ -1,7 +1,5 @@
 <#macro switch sw>
-	<#if sw.assignment.name() == "Unassigned">
-		---
-	<#else>
+	<#if sw.assignment?? && sw.assignment.name() != "Unassigned">
 		<#switch sw.type.name()>
 			<#case "ToggleSwitch">
 				<#if sw.direction==1>
@@ -22,6 +20,8 @@
 			<#default>
 				${sw.assignment}						
 		</#switch>
+	<#else>
+		---
 	</#if>
 </#macro>
 
