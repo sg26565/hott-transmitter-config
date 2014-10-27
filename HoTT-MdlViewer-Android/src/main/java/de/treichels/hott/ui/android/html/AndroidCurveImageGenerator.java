@@ -40,14 +40,15 @@ import android.graphics.Typeface;
 import android.util.Base64;
 
 /**
- * @author oli@treichels.de
+ * Android implementation of a {@link CurveImageGenerator}.
  *
+ * @author oli@treichels.de
  */
 public class AndroidCurveImageGenerator implements CurveImageGenerator {
     private Bitmap getBitmap(final Curve curve, final float scale, final boolean description) {
         final boolean pitchCurve = curve.getPoint()[0].getPosition() == 0;
         final float scale1 = scale * 0.75f; // smaller images on the android
-                                            // platform
+        // platform
 
         final Bitmap image = Bitmap.createBitmap((int) (10 + 200 * scale1), (int) (10 + 250 * scale1), Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(image);

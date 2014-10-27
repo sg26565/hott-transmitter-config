@@ -1,3 +1,20 @@
+/**
+ *  HoTT Transmitter Config
+ *  Copyright (C) 2013  Oliver Treichel
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.treichels.hott.ui.android.dialogs;
 
 import gde.model.serial.ModelInfo;
@@ -18,6 +35,12 @@ import android.widget.Spinner;
 import de.treichels.hott.ui.android.R;
 import de.treichels.hott.ui.android.usb.SerialUsbDeviceAdapter;
 
+/**
+ * A {@link DialogFragment} that shows a list of model from the transmitter
+ * memory and allows the user to select one of them.
+ *
+ * @author oli@treichels.de
+ */
 public class OpenFromMemoryDialog extends DialogFragment {
     private static final String  USB_DEVICE_NAME = "usbDeviceName";
     private DialogClosedListener closedListener  = null;
@@ -43,12 +66,17 @@ public class OpenFromMemoryDialog extends DialogFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
 
+        // inflate view from xml
         final View view = inflater.inflate(R.layout.load_from_tx, container);
-        final SerialUsbDeviceAdapter adapter = new SerialUsbDeviceAdapter(getActivity());
 
+        // generate a spinner for all USB devices attached via host mode
+        final SerialUsbDeviceAdapter adapter = new SerialUsbDeviceAdapter(getActivity());
         spinner = (Spinner) view.findViewById(R.id.portSelector);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            /**
+             * Handle selection of a device from the spinner.
+             */
             @Override
             public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
                 setUsbDevice((UsbDevice) parent.getItemAtPosition(position));
@@ -60,7 +88,7 @@ public class OpenFromMemoryDialog extends DialogFragment {
             }
         });
 
-        // set spinner to save usb device name
+        // initialize spinner to saved usb device name
         final String savedUsbDeviceName = preferences.getString(USB_DEVICE_NAME, null);
         if (savedUsbDeviceName != null) {
             final int position = adapter.getPosition(savedUsbDeviceName);
@@ -105,7 +133,7 @@ public class OpenFromMemoryDialog extends DialogFragment {
     public void setUsbDevice(final UsbDevice usbDevice) {
         this.usbDevice = usbDevice;
 
-        // save device name into preferences
+        // save device name as preferences
         final SharedPreferences.Editor editor = preferences.edit();
         final String savedUsbDeviceName = usbDevice.getDeviceName();
         editor.putString(USB_DEVICE_NAME, savedUsbDeviceName);

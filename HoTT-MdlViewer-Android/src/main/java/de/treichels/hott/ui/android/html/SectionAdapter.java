@@ -28,13 +28,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import de.treichels.hott.ui.android.R;
 
 /**
- * @author oli
+ * An {@link Adapter} for navigation items on a drawer.
  *
+ * @author oli@treichels.de
  */
 public class SectionAdapter extends BaseAdapter {
     private final LayoutInflater inflater;

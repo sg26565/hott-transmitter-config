@@ -1,3 +1,20 @@
+/**
+ *  HoTT Transmitter Config
+ *  Copyright (C) 2013  Oliver Treichel
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.treichels.hott.ui.android;
 
 import gde.model.BaseModel;
@@ -35,6 +52,11 @@ import de.treichels.hott.ui.android.html.SectionAdapter;
 import de.treichels.hott.ui.android.usb.GetModelFromMemoryTask;
 import de.treichels.hott.ui.android.usb.UsbUtils;
 
+/**
+ * The main activity for the MdlViewer.
+ *
+ * @author oli@treichels.de
+ */
 public class MdlViewerActivity extends Activity implements ListView.OnItemClickListener {
     public static final String  CACHE_FILE_NAME   = "MdlViewer.html";                                      //$NON-NLS-1$
     private static final String MDL_MIME_TYPE     = "application/octet-stream";                            //$NON-NLS-1$
@@ -67,6 +89,8 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
     /** Progress Bar */
     private ProgressBar         progressBar       = null;
+
+    private Toast               toast             = null;
 
     /** Transmitter type */
     private TransmitterType     transmitterType   = null;
@@ -117,9 +141,9 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
         drawer = (ListView) findViewById(R.id.drawer);
         drawer.setOnItemClickListener(this);
 
-        // check if we were started via an intent
         final Intent intent = getIntent();
         if (intent != null && intent.getAction() == Intent.ACTION_VIEW) {
+            // activity was started via an intent
             updateUI(intent.getData());
         } else if (savedInstanceState != null) {
             // restore from saved state
@@ -137,6 +161,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
             updateUI();
         } else {
+            // fall back to load from file
             performFileSearch();
         }
     }
@@ -231,7 +256,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
 
     /**
      * Fires an intent to spin up the "file chooser" UI and select a file.
-     * Response will be handeled by {@link MdlViewerActivity.onActivityResult()}
+     * Response will be handled by {@link MdlViewerActivity.onActivityResult()}
      */
     public void performFileSearch() {
         Toast.makeText(getApplicationContext(), R.string.msg_select_mdl, Toast.LENGTH_SHORT).show();
@@ -297,38 +322,6 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
         printManager.print("HoTTMdlViewer - " + modelName, webView.createPrintDocumentAdapter(), null); //$NON-NLS-1$
     }
 
-    /**
-     * Show a simple error dialog.
-     *
-     * @param title
-     * @param messages
-     */
-    private void showDialog(final Exception e) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.msg_error);
-        builder.setMessage(e.getLocalizedMessage());
-        builder.setPositiveButton(android.R.string.ok, null);
-        builder.create().show();
-    }
-
-    public void updateUI() {
-        Log.d("updateUI()", modelName);
-        Log.d("updateUI()", modelType.name());
-        Log.d("updateUI()", transmitterType.name());
-
-        if (modelName != null && modelType != null && transmitterType != null) {
-            setWait(R.string.msg_loading);
-            // done - update UI
-            webView.loadUrl(loadUrl);
-            setTitle(modelName);
-            drawer.setAdapter(new SectionAdapter(MdlViewerActivity.this, modelType, transmitterType));
-
-            setWait(0);
-        }
-    }
-
-    private Toast toast = null;
-
     private void setWait(final int msgId) {
         if (toast != null) {
             toast.cancel();
@@ -347,20 +340,55 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     }
 
     /**
+     * Show a simple error dialog.
+     *
+     * @param title
+     * @param messages
+     */
+    private void showDialog(final Exception e) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.msg_error);
+        builder.setMessage(e.getLocalizedMessage());
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.create().show();
+    }
+
+    /**
+     * Reload the ui from saved state.
+     */
+    public void updateUI() {
+        Log.d("updateUI()", modelName);
+        Log.d("updateUI()", modelType.name());
+        Log.d("updateUI()", transmitterType.name());
+
+        if (modelName != null && modelType != null && transmitterType != null) {
+            setWait(R.string.msg_loading);
+
+            webView.loadUrl(loadUrl);
+            setTitle(modelName);
+            drawer.setAdapter(new SectionAdapter(MdlViewerActivity.this, modelType, transmitterType));
+
+            // turn off busy indicator
+            setWait(0);
+        }
+    }
+
+    /**
      * Update WebView in a background thread without blocking the UI thread.
+     * Convert a {@link BaseModel} to html.
      */
     public void updateUI(final BaseModel model) {
         Log.d("updateUI(BaseModel)", model.getModelName());
 
+        modelName = model.getModelName();
+        modelType = model.getModelType();
+        transmitterType = model.getTransmitterType();
+
         // Generate HTML in background task
         new GenerateHtmlTask(this) {
-
             @Override
             protected void onPostExecute(final String result) {
-                modelName = model.getModelName();
-                modelType = model.getModelType();
-                transmitterType = model.getTransmitterType();
-
+                // update webwiew
                 updateUI();
             }
 
@@ -372,12 +400,17 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
         }.execute(model);
     }
 
+    /**
+     * Update WebView in a background thread without blocking the UI thread.
+     * Read data from {@link Uri} and decode into a {@link BaseModel}.
+     */
     public void updateUI(final Uri uri) {
         Log.d("updateUI(Uri)", uri.toString());
 
         new GetModelFromUriTask(this) {
             @Override
             protected void onPostExecute(final BaseModel result) {
+                // convert to HTML
                 updateUI(result);
             }
 
