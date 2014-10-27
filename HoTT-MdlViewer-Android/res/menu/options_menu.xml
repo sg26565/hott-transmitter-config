@@ -1,15 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_load"
+        android:id="@+id/action_load_from_file"
         android:showAsAction="ifRoom"
-        android:title="@string/action_load_mdl"
+        android:title="@string/action_load_from_file"
         android:titleCondensed="@string/action_load"/>
-    <item
-        android:id="@+id/action_reload"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_reload_mdl"
-        android:titleCondensed="@string/action_reload"/>
     <item
         android:id="@+id/action_load_from_tx"
         android:showAsAction="never"

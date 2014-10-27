@@ -1,316 +1,391 @@
 package de.treichels.hott.ui.android;
 
 import gde.model.BaseModel;
+import gde.model.enums.ModelType;
 import gde.model.enums.Section;
+import gde.model.enums.TransmitterType;
+import gde.model.serial.ModelInfo;
 
 import java.net.MalformedURLException;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.usb.UsbDevice;
 import android.net.Uri;
 import android.os.Bundle;
 import android.print.PrintManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+import de.treichels.hott.ui.android.dialogs.DialogClosedListener;
 import de.treichels.hott.ui.android.dialogs.OpenFromMemoryDialog;
 import de.treichels.hott.ui.android.html.GenerateHtmlTask;
+import de.treichels.hott.ui.android.html.GetModelFromUriTask;
 import de.treichels.hott.ui.android.html.SectionAdapter;
+import de.treichels.hott.ui.android.usb.GetModelFromMemoryTask;
 import de.treichels.hott.ui.android.usb.UsbUtils;
 
 public class MdlViewerActivity extends Activity implements ListView.OnItemClickListener {
-  private static final String MDL_MIME_TYPE     = "application/octet-stream";                //$NON-NLS-1$
-  private static final String SAVED_STATE_URI   = MdlViewerActivity.class.getName() + ".URI"; //$NON-NLS-1$
-  public static final String  CACHE_FILE_NAME   = "MdlViewer.html";                          //$NON-NLS-1$
-  private static final int    READ_REQUEST_CODE = 42;
+    public static final String  CACHE_FILE_NAME   = "MdlViewer.html";                                      //$NON-NLS-1$
+    private static final String MDL_MIME_TYPE     = "application/octet-stream";                            //$NON-NLS-1$
+    private static final String MODEL_NAME        = MdlViewerActivity.class.getName() + ".modelName";
+    private static final String MODEL_TYPE        = MdlViewerActivity.class.getName() + ".modelType";
+    private static final int    READ_REQUEST_CODE = 42;
+    private static final String TRANSMITTER_TYPE  = MdlViewerActivity.class.getName() + ".transmitterType";
 
-  /** Uri of the currently loaded model **/
-  private Uri                 uri               = null;
+    /** Table of contents list */
+    private ListView            drawer            = null;
 
-  /** Model data **/
-  private BaseModel           model             = null;
+    /** Table of contents container */
+    private DrawerLayout        drawerLayout      = null;
 
-  /** Html view **/
-  private WebView             webView           = null;
+    /**
+     * Url to temporary file.
+     *
+     * This is a ugly workaround, to enable TOC navigation via
+     * {@code webView.loadUrl(loadUrl + "#" + section.name());}. It would be
+     * more elegant to navigate via JavaScript calls. However, this is only
+     * supported on Anroid 4.4 or higher.
+     */
+    private String              loadUrl           = null;
 
-  /** Table of contents container **/
-  private DrawerLayout        drawerLayout      = null;
+    /** Model name */
+    private String              modelName         = null;
 
-  /** Table of contents list **/
-  private ListView            drawer            = null;
+    /** Model type */
+    private ModelType           modelType         = null;
 
-  /**
-   * Url to temporary file.
-   *
-   * This is a ugly workaround, to enable TOC navigation via {@code webView.loadUrl(loadUrl + "#" + section.name());}. It would be more elegant to navigate via
-   * JavaScript calls. However, this is only supported on Anroid 4.4 or higher.
-   **/
-  private String              loadUrl           = null;
+    /** Progress Bar */
+    private ProgressBar         progressBar       = null;
 
-  /**
-   * Handle file selection in response to a {@link Intent.ACTION_GET_CONTENT} action intent.
-   */
-  @Override
-  public void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
-    if (resultCode == Activity.RESULT_OK && resultData != null && requestCode == READ_REQUEST_CODE) {
-      uri = resultData.getData();
-      updateUI();
-    }
-  }
+    /** Transmitter type */
+    private TransmitterType     transmitterType   = null;
 
-  /**
-   * Called when the activity is first created.
-   *
-   * @param savedInstanceState
-   *          If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
-   *          onSaveInstanceState(Bundle). <b>Note: Otherwise it is null.</b>
-   */
-  @Override
-  public void onCreate(final Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    /** Html view */
+    private WebView             webView           = null;
 
-    setContentView(R.layout.main);
-
-    // temporary file to store html
-    try {
-      loadUrl = getFileStreamPath(CACHE_FILE_NAME).toURI().toURL().toString();
-    } catch (final MalformedURLException e) {
-      throw new RuntimeException(e);
-    }
-
-    webView = (WebView) findViewById(R.id.webwiew);
-    webView.getSettings().setBuiltInZoomControls(true);
-
-    drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-    drawer = (ListView) findViewById(R.id.drawer);
-    drawer.setOnItemClickListener(this);
-
-    // check if we were started via an intent
-    final Intent intent = getIntent();
-    if (intent != null && intent.getAction() == Intent.ACTION_VIEW) {
-      uri = intent.getData();
-    }
-
-    // restore from saved state
-    if (uri == null && savedInstanceState != null) {
-      if (savedInstanceState.containsKey(SAVED_STATE_URI)) {
-        final String uriString = savedInstanceState.getString(SAVED_STATE_URI);
-        if (uriString != null) {
-          uri = Uri.parse(uriString);
+    /**
+     * Handle file selection in response to a {@link Intent.ACTION_GET_CONTENT}
+     * action intent.
+     */
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
+        if (resultCode == Activity.RESULT_OK && resultData != null && requestCode == READ_REQUEST_CODE) {
+            updateUI(resultData.getData());
         }
-      }
     }
 
-    if (uri == null) {
-      // first start, no saved state, no intent
-      performFileSearch();
-    } else {
-      // refresh
-      updateUI();
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState
+     *            If the activity is being re-initialized after previously being
+     *            shut down then this Bundle contains the data it most recently
+     *            supplied in onSaveInstanceState(Bundle). <b>Note: Otherwise it
+     *            is null.</b>
+     */
+    @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.main);
+
+        // temporary file to store html
+        try {
+            loadUrl = getFileStreamPath(CACHE_FILE_NAME).toURI().toURL().toString();
+        } catch (final MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+
+        webView = (WebView) findViewById(R.id.webwiew);
+        webView.getSettings().setBuiltInZoomControls(true);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (ListView) findViewById(R.id.drawer);
+        drawer.setOnItemClickListener(this);
+
+        // check if we were started via an intent
+        final Intent intent = getIntent();
+        if (intent != null && intent.getAction() == Intent.ACTION_VIEW) {
+            updateUI(intent.getData());
+        } else if (savedInstanceState != null) {
+            // restore from saved state
+            if (savedInstanceState.containsKey(MODEL_NAME)) {
+                modelName = savedInstanceState.getString(MODEL_NAME);
+            }
+
+            if (savedInstanceState.containsKey(MODEL_TYPE)) {
+                modelType = ModelType.valueOf(savedInstanceState.getString(MODEL_TYPE));
+            }
+
+            if (savedInstanceState.containsKey(TRANSMITTER_TYPE)) {
+                transmitterType = TransmitterType.valueOf(savedInstanceState.getString(TRANSMITTER_TYPE));
+            }
+
+            updateUI();
+        } else {
+            performFileSearch();
+        }
     }
-  }
 
-  /**
-   * Handle menu button
-   *
-   * @param menu
-   * @return
-   */
-  @Override
-  public boolean onCreateOptionsMenu(final Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.options_menu, menu);
+    /**
+     * Handle menu button
+     *
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.options_menu, menu);
 
-    if (!UsbUtils.isUsbHost(this)) {
-      // disable these menu items as they don't work without USB host mode
-      menu.findItem(R.id.action_load_from_sd).setVisible(false);
-      menu.findItem(R.id.action_load_from_tx).setVisible(false);
+        if (!UsbUtils.isUsbHost(this)) {
+            // disable these menu items as they don't work without USB host mode
+            menu.findItem(R.id.action_load_from_sd).setVisible(false);
+            menu.findItem(R.id.action_load_from_tx).setVisible(false);
+        }
+
+        return true;
     }
 
-    return true;
-  }
+    /**
+     * Handle toc selection in drawer.
+     *
+     * Navigate webView to the anchor with the same name as the section in the
+     * drawer that was clicked.
+     *
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+        drawerLayout.closeDrawer(drawer);
 
-  /**
-   * Handle toc selection in drawer.
-   *
-   * Navigate webView to the anchor with the same name as the section in the drawer that was clicked.
-   *
-   * @param parent
-   * @param view
-   * @param position
-   * @param id
-   */
-  @Override
-  public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-    drawerLayout.closeDrawer(drawer);
-
-    final Section section = Section.values()[(int) id];
-    webView.loadUrl(loadUrl + "#" + section.name()); //$NON-NLS-1$
-  }
-
-  /**
-   * Handle menu selection.
-   *
-   * Launch functionality according to menu item selected.
-   *
-   * @param item
-   * @return
-   */
-  @Override
-  public boolean onOptionsItemSelected(final MenuItem item) {
-    switch (item.getItemId()) {
-    case R.id.action_load:
-      performFileSearch();
-      return true;
-
-    case R.id.action_reload:
-      updateUI();
-      return true;
-
-    case R.id.action_print:
-      print();
-      return true;
-
-    case R.id.action_load_from_sd:
-      performUsbSearch(item);
-      return true;
-
-    case R.id.action_load_from_tx:
-      performUsbSearch(item);
-      return true;
-
-    default:
-      return super.onOptionsItemSelected(item);
+        final Section section = Section.values()[(int) id];
+        webView.loadUrl(loadUrl + "#" + section.name()); //$NON-NLS-1$
     }
-  }
 
-  /**
-   * Activity will be stopped. Save state.
-   */
-  @Override
-  protected void onSaveInstanceState(final Bundle outState) {
-    super.onSaveInstanceState(outState);
+    /**
+     * Handle menu selection.
+     *
+     * Launch functionality according to menu item selected.
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_print:
+            print();
+            return true;
 
-    if (uri != null) {
-      outState.putString(SAVED_STATE_URI, uri.toString());
+        case R.id.action_load_from_file:
+            performFileSearch();
+            return true;
+
+        case R.id.action_load_from_sd:
+            performUsbSdSearch(item);
+            return true;
+
+        case R.id.action_load_from_tx:
+            performUsbMemorySearch(item);
+            return true;
+
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
-  }
 
-  /**
-   * Fires an intent to spin up the "file chooser" UI and select a file. Response will be handeled by {@link MdlViewerActivity.onActivityResult()}
-   */
-  public void performFileSearch() {
-    Toast.makeText(getApplicationContext(), R.string.msg_select_mdl, Toast.LENGTH_SHORT).show();
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-    Intent intent;
+        if (modelName != null) {
+            outState.putString(MODEL_NAME, modelName);
+        }
 
-    intent = new Intent(Intent.ACTION_GET_CONTENT);
-    intent.addCategory(Intent.CATEGORY_OPENABLE);
-    intent.setType(MDL_MIME_TYPE);
+        if (modelType != null) {
+            outState.putString(MODEL_TYPE, modelType.name());
+        }
 
-    startActivityForResult(intent, READ_REQUEST_CODE);
-  }
-
-  /**
-   * Select models from transmitter memory
-   *
-   * @param item
-   */
-  public void performUsbSearch(final MenuItem item) {
-    final OpenFromMemoryDialog dialog = new OpenFromMemoryDialog();
-
-    try {
-      dialog.show(getFragmentManager(), "open_from_tx");
-    } catch (final Exception e) {
-      dialog.dismiss();
-      showDialog(e);
+        if (transmitterType != null) {
+            outState.putString(TRANSMITTER_TYPE, transmitterType.name());
+        }
     }
-  }
 
-  /**
-   * Create a PDF version of the document. Only support on Android 4.4 and newer.
-   */
-  @TargetApi(19)
-  public void print() {
-    final PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
-    printManager.print("HoTTMdlViewer - " + model.getModelName(), webView.createPrintDocumentAdapter(), null); //$NON-NLS-1$
-  }
+    /**
+     * Fires an intent to spin up the "file chooser" UI and select a file.
+     * Response will be handeled by {@link MdlViewerActivity.onActivityResult()}
+     */
+    public void performFileSearch() {
+        Toast.makeText(getApplicationContext(), R.string.msg_select_mdl, Toast.LENGTH_SHORT).show();
 
-  /**
-   * Show a simple error dialog.
-   *
-   * @param title
-   * @param messages
-   */
-  private void showDialog(final Exception e) {
-    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setTitle(R.string.msg_error);
-    builder.setMessage(e.getLocalizedMessage());
-    builder.setPositiveButton(android.R.string.ok, null);
-    builder.create().show();
-  }
+        final Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType(MDL_MIME_TYPE);
 
-  /**
-   * Show a simple dialog with a title and a list of messages.
-   *
-   * @param title
-   * @param messages
-   */
-  private void showDialog(final String title, final List<String> messages) {
-    showDialog(title, messages.toArray(new String[] {}));
-  }
+        startActivityForResult(intent, READ_REQUEST_CODE);
+    }
 
-  /**
-   * Show a simple dialog with a title and a list of messages.
-   *
-   * @param title
-   * @param messages
-   */
-  private void showDialog(final String title, final String... messages) {
-    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setTitle(title);
-    builder.setItems(messages, null);
-    builder.setPositiveButton(android.R.string.ok, null);
-    builder.create().show();
-  }
+    /**
+     * Select models from transmitter memory
+     *
+     * @param item
+     */
+    public void performUsbMemorySearch(final MenuItem item) {
+        final OpenFromMemoryDialog dialog = new OpenFromMemoryDialog();
 
-  /**
-   * Update WebView in a background thread without blocking the UI thread.
-   */
-  public void updateUI() {
-    if (uri != null) {
-      // tell user to be patient
-      final Toast toast = Toast.makeText(this, R.string.msg_loading, Toast.LENGTH_LONG);
-      toast.show();
+        dialog.setDialogClosedListener(new DialogClosedListener() {
+            @Override
+            public void onDialogClosed(final int resultStatus) {
+                if (resultStatus == DialogClosedListener.OK) {
+                    final UsbDevice device = dialog.getUsbDevice();
+                    final ModelInfo info = dialog.getInfo();
+                    if (info != null) {
+                        new GetModelFromMemoryTask(MdlViewerActivity.this, device) {
+                            @Override
+                            protected void onPostExecute(final BaseModel result) {
+                                updateUI(result);
+                            }
 
-      // Generate HTML in background task
-      new GenerateHtmlTask(this) {
-        @Override
-        protected void onPostExecute(final BaseModel result) {
-          // done - update UI
-          try {
-            model = get();
-            webView.loadUrl(loadUrl);
-            setTitle(model.getModelName());
-            drawer.setAdapter(new SectionAdapter(MdlViewerActivity.this, model.getModelType(), model.getTransmitterType()));
-            toast.cancel();
-          } catch (InterruptedException | ExecutionException e) {
-            // something went wrong - show an error dialog
+                            @Override
+                            protected void onPreExecute() {
+                                // tell user to be patient
+                                setWait(R.string.msg_decode_data);
+                            }
+                        }.execute(info.getModelNumber());
+                    }
+                }
+            }
+        });
+
+        try {
+            dialog.show(getFragmentManager(), "open_from_tx");
+        } catch (final Exception e) {
+            dialog.dismiss();
             showDialog(e);
-            toast.cancel();
-          }
         }
-      }.execute(uri);
     }
-  }
+
+    private void performUsbSdSearch(final MenuItem item) {
+        // TODO Auto-generated method stub
+    }
+
+    /**
+     * Create a PDF version of the document. Only support on Android 4.4 and
+     * newer.
+     */
+    @TargetApi(19)
+    public void print() {
+        final PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
+        printManager.print("HoTTMdlViewer - " + modelName, webView.createPrintDocumentAdapter(), null); //$NON-NLS-1$
+    }
+
+    /**
+     * Show a simple error dialog.
+     *
+     * @param title
+     * @param messages
+     */
+    private void showDialog(final Exception e) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.msg_error);
+        builder.setMessage(e.getLocalizedMessage());
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.create().show();
+    }
+
+    public void updateUI() {
+        Log.d("updateUI()", modelName);
+        Log.d("updateUI()", modelType.name());
+        Log.d("updateUI()", transmitterType.name());
+
+        if (modelName != null && modelType != null && transmitterType != null) {
+            setWait(R.string.msg_loading);
+            // done - update UI
+            webView.loadUrl(loadUrl);
+            setTitle(modelName);
+            drawer.setAdapter(new SectionAdapter(MdlViewerActivity.this, modelType, transmitterType));
+
+            setWait(0);
+        }
+    }
+
+    private Toast toast = null;
+
+    private void setWait(final int msgId) {
+        if (toast != null) {
+            toast.cancel();
+        }
+
+        if (msgId == 0) {
+            webView.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
+        } else {
+            toast = Toast.makeText(MdlViewerActivity.this, msgId, Toast.LENGTH_LONG);
+            toast.show();
+
+            webView.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Update WebView in a background thread without blocking the UI thread.
+     */
+    public void updateUI(final BaseModel model) {
+        Log.d("updateUI(BaseModel)", model.getModelName());
+
+        // Generate HTML in background task
+        new GenerateHtmlTask(this) {
+
+            @Override
+            protected void onPostExecute(final String result) {
+                modelName = model.getModelName();
+                modelType = model.getModelType();
+                transmitterType = model.getTransmitterType();
+
+                updateUI();
+            }
+
+            @Override
+            protected void onPreExecute() {
+                // tell user to be patient
+                setWait(R.string.msg_convert_to_html);
+            }
+        }.execute(model);
+    }
+
+    public void updateUI(final Uri uri) {
+        Log.d("updateUI(Uri)", uri.toString());
+
+        new GetModelFromUriTask(this) {
+            @Override
+            protected void onPostExecute(final BaseModel result) {
+                updateUI(result);
+            }
+
+            @Override
+            protected void onPreExecute() {
+                // tell user to be patient
+                setWait(R.string.msg_decode_data);
+            }
+        }.execute(uri);
+    }
 }

@@ -17,69 +17,69 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
  * @author oli
  */
 public class AndroidUsbSerialPortImplementation implements SerialPort {
-  static final int                  IO_TIMEOUT   = 1000;
-  static final int                  BUFFER_SIZE  = 2064;
+    static final int                  IO_TIMEOUT   = 1000;
+    static final int                  BUFFER_SIZE  = 2064;
 
-  private final UsbSerialPort       port;
-  private final UsbDeviceConnection connection;
-  private boolean                   open         = false;
-  private InputStream               inputStream  = null;
-  private OutputStream              outputStream = null;
+    private final UsbSerialPort       port;
+    private final UsbDeviceConnection connection;
+    private boolean                   open         = false;
+    private InputStream               inputStream  = null;
+    private OutputStream              outputStream = null;
 
-  /**
-   * @param connection
-   * @param device
-   * @param interface1
-   */
-  public AndroidUsbSerialPortImplementation(final UsbSerialPort port, final UsbDeviceConnection connection) {
-    this.port = port;
-    this.connection = connection;
-  }
-
-  @Override
-  public void close() throws IOException {
-    if (open) {
-      inputStream.close();
-      inputStream = null;
-
-      outputStream.flush();
-      outputStream.close();
-      outputStream = null;
-
-      port.close();
-      open = false;
+    /**
+     * @param connection
+     * @param device
+     * @param interface1
+     */
+    public AndroidUsbSerialPortImplementation(final UsbSerialPort port, final UsbDeviceConnection connection) {
+        this.port = port;
+        this.connection = connection;
     }
-  }
 
-  @Override
-  public InputStream getInputStream() throws HoTTException {
-    return inputStream;
-  }
+    @Override
+    public void close() throws IOException {
+        if (open) {
+            inputStream.close();
+            inputStream = null;
 
-  @Override
-  public OutputStream getOutputStream() throws HoTTException {
-    return outputStream;
-  }
+            outputStream.flush();
+            outputStream.close();
+            outputStream = null;
 
-  @Override
-  public boolean isOpen() {
-    return open;
-  }
-
-  @Override
-  public void open() throws HoTTException {
-    if (!open) {
-      try {
-        port.open(connection);
-        port.setParameters(115200, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-
-        inputStream = new UsbSerialDriverInputStream(port);
-        outputStream = new UsbSerialDriverOutputStream(port);
-
-        open = true;
-      } catch (final IOException e) {
-        throw new HoTTException(e);
-      }
+            port.close();
+            open = false;
+        }
     }
-  }
+
+    @Override
+    public InputStream getInputStream() throws HoTTException {
+        return inputStream;
+    }
+
+    @Override
+    public OutputStream getOutputStream() throws HoTTException {
+        return outputStream;
+    }
+
+    @Override
+    public boolean isOpen() {
+        return open;
+    }
+
+    @Override
+    public void open() throws HoTTException {
+        if (!open) {
+            try {
+                port.open(connection);
+                port.setParameters(115200, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+
+                inputStream = new UsbSerialDriverInputStream(port);
+                outputStream = new UsbSerialDriverOutputStream(port);
+
+                open = true;
+            } catch (final IOException e) {
+                throw new HoTTException(e);
+            }
+        }
+    }
 }

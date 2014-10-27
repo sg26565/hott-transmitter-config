@@ -19,46 +19,50 @@ import android.widget.TextView;
  * @author oli
  */
 public class SerialUsbDeviceAdapter extends BaseAdapter {
-  private final UsbManager                 manager;
-  private final HashMap<String, UsbDevice> usbDevices;
-  private final List<String>               usbDeviceNames;
-  private final Context                    context;
+    private final Context                    context;
+    private final UsbManager                 manager;
+    private final List<String>               usbDeviceNames;
+    private final HashMap<String, UsbDevice> usbDevices;
 
-  public SerialUsbDeviceAdapter(final Context context) {
-    this.context = context;
-    manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
-    usbDevices = manager.getDeviceList();
-    usbDeviceNames = new ArrayList<>(usbDevices.keySet());
-  }
-
-  @Override
-  public int getCount() {
-    return usbDevices.size();
-  }
-
-  @Override
-  public Object getItem(final int position) {
-    return usbDevices.get(usbDeviceNames.get(position));
-  }
-
-  @Override
-  public long getItemId(final int position) {
-    return position;
-  }
-
-  @Override
-  public View getView(final int position, final View convertView, final ViewGroup parent) {
-    final TextView view;
-
-    if (convertView == null) {
-      final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      view = (TextView) inflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
-    } else {
-      view = (TextView) convertView;
+    public SerialUsbDeviceAdapter(final Context context) {
+        this.context = context;
+        manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
+        usbDevices = manager.getDeviceList();
+        usbDeviceNames = new ArrayList<>(usbDevices.keySet());
     }
 
-    view.setText(usbDeviceNames.get(position));
+    @Override
+    public int getCount() {
+        return usbDevices.size();
+    }
 
-    return view;
-  }
+    @Override
+    public Object getItem(final int position) {
+        return usbDevices.get(usbDeviceNames.get(position));
+    }
+
+    @Override
+    public long getItemId(final int position) {
+        return position;
+    }
+
+    public int getPosition(final String deviceName) {
+        return usbDeviceNames.indexOf(deviceName);
+    }
+
+    @Override
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
+        final TextView view;
+
+        if (convertView == null) {
+            final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = (TextView) inflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
+        } else {
+            view = (TextView) convertView;
+        }
+
+        view.setText(usbDeviceNames.get(position));
+
+        return view;
+    }
 }
