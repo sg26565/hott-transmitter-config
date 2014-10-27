@@ -21,9 +21,9 @@
 
 package com.hoho.android.usbserial.driver;
 
-import android.hardware.usb.UsbDevice;
-
 import java.util.List;
+
+import android.hardware.usb.UsbDevice;
 
 /**
  *

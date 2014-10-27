@@ -24,65 +24,64 @@ import gde.model.enums.TransmitterType;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.treichels.hott.ui.android.R;
-import de.treichels.hott.ui.android.R.layout;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import de.treichels.hott.ui.android.R;
 
 /**
  * @author oli
- * 
+ *
  */
 public class SectionAdapter extends BaseAdapter {
-  private final LayoutInflater inflater;
-  private final List<Section>  sections;
+    private final LayoutInflater inflater;
+    private final List<Section>  sections;
 
-  /**
-   * @param modelType
-   * @param transmitterType
-   */
-  public SectionAdapter(final Context context, final ModelType modelType, final TransmitterType transmitterType) {
-    inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    sections = new ArrayList<Section>();
+    /**
+     * @param modelType
+     * @param transmitterType
+     */
+    public SectionAdapter(final Context context, final ModelType modelType, final TransmitterType transmitterType) {
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        sections = new ArrayList<Section>();
 
-    for (final Section s : Section.values()) {
-      if (s.isValidFor(modelType) && s.isValidFor(transmitterType)) {
-        sections.add(s);
-      }
-    }
-  }
-
-  @Override
-  public int getCount() {
-    return sections.size();
-  }
-
-  @Override
-  public Object getItem(final int position) {
-    return sections.get(position).name();
-  }
-
-  @Override
-  public long getItemId(final int position) {
-    return sections.get(position).ordinal();
-  }
-
-  @Override
-  public View getView(final int position, final View convertView, final ViewGroup parent) {
-    TextView textView;
-
-    if (convertView != null) {
-      textView = (TextView) convertView;
-    } else {
-      textView = (TextView) inflater.inflate(R.layout.drawer_list_item, parent, false);
+        for (final Section s : Section.values()) {
+            if (s.isValidFor(modelType) && s.isValidFor(transmitterType)) {
+                sections.add(s);
+            }
+        }
     }
 
-    textView.setText(sections.get(position).toString());
+    @Override
+    public int getCount() {
+        return sections.size();
+    }
 
-    return textView;
-  }
+    @Override
+    public Object getItem(final int position) {
+        return sections.get(position).name();
+    }
+
+    @Override
+    public long getItemId(final int position) {
+        return sections.get(position).ordinal();
+    }
+
+    @Override
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
+        TextView textView;
+
+        if (convertView != null) {
+            textView = (TextView) convertView;
+        } else {
+            textView = (TextView) inflater.inflate(R.layout.drawer_list_item, parent, false);
+        }
+
+        textView.setText(sections.get(position).toString());
+
+        return textView;
+    }
 }

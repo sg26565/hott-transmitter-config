@@ -27,19 +27,24 @@ package com.hoho.android.usbserial.driver;
 @SuppressWarnings("serial")
 public class UsbSerialRuntimeException extends RuntimeException {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     public UsbSerialRuntimeException() {
         super();
     }
 
-    public UsbSerialRuntimeException(String detailMessage, Throwable throwable) {
+    public UsbSerialRuntimeException(final String detailMessage, final Throwable throwable) {
         super(detailMessage, throwable);
     }
 
-    public UsbSerialRuntimeException(String detailMessage) {
+    public UsbSerialRuntimeException(final String detailMessage) {
         super(detailMessage);
     }
 
-    public UsbSerialRuntimeException(Throwable throwable) {
+    public UsbSerialRuntimeException(final Throwable throwable) {
         super(throwable);
     }
 

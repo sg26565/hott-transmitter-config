@@ -1,11 +1,9 @@
 package de.treichels.hott.ui.android.usb;
 
-import gde.model.enums.ModelType;
-import gde.model.serial.ModelInfo;
+import gde.model.BaseModel;
 import gde.model.serial.SerialPort;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -17,31 +15,32 @@ import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 
+import de.treichels.hott.HoTTDecoder;
 import de.treichels.hott.HoTTSerialPort;
 
 /**
- * Retrieve a list of all model names from a transmitter attached via USB host
- * mode.
+ * Load the specified model from transmitter memory.
  *
  * @author oli
  */
-public class GetAllModelsTask extends UsbTask<UsbDevice, ModelInfo, List<ModelInfo>> {
-    private final List<ModelInfo> models = new ArrayList<ModelInfo>();
+public class GetModelFromMemoryTask extends UsbTask<Integer, Void, BaseModel> {
+    private final UsbDevice device;
 
     /**
      * @param context
      */
-    public GetAllModelsTask(final Context context) {
+    public GetModelFromMemoryTask(final Context context, final UsbDevice device) {
         super(context);
+        this.device = device;
     }
 
     @Override
     @SuppressLint("DefaultLocale")
-    protected List<ModelInfo> doInBackground(final UsbDevice... params) {
-        final UsbDevice device = params[0];
+    protected BaseModel doInBackground(final Integer... params) {
+        final int modelNumber = params[0];
+        BaseModel model = null;
 
         check4Permission(device);
-
         final UsbSerialDriver driver = UsbSerialProber.getDefaultProber().probeDevice(device);
 
         if (driver != null) {
@@ -54,20 +53,13 @@ public class GetAllModelsTask extends UsbTask<UsbDevice, ModelInfo, List<ModelIn
 
                 try {
                     port.open();
-                    final ModelInfo[] infos = port.getAllModelInfos();
+                    model = HoTTDecoder.decodeMemory(port, modelNumber);
                     port.close();
-
-                    for (final ModelInfo info : infos) {
-                        if (info.getModelType() != ModelType.Unknown) {
-                            models.add(info);
-                            publishProgress(info);
-                        }
-                    }
                 } catch (final IOException e) {
                 }
             }
         }
 
-        return models;
+        return model;
     }
 }

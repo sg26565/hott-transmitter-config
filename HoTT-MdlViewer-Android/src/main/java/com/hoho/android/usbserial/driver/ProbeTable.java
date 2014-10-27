@@ -21,12 +21,12 @@
 
 package com.hoho.android.usbserial.driver;
 
-import android.util.Pair;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import android.util.Pair;
 
 /**
  * Maps (vendor id, product id) pairs to the corresponding serial driver.
@@ -35,19 +35,20 @@ import java.util.Map;
  */
 public class ProbeTable {
 
-    private final Map<Pair<Integer, Integer>, Class<? extends UsbSerialDriver>> mProbeTable =
-            new LinkedHashMap<Pair<Integer,Integer>, Class<? extends UsbSerialDriver>>();
+    private final Map<Pair<Integer, Integer>, Class<? extends UsbSerialDriver>> mProbeTable = new LinkedHashMap<Pair<Integer, Integer>, Class<? extends UsbSerialDriver>>();
 
     /**
      * Adds or updates a (vendor, product) pair in the table.
      *
-     * @param vendorId the USB vendor id
-     * @param productId the USB product id
-     * @param driverClass the driver class responsible for this pair
+     * @param vendorId
+     *            the USB vendor id
+     * @param productId
+     *            the USB product id
+     * @param driverClass
+     *            the driver class responsible for this pair
      * @return {@code this}, for chaining
      */
-    public ProbeTable addProduct(int vendorId, int productId,
-            Class<? extends UsbSerialDriver> driverClass) {
+    public ProbeTable addProduct(final int vendorId, final int productId, final Class<? extends UsbSerialDriver> driverClass) {
         mProbeTable.put(Pair.create(vendorId, productId), driverClass);
         return this;
     }
@@ -60,31 +61,31 @@ public class ProbeTable {
      * @return
      */
     @SuppressWarnings("unchecked")
-    ProbeTable addDriver(Class<? extends UsbSerialDriver> driverClass) {
+    ProbeTable addDriver(final Class<? extends UsbSerialDriver> driverClass) {
         final Method method;
 
         try {
             method = driverClass.getMethod("getSupportedDevices");
-        } catch (SecurityException e) {
+        } catch (final SecurityException e) {
             throw new RuntimeException(e);
-        } catch (NoSuchMethodException e) {
+        } catch (final NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
 
         final Map<Integer, int[]> devices;
         try {
             devices = (Map<Integer, int[]>) method.invoke(null);
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
+        } catch (final IllegalAccessException e) {
             throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
+        } catch (final InvocationTargetException e) {
             throw new RuntimeException(e);
         }
 
-        for (Map.Entry<Integer, int[]> entry : devices.entrySet()) {
+        for (final Map.Entry<Integer, int[]> entry : devices.entrySet()) {
             final int vendorId = entry.getKey().intValue();
-            for (int productId : entry.getValue()) {
+            for (final int productId : entry.getValue()) {
                 addProduct(vendorId, productId, driverClass);
             }
         }
@@ -96,11 +97,13 @@ public class ProbeTable {
      * Returns the driver for the given (vendor, product) pair, or {@code null}
      * if no match.
      *
-     * @param vendorId the USB vendor id
-     * @param productId the USB product id
+     * @param vendorId
+     *            the USB vendor id
+     * @param productId
+     *            the USB product id
      * @return the driver class matching this pair, or {@code null}
      */
-    public Class<? extends UsbSerialDriver> findDriver(int vendorId, int productId) {
+    public Class<? extends UsbSerialDriver> findDriver(final int vendorId, final int productId) {
         final Pair<Integer, Integer> pair = Pair.create(vendorId, productId);
         return mProbeTable.get(pair);
     }

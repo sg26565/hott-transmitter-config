@@ -21,10 +21,10 @@
 
 package com.hoho.android.usbserial.driver;
 
+import java.io.IOException;
+
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
-
-import java.io.IOException;
 
 /**
  * A base class shared by several driver implementations.
@@ -33,37 +33,36 @@ import java.io.IOException;
  */
 abstract class CommonUsbSerialPort implements UsbSerialPort {
 
-    public static final int DEFAULT_READ_BUFFER_SIZE = 16 * 1024;
-    public static final int DEFAULT_WRITE_BUFFER_SIZE = 16 * 1024;
+    public static final int       DEFAULT_READ_BUFFER_SIZE  = 16 * 1024;
+    public static final int       DEFAULT_WRITE_BUFFER_SIZE = 16 * 1024;
 
-    protected final UsbDevice mDevice;
-    protected final int mPortNumber;
+    protected final UsbDevice     mDevice;
+    protected final int           mPortNumber;
 
     // non-null when open()
-    protected UsbDeviceConnection mConnection = null;
+    protected UsbDeviceConnection mConnection               = null;
 
-    protected final Object mReadBufferLock = new Object();
-    protected final Object mWriteBufferLock = new Object();
+    protected final Object        mReadBufferLock           = new Object();
+    protected final Object        mWriteBufferLock          = new Object();
 
-    /** Internal read buffer.  Guarded by {@link #mReadBufferLock}. */
-    protected byte[] mReadBuffer;
+    /** Internal read buffer. Guarded by {@link #mReadBufferLock}. */
+    protected byte[]              mReadBuffer;
 
-    /** Internal write buffer.  Guarded by {@link #mWriteBufferLock}. */
-    protected byte[] mWriteBuffer;
+    /** Internal write buffer. Guarded by {@link #mWriteBufferLock}. */
+    protected byte[]              mWriteBuffer;
 
-    public CommonUsbSerialPort(UsbDevice device, int portNumber) {
+    public CommonUsbSerialPort(final UsbDevice device, final int portNumber) {
         mDevice = device;
         mPortNumber = portNumber;
 
         mReadBuffer = new byte[DEFAULT_READ_BUFFER_SIZE];
         mWriteBuffer = new byte[DEFAULT_WRITE_BUFFER_SIZE];
     }
-    
+
     @Override
     public String toString() {
-        return String.format("<%s device_name=%s device_id=%s port_number=%s>",
-                getClass().getSimpleName(), mDevice.getDeviceName(),
-                mDevice.getDeviceId(), mPortNumber);
+        return String.format("<%s device_name=%s device_id=%s port_number=%s>", getClass().getSimpleName(), mDevice.getDeviceName(), mDevice.getDeviceId(),
+                mPortNumber);
     }
 
     /**
@@ -82,11 +81,12 @@ abstract class CommonUsbSerialPort implements UsbSerialPort {
 
     /**
      * Sets the size of the internal buffer used to exchange data with the USB
-     * stack for read operations.  Most users should not need to change this.
+     * stack for read operations. Most users should not need to change this.
      *
-     * @param bufferSize the size in bytes
+     * @param bufferSize
+     *            the size in bytes
      */
-    public final void setReadBufferSize(int bufferSize) {
+    public final void setReadBufferSize(final int bufferSize) {
         synchronized (mReadBufferLock) {
             if (bufferSize == mReadBuffer.length) {
                 return;
@@ -97,11 +97,12 @@ abstract class CommonUsbSerialPort implements UsbSerialPort {
 
     /**
      * Sets the size of the internal buffer used to exchange data with the USB
-     * stack for write operations.  Most users should not need to change this.
+     * stack for write operations. Most users should not need to change this.
      *
-     * @param bufferSize the size in bytes
+     * @param bufferSize
+     *            the size in bytes
      */
-    public final void setWriteBufferSize(int bufferSize) {
+    public final void setWriteBufferSize(final int bufferSize) {
         synchronized (mWriteBufferLock) {
             if (bufferSize == mWriteBuffer.length) {
                 return;
@@ -123,8 +124,7 @@ abstract class CommonUsbSerialPort implements UsbSerialPort {
     public abstract int write(final byte[] src, final int timeoutMillis) throws IOException;
 
     @Override
-    public abstract void setParameters(
-            int baudRate, int dataBits, int stopBits, int parity) throws IOException;
+    public abstract void setParameters(int baudRate, int dataBits, int stopBits, int parity) throws IOException;
 
     @Override
     public abstract boolean getCD() throws IOException;
@@ -151,7 +151,7 @@ abstract class CommonUsbSerialPort implements UsbSerialPort {
     public abstract void setRTS(boolean value) throws IOException;
 
     @Override
-    public boolean purgeHwBuffers(boolean flushReadBuffers, boolean flushWriteBuffers) throws IOException {
+    public boolean purgeHwBuffers(final boolean flushReadBuffers, final boolean flushWriteBuffers) throws IOException {
         return !flushReadBuffers && !flushWriteBuffers;
     }
 

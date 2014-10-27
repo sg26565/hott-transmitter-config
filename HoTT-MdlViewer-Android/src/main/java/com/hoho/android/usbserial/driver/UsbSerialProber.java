@@ -21,13 +21,13 @@
 
 package com.hoho.android.usbserial.driver;
 
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 
 /**
  *
@@ -37,14 +37,14 @@ public class UsbSerialProber {
 
     private final ProbeTable mProbeTable;
 
-    public UsbSerialProber(ProbeTable probeTable) {
+    public UsbSerialProber(final ProbeTable probeTable) {
         mProbeTable = probeTable;
     }
 
     public static UsbSerialProber getDefaultProber() {
         return new UsbSerialProber(getDefaultProbeTable());
     }
-    
+
     public static ProbeTable getDefaultProbeTable() {
         final ProbeTable probeTable = new ProbeTable();
         probeTable.addDriver(CdcAcmSerialDriver.class);
@@ -74,11 +74,12 @@ public class UsbSerialProber {
         }
         return result;
     }
-    
+
     /**
      * Probes a single device for a compatible driver.
-     * 
-     * @param usbDevice the usb device to probe
+     *
+     * @param usbDevice
+     *            the usb device to probe
      * @return a new {@link UsbSerialDriver} compatible with this device, or
      *         {@code null} if none available.
      */
@@ -86,23 +87,21 @@ public class UsbSerialProber {
         final int vendorId = usbDevice.getVendorId();
         final int productId = usbDevice.getProductId();
 
-        final Class<? extends UsbSerialDriver> driverClass =
-                mProbeTable.findDriver(vendorId, productId);
+        final Class<? extends UsbSerialDriver> driverClass = mProbeTable.findDriver(vendorId, productId);
         if (driverClass != null) {
             final UsbSerialDriver driver;
             try {
-                final Constructor<? extends UsbSerialDriver> ctor =
-                        driverClass.getConstructor(UsbDevice.class);
+                final Constructor<? extends UsbSerialDriver> ctor = driverClass.getConstructor(UsbDevice.class);
                 driver = ctor.newInstance(usbDevice);
-            } catch (NoSuchMethodException e) {
+            } catch (final NoSuchMethodException e) {
                 throw new RuntimeException(e);
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 throw new RuntimeException(e);
-            } catch (InstantiationException e) {
+            } catch (final InstantiationException e) {
                 throw new RuntimeException(e);
-            } catch (IllegalAccessException e) {
+            } catch (final IllegalAccessException e) {
                 throw new RuntimeException(e);
-            } catch (InvocationTargetException e) {
+            } catch (final InvocationTargetException e) {
                 throw new RuntimeException(e);
             }
             return driver;
