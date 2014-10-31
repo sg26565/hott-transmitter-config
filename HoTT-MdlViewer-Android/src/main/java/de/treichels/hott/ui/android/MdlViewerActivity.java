@@ -46,10 +46,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import de.treichels.hott.ui.android.dialogs.DialogClosedListener;
 import de.treichels.hott.ui.android.dialogs.OpenFromMemoryDialog;
+import de.treichels.hott.ui.android.dialogs.OpenFromSdDialog;
 import de.treichels.hott.ui.android.html.GenerateHtmlTask;
 import de.treichels.hott.ui.android.html.GetModelFromUriTask;
 import de.treichels.hott.ui.android.html.SectionAdapter;
 import de.treichels.hott.ui.android.usb.GetModelFromMemoryTask;
+import de.treichels.hott.ui.android.usb.GetModelFromSdTask;
 import de.treichels.hott.ui.android.usb.UsbUtils;
 
 /**
@@ -281,7 +283,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
             public void onDialogClosed(final int resultStatus) {
                 if (resultStatus == DialogClosedListener.OK) {
                     final UsbDevice device = dialog.getUsbDevice();
-                    final ModelInfo info = dialog.getInfo();
+                    final ModelInfo info = dialog.getResult();
                     if (info != null) {
                         new GetModelFromMemoryTask(MdlViewerActivity.this, device) {
                             @Override
@@ -309,7 +311,38 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     }
 
     private void performUsbSdSearch(final MenuItem item) {
-        // TODO Auto-generated method stub
+        final OpenFromSdDialog dialog = new OpenFromSdDialog();
+
+        dialog.setDialogClosedListener(new DialogClosedListener() {
+            @Override
+            public void onDialogClosed(final int resultStatus) {
+                if (resultStatus == DialogClosedListener.OK) {
+                    final UsbDevice device = dialog.getUsbDevice();
+                    final String filePath = dialog.getResult();
+                    if (filePath != null) {
+                        new GetModelFromSdTask(MdlViewerActivity.this, device) {
+                            @Override
+                            protected void onPostExecute(final BaseModel result) {
+                                updateUI(result);
+                            }
+
+                            @Override
+                            protected void onPreExecute() {
+                                // tell user to be patient
+                                setWait(R.string.msg_decode_data);
+                            }
+                        }.execute(filePath);
+                    }
+                }
+            }
+        });
+
+        try {
+            dialog.show(getFragmentManager(), "open_from_sd");
+        } catch (final Exception e) {
+            dialog.dismiss();
+            showDialog(e);
+        }
     }
 
     /**

@@ -18,5 +18,6 @@
     <string name="action_load_from_tx">Load from Transmitter</string>
     <string name="action_load_from_sd">Load from SD Card</string>
     <string name="usb_device">USB Device</string>
+    <string name="model_memory">Model Memory</string>
 
 </resources>
