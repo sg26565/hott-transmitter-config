@@ -21,7 +21,6 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.hardware.usb.UsbDevice;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,13 +36,18 @@ import android.widget.TextView;
 import de.treichels.hott.ui.android.R;
 import de.treichels.hott.ui.android.usb.SerialUsbDeviceAdapter;
 
-public abstract class AbstractUsbDialog<T> extends DialogFragment implements OnItemClickListener {
-  private static final String  USB_DEVICE_NAME = "usbDeviceName";
-  private DialogClosedListener closedListener  = null;
-  private SharedPreferences    preferences;
-  private T                    result          = null;
-  private UsbDevice            usbDevice;
+public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFragment implements OnItemClickListener {
+  private DialogClosedListener closedListener = null;
+  private DeviceType           device;
   private TextView             listViewLabel;
+  private SharedPreferences    preferences;
+  private ResultType           result         = null;
+
+  public DeviceType getDevice() {
+    return device;
+  }
+
+  protected abstract String getDeviceId();
 
   public DialogClosedListener getDialogClosedListener() {
     return closedListener;
@@ -53,15 +57,11 @@ public abstract class AbstractUsbDialog<T> extends DialogFragment implements OnI
 
   protected abstract String getListViewLabel();
 
-  public T getResult() {
+  public ResultType getResult() {
     return result;
   }
 
   protected abstract int getTitleId();
-
-  public UsbDevice getUsbDevice() {
-    return usbDevice;
-  }
 
   @Override
   public void onCancel(final DialogInterface dialog) {
@@ -70,6 +70,7 @@ public abstract class AbstractUsbDialog<T> extends DialogFragment implements OnI
     }
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
     preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -93,7 +94,7 @@ public abstract class AbstractUsbDialog<T> extends DialogFragment implements OnI
        */
       @Override
       public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
-        setUsbDevice((UsbDevice) parent.getItemAtPosition(position));
+        setDevice((DeviceType) parent.getItemAtPosition(position));
         // switch to selected device
         listView.setAdapter(getListAdapter());
       }
@@ -103,11 +104,11 @@ public abstract class AbstractUsbDialog<T> extends DialogFragment implements OnI
     });
 
     // initialize spinner to saved usb device name
-    final String savedUsbDeviceName = preferences.getString(USB_DEVICE_NAME, null);
-    if (savedUsbDeviceName != null) {
-      final int position = adapter.getPosition(savedUsbDeviceName);
+    final String savedDeviceId = preferences.getString(device.getClass().getSimpleName(), null);
+    if (savedDeviceId != null) {
+      final int position = adapter.getPosition(savedDeviceId);
       spinner.setSelection(position != -1 ? position : 0);
-      setUsbDevice((UsbDevice) spinner.getSelectedItem());
+      setDevice((DeviceType) spinner.getSelectedItem());
       listView.setAdapter(getListAdapter());
     }
 
@@ -119,6 +120,16 @@ public abstract class AbstractUsbDialog<T> extends DialogFragment implements OnI
     return view;
   }
 
+  public void setDevice(final DeviceType device) {
+    this.device = device;
+
+    // save device name as preferences
+    final SharedPreferences.Editor editor = preferences.edit();
+    final String savedDeviceId = getDeviceId();
+    editor.putString(device.getClass().getSimpleName(), savedDeviceId);
+    editor.commit();
+  }
+
   public void setDialogClosedListener(final DialogClosedListener closedListener) {
     this.closedListener = closedListener;
   }
@@ -127,17 +138,7 @@ public abstract class AbstractUsbDialog<T> extends DialogFragment implements OnI
     listViewLabel.setText(label);
   }
 
-  protected void setResult(final T result) {
+  protected void setResult(final ResultType result) {
     this.result = result;
-  }
-
-  public void setUsbDevice(final UsbDevice usbDevice) {
-    this.usbDevice = usbDevice;
-
-    // save device name as preferences
-    final SharedPreferences.Editor editor = preferences.edit();
-    final String savedUsbDeviceName = usbDevice.getDeviceName();
-    editor.putString(USB_DEVICE_NAME, savedUsbDeviceName);
-    editor.commit();
   }
 }

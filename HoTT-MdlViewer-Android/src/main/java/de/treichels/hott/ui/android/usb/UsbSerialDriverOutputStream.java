@@ -30,9 +30,9 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
  * @author oli@treichels.de
  */
 class UsbSerialDriverOutputStream extends OutputStream {
-    private final UsbSerialPort port;
     private final byte[]        buffer = new byte[AndroidUsbSerialPortImplementation.BUFFER_SIZE];
     private int                 len    = 0;
+    private final UsbSerialPort port;
 
     /**
      * @param port

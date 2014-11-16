@@ -20,68 +20,73 @@ package de.treichels.hott.ui.android.dialogs;
 import gde.model.serial.FileInfo;
 import gde.model.serial.FileType;
 import android.app.DialogFragment;
+import android.hardware.usb.UsbDevice;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import de.treichels.hott.ui.android.R;
 
 /**
- * A {@link DialogFragment} that shows a list of files from the transmitter sd
- * card and allows the user to select one of them.
+ * A {@link DialogFragment} that shows a list of files from the transmitter sd card and allows the user to select one of them.
  *
  * @author oli@treichels.de
  */
-public class OpenFromSdDialog extends AbstractUsbDialog<String> {
-    private FileInfoAdapter adapter = null;
+public class OpenFromSdDialog extends AbstractTxDialog<String, UsbDevice> {
+  private FileInfoAdapter adapter = null;
 
-    @Override
-    protected ListAdapter getListAdapter() {
-        if (adapter == null) {
-            adapter = new FileInfoAdapter(getActivity(), getUsbDevice());
-        }
+  @Override
+  protected String getDeviceId() {
+    return getDevice().getDeviceName();
+  }
 
-        return adapter;
+  @Override
+  protected ListAdapter getListAdapter() {
+    if (adapter == null) {
+      adapter = new FileInfoAdapter(getActivity(), getDevice());
     }
 
-    @Override
-    protected int getTitleId() {
-        return R.string.action_load_from_sd;
+    return adapter;
+  }
+
+  @Override
+  protected String getListViewLabel() {
+    return getResult();
+  }
+
+  @Override
+  public String getResult() {
+    final String result = super.getResult();
+
+    if (result == null || result.length() == 0) {
+      return "/";
     }
 
-    @Override
-    protected String getListViewLabel() {
-        return getResult();
+    return result;
+  }
+
+  @Override
+  protected int getTitleId() {
+    return R.string.action_load_from_sd;
+  }
+
+  @Override
+  public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+    final FileInfo item = (FileInfo) parent.getItemAtPosition(position);
+    final String result = item.getPath().replaceAll("/[^/]*/\\.\\.", "");
+    setResult(result);
+    setListViewLabel(getResult());
+
+    if (item.getType() == FileType.File) {
+      // file selected - close dialog and notify listener
+      dismiss();
+
+      final DialogClosedListener listener = getDialogClosedListener();
+      if (listener != null) {
+        listener.onDialogClosed(DialogClosedListener.OK);
+      }
+    } else {
+      // directory selected - open directory
+      adapter.reload(getDevice(), getResult());
     }
-
-    @Override
-    public String getResult() {
-        final String result = super.getResult();
-
-        if (result == null || result.length() == 0) {
-            return "/";
-        }
-
-        return result;
-    }
-
-    @Override
-    public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-        final FileInfo item = (FileInfo) parent.getItemAtPosition(position);
-        final String result = item.getPath().replaceAll("/[^/]*/\\.\\.", "");
-        setResult(result);
-        setListViewLabel(getResult());
-
-        if (item.getType() == FileType.File) {
-            // file selected - close dialog and notify listener
-            dismiss();
-
-            final DialogClosedListener listener = getDialogClosedListener();
-            if (listener != null) {
-                listener.onDialogClosed(DialogClosedListener.OK);
-            }
-        } else {
-            // directory selected - open directory
-            adapter.reload(getUsbDevice(), getResult());
-        }
-    }
+  }
 }

@@ -35,11 +35,11 @@ import de.treichels.hott.ui.android.background.FailSafeAsyncTask;
  * @author oli@treichels.de
  */
 public class GenerateHtmlTask extends FailSafeAsyncTask<BaseModel, Void, String> {
-  private final Context context;
-
   static {
     HTMLReport.setCurveImageGenerator(new AndroidCurveImageGenerator());
   }
+
+  private final Context context;
 
   public GenerateHtmlTask(final Context context) {
     this.context = context;

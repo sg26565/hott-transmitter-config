@@ -34,14 +34,14 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
  * @author oli@treichels.de
  */
 public class AndroidUsbSerialPortImplementation implements SerialPort {
-    static final int                  IO_TIMEOUT   = 1000;
     static final int                  BUFFER_SIZE  = 2064;
+    static final int                  IO_TIMEOUT   = 1000;
 
-    private final UsbSerialPort       port;
     private final UsbDeviceConnection connection;
-    private boolean                   open         = false;
     private InputStream               inputStream  = null;
+    private boolean                   open         = false;
     private OutputStream              outputStream = null;
+    private final UsbSerialPort       port;
 
     /**
      * @param connection

@@ -66,6 +66,12 @@ public abstract class UsbTask<Params, Progress, Result> extends FailSafeAsyncTas
     }
   }
 
+  /** Constant for the USB permission action. */
+  private static final String ACTION_USB_PERMISSION = "de.treichels.hott.ui.android.USB_PERMISSION";
+
+  /** System wide USB manager service */
+  private static UsbManager   manager               = null;
+
   /**
    * Get a list of all USB Devices currently attached in host mode.
    *
@@ -110,17 +116,11 @@ public abstract class UsbTask<Params, Progress, Result> extends FailSafeAsyncTas
     return !getDevices(context).isEmpty();
   }
 
-  /** Constant for the USB permission action. */
-  private static final String ACTION_USB_PERMISSION = "de.treichels.hott.ui.android.USB_PERMISSION";
-
   /** The current android contect */
   protected final Context     context;
 
   /** The current USB device for this task */
   private final UsbDevice     device;
-
-  /** System wide USB manager service */
-  private static UsbManager   manager               = null;
 
   /** {@link HoTTSerialPort} implementation for this task. */
   protected HoTTSerialPort    port;

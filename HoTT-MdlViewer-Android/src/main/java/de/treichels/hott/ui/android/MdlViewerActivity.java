@@ -275,7 +275,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
       @Override
       public void onDialogClosed(final int resultStatus) {
         if (resultStatus == DialogClosedListener.OK) {
-          final UsbDevice device = dialog.getUsbDevice();
+          final UsbDevice device = dialog.getDevice();
           final ModelInfo info = dialog.getResult();
           if (info != null) {
             new GetModelFromMemoryTask(MdlViewerActivity.this, device) {
@@ -315,7 +315,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
       @Override
       public void onDialogClosed(final int resultStatus) {
         if (resultStatus == DialogClosedListener.OK) {
-          final UsbDevice device = dialog.getUsbDevice();
+          final UsbDevice device = dialog.getDevice();
           final String filePath = dialog.getResult();
           if (filePath != null) {
             new GetModelFromSdTask(MdlViewerActivity.this, device) {
@@ -354,7 +354,8 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   @TargetApi(19)
   public void print() {
     final PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
-    printManager.print("HoTTMdlViewer - " + modelName, webView.createPrintDocumentAdapter(), null); //$NON-NLS-1$
+    final String documentName = "HoTTMdlViewer - " + modelName;
+    printManager.print(documentName, webView.createPrintDocumentAdapter(documentName), null);
   }
 
   private void setWait(final int msgId) {

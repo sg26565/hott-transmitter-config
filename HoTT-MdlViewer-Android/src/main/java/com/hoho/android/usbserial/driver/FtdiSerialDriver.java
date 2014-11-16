@@ -122,7 +122,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
     private class FtdiSerialPort extends CommonUsbSerialPort {
 
         public static final int      USB_RECIP_DEVICE           = 0x00;
-        public static final int      USB_ENDPOINT_IN            = 0x80;
+        //public static final int      USB_ENDPOINT_IN            = 0x80;
         public static final int      USB_ENDPOINT_OUT           = 0x00;
 
         public static final int      USB_WRITE_TIMEOUT_MILLIS   = 5000;
