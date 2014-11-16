@@ -1,8 +1,31 @@
+/**
+ *  HoTT Transmitter Config
+ *  Copyright (C) 2013  Oliver Treichel
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.treichels.hott.ui.android.background;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
+/**
+ * An {@link AsyncTask} that is fail safe. The task can report success or failure via a status, a text message and an optional throwavble. Subclasses need to
+ * implement the doInBackgroundFailSafe method which is allowed to throw exceptions.
+ *
+ * @author oli
+ */
 public abstract class FailSafeAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
   public enum ResultStatus {
     error, notstarted, ok, running

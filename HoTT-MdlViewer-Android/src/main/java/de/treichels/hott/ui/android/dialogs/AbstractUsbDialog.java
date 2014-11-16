@@ -1,3 +1,20 @@
+/**
+ *  HoTT Transmitter Config
+ *  Copyright (C) 2013  Oliver Treichel
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.treichels.hott.ui.android.dialogs;
 
 import android.app.DialogFragment;
@@ -21,107 +38,106 @@ import de.treichels.hott.ui.android.R;
 import de.treichels.hott.ui.android.usb.SerialUsbDeviceAdapter;
 
 public abstract class AbstractUsbDialog<T> extends DialogFragment implements OnItemClickListener {
-    private static final String  USB_DEVICE_NAME = "usbDeviceName";
-    private DialogClosedListener closedListener  = null;
-    private SharedPreferences    preferences;
-    private T                    result          = null;
-    private UsbDevice            usbDevice;
-    private TextView             listViewLabel;
+  private static final String  USB_DEVICE_NAME = "usbDeviceName";
+  private DialogClosedListener closedListener  = null;
+  private SharedPreferences    preferences;
+  private T                    result          = null;
+  private UsbDevice            usbDevice;
+  private TextView             listViewLabel;
 
-    public T getResult() {
-        return result;
+  public DialogClosedListener getDialogClosedListener() {
+    return closedListener;
+  }
+
+  protected abstract ListAdapter getListAdapter();
+
+  protected abstract String getListViewLabel();
+
+  public T getResult() {
+    return result;
+  }
+
+  protected abstract int getTitleId();
+
+  public UsbDevice getUsbDevice() {
+    return usbDevice;
+  }
+
+  @Override
+  public void onCancel(final DialogInterface dialog) {
+    if (closedListener != null) {
+      closedListener.onDialogClosed(DialogClosedListener.CANCELED);
+    }
+  }
+
+  @Override
+  public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+    preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+    // inflate view from xml
+    final View view = inflater.inflate(R.layout.load_from_tx, container);
+
+    final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
+
+    final ListView listView = (ListView) view.findViewById(R.id.listView);
+    listView.setEmptyView(progressBar);
+    listView.setOnItemClickListener(this);
+
+    // generate a spinner for all USB devices attached via host mode
+    final SerialUsbDeviceAdapter adapter = new SerialUsbDeviceAdapter(getActivity());
+    final Spinner spinner = (Spinner) view.findViewById(R.id.portSelector);
+    spinner.setAdapter(adapter);
+    spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+      /**
+       * Handle selection of a device from the spinner.
+       */
+      @Override
+      public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
+        setUsbDevice((UsbDevice) parent.getItemAtPosition(position));
+        // switch to selected device
+        listView.setAdapter(getListAdapter());
+      }
+
+      @Override
+      public void onNothingSelected(final AdapterView<?> parent) {}
+    });
+
+    // initialize spinner to saved usb device name
+    final String savedUsbDeviceName = preferences.getString(USB_DEVICE_NAME, null);
+    if (savedUsbDeviceName != null) {
+      final int position = adapter.getPosition(savedUsbDeviceName);
+      spinner.setSelection(position != -1 ? position : 0);
+      setUsbDevice((UsbDevice) spinner.getSelectedItem());
+      listView.setAdapter(getListAdapter());
     }
 
-    protected void setResult(final T result) {
-        this.result = result;
-    }
+    getDialog().setTitle(getTitleId());
 
-    public DialogClosedListener getDialogClosedListener() {
-        return closedListener;
-    }
+    listViewLabel = (TextView) view.findViewById(R.id.listViewLabel);
+    listViewLabel.setText(getListViewLabel());
 
-    protected abstract ListAdapter getListAdapter();
+    return view;
+  }
 
-    public UsbDevice getUsbDevice() {
-        return usbDevice;
-    }
+  public void setDialogClosedListener(final DialogClosedListener closedListener) {
+    this.closedListener = closedListener;
+  }
 
-    @Override
-    public void onCancel(final DialogInterface dialog) {
-        if (closedListener != null) {
-            closedListener.onDialogClosed(DialogClosedListener.CANCELED);
-        }
-    }
+  protected void setListViewLabel(final String label) {
+    listViewLabel.setText(label);
+  }
 
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+  protected void setResult(final T result) {
+    this.result = result;
+  }
 
-        // inflate view from xml
-        final View view = inflater.inflate(R.layout.load_from_tx, container);
+  public void setUsbDevice(final UsbDevice usbDevice) {
+    this.usbDevice = usbDevice;
 
-        final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
-
-        final ListView listView = (ListView) view.findViewById(R.id.listView);
-        listView.setEmptyView(progressBar);
-        listView.setOnItemClickListener(this);
-
-        // generate a spinner for all USB devices attached via host mode
-        final SerialUsbDeviceAdapter adapter = new SerialUsbDeviceAdapter(getActivity());
-        final Spinner spinner = (Spinner) view.findViewById(R.id.portSelector);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            /**
-             * Handle selection of a device from the spinner.
-             */
-            @Override
-            public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
-                setUsbDevice((UsbDevice) parent.getItemAtPosition(position));
-                // switch to selected device
-                listView.setAdapter(getListAdapter());
-            }
-
-            @Override
-            public void onNothingSelected(final AdapterView<?> parent) {
-            }
-        });
-
-        // initialize spinner to saved usb device name
-        final String savedUsbDeviceName = preferences.getString(USB_DEVICE_NAME, null);
-        if (savedUsbDeviceName != null) {
-            final int position = adapter.getPosition(savedUsbDeviceName);
-            spinner.setSelection(position != -1 ? position : 0);
-            setUsbDevice((UsbDevice) spinner.getSelectedItem());
-            listView.setAdapter(getListAdapter());
-        }
-
-        getDialog().setTitle(getTitleId());
-
-        listViewLabel = (TextView) view.findViewById(R.id.listViewLabel);
-        listViewLabel.setText(getListViewLabel());
-
-        return view;
-    }
-
-    protected void setListViewLabel(final String label) {
-        listViewLabel.setText(label);
-    }
-
-    protected abstract int getTitleId();
-
-    protected abstract String getListViewLabel();
-
-    public void setDialogClosedListener(final DialogClosedListener closedListener) {
-        this.closedListener = closedListener;
-    }
-
-    public void setUsbDevice(final UsbDevice usbDevice) {
-        this.usbDevice = usbDevice;
-
-        // save device name as preferences
-        final SharedPreferences.Editor editor = preferences.edit();
-        final String savedUsbDeviceName = usbDevice.getDeviceName();
-        editor.putString(USB_DEVICE_NAME, savedUsbDeviceName);
-        editor.commit();
-    }
+    // save device name as preferences
+    final SharedPreferences.Editor editor = preferences.edit();
+    final String savedUsbDeviceName = usbDevice.getDeviceName();
+    editor.putString(USB_DEVICE_NAME, savedUsbDeviceName);
+    editor.commit();
+  }
 }

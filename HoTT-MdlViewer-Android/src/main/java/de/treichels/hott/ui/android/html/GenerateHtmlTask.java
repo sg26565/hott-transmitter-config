@@ -37,6 +37,10 @@ import de.treichels.hott.ui.android.background.FailSafeAsyncTask;
 public class GenerateHtmlTask extends FailSafeAsyncTask<BaseModel, Void, String> {
   private final Context context;
 
+  static {
+    HTMLReport.setCurveImageGenerator(new AndroidCurveImageGenerator());
+  }
+
   public GenerateHtmlTask(final Context context) {
     this.context = context;
   }
@@ -46,7 +50,6 @@ public class GenerateHtmlTask extends FailSafeAsyncTask<BaseModel, Void, String>
     final BaseModel model = params[0];
 
     // convert to HTML
-    HTMLReport.setCurveImageGenerator(new AndroidCurveImageGenerator());
     final String html = HTMLReport.generateHTML(model);
 
     // write to cache file

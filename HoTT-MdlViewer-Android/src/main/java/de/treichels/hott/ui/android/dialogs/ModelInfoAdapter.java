@@ -1,5 +1,3 @@
-package de.treichels.hott.ui.android.dialogs;
-
 /**
  *  HoTT Transmitter Config
  *  Copyright (C) 2013  Oliver Treichel
@@ -17,6 +15,8 @@ package de.treichels.hott.ui.android.dialogs;
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.treichels.hott.ui.android.dialogs;
+
 import gde.model.serial.ModelInfo;
 import android.content.Context;
 import android.hardware.usb.UsbDevice;
@@ -28,47 +28,45 @@ import android.widget.TextView;
 import de.treichels.hott.ui.android.usb.GetAllModelsTask;
 
 /**
- * This class provides an adapter for {@link ModelInfo} instances. It will load
- * all defined models from the transmitter memory and generate {@link View}
- * objects for use in a {@link ListView} for each model.
+ * This class provides an adapter for {@link ModelInfo} instances. It will load all defined models from the transmitter memory and generate {@link View} objects
+ * for use in a {@link ListView} for each model.
  *
  * @author oli@treichels.de
  */
 public class ModelInfoAdapter extends GenericListAdaper<ModelInfo> {
-    /**
-     * @param context
-     * @param usbDevice
-     */
-    public ModelInfoAdapter(final Context context, final UsbDevice usbDevice) {
-        super(context);
+  /**
+   * @param context
+   * @param usbDevice
+   */
+  public ModelInfoAdapter(final Context context, final UsbDevice usbDevice) {
+    super(context);
 
-        // Load all model infos from transmitter memory as background task
-        new GetAllModelsTask(context, usbDevice) {
-            @Override
-            protected void onProgressUpdate(final ModelInfo... values) {
-                for (final ModelInfo info : values) {
-                    add(info);
-                }
-                notifyDataSetChanged();
-            }
-        }.execute();
-    }
-
-
-    @Override
-    public View getView(final int position, final View convertView, final ViewGroup parent) {
-        final TextView view;
-
-        if (convertView == null) {
-            final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = (TextView) inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-        } else {
-            view = (TextView) convertView;
+    // Load all model infos from transmitter memory as background task
+    new GetAllModelsTask(context, usbDevice) {
+      @Override
+      protected void onProgressUpdate(final ModelInfo... values) {
+        for (final ModelInfo info : values) {
+          add(info);
         }
+        notifyDataSetChanged();
+      }
+    }.execute();
+  }
 
-        final ModelInfo info = get(position);
-        view.setText(String.format("%2d: %s (%s)", info.getModelNumber() + 1, info.getModelName(), info.getModelType()));
+  @Override
+  public View getView(final int position, final View convertView, final ViewGroup parent) {
+    final TextView view;
 
-        return view;
+    if (convertView == null) {
+      final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+      view = (TextView) inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+    } else {
+      view = (TextView) convertView;
     }
+
+    final ModelInfo info = get(position);
+    view.setText(String.format("%2d: %s (%s)", info.getModelNumber() + 1, info.getModelName(), info.getModelType()));
+
+    return view;
+  }
 }
