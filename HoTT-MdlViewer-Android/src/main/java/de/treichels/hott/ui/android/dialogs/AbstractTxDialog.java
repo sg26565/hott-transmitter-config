@@ -34,23 +34,22 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import de.treichels.hott.ui.android.R;
-import de.treichels.hott.ui.android.usb.SerialUsbDeviceAdapter;
+import de.treichels.hott.ui.android.tx.DeviceHandler;
+import de.treichels.hott.ui.android.tx.usb.SerialUsbDeviceAdapter;
 
 public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFragment implements OnItemClickListener {
-  private DialogClosedListener closedListener = null;
-  private DeviceType           device;
-  private TextView             listViewLabel;
-  private SharedPreferences    preferences;
-  private ResultType           result         = null;
-
-  public DeviceType getDevice() {
-    return device;
-  }
-
-  protected abstract String getDeviceId();
+  private DialogClosedListener        closedListener = null;
+  protected DeviceHandler<DeviceType> handler        = null;
+  private TextView                    listViewLabel;
+  private SharedPreferences           preferences;
+  private ResultType                  result         = null;
 
   public DialogClosedListener getDialogClosedListener() {
     return closedListener;
+  }
+
+  public DeviceHandler<DeviceType> getHandler() {
+    return handler;
   }
 
   protected abstract ListAdapter getListAdapter();
@@ -65,8 +64,8 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
 
   @Override
   public void onCancel(final DialogInterface dialog) {
-    if (closedListener != null) {
-      closedListener.onDialogClosed(DialogClosedListener.CANCELED);
+    if (getDialogClosedListener() != null) {
+      getDialogClosedListener().onDialogClosed(DialogClosedListener.CANCELED);
     }
   }
 
@@ -94,7 +93,7 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
        */
       @Override
       public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
-        setDevice((DeviceType) parent.getItemAtPosition(position));
+        savePreferences((DeviceType) parent.getItemAtPosition(position));
         // switch to selected device
         listView.setAdapter(getListAdapter());
       }
@@ -104,11 +103,11 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
     });
 
     // initialize spinner to saved usb device name
-    final String savedDeviceId = preferences.getString(device.getClass().getSimpleName(), null);
+    final String savedDeviceId = preferences.getString(handler.getClass().getSimpleName(), null);
     if (savedDeviceId != null) {
       final int position = adapter.getPosition(savedDeviceId);
       spinner.setSelection(position != -1 ? position : 0);
-      setDevice((DeviceType) spinner.getSelectedItem());
+      savePreferences((DeviceType) spinner.getSelectedItem());
       listView.setAdapter(getListAdapter());
     }
 
@@ -120,12 +119,12 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
     return view;
   }
 
-  public void setDevice(final DeviceType device) {
-    this.device = device;
+  private void savePreferences(final DeviceType device) {
+    setHandler(device);
 
     // save device name as preferences
     final SharedPreferences.Editor editor = preferences.edit();
-    final String savedDeviceId = getDeviceId();
+    final String savedDeviceId = getHandler().getDeviceId();
     editor.putString(device.getClass().getSimpleName(), savedDeviceId);
     editor.commit();
   }
@@ -134,7 +133,9 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
     this.closedListener = closedListener;
   }
 
-  protected void setListViewLabel(final String label) {
+  protected abstract void setHandler(DeviceType device);
+
+  protected void setLabel(final String label) {
     listViewLabel.setText(label);
   }
 

@@ -44,15 +44,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import de.treichels.hott.ui.android.dialogs.AbstractTxDialog;
 import de.treichels.hott.ui.android.dialogs.DialogClosedListener;
-import de.treichels.hott.ui.android.dialogs.OpenFromMemoryDialog;
-import de.treichels.hott.ui.android.dialogs.OpenFromSdDialog;
+import de.treichels.hott.ui.android.dialogs.OpenFromUsbMemoryDialog;
+import de.treichels.hott.ui.android.dialogs.OpenFromUsbSdDialog;
 import de.treichels.hott.ui.android.html.GenerateHtmlTask;
 import de.treichels.hott.ui.android.html.GetModelFromUriTask;
 import de.treichels.hott.ui.android.html.SectionAdapter;
-import de.treichels.hott.ui.android.usb.GetModelFromMemoryTask;
-import de.treichels.hott.ui.android.usb.GetModelFromSdTask;
-import de.treichels.hott.ui.android.usb.UsbTask;
+import de.treichels.hott.ui.android.tx.DeviceHandler;
+import de.treichels.hott.ui.android.tx.GetModelFromMemoryTask;
+import de.treichels.hott.ui.android.tx.GetModelFromSdTask;
+import de.treichels.hott.ui.android.tx.usb.UsbDeviceHandler;
 
 /**
  * The main activity for the MdlViewer.
@@ -174,7 +176,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.options_menu, menu);
 
-    if (!UsbTask.isUsbHost(this)) {
+    if (!UsbDeviceHandler.isUsbHost(this)) {
       // disable these menu items as they don't work without USB host mode
       menu.findItem(R.id.action_load_from_sd).setVisible(false);
       menu.findItem(R.id.action_load_from_tx).setVisible(false);
@@ -269,16 +271,16 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
    * @param item
    */
   public void performUsbMemorySearch(final MenuItem item) {
-    final OpenFromMemoryDialog dialog = new OpenFromMemoryDialog();
+    final AbstractTxDialog<ModelInfo, UsbDevice> dialog = new OpenFromUsbMemoryDialog();
 
     dialog.setDialogClosedListener(new DialogClosedListener() {
       @Override
       public void onDialogClosed(final int resultStatus) {
         if (resultStatus == DialogClosedListener.OK) {
-          final UsbDevice device = dialog.getDevice();
+          final DeviceHandler<?> handler = dialog.getHandler();
           final ModelInfo info = dialog.getResult();
           if (info != null) {
-            new GetModelFromMemoryTask(MdlViewerActivity.this, device) {
+            new GetModelFromMemoryTask(handler) {
               @Override
               protected void onError(final String message, final Throwable throwable) {
                 showDialog(message, throwable);
@@ -309,16 +311,16 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   }
 
   private void performUsbSdSearch(final MenuItem item) {
-    final OpenFromSdDialog dialog = new OpenFromSdDialog();
+    final AbstractTxDialog<String, UsbDevice> dialog = new OpenFromUsbSdDialog();
 
     dialog.setDialogClosedListener(new DialogClosedListener() {
       @Override
       public void onDialogClosed(final int resultStatus) {
         if (resultStatus == DialogClosedListener.OK) {
-          final UsbDevice device = dialog.getDevice();
+          final DeviceHandler<?> handler = dialog.getHandler();
           final String filePath = dialog.getResult();
           if (filePath != null) {
-            new GetModelFromSdTask(MdlViewerActivity.this, device) {
+            new GetModelFromSdTask(handler) {
               @Override
               protected void onError(final String message, final Throwable throwable) {
                 showDialog(message, throwable);

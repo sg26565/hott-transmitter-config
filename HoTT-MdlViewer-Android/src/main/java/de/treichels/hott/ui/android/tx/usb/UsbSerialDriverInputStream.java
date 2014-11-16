@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.usb;
+package de.treichels.hott.ui.android.tx.usb;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +30,7 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
  * @author oli@treichels.de
  */
 class UsbSerialDriverInputStream extends InputStream {
-    private final byte[]        buffer = new byte[AndroidUsbSerialPortImplementation.BUFFER_SIZE];
+    private final byte[]        buffer = new byte[UsbSerialPortImplementation.BUFFER_SIZE];
     private int                 index  = 0;
     private int                 len    = 0;
     private final UsbSerialPort port;
@@ -55,7 +55,7 @@ class UsbSerialDriverInputStream extends InputStream {
 
     private int fetch() throws IOException {
         index = 0;
-        len = port.read(buffer, AndroidUsbSerialPortImplementation.IO_TIMEOUT);
+        len = port.read(buffer, UsbSerialPortImplementation.IO_TIMEOUT);
 
         if (len < 0) {
             Log.i("UsbSerialDriver.read()", "no data");

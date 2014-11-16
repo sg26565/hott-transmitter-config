@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.usb;
+package de.treichels.hott.ui.android.tx;
 
 import gde.model.serial.FileInfo;
 
@@ -23,12 +23,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
-import android.hardware.usb.UsbDevice;
-
-public class ListDirectoryTask extends UsbTask<String, FileInfo, List<FileInfo>> {
-  public ListDirectoryTask(final Context context, final UsbDevice device) {
-    super(context, device);
+public class ListDirectoryTask extends TxTask<String, FileInfo, List<FileInfo>> {
+  public ListDirectoryTask(final DeviceHandler<?> handler) {
+    super(handler);
   }
 
   @Override

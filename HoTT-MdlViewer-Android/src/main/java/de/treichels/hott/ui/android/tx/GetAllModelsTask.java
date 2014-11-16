@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.usb;
+package de.treichels.hott.ui.android.tx;
 
 import gde.model.enums.ModelType;
 import gde.model.serial.ModelInfo;
@@ -24,35 +24,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
-import android.hardware.usb.UsbDevice;
-
 /**
- * Retrieve a list of all model names from a transmitter attached via USB host
- * mode.
+ * Retrieve a list of all model names from a transmitter attached via USB host mode.
  *
  * @author oli@treichels.de
  */
-public class GetAllModelsTask extends UsbTask<Void, ModelInfo, List<ModelInfo>> {
-    /**
-     * @param context
-     */
-    public GetAllModelsTask(final Context context, final UsbDevice device) {
-        super(context, device);
+public class GetAllModelsTask extends TxTask<Void, ModelInfo, List<ModelInfo>> {
+  /**
+   * @param context
+   */
+  public GetAllModelsTask(final DeviceHandler<?> handler) {
+    super(handler);
+  }
+
+  @Override
+  protected List<ModelInfo> doInternal(final Void... params) throws IOException {
+    final List<ModelInfo> models = new ArrayList<ModelInfo>();
+
+    final ModelInfo[] infos = port.getAllModelInfos();
+    for (final ModelInfo info : infos) {
+      if (info.getModelType() != ModelType.Unknown) {
+        models.add(info);
+        publishProgress(info);
+      }
     }
 
-    @Override
-    protected List<ModelInfo> doInternal(final Void... params) throws IOException {
-        final List<ModelInfo> models = new ArrayList<ModelInfo>();
-
-        final ModelInfo[] infos = port.getAllModelInfos();
-        for (final ModelInfo info : infos) {
-            if (info.getModelType() != ModelType.Unknown) {
-                models.add(info);
-                publishProgress(info);
-            }
-        }
-
-        return models;
-    }
+    return models;
+  }
 }

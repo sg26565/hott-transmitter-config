@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.usb;
+package de.treichels.hott.ui.android.tx.usb;
 
 import gde.model.HoTTException;
 import gde.model.serial.SerialPort;
@@ -33,7 +33,7 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
  *
  * @author oli@treichels.de
  */
-public class AndroidUsbSerialPortImplementation implements SerialPort {
+public class UsbSerialPortImplementation implements SerialPort {
     static final int                  BUFFER_SIZE  = 2064;
     static final int                  IO_TIMEOUT   = 1000;
 
@@ -48,7 +48,7 @@ public class AndroidUsbSerialPortImplementation implements SerialPort {
      * @param device
      * @param interface1
      */
-    public AndroidUsbSerialPortImplementation(final UsbSerialPort port, final UsbDeviceConnection connection) {
+    public UsbSerialPortImplementation(final UsbSerialPort port, final UsbDeviceConnection connection) {
         this.port = port;
         this.connection = connection;
     }

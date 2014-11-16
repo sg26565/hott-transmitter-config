@@ -19,13 +19,13 @@ package de.treichels.hott.ui.android.dialogs;
 
 import gde.model.serial.ModelInfo;
 import android.content.Context;
-import android.hardware.usb.UsbDevice;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import de.treichels.hott.ui.android.usb.GetAllModelsTask;
+import de.treichels.hott.ui.android.tx.DeviceHandler;
+import de.treichels.hott.ui.android.tx.GetAllModelsTask;
 
 /**
  * This class provides an adapter for {@link ModelInfo} instances. It will load all defined models from the transmitter memory and generate {@link View} objects
@@ -38,11 +38,11 @@ public class ModelInfoAdapter extends GenericListAdaper<ModelInfo> {
    * @param context
    * @param usbDevice
    */
-  public ModelInfoAdapter(final Context context, final UsbDevice usbDevice) {
-    super(context);
+  public ModelInfoAdapter(final DeviceHandler<?> handler) {
+    super(handler.getContext());
 
     // Load all model infos from transmitter memory as background task
-    new GetAllModelsTask(context, usbDevice) {
+    new GetAllModelsTask(handler) {
       @Override
       protected void onProgressUpdate(final ModelInfo... values) {
         for (final ModelInfo info : values) {

@@ -36,14 +36,14 @@ package de.treichels.hott.ui.android.dialogs;
 import gde.model.serial.FileInfo;
 import gde.model.serial.FileType;
 import android.content.Context;
-import android.hardware.usb.UsbDevice;
 import android.os.AsyncTask.Status;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import de.treichels.hott.ui.android.usb.ListDirectoryTask;
+import de.treichels.hott.ui.android.tx.DeviceHandler;
+import de.treichels.hott.ui.android.tx.ListDirectoryTask;
 
 /**
  * This class provides an adapter for {@link FileInfo} objects. It will list files and directories from the transmitter sd card and generate {@link View}
@@ -52,7 +52,8 @@ import de.treichels.hott.ui.android.usb.ListDirectoryTask;
  * @author oli@treichels.de
  */
 public class FileInfoAdapter extends GenericListAdaper<FileInfo> {
-  private ListDirectoryTask task = null;
+  private ListDirectoryTask      task = null;
+  private final DeviceHandler<?> handler;
 
   /**
    * Create a FileInfoAdapter for the specified directory path.
@@ -60,9 +61,10 @@ public class FileInfoAdapter extends GenericListAdaper<FileInfo> {
    * @param context
    * @param usbDevice
    */
-  public FileInfoAdapter(final Context context, final UsbDevice usbDevice) {
-    super(context);
-    reload(usbDevice, "/");
+  public FileInfoAdapter(final DeviceHandler<?> handler) {
+    super(handler.getContext());
+    this.handler = handler;
+    reload("/");
   }
 
   @Override
@@ -90,14 +92,14 @@ public class FileInfoAdapter extends GenericListAdaper<FileInfo> {
     return view;
   }
 
-  public void reload(final UsbDevice usbDevice, final String path) {
+  public void reload(final String path) {
     // cancel running task
     if (task != null && task.getStatus() != Status.FINISHED) {
       task.cancel(true);
     }
 
     // Load all file infos from transmitter sd card as background task
-    task = new ListDirectoryTask(getContext(), usbDevice) {
+    task = new ListDirectoryTask(handler) {
       @Override
       protected void onPreExecute() {
         // remove old entries

@@ -20,7 +20,6 @@ package de.treichels.hott.ui.android.dialogs;
 import gde.model.serial.FileInfo;
 import gde.model.serial.FileType;
 import android.app.DialogFragment;
-import android.hardware.usb.UsbDevice;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -31,18 +30,13 @@ import de.treichels.hott.ui.android.R;
  *
  * @author oli@treichels.de
  */
-public class OpenFromSdDialog extends AbstractTxDialog<String, UsbDevice> {
+public abstract class OpenFromSdDialog<DeviceType> extends AbstractTxDialog<String, DeviceType> {
   private FileInfoAdapter adapter = null;
-
-  @Override
-  protected String getDeviceId() {
-    return getDevice().getDeviceName();
-  }
 
   @Override
   protected ListAdapter getListAdapter() {
     if (adapter == null) {
-      adapter = new FileInfoAdapter(getActivity(), getDevice());
+      adapter = new FileInfoAdapter(getHandler());
     }
 
     return adapter;
@@ -74,7 +68,7 @@ public class OpenFromSdDialog extends AbstractTxDialog<String, UsbDevice> {
     final FileInfo item = (FileInfo) parent.getItemAtPosition(position);
     final String result = item.getPath().replaceAll("/[^/]*/\\.\\.", "");
     setResult(result);
-    setListViewLabel(getResult());
+    setLabel(getResult());
 
     if (item.getType() == FileType.File) {
       // file selected - close dialog and notify listener
@@ -86,7 +80,7 @@ public class OpenFromSdDialog extends AbstractTxDialog<String, UsbDevice> {
       }
     } else {
       // directory selected - open directory
-      adapter.reload(getDevice(), getResult());
+      adapter.reload(getResult());
     }
   }
 }

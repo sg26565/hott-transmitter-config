@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.usb;
+package de.treichels.hott.ui.android.tx.usb;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -30,7 +30,7 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
  * @author oli@treichels.de
  */
 class UsbSerialDriverOutputStream extends OutputStream {
-    private final byte[]        buffer = new byte[AndroidUsbSerialPortImplementation.BUFFER_SIZE];
+    private final byte[]        buffer = new byte[UsbSerialPortImplementation.BUFFER_SIZE];
     private int                 len    = 0;
     private final UsbSerialPort port;
 
@@ -50,14 +50,14 @@ class UsbSerialDriverOutputStream extends OutputStream {
             }
 
             byte[] b;
-            if (len == AndroidUsbSerialPortImplementation.BUFFER_SIZE) {
+            if (len == UsbSerialPortImplementation.BUFFER_SIZE) {
                 b = buffer;
             } else {
                 b = new byte[len];
                 System.arraycopy(buffer, 0, b, 0, len);
             }
 
-            final int rc = port.write(b, AndroidUsbSerialPortImplementation.IO_TIMEOUT);
+            final int rc = port.write(b, UsbSerialPortImplementation.IO_TIMEOUT);
             builder.append(": ").append(rc);
 
             Log.i("bulkUsbSerialDriver.write()", builder.toString());
@@ -70,7 +70,7 @@ class UsbSerialDriverOutputStream extends OutputStream {
     public void write(final int oneByte) throws IOException {
         buffer[len++] = (byte) oneByte;
 
-        if (len == AndroidUsbSerialPortImplementation.BUFFER_SIZE) {
+        if (len == UsbSerialPortImplementation.BUFFER_SIZE) {
             flush();
         }
     }

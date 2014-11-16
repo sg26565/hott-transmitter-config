@@ -19,7 +19,6 @@ package de.treichels.hott.ui.android.dialogs;
 
 import gde.model.serial.ModelInfo;
 import android.app.DialogFragment;
-import android.hardware.usb.UsbDevice;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -30,18 +29,13 @@ import de.treichels.hott.ui.android.R;
  *
  * @author oli@treichels.de
  */
-public class OpenFromMemoryDialog extends AbstractTxDialog<ModelInfo, UsbDevice> {
+public abstract class OpenFromMemoryDialog<DeviceType> extends AbstractTxDialog<ModelInfo, DeviceType> {
   private ListAdapter adapter = null;
-
-  @Override
-  protected String getDeviceId() {
-    return getDevice().getDeviceName();
-  }
 
   @Override
   protected ListAdapter getListAdapter() {
     if (adapter == null) {
-      adapter = new ModelInfoAdapter(getActivity(), getDevice());
+      adapter = new ModelInfoAdapter(getHandler());
     }
 
     return adapter;

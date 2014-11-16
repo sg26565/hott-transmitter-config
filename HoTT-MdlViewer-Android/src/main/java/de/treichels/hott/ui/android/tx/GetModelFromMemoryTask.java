@@ -15,14 +15,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.usb;
+package de.treichels.hott.ui.android.tx;
 
 import gde.model.BaseModel;
 
 import java.io.IOException;
 
-import android.content.Context;
-import android.hardware.usb.UsbDevice;
 import de.treichels.hott.HoTTDecoder;
 
 /**
@@ -30,18 +28,18 @@ import de.treichels.hott.HoTTDecoder;
  *
  * @author oli@treichels.de
  */
-public class GetModelFromMemoryTask extends UsbTask<Integer, Void, BaseModel> {
-    /**
-     * @param context
-     */
-    public GetModelFromMemoryTask(final Context context, final UsbDevice device) {
-        super(context, device);
-    }
+public class GetModelFromMemoryTask extends TxTask<Integer, Void, BaseModel> {
+  /**
+   * @param context
+   */
+  public GetModelFromMemoryTask(final DeviceHandler<?> handler) {
+    super(handler);
+  }
 
-    @Override
-    protected BaseModel doInternal(final Integer... params) throws IOException {
-        final int modelNumber = params[0];
-        final BaseModel model = HoTTDecoder.decodeMemory(port, modelNumber);
-        return model;
-    }
+  @Override
+  protected BaseModel doInternal(final Integer... params) throws IOException {
+    final int modelNumber = params[0];
+    final BaseModel model = HoTTDecoder.decodeMemory(port, modelNumber);
+    return model;
+  }
 }
