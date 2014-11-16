@@ -52,7 +52,7 @@ import de.treichels.hott.ui.android.html.GetModelFromUriTask;
 import de.treichels.hott.ui.android.html.SectionAdapter;
 import de.treichels.hott.ui.android.usb.GetModelFromMemoryTask;
 import de.treichels.hott.ui.android.usb.GetModelFromSdTask;
-import de.treichels.hott.ui.android.usb.UsbUtils;
+import de.treichels.hott.ui.android.usb.UsbTask;
 
 /**
  * The main activity for the MdlViewer.
@@ -76,10 +76,8 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     /**
      * Url to temporary file.
      *
-     * This is a ugly workaround, to enable TOC navigation via
-     * {@code webView.loadUrl(loadUrl + "#" + section.name());}. It would be
-     * more elegant to navigate via JavaScript calls. However, this is only
-     * supported on Anroid 4.4 or higher.
+     * This is a ugly workaround, to enable TOC navigation via {@code webView.loadUrl(loadUrl + "#" + section.name());}. It would be more elegant to navigate via
+     * JavaScript calls. However, this is only supported on Anroid 4.4 or higher.
      */
     private String              loadUrl           = null;
 
@@ -101,8 +99,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     private WebView             webView           = null;
 
     /**
-     * Handle file selection in response to a {@link Intent.ACTION_GET_CONTENT}
-     * action intent.
+     * Handle file selection in response to a {@link Intent.ACTION_GET_CONTENT} action intent.
      */
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
@@ -115,10 +112,8 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
      * Called when the activity is first created.
      *
      * @param savedInstanceState
-     *            If the activity is being re-initialized after previously being
-     *            shut down then this Bundle contains the data it most recently
-     *            supplied in onSaveInstanceState(Bundle). <b>Note: Otherwise it
-     *            is null.</b>
+     *          If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     *          onSaveInstanceState(Bundle). <b>Note: Otherwise it is null.</b>
      */
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -179,7 +174,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.options_menu, menu);
 
-        if (!UsbUtils.isUsbHost(this)) {
+        if (!UsbTask.isUsbHost(this)) {
             // disable these menu items as they don't work without USB host mode
             menu.findItem(R.id.action_load_from_sd).setVisible(false);
             menu.findItem(R.id.action_load_from_tx).setVisible(false);
@@ -191,8 +186,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     /**
      * Handle toc selection in drawer.
      *
-     * Navigate webView to the anchor with the same name as the section in the
-     * drawer that was clicked.
+     * Navigate webView to the anchor with the same name as the section in the drawer that was clicked.
      *
      * @param parent
      * @param view
@@ -257,8 +251,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     }
 
     /**
-     * Fires an intent to spin up the "file chooser" UI and select a file.
-     * Response will be handled by {@link MdlViewerActivity.onActivityResult()}
+     * Fires an intent to spin up the "file chooser" UI and select a file. Response will be handled by {@link MdlViewerActivity.onActivityResult()}
      */
     public void performFileSearch() {
         Toast.makeText(getApplicationContext(), R.string.msg_select_mdl, Toast.LENGTH_SHORT).show();
@@ -325,6 +318,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
         }
     }
 
+
     private void performUsbSdSearch(final MenuItem item) {
         final OpenFromSdDialog dialog = new OpenFromSdDialog();
 
@@ -376,8 +370,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     }
 
     /**
-     * Create a PDF version of the document. Only support on Android 4.4 and
-     * newer.
+     * Create a PDF version of the document. Only support on Android 4.4 and newer.
      */
     @TargetApi(19)
     public void print() {
@@ -437,8 +430,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     }
 
     /**
-     * Update WebView in a background thread without blocking the UI thread.
-     * Convert a {@link BaseModel} to html.
+     * Update WebView in a background thread without blocking the UI thread. Convert a {@link BaseModel} to html.
      */
     public void updateUI(final BaseModel model) {
         Log.d("updateUI(BaseModel)", model.getModelName());
@@ -479,8 +471,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     }
 
     /**
-     * Update WebView in a background thread without blocking the UI thread.
-     * Read data from {@link Uri} and decode into a {@link BaseModel}.
+     * Update WebView in a background thread without blocking the UI thread. Read data from {@link Uri} and decode into a {@link BaseModel}.
      */
     public void updateUI(final Uri uri) {
         Log.d("updateUI(Uri)", uri.toString());
