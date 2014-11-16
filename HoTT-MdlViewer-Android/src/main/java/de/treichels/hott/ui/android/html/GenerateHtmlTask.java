@@ -18,10 +18,8 @@
 package de.treichels.hott.ui.android.html;
 
 import gde.model.BaseModel;
-import gde.report.ReportException;
 import gde.report.html.HTMLReport;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -37,47 +35,37 @@ import de.treichels.hott.ui.android.background.FailSafeAsyncTask;
  * @author oli@treichels.de
  */
 public class GenerateHtmlTask extends FailSafeAsyncTask<BaseModel, Void, String> {
-    private final Context context;
+  private final Context context;
 
-    public GenerateHtmlTask(final Context context) {
-        this.context = context;
+  public GenerateHtmlTask(final Context context) {
+    this.context = context;
+  }
+
+  @Override
+  protected String doInBackgroundFailSafe(final BaseModel... params) throws Exception {
+    final BaseModel model = params[0];
+
+    // convert to HTML
+    HTMLReport.setCurveImageGenerator(new AndroidCurveImageGenerator());
+    final String html = HTMLReport.generateHTML(model);
+
+    // write to cache file
+    OutputStream os = null;
+    Writer writer = null;
+    try {
+      os = context.openFileOutput(MdlViewerActivity.CACHE_FILE_NAME, Context.MODE_PRIVATE);
+      writer = new OutputStreamWriter(os);
+      writer.write(html);
+    } finally {
+      if (writer != null) {
+        writer.close();
+      }
+
+      if (os != null) {
+        os.close();
+      }
     }
 
-    @Override
-    protected String doInBackground(final BaseModel... params) {
-        final BaseModel model = params[0];
-        OutputStream os = null;
-        Writer writer = null;
-        String html = null;
-        try {
-            // convert to HTML
-            HTMLReport.setCurveImageGenerator(new AndroidCurveImageGenerator());
-            html = HTMLReport.generateHTML(model);
-
-            // write to cache file
-            os = context.openFileOutput(MdlViewerActivity.CACHE_FILE_NAME, Context.MODE_PRIVATE);
-            writer = new OutputStreamWriter(os);
-            writer.write(html);
-        } catch (final ReportException | IOException e) {
-            setResult(ResultStatus.error, null, e);
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (final IOException e) {
-                    // ignore
-                }
-            }
-
-            if (os != null) {
-                try {
-                    os.close();
-                } catch (final IOException e) {
-                    // ignore
-                }
-            }
-        }
-
-        return html;
-    }
+    return html;
+  }
 }
