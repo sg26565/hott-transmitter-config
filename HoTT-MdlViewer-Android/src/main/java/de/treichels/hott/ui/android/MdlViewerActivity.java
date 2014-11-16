@@ -288,7 +288,22 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
                         new GetModelFromMemoryTask(MdlViewerActivity.this, device) {
                             @Override
                             protected void onPostExecute(final BaseModel result) {
-                                updateUI(result);
+                                switch (getResultStatus()) {
+                                case ok:
+                                    updateUI(result);
+                                    break;
+
+                                case error:
+                                    if (getResultMessage() != null) {
+                                        showDialog(getResultMessage());
+                                    } else if (getResultException() != null) {
+                                        showDialog(getResultException().getLocalizedMessage());
+                                    }
+                                    break;
+
+                                default:
+                                    // do nothing
+                                }
                             }
 
                             @Override
@@ -306,7 +321,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
             dialog.show(getFragmentManager(), "open_from_tx");
         } catch (final Exception e) {
             dialog.dismiss();
-            showDialog(e);
+            showDialog(e.getLocalizedMessage());
         }
     }
 
@@ -323,7 +338,22 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
                         new GetModelFromSdTask(MdlViewerActivity.this, device) {
                             @Override
                             protected void onPostExecute(final BaseModel result) {
-                                updateUI(result);
+                                switch (getResultStatus()) {
+                                case ok:
+                                    updateUI(result);
+                                    break;
+
+                                case error:
+                                    if (getResultMessage() != null) {
+                                        showDialog(getResultMessage());
+                                    } else if (getResultException() != null) {
+                                        showDialog(getResultException().getLocalizedMessage());
+                                    }
+                                    break;
+
+                                default:
+                                    // do nothing
+                                }
                             }
 
                             @Override
@@ -341,7 +371,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
             dialog.show(getFragmentManager(), "open_from_sd");
         } catch (final Exception e) {
             dialog.dismiss();
-            showDialog(e);
+            showDialog(e.getLocalizedMessage());
         }
     }
 
@@ -378,10 +408,10 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
      * @param title
      * @param messages
      */
-    private void showDialog(final Exception e) {
+    private void showDialog(final String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.msg_error);
-        builder.setMessage(e.getLocalizedMessage());
+        builder.setMessage(message);
         builder.setPositiveButton(android.R.string.ok, null);
         builder.create().show();
     }
@@ -422,7 +452,22 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
             @Override
             protected void onPostExecute(final String result) {
                 // update webwiew
-                updateUI();
+                switch (getResultStatus()) {
+                case ok:
+                    updateUI();
+                    break;
+
+                case error:
+                    if (getResultMessage() != null) {
+                        showDialog(getResultMessage());
+                    } else if (getResultException() != null) {
+                        showDialog(getResultException().getLocalizedMessage());
+                    }
+                    break;
+
+                default:
+                    // do nothing
+                }
             }
 
             @Override

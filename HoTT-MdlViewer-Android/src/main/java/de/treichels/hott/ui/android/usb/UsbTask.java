@@ -38,6 +38,7 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 
 import de.treichels.hott.HoTTSerialPort;
+import de.treichels.hott.ui.android.background.FailSafeAsyncTask;
 
 /**
  * An abstract {@link AsyncTask} for USB communication.
@@ -47,7 +48,7 @@ import de.treichels.hott.HoTTSerialPort;
  *
  * @author oli@treichels.de
  */
-public abstract class UsbTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
+public abstract class UsbTask<Params, Progress, Result> extends FailSafeAsyncTask<Params, Progress, Result> {
     final class Unlocker extends BroadcastReceiver {
         @Override
         public void onReceive(final Context context, final Intent intent) {
@@ -108,6 +109,9 @@ public abstract class UsbTask<Params, Progress, Result> extends AsyncTask<Params
     @SuppressWarnings("unchecked")
     @Override
     protected Result doInBackground(final Params... params) {
+        setResult(ResultStatus.running, null, null);
+        Result result = null;
+
         check4Permission();
         final UsbSerialDriver driver = UsbSerialProber.getDefaultProber().probeDevice(device);
 
@@ -121,20 +125,23 @@ public abstract class UsbTask<Params, Progress, Result> extends AsyncTask<Params
 
                 try {
                     port.open();
-                    return doInternal(params);
+                    result = doInternal(params);
                 } catch (final IOException e) {
                     Log.e("doInBackground", "io error", e);
+                    setResult(ResultStatus.error, "io error", e);
                 } finally {
                     try {
                         port.close();
                         connection.close();
                     } catch (final IOException e) {
                         Log.e("doInBackground", "port_close_failed", e);
+                        setResult(ResultStatus.error, "io error", e);
                     }
                 }
             }
         }
 
-        return null;
+        setResult(ResultStatus.ok, null, null);
+        return result;
     }
 }

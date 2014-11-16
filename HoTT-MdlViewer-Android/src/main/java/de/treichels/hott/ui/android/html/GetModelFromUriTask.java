@@ -32,6 +32,7 @@ import android.os.AsyncTask;
 import android.provider.OpenableColumns;
 import de.treichels.hott.HoTTDecoder;
 import de.treichels.hott.ui.android.R;
+import de.treichels.hott.ui.android.background.FailSafeAsyncTask;
 
 /**
  * An {@link AsyncTask} that load data from an {@link Uri} and converts it into
@@ -39,7 +40,7 @@ import de.treichels.hott.ui.android.R;
  *
  * @author oli@treichels.de
  */
-public class GetModelFromUriTask extends AsyncTask<Uri, Void, BaseModel> {
+public class GetModelFromUriTask extends FailSafeAsyncTask<Uri, Void, BaseModel> {
     private static final String FILE_EXTENSION_MDL = ".mdl"; //$NON-NLS-1$
     private final Context       context;
 
@@ -79,12 +80,14 @@ public class GetModelFromUriTask extends AsyncTask<Uri, Void, BaseModel> {
             fileName = uri.getLastPathSegment();
         } else {
             // unknown scheme
-            throw new IllegalArgumentException(context.getResources().getString(R.string.msg_unsupported_uri, uri));
+            setResult(ResultStatus.error, context.getResources().getString(R.string.msg_unsupported_uri, uri), null);
+            return null;
         }
 
         // check file name extension (must be ".mdl")
         if (fileName == null || !fileName.endsWith(FILE_EXTENSION_MDL)) {
-            throw new IllegalArgumentException(context.getResources().getString(R.string.msg_invalid_file_name, fileName));
+            setResult(ResultStatus.error, context.getResources().getString(R.string.msg_invalid_file_name, fileName), null);
+            return null;
         }
 
         // check model type (either 'a' or 'h')
@@ -99,7 +102,8 @@ public class GetModelFromUriTask extends AsyncTask<Uri, Void, BaseModel> {
             break;
 
         default:
-            throw new IllegalArgumentException(context.getResources().getString(R.string.msg_invalid_file_type, fileName.charAt(0)));
+            setResult(ResultStatus.error, context.getResources().getString(R.string.msg_invalid_file_type, fileName.charAt(0)), null);
+            return null;
         }
 
         // filenName = modelType + modelName + ".mdl"
@@ -112,14 +116,13 @@ public class GetModelFromUriTask extends AsyncTask<Uri, Void, BaseModel> {
             is = context.getContentResolver().openInputStream(uri);
             model = HoTTDecoder.decodeStream(modelType, modelName, is);
         } catch (final IOException e) {
-            cancel(false);
-            throw new RuntimeException(e);
+            setResult(ResultStatus.error, null, e);
         } finally {
             if (is != null) {
                 try {
                     is.close();
                 } catch (final IOException e) {
-                    throw new RuntimeException(e);
+                    setResult(ResultStatus.error, null, e);
                 }
             }
         }

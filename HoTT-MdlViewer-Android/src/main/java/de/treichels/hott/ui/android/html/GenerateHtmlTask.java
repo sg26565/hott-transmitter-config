@@ -29,13 +29,14 @@ import java.io.Writer;
 import android.content.Context;
 import android.os.AsyncTask;
 import de.treichels.hott.ui.android.MdlViewerActivity;
+import de.treichels.hott.ui.android.background.FailSafeAsyncTask;
 
 /**
  * An {@link AsyncTask} that generates an HTML report for a model configuration.
  *
  * @author oli@treichels.de
  */
-public class GenerateHtmlTask extends AsyncTask<BaseModel, Void, String> {
+public class GenerateHtmlTask extends FailSafeAsyncTask<BaseModel, Void, String> {
     private final Context context;
 
     public GenerateHtmlTask(final Context context) {
@@ -58,13 +59,13 @@ public class GenerateHtmlTask extends AsyncTask<BaseModel, Void, String> {
             writer = new OutputStreamWriter(os);
             writer.write(html);
         } catch (final ReportException | IOException e) {
-            throw new RuntimeException(e);
+            setResult(ResultStatus.error, null, e);
         } finally {
             if (writer != null) {
                 try {
                     writer.close();
                 } catch (final IOException e) {
-                    throw new RuntimeException(e);
+                    // ignore
                 }
             }
 
@@ -72,7 +73,7 @@ public class GenerateHtmlTask extends AsyncTask<BaseModel, Void, String> {
                 try {
                     os.close();
                 } catch (final IOException e) {
-                    throw new RuntimeException(e);
+                    // ignore
                 }
             }
         }
