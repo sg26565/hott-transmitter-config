@@ -20,6 +20,7 @@ package de.treichels.hott.ui.android.usb;
 import gde.model.serial.SerialPort;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.PendingIntent;
@@ -42,99 +43,159 @@ import de.treichels.hott.HoTTSerialPort;
 /**
  * An abstract {@link AsyncTask} for USB communication.
  *
- * This class provides access to the {@link UsbManager} and asks the user for
- * device permissions.
+ * This class provides access to the {@link UsbManager} and asks the user for device permissions.
  *
  * @author oli@treichels.de
  */
 public abstract class UsbTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
-    final class Unlocker extends BroadcastReceiver {
-        @Override
-        public void onReceive(final Context context, final Intent intent) {
-            final String action = intent.getAction();
-            if (ACTION_USB_PERMISSION.equals(action)) {
-                synchronized (mutex) {
-                    // wakeup thread
-                    mutex.notify();
-                }
-            }
-        }
-    }
-
-    private static final String ACTION_USB_PERMISSION = "de.treichels.hott.ui.android.USB_PERMISSION";
-
-    private final UsbDevice     device;
-    private final UsbManager    manager;
-    private final Object        mutex                 = new Object();
-    protected final Context     context;
-    protected HoTTSerialPort    port;
-
-
-    public UsbTask(final Context context, final UsbDevice device) {
-        this.context = context;
-        this.device = device;
-        manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
-    }
-
-    /**
-     * Check that this activity has permission to access the usb device and ask
-     * user for permission if necessary.
-     *
-     * @param device
-     */
-    protected boolean check4Permission() {
-        if (!manager.hasPermission(device)) {
-            synchronized (mutex) {
-                final PendingIntent mPermissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_USB_PERMISSION), 0);
-                final IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
-                context.registerReceiver(new Unlocker(), filter);
-                manager.requestPermission(device, mPermissionIntent);
-
-                try {
-                    // wait for user decision
-                    mutex.wait();
-                } catch (final InterruptedException e) {
-                    // ignore
-                }
-            }
-        }
-
-        return manager.hasPermission(device);
-    }
-
-    @SuppressWarnings("unchecked")
-    protected abstract Result doInternal(Params... params) throws IOException;
-
-    @SuppressWarnings("unchecked")
+  /**
+   * A broadcast receiver that waits for {@link UsbTask.ACTION_USB_PERMISSION} action intent and notifies a waiting thread.
+   *
+   * @author oli
+   */
+  final class Unlocker extends BroadcastReceiver {
     @Override
-    protected Result doInBackground(final Params... params) {
-        check4Permission();
-        final UsbSerialDriver driver = UsbSerialProber.getDefaultProber().probeDevice(device);
-
-        if (driver != null) {
-            final List<UsbSerialPort> ports = driver.getPorts();
-
-            if (ports != null && ports.size() > 0) {
-                final UsbDeviceConnection connection = manager.openDevice(device);
-                final SerialPort impl = new AndroidUsbSerialPortImplementation(ports.get(0), connection);
-                port = new HoTTSerialPort(impl);
-
-                try {
-                    port.open();
-                    return doInternal(params);
-                } catch (final IOException e) {
-                    Log.e("doInBackground", "io error", e);
-                } finally {
-                    try {
-                        port.close();
-                        connection.close();
-                    } catch (final IOException e) {
-                        Log.e("doInBackground", "port_close_failed", e);
-                    }
-                }
-            }
+    public void onReceive(final Context context, final Intent intent) {
+      final String action = intent.getAction();
+      if (ACTION_USB_PERMISSION.equals(action)) {
+        synchronized (UsbTask.this) {
+          // wakeup main thread
+          UsbTask.this.notify();
         }
-
-        return null;
+      }
     }
+  }
+
+  /**
+   * Get a list of all USB Devices currently attached in host mode.
+   *
+   * @param context
+   * @return
+   */
+  public synchronized static List<UsbDevice> getDevices(final Context context) {
+    final List<UsbDevice> list = new ArrayList<UsbDevice>();
+    final UsbSerialProber prober = UsbSerialProber.getDefaultProber();
+
+    // Check each device and filter on UsbSerial
+    for (final UsbDevice device : getUsbManager(context).getDeviceList().values()) {
+      final UsbSerialDriver driver = prober.probeDevice(device);
+      if (driver != null) {
+        list.add(device);
+      }
+    }
+
+    return list;
+  }
+
+  /**
+   * Get the system wide {@linkp UsbManager}.
+   *
+   * @param context
+   * @return
+   */
+  public static UsbManager getUsbManager(final Context context) {
+    if (manager == null) {
+      manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
+    }
+
+    return manager;
+  }
+
+  /**
+   * Check if the device is USB host capable only once and remember the result.
+   *
+   * @return
+   */
+  public static boolean isUsbHost(final Context context) {
+    return !getDevices(context).isEmpty();
+  }
+
+  /** Constant for the USB permission action. */
+  private static final String ACTION_USB_PERMISSION = "de.treichels.hott.ui.android.USB_PERMISSION";
+
+  /** The current android contect */
+  protected final Context     context;
+
+  /** The current USB device for this task */
+  private final UsbDevice     device;
+
+  /** System wide USB manager service */
+  private static UsbManager   manager               = null;
+
+  /** {@link HoTTSerialPort} implementation for this task. */
+  protected HoTTSerialPort    port;
+
+  public UsbTask(final Context context, final UsbDevice device) {
+    this.context = context;
+    this.device = device;
+  }
+
+  /**
+   * Check that this activity has permission to access the USB device and ask user for permission if necessary.
+   *
+   * @param device
+   */
+  protected boolean check4Permission() {
+    if (!getUsbManager().hasPermission(device)) {
+      synchronized (this) {
+        // setup broadcast receiver
+        context.registerReceiver(new Unlocker(), new IntentFilter(ACTION_USB_PERMISSION));
+
+        // intent to fire on completion
+        final PendingIntent permissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_USB_PERMISSION), 0);
+
+        // ask for permission
+        getUsbManager().requestPermission(device, permissionIntent);
+
+        try {
+          // wait for user decision
+          wait();
+        } catch (final InterruptedException e) {
+          // ignore
+        }
+      }
+    }
+
+    return getUsbManager().hasPermission(device);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  protected final Result doInBackground(final Params... params) {
+    check4Permission();
+    final UsbSerialDriver driver = UsbSerialProber.getDefaultProber().probeDevice(device);
+
+    if (driver != null) {
+      final List<UsbSerialPort> ports = driver.getPorts();
+
+      if (ports != null && ports.size() > 0) {
+        final UsbDeviceConnection connection = getUsbManager().openDevice(device);
+        final SerialPort impl = new AndroidUsbSerialPortImplementation(ports.get(0), connection);
+        port = new HoTTSerialPort(impl);
+
+        try {
+          port.open();
+          return doInternal(params);
+        } catch (final IOException e) {
+          Log.e("doInBackground", "io error", e);
+        } finally {
+          try {
+            port.close();
+            connection.close();
+          } catch (final IOException e) {
+            Log.e("doInBackground", "port_close_failed", e);
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  @SuppressWarnings("unchecked")
+  protected abstract Result doInternal(Params... params) throws IOException;
+
+  public UsbManager getUsbManager() {
+    return getUsbManager(context);
+  }
 }
