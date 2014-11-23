@@ -30,7 +30,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.usb.UsbDevice;
 import android.net.Uri;
 import android.os.Bundle;
 import android.print.PrintManager;
@@ -46,14 +45,17 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import de.treichels.hott.ui.android.dialogs.AbstractTxDialog;
 import de.treichels.hott.ui.android.dialogs.DialogClosedListener;
-import de.treichels.hott.ui.android.dialogs.usb.OpenFromUsbMemoryDialog;
-import de.treichels.hott.ui.android.dialogs.usb.OpenFromUsbSdDialog;
+import de.treichels.hott.ui.android.dialogs.bluetooth.OpenFromMemoryDialogBluetooth;
+import de.treichels.hott.ui.android.dialogs.bluetooth.OpenFromSdDialogBluetooth;
+import de.treichels.hott.ui.android.dialogs.usb.OpenFromMemoryDialogUsb;
+import de.treichels.hott.ui.android.dialogs.usb.OpenFromSdDialogUsb;
 import de.treichels.hott.ui.android.html.GenerateHtmlTask;
 import de.treichels.hott.ui.android.html.GetModelFromUriTask;
 import de.treichels.hott.ui.android.html.SectionAdapter;
 import de.treichels.hott.ui.android.tx.DeviceHandler;
 import de.treichels.hott.ui.android.tx.GetModelFromMemoryTask;
 import de.treichels.hott.ui.android.tx.GetModelFromSdTask;
+import de.treichels.hott.ui.android.tx.bluetooth.BluetoothDeviceHandler;
 import de.treichels.hott.ui.android.tx.usb.UsbDeviceHandler;
 
 /**
@@ -216,12 +218,20 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
       performFileSearch();
       return true;
 
-    case R.id.action_load_from_sd:
-      performUsbSdSearch(item);
+    case R.id.action_load_from_sd_usb:
+      performSdSearchUsb(item);
       return true;
 
-    case R.id.action_load_from_tx:
-      performUsbMemorySearch(item);
+    case R.id.action_load_from_tx_usb:
+      performMemorySearchUsb(item);
+      return true;
+
+    case R.id.action_load_from_sd_bt:
+      performSdSearchBluetooth(item);
+      return true;
+
+    case R.id.action_load_from_tx_bt:
+      performMemorySearchBluetooth(item);
       return true;
 
     default:
@@ -234,8 +244,13 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     final boolean isUsbHost = UsbDeviceHandler.isUsbHost(this);
 
     // dynamically enable/disable these menu items if devices are attached in USB host mode
-    menu.findItem(R.id.action_load_from_sd).setVisible(isUsbHost);
-    menu.findItem(R.id.action_load_from_tx).setVisible(isUsbHost);
+    menu.findItem(R.id.action_load_from_sd_usb).setVisible(isUsbHost);
+    menu.findItem(R.id.action_load_from_tx_usb).setVisible(isUsbHost);
+
+    final boolean isBluetoothHost = BluetoothDeviceHandler.isBluetoothHost(this);
+    // dynamically enable/disable these menu items if devices are attached via Bluetooth
+    menu.findItem(R.id.action_load_from_sd_bt).setVisible(isBluetoothHost);
+    menu.findItem(R.id.action_load_from_tx_bt).setVisible(isBluetoothHost);
 
     return super.onPrepareOptionsMenu(menu);
   }
@@ -270,14 +285,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     startActivityForResult(intent, READ_REQUEST_CODE);
   }
 
-  /**
-   * Select models from transmitter memory
-   *
-   * @param item
-   */
-  public void performUsbMemorySearch(final MenuItem item) {
-    final AbstractTxDialog<ModelInfo, UsbDevice> dialog = new OpenFromUsbMemoryDialog();
-
+  public void performMemorySearch(final AbstractTxDialog<ModelInfo, ?> dialog) {
     dialog.setDialogClosedListener(new DialogClosedListener() {
       @Override
       public void onDialogClosed(final int resultStatus) {
@@ -315,9 +323,20 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     }
   }
 
-  private void performUsbSdSearch(final MenuItem item) {
-    final AbstractTxDialog<String, UsbDevice> dialog = new OpenFromUsbSdDialog();
+  /**
+   * Select models from transmitter memory
+   *
+   * @param item
+   */
+  public void performMemorySearchBluetooth(final MenuItem item) {
+    performMemorySearch(new OpenFromMemoryDialogBluetooth());
+  }
 
+  public void performMemorySearchUsb(final MenuItem item) {
+    performMemorySearch(new OpenFromMemoryDialogUsb());
+  }
+
+  private void performSdSearch(final AbstractTxDialog<String, ?> dialog) {
     dialog.setDialogClosedListener(new DialogClosedListener() {
       @Override
       public void onDialogClosed(final int resultStatus) {
@@ -353,6 +372,14 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
       dialog.dismiss();
       showDialog(e.getLocalizedMessage());
     }
+  }
+
+  private void performSdSearchBluetooth(final MenuItem item) {
+    performSdSearch(new OpenFromSdDialogBluetooth());
+  }
+
+  private void performSdSearchUsb(final MenuItem item) {
+    performSdSearch(new OpenFromSdDialogUsb());
   }
 
   /**

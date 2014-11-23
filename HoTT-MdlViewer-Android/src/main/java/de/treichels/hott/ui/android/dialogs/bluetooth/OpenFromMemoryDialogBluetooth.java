@@ -15,27 +15,38 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.dialogs.usb;
+package de.treichels.hott.ui.android.dialogs.bluetooth;
 
-import android.hardware.usb.UsbDevice;
+import android.bluetooth.BluetoothDevice;
+import de.treichels.hott.ui.android.R;
 import de.treichels.hott.ui.android.dialogs.OpenFromMemoryDialog;
 import de.treichels.hott.ui.android.tx.DeviceHandler;
-import de.treichels.hott.ui.android.tx.usb.UsbDeviceHandler;
+import de.treichels.hott.ui.android.tx.bluetooth.BluetoothDeviceHandler;
 
 /**
- * Read list of model via USB.
+ * Read list of model via BlueTooth.
  *
  * @author oli
  */
-public class OpenFromUsbMemoryDialog extends OpenFromMemoryDialog<UsbDevice> {
-  private UsbDeviceHandler handler = null;
+public class OpenFromMemoryDialogBluetooth extends OpenFromMemoryDialog<BluetoothDevice> {
+  private BluetoothDeviceHandler handler = null;
 
   @Override
-  public DeviceHandler<UsbDevice> getHandler() {
+  public DeviceHandler<BluetoothDevice> getHandler() {
     if (handler == null) {
-      handler = new UsbDeviceHandler(getActivity());
+      handler = new BluetoothDeviceHandler(getActivity());
     }
 
     return handler;
+  }
+
+  @Override
+  protected int getSelectorLabelId() {
+    return R.string.bluetooth_device;
+  }
+
+  @Override
+  protected int getTitleId() {
+    return R.string.action_load_from_tx_bt;
   }
 }

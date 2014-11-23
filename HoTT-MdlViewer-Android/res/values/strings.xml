@@ -14,10 +14,12 @@
     <string name="msg_decode_data">Decoding data &#8230; please wait.</string>
     <string name="msg_write_data">Writing data &#8230; please wait.</string>
     <string name="action_print_pdf">Print PDF</string>
-    <string name="action_print">Print</string>
-    <string name="action_load_from_tx">Load from Transmitter</string>
-    <string name="action_load_from_sd">Load from SD Card</string>
+    <string name="action_load_from_tx_usb">Load from Transmitter (USB)</string>
+    <string name="action_load_from_sd_usb">Load from SD Card (USB)</string>
+    <string name="action_load_from_tx_bt">Load from Transmitter (Bluetooth)</string>
+    <string name="action_load_from_sd_bt">Load from SD Card (Bluetooth)</string>
     <string name="usb_device">USB Device</string>
+    <string name="bluetooth_device">Bluetooth Device</string>
     <string name="model_memory">Model Memory</string>
 
 </resources>

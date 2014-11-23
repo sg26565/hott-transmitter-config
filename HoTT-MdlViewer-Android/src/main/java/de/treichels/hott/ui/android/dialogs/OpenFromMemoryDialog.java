@@ -49,11 +49,6 @@ public abstract class OpenFromMemoryDialog<DeviceType> extends AbstractTxDialog<
   }
 
   @Override
-  protected int getTitleId() {
-    return R.string.action_load_from_tx;
-  }
-
-  @Override
   public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
     setResult((ModelInfo) parent.getItemAtPosition(position));
 

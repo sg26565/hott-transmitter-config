@@ -48,6 +48,16 @@ public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
     }
   }
 
+  public static DeviceInfo<UsbDevice> getDeviceInfo(final UsbDevice device) {
+    final DeviceInfo<UsbDevice> info = new DeviceInfo<UsbDevice>();
+
+    info.setDevice(device);
+    info.setName(device.getDeviceName());
+    info.setId(device.getDeviceId());
+
+    return info;
+  }
+
   /**
    * Does the mobile device have any USB devices attached in usb host mode?
    *
@@ -79,7 +89,7 @@ public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
    *
    * @param device
    */
-  protected boolean check4Permission() {
+  private boolean check4Permission() {
     if (!manager.hasPermission(getDevice())) {
       synchronized (this) {
         // setup broadcast receiver
@@ -187,10 +197,7 @@ public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
     if (device == null) {
       deviceInfo = null;
     } else {
-      deviceInfo = new DeviceInfo<UsbDevice>();
-      deviceInfo.setDevice(device);
-      deviceInfo.setName(device.getDeviceName());
-      deviceInfo.setId(device.getDeviceId());
+      deviceInfo = getDeviceInfo(device);
     }
   }
 }

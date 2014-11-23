@@ -4,14 +4,20 @@
         android:id="@+id/action_load_from_file"
         android:showAsAction="never"
         android:title="@string/action_load_from_file"
-        android:titleCondensed="@string/action_load"/>
-    <item
-        android:id="@+id/action_load_from_tx"
+        android:titleCondensed="@string/action_load"/><item
+        android:id="@+id/action_load_from_tx_usb"
         android:showAsAction="never"
-        android:title="@string/action_load_from_tx"/>
+        android:title="@string/action_load_from_tx_usb"/>
     <item
-        android:id="@+id/action_load_from_sd"
+        android:id="@+id/action_load_from_sd_usb"
         android:showAsAction="never"
-        android:title="@string/action_load_from_sd"/>
-
+        android:title="@string/action_load_from_sd_usb"/>
+    <item
+        android:id="@+id/action_load_from_tx_bt"
+        android:showAsAction="never"
+        android:title="@string/action_load_from_tx_bt"/>
+    <item
+        android:id="@+id/action_load_from_sd_bt"
+        android:showAsAction="never"
+        android:title="@string/action_load_from_sd_bt"/>
 </menu>

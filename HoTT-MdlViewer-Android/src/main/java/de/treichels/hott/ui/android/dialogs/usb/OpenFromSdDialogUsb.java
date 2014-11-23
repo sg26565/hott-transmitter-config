@@ -18,6 +18,7 @@
 package de.treichels.hott.ui.android.dialogs.usb;
 
 import android.hardware.usb.UsbDevice;
+import de.treichels.hott.ui.android.R;
 import de.treichels.hott.ui.android.dialogs.OpenFromSdDialog;
 import de.treichels.hott.ui.android.tx.DeviceHandler;
 import de.treichels.hott.ui.android.tx.usb.UsbDeviceHandler;
@@ -27,7 +28,7 @@ import de.treichels.hott.ui.android.tx.usb.UsbDeviceHandler;
  *
  * @author oli
  */
-public class OpenFromUsbSdDialog extends OpenFromSdDialog<UsbDevice> {
+public class OpenFromSdDialogUsb extends OpenFromSdDialog<UsbDevice> {
   private UsbDeviceHandler handler = null;
 
   @Override
@@ -37,5 +38,15 @@ public class OpenFromUsbSdDialog extends OpenFromSdDialog<UsbDevice> {
     }
 
     return handler;
+  }
+
+  @Override
+  protected int getSelectorLabelId() {
+    return R.string.usb_device;
+  }
+
+  @Override
+  protected int getTitleId() {
+    return R.string.action_load_from_sd_usb;
   }
 }

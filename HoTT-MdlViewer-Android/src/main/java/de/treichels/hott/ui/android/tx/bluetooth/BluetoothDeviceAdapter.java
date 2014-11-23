@@ -15,27 +15,24 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.tx.usb;
+package de.treichels.hott.ui.android.tx.bluetooth;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
 import de.treichels.hott.ui.android.tx.DeviceAdapter;
 
 /**
- * An {@link DeviceAdapter} that holds a list of {@link UsbDevice} objects.
+ * An {@link DeviceAdapter} that holds a list of {@link BluetoothDevice} objects.
  *
  * @author oli@treichels.de
  */
-public class UsbDeviceAdapter extends DeviceAdapter<UsbDevice> {
+public class BluetoothDeviceAdapter extends DeviceAdapter<BluetoothDevice> {
 
-  public UsbDeviceAdapter(final Context context) {
+  public BluetoothDeviceAdapter(final Context context) {
     super(context);
 
-    final UsbManager manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
-
-    for (final UsbDevice device : manager.getDeviceList().values()) {
-      devices.add(UsbDeviceHandler.getDeviceInfo(device));
+    for (final BluetoothDevice device : BluetoothDeviceHandler.getBluetoothDevices()) {
+      devices.add(BluetoothDeviceHandler.getDeviceInfo(device));
     }
   }
 }

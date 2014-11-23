@@ -108,6 +108,8 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
     return result;
   }
 
+  protected abstract int getSelectorLabelId();
+
   /**
    * A resource id for the title of the dialog.
    *

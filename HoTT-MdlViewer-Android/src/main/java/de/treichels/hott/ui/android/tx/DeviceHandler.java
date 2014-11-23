@@ -62,7 +62,7 @@ public abstract class DeviceHandler<DeviceType> {
 
   public abstract String getPreferenceKey();
 
-  public abstract void openDevice();
+  public abstract void openDevice() throws IOException;
 
   public abstract void setDevice(DeviceType device);
 }

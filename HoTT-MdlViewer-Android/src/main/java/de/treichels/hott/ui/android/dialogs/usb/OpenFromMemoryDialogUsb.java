@@ -15,27 +15,38 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.tx.usb;
+package de.treichels.hott.ui.android.dialogs.usb;
 
-import android.content.Context;
 import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
-import de.treichels.hott.ui.android.tx.DeviceAdapter;
+import de.treichels.hott.ui.android.R;
+import de.treichels.hott.ui.android.dialogs.OpenFromMemoryDialog;
+import de.treichels.hott.ui.android.tx.DeviceHandler;
+import de.treichels.hott.ui.android.tx.usb.UsbDeviceHandler;
 
 /**
- * An {@link DeviceAdapter} that holds a list of {@link UsbDevice} objects.
+ * Read list of model via USB.
  *
- * @author oli@treichels.de
+ * @author oli
  */
-public class UsbDeviceAdapter extends DeviceAdapter<UsbDevice> {
+public class OpenFromMemoryDialogUsb extends OpenFromMemoryDialog<UsbDevice> {
+  private UsbDeviceHandler handler = null;
 
-  public UsbDeviceAdapter(final Context context) {
-    super(context);
-
-    final UsbManager manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
-
-    for (final UsbDevice device : manager.getDeviceList().values()) {
-      devices.add(UsbDeviceHandler.getDeviceInfo(device));
+  @Override
+  public DeviceHandler<UsbDevice> getHandler() {
+    if (handler == null) {
+      handler = new UsbDeviceHandler(getActivity());
     }
+
+    return handler;
+  }
+
+  @Override
+  protected int getSelectorLabelId() {
+    return R.string.usb_device;
+  }
+
+  @Override
+  protected int getTitleId() {
+    return R.string.action_load_from_tx_usb;
   }
 }
