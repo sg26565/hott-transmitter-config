@@ -46,8 +46,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import de.treichels.hott.ui.android.dialogs.AbstractTxDialog;
 import de.treichels.hott.ui.android.dialogs.DialogClosedListener;
-import de.treichels.hott.ui.android.dialogs.OpenFromUsbMemoryDialog;
-import de.treichels.hott.ui.android.dialogs.OpenFromUsbSdDialog;
+import de.treichels.hott.ui.android.dialogs.usb.OpenFromUsbMemoryDialog;
+import de.treichels.hott.ui.android.dialogs.usb.OpenFromUsbSdDialog;
 import de.treichels.hott.ui.android.html.GenerateHtmlTask;
 import de.treichels.hott.ui.android.html.GetModelFromUriTask;
 import de.treichels.hott.ui.android.html.SectionAdapter;
@@ -159,9 +159,9 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
       }
 
       updateUI();
-    } else {
+      // } else {
       // fall back to load from file
-      performFileSearch();
+      // performFileSearch();
     }
   }
 
@@ -357,7 +357,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   public void print() {
     final PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
     final String documentName = "HoTTMdlViewer - " + modelName;
-    printManager.print(documentName, webView.createPrintDocumentAdapter(documentName), null);
+    printManager.print(documentName, webView.createPrintDocumentAdapter(), null);
   }
 
   private void setWait(final int msgId) {

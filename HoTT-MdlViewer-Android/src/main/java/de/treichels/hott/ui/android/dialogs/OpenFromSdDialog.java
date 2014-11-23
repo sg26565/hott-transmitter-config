@@ -36,6 +36,7 @@ public abstract class OpenFromSdDialog<DeviceType> extends AbstractTxDialog<Stri
   @Override
   protected ListAdapter getListAdapter() {
     if (adapter == null) {
+      // this dialog displays a list of file infos
       adapter = new FileInfoAdapter(getHandler());
     }
 
@@ -44,15 +45,16 @@ public abstract class OpenFromSdDialog<DeviceType> extends AbstractTxDialog<Stri
 
   @Override
   protected String getListViewLabel() {
+    // display the current file path as the list view label
     return getResult();
   }
 
   @Override
   public String getResult() {
-    final String result = super.getResult();
+    String result = super.getResult();
 
     if (result == null || result.length() == 0) {
-      return "/";
+      result = "/";
     }
 
     return result;
@@ -66,9 +68,12 @@ public abstract class OpenFromSdDialog<DeviceType> extends AbstractTxDialog<Stri
   @Override
   public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
     final FileInfo item = (FileInfo) parent.getItemAtPosition(position);
+
+    // handle parent references (i.e. replace "/abc/.." with "")
     final String result = item.getPath().replaceAll("/[^/]*/\\.\\.", "");
+
     setResult(result);
-    setLabel(getResult());
+    setListViewLabel(getResult());
 
     if (item.getType() == FileType.File) {
       // file selected - close dialog and notify listener

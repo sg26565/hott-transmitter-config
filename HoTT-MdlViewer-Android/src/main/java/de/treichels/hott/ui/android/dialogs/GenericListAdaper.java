@@ -23,6 +23,11 @@ import java.util.List;
 import android.content.Context;
 import android.widget.BaseAdapter;
 
+/**
+ * A {@link BaseAdapter}, that is backed by a list.
+ *
+ * @author oli
+ */
 public abstract class GenericListAdaper<T> extends BaseAdapter {
   private final Context context;
   private final List<T> list = new ArrayList<T>();
@@ -33,10 +38,12 @@ public abstract class GenericListAdaper<T> extends BaseAdapter {
 
   protected void add(final T item) {
     list.add(item);
+    notifyDataSetChanged();
   }
 
   protected void clear() {
     list.clear();
+    notifyDataSetChanged();
   }
 
   protected T get(final int position) {
@@ -65,4 +72,6 @@ public abstract class GenericListAdaper<T> extends BaseAdapter {
   protected boolean isEmtpy() {
     return list.isEmpty();
   }
+
+  public abstract void reload();
 }

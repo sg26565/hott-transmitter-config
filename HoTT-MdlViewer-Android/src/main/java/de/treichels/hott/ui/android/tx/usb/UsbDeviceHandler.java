@@ -19,9 +19,16 @@ import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 
+import de.treichels.hott.ui.android.tx.DeviceAdapter;
 import de.treichels.hott.ui.android.tx.DeviceHandler;
+import de.treichels.hott.ui.android.tx.DeviceInfo;
 import de.treichels.hott.ui.android.tx.TxTask;
 
+/**
+ * A {@link DeviceHandler} for {@link UsbDevice} objects.
+ *
+ * @author oli
+ */
 public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
   /**
    * A broadcast receiver that waits for {@link TxTask.ACTION_USB_PERMISSION} action intent and notifies a waiting thread.
@@ -41,21 +48,29 @@ public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
     }
   }
 
+  /**
+   * Does the mobile device have any USB devices attached in usb host mode?
+   *
+   * @param context
+   * @return
+   */
   public static boolean isUsbHost(final Context context) {
-    return new UsbDeviceHandler(context, null).isUsbHost();
+    return new UsbDeviceHandler(context).isUsbHost();
   }
 
   /** Constant for the USB permission action. */
-  public static final String  ACTION_USB_PERMISSION = "de.treichels.hott.ui.android.USB_PERMISSION";
+  public static final String    ACTION_USB_PERMISSION = "de.treichels.hott.ui.android.USB_PERMISSION";
 
-  private final UsbManager    manager;
+  private UsbDeviceConnection   connection            = null;
 
-  private UsbDeviceConnection connection            = null;
+  private DeviceInfo<UsbDevice> deviceInfo            = null;
 
-  private SerialPort          impl                  = null;
+  private SerialPort            impl                  = null;
 
-  public UsbDeviceHandler(final Context context, final UsbDevice device) {
-    super(context, device);
+  private final UsbManager      manager;
+
+  public UsbDeviceHandler(final Context context) {
+    super(context);
     manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
   }
 
@@ -65,7 +80,7 @@ public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
    * @param device
    */
   protected boolean check4Permission() {
-    if (!manager.hasPermission(device)) {
+    if (!manager.hasPermission(getDevice())) {
       synchronized (this) {
         // setup broadcast receiver
         context.registerReceiver(new Unlocker(), new IntentFilter(UsbDeviceHandler.ACTION_USB_PERMISSION));
@@ -74,7 +89,7 @@ public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
         final PendingIntent permissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(UsbDeviceHandler.ACTION_USB_PERMISSION), 0);
 
         // ask for permission
-        manager.requestPermission(device, permissionIntent);
+        manager.requestPermission(getDevice(), permissionIntent);
 
         try {
           // wait for user decision
@@ -85,7 +100,7 @@ public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
       }
     }
 
-    return manager.hasPermission(device);
+    return manager.hasPermission(getDevice());
   }
 
   @Override
@@ -103,13 +118,23 @@ public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
   }
 
   @Override
-  public String getDeviceId() {
-    return device.getDeviceName();
+  public DeviceAdapter<UsbDevice> getDeviceAdapter() {
+    return new UsbDeviceAdapter(context);
+  }
+
+  @Override
+  public DeviceInfo<UsbDevice> getDeviceInfo() {
+    return deviceInfo;
   }
 
   @Override
   public SerialPort getPort() {
     return impl;
+  }
+
+  @Override
+  public String getPreferenceKey() {
+    return UsbDevice.class.getName();
   }
 
   /**
@@ -145,15 +170,28 @@ public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
   @Override
   public void openDevice() {
     check4Permission();
-    final UsbSerialDriver driver = UsbSerialProber.getDefaultProber().probeDevice(device);
+    final UsbSerialDriver driver = UsbSerialProber.getDefaultProber().probeDevice(getDevice());
 
     if (driver != null) {
       final List<UsbSerialPort> ports = driver.getPorts();
 
       if (ports != null && ports.size() > 0) {
-        connection = manager.openDevice(device);
+        connection = manager.openDevice(getDevice());
         impl = new UsbSerialPortImplementation(ports.get(0), connection);
       }
+    }
+  }
+
+  @Override
+  public void setDevice(final UsbDevice device) {
+    if (device == null) {
+      deviceInfo = null;
+    } else {
+      deviceInfo = new DeviceInfo<UsbDevice>();
+      deviceInfo.setDevice(device);
+      deviceInfo.setName(device.getDeviceName());
+      deviceInfo.setId(device.getDeviceId());
+      check4Permission();
     }
   }
 }

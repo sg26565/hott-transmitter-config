@@ -15,16 +15,27 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.dialogs;
+package de.treichels.hott.ui.android.dialogs.usb;
+
+import android.hardware.usb.UsbDevice;
+import de.treichels.hott.ui.android.dialogs.OpenFromSdDialog;
+import de.treichels.hott.ui.android.tx.DeviceHandler;
+import de.treichels.hott.ui.android.tx.usb.UsbDeviceHandler;
 
 /**
- * A listener interface that listens for dialog close events.
+ * Read list of model via USB.
  *
- * @author oli@treichels.de
+ * @author oli
  */
-public interface DialogClosedListener {
-    public int CANCELED = 1;
-    public int OK       = 0;
+public class OpenFromUsbSdDialog extends OpenFromSdDialog<UsbDevice> {
+  private UsbDeviceHandler handler = null;
 
-    public void onDialogClosed(int resultStatus);
+  @Override
+  public DeviceHandler<UsbDevice> getHandler() {
+    if (handler == null) {
+      handler = new UsbDeviceHandler(getActivity());
+    }
+
+    return handler;
+  }
 }

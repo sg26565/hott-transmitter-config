@@ -25,18 +25,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Retrieve a list of all model names from a transmitter attached via USB host mode.
+ * Retrieve a list of all model names from the transmitter.
  *
  * @author oli@treichels.de
  */
 public class GetAllModelsTask extends TxTask<Void, ModelInfo, List<ModelInfo>> {
-  /**
-   * @param context
-   */
   public GetAllModelsTask(final DeviceHandler<?> handler) {
     super(handler);
   }
 
+  /**
+   * Get a list of all model infos from the transmitter memory.
+   *
+   * @param params
+   *          ignored
+   * @return A list of {@link ModelInfo} objects.
+   * @throws IOException
+   */
   @Override
   protected List<ModelInfo> doInternal(final Void... params) throws IOException {
     final List<ModelInfo> models = new ArrayList<ModelInfo>();

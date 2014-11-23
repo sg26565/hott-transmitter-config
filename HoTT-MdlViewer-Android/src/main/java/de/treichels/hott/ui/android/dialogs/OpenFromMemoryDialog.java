@@ -35,6 +35,7 @@ public abstract class OpenFromMemoryDialog<DeviceType> extends AbstractTxDialog<
   @Override
   protected ListAdapter getListAdapter() {
     if (adapter == null) {
+      // this dialog displays a list of model infos
       adapter = new ModelInfoAdapter(getHandler());
     }
 
@@ -43,6 +44,7 @@ public abstract class OpenFromMemoryDialog<DeviceType> extends AbstractTxDialog<
 
   @Override
   protected String getListViewLabel() {
+    // the list view label is a static string
     return getActivity().getString(R.string.model_memory);
   }
 

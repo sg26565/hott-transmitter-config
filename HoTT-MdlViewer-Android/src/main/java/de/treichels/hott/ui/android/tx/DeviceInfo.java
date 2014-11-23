@@ -15,16 +15,41 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.dialogs;
+package de.treichels.hott.ui.android.tx;
 
 /**
- * A listener interface that listens for dialog close events.
+ * A data holder class that hold information about communication devices (i.e. USB or Bluetooth) on the mobile device.
  *
- * @author oli@treichels.de
+ * @author oli
  */
-public interface DialogClosedListener {
-    public int CANCELED = 1;
-    public int OK       = 0;
+public class DeviceInfo<DeviceType> {
+  private DeviceType device;
+  private long       id;
+  private String     name;
 
-    public void onDialogClosed(int resultStatus);
+  public DeviceInfo() {}
+
+  public DeviceType getDevice() {
+    return device;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setDevice(final DeviceType device) {
+    this.device = device;
+  }
+
+  public void setId(final long id) {
+    this.id = id;
+  }
+
+  public void setName(final String name) {
+    this.name = name;
+  }
 }

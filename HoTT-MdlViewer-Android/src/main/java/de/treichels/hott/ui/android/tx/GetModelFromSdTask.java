@@ -35,13 +35,18 @@ import de.treichels.hott.ui.android.R;
 public class GetModelFromSdTask extends TxTask<String, Void, BaseModel> {
   private static final String FILE_EXTENSION_MDL = ".mdl"; //$NON-NLS-1$
 
-  /**
-   * @param context
-   */
   public GetModelFromSdTask(final DeviceHandler<?> handler) {
     super(handler);
   }
 
+  /**
+   * Load the data of the model specified by the path in the first parameter. Other parameters are ignored.
+   *
+   * @param params
+   *          First pram contains the file path on the sd card. Other params are ignored.
+   * @return The model
+   * @throws IOException
+   */
   @Override
   protected BaseModel doInternal(final String... params) throws IOException {
     final String path = params[0];

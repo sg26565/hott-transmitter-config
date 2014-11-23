@@ -30,38 +30,96 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import de.treichels.hott.ui.android.R;
+import de.treichels.hott.ui.android.tx.DeviceAdapter;
 import de.treichels.hott.ui.android.tx.DeviceHandler;
-import de.treichels.hott.ui.android.tx.usb.SerialUsbDeviceAdapter;
 
+/**
+ * An abstract dialog that provides a spinner to select a communication device and uses this device to retrieve a list of models to select from.
+ *
+ * @author oli
+ */
 public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFragment implements OnItemClickListener {
-  private DialogClosedListener        closedListener = null;
-  protected DeviceHandler<DeviceType> handler        = null;
-  private TextView                    listViewLabel;
-  private SharedPreferences           preferences;
-  private ResultType                  result         = null;
+  private DeviceAdapter<DeviceType> spinnerAdapter = null;
+  private DialogClosedListener      closedListener = null;
+  private ListView                  listView       = null;
+  private TextView                  listViewLabel;
+  private SharedPreferences         preferences;
+  private ResultType                result         = null;
+  private Spinner                   spinner        = null;
 
+  /**
+   * Listener to be notified when the dialog was closed.
+   *
+   * @return
+   */
   public DialogClosedListener getDialogClosedListener() {
     return closedListener;
   }
 
-  public DeviceHandler<DeviceType> getHandler() {
-    return handler;
-  }
+  /**
+   * The device handler for the dialog
+   *
+   * @return
+   */
+  public abstract DeviceHandler<DeviceType> getHandler();
 
+  /**
+   * An adapter that transforms the model data from the transmitter into widgets for a {@link ListView}.
+   *
+   * @return
+   */
   protected abstract ListAdapter getListAdapter();
 
+  /**
+   * The label of the {@link ListView}.
+   *
+   * @return
+   */
   protected abstract String getListViewLabel();
 
+  /**
+   * Load the preferred device from preferences. First, the preferred device name is read form the preferences and then the spinner adapter is used to find a
+   * matching device. If no match was found, the first device will be used.
+   *
+   * @return
+   */
+  @SuppressWarnings("unchecked")
+  private DeviceType getPreferredDevice() {
+    DeviceType device = null;
+
+    final String savedDeviceName = preferences.getString(getHandler().getPreferenceKey(), null);
+    if (savedDeviceName != null) {
+      spinner.setSelection(spinnerAdapter.getPosition(savedDeviceName) != -1 ? spinnerAdapter.getPosition(savedDeviceName) : 0);
+      device = (DeviceType) spinner.getSelectedItem();
+    }
+
+    return device;
+  }
+
+  /**
+   * The model that was selected or null.
+   *
+   * @return
+   */
   public ResultType getResult() {
     return result;
   }
 
+  /**
+   * A resource id for the title of the dialog.
+   *
+   * @return
+   */
   protected abstract int getTitleId();
 
+  /**
+   * Notify the {@link DialogClosedListener} that the dialog was cancelled.
+   *
+   * @param dialog
+   */
   @Override
   public void onCancel(final DialogInterface dialog) {
     if (getDialogClosedListener() != null) {
@@ -69,7 +127,14 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
     }
   }
 
-  @SuppressWarnings("unchecked")
+  /**
+   * Create the view for this dialog.
+   *
+   * @param inflater
+   * @param container
+   * @param savedInstanceState
+   * @return
+   */
   @Override
   public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
     preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -77,55 +142,47 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
     // inflate view from xml
     final View view = inflater.inflate(R.layout.load_from_tx, container);
 
-    final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
-
-    final ListView listView = (ListView) view.findViewById(R.id.listView);
-    listView.setEmptyView(progressBar);
+    // main list view
+    listView = (ListView) view.findViewById(R.id.listView);
+    listView.setEmptyView(view.findViewById(R.id.progressBar1));
     listView.setOnItemClickListener(this);
-
-    // generate a spinner for all USB devices attached via host mode
-    final SerialUsbDeviceAdapter adapter = new SerialUsbDeviceAdapter(getActivity());
-    final Spinner spinner = (Spinner) view.findViewById(R.id.portSelector);
-    spinner.setAdapter(adapter);
-    spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-      /**
-       * Handle selection of a device from the spinner.
-       */
-      @Override
-      public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
-        savePreferences((DeviceType) parent.getItemAtPosition(position));
-        // switch to selected device
-        listView.setAdapter(getListAdapter());
-      }
-
-      @Override
-      public void onNothingSelected(final AdapterView<?> parent) {}
-    });
-
-    // initialize spinner to saved usb device name
-    final String savedDeviceId = preferences.getString(handler.getClass().getSimpleName(), null);
-    if (savedDeviceId != null) {
-      final int position = adapter.getPosition(savedDeviceId);
-      spinner.setSelection(position != -1 ? position : 0);
-      savePreferences((DeviceType) spinner.getSelectedItem());
-      listView.setAdapter(getListAdapter());
-    }
-
-    getDialog().setTitle(getTitleId());
 
     listViewLabel = (TextView) view.findViewById(R.id.listViewLabel);
     listViewLabel.setText(getListViewLabel());
 
+    // generate a spinner for communication devices
+    spinnerAdapter = getHandler().getDeviceAdapter();
+    spinner = (Spinner) view.findViewById(R.id.portSelector);
+    spinner.setAdapter(spinnerAdapter);
+    spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+      /**
+       * Handle selection of a device from the spinner.
+       */
+      @SuppressWarnings("unchecked")
+      @Override
+      public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
+        switchDevice((DeviceType) parent.getItemAtPosition(position));
+      }
+
+      @Override
+      public void onNothingSelected(final AdapterView<?> parent) {
+        // ignored
+      }
+    });
+
+    // initialize spinner to saved device name
+    switchDevice(getPreferredDevice());
+
+    // set title
+    getDialog().setTitle(getTitleId());
+
     return view;
   }
 
-  private void savePreferences(final DeviceType device) {
-    setHandler(device);
-
+  private void savePreferredDevice(final DeviceType device) {
     // save device name as preferences
     final SharedPreferences.Editor editor = preferences.edit();
-    final String savedDeviceId = getHandler().getDeviceId();
-    editor.putString(device.getClass().getSimpleName(), savedDeviceId);
+    editor.putString(getHandler().getPreferenceKey(), getHandler().getDeviceName());
     editor.commit();
   }
 
@@ -133,13 +190,24 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
     this.closedListener = closedListener;
   }
 
-  protected abstract void setHandler(DeviceType device);
-
-  protected void setLabel(final String label) {
+  protected void setListViewLabel(final String label) {
     listViewLabel.setText(label);
   }
 
   protected void setResult(final ResultType result) {
     this.result = result;
+  }
+
+  private void switchDevice(final DeviceType device) {
+    if (device != null) {
+      // switch to selected device
+      getHandler().setDevice(device);
+
+      // save as preference
+      savePreferredDevice(device);
+
+      // new list adapter for this device
+      listView.setAdapter(getListAdapter());
+    }
   }
 }

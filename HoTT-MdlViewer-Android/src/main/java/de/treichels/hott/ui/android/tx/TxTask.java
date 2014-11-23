@@ -20,15 +20,11 @@ package de.treichels.hott.ui.android.tx;
 import java.io.IOException;
 
 import android.content.Context;
-import android.hardware.usb.UsbManager;
-import android.os.AsyncTask;
 import de.treichels.hott.HoTTSerialPort;
 import de.treichels.hott.ui.android.background.FailSafeAsyncTask;
 
 /**
- * An abstract {@link AsyncTask} for USB communication.
- *
- * This class provides access to the {@link UsbManager} and asks the user for device permissions.
+ * An abstract {@link FailSafeAsyncTask} for communication with the transmitter that is independent form the communication channel (Usb or Bluetooth).
  *
  * @author oli@treichels.de
  */
@@ -41,6 +37,14 @@ public abstract class TxTask<Params, Progress, Result> extends FailSafeAsyncTask
     this.handler = handler;
   }
 
+  /**
+   * Perform communication in a device indepentent way. Ask the handler to setup and open the device, open a communication port, perform the task and close the
+   * port and device.
+   *
+   * @param params
+   * @return
+   * @throws IOException
+   */
   @SuppressWarnings("unchecked")
   @Override
   protected Result doInBackgroundFailSafe(final Params... params) throws IOException {
@@ -60,6 +64,13 @@ public abstract class TxTask<Params, Progress, Result> extends FailSafeAsyncTask
     return result;
   }
 
+  /**
+   * Perform the task. Sub classes can rely on communication port being ready for use.
+   * 
+   * @param params
+   * @return
+   * @throws IOException
+   */
   @SuppressWarnings("unchecked")
   protected abstract Result doInternal(Params... params) throws IOException;
 

@@ -34,23 +34,16 @@ import de.treichels.hott.ui.android.tx.GetAllModelsTask;
  * @author oli@treichels.de
  */
 public class ModelInfoAdapter extends GenericListAdaper<ModelInfo> {
+  private final DeviceHandler<?> handler;
+
   /**
    * @param context
    * @param usbDevice
    */
   public ModelInfoAdapter(final DeviceHandler<?> handler) {
     super(handler.getContext());
-
-    // Load all model infos from transmitter memory as background task
-    new GetAllModelsTask(handler) {
-      @Override
-      protected void onProgressUpdate(final ModelInfo... values) {
-        for (final ModelInfo info : values) {
-          add(info);
-        }
-        notifyDataSetChanged();
-      }
-    }.execute();
+    this.handler = handler;
+    reload();
   }
 
   @Override
@@ -68,5 +61,24 @@ public class ModelInfoAdapter extends GenericListAdaper<ModelInfo> {
     view.setText(String.format("%2d: %s (%s)", info.getModelNumber() + 1, info.getModelName(), info.getModelType()));
 
     return view;
+  }
+
+  @Override
+  public void reload() {
+    // Load all model infos from transmitter memory as background task
+    new GetAllModelsTask(handler) {
+      @Override
+      protected void onPreExecute() {
+        // remove old entries
+        clear();
+      }
+
+      @Override
+      protected void onProgressUpdate(final ModelInfo... values) {
+        for (final ModelInfo info : values) {
+          add(info);
+        }
+      }
+    }.execute();
   }
 }

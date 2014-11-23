@@ -29,13 +29,18 @@ import de.treichels.hott.HoTTDecoder;
  * @author oli@treichels.de
  */
 public class GetModelFromMemoryTask extends TxTask<Integer, Void, BaseModel> {
-  /**
-   * @param context
-   */
   public GetModelFromMemoryTask(final DeviceHandler<?> handler) {
     super(handler);
   }
 
+  /**
+   * Load the data of the model specified by the model number in the first parameter. Other parameters are ignored.
+   *
+   * @param params
+   *          First param contains the model number. Other params are ignored.
+   * @return The model
+   * @throws IOException
+   */
   @Override
   protected BaseModel doInternal(final Integer... params) throws IOException {
     final int modelNumber = params[0];

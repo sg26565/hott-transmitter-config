@@ -23,11 +23,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * List a directory on the sd card of the transmitter and return a list of {@link FileInfo} objects for each entry.
+ *
+ * @author oli
+ */
 public class ListDirectoryTask extends TxTask<String, FileInfo, List<FileInfo>> {
   public ListDirectoryTask(final DeviceHandler<?> handler) {
     super(handler);
   }
 
+  /**
+   * List the content of the directory specified by the path in the first parameter. Other parameters are ignored.
+   *
+   * @param params
+   *          First param contains the file path of the directory. Other params are ignored.
+   * @return A list of {@link FileInfo} objects.
+   * @throws IOException
+   */
   @Override
   protected List<FileInfo> doInternal(final String... params) throws IOException {
     final String path = params[0];
