@@ -191,7 +191,6 @@ public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
       deviceInfo.setDevice(device);
       deviceInfo.setName(device.getDeviceName());
       deviceInfo.setId(device.getDeviceId());
-      check4Permission();
     }
   }
 }

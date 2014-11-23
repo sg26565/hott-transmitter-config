@@ -176,12 +176,6 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.options_menu, menu);
 
-    if (!UsbDeviceHandler.isUsbHost(this)) {
-      // disable these menu items as they don't work without USB host mode
-      menu.findItem(R.id.action_load_from_sd).setVisible(false);
-      menu.findItem(R.id.action_load_from_tx).setVisible(false);
-    }
-
     return true;
   }
 
@@ -233,6 +227,17 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     default:
       return super.onOptionsItemSelected(item);
     }
+  }
+
+  @Override
+  public boolean onPrepareOptionsMenu(final Menu menu) {
+    final boolean isUsbHost = UsbDeviceHandler.isUsbHost(this);
+
+    // dynamically enable/disable these menu items if devices are attached in USB host mode
+    menu.findItem(R.id.action_load_from_sd).setVisible(isUsbHost);
+    menu.findItem(R.id.action_load_from_tx).setVisible(isUsbHost);
+
+    return super.onPrepareOptionsMenu(menu);
   }
 
   @Override
@@ -353,10 +358,12 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   /**
    * Create a PDF version of the document. Only support on Android 4.4 and newer.
    */
+  @SuppressWarnings("deprecation")
   @TargetApi(19)
   public void print() {
     final PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
     final String documentName = "HoTTMdlViewer - " + modelName;
+    // deprecated method is needed for backward compatibility with Android 4.4 (api level 19)
     printManager.print(documentName, webView.createPrintDocumentAdapter(), null);
   }
 
