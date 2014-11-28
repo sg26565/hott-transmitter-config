@@ -30,6 +30,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.print.PrintManager;
@@ -122,6 +125,20 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
   @Override
   public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    // set the version of the application from the manifest
+    try {
+      final PackageManager pm = getPackageManager();
+      final CharSequence label = pm.getApplicationLabel(getApplicationInfo());
+      final PackageInfo packageInfo = pm.getPackageInfo(getPackageName(), 0);
+      final String versionName = packageInfo.versionName;
+
+      if (label != null && label.length() > 0 && versionName != null && versionName.length() > 0) {
+        setTitle(label + " " + versionName);
+      }
+    } catch (final NameNotFoundException e) {
+      // ignore
+    }
 
     setContentView(R.layout.main);
 
