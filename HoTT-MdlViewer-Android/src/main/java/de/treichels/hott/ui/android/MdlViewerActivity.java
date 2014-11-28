@@ -307,7 +307,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
       @Override
       public void onDialogClosed(final int resultStatus) {
         if (resultStatus == DialogClosedListener.OK) {
-          final DeviceHandler<?> handler = dialog.getHandler();
+          final DeviceHandler<?> handler = dialog.getDeviceHandler();
           final ModelInfo info = dialog.getResult();
           if (info != null) {
             new GetModelFromMemoryTask(handler) {
@@ -358,7 +358,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
       @Override
       public void onDialogClosed(final int resultStatus) {
         if (resultStatus == DialogClosedListener.OK) {
-          final DeviceHandler<?> handler = dialog.getHandler();
+          final DeviceHandler<?> handler = dialog.getDeviceHandler();
           final String filePath = dialog.getResult();
           if (filePath != null) {
             new GetModelFromSdTask(handler) {

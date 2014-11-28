@@ -32,7 +32,7 @@ public class OpenFromSdDialogBluetooth extends OpenFromSdDialog<BluetoothDevice>
   private BluetoothDeviceHandler handler = null;
 
   @Override
-  public DeviceHandler<BluetoothDevice> getHandler() {
+  public DeviceHandler<BluetoothDevice> getDeviceHandler() {
     if (handler == null) {
       handler = new BluetoothDeviceHandler(getActivity());
     }
@@ -41,7 +41,7 @@ public class OpenFromSdDialogBluetooth extends OpenFromSdDialog<BluetoothDevice>
   }
 
   @Override
-  protected int getSelectorLabelId() {
+  protected int getPortSelectorLabelId() {
     return R.string.bluetooth_device;
   }
 

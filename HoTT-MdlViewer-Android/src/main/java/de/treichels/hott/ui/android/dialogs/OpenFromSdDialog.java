@@ -30,16 +30,16 @@ import android.widget.ListAdapter;
  * @author oli@treichels.de
  */
 public abstract class OpenFromSdDialog<DeviceType> extends AbstractTxDialog<String, DeviceType> {
-  private FileInfoAdapter adapter = null;
+  private FileInfoAdapter listAdapter = null;
 
   @Override
-  protected ListAdapter getListAdapter() {
-    if (adapter == null) {
+  protected ListAdapter getListViewAdapter() {
+    if (listAdapter == null) {
       // this dialog displays a list of file infos
-      adapter = new FileInfoAdapter(getHandler());
+      listAdapter = new FileInfoAdapter(getDeviceHandler());
     }
 
-    return adapter;
+    return listAdapter;
   }
 
   @Override
@@ -79,7 +79,7 @@ public abstract class OpenFromSdDialog<DeviceType> extends AbstractTxDialog<Stri
       }
     } else {
       // directory selected - open directory
-      adapter.reload(getResult());
+      listAdapter.reload(getResult());
     }
   }
 }

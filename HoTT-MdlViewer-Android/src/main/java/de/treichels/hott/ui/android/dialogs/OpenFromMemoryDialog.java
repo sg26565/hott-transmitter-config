@@ -30,16 +30,16 @@ import de.treichels.hott.ui.android.R;
  * @author oli@treichels.de
  */
 public abstract class OpenFromMemoryDialog<DeviceType> extends AbstractTxDialog<ModelInfo, DeviceType> {
-  private ListAdapter adapter = null;
+  private ListAdapter listAdapter = null;
 
   @Override
-  protected ListAdapter getListAdapter() {
-    if (adapter == null) {
+  protected ListAdapter getListViewAdapter() {
+    if (listAdapter == null) {
       // this dialog displays a list of model infos
-      adapter = new ModelInfoAdapter(getHandler());
+      listAdapter = new ModelInfoAdapter(getDeviceHandler());
     }
 
-    return adapter;
+    return listAdapter;
   }
 
   @Override

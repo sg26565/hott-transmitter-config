@@ -32,7 +32,7 @@ public class OpenFromSdDialogUsb extends OpenFromSdDialog<UsbDevice> {
   private UsbDeviceHandler handler = null;
 
   @Override
-  public DeviceHandler<UsbDevice> getHandler() {
+  public DeviceHandler<UsbDevice> getDeviceHandler() {
     if (handler == null) {
       handler = new UsbDeviceHandler(getActivity());
     }
@@ -41,7 +41,7 @@ public class OpenFromSdDialogUsb extends OpenFromSdDialog<UsbDevice> {
   }
 
   @Override
-  protected int getSelectorLabelId() {
+  protected int getPortSelectorLabelId() {
     return R.string.usb_device;
   }
 
