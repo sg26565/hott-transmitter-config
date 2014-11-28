@@ -18,10 +18,10 @@
 package de.treichels.hott.ui.android.dialogs.usb;
 
 import android.hardware.usb.UsbDevice;
+import de.treichels.hott.android.background.serial.DeviceHandler;
+import de.treichels.hott.android.background.serial.usb.UsbDeviceHandler;
 import de.treichels.hott.ui.android.R;
 import de.treichels.hott.ui.android.dialogs.OpenFromSdDialog;
-import de.treichels.hott.ui.android.tx.DeviceHandler;
-import de.treichels.hott.ui.android.tx.usb.UsbDeviceHandler;
 
 /**
  * Read list of model via USB.

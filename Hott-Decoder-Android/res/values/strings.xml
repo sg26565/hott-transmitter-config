@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Hott-Decoder-Android</string>
+    <string name="msg_invalid_file_name">Invalid file name: \&quot;%s\&quot;!</string>
+    <string name="msg_invalid_file_type">Invalid model type: \&quot;%s\&quot;!</string>
+
+</resources>

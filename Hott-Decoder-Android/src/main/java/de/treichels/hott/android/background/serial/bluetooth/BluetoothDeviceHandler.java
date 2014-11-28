@@ -1,4 +1,4 @@
-package de.treichels.hott.ui.android.tx.bluetooth;
+package de.treichels.hott.android.background.serial.bluetooth;
 
 import gde.model.serial.SerialPort;
 
@@ -18,9 +18,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.ParcelUuid;
-import de.treichels.hott.ui.android.tx.DeviceAdapter;
-import de.treichels.hott.ui.android.tx.DeviceHandler;
-import de.treichels.hott.ui.android.tx.DeviceInfo;
+import de.treichels.hott.android.background.serial.DeviceAdapter;
+import de.treichels.hott.android.background.serial.DeviceHandler;
+import de.treichels.hott.android.background.serial.DeviceInfo;
 
 /**
  * A {@link DeviceHandler} for {@link BluetoothDevice} objects.

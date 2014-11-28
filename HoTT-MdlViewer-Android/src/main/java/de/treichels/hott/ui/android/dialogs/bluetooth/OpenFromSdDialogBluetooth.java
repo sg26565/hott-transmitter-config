@@ -18,10 +18,10 @@
 package de.treichels.hott.ui.android.dialogs.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
+import de.treichels.hott.android.background.serial.DeviceHandler;
+import de.treichels.hott.android.background.serial.bluetooth.BluetoothDeviceHandler;
 import de.treichels.hott.ui.android.R;
 import de.treichels.hott.ui.android.dialogs.OpenFromSdDialog;
-import de.treichels.hott.ui.android.tx.DeviceHandler;
-import de.treichels.hott.ui.android.tx.bluetooth.BluetoothDeviceHandler;
 
 /**
  * Read list of model via BlueTooth.

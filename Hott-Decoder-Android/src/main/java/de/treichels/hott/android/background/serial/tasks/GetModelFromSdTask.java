@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.tx;
+package de.treichels.hott.android.background.serial.tasks;
 
 import gde.model.BaseModel;
 import gde.model.enums.ModelType;
@@ -25,7 +25,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import de.treichels.hott.HoTTDecoder;
-import de.treichels.hott.ui.android.R;
+import de.treichels.hott.android.background.serial.DeviceHandler;
+import de.treichels.hott.android.background.serial.TxTask;
+import de.treichels.hott.android.decoder.R;
 
 /**
  * Load the specified model from transmitter sd card.

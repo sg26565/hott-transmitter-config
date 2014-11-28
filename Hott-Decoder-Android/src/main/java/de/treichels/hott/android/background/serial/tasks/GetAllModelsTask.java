@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.tx;
+package de.treichels.hott.android.background.serial.tasks;
 
 import gde.model.enums.ModelType;
 import gde.model.serial.ModelInfo;
@@ -23,6 +23,9 @@ import gde.model.serial.ModelInfo;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.treichels.hott.android.background.serial.DeviceHandler;
+import de.treichels.hott.android.background.serial.TxTask;
 
 /**
  * Retrieve a list of all model names from the transmitter.

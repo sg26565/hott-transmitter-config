@@ -1,4 +1,4 @@
-package de.treichels.hott.ui.android.tx.usb;
+package de.treichels.hott.android.background.serial.usb;
 
 import gde.model.serial.SerialPort;
 
@@ -19,10 +19,10 @@ import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 
-import de.treichels.hott.ui.android.tx.DeviceAdapter;
-import de.treichels.hott.ui.android.tx.DeviceHandler;
-import de.treichels.hott.ui.android.tx.DeviceInfo;
-import de.treichels.hott.ui.android.tx.TxTask;
+import de.treichels.hott.android.background.serial.DeviceAdapter;
+import de.treichels.hott.android.background.serial.DeviceHandler;
+import de.treichels.hott.android.background.serial.DeviceInfo;
+import de.treichels.hott.android.background.serial.TxTask;
 
 /**
  * A {@link DeviceHandler} for {@link UsbDevice} objects.

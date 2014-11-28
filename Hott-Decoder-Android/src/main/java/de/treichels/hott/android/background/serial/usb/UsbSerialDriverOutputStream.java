@@ -15,68 +15,63 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.tx.usb;
+package de.treichels.hott.android.background.serial.usb;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 
 import android.util.Log;
 
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 
 /**
- * An {@link InputStream} that reads from a supplied {@link UsbSerialPort}.
+ * An {@link OutputStream} that writes to a supplied {@link UsbSerialPort}.
  *
  * @author oli@treichels.de
  */
-class UsbSerialDriverInputStream extends InputStream {
+class UsbSerialDriverOutputStream extends OutputStream {
     private final byte[]        buffer = new byte[UsbSerialPortImplementation.BUFFER_SIZE];
-    private int                 index  = 0;
     private int                 len    = 0;
     private final UsbSerialPort port;
 
     /**
      * @param port
      */
-    public UsbSerialDriverInputStream(final UsbSerialPort port) {
+    public UsbSerialDriverOutputStream(final UsbSerialPort port) {
         this.port = port;
     }
 
     @Override
-    public int available() throws IOException {
-        int available = len - index;
-
-        if (available == 0) {
-            available = fetch();
-        }
-
-        return available;
-    }
-
-    private int fetch() throws IOException {
-        index = 0;
-        len = port.read(buffer, UsbSerialPortImplementation.IO_TIMEOUT);
-
-        if (len < 0) {
-            Log.i("UsbSerialDriver.read()", "no data");
-            len = 0;
-        } else {
+    public void flush() throws IOException {
+        if (len > 0) {
             final StringBuilder builder = new StringBuilder();
             for (int i = 0; i < len; i++) {
                 builder.append(String.format("%02x ", buffer[i]));
             }
-            Log.i("UsbSerialDriver.read()", builder.toString());
-        }
 
-        return len;
+            byte[] b;
+            if (len == UsbSerialPortImplementation.BUFFER_SIZE) {
+                b = buffer;
+            } else {
+                b = new byte[len];
+                System.arraycopy(buffer, 0, b, 0, len);
+            }
+
+            final int rc = port.write(b, UsbSerialPortImplementation.IO_TIMEOUT);
+            builder.append(": ").append(rc);
+
+            Log.i("bulkUsbSerialDriver.write()", builder.toString());
+
+            len = 0;
+        }
     }
 
     @Override
-    public int read() throws IOException {
-        if (available() == 0) {
-            fetch();
-        }
+    public void write(final int oneByte) throws IOException {
+        buffer[len++] = (byte) oneByte;
 
-        return index < len ? buffer[index++] & 0xff : -1;
+        if (len == UsbSerialPortImplementation.BUFFER_SIZE) {
+            flush();
+        }
     }
 }

@@ -15,41 +15,24 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.tx;
+package de.treichels.hott.android.background.serial.bluetooth;
+
+import android.bluetooth.BluetoothDevice;
+import android.content.Context;
+import de.treichels.hott.android.background.serial.DeviceAdapter;
 
 /**
- * A data holder class that hold information about communication devices (i.e. USB or Bluetooth) on the mobile device.
+ * An {@link DeviceAdapter} that holds a list of {@link BluetoothDevice} objects.
  *
- * @author oli
+ * @author oli@treichels.de
  */
-public class DeviceInfo<DeviceType> {
-  private DeviceType device;
-  private long       id;
-  private String     name;
+public class BluetoothDeviceAdapter extends DeviceAdapter<BluetoothDevice> {
 
-  public DeviceInfo() {}
+  public BluetoothDeviceAdapter(final Context context) {
+    super(context);
 
-  public DeviceType getDevice() {
-    return device;
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setDevice(final DeviceType device) {
-    this.device = device;
-  }
-
-  public void setId(final long id) {
-    this.id = id;
-  }
-
-  public void setName(final String name) {
-    this.name = name;
+    for (final BluetoothDevice device : BluetoothDeviceHandler.getBluetoothDevices()) {
+      devices.add(BluetoothDeviceHandler.getDeviceInfo(device));
+    }
   }
 }

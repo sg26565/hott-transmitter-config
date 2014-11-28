@@ -26,8 +26,8 @@ import java.io.Writer;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import de.treichels.hott.android.background.FailSafeAsyncTask;
 import de.treichels.hott.ui.android.MdlViewerActivity;
-import de.treichels.hott.ui.android.background.FailSafeAsyncTask;
 
 /**
  * An {@link AsyncTask} that generates an HTML report for a model configuration.

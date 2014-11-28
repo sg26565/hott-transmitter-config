@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.tx.usb;
+package de.treichels.hott.android.background.serial.usb;
 
 import gde.model.HoTTException;
 import gde.model.serial.SerialPort;

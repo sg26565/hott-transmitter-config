@@ -30,8 +30,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.OpenableColumns;
 import de.treichels.hott.HoTTDecoder;
+import de.treichels.hott.android.background.FailSafeAsyncTask;
 import de.treichels.hott.ui.android.R;
-import de.treichels.hott.ui.android.background.FailSafeAsyncTask;
 
 /**
  * An {@link AsyncTask} that load data from an {@link Uri} and converts it into a {@link BaseModel}.

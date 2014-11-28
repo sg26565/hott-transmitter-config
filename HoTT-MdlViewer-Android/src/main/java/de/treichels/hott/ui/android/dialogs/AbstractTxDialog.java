@@ -32,9 +32,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import de.treichels.hott.android.background.serial.DeviceAdapter;
+import de.treichels.hott.android.background.serial.DeviceHandler;
 import de.treichels.hott.ui.android.R;
-import de.treichels.hott.ui.android.tx.DeviceAdapter;
-import de.treichels.hott.ui.android.tx.DeviceHandler;
 
 /**
  * An abstract dialog that provides a spinner to select a communication device and uses this device to retrieve a list of models to select from.

@@ -43,6 +43,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import de.treichels.hott.android.background.serial.DeviceHandler;
+import de.treichels.hott.android.background.serial.bluetooth.BluetoothDeviceHandler;
+import de.treichels.hott.android.background.serial.tasks.GetModelFromMemoryTask;
+import de.treichels.hott.android.background.serial.tasks.GetModelFromSdTask;
+import de.treichels.hott.android.background.serial.usb.UsbDeviceHandler;
 import de.treichels.hott.ui.android.dialogs.AbstractTxDialog;
 import de.treichels.hott.ui.android.dialogs.DialogClosedListener;
 import de.treichels.hott.ui.android.dialogs.bluetooth.OpenFromMemoryDialogBluetooth;
@@ -52,11 +57,6 @@ import de.treichels.hott.ui.android.dialogs.usb.OpenFromSdDialogUsb;
 import de.treichels.hott.ui.android.html.GenerateHtmlTask;
 import de.treichels.hott.ui.android.html.GetModelFromUriTask;
 import de.treichels.hott.ui.android.html.SectionAdapter;
-import de.treichels.hott.ui.android.tx.DeviceHandler;
-import de.treichels.hott.ui.android.tx.GetModelFromMemoryTask;
-import de.treichels.hott.ui.android.tx.GetModelFromSdTask;
-import de.treichels.hott.ui.android.tx.bluetooth.BluetoothDeviceHandler;
-import de.treichels.hott.ui.android.tx.usb.UsbDeviceHandler;
 
 /**
  * The main activity for the MdlViewer.

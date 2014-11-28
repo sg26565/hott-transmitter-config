@@ -15,13 +15,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.treichels.hott.ui.android.tx;
+package de.treichels.hott.android.background.serial;
 
 import java.io.IOException;
 
 import android.content.Context;
 import de.treichels.hott.HoTTSerialPort;
-import de.treichels.hott.ui.android.background.FailSafeAsyncTask;
+import de.treichels.hott.android.background.FailSafeAsyncTask;
 
 /**
  * An abstract {@link FailSafeAsyncTask} for communication with the transmitter that is independent form the communication channel (Usb or Bluetooth).
