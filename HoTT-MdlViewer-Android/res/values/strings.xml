@@ -19,5 +19,10 @@
     <string name="usb_device">USB Device</string>
     <string name="bluetooth_device">Bluetooth Device</string>
     <string name="model_memory">Model Memory</string>
+    <string name="crash_toast_text">An unexpected error occurred forcing the application to stop.</string>
+    <string name="crash_dialog_title">MdlViewer has crashed</string>
+    <string name="crash_dialog_text">An unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data.</string>
+    <string name="crash_dialog_comment_prompt">You might add your comments about the problem below:</string>
+    <string name="crash_dialog_ok_toast">Thank you!</string>
 
 </resources>

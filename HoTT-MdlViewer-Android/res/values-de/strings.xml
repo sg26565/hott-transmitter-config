@@ -19,5 +19,10 @@
     <string name="usb_device">USB Gerät</string>
     <string name="bluetooth_device">Bluetooth Gerät</string>
     <string name="model_memory">Modellspeicher</string>
+    <string name="crash_toast_text">Es ist ein unerwarteter Fehler aufgetreten.</string>
+    <string name="crash_dialog_title">MdlViewer ist abgestützt</string>
+    <string name="crash_dialog_text">Es ist ein unerwarteter Fehler aufgetreten. Bitte helfe bei der Fehlerbehebung, indem Du Daten zum Problem sendest.</string>
+    <string name="crash_dialog_comment_prompt">Hier kannst Du Kommentare zum Problem eingeben:</string>
+    <string name="crash_dialog_ok_toast">Vielen Dank!</string>
 
 </resources>
