@@ -18,6 +18,18 @@
 
 package gde.report.html;
 
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
+import gde.model.BaseModel;
+import gde.model.HoTTException;
+import gde.model.helicopter.HelicopterModel;
+import gde.model.winged.WingedModel;
+import gde.report.CurveImageGenerator;
+import gde.report.ReportException;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,84 +44,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateExceptionHandler;
-import gde.model.BaseModel;
-import gde.model.HoTTException;
-import gde.model.helicopter.HelicopterModel;
-import gde.model.winged.WingedModel;
-import gde.report.CurveImageGenerator;
-import gde.report.ReportException;
-
 /**
  * @author oli@treichels.de
  */
 public class HTMLReport {
-  private static final Configuration      CONFIGURATION;
-  private static TemplateExceptionHandler CUSTOM_EXCEPTION_HANDLER;
-  private static CurveImageGenerator      CURVE_IMAGE_GENERATOR;
-
-  static {
-    // setup freemarker
-    CONFIGURATION = new Configuration();
-    CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8"); //$NON-NLS-1$
-    CONFIGURATION.setClassForTemplateLoading(HTMLReport.class, "templates"); //$NON-NLS-1$
-    CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
-    CUSTOM_EXCEPTION_HANDLER = new FreeMarkerExceptionHandler();
-
-    // setup CurveImageGenerator
-    final ServiceLoader<CurveImageGenerator> loader = ServiceLoader.load(CurveImageGenerator.class);
-    final Iterator<CurveImageGenerator> iterator = loader.iterator();
-
-    if (iterator.hasNext()) {
-      CURVE_IMAGE_GENERATOR = loader.iterator().next();
-    } else {
-      CURVE_IMAGE_GENERATOR = new DummyCurveImageGenerator();
-    }
-
-    // extract font file
-    final File fontFfileile = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf"); //$NON-NLS-1$ //$NON-NLS-2$
-    if (!(fontFfileile.exists() && fontFfileile.isFile() && fontFfileile.canRead())) {
-      InputStream is = null;
-      OutputStream os = null;
-
-      try {
-        is = ClassLoader.getSystemResourceAsStream("Arial.ttf"); //$NON-NLS-1$
-        os = new FileOutputStream(fontFfileile);
-
-        final byte[] buffer = new byte[1024];
-        while (true) {
-          final int len = is.read(buffer);
-          if (len == -1) {
-            break;
-          }
-          os.write(buffer, 0, len);
-        }
-      } catch (final IOException e) {
-        throw new RuntimeException(e);
-      } finally {
-        if (is != null) {
-          try {
-            is.close();
-          } catch (final IOException e) {
-            throw new RuntimeException(e);
-          }
-        }
-
-        if (os != null) {
-          try {
-            os.close();
-          } catch (final IOException e) {
-            throw new RuntimeException(e);
-          }
-        }
-      }
-    }
-  }
-
   public static String generateHTML(final BaseModel model) throws IOException, ReportException {
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final String templateName;
@@ -190,6 +128,70 @@ public class HTMLReport {
       CONFIGURATION.setTemplateExceptionHandler(CUSTOM_EXCEPTION_HANDLER);
     } else {
       CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
+    }
+  }
+
+  private static final Configuration      CONFIGURATION;
+
+  private static TemplateExceptionHandler CUSTOM_EXCEPTION_HANDLER;
+
+  private static CurveImageGenerator      CURVE_IMAGE_GENERATOR;
+
+  static {
+    // setup freemarker
+    CONFIGURATION = new Configuration();
+    CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8"); //$NON-NLS-1$
+    CONFIGURATION.setClassForTemplateLoading(HTMLReport.class, "templates"); //$NON-NLS-1$
+    CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
+    CUSTOM_EXCEPTION_HANDLER = new FreeMarkerExceptionHandler();
+
+    // setup CurveImageGenerator
+    final ServiceLoader<CurveImageGenerator> loader = ServiceLoader.load(CurveImageGenerator.class);
+    final Iterator<CurveImageGenerator> iterator = loader.iterator();
+
+    if (iterator.hasNext()) {
+      CURVE_IMAGE_GENERATOR = loader.iterator().next();
+    } else {
+      CURVE_IMAGE_GENERATOR = new DummyCurveImageGenerator();
+    }
+
+    // extract font file
+    final File fontFile = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf"); //$NON-NLS-1$ //$NON-NLS-2$
+    if (!(fontFile.exists() && fontFile.isFile() && fontFile.canRead())) {
+      InputStream is = null;
+      OutputStream os = null;
+
+      try {
+        is = HTMLReport.class.getClassLoader().getResourceAsStream("Arial.ttf"); //$NON-NLS-1$
+        os = new FileOutputStream(fontFile);
+
+        final byte[] buffer = new byte[1024];
+        while (true) {
+          final int len = is.read(buffer);
+          if (len == -1) {
+            break;
+          }
+          os.write(buffer, 0, len);
+        }
+      } catch (final IOException e) {
+        throw new RuntimeException(e);
+      } finally {
+        if (is != null) {
+          try {
+            is.close();
+          } catch (final IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+
+        if (os != null) {
+          try {
+            os.close();
+          } catch (final IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+      }
     }
   }
 }
