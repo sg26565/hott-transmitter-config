@@ -12,6 +12,9 @@ public class MdlViewerApplication extends Application {
   public void onCreate() {
     super.onCreate();
 
+    // redirect tmpdir to app private filesdir
+    System.setProperty("java.io.tmpdir", getFilesDir().getAbsolutePath());
+
     ACRA.init(this);
   }
 }
