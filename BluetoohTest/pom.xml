@@ -1,0 +1,110 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>BluetoohTest</artifactId>
+	<packaging>apk</packaging>
+	<name>HoTT MdlViewer for Android</name>
+
+	<parent>
+		<groupId>de.treichels.hott</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.8-SNAPSHOT</version>
+	</parent>
+
+	<scm>
+		<connection>scm:git:https://code.google.com/p/hott-transmitter-config/</connection>
+		<url>https://code.google.com/p/hott-transmitter-config/source/browse/</url>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<platform.version>21</platform.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>google</id>
+			<url>file://${android.sdk.path}/extras/google/m2repository/</url>
+		</repository>
+		<repository>
+			<id>android</id>
+			<url>file://${android.sdk.path}/extras/android/m2repository/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.google.android</groupId> -->
+<!-- 			<artifactId>android</artifactId> -->
+<!-- 			<version>${platform.version}</version> -->
+<!-- 			<scope>system</scope> -->
+<!--  			<systemPath>${android.sdk.path}/platforms/android-${platform.version}/android.jar</systemPath> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8</version><!--$NO-MVN-MAN-VER$-->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.acra</groupId>
+			<artifactId>acra</artifactId>
+			<version>4.5.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<configuration>
+					<sdk>
+						<platform>${platform.version}</platform>
+					</sdk>
+					<dexCoreLibrary>true</dexCoreLibrary>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											com.jayway.maven.plugins.android.generation2
+										</groupId>
+										<artifactId>
+											android-maven-plugin
+										</artifactId>
+										<versionRange>
+											[3.8.2,)
+										</versionRange>
+										<goals>
+											<goal>consume-aar</goal>
+											<goal>
+												generate-sources
+											</goal>
+											<goal>proguard</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
