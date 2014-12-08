@@ -34,19 +34,30 @@ public abstract class FailSafeAsyncTask<Params, Progress, Result> extends AsyncT
   private String       resultMessage   = null;
   private ResultStatus resultStatus    = ResultStatus.notstarted;
   private Throwable    resultThrowable = null;
+  private int          retryCount      = 2;
 
   @Override
   protected final Result doInBackground(@SuppressWarnings("unchecked") final Params... params) {
     Result result = null;
 
-    try {
-      setResultStatus(ResultStatus.running);
+    setResultStatus(ResultStatus.running);
 
-      result = doInBackgroundFailSafe(params);
-    } catch (final Throwable e) {
-      Log.e("FailSafeAsyncTask.doInBackground", e.getClass().getSimpleName(), e);
-      setResultStatus(ResultStatus.error);
-      setResultThrowable(e);
+    while (true) {
+      if (isCancelled()) {
+        break;
+      }
+
+      try {
+        result = doInBackgroundFailSafe(params);
+      } catch (final Throwable t) {
+        Log.e("FailSafeAsyncTask.doInBackground", t.getClass().getSimpleName(), t);
+        if (retryCount-- == 0) {
+          setResultStatus(ResultStatus.error);
+          setResultThrowable(t);
+          break;
+        }
+        Log.d("FailSafeAsyncTask.doInBackground", "retry");
+      }
     }
 
     return result;
@@ -64,6 +75,10 @@ public abstract class FailSafeAsyncTask<Params, Progress, Result> extends AsyncT
 
   public Throwable getResultThrowable() {
     return resultThrowable;
+  }
+
+  public int getRetryCount() {
+    return retryCount;
   }
 
   protected void onError(final String message, final Throwable throwable) {}
@@ -110,5 +125,9 @@ public abstract class FailSafeAsyncTask<Params, Progress, Result> extends AsyncT
     if (getResultMessage() == null) {
       setResultMessage(resultThrowable.getClass().getSimpleName());
     }
+  }
+
+  public void setRetryCount(final int retryCount) {
+    this.retryCount = retryCount;
   }
 }

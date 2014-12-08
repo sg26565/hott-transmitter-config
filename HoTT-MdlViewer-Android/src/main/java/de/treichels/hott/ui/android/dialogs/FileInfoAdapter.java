@@ -26,7 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import de.treichels.hott.android.background.serial.DeviceHandler;
 import de.treichels.hott.android.background.serial.tasks.ListDirectoryTask;
 
@@ -84,7 +83,7 @@ public class FileInfoAdapter extends GenericListAdaper<FileInfo> {
     reload("/");
   }
 
-  public void reload(final String path) {
+  public synchronized void reload(final String path) {
     // cancel running task
     if (task != null && task.getStatus() != Status.FINISHED) {
       task.cancel(true);
@@ -98,7 +97,7 @@ public class FileInfoAdapter extends GenericListAdaper<FileInfo> {
           // stop progressbar
           add(null);
         }
-        Toast.makeText(handler.getContext(), message, Toast.LENGTH_LONG).show();
+        showDialog(message);
       }
 
       @Override

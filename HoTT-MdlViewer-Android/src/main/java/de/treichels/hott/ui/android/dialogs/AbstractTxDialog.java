@@ -32,6 +32,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.treichels.hott.android.background.serial.DeviceAdapter;
 import de.treichels.hott.android.background.serial.DeviceHandler;
 import de.treichels.hott.ui.android.R;
@@ -88,20 +89,6 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
   protected abstract int getPortSelectorLabelId();
 
   /**
-   * Load the preferred device from preferences. First, the preferred device name is read form the preferences and then the spinner adapter is used to find a
-   * matching device. If no match was found, the first device will be used.
-   *
-   * @return
-   */
-  private void getPreferredDevice() {
-
-    final String savedDeviceName = preferences.getString(getDeviceHandler().getPreferenceKey(), null);
-    if (savedDeviceName != null) {
-      portSelector.setSelection(portSelectorAdapter.getPosition(savedDeviceName) != -1 ? portSelectorAdapter.getPosition(savedDeviceName) : 0);
-    }
-  }
-
-  /**
    * The model that was selected or null.
    *
    * @return
@@ -116,6 +103,21 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
    * @return
    */
   protected abstract int getTitleId();
+
+  /**
+   * Load the preferred device from preferences. First, the preferred device name is read form the preferences and then the spinner adapter is used to find a
+   * matching device. If no match was found, the first device will be used.
+   *
+   * @return
+   */
+  private void loadPreferredDevice() {
+
+    final String savedDeviceName = preferences.getString(getDeviceHandler().getPreferenceKey(), null);
+    if (savedDeviceName != null) {
+      // this will trigger onItemSelected()
+      portSelector.setSelection(portSelectorAdapter.getPosition(savedDeviceName) != -1 ? portSelectorAdapter.getPosition(savedDeviceName) : 0);
+    }
+  }
 
   /**
    * Notify the {@link DialogClosedListener} that the dialog was cancelled.
@@ -166,7 +168,7 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
 
       @Override
       public void onNothingSelected(final AdapterView<?> parent) {
-        // ignored
+        Toast.makeText(getActivity(), R.string.msg_select_device, Toast.LENGTH_LONG).show();
       }
     });
 
@@ -179,7 +181,7 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
     listView.setOnItemClickListener(this);
 
     // initialize spinner to saved device name
-    getPreferredDevice();
+    loadPreferredDevice();
 
     return view;
   }
@@ -226,6 +228,7 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
       // new list adapter for this device
       final GenericListAdaper<?> adapter = getListViewAdapter();
       listView.setAdapter(adapter);
+      adapter.clear();
       adapter.reload();
     }
   }

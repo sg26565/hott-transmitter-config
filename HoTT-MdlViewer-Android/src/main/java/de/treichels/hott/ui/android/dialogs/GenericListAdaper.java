@@ -20,8 +20,10 @@ package de.treichels.hott.ui.android.dialogs;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.widget.BaseAdapter;
+import de.treichels.hott.ui.android.R;
 
 /**
  * A {@link BaseAdapter}, that is backed by a list.
@@ -70,4 +72,18 @@ public abstract class GenericListAdaper<T> extends BaseAdapter {
   }
 
   public abstract void reload();
+
+  /**
+   * Show a simple error dialog.
+   *
+   * @param title
+   * @param messages
+   */
+  protected void showDialog(final String message) {
+    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    builder.setTitle(R.string.msg_error);
+    builder.setMessage(message);
+    builder.setPositiveButton(android.R.string.ok, null);
+    builder.create().show();
+  }
 }

@@ -19,13 +19,12 @@ package de.treichels.hott.ui.android.dialogs;
 
 import gde.model.serial.ModelInfo;
 import android.content.Context;
-import android.util.Log;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import de.treichels.hott.android.background.serial.DeviceHandler;
 import de.treichels.hott.android.background.serial.tasks.GetAllModelsTask;
 
@@ -37,6 +36,7 @@ import de.treichels.hott.android.background.serial.tasks.GetAllModelsTask;
  */
 public class ModelInfoAdapter extends GenericListAdaper<ModelInfo> {
   private final DeviceHandler<?> handler;
+  private GetAllModelsTask       task = null;
 
   /**
    * @param context
@@ -67,37 +67,36 @@ public class ModelInfoAdapter extends GenericListAdaper<ModelInfo> {
   }
 
   @Override
-  public void reload() {
+  public synchronized void reload() {
+    if (task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
+      task.cancel(true);
+    }
 
     // Load all model infos from transmitter memory as background task
-    new GetAllModelsTask(handler) {
+    task = new GetAllModelsTask(handler) {
       @Override
       protected void onError(final String message, final Throwable throwable) {
-        Log.d("onError", message, throwable);
-
         if (isEmpty()) {
           // stop progressbar
           add(null);
         }
-        Toast.makeText(handler.getContext(), message, Toast.LENGTH_LONG).show();
+        showDialog(message);
       }
 
       @Override
       protected void onPreExecute() {
-        Log.d("onPreExecute", "enter");
         // remove old entries
         clear();
       }
 
       @Override
       protected void onProgressUpdate(final ModelInfo... values) {
-        Log.d("onProgrerssUpdate", "enter");
         for (final ModelInfo info : values) {
           add(info);
         }
       }
-    }.execute();
+    };
 
-    Log.d("reload", "exit");
+    task.execute();
   }
 }

@@ -115,15 +115,15 @@ public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
 
   @Override
   public void closeDevice() throws IOException {
-    if (impl.isOpen()) {
+    if (impl != null && impl.isOpen()) {
       impl.close();
     }
     impl = null;
 
     if (connection != null) {
       connection.close();
-      connection = null;
     }
+    connection = null;
 
   }
 
