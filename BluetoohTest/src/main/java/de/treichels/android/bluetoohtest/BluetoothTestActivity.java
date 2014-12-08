@@ -1,4 +1,4 @@
-package de.treichels.android.hott.bluetooth_test;
+package de.treichels.android.bluetoohtest;
 
 import android.app.Activity;
 import android.os.AsyncTask;

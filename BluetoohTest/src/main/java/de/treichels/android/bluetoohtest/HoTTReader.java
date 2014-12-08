@@ -1,4 +1,4 @@
-package de.treichels.android.hott.bluetooth_test;
+package de.treichels.android.bluetoohtest;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

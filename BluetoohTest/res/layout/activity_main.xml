@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="de.treichels.android.hott.bluetooth_test.BluetoothTestActivity" >
+    tools:context="de.treichels.android.bluetoohtest.BluetoothTestActivity" >
 
     <Button
         android:id="@+id/button"
