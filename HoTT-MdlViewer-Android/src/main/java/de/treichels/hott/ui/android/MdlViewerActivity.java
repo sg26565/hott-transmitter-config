@@ -457,11 +457,11 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
    * Reload the ui from saved state.
    */
   public void updateUI() {
-    Log.d("updateUI()", modelName);
-    Log.d("updateUI()", modelType.name());
-    Log.d("updateUI()", transmitterType.name());
-
     if (modelName != null && modelType != null && transmitterType != null) {
+      Log.d("updateUI()", modelName);
+      Log.d("updateUI()", modelType.name());
+      Log.d("updateUI()", transmitterType.name());
+
       setWait(R.string.msg_loading);
 
       webView.loadUrl(loadUrl);
