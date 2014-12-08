@@ -98,5 +98,15 @@ public abstract class FailSafeAsyncTask<Params, Progress, Result> extends AsyncT
 
   public void setResultThrowable(final Throwable resultThrowable) {
     this.resultThrowable = resultThrowable;
+
+    Throwable t = resultThrowable;
+    while (getResultMessage() == null && t != null) {
+      setResultMessage(t.getLocalizedMessage());
+      t = t.getCause();
+    }
+
+    if (getResultMessage() == null) {
+      setResultMessage(resultThrowable.getClass().getSimpleName());
+    }
   }
 }

@@ -22,7 +22,6 @@ import gde.model.serial.FileType;
 import android.app.DialogFragment;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 
 /**
  * A {@link DialogFragment} that shows a list of files from the transmitter sd card and allows the user to select one of them.
@@ -33,7 +32,7 @@ public abstract class OpenFromSdDialog<DeviceType> extends AbstractTxDialog<Stri
   private FileInfoAdapter listAdapter = null;
 
   @Override
-  protected ListAdapter getListViewAdapter() {
+  protected GenericListAdaper<FileInfo> getListViewAdapter() {
     if (listAdapter == null) {
       // this dialog displays a list of file infos
       listAdapter = new FileInfoAdapter(getDeviceHandler());

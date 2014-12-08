@@ -22,13 +22,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -71,7 +71,7 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
    *
    * @return
    */
-  protected abstract ListAdapter getListViewAdapter();
+  protected abstract GenericListAdaper<?> getListViewAdapter();
 
   /**
    * The label text of the {@link ListView}.
@@ -93,17 +93,12 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
    *
    * @return
    */
-  @SuppressWarnings("unchecked")
-  private DeviceType getPreferredDevice() {
-    DeviceType device = null;
+  private void getPreferredDevice() {
 
     final String savedDeviceName = preferences.getString(getDeviceHandler().getPreferenceKey(), null);
     if (savedDeviceName != null) {
       portSelector.setSelection(portSelectorAdapter.getPosition(savedDeviceName) != -1 ? portSelectorAdapter.getPosition(savedDeviceName) : 0);
-      device = (DeviceType) portSelector.getSelectedItem();
     }
-
-    return device;
   }
 
   /**
@@ -184,7 +179,7 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
     listView.setOnItemClickListener(this);
 
     // initialize spinner to saved device name
-    switchDevice(getPreferredDevice());
+    getPreferredDevice();
 
     return view;
   }
@@ -219,6 +214,8 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
    * @param device
    */
   private void switchDevice(final DeviceType device) {
+    Log.d("switchDevice", "enter");
+
     if (device != null) {
       // switch to selected device
       getDeviceHandler().setDevice(device);
@@ -227,7 +224,9 @@ public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFra
       savePreferredDevice(device);
 
       // new list adapter for this device
-      listView.setAdapter(getListViewAdapter());
+      final GenericListAdaper<?> adapter = getListViewAdapter();
+      listView.setAdapter(adapter);
+      adapter.reload();
     }
   }
 }

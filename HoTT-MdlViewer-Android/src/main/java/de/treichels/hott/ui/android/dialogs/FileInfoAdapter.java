@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.treichels.hott.android.background.serial.DeviceHandler;
 import de.treichels.hott.android.background.serial.tasks.ListDirectoryTask;
 
@@ -63,14 +64,16 @@ public class FileInfoAdapter extends GenericListAdaper<FileInfo> {
     }
 
     final FileInfo info = get(position);
-    switch (info.getType()) {
-    case File:
-      view.setText(info.getName());
-      break;
+    if (info != null) {
+      switch (info.getType()) {
+      case File:
+        view.setText(info.getName());
+        break;
 
-    case Dir:
-      view.setText(String.format("%s/", info.getName()));
-      break;
+      case Dir:
+        view.setText(String.format("%s/", info.getName()));
+        break;
+      }
     }
 
     return view;
@@ -89,6 +92,15 @@ public class FileInfoAdapter extends GenericListAdaper<FileInfo> {
 
     // Load all file infos from transmitter sd card as background task
     task = new ListDirectoryTask(handler) {
+      @Override
+      protected void onError(final String message, final Throwable throwable) {
+        if (isEmpty()) {
+          // stop progressbar
+          add(null);
+        }
+        Toast.makeText(handler.getContext(), message, Toast.LENGTH_LONG).show();
+      }
+
       @Override
       protected void onPreExecute() {
         // remove old entries

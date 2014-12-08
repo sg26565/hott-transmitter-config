@@ -69,9 +69,5 @@ public abstract class GenericListAdaper<T> extends BaseAdapter {
     return position;
   }
 
-  protected boolean isEmtpy() {
-    return list.isEmpty();
-  }
-
   public abstract void reload();
 }

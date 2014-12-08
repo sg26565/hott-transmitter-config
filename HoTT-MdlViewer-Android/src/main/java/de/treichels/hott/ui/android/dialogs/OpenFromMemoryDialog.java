@@ -21,7 +21,6 @@ import gde.model.serial.ModelInfo;
 import android.app.DialogFragment;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import de.treichels.hott.ui.android.R;
 
 /**
@@ -30,10 +29,10 @@ import de.treichels.hott.ui.android.R;
  * @author oli@treichels.de
  */
 public abstract class OpenFromMemoryDialog<DeviceType> extends AbstractTxDialog<ModelInfo, DeviceType> {
-  private ListAdapter listAdapter = null;
+  private GenericListAdaper<ModelInfo> listAdapter = null;
 
   @Override
-  protected ListAdapter getListViewAdapter() {
+  protected GenericListAdaper<ModelInfo> getListViewAdapter() {
     if (listAdapter == null) {
       // this dialog displays a list of model infos
       listAdapter = new ModelInfoAdapter(getDeviceHandler());

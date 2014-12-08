@@ -19,11 +19,13 @@ package de.treichels.hott.ui.android.dialogs;
 
 import gde.model.serial.ModelInfo;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.treichels.hott.android.background.serial.DeviceHandler;
 import de.treichels.hott.android.background.serial.tasks.GetAllModelsTask;
 
@@ -43,7 +45,6 @@ public class ModelInfoAdapter extends GenericListAdaper<ModelInfo> {
   public ModelInfoAdapter(final DeviceHandler<?> handler) {
     super(handler.getContext());
     this.handler = handler;
-    reload();
   }
 
   @Override
@@ -58,27 +59,45 @@ public class ModelInfoAdapter extends GenericListAdaper<ModelInfo> {
     }
 
     final ModelInfo info = get(position);
-    view.setText(String.format("%2d: %s (%s)", info.getModelNumber() + 1, info.getModelName(), info.getModelType()));
+    if (info != null) {
+      view.setText(String.format("%2d: %s (%s)", info.getModelNumber() + 1, info.getModelName(), info.getModelType()));
+    }
 
     return view;
   }
 
   @Override
   public void reload() {
+
     // Load all model infos from transmitter memory as background task
     new GetAllModelsTask(handler) {
       @Override
+      protected void onError(final String message, final Throwable throwable) {
+        Log.d("onError", message, throwable);
+
+        if (isEmpty()) {
+          // stop progressbar
+          add(null);
+        }
+        Toast.makeText(handler.getContext(), message, Toast.LENGTH_LONG).show();
+      }
+
+      @Override
       protected void onPreExecute() {
+        Log.d("onPreExecute", "enter");
         // remove old entries
         clear();
       }
 
       @Override
       protected void onProgressUpdate(final ModelInfo... values) {
+        Log.d("onProgrerssUpdate", "enter");
         for (final ModelInfo info : values) {
           add(info);
         }
       }
     }.execute();
+
+    Log.d("reload", "exit");
   }
 }
