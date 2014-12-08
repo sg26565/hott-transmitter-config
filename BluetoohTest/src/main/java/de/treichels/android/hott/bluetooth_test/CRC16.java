@@ -1,4 +1,4 @@
-package de.treichels.android.bluetoohtest;
+package de.treichels.android.hott.bluetooth_test;
 
 /**
  * Calculate the CRC-16 checksum for a binary block of data.
