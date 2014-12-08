@@ -102,9 +102,11 @@ public abstract class FailSafeAsyncTask<Params, Progress, Result> extends AsyncT
     Throwable t = resultThrowable;
     while (getResultMessage() == null && t != null) {
       setResultMessage(t.getLocalizedMessage());
+      // get message from cause in case throwable has no message
       t = t.getCause();
     }
 
+    // no message at all - fall back to simple class name
     if (getResultMessage() == null) {
       setResultMessage(resultThrowable.getClass().getSimpleName());
     }
