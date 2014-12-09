@@ -49,6 +49,7 @@ public abstract class FailSafeAsyncTask<Params, Progress, Result> extends AsyncT
 
       try {
         result = doInBackgroundFailSafe(params);
+        break;
       } catch (final Throwable t) {
         Log.e("FailSafeAsyncTask.doInBackground", t.getClass().getSimpleName(), t);
         if (retryCount-- == 0) {

@@ -112,7 +112,7 @@ public class BluetoothDeviceHandler extends DeviceHandler<BluetoothDevice> {
   @Override
   public void openDevice() throws IOException {
     if (deviceInfo != null) {
-      socket = deviceInfo.getDevice().createInsecureRfcommSocketToServiceRecord(UUID.fromString(UUID_SERIAL_PORT_PROFILE));
+      socket = deviceInfo.getDevice().createRfcommSocketToServiceRecord(UUID.fromString(UUID_SERIAL_PORT_PROFILE));
       impl = new BluetoothSerialPortImplementation(socket);
     }
   }
