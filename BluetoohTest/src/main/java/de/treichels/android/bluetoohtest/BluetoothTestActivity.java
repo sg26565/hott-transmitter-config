@@ -42,7 +42,7 @@ public class BluetoothTestActivity extends Activity {
         protected void onProgressUpdate(final String... values) {
           for (final String value : values) {
             textView.append(value);
-            textView.setScrollY(textView.getLineCount() * textView.getLineHeight());
+            textView.scrollTo(0, textView.getLineCount() * textView.getLineHeight());
           }
         }
       }.execute(new Void[] {});
