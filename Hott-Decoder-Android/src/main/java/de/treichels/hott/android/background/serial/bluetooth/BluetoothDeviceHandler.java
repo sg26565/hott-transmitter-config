@@ -27,7 +27,7 @@ public class BluetoothDeviceHandler extends DeviceHandler<BluetoothDevice> {
    * @return
    */
   public static Set<BluetoothDevice> getBluetoothDevices() {
-    return adapter.getBondedDevices();
+    return ADAPTER.getBondedDevices();
   }
 
   public static DeviceInfo<BluetoothDevice> getDeviceInfo(final BluetoothDevice device) {
@@ -52,15 +52,15 @@ public class BluetoothDeviceHandler extends DeviceHandler<BluetoothDevice> {
     return new BluetoothDeviceHandler(context).isBluetoothHost();
   }
 
-  private static final BluetoothAdapter adapter                  = BluetoothAdapter.getDefaultAdapter();
+  public static final BluetoothAdapter ADAPTER                  = BluetoothAdapter.getDefaultAdapter();
 
-  private static final String           UUID_SERIAL_PORT_PROFILE = "00001101-0000-1000-8000-00805F9B34FB";
+  private static final String          UUID_SERIAL_PORT_PROFILE = "00001101-0000-1000-8000-00805F9B34FB";
 
-  private DeviceInfo<BluetoothDevice>   deviceInfo               = null;
+  private DeviceInfo<BluetoothDevice>  deviceInfo               = null;
 
-  private SerialPort                    impl                     = null;
+  private SerialPort                   impl                     = null;
 
-  private BluetoothSocket               socket                   = null;
+  private BluetoothSocket              socket                   = null;
 
   public BluetoothDeviceHandler(final Context context) {
     super(context);
@@ -106,7 +106,7 @@ public class BluetoothDeviceHandler extends DeviceHandler<BluetoothDevice> {
    * @return
    */
   public boolean isBluetoothHost() {
-    return adapter != null && adapter.isEnabled() && !getBluetoothDevices().isEmpty();
+    return ADAPTER != null && ADAPTER.isEnabled() && !getBluetoothDevices().isEmpty();
   }
 
   @Override

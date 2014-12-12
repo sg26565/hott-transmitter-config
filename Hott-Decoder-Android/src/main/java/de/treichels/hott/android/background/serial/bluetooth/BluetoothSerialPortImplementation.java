@@ -33,6 +33,7 @@ import android.bluetooth.BluetoothSocket;
  */
 public class BluetoothSerialPortImplementation implements SerialPort {
   private final BluetoothSocket socket;
+  private boolean               isOpen = false;
 
   /**
    * @param connection
@@ -45,8 +46,9 @@ public class BluetoothSerialPortImplementation implements SerialPort {
 
   @Override
   public void close() throws IOException {
-    if (socket.isConnected()) {
+    if (isOpen) {
       socket.close();
+      isOpen = false;
     }
   }
 
@@ -70,14 +72,16 @@ public class BluetoothSerialPortImplementation implements SerialPort {
 
   @Override
   public boolean isOpen() {
-    return socket.isConnected();
+    return isOpen;
   }
 
   @Override
   public void open() throws HoTTException {
-    if (!socket.isConnected()) {
+    if (!isOpen) {
       try {
+        BluetoothDeviceHandler.ADAPTER.cancelDiscovery();
         socket.connect();
+        isOpen = true;
       } catch (final IOException e) {
         throw new HoTTException(e);
       }
