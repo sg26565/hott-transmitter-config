@@ -58,6 +58,7 @@ public class BackgroundTask extends AsyncTask<Void, String, Void> {
 
           try {
             socket = openSocket(device);
+            adapter.cancelDiscovery();
             connect(socket);
             sendCommand(socket);
             wait4Response(socket);
