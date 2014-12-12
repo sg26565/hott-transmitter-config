@@ -10,7 +10,6 @@
     <string name="msg_error">Es ist ein Fehler aufgetreten</string>
     <string name="msg_convert_to_html">konvertiere zu HTML &#8230; bitte warten.</string>
     <string name="msg_decode_data">dekodiere Daten &#8230; bitte warten.</string>
-    <string name="msg_write_data">speichere Daten &#8230; bitte warten.</string>
     <string name="msg_select_device">Bitte ein Gerät auswählen.</string>
     <string name="action_print_pdf">als PDF Drucken</string>
     <string name="action_load_from_tx_usb">Laden vom Sender (USB)</string>

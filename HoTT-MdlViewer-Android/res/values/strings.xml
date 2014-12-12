@@ -10,8 +10,8 @@
     <string name="msg_unsupported_uri">Unsupported source: \&quot;%s\&quot;!</string>
     <string name="msg_convert_to_html">Converting to HTML &#8230; please wait.</string>
     <string name="msg_decode_data">Decoding data &#8230; please wait.</string>
-    <string name="msg_write_data">Writing data &#8230; please wait.</string><string name="msg_select_device">Please select a device.</string>
-<string name="action_print_pdf">Print PDF</string>
+    <string name="msg_select_device">Please select a device.</string>
+    <string name="action_print_pdf">Print PDF</string>
     <string name="action_load_from_tx_usb">Load from Transmitter (USB)</string>
     <string name="action_load_from_sd_usb">Load from SD Card (USB)</string>
     <string name="action_load_from_tx_bt">Load from Transmitter (Bluetooth)</string>
