@@ -136,7 +136,7 @@ public class BackgroundTask extends AsyncTask<Void, String, Void> {
     checkCanceled();
 
     print("\n  Open socket ... ");
-    final BluetoothSocket socket = device.createRfcommSocketToServiceRecord(UUID_SERIAL_PORT_PROFILE);
+    final BluetoothSocket socket = device.createInsecureRfcommSocketToServiceRecord(UUID_SERIAL_PORT_PROFILE);
     println("ok");
 
     return socket;
