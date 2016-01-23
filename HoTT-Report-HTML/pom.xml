@@ -31,5 +31,10 @@
 			<artifactId>freemarker</artifactId>
 			<classifier>android</classifier>
 		</dependency>
+		<dependency>
+			<groupId>de.treichels.wea</groupId>
+			<artifactId>bat64-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
