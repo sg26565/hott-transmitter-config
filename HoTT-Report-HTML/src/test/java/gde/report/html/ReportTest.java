@@ -23,6 +23,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -32,89 +33,122 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.treichels.hott.HoTTDecoder;
+import de.treichels.wea.bat64.gen.Root;
+import de.treichels.wea.bat64.xml.Unmarshaller;
+import de.treichels.wea.bat64.xml.XmlElement;
+import de.treichels.wea.bat64.xml.XmlReader;
 import freemarker.template.TemplateException;
 import gde.model.BaseModel;
 import gde.model.enums.TransmitterType;
 
 public class ReportTest {
-  @BeforeClass
-  public static void setup() {
-    System.setProperty("program.dir", "/tmp"); //$NON-NLS-1$ //$NON-NLS-2$
-    System.setProperty("program.version", "0.test"); //$NON-NLS-1$ //$NON-NLS-2$
-  }
+	@BeforeClass
+	public static void setup() {
+		System.setProperty("program.dir", "/tmp"); //$NON-NLS-1$ //$NON-NLS-2$
+		System.setProperty("program.version", "0.test"); //$NON-NLS-1$ //$NON-NLS-2$
+	}
 
-  @Test
-  public void testMc20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc20").toURI()); //$NON-NLS-1$
+	@Test
+	public void testBat64Models() throws Exception {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/bat64").toURI()); //$NON-NLS-1$
+		final XmlReader reader = new XmlReader();
 
-    for (final File file : dir.listFiles()) {
-      final BaseModel model = HoTTDecoder.decodeFile(file);
+		for (final File file : dir.listFiles()) {
+			if (!file.getName().endsWith(".model")) {
+				continue;
+			}
 
-      assertEquals(TransmitterType.mc20, model.getTransmitterType());
+			final XmlElement inRootElement = reader.read(file);
+			final Root root = new Root();
+			Unmarshaller.unmarshal(inRootElement, root, null);
 
-      final String html = HTMLReport.generateHTML(model);
-      assertNotNull(html);
-      assertFalse(html.isEmpty());
-    }
-  }
+			final String html = HTMLReport.generateHTML(root);
+			assertNotNull(html);
+			assertFalse(html.isEmpty());
 
-  @Test
-  public void testMc32Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc32").toURI()); //$NON-NLS-1$
+			final String fileName = file.getName();
+			final String htmlFileName = fileName.substring(0, fileName.length() - 6) + ".html";
+			final File htmlFile = new File(dir, htmlFileName);
+			try (FileWriter writer = new FileWriter(htmlFile)) {
+				writer.write(html);
+			}
+		}
 
-    for (final File file : dir.listFiles()) {
-      final BaseModel model = HoTTDecoder.decodeFile(file);
+	}
 
-      assertEquals(TransmitterType.mc32, model.getTransmitterType());
+	@Test
+	public void testMc20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc20").toURI()); //$NON-NLS-1$
 
-      final String html = HTMLReport.generateHTML(model);
-      assertNotNull(html);
-      assertFalse(html.isEmpty());
-    }
-  }
+		for (final File file : dir.listFiles()) {
+			final BaseModel model = HoTTDecoder.decodeFile(file);
 
-  @Test
-  public void testMx12Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx12").toURI()); //$NON-NLS-1$
+			assertEquals(TransmitterType.mc20, model.getTransmitterType());
 
-    for (final File file : dir.listFiles()) {
-      final BaseModel model = HoTTDecoder.decodeFile(file);
+			final String html = HTMLReport.generateHTML(model);
+			assertNotNull(html);
+			assertFalse(html.isEmpty());
+		}
+	}
 
-      assertEquals(TransmitterType.mx12, model.getTransmitterType());
+	@Test
+	public void testMc32Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc32").toURI()); //$NON-NLS-1$
 
-      final String html = HTMLReport.generateHTML(model);
-      assertNotNull(html);
-      assertFalse(html.isEmpty());
-    }
-  }
+		for (final File file : dir.listFiles()) {
+			final BaseModel model = HoTTDecoder.decodeFile(file);
 
-  @Test
-  public void testMx16Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx16").toURI()); //$NON-NLS-1$
+			assertEquals(TransmitterType.mc32, model.getTransmitterType());
 
-    for (final File file : dir.listFiles()) {
-      final BaseModel model = HoTTDecoder.decodeFile(file);
+			final String html = HTMLReport.generateHTML(model);
+			assertNotNull(html);
+			assertFalse(html.isEmpty());
+		}
+	}
 
-      assertEquals(TransmitterType.mx16, model.getTransmitterType());
+	@Test
+	public void testMx12Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx12").toURI()); //$NON-NLS-1$
 
-      final String html = HTMLReport.generateHTML(model);
-      assertNotNull(html);
-      assertFalse(html.isEmpty());
-    }
-  }
+		for (final File file : dir.listFiles()) {
+			final BaseModel model = HoTTDecoder.decodeFile(file);
 
-  @Test
-  public void testMx20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
-    final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx20").toURI()); //$NON-NLS-1$
+			assertEquals(TransmitterType.mx12, model.getTransmitterType());
 
-    for (final File file : dir.listFiles()) {
-      final BaseModel model = HoTTDecoder.decodeFile(file);
+			final String html = HTMLReport.generateHTML(model);
+			assertNotNull(html);
+			assertFalse(html.isEmpty());
+		}
+	}
 
-      assertEquals(TransmitterType.mx20, model.getTransmitterType());
+	@Test
+	public void testMx16Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx16").toURI()); //$NON-NLS-1$
 
-      final String html = HTMLReport.generateHTML(model);
-      assertNotNull(html);
-      assertFalse(html.isEmpty());
-    }
-  }
+		for (final File file : dir.listFiles()) {
+			final BaseModel model = HoTTDecoder.decodeFile(file);
+
+			assertEquals(TransmitterType.mx16, model.getTransmitterType());
+
+			final String html = HTMLReport.generateHTML(model);
+			assertNotNull(html);
+			assertFalse(html.isEmpty());
+		}
+	}
+
+	@Test
+	public void testMx20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx20").toURI()); //$NON-NLS-1$
+
+		for (final File file : dir.listFiles()) {
+			final BaseModel model = HoTTDecoder.decodeFile(file);
+
+			assertEquals(TransmitterType.mx20, model.getTransmitterType());
+
+			final String html = HTMLReport.generateHTML(model);
+			assertNotNull(html);
+			assertFalse(html.isEmpty());
+
+		}
+	}
 }

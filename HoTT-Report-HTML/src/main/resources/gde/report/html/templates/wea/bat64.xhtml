@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!--
-	HoTT Transmitter Config
+	Transmitter Config
 	Copyright (C) 2013  Oliver Treichel
 	
 	This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 <@htmlsafe>
 <#include "macros.ftl">
 	<head>
-		<title>${model.vendor} ${model.transmitterType} - ${model.modelName}</title>
+		<title>${model.modelConfig.modelName.value}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<#include "styles.ftl">
 		<#include "bookmarks.ftl">
@@ -32,6 +32,22 @@
 			<#include "toc.ftl">
 		</div>
 		<div class="data">
+			<#include "modelconfig.ftl">
+			<!--include "receiverconfig.ftl!-->
+			<!--include "servoconfig.ftl!-->
+			<!--include "telemetry.ftl!-->
+			<!--include "functions.ftl!-->
+			<!--include "mixer.ftl!-->
+			<!--include "flightmodes.ftl!-->
+			<!--include "sequencer.ftl!-->
+			<!--include "virtualswitches.ftl!-->
+			<!--include "timer.ftl!-->
+			<!--include "limiter.ftl!-->
+			<!--include "teacherstudent.ftl!-->
+			<!--include "screensettings.ftl!-->
+			<!--include "inputmatrix.ftl!-->
+			<!--include "sound.ftl!-->
+			<!--include "startupwarnings.ftl!-->
 		</div>
 	</body>
 </@htmlsafe>

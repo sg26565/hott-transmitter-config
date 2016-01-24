@@ -3,7 +3,7 @@
 		size: a4;
 		
 		@top-left {
-			content: "${model.transmitterType} - ${model.modelName}";
+			content: "BAT 64 - ${model.modelConfig.modelName.value}";
 		}
 	
 		@top-right {
@@ -11,7 +11,7 @@
 		}
 	
 		@bottom-left {
-			content: "HoTTMdlViewer ${version}";
+			content: "MdlViewer ${version}";
 		}
 	
 		@bottom-right {
