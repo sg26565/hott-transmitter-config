@@ -21,46 +21,41 @@ import gde.model.serial.ModelInfo;
 import android.app.DialogFragment;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import de.treichels.hott.ui.android.R;
 
 /**
- * A {@link DialogFragment} that shows a list of models from the transmitter
- * memory and allows the user to select one of them.
+ * A {@link DialogFragment} that shows a list of models from the transmitter memory and allows the user to select one of them.
  *
  * @author oli@treichels.de
  */
-public class OpenFromMemoryDialog extends AbstractUsbDialog<ModelInfo> {
-    private ListAdapter adapter = null;
+public abstract class OpenFromMemoryDialog<DeviceType> extends AbstractTxDialog<ModelInfo, DeviceType> {
+  private GenericListAdaper<ModelInfo> listAdapter = null;
 
-    @Override
-    protected ListAdapter getListAdapter() {
-        if (adapter == null) {
-            adapter = new ModelInfoAdapter(getActivity(), getUsbDevice());
-        }
-
-        return adapter;
+  @Override
+  protected GenericListAdaper<ModelInfo> getListViewAdapter() {
+    if (listAdapter == null) {
+      // this dialog displays a list of model infos
+      listAdapter = new ModelInfoAdapter(getDeviceHandler());
     }
 
-    @Override
-    protected int getTitleId() {
-        return R.string.action_load_from_tx;
+    return listAdapter;
+  }
+
+  @Override
+  protected String getListViewLabel() {
+    // the list view label is a static string
+    return getActivity().getString(R.string.model_memory);
+  }
+
+  @Override
+  public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+    setResult((ModelInfo) parent.getItemAtPosition(position));
+
+    dismiss();
+
+    final DialogClosedListener listener = getDialogClosedListener();
+    if (listener != null) {
+      listener.onDialogClosed(DialogClosedListener.OK);
     }
-
-    @Override
-    protected String getListViewLabel() {
-        return getActivity().getString(R.string.model_memory);
-    }
-
-    @Override
-    public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-        setResult((ModelInfo) parent.getItemAtPosition(position));
-
-        dismiss();
-
-        final DialogClosedListener listener = getDialogClosedListener();
-        if (listener != null) {
-            listener.onDialogClosed(DialogClosedListener.OK);
-        }
-    }
+  }
 }

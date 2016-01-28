@@ -19,7 +19,6 @@
             android:layout_marginStart="10dp"
             android:gravity="center_vertical"
             android:labelFor="@+id/portSelector"
-            android:text="@string/usb_device"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner

@@ -19,7 +19,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<platform.version>19</platform.version>
+		<platform.version>21</platform.version>
 	</properties>
 
 	<repositories>
@@ -43,10 +43,6 @@
 <!-- 		</dependency> -->
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTT-Decoder</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Report-HTML</artifactId>
 		</dependency>
 		<dependency>
@@ -66,7 +62,12 @@
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>support-v4</artifactId>
-			<version>19.0.1</version>
+			<version>19.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.acra</groupId>
+			<artifactId>acra</artifactId>
+			<version>4.5.0</version>
 		</dependency>
 	</dependencies>
 

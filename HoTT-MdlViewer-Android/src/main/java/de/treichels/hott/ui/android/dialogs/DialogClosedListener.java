@@ -23,8 +23,8 @@ package de.treichels.hott.ui.android.dialogs;
  * @author oli@treichels.de
  */
 public interface DialogClosedListener {
-    public int OK       = 0;
     public int CANCELED = 1;
+    public int OK       = 0;
 
     public void onDialogClosed(int resultStatus);
 }

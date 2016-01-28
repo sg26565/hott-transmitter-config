@@ -227,6 +227,11 @@
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
+				<artifactId>HoTT-Decoder-Android</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-Report-HTML</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -248,6 +253,11 @@
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-MdlViewer-SWT</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.treichels.hott</groupId>
+				<artifactId>HoTT-MdlViewer-Android</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
