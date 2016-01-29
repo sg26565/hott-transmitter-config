@@ -46,8 +46,8 @@ public class PropertyChangeAspectTest {
     }
   }
 
-  private static final String       MEMORY_VERSION = "memoryVersion";
-  private static final String       VENDOR         = "vendor";
+  private static final String       MEMORY_VERSION = "memoryVersion"; //$NON-NLS-1$
+  private static final String       VENDOR         = "vendor"; //$NON-NLS-1$
 
   private BaseModel                 model;
   private List<PropertyChangeEvent> events;
@@ -71,7 +71,7 @@ public class PropertyChangeAspectTest {
     assertEquals(1, events.size());
     final PropertyChangeEvent event = events.get(0);
     assertEquals(sw, event.getSource());
-    assertEquals("number", event.getPropertyName());
+    assertEquals("number", event.getPropertyName()); //$NON-NLS-1$
     assertEquals(0, event.getOldValue());
     assertEquals(5, event.getNewValue());
   }
@@ -89,7 +89,7 @@ public class PropertyChangeAspectTest {
     assertEquals(1, events.size());
     PropertyChangeEvent event = events.get(0);
     assertEquals(sw, event.getSource());
-    assertEquals("enabled", event.getPropertyName());
+    assertEquals("enabled", event.getPropertyName()); //$NON-NLS-1$
     assertEquals(Boolean.FALSE, event.getOldValue());
     assertEquals(Boolean.TRUE, event.getNewValue());
 
@@ -102,7 +102,7 @@ public class PropertyChangeAspectTest {
     assertEquals(1, events.size());
     event = events.get(0);
     assertEquals(sw, event.getSource());
-    assertEquals("enabled", event.getPropertyName());
+    assertEquals("enabled", event.getPropertyName()); //$NON-NLS-1$
     assertEquals(Boolean.TRUE, event.getOldValue());
     assertEquals(Boolean.FALSE, event.getNewValue());
 
@@ -131,9 +131,9 @@ public class PropertyChangeAspectTest {
 
   @Test
   public void testHasListenersOnClass3() {
-    assertFalse(model.hasListeners("foo"));
+    assertFalse(model.hasListeners("foo")); //$NON-NLS-1$
     model.addPropertyChangeListener(listener);
-    assertTrue(model.hasListeners("foo"));
+    assertTrue(model.hasListeners("foo")); //$NON-NLS-1$
   }
 
   @Test
@@ -223,7 +223,7 @@ public class PropertyChangeAspectTest {
     assertEquals(1, events.size());
     final PropertyChangeEvent event = events.get(0);
     assertEquals(clock, event.getSource());
-    assertEquals("timer", event.getPropertyName());
+    assertEquals("timer", event.getPropertyName()); //$NON-NLS-1$
     assertEquals(0, event.getOldValue());
     assertEquals(66, event.getNewValue());
 
@@ -247,13 +247,13 @@ public class PropertyChangeAspectTest {
 
     PropertyChangeEvent event = events.get(0);
     assertEquals(clock, event.getSource());
-    assertEquals("timer", event.getPropertyName());
+    assertEquals("timer", event.getPropertyName()); //$NON-NLS-1$
     assertEquals(0, event.getOldValue());
     assertEquals(60, event.getNewValue());
 
     event = events.get(1);
     assertEquals(clock, event.getSource());
-    assertEquals("timerMinutes", event.getPropertyName());
+    assertEquals("timerMinutes", event.getPropertyName()); //$NON-NLS-1$
     assertEquals(0, event.getOldValue());
     assertEquals(1, event.getNewValue());
 
@@ -277,13 +277,13 @@ public class PropertyChangeAspectTest {
 
     PropertyChangeEvent event = events.get(0);
     assertEquals(clock, event.getSource());
-    assertEquals("timer", event.getPropertyName());
+    assertEquals("timer", event.getPropertyName()); //$NON-NLS-1$
     assertEquals(0, event.getOldValue());
     assertEquals(30, event.getNewValue());
 
     event = events.get(1);
     assertEquals(clock, event.getSource());
-    assertEquals("timerSeconds", event.getPropertyName());
+    assertEquals("timerSeconds", event.getPropertyName()); //$NON-NLS-1$
     assertEquals(0, event.getOldValue());
     assertEquals(30, event.getNewValue());
 

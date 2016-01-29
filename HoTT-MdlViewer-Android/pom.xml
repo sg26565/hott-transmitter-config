@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>de.treichels.hott</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.7</version>
+		<version>0.8-SNAPSHOT</version>
 	</parent>
 
 	<scm>
@@ -19,8 +19,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<platform.version>19</platform.version>
-		<android.sdk.path>/home/oli/android-sdk-linux</android.sdk.path>
+		<platform.version>21</platform.version>
 	</properties>
 
 	<repositories>
@@ -35,17 +34,13 @@
 	</repositories>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-			<version>${platform.version}</version>
-			<scope>provided</scope>
-<!-- 			<systemPath>${android.sdk.path}/platforms/android-${platform.version}/android.jar</systemPath> -->
-		</dependency>
-		<dependency>
-			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTT-Decoder</artifactId>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.google.android</groupId> -->
+<!-- 			<artifactId>android</artifactId> -->
+<!-- 			<version>${platform.version}</version> -->
+<!-- 			<scope>system</scope> -->
+<!--  			<systemPath>${android.sdk.path}/platforms/android-${platform.version}/android.jar</systemPath> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Report-HTML</artifactId>
@@ -67,7 +62,12 @@
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>support-v4</artifactId>
-			<version>19.0.1</version>
+			<version>19.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.acra</groupId>
+			<artifactId>acra</artifactId>
+			<version>4.5.0</version>
 		</dependency>
 	</dependencies>
 
@@ -108,6 +108,10 @@
 										</versionRange>
 										<goals>
 											<goal>consume-aar</goal>
+											<goal>
+												generate-sources
+											</goal>
+											<goal>proguard</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>

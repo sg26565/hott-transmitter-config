@@ -37,6 +37,7 @@ public final class TxInfo implements Serializable {
   private final String          vendorName;
   private final String          ownerName;
   private final String[]        customPhaseNames;
+  private final long            rfId;
 
   /**
    * @param transmitterType
@@ -46,9 +47,9 @@ public final class TxInfo implements Serializable {
    * @param transmitterName
    * @param vendorName
    */
-  public TxInfo(final TransmitterType transmitterType, final int appVersion, final int memoryVersion, final int year, final String transmitterName,
-      final String vendorName, final String ownerName, final String[] customPhaseNames) {
-    super();
+  public TxInfo(final Long rfId, final TransmitterType transmitterType, final int appVersion, final int memoryVersion, final int year,
+      final String transmitterName, final String vendorName, final String ownerName, final String[] customPhaseNames) {
+    this.rfId = rfId;
     this.transmitterType = transmitterType;
     this.appVersion = appVersion;
     this.memoryVersion = memoryVersion;
@@ -75,6 +76,10 @@ public final class TxInfo implements Serializable {
     return ownerName;
   }
 
+  public long getRfId() {
+    return rfId;
+  }
+
   public String getTransmitterName() {
     return transmitterName;
   }
@@ -94,7 +99,7 @@ public final class TxInfo implements Serializable {
   @Override
   public String toString() {
     return String.format(
-        "TxInfo [transmitterType=%s, appVersion=%s, memoryVersion=%s, year=%s, transmitterName=%s, vendorName=%s, ownerName=%s, customPhaseNames=%s]",
+        "TxInfo [transmitterType=%s, appVersion=%s, memoryVersion=%s, year=%s, transmitterName=%s, vendorName=%s, ownerName=%s, customPhaseNames=%s]", //$NON-NLS-1$
         transmitterType, appVersion, memoryVersion, year, transmitterName, vendorName, ownerName, Arrays.toString(customPhaseNames));
   }
 }

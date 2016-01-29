@@ -91,7 +91,7 @@ public class ModelInfo implements Serializable {
   @Override
   public String toString() {
     return String.format(
-        "ModelInfo [modelNumber=%s, modelName=%s, modelInfo=%s, modelType=%s, transmitterType=%s, receiverType=%s, usedHours=%s, usedMinutes=%s]", modelNumber,
+        "ModelInfo [modelNumber=%s, modelName=%s, modelInfo=%s, modelType=%s, transmitterType=%s, receiverType=%s, usedHours=%s, usedMinutes=%s]", modelNumber, //$NON-NLS-1$
         modelName, modelInfo, modelType, transmitterType, receiverType, usedHours, usedMinutes);
   }
 }

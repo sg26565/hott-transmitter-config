@@ -2,17 +2,27 @@
 <resources>
 
     <string name="app_name">HoTT MdlViewer</string>
-    <string name="action_load_mdl">Lade MDL Datei</string>
+    <string name="action_load_from_file">Lade MDL Datei</string>
     <string name="action_load">Laden</string>
-    <string name="action_reload_mdl">Aktualisieren</string>
-    <string name="action_reload">Aktualisieren</string>
     <string name="msg_loading">Ladevorgang &#8230; bitte warten.</string>
     <string name="msg_select_mdl">Bitte eine MDL Datei auswählen.</string>
-    <string name="msg_invalid_file_name">Ungültiger Dateiname: \&quot;%s\&quot;!</string>
-    <string name="msg_invalid_file_type">Ungültiger Modelltyp: \&quot;%s\&quot;!</string>
     <string name="msg_unsupported_uri">Nicht unterstützte Quelle: \&quot;%s\&quot;!</string>
     <string name="msg_error">Es ist ein Fehler aufgetreten</string>
+    <string name="msg_convert_to_html">konvertiere zu HTML &#8230; bitte warten.</string>
+    <string name="msg_decode_data">dekodiere Daten &#8230; bitte warten.</string>
+    <string name="msg_select_device">Bitte ein Gerät auswählen.</string>
     <string name="action_print_pdf">als PDF Drucken</string>
-    <string name="action_print">Drucken</string>
+    <string name="action_load_from_tx_usb">Laden vom Sender (USB)</string>
+    <string name="action_load_from_sd_usb">Laden von SD Karte (USB)</string>
+    <string name="action_load_from_tx_bt">Laden vom Sender (Bluetooth)</string>
+    <string name="action_load_from_sd_bt">Laden von SD Karte (Bluetooth)</string>
+    <string name="usb_device">USB Gerät</string>
+    <string name="bluetooth_device">Bluetooth Gerät</string>
+    <string name="model_memory">Modellspeicher</string>
+    <string name="crash_toast_text">Es ist ein unerwarteter Fehler aufgetreten.</string>
+    <string name="crash_dialog_title">MdlViewer ist abgestützt</string>
+    <string name="crash_dialog_text">Es ist ein unerwarteter Fehler aufgetreten. Bitte helfe bei der Fehlerbehebung, indem Du Daten zum Problem sendest.</string>
+    <string name="crash_dialog_comment_prompt">Hier kannst Du Kommentare zum Problem eingeben:</string>
+    <string name="crash_dialog_ok_toast">Vielen Dank!</string>
 
 </resources>

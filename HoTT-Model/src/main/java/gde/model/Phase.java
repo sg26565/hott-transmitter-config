@@ -219,6 +219,6 @@ public abstract class Phase extends AbstractBase {
 
   @Override
   public String toString() {
-    return String.format("Phase %d: %s", Integer.parseInt(getNumber()) + 1, getPhaseName());
+    return String.format("Phase %d: %s", Integer.parseInt(getNumber()) + 1, getPhaseName());  //$NON-NLS-1$
   }
 }

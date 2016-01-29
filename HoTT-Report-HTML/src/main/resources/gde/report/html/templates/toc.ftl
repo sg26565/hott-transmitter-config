@@ -60,11 +60,15 @@
 <a href="#failSafe">Fail Safe</a>
 <a href="#trainerPupil">Lehrer/Schüler</a>
 <a href="#outputChannel">Senderausgang</a>
-<a href="#profiTrim">Profitrimm</a>
+<#if model.transmitterType.name() != "mx20">
+	<a href="#profiTrim">Profitrimm</a>
+</#if>
 <a href="#trimMemory">Trimmspeicher</a>
 <a href="#telemetry">Telemetrie</a>		
 <a href="#channelSequencer">Kanal Sequenzer</a>
-<a href="#multiChannel">Multikanal</a>
+<#if model.transmitterType.name() != "mx20">
+	<a href="#multiChannel">Multikanal</a>
+</#if>
 <a href="#ringLimiter">Ringbegrenzer</a>
 <#if model.transmitterType.name() != "mx20">
 	<a href="#mp3Player">MP3-Player</a>

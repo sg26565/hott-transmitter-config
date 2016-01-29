@@ -63,7 +63,7 @@ public class BaseModel extends AbstractBase {
   private Phase[]           phase;
   private PhaseAssignment   phaseAssignment;
   private Receiver[]        receiver;
-  private ReceiverType      reveiverType;
+  private ReceiverType      receiverType;
   private RingLimiter[]     ringLimiter;
   private StickMode         stickMode;
   private StickTrim[]       stickTrim;
@@ -358,8 +358,8 @@ public class BaseModel extends AbstractBase {
     return receiver;
   }
 
-  public ReceiverType getReveiverType() {
-    return reveiverType;
+  public ReceiverType getReceiverType() {
+    return receiverType;
   }
 
   @XmlElementWrapper(name = "ringLimiters")
@@ -581,8 +581,8 @@ public class BaseModel extends AbstractBase {
     receiver = receivers;
   }
 
-  public void setReveiverType(final ReceiverType reveiverType) {
-    this.reveiverType = reveiverType;
+  public void setReceiverType(final ReceiverType reveiverType) {
+    this.receiverType = reveiverType;
   }
 
   public void setRingLimiter(final RingLimiter[] ringLimiter) {

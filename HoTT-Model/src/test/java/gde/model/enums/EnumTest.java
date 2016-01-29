@@ -19,7 +19,7 @@ public class EnumTest {
   @Test
   public void test() throws IOException, URISyntaxException, ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException,
       IllegalArgumentException, InvocationTargetException {
-    final Enumeration<URL> enums = Thread.currentThread().getContextClassLoader().getResources("gde/model/enums");
+    final Enumeration<URL> enums = Thread.currentThread().getContextClassLoader().getResources("gde/model/enums"); //$NON-NLS-1$
 
     while (enums.hasMoreElements()) {
       final File dir = new File(enums.nextElement().toURI());
@@ -30,13 +30,13 @@ public class EnumTest {
         for (final File file : files) {
           final String fileName = file.getName();
 
-          if (fileName.endsWith(".class")) {
-            final Class<?> clazz = Class.forName("gde.model.enums." + fileName.substring(0, fileName.length() - 6));
+          if (fileName.endsWith(".class")) { //$NON-NLS-1$
+            final Class<?> clazz = Class.forName("gde.model.enums." + fileName.substring(0, fileName.length() - 6)); //$NON-NLS-1$
 
             if (clazz.isEnum()) {
               final Field[] fields = clazz.getDeclaredFields();
-              final Method toStringMethod = clazz.getMethod("toString");
-              final Method nameMethod = clazz.getMethod("name");
+              final Method toStringMethod = clazz.getMethod("toString"); //$NON-NLS-1$
+              final Method nameMethod = clazz.getMethod("name"); //$NON-NLS-1$
 
               for (final Field field : fields) {
                 if ((field.getModifiers() & Modifier.STATIC & Modifier.PUBLIC) == 0) {

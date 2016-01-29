@@ -71,7 +71,7 @@ public class SwingCurveImageGenerator implements CurveImageGenerator {
       if (curve.getPoint() != null) {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setStroke(new BasicStroke(4, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0.0f, null, 0.0f));
-        g.setFont(new Font("Arial", Font.BOLD, 12));
+        g.setFont(new Font("Arial", Font.BOLD, 12)); //$NON-NLS-1$
         g.setColor(Color.BLACK);
 
         int numPoints = 0;
@@ -179,7 +179,7 @@ public class SwingCurveImageGenerator implements CurveImageGenerator {
   public String getImageSource(final Curve curve, final float scale, final boolean description) {
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     try {
-      ImageIO.write(getImage(curve, scale, description), "png", baos);
+      ImageIO.write(getImage(curve, scale, description), "png", baos); //$NON-NLS-1$
     } catch (final IOException e) {
       throw new RuntimeException(e);
     }

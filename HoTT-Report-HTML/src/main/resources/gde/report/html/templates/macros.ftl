@@ -1,7 +1,5 @@
 <#macro switch sw>
-	<#if sw.assignment.name() == "Unassigned">
-		---
-	<#else>
+	<#if sw.assignment?? && sw.assignment.name() != "Unassigned">
 		<#switch sw.type.name()>
 			<#case "ToggleSwitch">
 				<#if sw.direction==1>
@@ -22,6 +20,8 @@
 			<#default>
 				${sw.assignment}						
 		</#switch>
+	<#else>
+		---
 	</#if>
 </#macro>
 
@@ -108,7 +108,7 @@
 	<tr class="<@d/>">
 		<th align="right">Kurve</th>
 		<td colspan="4" align="left">${curve.smoothing?string("an","aus")}</td>
-		<td colspan="4" rowspan="${curve.point?size+2}" align="center"><img src="${png.getImageSource(curve,1.0,false)}"/></td>
+		<td colspan="4" rowspan="${curve.point?size+2}" align="center"><img src="${png.getImageSource(curve,1.0,true)}"/></td>
 	</tr>
 
 	<tr>

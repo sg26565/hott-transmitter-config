@@ -65,11 +65,15 @@
 	<bookmark href="#failSafe" name="Fail Safe"/>
 	<bookmark href="#trainerPupil" name="Lehrer/Schüler"/>
 	<bookmark href="#outputChannel" name="Senderausgang"/>
-	<bookmark href="#profiTrim" name="Profitrimm"/>
+	<#if model.transmitterType.name() != "mx20">
+		<bookmark href="#profiTrim" name="Profitrimm"/>
+	</#if>
 	<bookmark href="#trimMemory" name="Trimmspeicher"/>
 	<bookmark href="#telemetry" name="Telemetrie"/>		
 	<bookmark href="#channelSequencer" name="Kanal Sequenzer"/>
-	<bookmark href="#multiChannel" name="Multikanal"/>
+	<#if model.transmitterType.name() != "mx20">
+		<bookmark href="#multiChannel" name="Multikanal"/>
+	</#if>
 	<bookmark href="#ringLimiter" name="Ringbegrenzer"/>
 	<#if model.transmitterType.name() != "mx20">
 		<bookmark href="#mp3Player" name="MP3-Player"/>

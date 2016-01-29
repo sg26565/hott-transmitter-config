@@ -17,6 +17,8 @@
  */
 package gde.mdl.ui;
 
+import gde.mdl.messages.Messages;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -31,15 +33,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import javax.swing.SwingUtilities;
+
 /**
  * @author oli@treichels.de
  */
 public class Launcher {
 
-  public static final String LOG_DIR         = "log.dir";
-  public static final String MDL_DIR         = "mdl.dir";
-  public static final String PROGRAM_DIR     = "program.dir";
-  public static final String PROGRAM_VERSION = "program.version";
+  public static final String LOG_DIR         = "log.dir";        //$NON-NLS-1$
+  public static final String MDL_DIR         = "mdl.dir";        //$NON-NLS-1$
+  public static final String PROGRAM_DIR     = "program.dir";    //$NON-NLS-1$
+  public static final String PROGRAM_VERSION = "program.version"; //$NON-NLS-1$
 
   /**
    * Initialize logfile.
@@ -48,7 +52,7 @@ public class Launcher {
    * @throws IOException
    */
   public static void initLogging() throws SecurityException, IOException {
-    final Logger global = Logger.getLogger("");
+    final Logger global = Logger.getLogger(""); //$NON-NLS-1$
 
     // remove console handler - we don't run from a command line
     for (final Handler handler : global.getHandlers()) {
@@ -56,7 +60,7 @@ public class Launcher {
     }
 
     // Setup logfile
-    final Handler handler = new FileHandler(System.getProperty(LOG_DIR) + "/HoTTGUI.log");
+    final Handler handler = new FileHandler(System.getProperty(LOG_DIR) + "/MdlViewer.log"); //$NON-NLS-1$
     handler.setLevel(Level.INFO);
     handler.setFormatter(new SimpleFormatter());
 
@@ -64,9 +68,9 @@ public class Launcher {
     global.setLevel(Level.INFO);
 
     final Logger logger = Logger.getLogger(Launcher.class.getName());
-    logger.log(Level.INFO, "program.dir =  " + System.getProperty(PROGRAM_DIR));
-    logger.log(Level.INFO, "mdl.dir =  " + System.getProperty(MDL_DIR));
-    logger.log(Level.INFO, "log.dir =  " + System.getProperty(LOG_DIR));
+    logger.log(Level.INFO, "program.dir =  " + System.getProperty(PROGRAM_DIR)); //$NON-NLS-1$
+    logger.log(Level.INFO, "mdl.dir =  " + System.getProperty(MDL_DIR)); //$NON-NLS-1$
+    logger.log(Level.INFO, "log.dir =  " + System.getProperty(LOG_DIR)); //$NON-NLS-1$
   }
 
   /**
@@ -80,14 +84,14 @@ public class Launcher {
     final URL url = Launcher.class.getProtectionDomain().getCodeSource().getLocation();
     File source = new File(url.toURI());
 
-    if (source.getName().endsWith(".jar")) {
+    if (source.getName().endsWith(".jar")) { //$NON-NLS-1$
       // read program version from manifest
       JarFile jarFile = null;
       try {
         jarFile = new JarFile(source);
         final Manifest manifest = jarFile.getManifest();
         final Attributes attributes = manifest.getMainAttributes();
-        final String version = attributes.getValue("Implementation-Version") + "." + attributes.getValue("Implementation-Build");
+        final String version = Messages.getString("Launcher.Version", attributes.getValue("Implementation-Version")); //$NON-NLS-1$ //$NON-NLS-2$
         System.setProperty(Launcher.PROGRAM_VERSION, version);
       } finally {
         if (jarFile != null) {
@@ -96,12 +100,12 @@ public class Launcher {
       }
     } else {
       if (!System.getProperties().containsKey(PROGRAM_VERSION)) {
-        System.setProperty(Launcher.PROGRAM_VERSION, "unknown");
+        System.setProperty(Launcher.PROGRAM_VERSION, Messages.getString("Launcher.Unknown")); //$NON-NLS-1$
       }
 
       // application was packaged as individual class files, find the classes
       // directory
-      while (!source.getName().equals("classes")) {
+      while (!source.getName().equals("classes")) { //$NON-NLS-1$
         source = source.getParentFile();
       }
     }
@@ -112,7 +116,7 @@ public class Launcher {
 
     // if we are running inside Eclipse in the target directory, step up to
     // the project level
-    if (programDir.getName().equals("target")) {
+    if (programDir.getName().equals("target")) { //$NON-NLS-1$
       programDir = programDir.getParentFile();
     }
 
@@ -142,6 +146,11 @@ public class Launcher {
    * @throws InvocationTargetException
    */
   public static void startSwingApplication() {
-    new SimpleGUI().showInFrame();
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        new SimpleGUI();
+      }
+    });
   }
 }

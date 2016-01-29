@@ -27,7 +27,7 @@
 	<tbody>
 		<#list model.channelSequencer.sequence as seq>
 			<tr class="<@d/> <@u seq.enabled/>">
-				<td align="center">Kanal ${seq.outputChannel.number}</td>
+				<td align="center">Kanal ${seq.outputChannel.number?number+1}</td>
 				<td align="center">${seq.enabled?string("aktiv","inaktiv")}</td>
 
 				<#if seq.enabled>

@@ -27,6 +27,6 @@ import gde.report.CurveImageGenerator;
 public class DummyCurveImageGenerator implements CurveImageGenerator {
   @Override
   public String getImageSource(final Curve curve, final float scale, final boolean description) {
-    return "";
+    return ""; //$NON-NLS-1$
   }
 }

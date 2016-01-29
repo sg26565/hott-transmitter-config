@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>de.treichels.hott</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.7</version>
+		<version>0.8-SNAPSHOT</version>
 	</parent>
 
 	<scm>
@@ -74,15 +74,23 @@
 		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTT-MdlViewer-Swing</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Model</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Decoder</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTT-Report-HTML</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTT-Report-PDF</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTT-Report-XML</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -91,6 +99,10 @@
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>gnu.io.RXTXcomm</groupId>
+			<artifactId>RXTXcomm</artifactId>
 		</dependency>
 	</dependencies>
 </project>
