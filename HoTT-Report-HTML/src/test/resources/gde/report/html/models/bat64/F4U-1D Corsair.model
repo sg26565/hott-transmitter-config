@@ -1,0 +1,3034 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root typeinfo="32">
+	<BTConfig typeinfo="83">
+		<BTName typeinfo="47">WEA Bluetooth</BTName>
+		<IsActive typeinfo="52">0</IsActive>
+		<PIN typeinfo="47">0000</PIN>
+		<Protocol typeinfo="52">0</Protocol>
+		<ProtocolDetail typeinfo="32">
+			<SkyNavigator typeinfo="32">
+				<Functions typeinfo="47" />
+			</SkyNavigator>
+		</ProtocolDetail>
+		<TxPower typeinfo="53">65528</TxPower>
+	</BTConfig>
+	<BindingConfig typeinfo="7">
+		<ConnectionID typeinfo="53">43690</ConnectionID>
+		<RadioBand typeinfo="52">0</RadioBand>
+		<Rxs typeinfo="32">
+			<Rx__00 typeinfo="32">
+				<DeviceType typeinfo="53">49957</DeviceType>
+				<FWVersion typeinfo="53">1542</FWVersion>
+				<Serial typeinfo="55">320081100000</Serial>
+			</Rx__00>
+			<Rx__01 typeinfo="32">
+				<DeviceType typeinfo="53">0</DeviceType>
+				<FWVersion typeinfo="53">0</FWVersion>
+				<Serial typeinfo="55">0</Serial>
+			</Rx__01>
+			<Rx__02 typeinfo="32">
+				<DeviceType typeinfo="53">0</DeviceType>
+				<FWVersion typeinfo="53">0</FWVersion>
+				<Serial typeinfo="55">0</Serial>
+			</Rx__02>
+		</Rxs>
+	</BindingConfig>
+	<ConfigLVario typeinfo="72">
+		<Sensors typeinfo="32">
+			<Motor typeinfo="32">
+				<Input typeinfo="47">E Motor</Input>
+				<Item typeinfo="6">
+					<_00 typeinfo="47">Motor voltage
+				</_00>
+					<_01 typeinfo="47">Motor current
+				</_01>
+					<_02 typeinfo="47">Motor capacity
+				</_02>
+				</Item>
+				<LogFrequency typeinfo="6">
+					<_00 typeinfo="52">5
+				</_00>
+					<_01 typeinfo="52">5
+				</_01>
+					<_02 typeinfo="52">5
+				</_02>
+				</LogFrequency>
+				<SensorType typeinfo="52">0</SensorType>
+			</Motor>
+			<Sensor typeinfo="6">
+				<_00 typeinfo="32">
+				<Input typeinfo="52">0</Input>
+				<Item typeinfo="47">Temperature</Item>
+				<LogFrequency typeinfo="52">10</LogFrequency>
+				<SensorType typeinfo="52">8</SensorType>
+			</_00>
+				<_01 typeinfo="32">
+				<Input typeinfo="52">1</Input>
+				<Item typeinfo="47" />
+				<LogFrequency typeinfo="52">8</LogFrequency>
+				<SensorType typeinfo="52">0</SensorType>
+			</_01>
+				<_02 typeinfo="32">
+				<Input typeinfo="52">2</Input>
+				<Item typeinfo="47">Supply voltage</Item>
+				<LogFrequency typeinfo="52">10</LogFrequency>
+				<SensorType typeinfo="52">7</SensorType>
+			</_02>
+			</Sensor>
+		</Sensors>
+		<Sound typeinfo="32">
+			<ClimbRates typeinfo="6">
+				<_00 typeinfo="32">
+				<Frequency typeinfo="53">200</Frequency>
+				<Rate typeinfo="44">-1000</Rate>
+			</_00>
+				<_01 typeinfo="32">
+				<Frequency typeinfo="53">370</Frequency>
+				<Rate typeinfo="44">0</Rate>
+			</_01>
+				<_02 typeinfo="32">
+				<Frequency typeinfo="53">500</Frequency>
+				<Rate typeinfo="44">400</Rate>
+			</_02>
+				<_03 typeinfo="32">
+				<Frequency typeinfo="53">900</Frequency>
+				<Rate typeinfo="44">1000</Rate>
+			</_03>
+			</ClimbRates>
+			<ToneRates typeinfo="6">
+				<_00 typeinfo="53">1
+			</_00>
+				<_01 typeinfo="53">2
+			</_01>
+				<_02 typeinfo="53">3
+			</_02>
+			</ToneRates>
+		</Sound>
+	</ConfigLVario>
+	<ControlSurfaces typeinfo="32">
+		<ControlSurface__00 typeinfo="9">
+			<ServoGroup typeinfo="53">16</ServoGroup>
+			<Servos typeinfo="47">6</Servos>
+		</ControlSurface__00>
+		<ControlSurface__01 typeinfo="9">
+			<ServoGroup typeinfo="53">15</ServoGroup>
+			<Servos typeinfo="47">5</Servos>
+		</ControlSurface__01>
+		<ControlSurface__02 typeinfo="9">
+			<ServoGroup typeinfo="53">17</ServoGroup>
+			<Servos typeinfo="47">4</Servos>
+		</ControlSurface__02>
+		<ControlSurface__03 typeinfo="9">
+			<ServoGroup typeinfo="53">26</ServoGroup>
+			<Servos typeinfo="47">3</Servos>
+		</ControlSurface__03>
+		<ControlSurface__04 typeinfo="9">
+			<ServoGroup typeinfo="53">30</ServoGroup>
+			<Servos typeinfo="47">2</Servos>
+		</ControlSurface__04>
+		<ControlSurface__05 typeinfo="9">
+			<ServoGroup typeinfo="53">31</ServoGroup>
+			<Servos typeinfo="47">7</Servos>
+		</ControlSurface__05>
+	</ControlSurfaces>
+	<ControlSurfacesConfig typeinfo="11">
+		<Elevators typeinfo="10">
+			<ControlSurfaces typeinfo="47">4, 5</ControlSurfaces>
+			<DependentFunctions typeinfo="32">
+				<DependentFunction__00 typeinfo="32">
+					<Index typeinfo="53">3</Index>
+					<UsedSurfaces typeinfo="53">3</UsedSurfaces>
+				</DependentFunction__00>
+			</DependentFunctions>
+		</Elevators>
+		<Rudders typeinfo="10">
+			<ControlSurfaces typeinfo="47">3</ControlSurfaces>
+			<DependentFunctions typeinfo="32">
+				<DependentFunction__00 typeinfo="32">
+					<Index typeinfo="53">0</Index>
+					<UsedSurfaces typeinfo="53">1</UsedSurfaces>
+				</DependentFunction__00>
+			</DependentFunctions>
+		</Rudders>
+		<Wings typeinfo="10">
+			<ControlSurfaces typeinfo="47">0, 1, 2</ControlSurfaces>
+			<DependentFunctions typeinfo="32">
+				<DependentFunction__00 typeinfo="32">
+					<Index typeinfo="53">1</Index>
+					<UsedSurfaces typeinfo="53">5</UsedSurfaces>
+				</DependentFunction__00>
+				<DependentFunction__01 typeinfo="32">
+					<Index typeinfo="53">2</Index>
+					<UsedSurfaces typeinfo="53">2</UsedSurfaces>
+				</DependentFunction__01>
+			</DependentFunctions>
+		</Wings>
+	</ControlSurfacesConfig>
+	<Curves typeinfo="32">
+		<Curve__00 typeinfo="13">
+			<CurveValue typeinfo="47">-2047,-1919,-1791,-1664,-1536,-1408,-1280,-1152,-1024,-896,-768,-640,-512,-384,-256,-128,0,128,256,384,512,640,768,896,1024,1152,1280,1408,1536,1664,1792,1920,2047
+			</CurveValue>
+			<RealPoints typeinfo="54">65537</RealPoints>
+		</Curve__00>
+		<Curve__01 typeinfo="13">
+			<CurveValue typeinfo="47">2047,1793,1539,1284,1019,764,509,255,0,-255,-509,-764,-1019,-1284,-1539,-1793,-2047,-2047,-2047,-2047,-2047,-2047,-2047,-2047,-2047,-2047,-2047,-2047,-2047,-2047,-2047,-2047,-2047
+			</CurveValue>
+			<RealPoints typeinfo="54">65537</RealPoints>
+		</Curve__01>
+		<Curve__02 typeinfo="13">
+			<CurveValue typeinfo="47">2047,1916,1793,1661,1539,1406,1284,1151,1019,897,764,642,509,387,255,132,0,-132,-255,-387,-509,-642,-764,-897,-1019,-1151,-1284,-1406,-1539,-1661,-1793,-1916,-2047
+			</CurveValue>
+			<RealPoints typeinfo="54">65537</RealPoints>
+		</Curve__02>
+		<Curve__04 typeinfo="13">
+			<CurveValue typeinfo="47">0,61,132,194,255,316,387,448,509,581,642,703,764,836,897,958,1019,1090,1151,1212,1284,1345,1406,1467,1539,1600,1661,1732,1793,1854,1916,1987,2047
+			</CurveValue>
+			<RealPoints typeinfo="54">1</RealPoints>
+		</Curve__04>
+		<Curve__05 typeinfo="13">
+			<CurveValue typeinfo="47">2047,1936,1824,1712,1600,1488,1376,1263,1151,1039,927,815,703,591,479,367,255,143,31,-82,-194,-306,-418,-530,-642,-754,-866,-978,-1090,-1202,-1314,-1426,-1536
+			</CurveValue>
+			<RealPoints typeinfo="54">1</RealPoints>
+		</Curve__05>
+	</Curves>
+	<FMControlAssign typeinfo="15">
+		<ControlSwitchs typeinfo="32">
+			<ControlSwitch__00 typeinfo="12">
+				<Control typeinfo="53">2</Control>
+				<Trigger typeinfo="45">0</Trigger>
+			</ControlSwitch__00>
+			<ControlSwitch__01 typeinfo="12">
+				<Control typeinfo="53">2</Control>
+				<Trigger typeinfo="45">0</Trigger>
+			</ControlSwitch__01>
+			<ControlSwitch__02 typeinfo="12">
+				<Control typeinfo="53">2</Control>
+				<Trigger typeinfo="45">0</Trigger>
+			</ControlSwitch__02>
+			<ControlSwitch__03 typeinfo="12">
+				<Control typeinfo="53">2</Control>
+				<Trigger typeinfo="45">0</Trigger>
+			</ControlSwitch__03>
+			<ControlSwitch__04 typeinfo="12">
+				<Control typeinfo="53">2</Control>
+				<Trigger typeinfo="45">0</Trigger>
+			</ControlSwitch__04>
+			<ControlSwitch__05 typeinfo="12">
+				<Control typeinfo="53">2</Control>
+				<Trigger typeinfo="45">0</Trigger>
+			</ControlSwitch__05>
+			<ControlSwitch__06 typeinfo="12">
+				<Control typeinfo="53">2</Control>
+				<Trigger typeinfo="45">0</Trigger>
+			</ControlSwitch__06>
+			<ControlSwitch__07 typeinfo="12">
+				<Control typeinfo="53">2</Control>
+				<Trigger typeinfo="45">0</Trigger>
+			</ControlSwitch__07>
+		</ControlSwitchs>
+		<FlightModeLUT typeinfo="47">0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0</FlightModeLUT>
+	</FMControlAssign>
+	<FlightModes typeinfo="32">
+		<FlightMode__00 typeinfo="14">
+			<FadeIn typeinfo="45">0</FadeIn>
+			<Name typeinfo="47">Normal</Name>
+			<NoFadeInFuncIdxs typeinfo="47" />
+		</FlightMode__00>
+	</FlightModes>
+	<FreeServoGroupsUser typeinfo="47">1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14</FreeServoGroupsUser>
+	<Functions typeinfo="32">
+		<Function__00 typeinfo="17">
+			<Control typeinfo="53">497</Control>
+			<ControlDifferential typeinfo="53">0</ControlDifferential>
+			<ControlExpo typeinfo="53">1010</ControlExpo>
+			<ControlRate typeinfo="53">1011</ControlRate>
+			<FailSafePos typeinfo="32">
+				<Mode typeinfo="52">2</Mode>
+				<Value typeinfo="45">0</Value>
+			</FailSafePos>
+			<Flags typeinfo="54">3</Flags>
+			<GlobalCurveIdx typeinfo="53">0</GlobalCurveIdx>
+			<GyroIdx typeinfo="53">0</GyroIdx>
+			<ID typeinfo="53">4</ID>
+			<Name typeinfo="47">Seitenruder</Name>
+			<Servos typeinfo="32">
+				<Servo__00 typeinfo="18">
+					<ServoIdx typeinfo="53">3</ServoIdx>
+					<ServoMixerIdx typeinfo="53">0</ServoMixerIdx>
+				</Servo__00>
+			</Servos>
+			<Setups typeinfo="32">
+				<Setup__00 typeinfo="19">
+					<CurveIdx typeinfo="53">0</CurveIdx>
+					<Duration typeinfo="32">
+						<FromLeft typeinfo="45">0</FromLeft>
+						<FromRight typeinfo="45">0</FromRight>
+					</Duration>
+					<FMO typeinfo="45">0</FMO>
+					<FlexDifferential typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexDifferential>
+					<FlexExpo typeinfo="51">
+						<Center typeinfo="45">512</Center>
+						<Hi typeinfo="45">0</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexExpo>
+					<FlexRate typeinfo="51">
+						<Center typeinfo="45">1536</Center>
+						<Hi typeinfo="45">2047</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexRate>
+				</Setup__00>
+			</Setups>
+			<Trim typeinfo="50">
+				<Control typeinfo="53">753</Control>
+				<Mode typeinfo="52">2</Mode>
+				<Range typeinfo="45">512</Range>
+				<Reverse typeinfo="52">0</Reverse>
+			</Trim>
+		</Function__00>
+		<Function__01 typeinfo="17">
+			<Control typeinfo="53">257</Control>
+			<ControlDifferential typeinfo="53">528</ControlDifferential>
+			<ControlExpo typeinfo="53">1010</ControlExpo>
+			<ControlRate typeinfo="53">1011</ControlRate>
+			<FailSafePos typeinfo="32">
+				<Mode typeinfo="52">2</Mode>
+				<Value typeinfo="45">0</Value>
+			</FailSafePos>
+			<Flags typeinfo="54">3</Flags>
+			<GlobalCurveIdx typeinfo="53">0</GlobalCurveIdx>
+			<GyroIdx typeinfo="53">0</GyroIdx>
+			<ID typeinfo="53">1</ID>
+			<Name typeinfo="47">Querruder</Name>
+			<Servos typeinfo="32">
+				<Servo__00 typeinfo="18">
+					<ServoIdx typeinfo="53">6</ServoIdx>
+					<ServoMixerIdx typeinfo="53">1</ServoMixerIdx>
+				</Servo__00>
+				<Servo__01 typeinfo="18">
+					<ServoIdx typeinfo="53">4</ServoIdx>
+					<ServoMixerIdx typeinfo="53">0</ServoMixerIdx>
+				</Servo__01>
+			</Servos>
+			<Setups typeinfo="32">
+				<Setup__00 typeinfo="19">
+					<CurveIdx typeinfo="53">0</CurveIdx>
+					<Duration typeinfo="32">
+						<FromLeft typeinfo="45">0</FromLeft>
+						<FromRight typeinfo="45">0</FromRight>
+					</Duration>
+					<FMO typeinfo="45">0</FMO>
+					<FlexDifferential typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexDifferential>
+					<FlexExpo typeinfo="51">
+						<Center typeinfo="45">512</Center>
+						<Hi typeinfo="45">0</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexExpo>
+					<FlexRate typeinfo="51">
+						<Center typeinfo="45">1536</Center>
+						<Hi typeinfo="45">2047</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexRate>
+				</Setup__00>
+			</Setups>
+			<Trim typeinfo="50">
+				<Control typeinfo="53">513</Control>
+				<Mode typeinfo="52">2</Mode>
+				<Range typeinfo="45">512</Range>
+				<Reverse typeinfo="52">0</Reverse>
+			</Trim>
+		</Function__01>
+		<Function__02 typeinfo="17">
+			<Control typeinfo="53">783</Control>
+			<ControlDifferential typeinfo="53">0</ControlDifferential>
+			<ControlExpo typeinfo="53">0</ControlExpo>
+			<ControlRate typeinfo="53">0</ControlRate>
+			<FailSafePos typeinfo="32">
+				<Mode typeinfo="52">1</Mode>
+				<Value typeinfo="45">0</Value>
+			</FailSafePos>
+			<Flags typeinfo="54">3</Flags>
+			<GlobalCurveIdx typeinfo="53">0</GlobalCurveIdx>
+			<GyroIdx typeinfo="53">0</GyroIdx>
+			<ID typeinfo="53">2</ID>
+			<Name typeinfo="47">Landeklappen</Name>
+			<Servos typeinfo="32">
+				<Servo__00 typeinfo="18">
+					<ServoIdx typeinfo="53">5</ServoIdx>
+					<ServoMixerIdx typeinfo="53">0</ServoMixerIdx>
+				</Servo__00>
+			</Servos>
+			<Setups typeinfo="32">
+				<Setup__00 typeinfo="19">
+					<CurveIdx typeinfo="53">0</CurveIdx>
+					<Duration typeinfo="32">
+						<FromLeft typeinfo="45">30</FromLeft>
+						<FromRight typeinfo="45">30</FromRight>
+					</Duration>
+					<FMO typeinfo="45">0</FMO>
+					<FlexDifferential typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexDifferential>
+					<FlexExpo typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexExpo>
+					<FlexRate typeinfo="51">
+						<Center typeinfo="45">2047</Center>
+						<Hi typeinfo="45">1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexRate>
+				</Setup__00>
+			</Setups>
+			<Trim typeinfo="50">
+				<Control typeinfo="53">754</Control>
+				<Mode typeinfo="52">4</Mode>
+				<Range typeinfo="45">512</Range>
+				<Reverse typeinfo="52">0</Reverse>
+			</Trim>
+		</Function__02>
+		<Function__03 typeinfo="17">
+			<Control typeinfo="53">256</Control>
+			<ControlDifferential typeinfo="53">0</ControlDifferential>
+			<ControlExpo typeinfo="53">1010</ControlExpo>
+			<ControlRate typeinfo="53">1011</ControlRate>
+			<FailSafePos typeinfo="32">
+				<Mode typeinfo="52">2</Mode>
+				<Value typeinfo="45">0</Value>
+			</FailSafePos>
+			<Flags typeinfo="54">3</Flags>
+			<GlobalCurveIdx typeinfo="53">0</GlobalCurveIdx>
+			<GyroIdx typeinfo="53">0</GyroIdx>
+			<ID typeinfo="53">5</ID>
+			<Name typeinfo="47">Höhenruder</Name>
+			<Servos typeinfo="32">
+				<Servo__00 typeinfo="18">
+					<ServoIdx typeinfo="53">2</ServoIdx>
+					<ServoMixerIdx typeinfo="53">0</ServoMixerIdx>
+				</Servo__00>
+				<Servo__01 typeinfo="18">
+					<ServoIdx typeinfo="53">7</ServoIdx>
+					<ServoMixerIdx typeinfo="53">0</ServoMixerIdx>
+				</Servo__01>
+			</Servos>
+			<Setups typeinfo="32">
+				<Setup__00 typeinfo="19">
+					<CurveIdx typeinfo="53">0</CurveIdx>
+					<Duration typeinfo="32">
+						<FromLeft typeinfo="45">0</FromLeft>
+						<FromRight typeinfo="45">0</FromRight>
+					</Duration>
+					<FMO typeinfo="45">0</FMO>
+					<FlexDifferential typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexDifferential>
+					<FlexExpo typeinfo="51">
+						<Center typeinfo="45">512</Center>
+						<Hi typeinfo="45">0</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexExpo>
+					<FlexRate typeinfo="51">
+						<Center typeinfo="45">1536</Center>
+						<Hi typeinfo="45">2047</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexRate>
+				</Setup__00>
+			</Setups>
+			<Trim typeinfo="50">
+				<Control typeinfo="53">512</Control>
+				<Mode typeinfo="52">2</Mode>
+				<Range typeinfo="45">512</Range>
+				<Reverse typeinfo="52">0</Reverse>
+			</Trim>
+		</Function__03>
+		<Function__04 typeinfo="17">
+			<Control typeinfo="53">496</Control>
+			<ControlDifferential typeinfo="53">0</ControlDifferential>
+			<ControlExpo typeinfo="53">0</ControlExpo>
+			<ControlRate typeinfo="53">0</ControlRate>
+			<FailSafePos typeinfo="32">
+				<Mode typeinfo="52">2</Mode>
+				<Value typeinfo="45">-1536</Value>
+			</FailSafePos>
+			<Flags typeinfo="54">1</Flags>
+			<GlobalCurveIdx typeinfo="53">5</GlobalCurveIdx>
+			<GyroIdx typeinfo="53">0</GyroIdx>
+			<ID typeinfo="53">6</ID>
+			<Name typeinfo="47">Motor</Name>
+			<Servos typeinfo="32">
+				<Servo__00 typeinfo="18">
+					<ServoIdx typeinfo="53">11</ServoIdx>
+					<ServoMixerIdx typeinfo="53">1</ServoMixerIdx>
+				</Servo__00>
+			</Servos>
+			<Setups typeinfo="32">
+				<Setup__00 typeinfo="19">
+					<CurveIdx typeinfo="53">0</CurveIdx>
+					<Duration typeinfo="32">
+						<FromLeft typeinfo="45">0</FromLeft>
+						<FromRight typeinfo="45">0</FromRight>
+					</Duration>
+					<FMO typeinfo="45">0</FMO>
+					<FlexDifferential typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexDifferential>
+					<FlexExpo typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexExpo>
+					<FlexRate typeinfo="51">
+						<Center typeinfo="45">2047</Center>
+						<Hi typeinfo="45">1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexRate>
+				</Setup__00>
+			</Setups>
+			<Trim typeinfo="50">
+				<Control typeinfo="53">752</Control>
+				<Mode typeinfo="52">3</Mode>
+				<Range typeinfo="45">512</Range>
+				<Reverse typeinfo="52">0</Reverse>
+			</Trim>
+		</Function__04>
+		<Function__05 typeinfo="17">
+			<Control typeinfo="53">496</Control>
+			<ControlDifferential typeinfo="53">0</ControlDifferential>
+			<ControlExpo typeinfo="53">0</ControlExpo>
+			<ControlRate typeinfo="53">0</ControlRate>
+			<FailSafePos typeinfo="32">
+				<Mode typeinfo="52">2</Mode>
+				<Value typeinfo="45">-2047</Value>
+			</FailSafePos>
+			<Flags typeinfo="54">1</Flags>
+			<GlobalCurveIdx typeinfo="53">2</GlobalCurveIdx>
+			<GyroIdx typeinfo="53">0</GyroIdx>
+			<ID typeinfo="53">0</ID>
+			<Name typeinfo="47">Glühung</Name>
+			<Servos typeinfo="32">
+				<Servo__00 typeinfo="18">
+					<ServoIdx typeinfo="53">19</ServoIdx>
+					<ServoMixerIdx typeinfo="53">0</ServoMixerIdx>
+				</Servo__00>
+			</Servos>
+			<Setups typeinfo="32">
+				<Setup__00 typeinfo="19">
+					<CurveIdx typeinfo="53">0</CurveIdx>
+					<Duration typeinfo="32">
+						<FromLeft typeinfo="45">0</FromLeft>
+						<FromRight typeinfo="45">0</FromRight>
+					</Duration>
+					<FMO typeinfo="45">0</FMO>
+					<FlexDifferential typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexDifferential>
+					<FlexExpo typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexExpo>
+					<FlexRate typeinfo="51">
+						<Center typeinfo="45">2047</Center>
+						<Hi typeinfo="45">1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexRate>
+				</Setup__00>
+			</Setups>
+			<Trim typeinfo="50">
+				<Control typeinfo="53">0</Control>
+				<Mode typeinfo="52">2</Mode>
+				<Range typeinfo="45">512</Range>
+				<Reverse typeinfo="52">0</Reverse>
+			</Trim>
+		</Function__05>
+		<Function__06 typeinfo="17">
+			<Control typeinfo="53">771</Control>
+			<ControlDifferential typeinfo="53">0</ControlDifferential>
+			<ControlExpo typeinfo="53">0</ControlExpo>
+			<ControlRate typeinfo="53">0</ControlRate>
+			<FailSafePos typeinfo="32">
+				<Mode typeinfo="52">2</Mode>
+				<Value typeinfo="45">-2047</Value>
+			</FailSafePos>
+			<Flags typeinfo="54">1</Flags>
+			<GlobalCurveIdx typeinfo="53">0</GlobalCurveIdx>
+			<GyroIdx typeinfo="53">0</GyroIdx>
+			<ID typeinfo="53">0</ID>
+			<Name typeinfo="47">Licht</Name>
+			<Servos typeinfo="32">
+				<Servo__00 typeinfo="18">
+					<ServoIdx typeinfo="53">9</ServoIdx>
+					<ServoMixerIdx typeinfo="53">1</ServoMixerIdx>
+				</Servo__00>
+			</Servos>
+			<Setups typeinfo="32">
+				<Setup__00 typeinfo="19">
+					<CurveIdx typeinfo="53">0</CurveIdx>
+					<Duration typeinfo="32">
+						<FromLeft typeinfo="45">0</FromLeft>
+						<FromRight typeinfo="45">0</FromRight>
+					</Duration>
+					<FMO typeinfo="45">0</FMO>
+					<FlexDifferential typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexDifferential>
+					<FlexExpo typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexExpo>
+					<FlexRate typeinfo="51">
+						<Center typeinfo="45">2047</Center>
+						<Hi typeinfo="45">1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexRate>
+				</Setup__00>
+			</Setups>
+			<Trim typeinfo="50">
+				<Control typeinfo="53">0</Control>
+				<Mode typeinfo="52">2</Mode>
+				<Range typeinfo="45">512</Range>
+				<Reverse typeinfo="52">0</Reverse>
+			</Trim>
+		</Function__06>
+		<Function__08 typeinfo="17">
+			<Control typeinfo="53">1023</Control>
+			<ControlDifferential typeinfo="53">0</ControlDifferential>
+			<ControlExpo typeinfo="53">0</ControlExpo>
+			<ControlRate typeinfo="53">0</ControlRate>
+			<FailSafePos typeinfo="32">
+				<Mode typeinfo="52">2</Mode>
+				<Value typeinfo="45">-2047</Value>
+			</FailSafePos>
+			<Flags typeinfo="54">1</Flags>
+			<GlobalCurveIdx typeinfo="53">1</GlobalCurveIdx>
+			<GyroIdx typeinfo="53">0</GyroIdx>
+			<ID typeinfo="53">0</ID>
+			<Name typeinfo="47">Abwurf</Name>
+			<Servos typeinfo="32">
+				<Servo__00 typeinfo="18">
+					<ServoIdx typeinfo="53">17</ServoIdx>
+					<ServoMixerIdx typeinfo="53">0</ServoMixerIdx>
+				</Servo__00>
+			</Servos>
+			<Setups typeinfo="32">
+				<Setup__00 typeinfo="19">
+					<CurveIdx typeinfo="53">0</CurveIdx>
+					<Duration typeinfo="32">
+						<FromLeft typeinfo="45">0</FromLeft>
+						<FromRight typeinfo="45">0</FromRight>
+					</Duration>
+					<FMO typeinfo="45">0</FMO>
+					<FlexDifferential typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexDifferential>
+					<FlexExpo typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexExpo>
+					<FlexRate typeinfo="51">
+						<Center typeinfo="45">2047</Center>
+						<Hi typeinfo="45">1024</Hi>
+						<Lo typeinfo="45">1024</Lo>
+					</FlexRate>
+				</Setup__00>
+			</Setups>
+			<Trim typeinfo="50">
+				<Control typeinfo="53">0</Control>
+				<Mode typeinfo="52">2</Mode>
+				<Range typeinfo="45">512</Range>
+				<Reverse typeinfo="52">0</Reverse>
+			</Trim>
+		</Function__08>
+	</Functions>
+	<Gyros typeinfo="0" />
+	<HomeScreenAdjustment typeinfo="48">
+		<TelemetryIds typeinfo="6">
+			<_00 typeinfo="32">
+			<Category typeinfo="52">2</Category>
+			<Index typeinfo="54">7173</Index>
+			<Pos typeinfo="52">0</Pos>
+		</_00>
+			<_01 typeinfo="32">
+			<Category typeinfo="52">2</Category>
+			<Index typeinfo="54">7174</Index>
+			<Pos typeinfo="52">1</Pos>
+		</_01>
+			<_02 typeinfo="32">
+			<Category typeinfo="52">2</Category>
+			<Index typeinfo="54">7175</Index>
+			<Pos typeinfo="52">2</Pos>
+		</_02>
+			<_03 typeinfo="32">
+			<Category typeinfo="52">15</Category>
+			<Index typeinfo="54">8928</Index>
+			<Pos typeinfo="52">3</Pos>
+		</_03>
+			<_04 typeinfo="32">
+			<Category typeinfo="52">1</Category>
+			<Index typeinfo="54">25872</Index>
+			<Pos typeinfo="52">4</Pos>
+		</_04>
+			<_05 typeinfo="32">
+			<Category typeinfo="52">255</Category>
+			<Index typeinfo="54">65535</Index>
+			<Pos typeinfo="52">5</Pos>
+		</_05>
+		</TelemetryIds>
+		<Template typeinfo="52">2</Template>
+	</HomeScreenAdjustment>
+	<Limiters typeinfo="32">
+		<Limiter__00 typeinfo="27">
+			<Aboves typeinfo="32">
+				<Above__00 typeinfo="51">
+					<Center typeinfo="45">2047</Center>
+					<Hi typeinfo="45">-2047</Hi>
+					<Lo typeinfo="45">2047</Lo>
+				</Above__00>
+			</Aboves>
+			<Belows typeinfo="32">
+				<Below__00 typeinfo="51">
+					<Center typeinfo="45">-2047</Center>
+					<Hi typeinfo="45">-1024</Hi>
+					<Lo typeinfo="45">-2047</Lo>
+				</Below__00>
+			</Belows>
+			<ControlAbove typeinfo="53">785</ControlAbove>
+			<ControlBelow typeinfo="53">0</ControlBelow>
+			<FuncIdx typeinfo="53">4</FuncIdx>
+			<Name typeinfo="47">Motor stopp</Name>
+		</Limiter__00>
+	</Limiters>
+	<Mixers typeinfo="32">
+		<Mixer__00 typeinfo="29">
+			<Control typeinfo="53">514</Control>
+			<Flags typeinfo="54">3</Flags>
+			<FromFunction typeinfo="53">2</FromFunction>
+			<GlobalCurveIdx typeinfo="53">4</GlobalCurveIdx>
+			<InheritForNext typeinfo="52">0</InheritForNext>
+			<Name typeinfo="47">Flap Compensation</Name>
+			<Setups typeinfo="32">
+				<Setup__00 typeinfo="30">
+					<CurveIdx typeinfo="53">0</CurveIdx>
+					<DelayDown typeinfo="45">0</DelayDown>
+					<DelayUp typeinfo="45">0</DelayUp>
+					<Gain typeinfo="51">
+						<Center typeinfo="45">0</Center>
+						<Hi typeinfo="45">-2047</Hi>
+						<Lo typeinfo="45">2047</Lo>
+					</Gain>
+				</Setup__00>
+			</Setups>
+			<ToFunction typeinfo="53">3</ToFunction>
+			<Trim typeinfo="52">0</Trim>
+		</Mixer__00>
+	</Mixers>
+	<ModelConfig typeinfo="31">
+		<Category typeinfo="47">Normal</Category>
+		<FuncPreselect typeinfo="52">1</FuncPreselect>
+		<Image typeinfo="47">IMG_Corsair.jpg</Image>
+		<InfoText typeinfo="47">Add info here ...</InfoText>
+		<ModelName typeinfo="47">F4U-1D Corsair</ModelName>
+		<ModelTypeDependent typeinfo="32">
+			<Elevator typeinfo="53">2</Elevator>
+			<Rudder typeinfo="53">1</Rudder>
+			<TailType typeinfo="52">1</TailType>
+			<Wing typeinfo="53">3</Wing>
+		</ModelTypeDependent>
+		<OutputResolution typeinfo="52">3</OutputResolution>
+		<Type typeinfo="52">4</Type>
+	</ModelConfig>
+	<RotarySetup typeinfo="35">
+		<RotarySetupSingle__512 typeinfo="42">
+			<Flags typeinfo="52">2</Flags>
+			<ID typeinfo="53">512</ID>
+			<Preset typeinfo="45">0</Preset>
+			<Steps typeinfo="53">50</Steps>
+		</RotarySetupSingle__512>
+		<RotarySetupSingle__513 typeinfo="42">
+			<Flags typeinfo="52">2</Flags>
+			<ID typeinfo="53">513</ID>
+			<Preset typeinfo="45">0</Preset>
+			<Steps typeinfo="53">50</Steps>
+		</RotarySetupSingle__513>
+		<RotarySetupSingle__514 typeinfo="42">
+			<Flags typeinfo="52">2</Flags>
+			<ID typeinfo="53">514</ID>
+			<Preset typeinfo="45">0</Preset>
+			<Steps typeinfo="53">50</Steps>
+		</RotarySetupSingle__514>
+		<RotarySetupSingle__527 typeinfo="42">
+			<Flags typeinfo="52">2</Flags>
+			<ID typeinfo="53">527</ID>
+			<Preset typeinfo="45">0</Preset>
+			<Steps typeinfo="53">50</Steps>
+		</RotarySetupSingle__527>
+		<RotarySetupSingle__528 typeinfo="42">
+			<Flags typeinfo="52">2</Flags>
+			<ID typeinfo="53">528</ID>
+			<Preset typeinfo="45">0</Preset>
+			<Steps typeinfo="53">50</Steps>
+		</RotarySetupSingle__528>
+		<RotarySetupSingle__529 typeinfo="42">
+			<Flags typeinfo="52">2</Flags>
+			<ID typeinfo="53">529</ID>
+			<Preset typeinfo="45">0</Preset>
+			<Steps typeinfo="53">50</Steps>
+		</RotarySetupSingle__529>
+		<RotarySetupSingle__752 typeinfo="42">
+			<Flags typeinfo="52">2</Flags>
+			<ID typeinfo="53">752</ID>
+			<Preset typeinfo="45">0</Preset>
+			<Steps typeinfo="53">50</Steps>
+		</RotarySetupSingle__752>
+		<RotarySetupSingle__753 typeinfo="42">
+			<Flags typeinfo="52">2</Flags>
+			<ID typeinfo="53">753</ID>
+			<Preset typeinfo="45">0</Preset>
+			<Steps typeinfo="53">50</Steps>
+		</RotarySetupSingle__753>
+		<RotarySetupSingle__754 typeinfo="42">
+			<Flags typeinfo="52">2</Flags>
+			<ID typeinfo="53">754</ID>
+			<Preset typeinfo="45">0</Preset>
+			<Steps typeinfo="53">50</Steps>
+		</RotarySetupSingle__754>
+		<RotarySetupSingle__767 typeinfo="42">
+			<Flags typeinfo="52">2</Flags>
+			<ID typeinfo="53">767</ID>
+			<Preset typeinfo="45">0</Preset>
+			<Steps typeinfo="53">50</Steps>
+		</RotarySetupSingle__767>
+	</RotarySetup>
+	<RotaryValueInfoSingles typeinfo="32">
+		<RotaryValueInfoSingle__00 typeinfo="70">
+			<ID typeinfo="53">512</ID>
+			<Values typeinfo="6">
+				<_00 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_00>
+				<_01 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_01>
+				<_02 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_02>
+				<_03 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_03>
+				<_04 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_04>
+				<_05 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_05>
+				<_06 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_06>
+				<_07 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_07>
+				<_08 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_08>
+				<_09 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_09>
+				<_10 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_10>
+				<_11 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_11>
+				<_12 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_12>
+				<_13 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_13>
+				<_14 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_14>
+				<_15 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_15>
+			</Values>
+		</RotaryValueInfoSingle__00>
+		<RotaryValueInfoSingle__01 typeinfo="70">
+			<ID typeinfo="53">513</ID>
+			<Values typeinfo="6">
+				<_00 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_00>
+				<_01 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_01>
+				<_02 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_02>
+				<_03 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_03>
+				<_04 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_04>
+				<_05 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_05>
+				<_06 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_06>
+				<_07 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_07>
+				<_08 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_08>
+				<_09 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_09>
+				<_10 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_10>
+				<_11 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_11>
+				<_12 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_12>
+				<_13 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_13>
+				<_14 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_14>
+				<_15 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_15>
+			</Values>
+		</RotaryValueInfoSingle__01>
+		<RotaryValueInfoSingle__02 typeinfo="70">
+			<ID typeinfo="53">514</ID>
+			<Values typeinfo="6">
+				<_00 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_00>
+				<_01 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_01>
+				<_02 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_02>
+				<_03 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_03>
+				<_04 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_04>
+				<_05 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_05>
+				<_06 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_06>
+				<_07 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_07>
+				<_08 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_08>
+				<_09 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_09>
+				<_10 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_10>
+				<_11 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_11>
+				<_12 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_12>
+				<_13 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_13>
+				<_14 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_14>
+				<_15 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_15>
+			</Values>
+		</RotaryValueInfoSingle__02>
+		<RotaryValueInfoSingle__03 typeinfo="70">
+			<ID typeinfo="53">527</ID>
+			<Values typeinfo="6">
+				<_00 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_00>
+				<_01 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_01>
+				<_02 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_02>
+				<_03 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_03>
+				<_04 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_04>
+				<_05 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_05>
+				<_06 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_06>
+				<_07 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_07>
+				<_08 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_08>
+				<_09 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_09>
+				<_10 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_10>
+				<_11 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_11>
+				<_12 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_12>
+				<_13 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_13>
+				<_14 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_14>
+				<_15 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_15>
+			</Values>
+		</RotaryValueInfoSingle__03>
+		<RotaryValueInfoSingle__04 typeinfo="70">
+			<ID typeinfo="53">528</ID>
+			<Values typeinfo="6">
+				<_00 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_00>
+				<_01 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_01>
+				<_02 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_02>
+				<_03 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_03>
+				<_04 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_04>
+				<_05 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_05>
+				<_06 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_06>
+				<_07 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_07>
+				<_08 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_08>
+				<_09 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_09>
+				<_10 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_10>
+				<_11 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_11>
+				<_12 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_12>
+				<_13 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_13>
+				<_14 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_14>
+				<_15 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_15>
+			</Values>
+		</RotaryValueInfoSingle__04>
+		<RotaryValueInfoSingle__05 typeinfo="70">
+			<ID typeinfo="53">529</ID>
+			<Values typeinfo="6">
+				<_00 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_00>
+				<_01 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_01>
+				<_02 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_02>
+				<_03 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_03>
+				<_04 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_04>
+				<_05 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_05>
+				<_06 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_06>
+				<_07 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_07>
+				<_08 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_08>
+				<_09 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_09>
+				<_10 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_10>
+				<_11 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_11>
+				<_12 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_12>
+				<_13 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_13>
+				<_14 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_14>
+				<_15 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_15>
+			</Values>
+		</RotaryValueInfoSingle__05>
+		<RotaryValueInfoSingle__06 typeinfo="70">
+			<ID typeinfo="53">752</ID>
+			<Values typeinfo="6">
+				<_00 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_00>
+				<_01 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_01>
+				<_02 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_02>
+				<_03 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_03>
+				<_04 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_04>
+				<_05 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_05>
+				<_06 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_06>
+				<_07 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_07>
+				<_08 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_08>
+				<_09 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_09>
+				<_10 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_10>
+				<_11 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_11>
+				<_12 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_12>
+				<_13 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_13>
+				<_14 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_14>
+				<_15 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_15>
+			</Values>
+		</RotaryValueInfoSingle__06>
+		<RotaryValueInfoSingle__07 typeinfo="70">
+			<ID typeinfo="53">753</ID>
+			<Values typeinfo="6">
+				<_00 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_00>
+				<_01 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_01>
+				<_02 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_02>
+				<_03 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_03>
+				<_04 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_04>
+				<_05 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_05>
+				<_06 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_06>
+				<_07 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_07>
+				<_08 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_08>
+				<_09 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_09>
+				<_10 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_10>
+				<_11 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_11>
+				<_12 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_12>
+				<_13 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_13>
+				<_14 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_14>
+				<_15 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_15>
+			</Values>
+		</RotaryValueInfoSingle__07>
+		<RotaryValueInfoSingle__08 typeinfo="70">
+			<ID typeinfo="53">754</ID>
+			<Values typeinfo="6">
+				<_00 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_00>
+				<_01 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_01>
+				<_02 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_02>
+				<_03 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_03>
+				<_04 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_04>
+				<_05 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_05>
+				<_06 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_06>
+				<_07 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_07>
+				<_08 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_08>
+				<_09 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_09>
+				<_10 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_10>
+				<_11 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_11>
+				<_12 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_12>
+				<_13 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_13>
+				<_14 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_14>
+				<_15 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_15>
+			</Values>
+		</RotaryValueInfoSingle__08>
+		<RotaryValueInfoSingle__09 typeinfo="70">
+			<ID typeinfo="53">767</ID>
+			<Values typeinfo="6">
+				<_00 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_00>
+				<_01 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_01>
+				<_02 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_02>
+				<_03 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_03>
+				<_04 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_04>
+				<_05 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_05>
+				<_06 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_06>
+				<_07 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_07>
+				<_08 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_08>
+				<_09 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_09>
+				<_10 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_10>
+				<_11 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_11>
+				<_12 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_12>
+				<_13 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_13>
+				<_14 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_14>
+				<_15 typeinfo="6"><_00 typeinfo="44">0
+			</_00>
+				<_01 typeinfo="44">0
+			</_01>
+				<_02 typeinfo="44">0
+			</_02>
+			</_15>
+			</Values>
+		</RotaryValueInfoSingle__09>
+	</RotaryValueInfoSingles>
+	<RxConfigs typeinfo="32">
+		<RxConfig__00 typeinfo="36">
+			<AutoPowerOff typeinfo="52">1</AutoPowerOff>
+			<BackChannelWarning typeinfo="45">1</BackChannelWarning>
+			<BattWarning__0 typeinfo="45">5000</BattWarning__0>
+			<BattWarning__1 typeinfo="45">7400</BattWarning__1>
+			<BatteryTestVoltage__0 typeinfo="45">300</BatteryTestVoltage__0>
+			<BatteryTestVoltage__1 typeinfo="45">300</BatteryTestVoltage__1>
+			<FailSafeTimeout typeinfo="45">300</FailSafeTimeout>
+			<Flags typeinfo="54">0</Flags>
+			<IsServopulseSynchron typeinfo="52">0</IsServopulseSynchron>
+			<IsSumSignalOffWhileFS typeinfo="52">0</IsSumSignalOffWhileFS>
+			<RangeWarning typeinfo="45">30</RangeWarning>
+			<Role typeinfo="53">0</Role>
+			<SumSignalOutput typeinfo="52">0</SumSignalOutput>
+			<TemperatureWarning typeinfo="45">65</TemperatureWarning>
+			<Type typeinfo="53">49957</Type>
+		</RxConfig__00>
+		<RxConfig__01 typeinfo="36">
+			<AutoPowerOff typeinfo="52">0</AutoPowerOff>
+			<BackChannelWarning typeinfo="45">1</BackChannelWarning>
+			<BattWarning__0 typeinfo="45">7400</BattWarning__0>
+			<BattWarning__1 typeinfo="45">7400</BattWarning__1>
+			<BatteryTestVoltage__0 typeinfo="45">300</BatteryTestVoltage__0>
+			<BatteryTestVoltage__1 typeinfo="45">300</BatteryTestVoltage__1>
+			<FailSafeTimeout typeinfo="45">300</FailSafeTimeout>
+			<Flags typeinfo="54">0</Flags>
+			<IsServopulseSynchron typeinfo="52">0</IsServopulseSynchron>
+			<IsSumSignalOffWhileFS typeinfo="52">0</IsSumSignalOffWhileFS>
+			<RangeWarning typeinfo="45">30</RangeWarning>
+			<Role typeinfo="53">1</Role>
+			<SumSignalOutput typeinfo="52">0</SumSignalOutput>
+			<TemperatureWarning typeinfo="45">65</TemperatureWarning>
+			<Type typeinfo="53">0</Type>
+		</RxConfig__01>
+		<RxConfig__02 typeinfo="36">
+			<AutoPowerOff typeinfo="52">0</AutoPowerOff>
+			<BackChannelWarning typeinfo="45">1</BackChannelWarning>
+			<BattWarning__0 typeinfo="45">7400</BattWarning__0>
+			<BattWarning__1 typeinfo="45">7400</BattWarning__1>
+			<BatteryTestVoltage__0 typeinfo="45">300</BatteryTestVoltage__0>
+			<BatteryTestVoltage__1 typeinfo="45">300</BatteryTestVoltage__1>
+			<FailSafeTimeout typeinfo="45">300</FailSafeTimeout>
+			<Flags typeinfo="54">0</Flags>
+			<IsServopulseSynchron typeinfo="52">0</IsServopulseSynchron>
+			<IsSumSignalOffWhileFS typeinfo="52">0</IsSumSignalOffWhileFS>
+			<RangeWarning typeinfo="45">30</RangeWarning>
+			<Role typeinfo="53">2</Role>
+			<SumSignalOutput typeinfo="52">0</SumSignalOutput>
+			<TemperatureWarning typeinfo="45">65</TemperatureWarning>
+			<Type typeinfo="53">0</Type>
+		</RxConfig__02>
+	</RxConfigs>
+	<RxCurves typeinfo="32">
+		<RxCurve__00 typeinfo="13">
+			<CurveValue typeinfo="47">-2047,-1919,-1791,-1664,-1536,-1408,-1280,-1152,-1024,-896,-768,-640,-512,-384,-256,-128,0,128,256,384,512,640,768,896,1024,1152,1280,1408,1536,1664,1792,1920,2047
+			</CurveValue>
+			<RealPoints typeinfo="54">65537</RealPoints>
+		</RxCurve__00>
+	</RxCurves>
+	<Sequencers typeinfo="32">
+		<Sequencer__00 typeinfo="40">
+			<DelayDown typeinfo="45">150</DelayDown>
+			<DelayUp typeinfo="45">150</DelayUp>
+			<Failsafe typeinfo="32">
+				<Mode typeinfo="52">0</Mode>
+				<Position typeinfo="52">0</Position>
+			</Failsafe>
+			<Flags typeinfo="54">0</Flags>
+			<Name typeinfo="47">Fahrwerksklappen</Name>
+			<Servos typeinfo="6">
+				<_00 typeinfo="41">
+				<Flags typeinfo="54">0</Flags>
+				<Pairs typeinfo="6">
+					<_00 typeinfo="32">
+					<End typeinfo="52">100</End>
+					<EndValue typeinfo="44">-1228</EndValue>
+					<Start typeinfo="52">80</Start>
+					<StartValue typeinfo="44">1126</StartValue>
+				</_00>
+				</Pairs>
+				<ServoIndex typeinfo="53">0</ServoIndex>
+			</_00>
+				<_01 typeinfo="41">
+				<Flags typeinfo="54">0</Flags>
+				<Pairs typeinfo="6">
+					<_00 typeinfo="32">
+					<End typeinfo="52">100</End>
+					<EndValue typeinfo="44">1136</EndValue>
+					<Start typeinfo="52">80</Start>
+					<StartValue typeinfo="44">-1024</StartValue>
+				</_00>
+				</Pairs>
+				<ServoIndex typeinfo="53">1</ServoIndex>
+			</_01>
+				<_02 typeinfo="41">
+				<Flags typeinfo="54">0</Flags>
+				<Pairs typeinfo="6">
+					<_00 typeinfo="32">
+					<End typeinfo="52">100</End>
+					<EndValue typeinfo="44">1054</EndValue>
+					<Start typeinfo="52">80</Start>
+					<StartValue typeinfo="44">-901</StartValue>
+				</_00>
+				</Pairs>
+				<ServoIndex typeinfo="53">8</ServoIndex>
+			</_02>
+				<_03 typeinfo="41">
+				<Flags typeinfo="54">0</Flags>
+				<Pairs typeinfo="6">
+					<_00 typeinfo="32">
+					<End typeinfo="52">100</End>
+					<EndValue typeinfo="44">-962</EndValue>
+					<Start typeinfo="52">80</Start>
+					<StartValue typeinfo="44">1187</StartValue>
+				</_00>
+				</Pairs>
+				<ServoIndex typeinfo="53">16</ServoIndex>
+			</_03>
+			</Servos>
+			<Switch typeinfo="12">
+				<Control typeinfo="53">1023</Control>
+				<Trigger typeinfo="45">512</Trigger>
+			</Switch>
+		</Sequencer__00>
+		<Sequencer__01 typeinfo="40">
+			<DelayDown typeinfo="45">30</DelayDown>
+			<DelayUp typeinfo="45">30</DelayUp>
+			<Failsafe typeinfo="32">
+				<Mode typeinfo="52">0</Mode>
+				<Position typeinfo="52">0</Position>
+			</Failsafe>
+			<Flags typeinfo="54">0</Flags>
+			<Name typeinfo="47">Fahrwerk</Name>
+			<Servos typeinfo="6">
+				<_01 typeinfo="41">
+				<Flags typeinfo="54">0</Flags>
+				<Pairs typeinfo="6">
+					<_00 typeinfo="32">
+					<End typeinfo="52">1</End>
+					<EndValue typeinfo="44">1024</EndValue>
+					<Start typeinfo="52">0</Start>
+					<StartValue typeinfo="44">-1024</StartValue>
+				</_00>
+				</Pairs>
+				<ServoIndex typeinfo="53">13</ServoIndex>
+			</_01>
+			</Servos>
+			<Switch typeinfo="12">
+				<Control typeinfo="53">1023</Control>
+				<Trigger typeinfo="45">512</Trigger>
+			</Switch>
+		</Sequencer__01>
+	</Sequencers>
+	<ServoConfigs typeinfo="32">
+		<ServoConfig__00 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1126</MinValue>
+			<Name typeinfo="47">Fahrwerksklappe RA</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">0</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32" />
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">5500</Voltage>
+		</ServoConfig__00>
+		<ServoConfig__01 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1136</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Fahrwerksklappe LA</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">1</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32" />
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">5500</Voltage>
+		</ServoConfig__01>
+		<ServoConfig__02 typeinfo="37">
+			<Centre typeinfo="45">92</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">158</Group>
+			<MaxValue typeinfo="45">1116</MaxValue>
+			<MinValue typeinfo="45">-931</MinValue>
+			<Name typeinfo="47">Höhenruder links</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">2</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">3</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">-1024</MaxTravel>
+					<MinTravel typeinfo="45">1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+			</ServoMixers>
+			<ServoType typeinfo="52">3</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__02>
+		<ServoConfig__03 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">154</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Seitenruder</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">3</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">0</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">-1024</MaxTravel>
+					<MinTravel typeinfo="45">1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+			</ServoMixers>
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__03>
+		<ServoConfig__04 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">145</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Querruder rechts</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">4</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">1</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">1024</MaxTravel>
+					<MinTravel typeinfo="45">-1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+			</ServoMixers>
+			<ServoType typeinfo="52">4</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__04>
+		<ServoConfig__05 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">143</Group>
+			<MaxValue typeinfo="45">890</MaxValue>
+			<MinValue typeinfo="45">-972</MinValue>
+			<Name typeinfo="47">Landeklappen</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">5</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">2</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">-972</MaxTravel>
+					<MinTravel typeinfo="45">890</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+			</ServoMixers>
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__05>
+		<ServoConfig__06 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">144</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Querruder links</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">6</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">5</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">1024</MaxTravel>
+					<MinTravel typeinfo="45">-1024</MinTravel>
+					<RxCurveIdx typeinfo="53">0</RxCurveIdx>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+				<ServoMixer__01 typeinfo="38">
+					<FunctionIndex typeinfo="53">1</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">1024</MaxTravel>
+					<MinTravel typeinfo="45">-1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__01>
+			</ServoMixers>
+			<ServoType typeinfo="52">3</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__06>
+		<ServoConfig__07 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">159</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Höhenruder rechts</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">7</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">3</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">1024</MaxTravel>
+					<MinTravel typeinfo="45">-1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+			</ServoMixers>
+			<ServoType typeinfo="52">4</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__07>
+		<ServoConfig__08 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1054</MaxValue>
+			<MinValue typeinfo="45">-921</MinValue>
+			<Name typeinfo="47">Fahrwerksklappe RI</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">8</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">7</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">1024</MaxTravel>
+					<MinTravel typeinfo="45">-1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+			</ServoMixers>
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">5500</Voltage>
+		</ServoConfig__08>
+		<ServoConfig__09 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Licht</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">9</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">7</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">1024</MaxTravel>
+					<MinTravel typeinfo="45">-1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+				<ServoMixer__01 typeinfo="38">
+					<FunctionIndex typeinfo="53">6</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">1024</MaxTravel>
+					<MinTravel typeinfo="45">-1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__01>
+			</ServoMixers>
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">5500</Voltage>
+		</ServoConfig__09>
+		<ServoConfig__10 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Servo 11</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">10</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">7</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">1024</MaxTravel>
+					<MinTravel typeinfo="45">-1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+			</ServoMixers>
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__10>
+		<ServoConfig__11 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Gas</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">11</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">7</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">1024</MaxTravel>
+					<MinTravel typeinfo="45">-1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+				<ServoMixer__01 typeinfo="38">
+					<FunctionIndex typeinfo="53">4</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">1024</MaxTravel>
+					<MinTravel typeinfo="45">-1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__01>
+			</ServoMixers>
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__11>
+		<ServoConfig__12 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Servo 13</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">12</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32" />
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__12>
+		<ServoConfig__13 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Fahrwerk</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">13</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32" />
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__13>
+		<ServoConfig__14 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Servo 15</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">14</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32" />
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__14>
+		<ServoConfig__15 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Servo 16</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">15</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="0" />
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__15>
+		<ServoConfig__16 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1187</MaxValue>
+			<MinValue typeinfo="45">-983</MinValue>
+			<Name typeinfo="47">Fahrwerksklappe LI</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">16</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32" />
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">5500</Voltage>
+		</ServoConfig__16>
+		<ServoConfig__17 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Abwurf</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">17</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">8</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">-1024</MaxTravel>
+					<MinTravel typeinfo="45">1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+			</ServoMixers>
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">5500</Voltage>
+		</ServoConfig__17>
+		<ServoConfig__18 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Servo 19</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">18</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="0" />
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__18>
+		<ServoConfig__19 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Glühung</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">19</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="32">
+				<ServoMixer__00 typeinfo="38">
+					<FunctionIndex typeinfo="53">5</FunctionIndex>
+					<GyroIndex typeinfo="53">0</GyroIndex>
+					<MaxTravel typeinfo="45">1024</MaxTravel>
+					<MinTravel typeinfo="45">-1024</MinTravel>
+					<SourceType typeinfo="52">2</SourceType>
+				</ServoMixer__00>
+			</ServoMixers>
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__19>
+		<ServoConfig__20 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Servo 21</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">20</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="0" />
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__20>
+		<ServoConfig__21 typeinfo="37">
+			<Centre typeinfo="45">0</Centre>
+			<Flags typeinfo="54">0</Flags>
+			<FrameRate typeinfo="52">5</FrameRate>
+			<Group typeinfo="52">0</Group>
+			<MaxValue typeinfo="45">1024</MaxValue>
+			<MinValue typeinfo="45">-1024</MinValue>
+			<Name typeinfo="47">Servo 22</Name>
+			<Plug typeinfo="33">
+				<Connector typeinfo="52">21</Connector>
+				<RxID typeinfo="52">0</RxID>
+			</Plug>
+			<ServoMixers typeinfo="0" />
+			<ServoType typeinfo="52">0</ServoType>
+			<Voltage typeinfo="45">7400</Voltage>
+		</ServoConfig__21>
+	</ServoConfigs>
+	<ServoSync typeinfo="68" />
+	<ServoSyncGroups typeinfo="32">
+		<ServoSyncGroup__01 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">1</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__01>
+		<ServoSyncGroup__02 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">2</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__02>
+		<ServoSyncGroup__03 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">3</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__03>
+		<ServoSyncGroup__04 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">4</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__04>
+		<ServoSyncGroup__05 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">5</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__05>
+		<ServoSyncGroup__06 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">6</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__06>
+		<ServoSyncGroup__07 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">7</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__07>
+		<ServoSyncGroup__08 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">8</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__08>
+		<ServoSyncGroup__09 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">9</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__09>
+		<ServoSyncGroup__10 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">10</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__10>
+		<ServoSyncGroup__11 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">11</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__11>
+		<ServoSyncGroup__12 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">12</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__12>
+		<ServoSyncGroup__13 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">13</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__13>
+		<ServoSyncGroup__14 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">14</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__14>
+		<ServoSyncGroup__15 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">15</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__15>
+		<ServoSyncGroup__16 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">16</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__16>
+		<ServoSyncGroup__17 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">17</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__17>
+		<ServoSyncGroup__18 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">18</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__18>
+		<ServoSyncGroup__19 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">19</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__19>
+		<ServoSyncGroup__20 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">20</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__20>
+		<ServoSyncGroup__21 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">21</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__21>
+		<ServoSyncGroup__22 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">22</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__22>
+		<ServoSyncGroup__23 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">23</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__23>
+		<ServoSyncGroup__24 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">24</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__24>
+		<ServoSyncGroup__25 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">25</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__25>
+		<ServoSyncGroup__26 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">26</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__26>
+		<ServoSyncGroup__27 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">27</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__27>
+		<ServoSyncGroup__28 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">28</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__28>
+		<ServoSyncGroup__29 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">29</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__29>
+		<ServoSyncGroup__30 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">30</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__30>
+		<ServoSyncGroup__31 typeinfo="69">
+			<Accuracy typeinfo="52">3</Accuracy>
+			<Group typeinfo="53">31</Group>
+			<MaxCurrent typeinfo="45">1000</MaxCurrent>
+			<Mode typeinfo="52">0</Mode>
+			<TravelLimit typeinfo="45">256</TravelLimit>
+		</ServoSyncGroup__31>
+	</ServoSyncGroups>
+	<SortIndeces typeinfo="84">
+		<FlightModes typeinfo="47">0</FlightModes>
+		<Functions typeinfo="47">1,3,0,2,4,5,6,8</Functions>
+		<Limiters typeinfo="47">0</Limiters>
+		<Mixers typeinfo="47">0</Mixers>
+		<Sequencers typeinfo="47">0,1</Sequencers>
+		<SoundModes typeinfo="47">0</SoundModes>
+		<Timers typeinfo="47">0</Timers>
+		<VSwitchs typeinfo="47">0,1</VSwitchs>
+	</SortIndeces>
+	<SoundModes typeinfo="32">
+		<SoundMode__00 typeinfo="75">
+			<Alerts typeinfo="6">
+				<_00 typeinfo="76">
+				<Alarms typeinfo="52">0</Alarms>
+				<AudioItem typeinfo="78">
+					<AudioFile typeinfo="47" />
+					<Flags typeinfo="54">1</Flags>
+					<TelemetryIDInfo typeinfo="79">
+						<Category typeinfo="54">2</Category>
+						<ID typeinfo="54">7173</ID>
+					</TelemetryIDInfo>
+				</AudioItem>
+				<Operator typeinfo="52">2</Operator>
+				<RepetionCount typeinfo="52">0</RepetionCount>
+				<Threshold typeinfo="53">5000</Threshold>
+			</_00>
+				<_01 typeinfo="76">
+				<Alarms typeinfo="52">0</Alarms>
+				<AudioItem typeinfo="78">
+					<AudioFile typeinfo="47" />
+					<Flags typeinfo="54">1</Flags>
+					<TelemetryIDInfo typeinfo="79">
+						<Category typeinfo="54">2</Category>
+						<ID typeinfo="54">7174</ID>
+					</TelemetryIDInfo>
+				</AudioItem>
+				<Operator typeinfo="52">2</Operator>
+				<RepetionCount typeinfo="52">0</RepetionCount>
+				<Threshold typeinfo="53">5000</Threshold>
+			</_01>
+			</Alerts>
+			<Announcements typeinfo="6">
+				<_00 typeinfo="77">
+				<AudioItem typeinfo="78">
+					<AudioFile typeinfo="47" />
+					<Flags typeinfo="54">1</Flags>
+					<TelemetryIDInfo typeinfo="79">
+						<Category typeinfo="54">2</Category>
+						<ID typeinfo="54">7173</ID>
+					</TelemetryIDInfo>
+				</AudioItem>
+				<RepetionRate typeinfo="52">120</RepetionRate>
+			</_00>
+				<_01 typeinfo="77">
+				<AudioItem typeinfo="78">
+					<AudioFile typeinfo="47" />
+					<Flags typeinfo="54">1</Flags>
+					<TelemetryIDInfo typeinfo="79">
+						<Category typeinfo="54">2</Category>
+						<ID typeinfo="54">7174</ID>
+					</TelemetryIDInfo>
+				</AudioItem>
+				<RepetionRate typeinfo="52">120</RepetionRate>
+			</_01>
+				<_02 typeinfo="77">
+				<AudioItem typeinfo="78">
+					<AudioFile typeinfo="47" />
+					<Flags typeinfo="54">0</Flags>
+					<TelemetryIDInfo typeinfo="79">
+						<Category typeinfo="54">15</Category>
+						<ID typeinfo="54">8928</ID>
+					</TelemetryIDInfo>
+				</AudioItem>
+				<RepetionRate typeinfo="52">30</RepetionRate>
+			</_02>
+			</Announcements>
+			<AudioFile typeinfo="47" />
+			<IsLinkVarioActive typeinfo="52">0</IsLinkVarioActive>
+			<Name typeinfo="47">Basic</Name>
+			<Switch typeinfo="12">
+				<Control typeinfo="53">769</Control>
+				<Trigger typeinfo="45">1536</Trigger>
+			</Switch>
+		</SoundMode__00>
+	</SoundModes>
+	<TelemetryDataModel typeinfo="71">
+		<RxAccuCapacity typeinfo="32">
+			<LVario typeinfo="53">0</LVario>
+			<Mux__01 typeinfo="53">0</Mux__01>
+			<Mux__02 typeinfo="53">0</Mux__02>
+			<Mux__03 typeinfo="53">0</Mux__03>
+			<Mux__04 typeinfo="53">0</Mux__04>
+		</RxAccuCapacity>
+	</TelemetryDataModel>
+	<TelemetryScreenAdjustments typeinfo="32">
+		<TelemetryScreenAdjustment__00 typeinfo="48">
+			<TelemetryIds typeinfo="6">
+				<_00 typeinfo="32">
+				<Category typeinfo="52">2</Category>
+				<Index typeinfo="54">1027</Index>
+				<Pos typeinfo="52">0</Pos>
+			</_00>
+				<_01 typeinfo="32">
+				<Category typeinfo="52">2</Category>
+				<Index typeinfo="54">3073</Index>
+				<Pos typeinfo="52">1</Pos>
+			</_01>
+				<_02 typeinfo="32">
+				<Category typeinfo="52">2</Category>
+				<Index typeinfo="54">1028</Index>
+				<Pos typeinfo="52">2</Pos>
+			</_02>
+				<_03 typeinfo="32">
+				<Category typeinfo="52">2</Category>
+				<Index typeinfo="54">3074</Index>
+				<Pos typeinfo="52">3</Pos>
+			</_03>
+				<_04 typeinfo="32">
+				<Category typeinfo="52">255</Category>
+				<Index typeinfo="54">65535</Index>
+				<Pos typeinfo="52">4</Pos>
+			</_04>
+				<_05 typeinfo="32">
+				<Category typeinfo="52">255</Category>
+				<Index typeinfo="54">65535</Index>
+				<Pos typeinfo="52">5</Pos>
+			</_05>
+			</TelemetryIds>
+			<Template typeinfo="52">5</Template>
+		</TelemetryScreenAdjustment__00>
+	</TelemetryScreenAdjustments>
+	<Timers typeinfo="32">
+		<Timer__00 typeinfo="49">
+			<AlarmDuration typeinfo="54">600</AlarmDuration>
+			<AlarmTypes typeinfo="52">2</AlarmTypes>
+			<Alarms typeinfo="52">2</Alarms>
+			<Name typeinfo="47">Motorlaufzeit</Name>
+			<SwitchLap typeinfo="12">
+				<Control typeinfo="53">3</Control>
+				<Trigger typeinfo="45">0</Trigger>
+			</SwitchLap>
+			<SwitchReset typeinfo="12">
+				<Control typeinfo="53">785</Control>
+				<Trigger typeinfo="45">1536</Trigger>
+			</SwitchReset>
+			<SwitchStart typeinfo="12">
+				<Control typeinfo="53">1280</Control>
+				<Trigger typeinfo="45">0</Trigger>
+			</SwitchStart>
+			<SwitchStop typeinfo="12">
+				<Control typeinfo="53">1281</Control>
+				<Trigger typeinfo="45">0</Trigger>
+			</SwitchStop>
+			<TelemetryIdLastLap typeinfo="45">8944</TelemetryIdLastLap>
+			<TelemetryIdValue typeinfo="45">8928</TelemetryIdValue>
+			<ValueCurrent typeinfo="45">6000</ValueCurrent>
+			<ValueStart typeinfo="45">6000</ValueStart>
+			<ValueStop typeinfo="45">0</ValueStop>
+		</Timer__00>
+	</Timers>
+	<VSwitchs typeinfo="32">
+		<VSwitch__00 typeinfo="58">
+			<Control__1 typeinfo="32">
+				<Control typeinfo="53">496</Control>
+				<IsInverted typeinfo="52">1</IsInverted>
+				<Value typeinfo="45">1945</Value>
+			</Control__1>
+			<Control__2 typeinfo="32">
+				<Control typeinfo="53">785</Control>
+				<IsInverted typeinfo="52">1</IsInverted>
+				<Value typeinfo="45">0</Value>
+			</Control__2>
+			<IsLogicalOperationOR typeinfo="52">0</IsLogicalOperationOR>
+			<Name typeinfo="47">Motor an</Name>
+		</VSwitch__00>
+		<VSwitch__01 typeinfo="58">
+			<Control__1 typeinfo="32">
+				<Control typeinfo="53">496</Control>
+				<IsInverted typeinfo="52">0</IsInverted>
+				<Value typeinfo="45">1945</Value>
+			</Control__1>
+			<Control__2 typeinfo="32">
+				<Control typeinfo="53">785</Control>
+				<IsInverted typeinfo="52">0</IsInverted>
+				<Value typeinfo="45">0</Value>
+			</Control__2>
+			<IsLogicalOperationOR typeinfo="52">1</IsLogicalOperationOR>
+			<Name typeinfo="47">Motor aus</Name>
+		</VSwitch__01>
+	</VSwitchs>
+	<Version typeinfo="45">1542</Version>
+</root>
