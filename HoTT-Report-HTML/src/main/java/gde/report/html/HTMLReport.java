@@ -34,6 +34,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+import org.apache.commons.io.IOUtils;
+
 import de.treichels.wea.bat64.gen.Root;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -73,42 +75,12 @@ public class HTMLReport {
 		}
 
 		// extract font file
-		final File fontFfileile = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf"); //$NON-NLS-1$ //$NON-NLS-2$
-		// System.err.println(fontFfileile.getAbsolutePath());
-		if (!(fontFfileile.exists() && fontFfileile.isFile() && fontFfileile.canRead())) {
-			InputStream is = null;
-			OutputStream os = null;
-
-			try {
-				is = ClassLoader.getSystemResourceAsStream("Arial.ttf"); //$NON-NLS-1$
-				os = new FileOutputStream(fontFfileile);
-
-				final byte[] buffer = new byte[1024];
-				while (true) {
-					final int len = is.read(buffer);
-					if (len == -1) {
-						break;
-					}
-					os.write(buffer, 0, len);
-				}
+		final File fontFile = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf"); //$NON-NLS-1$ //$NON-NLS-2$
+		if (!(fontFile.exists() && fontFile.isFile() && fontFile.canRead())) {
+			try (InputStream is = ClassLoader.getSystemResourceAsStream("Arial.ttf"); OutputStream os = new FileOutputStream(fontFile)) {
+				IOUtils.copy(is, os);
 			} catch (final IOException e) {
 				throw new RuntimeException(e);
-			} finally {
-				if (is != null) {
-					try {
-						is.close();
-					} catch (final IOException e) {
-						throw new RuntimeException(e);
-					}
-				}
-
-				if (os != null) {
-					try {
-						os.close();
-					} catch (final IOException e) {
-						throw new RuntimeException(e);
-					}
-				}
 			}
 		}
 	}
