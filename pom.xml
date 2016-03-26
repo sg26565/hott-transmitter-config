@@ -20,7 +20,7 @@
 		<module>HoTT-Report-XML</module>
 		<module>HoTT-MdlViewer-Swing</module>
 		<module>HoTT-MdlViewer-SWT</module>
-		<module>HoTT-MdlViewer-Android</module>
+		<!-- module>HoTT-MdlViewer-Android</module-->
 		<module>MemoryDump</module>
 	</modules>
 
