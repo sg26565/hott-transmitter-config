@@ -14,7 +14,7 @@
 		<module>RXTXcomm</module>
 		<module>binding</module>
 		<module>HoTT-Model</module>
-		<module>../hottdecoder/HoTT-Decoder</module>
+		<module>../hott-decoder/HoTT-Decoder</module>
 		<module>HoTT-Report-HTML</module>
 		<module>HoTT-Report-PDF</module>
 		<module>HoTT-Report-XML</module>
