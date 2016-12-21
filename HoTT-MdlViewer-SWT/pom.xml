@@ -17,6 +17,7 @@
 
 	<properties>
 		<swtPath>${project.basedir}/swt</swtPath>
+		<swtVersion>4.4.3</swtVersion>
 	</properties>
 
 	<profiles>
@@ -151,7 +152,7 @@
 		<dependency>
 			<groupId>org.eclipse</groupId>
 			<artifactId>swt</artifactId>
-			<version>unknown</version>
+			<version>${swtVersion}</version>
 			<scope>system</scope>
 			<systemPath>${swtPath}/${swtJar}</systemPath>
 		</dependency>
