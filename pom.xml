@@ -20,7 +20,7 @@
 		<module>HoTT-Report-XML</module>
 		<module>HoTT-MdlViewer-Swing</module>
 		<module>HoTT-MdlViewer-SWT</module>
-		<!-- module>HoTT-MdlViewer-Android</module-->
+		<!-- module>HoTT-MdlViewer-Android</module -->
 		<module>MemoryDump</module>
 	</modules>
 
@@ -274,7 +274,6 @@
 			<dependency>
 				<groupId>org.freemarker</groupId>
 				<artifactId>freemarker</artifactId>
-				<classifier>android</classifier>
 				<version>2.3.20</version>
 			</dependency>
 			<dependency>
