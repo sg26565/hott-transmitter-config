@@ -9,14 +9,12 @@
 	<files>
 		<file>
 			<source>${project.build.directory}/${project.build.finalName}-shaded.jar</source>
-			<outputDirectory>/</outputDirectory>
 			<destName>HoTT-MdlViewer-SWT.jar</destName>
 		</file>
 	</files>
 	<fileSets>
 		<fileSet>
 			<directory>${project.basedir}</directory>
-			<outputDirectory>/</outputDirectory>
 			<includes>
 				<include>COPYING*</include>
 				<include>HoTTMdlViewer*</include>
