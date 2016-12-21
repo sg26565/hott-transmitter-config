@@ -50,25 +50,11 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>mac x86</id>
+			<id>macosx</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 				<os>
 					<family>mac</family>
-					<arch>x86</arch>
-				</os>
-			</activation>
-			<properties>
-				<swtJar>swt-mac-x86.jar</swtJar>
-			</properties>
-		</profile>
-		<profile>
-			<id>mac os x</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-				<os>
-					<family>mac</family>
-					<arch>x86_64</arch>
 				</os>
 			</activation>
 			<properties>
@@ -155,10 +141,6 @@
 			<version>${swtVersion}</version>
 			<scope>system</scope>
 			<systemPath>${swtPath}/${swtJar}</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTT-Model</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
