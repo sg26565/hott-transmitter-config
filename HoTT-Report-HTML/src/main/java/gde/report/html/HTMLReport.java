@@ -58,9 +58,9 @@ public class HTMLReport {
 
 	static {
 		// setup freemarker
-		CONFIGURATION = new Configuration();
+		CONFIGURATION = new Configuration(Configuration.VERSION_2_3_23);
 		CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8"); //$NON-NLS-1$
-		CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper());
+		CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_23));
 		CUSTOM_EXCEPTION_HANDLER = new FreeMarkerExceptionHandler();
 
 		// setup CurveImageGenerator
