@@ -17,7 +17,7 @@
 
 	<properties>
 		<swtPath>${project.basedir}/swt</swtPath>
-		<swtVersion>4.4.3</swtVersion>
+		<swtVersion>4.6.2</swtVersion>
 	</properties>
 
 	<profiles>
