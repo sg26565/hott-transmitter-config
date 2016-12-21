@@ -277,8 +277,8 @@ public class SimpleGUI {
   private final JScrollPane              scrollPane    = new JScrollPane();
   private final JPanel                   buttonPanel   = new JPanel();
   private final JPanel                   content       = new JPanel();
-  private final WaitLayerUI<JScrollPane> layerUI       = new WaitLayerUI<JScrollPane>();
-  private final JLayer<JScrollPane>      layer         = new JLayer<JScrollPane>(scrollPane, layerUI);
+	private final WaitLayerUI<JScrollPane> layerUI = new WaitLayerUI<>();
+	private final JLayer<JScrollPane> layer = new JLayer<>(scrollPane, layerUI);
 
   public SimpleGUI() {
     final SharedContext ctx = xhtmlPane.getSharedContext();
