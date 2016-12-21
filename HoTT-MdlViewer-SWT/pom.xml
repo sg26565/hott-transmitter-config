@@ -11,8 +11,8 @@
 	</parent>
 
 	<scm>
-		<connection>scm:git:https://code.google.com/p/hott-transmitter-config/</connection>
-		<url>https://code.google.com/p/hott-transmitter-config/source/browse/</url>
+		<connection>https://github.com/sg26565/hott-transmitter-config</connection>
+		<url>https://github.com/sg26565/hott-transmitter-config</url>
 	</scm>
 
 	<properties>
