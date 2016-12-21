@@ -12,7 +12,7 @@
 
 	<modules>
 		<module>RXTXcomm</module>
-		<module>binding</module>
+		<!-- <module>binding</module> -->
 		<module>HoTT-Model</module>
 		<module>../hott-decoder/HoTT-Decoder</module>
 		<module>HoTT-Report-HTML</module>
