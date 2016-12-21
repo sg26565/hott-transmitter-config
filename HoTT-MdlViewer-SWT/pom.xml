@@ -19,6 +19,89 @@
 		<swtPath>${project.basedir}/swt</swtPath>
 	</properties>
 
+	<profiles>
+		<profile>
+			<id>linux x86</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<os>
+					<name>linux</name>
+					<family>unix</family>
+					<arch>x86</arch>
+				</os>
+			</activation>
+			<properties>
+				<swtJar>swt-linux-x86.jar</swtJar>
+			</properties>
+		</profile>
+		<profile>
+			<id>linux amd64</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<os>
+					<name>linux</name>
+					<family>unix</family>
+					<arch>amd64</arch>
+				</os>
+			</activation>
+			<properties>
+				<swtJar>swt-linux-amd64.jar</swtJar>
+			</properties>
+		</profile>
+		<profile>
+			<id>mac x86</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<os>
+					<family>mac</family>
+					<arch>x86</arch>
+				</os>
+			</activation>
+			<properties>
+				<swtJar>swt-mac-x86.jar</swtJar>
+			</properties>
+		</profile>
+		<profile>
+			<id>mac os x</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<os>
+					<family>mac</family>
+					<arch>x86_64</arch>
+				</os>
+			</activation>
+			<properties>
+				<swtJar>swt-mac-x86_64.jar</swtJar>
+			</properties>
+		</profile>
+		<profile>
+			<id>windows x86</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<os>
+					<family>windows</family>
+					<arch>x86</arch>
+				</os>
+			</activation>
+			<properties>
+				<swtJar>swt-windows-x86.jar</swtJar>
+			</properties>
+		</profile>
+		<profile>
+			<id>windows amd64</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<os>
+					<family>windows</family>
+					<arch>amd64</arch>
+				</os>
+			</activation>
+			<properties>
+				<swtJar>swt-windows-amd64.jar</swtJar>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
