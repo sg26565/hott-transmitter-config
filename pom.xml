@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.treichels.hott</groupId>
 	<artifactId>parent</artifactId>
@@ -37,7 +36,7 @@
 		<url>https://github.com/sg26565/hott-transmitter-config/issues</url>
 		<system>GitHub</system>
 	</issueManagement>
-	
+
 	<url>https://github.com/sg26565/hott-transmitter-config</url>
 	<description>The goal of this project is to provide a tool for display and update of model configurations of the HoTT series of Graupner/SJ transmitters. The data format of the model files is only available under a non disclosure agreement. Therefore, the decoder/encoder for those files will not be provided as source code. Don't ask me for details about the format.I won't tell you! The project will provide an abstract data model for all model configuration settings. With this model, the data can be displayed in various formats (e.g. text, XML, PDF) or as a graphical user interface. This project complements the great Data Explorer project from Winfried Bruegmann and may eventually be merged with it.</description>
 
@@ -65,8 +64,10 @@
 				</executions>
 				<configuration>
 					<timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss}</timestampFormat>
+					<format>{1}</format>
 					<items>
 						<item>timestamp</item>
+						<item>buildNumber0</item>
 					</items>
 					<doCheck>false</doCheck>
 					<doUpdate>false</doUpdate>
@@ -146,8 +147,7 @@
 					<version>3.8.2</version>
 					<extensions>true</extensions>
 				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>

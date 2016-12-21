@@ -11,13 +11,16 @@
 			<source>${project.build.directory}/${project.build.finalName}-shaded.jar</source>
 			<destName>HoTT-MdlViewer-Swing.jar</destName>
 		</file>
+		<file>
+			<source>${project.build.directory}/${project.build.finalName}.exe</source>
+			<destName>HoTT-MdlViewer-Swing.exe</destName>
+		</file>		
 	</files>
 	<fileSets>
 		<fileSet>
 			<directory>${project.basedir}</directory>
 			<includes>
 				<include>COPYING*</include>
-				<include>*.cmd</include>
 			</includes>
 		</fileSet>
 	</fileSets>
