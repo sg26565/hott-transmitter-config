@@ -87,10 +87,6 @@ public class FreeMarkerHtmlSafeDirective implements TemplateDirectiveModel {
 					w.write("&euro;"); //$NON-NLS-1$
 					break;
 
-				case '&':
-					w.write("&amp;"); //$NON-NLS-1$
-					break;
-
 				default:
 					w.write(c);
 				}
