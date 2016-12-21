@@ -9,7 +9,7 @@
 	</parent>
 
 	<scm>
-		<connection>https://github.com/sg26565/hott-transmitter-config</connection>
+		<connection>scm:git:https://github.com/sg26565/hott-transmitter-config</connection>
 		<url>https://github.com/sg26565/hott-transmitter-config</url>
 	</scm>
 
