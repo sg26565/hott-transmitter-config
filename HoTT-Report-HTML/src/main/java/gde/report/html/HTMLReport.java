@@ -36,7 +36,6 @@ import java.util.ServiceLoader;
 
 import org.apache.commons.io.IOUtils;
 
-import de.treichels.wea.bat64.gen.Root;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -113,17 +112,8 @@ public class HTMLReport {
 		}
 	}
 
-	public static String generateHTML(final Root model) throws IOException, ReportException {
-		CONFIGURATION.setClassForTemplateLoading(HTMLReport.class, "templates/wea"); //$NON-NLS-1$
-
-		final Map<String, Object> rootMap = new HashMap<String, Object>();
-		rootMap.put("model", model); //$NON-NLS-1$
-
-		return genetateHTML("bat64.xhtml", rootMap);
-	}
-
 	private static String genetateHTML(final String templateName, final Map<String, Object> rootMap)
-	        throws IOException, MalformedURLException, UnsupportedEncodingException {
+			throws IOException, MalformedURLException, UnsupportedEncodingException {
 		try {
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			final Template template = HTMLReport.CONFIGURATION.getTemplate(templateName);

@@ -32,10 +32,6 @@
 			<classifier>android</classifier>
 		</dependency>
 		<dependency>
-			<groupId>de.treichels.wea</groupId>
-			<artifactId>bat64-api</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 		</dependency>
