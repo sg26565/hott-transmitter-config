@@ -18,7 +18,6 @@
 
 package gde.mdl.ui;
 
-import freemarker.ext.beans.JavaBeansIntrospector;
 import gde.mdl.messages.Messages;
 import gde.model.BaseModel;
 import gde.report.html.HTMLReport;
@@ -251,7 +250,6 @@ public class SimpleGUI {
   }
 
   @SuppressWarnings("unused")
-  private Class<JavaBeansIntrospector>   class1;
 
   @SuppressWarnings("unused")
   private static RXTXCommDriver          driver;
