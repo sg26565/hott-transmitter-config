@@ -19,42 +19,43 @@ package gde.report;
 
 /**
  * @author oli
- * 
+ *
  */
 public class ReportException extends RuntimeException {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  public ReportException() {}
+	public ReportException() {
+	}
 
-  /**
-   * @param message
-   */
-  public ReportException(final String message) {
-    super(message);
-  }
+	/**
+	 * @param message
+	 */
+	public ReportException(final String message) {
+		super(message);
+	}
 
-  /**
-   * @param message
-   * @param cause
-   */
-  public ReportException(final String message, final Throwable cause) {
-    super(message, cause);
-  }
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public ReportException(final String message, final Throwable cause) {
+		super(message, cause);
+	}
 
-  /**
-   * @param message
-   * @param cause
-   * @param enableSuppression
-   * @param writableStackTrace
-   */
-  public ReportException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
-    super(message, cause, enableSuppression, writableStackTrace);
-  }
+	/**
+	 * @param message
+	 * @param cause
+	 * @param enableSuppression
+	 * @param writableStackTrace
+	 */
+	public ReportException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+	}
 
-  /**
-   * @param cause
-   */
-  public ReportException(final Throwable cause) {
-    super(cause);
-  }
+	/**
+	 * @param cause
+	 */
+	public ReportException(final Throwable cause) {
+		super(cause);
+	}
 }

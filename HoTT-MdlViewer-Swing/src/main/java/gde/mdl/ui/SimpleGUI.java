@@ -54,7 +54,6 @@ import gde.model.BaseModel;
 import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;
 import gde.report.xml.XMLReport;
-import gnu.io.RXTXCommDriver;
 
 public class SimpleGUI {
 	private final class ExitAction extends AbstractAction {
@@ -248,9 +247,6 @@ public class SimpleGUI {
 			layerUI.stop();
 		}
 	}
-
-	@SuppressWarnings("unused")
-	private static RXTXCommDriver driver;
 
 	static final String LAST_LOAD_DIR = "lastLoadDir"; //$NON-NLS-1$
 

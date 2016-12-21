@@ -21,5 +21,5 @@ package gde.model.serial;
  * @author oli@treichels.de
  */
 public enum FileType {
-  Dir, File
+	Dir, File
 }

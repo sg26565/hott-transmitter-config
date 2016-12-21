@@ -17,13 +17,6 @@
  */
 package gde.model.serial;
 
-import gde.model.HoTTException;
-import gnu.io.CommPortIdentifier;
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.UnsupportedCommOperationException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -31,92 +24,99 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import gde.model.HoTTException;
+import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+import gnu.io.UnsupportedCommOperationException;
+
 /**
  * @author oli
- * 
+ *
  */
 public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
-  private static final int WRITE_BUFFER_SIZE = 2064;
-  private static final int READ_BUFFER_SIZE  = 2064;
+	private static final int WRITE_BUFFER_SIZE = 2064;
+	private static final int READ_BUFFER_SIZE = 2064;
 
-  public static List<String> getAvailablePorts() {
-    final List<String> result = new ArrayList<String>();
+	public static List<String> getAvailablePorts() {
+		final List<String> result = new ArrayList<>();
 
-    @SuppressWarnings("unchecked")
-    final Enumeration<CommPortIdentifier> enumeration = CommPortIdentifier.getPortIdentifiers();
+		@SuppressWarnings("unchecked")
+		final Enumeration<CommPortIdentifier> enumeration = CommPortIdentifier.getPortIdentifiers();
 
-    while (enumeration.hasMoreElements()) {
-      final CommPortIdentifier identifier = enumeration.nextElement();
-      if (identifier.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-        result.add(identifier.getName());
-      }
-    }
+		while (enumeration.hasMoreElements()) {
+			final CommPortIdentifier identifier = enumeration.nextElement();
+			if (identifier.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+				result.add(identifier.getName());
+			}
+		}
 
-    return result;
-  }
+		return result;
+	}
 
-  private final String name;
+	private final String name;
 
-  private SerialPort   port = null;
+	private SerialPort port = null;
 
-  /**
-   * @param name
-   */
-  public SerialPortDefaultImpl(final String name) {
-    super();
-    this.name = name;
-  }
+	/**
+	 * @param name
+	 */
+	public SerialPortDefaultImpl(final String name) {
+		super();
+		this.name = name;
+	}
 
-  @Override
-  public void close() {
-    port.close();
-    port = null;
-  }
+	@Override
+	public void close() {
+		port.close();
+		port = null;
+	}
 
-  @Override
-  public InputStream getInputStream() throws HoTTException {
-    try {
-      return port.getInputStream();
-    } catch (final IOException e) {
-      throw new HoTTException(e);
-    }
-  }
+	@Override
+	public InputStream getInputStream() throws HoTTException {
+		try {
+			return port.getInputStream();
+		} catch (final IOException e) {
+			throw new HoTTException(e);
+		}
+	}
 
-  public String getName() {
-    return name;
-  }
+	public String getName() {
+		return name;
+	}
 
-  @Override
-  public OutputStream getOutputStream() throws HoTTException {
-    try {
-      return port.getOutputStream();
-    } catch (final IOException e) {
-      throw new HoTTException(e);
-    }
-  }
+	@Override
+	public OutputStream getOutputStream() throws HoTTException {
+		try {
+			return port.getOutputStream();
+		} catch (final IOException e) {
+			throw new HoTTException(e);
+		}
+	}
 
-  @Override
-  public boolean isOpen() {
-    return port != null;
-  }
+	@Override
+	public boolean isOpen() {
+		return port != null;
+	}
 
-  @Override
-  public void open() throws HoTTException {
-    try {
-      final CommPortIdentifier identifier = CommPortIdentifier.getPortIdentifier(name);
-      port = (SerialPort) identifier.open(SerialPortDefaultImpl.class.getName(), 1000);
-      port.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-      port.setDTR(false);
-      port.setRTS(false);
-      port.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
-      port.setInputBufferSize(READ_BUFFER_SIZE);
-      port.setOutputBufferSize(WRITE_BUFFER_SIZE);
-    } catch (final NoSuchPortException e) {
-      throw new HoTTException(e);
-    } catch (final PortInUseException e) {
-      throw new HoTTException(e);
-    } catch (final UnsupportedCommOperationException e) {
-      throw new HoTTException(e);
-    }
-  }
+	@Override
+	public void open() throws HoTTException {
+		try {
+			final CommPortIdentifier identifier = CommPortIdentifier.getPortIdentifier(name);
+			port = (SerialPort) identifier.open(SerialPortDefaultImpl.class.getName(), 1000);
+			port.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+			port.setDTR(false);
+			port.setRTS(false);
+			port.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
+			port.setInputBufferSize(READ_BUFFER_SIZE);
+			port.setOutputBufferSize(WRITE_BUFFER_SIZE);
+		} catch (final NoSuchPortException e) {
+			throw new HoTTException(e);
+		} catch (final PortInUseException e) {
+			throw new HoTTException(e);
+		} catch (final UnsupportedCommOperationException e) {
+			throw new HoTTException(e);
+		}
+	}
 }

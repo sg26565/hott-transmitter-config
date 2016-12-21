@@ -102,7 +102,7 @@ public class FreeMarkerHtmlSafeDirective implements TemplateDirectiveModel {
 
 	@Override
 	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params, final TemplateModel[] loopVars, final TemplateDirectiveBody body)
-	        throws TemplateException, IOException {
+			throws TemplateException, IOException {
 		if (body != null) {
 			body.render(new HtmlSafeWriter(env.getOut()));
 		}

@@ -19,65 +19,65 @@ package gde.util;
 
 /**
  * @author oli@treichels.de
- * 
+ *
  */
 public class Util {
-  public static String dumpData(final byte[] data) {
-    return dumpData(data, 0);
-  }
+	public static String dumpData(final byte[] data) {
+		return dumpData(data, 0);
+	}
 
-  public static String dumpData(final byte[] data, final int baseAddress) {
-    final StringBuilder sb = new StringBuilder();
+	public static String dumpData(final byte[] data, final int baseAddress) {
+		final StringBuilder sb = new StringBuilder();
 
-    if (data != null) {
-      final int len = data.length;
-      int addr = 0;
+		if (data != null) {
+			final int len = data.length;
+			int addr = 0;
 
-      while (addr < len) {
-        sb.append(String.format("0x%04x: ", baseAddress + addr)); //$NON-NLS-1$
+			while (addr < len) {
+				sb.append(String.format("0x%04x: ", baseAddress + addr)); //$NON-NLS-1$
 
-        for (int i = 0; i < 16; i++) {
-          if (addr + i < len) {
-            switch (i) {
-            case 4:
-            case 12:
-              sb.append(':');
-              break;
+				for (int i = 0; i < 16; i++) {
+					if (addr + i < len) {
+						switch (i) {
+						case 4:
+						case 12:
+							sb.append(':');
+							break;
 
-            case 0:
-            case 8:
-              sb.append('|');
-              break;
+						case 0:
+						case 8:
+							sb.append('|');
+							break;
 
-            default:
-              sb.append(' ');
-              break;
-            }
+						default:
+							sb.append(' ');
+							break;
+						}
 
-            sb.append(String.format("%02x", data[addr + i])); //$NON-NLS-1$
-          } else {
-            sb.append("   "); //$NON-NLS-1$
-          }
-        }
+						sb.append(String.format("%02x", data[addr + i])); //$NON-NLS-1$
+					} else {
+						sb.append("   "); //$NON-NLS-1$
+					}
+				}
 
-        sb.append("| "); //$NON-NLS-1$
+				sb.append("| "); //$NON-NLS-1$
 
-        for (int i = 0; i < 16; i++) {
-          if (addr + i < len) {
-            final char c = (char) (data[addr + i] & 0xff);
-            if (c >= 0x20 && c <= 0x7e) {
-              sb.append(c);
-            } else {
-              sb.append('.');
-            }
-          }
-        }
+				for (int i = 0; i < 16; i++) {
+					if (addr + i < len) {
+						final char c = (char) (data[addr + i] & 0xff);
+						if (c >= 0x20 && c <= 0x7e) {
+							sb.append(c);
+						} else {
+							sb.append('.');
+						}
+					}
+				}
 
-        sb.append('\n');
-        addr += 16;
-      }
-    }
+				sb.append('\n');
+				addr += 16;
+			}
+		}
 
-    return sb.toString();
-  }
+		return sb.toString();
+	}
 }

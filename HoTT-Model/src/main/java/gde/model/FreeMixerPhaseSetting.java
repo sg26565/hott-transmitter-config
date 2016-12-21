@@ -22,64 +22,64 @@ import javax.xml.bind.annotation.XmlIDREF;
 
 /**
  * @author oli
- * 
+ *
  */
 public class FreeMixerPhaseSetting extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private boolean           enabled;
-  private Phase             phase;
+	private boolean enabled;
+	private Phase phase;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final FreeMixerPhaseSetting other = (FreeMixerPhaseSetting) obj;
-    if (enabled != other.enabled) {
-      return false;
-    }
-    if (phase == null) {
-      if (other.phase != null) {
-        return false;
-      }
-    } else if (!phase.equals(other.phase)) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final FreeMixerPhaseSetting other = (FreeMixerPhaseSetting) obj;
+		if (enabled != other.enabled) {
+			return false;
+		}
+		if (phase == null) {
+			if (other.phase != null) {
+				return false;
+			}
+		} else if (!phase.equals(other.phase)) {
+			return false;
+		}
+		return true;
+	}
 
-  @XmlIDREF
-  @XmlAttribute
-  public Phase getPhase() {
-    return phase;
-  }
+	@XmlIDREF
+	@XmlAttribute
+	public Phase getPhase() {
+		return phase;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (enabled ? 1231 : 1237);
-    result = prime * result + (phase == null ? 0 : phase.hashCode());
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (enabled ? 1231 : 1237);
+		result = prime * result + (phase == null ? 0 : phase.hashCode());
+		return result;
+	}
 
-  @XmlAttribute
-  public boolean isEnabled() {
-    return enabled;
-  }
+	@XmlAttribute
+	public boolean isEnabled() {
+		return enabled;
+	}
 
-  public void setEnabled(final boolean enabled) {
-    this.enabled = enabled;
-  }
+	public void setEnabled(final boolean enabled) {
+		this.enabled = enabled;
+	}
 
-  public void setPhase(final Phase phase) {
-    this.phase = phase;
-  }
+	public void setPhase(final Phase phase) {
+		this.phase = phase;
+	}
 }

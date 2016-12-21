@@ -19,8 +19,8 @@ package gde.model.enums;
 
 /**
  * @author oli
- * 
+ *
  */
 public enum SequenceStatus {
-  Dec, Inc;
+	Dec, Inc;
 }

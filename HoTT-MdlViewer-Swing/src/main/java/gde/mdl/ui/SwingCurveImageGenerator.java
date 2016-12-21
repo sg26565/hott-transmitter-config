@@ -17,10 +17,6 @@
  */
 package gde.mdl.ui;
 
-import gde.model.Curve;
-import gde.model.CurvePoint;
-import gde.report.CurveImageGenerator;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -36,153 +32,157 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 
+import gde.model.Curve;
+import gde.model.CurvePoint;
+import gde.report.CurveImageGenerator;
+
 /**
  * Generate offline PNG image using Swing.
- * 
+ *
  * @author oli@treichels.de
  */
 public class SwingCurveImageGenerator implements CurveImageGenerator {
-  private BufferedImage getImage(final Curve curve, final float scale, final boolean description) {
-    final boolean pitchCurve = curve.getPoint()[0].getPosition() == 0;
+	private BufferedImage getImage(final Curve curve, final float scale, final boolean description) {
+		final boolean pitchCurve = curve.getPoint()[0].getPosition() == 0;
 
-    final BufferedImage image = new BufferedImage((int) (10 + 200 * scale), (int) (10 + 250 * scale), BufferedImage.TYPE_INT_RGB);
+		final BufferedImage image = new BufferedImage((int) (10 + 200 * scale), (int) (10 + 250 * scale), BufferedImage.TYPE_INT_RGB);
 
-    Graphics2D g = null;
+		Graphics2D g = null;
 
-    try {
-      g = image.createGraphics();
+		try {
+			g = image.createGraphics();
 
-      g.setBackground(Color.WHITE);
-      g.clearRect(0, 0, (int) (10 + 200 * scale), (int) (10 + 250 * scale));
+			g.setBackground(Color.WHITE);
+			g.clearRect(0, 0, (int) (10 + 200 * scale), (int) (10 + 250 * scale));
 
-      g.setColor(Color.BLACK);
-      g.drawRect(5, 5, (int) (200 * scale), (int) (250 * scale));
+			g.setColor(Color.BLACK);
+			g.drawRect(5, 5, (int) (200 * scale), (int) (250 * scale));
 
-      g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0.0f, new float[] { 5.0f, 5.0f }, 0.0f));
-      g.setColor(Color.GRAY);
+			g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0.0f, new float[] { 5.0f, 5.0f }, 0.0f));
+			g.setColor(Color.GRAY);
 
-      g.drawLine(5, (int) (5 + 25 * scale), (int) (5 + 200 * scale), (int) (5 + 25 * scale));
-      g.drawLine(5, (int) (5 + 225 * scale), (int) (5 + 200 * scale), (int) (5 + 225 * scale));
-      if (!pitchCurve) {
-        g.drawLine(5, (int) (5 + 125 * scale), (int) (5 + 200 * scale), (int) (5 + 125 * scale));
-        g.drawLine((int) (5 + 100 * scale), 5, (int) (5 + 100 * scale), (int) (5 + 250 * scale));
-      }
+			g.drawLine(5, (int) (5 + 25 * scale), (int) (5 + 200 * scale), (int) (5 + 25 * scale));
+			g.drawLine(5, (int) (5 + 225 * scale), (int) (5 + 200 * scale), (int) (5 + 225 * scale));
+			if (!pitchCurve) {
+				g.drawLine(5, (int) (5 + 125 * scale), (int) (5 + 200 * scale), (int) (5 + 125 * scale));
+				g.drawLine((int) (5 + 100 * scale), 5, (int) (5 + 100 * scale), (int) (5 + 250 * scale));
+			}
 
-      if (curve.getPoint() != null) {
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setStroke(new BasicStroke(4, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0.0f, null, 0.0f));
-        g.setFont(new Font("Arial", Font.BOLD, 12)); //$NON-NLS-1$
-        g.setColor(Color.BLACK);
+			if (curve.getPoint() != null) {
+				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+				g.setStroke(new BasicStroke(4, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0.0f, null, 0.0f));
+				g.setFont(new Font("Arial", Font.BOLD, 12)); //$NON-NLS-1$
+				g.setColor(Color.BLACK);
 
-        int numPoints = 0;
-        for (final CurvePoint p : curve.getPoint()) {
-          if (p.isEnabled()) {
-            numPoints++;
-          }
-        }
+				int numPoints = 0;
+				for (final CurvePoint p : curve.getPoint()) {
+					if (p.isEnabled()) {
+						numPoints++;
+					}
+				}
 
-        final double[] xVals = new double[numPoints];
-        final double[] yVals = new double[numPoints];
+				final double[] xVals = new double[numPoints];
+				final double[] yVals = new double[numPoints];
 
-        int i = 0;
-        for (final CurvePoint p : curve.getPoint()) {
-          if (p.isEnabled()) {
-            if (i == 0) {
-              xVals[i] = pitchCurve ? 0 : -100;
-            } else if (i == numPoints - 1) {
-              xVals[i] = 100;
-            } else {
-              xVals[i] = p.getPosition();
-            }
-            yVals[i] = p.getValue();
+				int i = 0;
+				for (final CurvePoint p : curve.getPoint()) {
+					if (p.isEnabled()) {
+						if (i == 0) {
+							xVals[i] = pitchCurve ? 0 : -100;
+						} else if (i == numPoints - 1) {
+							xVals[i] = 100;
+						} else {
+							xVals[i] = p.getPosition();
+						}
+						yVals[i] = p.getValue();
 
-            if (description) {
-              int x0;
-              int y0;
-              if (pitchCurve) {
-                x0 = (int) (5 + xVals[i] * 2 * scale);
-                y0 = (int) (5 + (225 - yVals[i] * 2) * scale);
-              } else {
-                x0 = (int) (5 + (100 + xVals[i]) * scale);
-                y0 = (int) (5 + (125 - yVals[i]) * scale);
-              }
+						if (description) {
+							int x0;
+							int y0;
+							if (pitchCurve) {
+								x0 = (int) (5 + xVals[i] * 2 * scale);
+								y0 = (int) (5 + (225 - yVals[i] * 2) * scale);
+							} else {
+								x0 = (int) (5 + (100 + xVals[i]) * scale);
+								y0 = (int) (5 + (125 - yVals[i]) * scale);
+							}
 
-              g.drawOval(x0 - 2, y0 - 2, 4, 4);
-              g.clearRect(x0 - 6, y0 - 16, 8, 12);
-              g.drawString(Integer.toString(p.getNumber() + 1), x0 - 3, y0 - 5);
-            }
+							g.drawOval(x0 - 2, y0 - 2, 4, 4);
+							g.clearRect(x0 - 6, y0 - 16, 8, 12);
+							g.drawString(Integer.toString(p.getNumber() + 1), x0 - 3, y0 - 5);
+						}
 
-            i++;
-          }
-        }
+						i++;
+					}
+				}
 
-        g.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0.0f, null, 0.0f));
+				g.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0.0f, null, 0.0f));
 
-        if (numPoints > 2 && curve.isSmoothing()) {
-          final SplineInterpolator s = new SplineInterpolator();
-          final PolynomialSplineFunction function = s.interpolate(xVals, yVals);
+				if (numPoints > 2 && curve.isSmoothing()) {
+					final SplineInterpolator s = new SplineInterpolator();
+					final PolynomialSplineFunction function = s.interpolate(xVals, yVals);
 
-          int x0 = 5;
-          int y0;
-          if (pitchCurve) {
-            y0 = (int) (5 + (225 - yVals[0] * 2) * scale);
-          } else {
-            y0 = (int) (5 + (125 - yVals[0]) * scale);
-          }
+					int x0 = 5;
+					int y0;
+					if (pitchCurve) {
+						y0 = (int) (5 + (225 - yVals[0] * 2) * scale);
+					} else {
+						y0 = (int) (5 + (125 - yVals[0]) * scale);
+					}
 
-          while (x0 < (int) (4 + 200 * scale)) {
-            final int x1 = x0 + 1;
-            int y1;
-            if (pitchCurve) {
-              y1 = (int) (5 + (225 - function.value((x1 - 5) / scale / 2) * 2) * scale);
-            } else {
-              y1 = (int) (5 + (125 - function.value((x1 - 5) / scale - 100)) * scale);
-            }
+					while (x0 < (int) (4 + 200 * scale)) {
+						final int x1 = x0 + 1;
+						int y1;
+						if (pitchCurve) {
+							y1 = (int) (5 + (225 - function.value((x1 - 5) / scale / 2) * 2) * scale);
+						} else {
+							y1 = (int) (5 + (125 - function.value((x1 - 5) / scale - 100)) * scale);
+						}
 
-            g.drawLine(x0, y0, x1, y1);
+						g.drawLine(x0, y0, x1, y1);
 
-            x0 = x1;
-            y0 = y1;
-          }
-        } else {
-          for (i = 0; i < numPoints - 1; i++) {
-            int x0, y0, x1, y1;
+						x0 = x1;
+						y0 = y1;
+					}
+				} else {
+					for (i = 0; i < numPoints - 1; i++) {
+						int x0, y0, x1, y1;
 
-            if (pitchCurve) {
-              x0 = (int) (5 + xVals[i] * 2 * scale);
-              y0 = (int) (5 + (225 - yVals[i] * 2) * scale);
+						if (pitchCurve) {
+							x0 = (int) (5 + xVals[i] * 2 * scale);
+							y0 = (int) (5 + (225 - yVals[i] * 2) * scale);
 
-              x1 = (int) (5 + xVals[i + 1] * 2 * scale);
-              y1 = (int) (5 + (225 - yVals[i + 1] * 2) * scale);
-            } else {
-              x0 = (int) (5 + (100 + xVals[i]) * scale);
-              y0 = (int) (5 + (125 - yVals[i]) * scale);
+							x1 = (int) (5 + xVals[i + 1] * 2 * scale);
+							y1 = (int) (5 + (225 - yVals[i + 1] * 2) * scale);
+						} else {
+							x0 = (int) (5 + (100 + xVals[i]) * scale);
+							y0 = (int) (5 + (125 - yVals[i]) * scale);
 
-              x1 = (int) (5 + (100 + xVals[i + 1]) * scale);
-              y1 = (int) (5 + (125 - yVals[i + 1]) * scale);
-            }
+							x1 = (int) (5 + (100 + xVals[i + 1]) * scale);
+							y1 = (int) (5 + (125 - yVals[i + 1]) * scale);
+						}
 
-            g.drawLine(x0, y0, x1, y1);
-          }
-        }
-      }
-    } finally {
-      if (g != null) {
-        g.dispose();
-      }
-    }
+						g.drawLine(x0, y0, x1, y1);
+					}
+				}
+			}
+		} finally {
+			if (g != null) {
+				g.dispose();
+			}
+		}
 
-    return image;
-  }
+		return image;
+	}
 
-  @Override
-  public String getImageSource(final Curve curve, final float scale, final boolean description) {
-    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    try {
-      ImageIO.write(getImage(curve, scale, description), "png", baos); //$NON-NLS-1$
-    } catch (final IOException e) {
-      throw new RuntimeException(e);
-    }
-    return PREFIX + Base64.encodeBase64String(baos.toByteArray());
-  }
+	@Override
+	public String getImageSource(final Curve curve, final float scale, final boolean description) {
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			ImageIO.write(getImage(curve, scale, description), "png", baos); //$NON-NLS-1$
+		} catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
+		return PREFIX + Base64.encodeBase64String(baos.toByteArray());
+	}
 }

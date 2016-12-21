@@ -23,41 +23,41 @@ import gde.model.enums.HFModuleType;
  * @author oli@treichels.de
  */
 public class HFModule extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private HFModuleType      type;
+	private HFModuleType type;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final HFModule other = (HFModule) obj;
-    if (type != other.type) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final HFModule other = (HFModule) obj;
+		if (type != other.type) {
+			return false;
+		}
+		return true;
+	}
 
-  public HFModuleType getType() {
-    return type;
-  }
+	public HFModuleType getType() {
+		return type;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (type == null ? 0 : type.hashCode());
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (type == null ? 0 : type.hashCode());
+		return result;
+	}
 
-  public void setType(final HFModuleType type) {
-    this.type = type;
-  }
+	public void setType(final HFModuleType type) {
+		this.type = type;
+	}
 }

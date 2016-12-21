@@ -35,79 +35,80 @@ import com.itextpdf.text.pdf.codec.Base64;
  * @author oli@treichels.de
  */
 public class ITextInlineImageReplacedElementFactory implements ReplacedElementFactory {
-  private static final String          PREFIX = "data:image/png;base64,"; //$NON-NLS-1$
+	private static final String PREFIX = "data:image/png;base64,"; //$NON-NLS-1$
 
-  private final ReplacedElementFactory other;
+	private final ReplacedElementFactory other;
 
-  public ITextInlineImageReplacedElementFactory(final ReplacedElementFactory other) {
-    this.other = other;
-  }
+	public ITextInlineImageReplacedElementFactory(final ReplacedElementFactory other) {
+		this.other = other;
+	}
 
-  @Override
-  public ReplacedElement createReplacedElement(final LayoutContext c, final BlockBox box, final UserAgentCallback uac, final int cssWidth, final int cssHeight) {
-    final Element elem = box.getElement();
+	@Override
+	public ReplacedElement createReplacedElement(final LayoutContext c, final BlockBox box, final UserAgentCallback uac, final int cssWidth,
+			final int cssHeight) {
+		final Element elem = box.getElement();
 
-    // check if we have an inline png image
-    if (!(elem != null && elem.getNodeName().equals("img") && elem.hasAttribute("src") && elem.getAttribute("src").startsWith(PREFIX))) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-      return null; // other.createReplacedElement(c, box, uac, cssWidth,
-                   // cssHeight);
-    }
+		// check if we have an inline png image
+		if (!(elem != null && elem.getNodeName().equals("img") && elem.hasAttribute("src") && elem.getAttribute("src").startsWith(PREFIX))) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			return null; // other.createReplacedElement(c, box, uac, cssWidth,
+							// cssHeight);
+		}
 
-    int width = 0;
-    int height = 0;
+		int width = 0;
+		int height = 0;
 
-    if (cssWidth > 0) {
-      width = cssWidth;
-    }
-    if (cssHeight > 0) {
-      height = cssHeight;
-    }
+		if (cssWidth > 0) {
+			width = cssWidth;
+		}
+		if (cssHeight > 0) {
+			height = cssHeight;
+		}
 
-    if (elem.hasAttribute("width")) { //$NON-NLS-1$
-      width = Integer.parseInt(elem.getAttribute("width")); //$NON-NLS-1$
-    }
+		if (elem.hasAttribute("width")) { //$NON-NLS-1$
+			width = Integer.parseInt(elem.getAttribute("width")); //$NON-NLS-1$
+		}
 
-    if (elem.hasAttribute("height")) { //$NON-NLS-1$
-      height = Integer.parseInt(elem.getAttribute("height")); //$NON-NLS-1$
-    }
+		if (elem.hasAttribute("height")) { //$NON-NLS-1$
+			height = Integer.parseInt(elem.getAttribute("height")); //$NON-NLS-1$
+		}
 
-    final String inlineData = elem.getAttribute("src").substring(PREFIX.length()); // strip //$NON-NLS-1$
-                                                                                   // leading
-                                                                                   // "data:image/png;base64,"
+		final String inlineData = elem.getAttribute("src").substring(PREFIX.length()); // strip //$NON-NLS-1$
+																						// leading
+																						// "data:image/png;base64,"
 
-    try {
-      final Image image = Image.getInstance(Base64.decode(inlineData));
+		try {
+			final Image image = Image.getInstance(Base64.decode(inlineData));
 
-      if (width == 0) {
-        width = (int) image.getWidth();
-      }
+			if (width == 0) {
+				width = (int) image.getWidth();
+			}
 
-      if (height == 0) {
-        height = (int) image.getHeight();
-      }
+			if (height == 0) {
+				height = (int) image.getHeight();
+			}
 
-      image.scaleAbsolute(width * 16, height * 16);
+			image.scaleAbsolute(width * 16, height * 16);
 
-      final ITextFSImage fsImage = new ITextFSImage(image);
-      final ITextReplacedElement element = new ITextImageElement(fsImage);
-      return element;
-    } catch (final Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
+			final ITextFSImage fsImage = new ITextFSImage(image);
+			final ITextReplacedElement element = new ITextImageElement(fsImage);
+			return element;
+		} catch (final Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-  @Override
-  public void remove(final Element e) {
-    other.remove(e);
-  }
+	@Override
+	public void remove(final Element e) {
+		other.remove(e);
+	}
 
-  @Override
-  public void reset() {
-    other.reset();
-  }
+	@Override
+	public void reset() {
+		other.reset();
+	}
 
-  @Override
-  public void setFormSubmissionListener(final FormSubmissionListener listener) {
-    other.setFormSubmissionListener(listener);
-  }
+	@Override
+	public void setFormSubmissionListener(final FormSubmissionListener listener) {
+		other.setFormSubmissionListener(listener);
+	}
 }

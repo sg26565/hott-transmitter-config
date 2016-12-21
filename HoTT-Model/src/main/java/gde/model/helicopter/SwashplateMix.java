@@ -23,67 +23,67 @@ import gde.model.AbstractBase;
  * @author oli@treichels.de
  */
 public class SwashplateMix extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private int               nickMix;
-  private int               pitchMix;
-  private int               rollMix;
+	private int nickMix;
+	private int pitchMix;
+	private int rollMix;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final SwashplateMix other = (SwashplateMix) obj;
-    if (nickMix != other.nickMix) {
-      return false;
-    }
-    if (pitchMix != other.pitchMix) {
-      return false;
-    }
-    if (rollMix != other.rollMix) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final SwashplateMix other = (SwashplateMix) obj;
+		if (nickMix != other.nickMix) {
+			return false;
+		}
+		if (pitchMix != other.pitchMix) {
+			return false;
+		}
+		if (rollMix != other.rollMix) {
+			return false;
+		}
+		return true;
+	}
 
-  public int getNickMix() {
-    return nickMix;
-  }
+	public int getNickMix() {
+		return nickMix;
+	}
 
-  public int getPitchMix() {
-    return pitchMix;
-  }
+	public int getPitchMix() {
+		return pitchMix;
+	}
 
-  public int getRollMix() {
-    return rollMix;
-  }
+	public int getRollMix() {
+		return rollMix;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + nickMix;
-    result = prime * result + pitchMix;
-    result = prime * result + rollMix;
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + nickMix;
+		result = prime * result + pitchMix;
+		result = prime * result + rollMix;
+		return result;
+	}
 
-  public void setNickMix(final int nickMix) {
-    this.nickMix = nickMix;
-  }
+	public void setNickMix(final int nickMix) {
+		this.nickMix = nickMix;
+	}
 
-  public void setPitchMix(final int pitchMix) {
-    this.pitchMix = pitchMix;
-  }
+	public void setPitchMix(final int pitchMix) {
+		this.pitchMix = pitchMix;
+	}
 
-  public void setRollMix(final int rollMix) {
-    this.rollMix = rollMix;
-  }
+	public void setRollMix(final int rollMix) {
+		this.rollMix = rollMix;
+	}
 }

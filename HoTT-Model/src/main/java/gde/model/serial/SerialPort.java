@@ -17,24 +17,24 @@
  */
 package gde.model.serial;
 
-import gde.model.HoTTException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import gde.model.HoTTException;
+
 /**
  * @author oli@treichels.de
- * 
+ *
  */
 public interface SerialPort {
-  public void open() throws HoTTException;
+	public void close() throws IOException;
 
-  public boolean isOpen();
+	public InputStream getInputStream() throws HoTTException;
 
-  public void close() throws IOException;
+	public OutputStream getOutputStream() throws HoTTException;
 
-  public OutputStream getOutputStream() throws HoTTException;
+	public boolean isOpen();
 
-  public InputStream getInputStream() throws HoTTException;
+	public void open() throws HoTTException;
 }

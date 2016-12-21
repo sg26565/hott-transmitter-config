@@ -24,67 +24,67 @@ import java.io.Serializable;
 
 /**
  * Abstract base class with support for bound properties.
- * 
+ *
  * @author oli@treichels.de
  */
 public abstract class AbstractBase implements Serializable {
-  private static final long           serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private final PropertyChangeSupport support          = new PropertyChangeSupport(this);
+	private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-  public void addPropertyChangeListener(final PropertyChangeListener listener) {
-    support.addPropertyChangeListener(listener);
-  }
+	public void addPropertyChangeListener(final PropertyChangeListener listener) {
+		support.addPropertyChangeListener(listener);
+	}
 
-  public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener listener) {
-    support.addPropertyChangeListener(propertyName, listener);
-  }
+	public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener listener) {
+		support.addPropertyChangeListener(propertyName, listener);
+	}
 
-  public void fireIndexedPropertyChange(final String propertyName, final int index, final boolean oldValue, final boolean newValue) {
-    support.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
-  }
+	public void fireIndexedPropertyChange(final String propertyName, final int index, final boolean oldValue, final boolean newValue) {
+		support.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+	}
 
-  public void fireIndexedPropertyChange(final String propertyName, final int index, final int oldValue, final int newValue) {
-    support.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
-  }
+	public void fireIndexedPropertyChange(final String propertyName, final int index, final int oldValue, final int newValue) {
+		support.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+	}
 
-  public void fireIndexedPropertyChange(final String propertyName, final int index, final Object oldValue, final Object newValue) {
-    support.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
-  }
+	public void fireIndexedPropertyChange(final String propertyName, final int index, final Object oldValue, final Object newValue) {
+		support.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+	}
 
-  public void firePropertyChange(final PropertyChangeEvent event) {
-    support.firePropertyChange(event);
-  }
+	public void firePropertyChange(final PropertyChangeEvent event) {
+		support.firePropertyChange(event);
+	}
 
-  public void firePropertyChange(final String propertyName, final boolean oldValue, final boolean newValue) {
-    support.firePropertyChange(propertyName, oldValue, newValue);
-  }
+	public void firePropertyChange(final String propertyName, final boolean oldValue, final boolean newValue) {
+		support.firePropertyChange(propertyName, oldValue, newValue);
+	}
 
-  public void firePropertyChange(final String propertyName, final int oldValue, final int newValue) {
-    support.firePropertyChange(propertyName, oldValue, newValue);
-  }
+	public void firePropertyChange(final String propertyName, final int oldValue, final int newValue) {
+		support.firePropertyChange(propertyName, oldValue, newValue);
+	}
 
-  public void firePropertyChange(final String propertyName, final Object oldValue, final Object newValue) {
-    support.firePropertyChange(propertyName, oldValue, newValue);
-  }
+	public void firePropertyChange(final String propertyName, final Object oldValue, final Object newValue) {
+		support.firePropertyChange(propertyName, oldValue, newValue);
+	}
 
-  public PropertyChangeListener[] getPropertyChangeListeners() {
-    return support.getPropertyChangeListeners();
-  }
+	public PropertyChangeListener[] getPropertyChangeListeners() {
+		return support.getPropertyChangeListeners();
+	}
 
-  public PropertyChangeListener[] getPropertyChangeListeners(final String propertyName) {
-    return support.getPropertyChangeListeners(propertyName);
-  }
+	public PropertyChangeListener[] getPropertyChangeListeners(final String propertyName) {
+		return support.getPropertyChangeListeners(propertyName);
+	}
 
-  public boolean hasListeners(final String propertyName) {
-    return support.hasListeners(propertyName);
-  }
+	public boolean hasListeners(final String propertyName) {
+		return support.hasListeners(propertyName);
+	}
 
-  public void removePropertyChangeListener(final PropertyChangeListener listener) {
-    support.removePropertyChangeListener(listener);
-  }
+	public void removePropertyChangeListener(final PropertyChangeListener listener) {
+		support.removePropertyChangeListener(listener);
+	}
 
-  public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener listener) {
-    support.removePropertyChangeListener(propertyName, listener);
-  }
+	public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener listener) {
+		support.removePropertyChangeListener(propertyName, listener);
+	}
 }

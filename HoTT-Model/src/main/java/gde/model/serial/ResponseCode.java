@@ -18,25 +18,25 @@
 package gde.model.serial;
 
 public enum ResponseCode {
-  ACK(1), NACK(2), ERROR(3), CRC_ERROR(4), BUSY(5);
+	ACK(1), NACK(2), ERROR(3), CRC_ERROR(4), BUSY(5);
 
-  public static ResponseCode forId(final int id) {
-    for (final ResponseCode r : ResponseCode.values()) {
-      if (id == r.id) {
-        return r;
-      }
-    }
+	public static ResponseCode forId(final int id) {
+		for (final ResponseCode r : ResponseCode.values()) {
+			if (id == r.id) {
+				return r;
+			}
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  private final int id;
+	private final int id;
 
-  private ResponseCode(final int id) {
-    this.id = id;
-  }
+	private ResponseCode(final int id) {
+		this.id = id;
+	}
 
-  public int getId() {
-    return id;
-  }
+	public int getId() {
+		return id;
+	}
 }

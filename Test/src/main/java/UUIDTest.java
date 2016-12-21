@@ -20,12 +20,12 @@ import java.util.UUID;
 
 /**
  * @author oli
- * 
+ *
  */
 public class UUIDTest {
-  public static void main(final String[] args) {
-    for (int i = 0; i < 100; i++) {
-      System.out.println(UUID.randomUUID());
-    }
-  }
+	public static void main(final String[] args) {
+		for (int i = 0; i < 100; i++) {
+			System.out.println(UUID.randomUUID());
+		}
+	}
 }

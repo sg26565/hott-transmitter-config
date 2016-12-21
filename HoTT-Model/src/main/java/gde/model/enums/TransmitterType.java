@@ -23,31 +23,31 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum TransmitterType {
-  mc16(16004600), mc20(16004300), mc32(16004100), mx12(16003600), mx16(16003300), mx20(16003700), mz12(-1), mz18(-2), mz24(16005200), unknown(0);
+	mc16(16004600), mc20(16004300), mc32(16004100), mx12(16003600), mx16(16003300), mx20(16003700), mz12(-1), mz18(-2), mz24(16005200), unknown(0);
 
-  public static TransmitterType forProductCode(final int productCode) {
-    for (final TransmitterType t : TransmitterType.values()) {
-      if (productCode == t.productCode) {
-        return t;
-      }
-    }
+	public static TransmitterType forProductCode(final int productCode) {
+		for (final TransmitterType t : TransmitterType.values()) {
+			if (productCode == t.productCode) {
+				return t;
+			}
+		}
 
-    return unknown;
-  }
+		return unknown;
+	}
 
-  private final int productCode;
+	private final int productCode;
 
-  private TransmitterType(final int productCode) {
-    this.productCode = productCode;
-  }
+	private TransmitterType(final int productCode) {
+		this.productCode = productCode;
+	}
 
-  public int getProductCode() {
-    return productCode;
-  }
+	public int getProductCode() {
+		return productCode;
+	}
 
-  /** @return the locale-dependent message */
-  @Override
-  public String toString() {
-    return ResourceBundle.getBundle(getClass().getName()).getString(name());
-  }
+	/** @return the locale-dependent message */
+	@Override
+	public String toString() {
+		return ResourceBundle.getBundle(getClass().getName()).getString(name());
+	}
 }

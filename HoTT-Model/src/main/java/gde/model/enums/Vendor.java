@@ -23,11 +23,11 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum Vendor {
-  Graupner;
+	Graupner;
 
-  /** @return the locale-dependent message */
-  @Override
-  public String toString() {
-    return ResourceBundle.getBundle(getClass().getName()).getString(name());
-  }
+	/** @return the locale-dependent message */
+	@Override
+	public String toString() {
+		return ResourceBundle.getBundle(getClass().getName()).getString(name());
+	}
 }

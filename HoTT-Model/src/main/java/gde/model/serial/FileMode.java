@@ -21,15 +21,15 @@ package gde.model.serial;
  * @author oli@treichels.de
  */
 public enum FileMode {
-  Read(1), Write(2), Create(11);
+	Read(1), Write(2), Create(11);
 
-  private final int mode;
+	private final int mode;
 
-  private FileMode(final int mode) {
-    this.mode = mode;
-  }
+	private FileMode(final int mode) {
+		this.mode = mode;
+	}
 
-  public int getMode() {
-    return mode;
-  }
+	public int getMode() {
+		return mode;
+	}
 }

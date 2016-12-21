@@ -26,15 +26,15 @@ import freemarker.template.TemplateExceptionHandler;
 
 /**
  * @author oli@treichels.de
- * 
+ *
  */
 public class FreeMarkerExceptionHandler implements TemplateExceptionHandler {
-  @Override
-  public void handleTemplateException(final TemplateException e, final Environment env, final Writer out) throws TemplateException {
-    try {
-      out.write("[ERROR: " + e.getMessage() + "]"); //$NON-NLS-1$ //$NON-NLS-2$
-    } catch (final IOException e1) {
-      throw new TemplateException("Failed to print error message. Cause: " + e1, env); //$NON-NLS-1$
-    }
-  }
+	@Override
+	public void handleTemplateException(final TemplateException e, final Environment env, final Writer out) throws TemplateException {
+		try {
+			out.write("[ERROR: " + e.getMessage() + "]"); //$NON-NLS-1$ //$NON-NLS-2$
+		} catch (final IOException e1) {
+			throw new TemplateException("Failed to print error message. Cause: " + e1, env); //$NON-NLS-1$
+		}
+	}
 }

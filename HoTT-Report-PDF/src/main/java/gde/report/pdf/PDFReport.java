@@ -31,17 +31,17 @@ import com.itextpdf.text.DocumentException;
  * @author oli@treichels.de
  */
 public class PDFReport {
-  public static void save(final File file, final String html) throws IOException, DocumentException {
-    // setup flyingsaucer
-    final ITextRenderer renderer = new ITextRenderer();
-    final SharedContext ctx = renderer.getSharedContext();
-    final FileOutputStream fos = new FileOutputStream(file);
+	public static void save(final File file, final String html) throws IOException, DocumentException {
+		// setup flyingsaucer
+		final ITextRenderer renderer = new ITextRenderer();
+		final SharedContext ctx = renderer.getSharedContext();
+		final FileOutputStream fos = new FileOutputStream(file);
 
-    ctx.setReplacedElementFactory(new ITextInlineImageReplacedElementFactory(ctx.getReplacedElementFactory()));
+		ctx.setReplacedElementFactory(new ITextInlineImageReplacedElementFactory(ctx.getReplacedElementFactory()));
 
-    renderer.setDocumentFromString(html);
-    renderer.layout();
-    renderer.createPDF(fos);
-    fos.close();
-  }
+		renderer.setDocumentFromString(html);
+		renderer.layout();
+		renderer.createPDF(fos);
+		fos.close();
+	}
 }

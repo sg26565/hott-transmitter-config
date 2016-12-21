@@ -23,67 +23,67 @@ import gde.model.AbstractBase;
  * @author oli@treichels.de
  */
 public class HelicopterTrim extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private int               nickStickTrim;
-  private int               rollStickTrim;
-  private int               tailStickTrim;
+	private int nickStickTrim;
+	private int rollStickTrim;
+	private int tailStickTrim;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final HelicopterTrim other = (HelicopterTrim) obj;
-    if (nickStickTrim != other.nickStickTrim) {
-      return false;
-    }
-    if (rollStickTrim != other.rollStickTrim) {
-      return false;
-    }
-    if (tailStickTrim != other.tailStickTrim) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final HelicopterTrim other = (HelicopterTrim) obj;
+		if (nickStickTrim != other.nickStickTrim) {
+			return false;
+		}
+		if (rollStickTrim != other.rollStickTrim) {
+			return false;
+		}
+		if (tailStickTrim != other.tailStickTrim) {
+			return false;
+		}
+		return true;
+	}
 
-  public int getNickStickTrim() {
-    return nickStickTrim;
-  }
+	public int getNickStickTrim() {
+		return nickStickTrim;
+	}
 
-  public int getRollStickTrim() {
-    return rollStickTrim;
-  }
+	public int getRollStickTrim() {
+		return rollStickTrim;
+	}
 
-  public int getTailStickTrim() {
-    return tailStickTrim;
-  }
+	public int getTailStickTrim() {
+		return tailStickTrim;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + nickStickTrim;
-    result = prime * result + rollStickTrim;
-    result = prime * result + tailStickTrim;
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + nickStickTrim;
+		result = prime * result + rollStickTrim;
+		result = prime * result + tailStickTrim;
+		return result;
+	}
 
-  public void setNickStickTrim(final int nickStickTrim) {
-    this.nickStickTrim = nickStickTrim;
-  }
+	public void setNickStickTrim(final int nickStickTrim) {
+		this.nickStickTrim = nickStickTrim;
+	}
 
-  public void setRollStickTrim(final int rollStickTrim) {
-    this.rollStickTrim = rollStickTrim;
-  }
+	public void setRollStickTrim(final int rollStickTrim) {
+		this.rollStickTrim = rollStickTrim;
+	}
 
-  public void setTailStickTrim(final int tailStickTrim) {
-    this.tailStickTrim = tailStickTrim;
-  }
+	public void setTailStickTrim(final int tailStickTrim) {
+		this.tailStickTrim = tailStickTrim;
+	}
 }

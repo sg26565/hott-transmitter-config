@@ -21,15 +21,15 @@ import java.util.ResourceBundle;
 
 /**
  * @author oli
- * 
+ *
  */
 public enum CurveType {
-  Brake, Channel1, FreeMixer, Pitch, Tail, Throttle, Unused;
+	Brake, Channel1, FreeMixer, Pitch, Tail, Throttle, Unused;
 
-  /** @return the locale-dependent message */
-  @Override
-  public String toString() {
-    return ResourceBundle.getBundle(getClass().getName()).getString(name());
-  }
+	/** @return the locale-dependent message */
+	@Override
+	public String toString() {
+		return ResourceBundle.getBundle(getClass().getName()).getString(name());
+	}
 
 }

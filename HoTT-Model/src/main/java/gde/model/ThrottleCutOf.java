@@ -23,72 +23,72 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class ThrottleCutOf extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private int               position;
-  private Switch            sw;
-  private int               threshold;
+	private int position;
+	private Switch sw;
+	private int threshold;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final ThrottleCutOf other = (ThrottleCutOf) obj;
-    if (position != other.position) {
-      return false;
-    }
-    if (sw == null) {
-      if (other.sw != null) {
-        return false;
-      }
-    } else if (!sw.equals(other.sw)) {
-      return false;
-    }
-    if (threshold != other.threshold) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ThrottleCutOf other = (ThrottleCutOf) obj;
+		if (position != other.position) {
+			return false;
+		}
+		if (sw == null) {
+			if (other.sw != null) {
+				return false;
+			}
+		} else if (!sw.equals(other.sw)) {
+			return false;
+		}
+		if (threshold != other.threshold) {
+			return false;
+		}
+		return true;
+	}
 
-  public int getPosition() {
-    return position;
-  }
+	public int getPosition() {
+		return position;
+	}
 
-  @XmlIDREF
-  public Switch getSwitch() {
-    return sw;
-  }
+	@XmlIDREF
+	public Switch getSwitch() {
+		return sw;
+	}
 
-  public int getThreshold() {
-    return threshold;
-  }
+	public int getThreshold() {
+		return threshold;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + position;
-    result = prime * result + (sw == null ? 0 : sw.hashCode());
-    result = prime * result + threshold;
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + position;
+		result = prime * result + (sw == null ? 0 : sw.hashCode());
+		result = prime * result + threshold;
+		return result;
+	}
 
-  public void setPosition(final int position) {
-    this.position = position;
-  }
+	public void setPosition(final int position) {
+		this.position = position;
+	}
 
-  public void setSwitch(final Switch sw) {
-    this.sw = sw;
-  }
+	public void setSwitch(final Switch sw) {
+		this.sw = sw;
+	}
 
-  public void setThreshold(final int threshold) {
-    this.threshold = threshold;
-  }
+	public void setThreshold(final int threshold) {
+		this.threshold = threshold;
+	}
 }

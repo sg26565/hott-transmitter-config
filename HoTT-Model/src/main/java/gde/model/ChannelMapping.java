@@ -21,59 +21,59 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 /**
  * @author oli
- * 
+ *
  */
 public class ChannelMapping extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private int               inputChannel;
-  private int               outputChannel;
+	private int inputChannel;
+	private int outputChannel;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final ChannelMapping other = (ChannelMapping) obj;
-    if (inputChannel != other.inputChannel) {
-      return false;
-    }
-    if (outputChannel != other.outputChannel) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ChannelMapping other = (ChannelMapping) obj;
+		if (inputChannel != other.inputChannel) {
+			return false;
+		}
+		if (outputChannel != other.outputChannel) {
+			return false;
+		}
+		return true;
+	}
 
-  @XmlAttribute
-  public int getInputChannel() {
-    return inputChannel;
-  }
+	@XmlAttribute
+	public int getInputChannel() {
+		return inputChannel;
+	}
 
-  @XmlAttribute
-  public int getOutputChannel() {
-    return outputChannel;
-  }
+	@XmlAttribute
+	public int getOutputChannel() {
+		return outputChannel;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + inputChannel;
-    result = prime * result + outputChannel;
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + inputChannel;
+		result = prime * result + outputChannel;
+		return result;
+	}
 
-  public void setInputChannel(final int inputChannel) {
-    this.inputChannel = inputChannel;
-  }
+	public void setInputChannel(final int inputChannel) {
+		this.inputChannel = inputChannel;
+	}
 
-  public void setOutputChannel(final int outputChannel) {
-    this.outputChannel = outputChannel;
-  }
+	public void setOutputChannel(final int outputChannel) {
+		this.outputChannel = outputChannel;
+	}
 }

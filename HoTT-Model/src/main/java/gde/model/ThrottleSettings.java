@@ -21,72 +21,72 @@ package gde.model;
  * @author oli
  */
 public class ThrottleSettings extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private ThrottleCutOf     throttleCutOf;
-  private int               throttleLastIdlePosition;
-  private int               throttleTrim;
+	private ThrottleCutOf throttleCutOf;
+	private int throttleLastIdlePosition;
+	private int throttleTrim;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final ThrottleSettings other = (ThrottleSettings) obj;
-    if (throttleCutOf == null) {
-      if (other.throttleCutOf != null) {
-        return false;
-      }
-    } else if (!throttleCutOf.equals(other.throttleCutOf)) {
-      return false;
-    }
-    if (throttleLastIdlePosition != other.throttleLastIdlePosition) {
-      return false;
-    }
-    if (throttleTrim != other.throttleTrim) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ThrottleSettings other = (ThrottleSettings) obj;
+		if (throttleCutOf == null) {
+			if (other.throttleCutOf != null) {
+				return false;
+			}
+		} else if (!throttleCutOf.equals(other.throttleCutOf)) {
+			return false;
+		}
+		if (throttleLastIdlePosition != other.throttleLastIdlePosition) {
+			return false;
+		}
+		if (throttleTrim != other.throttleTrim) {
+			return false;
+		}
+		return true;
+	}
 
-  public ThrottleCutOf getThrottleCutOf() {
-    return throttleCutOf;
-  }
+	public ThrottleCutOf getThrottleCutOf() {
+		return throttleCutOf;
+	}
 
-  public int getThrottleLastIdlePosition() {
-    return throttleLastIdlePosition;
-  }
+	public int getThrottleLastIdlePosition() {
+		return throttleLastIdlePosition;
+	}
 
-  public int getThrottleTrim() {
-    return throttleTrim;
-  }
+	public int getThrottleTrim() {
+		return throttleTrim;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (throttleCutOf == null ? 0 : throttleCutOf.hashCode());
-    result = prime * result + throttleLastIdlePosition;
-    result = prime * result + throttleTrim;
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (throttleCutOf == null ? 0 : throttleCutOf.hashCode());
+		result = prime * result + throttleLastIdlePosition;
+		result = prime * result + throttleTrim;
+		return result;
+	}
 
-  public void setThrottleCutOf(final ThrottleCutOf throttleCutOf) {
-    this.throttleCutOf = throttleCutOf;
-  }
+	public void setThrottleCutOf(final ThrottleCutOf throttleCutOf) {
+		this.throttleCutOf = throttleCutOf;
+	}
 
-  public void setThrottleLastIdlePosition(final int throttleLastPosition) {
-    throttleLastIdlePosition = throttleLastPosition;
-  }
+	public void setThrottleLastIdlePosition(final int throttleLastPosition) {
+		throttleLastIdlePosition = throttleLastPosition;
+	}
 
-  public void setThrottleTrim(final int throttleTrim) {
-    this.throttleTrim = throttleTrim;
-  }
+	public void setThrottleTrim(final int throttleTrim) {
+		this.throttleTrim = throttleTrim;
+	}
 
 }

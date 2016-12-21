@@ -17,10 +17,6 @@
  */
 package gde.model.winged;
 
-import gde.model.AbstractBase;
-import gde.model.Switch;
-import gde.model.enums.SwitchFunction;
-
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -28,120 +24,124 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
+import gde.model.AbstractBase;
+import gde.model.Switch;
+import gde.model.enums.SwitchFunction;
+
 public class WingedMixer extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private SwitchFunction    function;
-  private Object[]          qualifier;
-  private Switch            sw;
-  private int[]             value;
+	private SwitchFunction function;
+	private Object[] qualifier;
+	private Switch sw;
+	private int[] value;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final WingedMixer other = (WingedMixer) obj;
-    if (function != other.function) {
-      return false;
-    }
-    if (!Arrays.equals(qualifier, other.qualifier)) {
-      return false;
-    }
-    if (sw == null) {
-      if (other.sw != null) {
-        return false;
-      }
-    } else if (!sw.equals(other.sw)) {
-      return false;
-    }
-    if (!Arrays.equals(value, other.value)) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final WingedMixer other = (WingedMixer) obj;
+		if (function != other.function) {
+			return false;
+		}
+		if (!Arrays.equals(qualifier, other.qualifier)) {
+			return false;
+		}
+		if (sw == null) {
+			if (other.sw != null) {
+				return false;
+			}
+		} else if (!sw.equals(other.sw)) {
+			return false;
+		}
+		if (!Arrays.equals(value, other.value)) {
+			return false;
+		}
+		return true;
+	}
 
-  public SwitchFunction getFunction() {
-    return function;
-  }
+	public SwitchFunction getFunction() {
+		return function;
+	}
 
-  @XmlID
-  @XmlAttribute
-  public String getId() {
-    final StringBuilder b = new StringBuilder();
+	@XmlID
+	@XmlAttribute
+	public String getId() {
+		final StringBuilder b = new StringBuilder();
 
-    b.append(function.name());
+		b.append(function.name());
 
-    if (qualifier != null) {
-      for (final Object q : qualifier) {
-        b.append("_"); //$NON-NLS-1$
+		if (qualifier != null) {
+			for (final Object q : qualifier) {
+				b.append("_"); //$NON-NLS-1$
 
-        if (q.getClass().isEnum()) {
-          try {
-            final Method m = q.getClass().getMethod("name"); //$NON-NLS-1$
-            b.append(m.invoke(q));
-          } catch (final Exception e) {
-            throw new RuntimeException(e);
-          }
-        } else {
-          b.append(q.toString());
-        }
-      }
-    }
+				if (q.getClass().isEnum()) {
+					try {
+						final Method m = q.getClass().getMethod("name"); //$NON-NLS-1$
+						b.append(m.invoke(q));
+					} catch (final Exception e) {
+						throw new RuntimeException(e);
+					}
+				} else {
+					b.append(q.toString());
+				}
+			}
+		}
 
-    return b.toString();
-  }
+		return b.toString();
+	}
 
-  public Object[] getQualifier() {
-    return qualifier;
-  }
+	public Object[] getQualifier() {
+		return qualifier;
+	}
 
-  @XmlIDREF
-  public Switch getSwitch() {
-    return sw;
-  }
+	@XmlIDREF
+	public Switch getSwitch() {
+		return sw;
+	}
 
-  public int[] getValue() {
-    return value;
-  }
+	public int[] getValue() {
+		return value;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (function == null ? 0 : function.hashCode());
-    result = prime * result + Arrays.hashCode(qualifier);
-    result = prime * result + (sw == null ? 0 : sw.hashCode());
-    result = prime * result + Arrays.hashCode(value);
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (function == null ? 0 : function.hashCode());
+		result = prime * result + Arrays.hashCode(qualifier);
+		result = prime * result + (sw == null ? 0 : sw.hashCode());
+		result = prime * result + Arrays.hashCode(value);
+		return result;
+	}
 
-  public void setFunction(final SwitchFunction function) {
-    this.function = function;
-  }
+	public void setFunction(final SwitchFunction function) {
+		this.function = function;
+	}
 
-  public void setQualifier(final Object[] qualifier) {
-    this.qualifier = qualifier;
-  }
+	public void setQualifier(final Object[] qualifier) {
+		this.qualifier = qualifier;
+	}
 
-  public void setSwitch(final Switch sw) {
-    this.sw = sw;
-  }
+	public void setSwitch(final Switch sw) {
+		this.sw = sw;
+	}
 
-  public void setValue(final int value) {
-    final int[] values = new int[1];
-    values[0] = value;
+	public void setValue(final int value) {
+		final int[] values = new int[1];
+		values[0] = value;
 
-    setValue(values);
-  }
+		setValue(values);
+	}
 
-  public void setValue(final int[] value) {
-    this.value = value;
-  }
+	public void setValue(final int[] value) {
+		this.value = value;
+	}
 }

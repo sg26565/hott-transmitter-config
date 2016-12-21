@@ -21,34 +21,34 @@ import java.util.ResourceBundle;
 
 /**
  * @author oli
- * 
+ *
  */
 public enum ReceiverType {
-  E06(1), E08(0), E12(5), E16(7);
+	E06(1), E08(0), E12(5), E16(7);
 
-  public static ReceiverType forId(final int id) {
-    for (final ReceiverType receiverType : ReceiverType.values()) {
-      if (receiverType.id == id) {
-        return receiverType;
-      }
-    }
+	public static ReceiverType forId(final int id) {
+		for (final ReceiverType receiverType : ReceiverType.values()) {
+			if (receiverType.id == id) {
+				return receiverType;
+			}
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  private final int id;
+	private final int id;
 
-  private ReceiverType(final int id) {
-    this.id = id;
-  }
+	private ReceiverType(final int id) {
+		this.id = id;
+	}
 
-  public int getId() {
-    return id;
-  }
+	public int getId() {
+		return id;
+	}
 
-  /** @return the locale-dependent message */
-  @Override
-  public String toString() {
-    return ResourceBundle.getBundle(getClass().getName()).getString(name());
-  }
+	/** @return the locale-dependent message */
+	@Override
+	public String toString() {
+		return ResourceBundle.getBundle(getClass().getName()).getString(name());
+	}
 }

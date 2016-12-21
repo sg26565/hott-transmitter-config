@@ -17,93 +17,93 @@
  */
 package gde.model;
 
-import gde.model.enums.MixerType;
-
 import java.util.Arrays;
 
 import javax.xml.bind.annotation.XmlIDREF;
 
+import gde.model.enums.MixerType;
+
 /**
  * Kreuzmischer
- * 
+ *
  * @author oli
  */
 public class DualMixer extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private Channel[]         channel;
-  private int               diff;
-  private int               number;
-  private MixerType         type;
+	private Channel[] channel;
+	private int diff;
+	private int number;
+	private MixerType type;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final DualMixer other = (DualMixer) obj;
-    if (!Arrays.equals(channel, other.channel)) {
-      return false;
-    }
-    if (diff != other.diff) {
-      return false;
-    }
-    if (number != other.number) {
-      return false;
-    }
-    if (type != other.type) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final DualMixer other = (DualMixer) obj;
+		if (!Arrays.equals(channel, other.channel)) {
+			return false;
+		}
+		if (diff != other.diff) {
+			return false;
+		}
+		if (number != other.number) {
+			return false;
+		}
+		if (type != other.type) {
+			return false;
+		}
+		return true;
+	}
 
-  @XmlIDREF
-  public Channel[] getChannel() {
-    return channel;
-  }
+	@XmlIDREF
+	public Channel[] getChannel() {
+		return channel;
+	}
 
-  public int getDiff() {
-    return diff;
-  }
+	public int getDiff() {
+		return diff;
+	}
 
-  public int getNumber() {
-    return number;
-  }
+	public int getNumber() {
+		return number;
+	}
 
-  public MixerType getType() {
-    return type;
-  }
+	public MixerType getType() {
+		return type;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + Arrays.hashCode(channel);
-    result = prime * result + diff;
-    result = prime * result + number;
-    result = prime * result + (type == null ? 0 : type.hashCode());
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(channel);
+		result = prime * result + diff;
+		result = prime * result + number;
+		result = prime * result + (type == null ? 0 : type.hashCode());
+		return result;
+	}
 
-  public void setChannel(final Channel[] channel) {
-    this.channel = channel;
-  }
+	public void setChannel(final Channel[] channel) {
+		this.channel = channel;
+	}
 
-  public void setDiff(final int diff) {
-    this.diff = diff;
-  }
+	public void setDiff(final int diff) {
+		this.diff = diff;
+	}
 
-  public void setNumber(final int number) {
-    this.number = number;
-  }
+	public void setNumber(final int number) {
+		this.number = number;
+	}
 
-  public void setType(final MixerType type) {
-    this.type = type;
-  }
+	public void setType(final MixerType type) {
+		this.type = type;
+	}
 }

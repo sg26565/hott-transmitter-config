@@ -18,8 +18,6 @@
 package gde.report.xml;
 
 import static org.junit.Assert.assertTrue;
-import gde.model.BaseModel;
-import gde.model.winged.WingedModel;
 
 import java.io.IOException;
 
@@ -27,17 +25,20 @@ import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
 
+import gde.model.BaseModel;
+import gde.model.winged.WingedModel;
+
 /**
  * @author oli
- * 
+ *
  */
 public class XMLReportTest {
-  @Test
-  public void testProcessXML() throws IOException, JAXBException {
-    final BaseModel model = new WingedModel();
-    model.setModelName("testModel1"); //$NON-NLS-1$
+	@Test
+	public void testProcessXML() throws IOException, JAXBException {
+		final BaseModel model = new WingedModel();
+		model.setModelName("testModel1"); //$NON-NLS-1$
 
-    final String data = XMLReport.generateXML(model);
-    assertTrue(data.contains("<modelName>testModel1</modelName>")); //$NON-NLS-1$
-  }
+		final String data = XMLReport.generateXML(model);
+		assertTrue(data.contains("<modelName>testModel1</modelName>")); //$NON-NLS-1$
+	}
 }

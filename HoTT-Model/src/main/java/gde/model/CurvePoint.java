@@ -23,81 +23,81 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author oli@treichels.de
  */
 public class CurvePoint extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private boolean           enabled;
-  private int               number;
-  private int               position;
-  private int               value;
+	private boolean enabled;
+	private int number;
+	private int position;
+	private int value;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final CurvePoint other = (CurvePoint) obj;
-    if (enabled != other.enabled) {
-      return false;
-    }
-    if (number != other.number) {
-      return false;
-    }
-    if (position != other.position) {
-      return false;
-    }
-    if (value != other.value) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final CurvePoint other = (CurvePoint) obj;
+		if (enabled != other.enabled) {
+			return false;
+		}
+		if (number != other.number) {
+			return false;
+		}
+		if (position != other.position) {
+			return false;
+		}
+		if (value != other.value) {
+			return false;
+		}
+		return true;
+	}
 
-  @XmlAttribute
-  public int getNumber() {
-    return number;
-  }
+	@XmlAttribute
+	public int getNumber() {
+		return number;
+	}
 
-  public int getPosition() {
-    return position;
-  }
+	public int getPosition() {
+		return position;
+	}
 
-  public int getValue() {
-    return value;
-  }
+	public int getValue() {
+		return value;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (enabled ? 1231 : 1237);
-    result = prime * result + number;
-    result = prime * result + position;
-    result = prime * result + value;
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (enabled ? 1231 : 1237);
+		result = prime * result + number;
+		result = prime * result + position;
+		result = prime * result + value;
+		return result;
+	}
 
-  public boolean isEnabled() {
-    return enabled;
-  }
+	public boolean isEnabled() {
+		return enabled;
+	}
 
-  public void setEnabled(final boolean enabled) {
-    this.enabled = enabled;
-  }
+	public void setEnabled(final boolean enabled) {
+		this.enabled = enabled;
+	}
 
-  public void setNumber(final int number) {
-    this.number = number;
-  }
+	public void setNumber(final int number) {
+		this.number = number;
+	}
 
-  public void setPosition(final int position) {
-    this.position = position;
-  }
+	public void setPosition(final int position) {
+		this.position = position;
+	}
 
-  public void setValue(final int value) {
-    this.value = value;
-  }
+	public void setValue(final int value) {
+		this.value = value;
+	}
 }

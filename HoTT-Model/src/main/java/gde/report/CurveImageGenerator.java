@@ -28,7 +28,7 @@ import gde.model.Curve;
  * @author oli@treichels.de
  */
 public interface CurveImageGenerator {
-    public static final String PREFIX = "data:image/png;base64,"; //$NON-NLS-1$
+	public static final String PREFIX = "data:image/png;base64,"; //$NON-NLS-1$
 
-    public abstract String getImageSource(final Curve curve, final float scale, final boolean description);
+	public abstract String getImageSource(final Curve curve, final float scale, final boolean description);
 }

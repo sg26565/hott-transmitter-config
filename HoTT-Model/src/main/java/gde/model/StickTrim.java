@@ -17,102 +17,102 @@
  */
 package gde.model;
 
-import gde.model.enums.TrimMode;
-
 import javax.xml.bind.annotation.XmlAttribute;
+
+import gde.model.enums.TrimMode;
 
 /**
  * @author oli
  */
 public class StickTrim extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private int               channel;
-  private int               increment;
-  private TrimMode          mode;
-  private int               timeHigh;
-  private int               timeLow;
+	private int channel;
+	private int increment;
+	private TrimMode mode;
+	private int timeHigh;
+	private int timeLow;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final StickTrim other = (StickTrim) obj;
-    if (channel != other.channel) {
-      return false;
-    }
-    if (increment != other.increment) {
-      return false;
-    }
-    if (mode != other.mode) {
-      return false;
-    }
-    if (timeHigh != other.timeHigh) {
-      return false;
-    }
-    if (timeLow != other.timeLow) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final StickTrim other = (StickTrim) obj;
+		if (channel != other.channel) {
+			return false;
+		}
+		if (increment != other.increment) {
+			return false;
+		}
+		if (mode != other.mode) {
+			return false;
+		}
+		if (timeHigh != other.timeHigh) {
+			return false;
+		}
+		if (timeLow != other.timeLow) {
+			return false;
+		}
+		return true;
+	}
 
-  @XmlAttribute
-  public int getChannel() {
-    return channel;
-  }
+	@XmlAttribute
+	public int getChannel() {
+		return channel;
+	}
 
-  public int getIncrement() {
-    return increment;
-  }
+	public int getIncrement() {
+		return increment;
+	}
 
-  public TrimMode getMode() {
-    return mode;
-  }
+	public TrimMode getMode() {
+		return mode;
+	}
 
-  public int getTimeHigh() {
-    return timeHigh;
-  }
+	public int getTimeHigh() {
+		return timeHigh;
+	}
 
-  public int getTimeLow() {
-    return timeLow;
-  }
+	public int getTimeLow() {
+		return timeLow;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + channel;
-    result = prime * result + increment;
-    result = prime * result + (mode == null ? 0 : mode.hashCode());
-    result = prime * result + timeHigh;
-    result = prime * result + timeLow;
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + channel;
+		result = prime * result + increment;
+		result = prime * result + (mode == null ? 0 : mode.hashCode());
+		result = prime * result + timeHigh;
+		result = prime * result + timeLow;
+		return result;
+	}
 
-  public void setChannel(final int channel) {
-    this.channel = channel;
-  }
+	public void setChannel(final int channel) {
+		this.channel = channel;
+	}
 
-  public void setIncrement(final int increment) {
-    this.increment = increment;
-  }
+	public void setIncrement(final int increment) {
+		this.increment = increment;
+	}
 
-  public void setMode(final TrimMode mode) {
-    this.mode = mode;
-  }
+	public void setMode(final TrimMode mode) {
+		this.mode = mode;
+	}
 
-  public void setTimeHigh(final int timeHigh) {
-    this.timeHigh = timeHigh;
-  }
+	public void setTimeHigh(final int timeHigh) {
+		this.timeHigh = timeHigh;
+	}
 
-  public void setTimeLow(final int timeLow) {
-    this.timeLow = timeLow;
-  }
+	public void setTimeLow(final int timeLow) {
+		this.timeLow = timeLow;
+	}
 }

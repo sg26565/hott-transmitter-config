@@ -23,31 +23,31 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum ModelType {
-  Helicopter(0), Unknown(-1), Winged(1);
+	Helicopter(0), Unknown(-1), Winged(1);
 
-  public static ModelType forId(final int id) {
-    for (final ModelType t : ModelType.values()) {
-      if (id == t.id) {
-        return t;
-      }
-    }
+	public static ModelType forId(final int id) {
+		for (final ModelType t : ModelType.values()) {
+			if (id == t.id) {
+				return t;
+			}
+		}
 
-    return Unknown;
-  }
+		return Unknown;
+	}
 
-  private final int id;
+	private final int id;
 
-  private ModelType(final int id) {
-    this.id = id;
-  }
+	private ModelType(final int id) {
+		this.id = id;
+	}
 
-  public int getId() {
-    return id;
-  }
+	public int getId() {
+		return id;
+	}
 
-  /** @return the locale-dependent message */
-  @Override
-  public String toString() {
-    return ResourceBundle.getBundle(getClass().getName()).getString(name());
-  }
+	/** @return the locale-dependent message */
+	@Override
+	public String toString() {
+		return ResourceBundle.getBundle(getClass().getName()).getString(name());
+	}
 }

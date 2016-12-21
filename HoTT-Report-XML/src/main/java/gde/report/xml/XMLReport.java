@@ -18,14 +18,6 @@
 
 package gde.report.xml;
 
-import gde.model.BaseModel;
-import gde.model.CurveMixer;
-import gde.model.LinearMixer;
-import gde.model.helicopter.HelicopterModel;
-import gde.model.helicopter.HelicopterPhase;
-import gde.model.winged.WingedModel;
-import gde.model.winged.WingedPhase;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -37,37 +29,46 @@ import javax.xml.bind.SchemaOutputResolver;
 import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamResult;
 
+import gde.model.BaseModel;
+import gde.model.CurveMixer;
+import gde.model.LinearMixer;
+import gde.model.helicopter.HelicopterModel;
+import gde.model.helicopter.HelicopterPhase;
+import gde.model.winged.WingedModel;
+import gde.model.winged.WingedPhase;
+
 /**
  * @author oli@treichels.de
  */
 public class XMLReport {
-  private static final JAXBContext CTX;
-  private static final Marshaller  MARSHALLER;
+	private static final JAXBContext CTX;
+	private static final Marshaller MARSHALLER;
 
-  static {
-    // setup JAXB
-    try {
-      CTX = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class, LinearMixer.class, CurveMixer.class);
-      MARSHALLER = CTX.createMarshaller();
-      MARSHALLER.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-    } catch (final JAXBException e) {
-      throw new RuntimeException(e);
-    }
-  }
+	static {
+		// setup JAXB
+		try {
+			CTX = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class, LinearMixer.class,
+					CurveMixer.class);
+			MARSHALLER = CTX.createMarshaller();
+			MARSHALLER.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		} catch (final JAXBException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-  public static String generateXML(final BaseModel model) throws JAXBException {
-    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    MARSHALLER.marshal(model, baos);
-    return baos.toString();
-  }
+	public static String generateXML(final BaseModel model) throws JAXBException {
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		MARSHALLER.marshal(model, baos);
+		return baos.toString();
+	}
 
-  public static void generateXsd(final File file) throws IOException {
-    CTX.generateSchema(new SchemaOutputResolver() {
-      @Override
-      public Result createOutput(final String namespaceUri, final String suggestedFileName) throws IOException {
-        final StreamResult result = new StreamResult(file);
-        return result;
-      }
-    });
-  }
+	public static void generateXsd(final File file) throws IOException {
+		CTX.generateSchema(new SchemaOutputResolver() {
+			@Override
+			public Result createOutput(final String namespaceUri, final String suggestedFileName) throws IOException {
+				final StreamResult result = new StreamResult(file);
+				return result;
+			}
+		});
+	}
 }

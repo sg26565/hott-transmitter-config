@@ -22,11 +22,11 @@ import gde.report.CurveImageGenerator;
 
 /**
  * @author oli
- * 
+ *
  */
 public class DummyCurveImageGenerator implements CurveImageGenerator {
-  @Override
-  public String getImageSource(final Curve curve, final float scale, final boolean description) {
-    return ""; //$NON-NLS-1$
-  }
+	@Override
+	public String getImageSource(final Curve curve, final float scale, final boolean description) {
+		return ""; //$NON-NLS-1$
+	}
 }

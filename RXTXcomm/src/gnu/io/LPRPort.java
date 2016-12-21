@@ -27,7 +27,7 @@
 |   any confusion about linking to RXTX.   We want to allow in part what
 |   section 5, paragraph 2 of the LGPL does not permit in the special
 |   case of linking over a controlled interface.  The intent is to add a
-|   Java Specification Request or standards body defined interface in the 
+|   Java Specification Request or standards body defined interface in the
 |   future as another exception but one is not currently available.
 |
 |   http://www.fsf.org/licenses/gpl-faq.html#LinkingOverControlledInterface
@@ -57,102 +57,179 @@
 --------------------------------------------------------------------------*/
 package gnu.io;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
 import java.util.TooManyListenersException;
-import java.lang.Math;
 
 /**
-  * LPRPort
-  */
+ * LPRPort
+ */
 
-final class LPRPort extends ParallelPort
-{
+final class LPRPort extends ParallelPort {
+
+	class MonitorThread extends Thread {
+		private boolean monError = false;
+		private boolean monBuffer = false;
+
+		MonitorThread() {
+		}
+
+		@Override
+		public void run() {
+			eventLoop();
+			yield();
+		}
+	}
+
+	/** Inner class for ParallelInputStream */
+	class ParallelInputStream extends InputStream {
+		@Override
+		public int available() throws IOException {
+			if (fd == 0) {
+				throw new IOException();
+			}
+			return nativeavailable();
+		}
+
+		@Override
+		public int read() throws IOException {
+			if (fd == 0) {
+				throw new IOException();
+			}
+			return readByte();
+		}
+
+		@Override
+		public int read(final byte b[]) throws IOException {
+			if (fd == 0) {
+				throw new IOException();
+			}
+			return readArray(b, 0, b.length);
+		}
+
+		@Override
+		public int read(final byte b[], final int off, final int len) throws IOException {
+			if (fd == 0) {
+				throw new IOException();
+			}
+			return readArray(b, off, len);
+		}
+	}
+
+	/** Inner class for ParallelOutputStream */
+	class ParallelOutputStream extends OutputStream {
+		@Override
+		public synchronized void flush() throws IOException {
+			if (fd == 0) {
+				throw new IOException();
+				// drain();
+			}
+		}
+
+		@Override
+		public synchronized void write(final byte b[]) throws IOException {
+			if (fd == 0) {
+				throw new IOException();
+			}
+			writeArray(b, 0, b.length);
+		}
+
+		@Override
+		public synchronized void write(final byte b[], final int off, final int len) throws IOException {
+			if (fd == 0) {
+				throw new IOException();
+			}
+			writeArray(b, off, len);
+		}
+
+		@Override
+		public synchronized void write(final int b) throws IOException {
+			if (fd == 0) {
+				throw new IOException();
+			}
+			writeByte(b);
+		}
+	}
 
 	static {
-		System.loadLibrary( "rxtxParallel" );
+		System.loadLibrary("rxtxParallel");
 		Initialize();
 	}
+	private final static boolean debug = false;
 
 	/** Initialize the native library */
 	private native static void Initialize();
-	private final static boolean debug = false;
-
-	/** Open the named port */
-	public LPRPort( String name ) throws PortInUseException
-	{
-		if (debug) System.out.println("LPRPort:LPRPort("+name+")");
-	/* 
-	   commapi/javadocs/API_users_guide.html specifies that whenever
-	   an application tries to open a port in use by another application
-	   the PortInUseException will be thrown
-
-	   I know some didnt like it this way but I'm not sure how to avoid
-	   it.  We will just be writing to a bogus fd if we catch the 
-	   exeption
-
-	   Trent
-	*/
-	//	try {
-			fd = open( name );
-			this.name = name;
-	//	} catch ( PortInUseException e ){}
-		if (debug)
-			System.out.println("LPRPort:LPRPort("+name+") fd = " +
-				fd);
-	}
-	private synchronized native int open( String name )
-		throws PortInUseException;
 
 	/** File descriptor */
 	private int fd;
-
 	/** Output stream */
 	private final ParallelOutputStream out = new ParallelOutputStream();
-	public OutputStream getOutputStream() { return out; }
 
 	/** Input stream */
 	private final ParallelInputStream in = new ParallelInputStream();
-	public InputStream getInputStream() { return in; }
+	/**
+	 * return current mode LPT_MODE_SPP, LPT_MODE_PS2, LPT_MODE_EPP, or
+	 * LPT_MODE_ECP
+	 */
+	private int lprmode = LPT_MODE_ANY;
 
-	/** return current mode LPT_MODE_SPP, LPT_MODE_PS2, LPT_MODE_EPP,
-	    or LPT_MODE_ECP */
-	private int lprmode=LPT_MODE_ANY;
-	public int getMode() { return lprmode; }
-	public int setMode(int mode) throws UnsupportedCommOperationException
-	{
-		try {
-			setLPRMode(mode);
-		} catch(UnsupportedCommOperationException e) {
-			e.printStackTrace();
-			return -1;
+	/** Receive timeout control */
+	private int timeout = 0;
+	/** Receive threshold control */
+	private int threshold = 1;
+	/** Parallel Port Event listener */
+	private ParallelPortEventListener PPEventListener;
+	/** Thread to monitor data */
+	private MonitorThread monThread;
+
+	/** Open the named port */
+	public LPRPort(final String name) throws PortInUseException {
+		if (debug) {
+			System.out.println("LPRPort:LPRPort(" + name + ")");
 		}
-		lprmode = mode;
-		return(0);
+		/*
+		 * commapi/javadocs/API_users_guide.html specifies that whenever an
+		 * application tries to open a port in use by another application the
+		 * PortInUseException will be thrown
+		 * 
+		 * I know some didnt like it this way but I'm not sure how to avoid it.
+		 * We will just be writing to a bogus fd if we catch the exeption
+		 * 
+		 * Trent
+		 */
+		// try {
+		fd = open(name);
+		this.name = name;
+		// } catch ( PortInUseException e ){}
+		if (debug) {
+			System.out.println("LPRPort:LPRPort(" + name + ") fd = " + fd);
+		}
 	}
-	public void restart()
-	{
-		System.out.println("restart() is not implemented");
+
+	/** Add an event listener */
+	@Override
+	public synchronized void addEventListener(final ParallelPortEventListener lsnr) throws TooManyListenersException {
+		if (PPEventListener != null) {
+			throw new TooManyListenersException();
+		}
+		PPEventListener = lsnr;
+		monThread = new MonitorThread();
+		monThread.start();
 	}
-	public void suspend()
-	{
-		System.out.println("suspend() is not implemented");
+
+	public boolean checkMonitorThread() {
+		if (monThread != null) {
+			return monThread.isInterrupted();
+		}
+		return true;
 	}
-	
-	public native boolean setLPRMode(int mode)
-		throws UnsupportedCommOperationException;
-	public native boolean isPaperOut();
-	public native boolean isPrinterBusy();
-	public native boolean isPrinterError();
-	public native boolean isPrinterSelected();
-	public native boolean isPrinterTimedOut();
-	
-	/** Close the port */
-	private native void nativeClose();
-	public synchronized void close()
-	{
-		if( fd < 0 ) return;
+
+	@Override
+	public synchronized void close() {
+		if (fd < 0) {
+			return;
+		}
 		nativeClose();
 		super.close();
 		removeEventListener();
@@ -160,217 +237,239 @@ final class LPRPort extends ParallelPort
 		fd = 0;
 		Runtime.getRuntime().gc();
 	}
-	/** Receive framing control */
-	public void enableReceiveFraming( int f )
-		throws UnsupportedCommOperationException
-	{
-		throw new UnsupportedCommOperationException( "Not supported" );
+
+	@Override
+	public void disableReceiveFraming() {
 	}
-	public void disableReceiveFraming() {}
-	public boolean isReceiveFramingEnabled() { return false; }
-	public int getReceiveFramingByte() { return 0; }
 
-	/** Receive timeout control */
-	private int timeout = 0;
-	public void enableReceiveTimeout( int t )
-	{
-		if( t > 0 ) timeout = t;
-		else timeout = 0;
+	@Override
+	public void disableReceiveThreshold() {
+		threshold = 1;
 	}
-	public void disableReceiveTimeout() { timeout = 0; }
-	public boolean isReceiveTimeoutEnabled() { return timeout > 0; }
-	public int getReceiveTimeout() { return timeout; }
 
-	/** Receive threshold control */
-	private int threshold = 1;
-	public void enableReceiveThreshold( int t )
-	{
-		if( t > 1 ) threshold = t;
-		else threshold = 1;
+	@Override
+	public void disableReceiveTimeout() {
+		timeout = 0;
 	}
-	public void disableReceiveThreshold() { threshold = 1; }
-	public int getReceiveThreshold() { return threshold; }
-	public boolean isReceiveThresholdEnabled() { return threshold > 1; };
 
-	/**
-		Input/output buffers
-		These are native stubs...
-	*/
-
-	public native void setInputBufferSize( int size );
-	public native int getInputBufferSize();
-	public native void setOutputBufferSize( int size );
-	public native int getOutputBufferSize();
-
-	public native int getOutputBufferFree();
-	/** Write to the port */
-	protected native void writeByte( int b ) throws IOException;
-	protected native void writeArray( byte b[], int off, int len )
-		throws IOException;
 	protected native void drain() throws IOException;
 
-	/** LPRPort read methods */
-	protected native int nativeavailable() throws IOException;
-	protected native int readByte() throws IOException;
-	protected native int readArray( byte b[], int off, int len )
-		throws IOException;
+	/** Receive framing control */
+	@Override
+	public void enableReceiveFraming(final int f) throws UnsupportedCommOperationException {
+		throw new UnsupportedCommOperationException("Not supported");
+	}
 
-	/** Parallel Port Event listener */
-	private ParallelPortEventListener PPEventListener;
+	@Override
+	public void enableReceiveThreshold(final int t) {
+		if (t > 1) {
+			threshold = t;
+		} else {
+			threshold = 1;
+		}
+	}
 
-	/** Thread to monitor data */
-	private MonitorThread monThread;
+	@Override
+	public void enableReceiveTimeout(final int t) {
+		if (t > 0) {
+			timeout = t;
+		} else {
+			timeout = 0;
+		}
+	}
 
 	/** Process ParallelPortEvents */
 	native void eventLoop();
 
-	public boolean checkMonitorThread() 
-	{
-		if(monThread != null)
-			return monThread.isInterrupted();
-		return(true);
-	}
-
-	public synchronized boolean sendEvent( int event, boolean state )
-	{
-		/* Let the native side know its time to die */
-
-		if ( fd == 0 || PPEventListener == null || monThread == null )
-		{
-			return(true);
-		}
-
-		switch( event )
-		{
-			case ParallelPortEvent.PAR_EV_BUFFER:
-				if(  monThread.monBuffer ) break;
-				return(false);
-			case ParallelPortEvent.PAR_EV_ERROR:
-				if(  monThread.monError ) break;
-				return(false);
-			default:
-				System.err.println("unknown event:"+event);
-				return(false);
-		}
-		ParallelPortEvent e = new ParallelPortEvent(this, event, !state,
-			state );
-		if( PPEventListener != null )
-			PPEventListener.parallelEvent( e );
-		if ( fd == 0 || PPEventListener == null || monThread == null )
-		{
-			return(true);
-		}
-		else
-		{
-			try{Thread.sleep(50);} catch(Exception exc){}
-			return(false);
+	/** Finalize the port */
+	@Override
+	protected void finalize() {
+		if (fd > 0) {
+			close();
 		}
 	}
 
-	/** Add an event listener */
-	public synchronized void addEventListener(
-		ParallelPortEventListener lsnr )
-		throws TooManyListenersException
-	{
-		if( PPEventListener != null )
-			throw new TooManyListenersException();
-		PPEventListener = lsnr;
-		monThread = new MonitorThread();
-		monThread.start();
+	@Override
+	public native int getInputBufferSize();
+
+	@Override
+	public InputStream getInputStream() {
+		return in;
 	}
+
+	@Override
+	public int getMode() {
+		return lprmode;
+	}
+
+	@Override
+	public native int getOutputBufferFree();
+
+	@Override
+	public native int getOutputBufferSize();
+
+	@Override
+	public OutputStream getOutputStream() {
+		return out;
+	}
+
+	@Override
+	public int getReceiveFramingByte() {
+		return 0;
+	}
+
+	@Override
+	public int getReceiveThreshold() {
+		return threshold;
+	}
+
+	@Override
+	public int getReceiveTimeout() {
+		return timeout;
+	}
+
+	@Override
+	public native boolean isPaperOut();;
+
+	@Override
+	public native boolean isPrinterBusy();
+
+	@Override
+	public native boolean isPrinterError();
+
+	@Override
+	public native boolean isPrinterSelected();
+
+	@Override
+	public native boolean isPrinterTimedOut();
+
+	@Override
+	public boolean isReceiveFramingEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isReceiveThresholdEnabled() {
+		return threshold > 1;
+	}
+
+	@Override
+	public boolean isReceiveTimeoutEnabled() {
+		return timeout > 0;
+	}
+
+	/** LPRPort read methods */
+	protected native int nativeavailable() throws IOException;
+
+	/** Close the port */
+	private native void nativeClose();
+
+	@Override
+	public synchronized void notifyOnBuffer(final boolean enable) {
+		System.out.println("notifyOnBuffer is not implemented yet");
+		monThread.monBuffer = enable;
+	}
+
+	/**
+	 * Note: these have to be separate boolean flags because the
+	 * ParallelPortEvent constants are NOT bit-flags, they are just defined as
+	 * integers from 1 to 10 -DPL
+	 */
+	@Override
+	public synchronized void notifyOnError(final boolean enable) {
+		System.out.println("notifyOnError is not implemented yet");
+		monThread.monError = enable;
+	}
+
+	private synchronized native int open(String name) throws PortInUseException;
+
+	protected native int readArray(byte b[], int off, int len) throws IOException;
+
+	protected native int readByte() throws IOException;
 
 	/** Remove the parallel port event listener */
-	public synchronized void removeEventListener()
-	{
+	@Override
+	public synchronized void removeEventListener() {
 		PPEventListener = null;
-		if( monThread != null )
-		{
+		if (monThread != null) {
 			monThread.interrupt();
 			monThread = null;
 		}
 	}
 
-	/** Note: these have to be separate boolean flags because the
-	   ParallelPortEvent constants are NOT bit-flags, they are just
-	   defined as integers from 1 to 10  -DPL */
-	public synchronized void notifyOnError( boolean enable )
-	{
-		System.out.println("notifyOnError is not implemented yet");
-		monThread.monError = enable;
-	}
-	public synchronized void notifyOnBuffer( boolean enable )
-	{
-		System.out.println("notifyOnBuffer is not implemented yet");
-		monThread.monBuffer = enable;
+	@Override
+	public void restart() {
+		System.out.println("restart() is not implemented");
 	}
 
+	public synchronized boolean sendEvent(final int event, final boolean state) {
+		/* Let the native side know its time to die */
 
-	/** Finalize the port */
-	protected void finalize()
-	{
-		if ( fd > 0 ) close();
-	}
+		if (fd == 0 || PPEventListener == null || monThread == null) {
+			return true;
+		}
 
-	/** Inner class for ParallelOutputStream */
-	class ParallelOutputStream extends OutputStream
-	{
-		public synchronized void write( int b ) throws IOException
-		{
-			if ( fd == 0 ) throw new IOException();
-			writeByte( b );
+		switch (event) {
+		case ParallelPortEvent.PAR_EV_BUFFER:
+			if (monThread.monBuffer) {
+				break;
+			}
+			return false;
+		case ParallelPortEvent.PAR_EV_ERROR:
+			if (monThread.monError) {
+				break;
+			}
+			return false;
+		default:
+			System.err.println("unknown event:" + event);
+			return false;
 		}
-		public synchronized void write( byte b[] ) throws IOException
-		{
-			if ( fd == 0 ) throw new IOException();
-			writeArray( b, 0, b.length );
+		final ParallelPortEvent e = new ParallelPortEvent(this, event, !state, state);
+		if (PPEventListener != null) {
+			PPEventListener.parallelEvent(e);
 		}
-		public synchronized void write( byte b[], int off, int len )
-			throws IOException
-		{
-			if ( fd == 0 ) throw new IOException();
-			writeArray( b, off, len );
-		}
-		public synchronized void flush() throws IOException
-		{
-			if ( fd == 0 ) throw new IOException();
-			//drain();
+		if (fd == 0 || PPEventListener == null || monThread == null) {
+			return true;
+		} else {
+			try {
+				Thread.sleep(50);
+			} catch (final Exception exc) {
+			}
+			return false;
 		}
 	}
 
-	/** Inner class for ParallelInputStream */
-	class ParallelInputStream extends InputStream
-	{
-		public int read() throws IOException
-		{
-			if ( fd == 0 ) throw new IOException();
-			return readByte();
+	/**
+	 * Input/output buffers These are native stubs...
+	 */
+
+	@Override
+	public native void setInputBufferSize(int size);
+
+	public native boolean setLPRMode(int mode) throws UnsupportedCommOperationException;
+
+	@Override
+	public int setMode(final int mode) throws UnsupportedCommOperationException {
+		try {
+			setLPRMode(mode);
+		} catch (final UnsupportedCommOperationException e) {
+			e.printStackTrace();
+			return -1;
 		}
-		public int read( byte b[] ) throws IOException
-		{
-			if ( fd == 0 ) throw new IOException();
-			return readArray( b, 0, b.length );
-		}
-		public int read( byte b[], int off, int len )
-			throws IOException
-		{
-			if ( fd == 0 ) throw new IOException();
-			return readArray( b, off, len );
-		}
-		public int available() throws IOException
-		{
-			if ( fd == 0 ) throw new IOException();
-			return nativeavailable();
-		}
+		lprmode = mode;
+		return 0;
 	}
-class MonitorThread extends Thread
-{
-	private boolean monError = false;
-	private boolean monBuffer = false;
-		MonitorThread() { }
-		public void run()
-		{
-			eventLoop();
-			yield();
-		}
+
+	@Override
+	public native void setOutputBufferSize(int size);
+
+	@Override
+	public void suspend() {
+		System.out.println("suspend() is not implemented");
 	}
+
+	protected native void writeArray(byte b[], int off, int len) throws IOException;
+
+	/** Write to the port */
+	protected native void writeByte(int b) throws IOException;
 }

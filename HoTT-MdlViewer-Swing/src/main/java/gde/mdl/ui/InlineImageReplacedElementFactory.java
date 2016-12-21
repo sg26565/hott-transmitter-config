@@ -36,64 +36,68 @@ import org.xhtmlrenderer.swing.ImageReplacedElement;
  * @author oli@treichels.de
  */
 public class InlineImageReplacedElementFactory implements ReplacedElementFactory {
-  private static final String PREFIX = "data:image/png;base64,"; //$NON-NLS-1$
+	private static final String PREFIX = "data:image/png;base64,"; //$NON-NLS-1$
 
-  @Override
-  public ReplacedElement createReplacedElement(final LayoutContext c, final BlockBox box, final UserAgentCallback uac, final int cssWidth, final int cssHeight) {
-    final Element elem = box.getElement();
+	@Override
+	public ReplacedElement createReplacedElement(final LayoutContext c, final BlockBox box, final UserAgentCallback uac, final int cssWidth,
+			final int cssHeight) {
+		final Element elem = box.getElement();
 
-    // check if we have an inline png image
-    if (!(elem != null && elem.getNodeName().equals("img") && elem.hasAttribute("src") && elem.getAttribute("src").startsWith(PREFIX))) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-      return null;
-    }
+		// check if we have an inline png image
+		if (!(elem != null && elem.getNodeName().equals("img") && elem.hasAttribute("src") && elem.getAttribute("src").startsWith(PREFIX))) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			return null;
+		}
 
-    int width = 0;
-    int height = 0;
+		int width = 0;
+		int height = 0;
 
-    if (cssWidth > 0) {
-      width = cssWidth;
-    }
-    if (cssHeight > 0) {
-      height = cssHeight;
-    }
+		if (cssWidth > 0) {
+			width = cssWidth;
+		}
+		if (cssHeight > 0) {
+			height = cssHeight;
+		}
 
-    if (elem.hasAttribute("width")) { //$NON-NLS-1$
-      width = Integer.parseInt(elem.getAttribute("width")); //$NON-NLS-1$
-    }
+		if (elem.hasAttribute("width")) { //$NON-NLS-1$
+			width = Integer.parseInt(elem.getAttribute("width")); //$NON-NLS-1$
+		}
 
-    if (elem.hasAttribute("height")) { //$NON-NLS-1$
-      height = Integer.parseInt(elem.getAttribute("height")); //$NON-NLS-1$
-    }
+		if (elem.hasAttribute("height")) { //$NON-NLS-1$
+			height = Integer.parseInt(elem.getAttribute("height")); //$NON-NLS-1$
+		}
 
-    final String inlineData = elem.getAttribute("src").substring(PREFIX.length()); // strip //$NON-NLS-1$
-                                                                                   // leading
-                                                                                   // "data:image/png;base64,"
+		final String inlineData = elem.getAttribute("src").substring(PREFIX.length()); // strip //$NON-NLS-1$
+																						// leading
+																						// "data:image/png;base64,"
 
-    try {
-      final ByteArrayInputStream is = new ByteArrayInputStream(Base64.decodeBase64(inlineData));
-      final BufferedImage image = ImageIO.read(is);
+		try {
+			final ByteArrayInputStream is = new ByteArrayInputStream(Base64.decodeBase64(inlineData));
+			final BufferedImage image = ImageIO.read(is);
 
-      if (width == 0) {
-        width = image.getWidth();
-      }
+			if (width == 0) {
+				width = image.getWidth();
+			}
 
-      if (height == 0) {
-        height = image.getHeight();
-      }
+			if (height == 0) {
+				height = image.getHeight();
+			}
 
-      final ImageReplacedElement element = new ImageReplacedElement(image, width, height);
-      return element;
-    } catch (final Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
+			final ImageReplacedElement element = new ImageReplacedElement(image, width, height);
+			return element;
+		} catch (final Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-  @Override
-  public void remove(final Element e) {}
+	@Override
+	public void remove(final Element e) {
+	}
 
-  @Override
-  public void reset() {}
+	@Override
+	public void reset() {
+	}
 
-  @Override
-  public void setFormSubmissionListener(final FormSubmissionListener listener) {}
+	@Override
+	public void setFormSubmissionListener(final FormSubmissionListener listener) {
+	}
 }

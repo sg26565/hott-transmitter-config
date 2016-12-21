@@ -17,36 +17,36 @@
  */
 package gde.model;
 
-import gde.mdl.messages.Messages;
-
 import java.io.IOException;
+
+import gde.mdl.messages.Messages;
 
 /**
  * @author oli@treichels.de
  */
 public class HoTTException extends IOException {
-  private static final long serialVersionUID = 1L;
-  private Object[]          args;
+	private static final long serialVersionUID = 1L;
+	private Object[] args;
 
-  public HoTTException() {
-    super();
-  }
+	public HoTTException() {
+		super();
+	}
 
-  public HoTTException(final String message, final Object... args) {
-    this(message, null, args);
-  }
+	public HoTTException(final String message, final Object... args) {
+		this(message, null, args);
+	}
 
-  public HoTTException(final String format, final Throwable cause, final Object... args) {
-    super(format, cause);
-    this.args = args;
-  }
+	public HoTTException(final String format, final Throwable cause, final Object... args) {
+		super(format, cause);
+		this.args = args;
+	}
 
-  public HoTTException(final Throwable cause) {
-    this(null, cause);
-  }
+	public HoTTException(final Throwable cause) {
+		this(null, cause);
+	}
 
-  @Override
-  public String getMessage() {
-    return Messages.getString(super.getMessage(), args);
-  }
+	@Override
+	public String getMessage() {
+		return Messages.getString(super.getMessage(), args);
+	}
 }

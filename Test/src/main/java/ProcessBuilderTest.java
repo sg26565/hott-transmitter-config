@@ -22,9 +22,9 @@ import java.io.IOException;
  * @author oli
  */
 public class ProcessBuilderTest {
-  public static void main(final String[] args) throws IOException {
-    final ProcessBuilder pb = new ProcessBuilder("google-chrome", "http://docs.oracle.com/javase/7/docs/api/index.html?java/lang/System.html");
+	public static void main(final String[] args) throws IOException {
+		final ProcessBuilder pb = new ProcessBuilder("google-chrome", "http://docs.oracle.com/javase/7/docs/api/index.html?java/lang/System.html");
 
-    pb.start();
-  }
+		pb.start();
+	}
 }

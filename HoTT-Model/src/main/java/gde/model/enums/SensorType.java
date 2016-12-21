@@ -21,5 +21,5 @@ package gde.model.enums;
  * @author oli@treichels.de
  */
 public enum SensorType {
-  ElectricAirModule, ESC, GeneralAirModule, GeneralModule, GPS, None, Receiver, Vario
+	ElectricAirModule, ESC, GeneralAirModule, GeneralModule, GPS, None, Receiver, Vario
 }

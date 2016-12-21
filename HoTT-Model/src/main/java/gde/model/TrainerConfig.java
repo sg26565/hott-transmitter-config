@@ -25,121 +25,121 @@ import javax.xml.bind.annotation.XmlIDREF;
  * @author oli@treichels.de
  */
 public class TrainerConfig extends AbstractBase {
-  private static final long   serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private Collection<Channel> pupilChannel;
-  private long                pupilId;
-  private Switch              sw;
-  private Collection<Channel> trainerChannel;
-  private long                trainerId;
-  private boolean             wireless;
+	private Collection<Channel> pupilChannel;
+	private long pupilId;
+	private Switch sw;
+	private Collection<Channel> trainerChannel;
+	private long trainerId;
+	private boolean wireless;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final TrainerConfig other = (TrainerConfig) obj;
-    if (pupilChannel == null) {
-      if (other.pupilChannel != null) {
-        return false;
-      }
-    } else if (!pupilChannel.equals(other.pupilChannel)) {
-      return false;
-    }
-    if (pupilId != other.pupilId) {
-      return false;
-    }
-    if (sw == null) {
-      if (other.sw != null) {
-        return false;
-      }
-    } else if (!sw.equals(other.sw)) {
-      return false;
-    }
-    if (trainerChannel == null) {
-      if (other.trainerChannel != null) {
-        return false;
-      }
-    } else if (!trainerChannel.equals(other.trainerChannel)) {
-      return false;
-    }
-    if (trainerId != other.trainerId) {
-      return false;
-    }
-    if (wireless != other.wireless) {
-      return false;
-    }
-    return true;
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final TrainerConfig other = (TrainerConfig) obj;
+		if (pupilChannel == null) {
+			if (other.pupilChannel != null) {
+				return false;
+			}
+		} else if (!pupilChannel.equals(other.pupilChannel)) {
+			return false;
+		}
+		if (pupilId != other.pupilId) {
+			return false;
+		}
+		if (sw == null) {
+			if (other.sw != null) {
+				return false;
+			}
+		} else if (!sw.equals(other.sw)) {
+			return false;
+		}
+		if (trainerChannel == null) {
+			if (other.trainerChannel != null) {
+				return false;
+			}
+		} else if (!trainerChannel.equals(other.trainerChannel)) {
+			return false;
+		}
+		if (trainerId != other.trainerId) {
+			return false;
+		}
+		if (wireless != other.wireless) {
+			return false;
+		}
+		return true;
+	}
 
-  @XmlIDREF
-  public Collection<Channel> getPupilChannel() {
-    return pupilChannel;
-  }
+	@XmlIDREF
+	public Collection<Channel> getPupilChannel() {
+		return pupilChannel;
+	}
 
-  public long getPupilId() {
-    return pupilId;
-  }
+	public long getPupilId() {
+		return pupilId;
+	}
 
-  @XmlIDREF
-  public Collection<Channel> getTrainerChannel() {
-    return trainerChannel;
-  }
+	@XmlIDREF
+	public Collection<Channel> getTrainerChannel() {
+		return trainerChannel;
+	}
 
-  public long getTrainerId() {
-    return trainerId;
-  }
+	public long getTrainerId() {
+		return trainerId;
+	}
 
-  @XmlIDREF
-  public Switch getTrainerSwitch() {
-    return sw;
-  }
+	@XmlIDREF
+	public Switch getTrainerSwitch() {
+		return sw;
+	}
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (pupilChannel == null ? 0 : pupilChannel.hashCode());
-    result = prime * result + (int) (pupilId ^ pupilId >>> 32);
-    result = prime * result + (sw == null ? 0 : sw.hashCode());
-    result = prime * result + (trainerChannel == null ? 0 : trainerChannel.hashCode());
-    result = prime * result + (int) (trainerId ^ trainerId >>> 32);
-    result = prime * result + (wireless ? 1231 : 1237);
-    return result;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (pupilChannel == null ? 0 : pupilChannel.hashCode());
+		result = prime * result + (int) (pupilId ^ pupilId >>> 32);
+		result = prime * result + (sw == null ? 0 : sw.hashCode());
+		result = prime * result + (trainerChannel == null ? 0 : trainerChannel.hashCode());
+		result = prime * result + (int) (trainerId ^ trainerId >>> 32);
+		result = prime * result + (wireless ? 1231 : 1237);
+		return result;
+	}
 
-  public boolean isWireless() {
-    return wireless;
-  }
+	public boolean isWireless() {
+		return wireless;
+	}
 
-  public void setPupilChannel(final Collection<Channel> pupilChannels) {
-    pupilChannel = pupilChannels;
-  }
+	public void setPupilChannel(final Collection<Channel> pupilChannels) {
+		pupilChannel = pupilChannels;
+	}
 
-  public void setPupilId(final long pupilId) {
-    this.pupilId = pupilId;
-  }
+	public void setPupilId(final long pupilId) {
+		this.pupilId = pupilId;
+	}
 
-  public void setTrainerChannel(final Collection<Channel> trainerChannels) {
-    trainerChannel = trainerChannels;
-  }
+	public void setTrainerChannel(final Collection<Channel> trainerChannels) {
+		trainerChannel = trainerChannels;
+	}
 
-  public void setTrainerId(final long trainerId) {
-    this.trainerId = trainerId;
-  }
+	public void setTrainerId(final long trainerId) {
+		this.trainerId = trainerId;
+	}
 
-  public void setTrainerSwitch(final Switch sw) {
-    this.sw = sw;
-  }
+	public void setTrainerSwitch(final Switch sw) {
+		this.sw = sw;
+	}
 
-  public void setWireless(final boolean wireless) {
-    this.wireless = wireless;
-  }
+	public void setWireless(final boolean wireless) {
+		this.wireless = wireless;
+	}
 }
