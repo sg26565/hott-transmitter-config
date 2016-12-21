@@ -88,7 +88,7 @@ public class HTMLReport {
 	public static String generateHTML(final BaseModel model) throws IOException, ReportException {
 		CONFIGURATION.setClassForTemplateLoading(HTMLReport.class, "templates/hott"); //$NON-NLS-1$
 
-		final Map<String, Object> rootMap = new HashMap<String, Object>();
+		final Map<String, Object> rootMap = new HashMap<>();
 		rootMap.put("model", model); //$NON-NLS-1$
 		rootMap.put("png", HTMLReport.CURVE_IMAGE_GENERATOR); //$NON-NLS-1$
 		if (model instanceof WingedModel) {
