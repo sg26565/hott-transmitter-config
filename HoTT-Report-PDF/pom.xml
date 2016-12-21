@@ -21,10 +21,6 @@
 			<artifactId>HoTT-Model</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTT-Decoder</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.xhtmlrenderer</groupId>
 			<artifactId>flying-saucer-pdf-itext5</artifactId>
 		</dependency>

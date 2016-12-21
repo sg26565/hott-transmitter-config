@@ -20,9 +20,5 @@
 			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Model</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTT-Decoder</artifactId>
-		</dependency>
 	</dependencies>
 </project>
