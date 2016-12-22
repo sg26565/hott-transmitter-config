@@ -1,4 +1,4 @@
 [submodule "HoTT-Decoder"]
 	path = HoTT-Decoder
-	url = git@git.assembla.com:hottdecoder.git
+	url = http://macmini.treichels.de/graupner/hott-decoder.git
 	branch = develop
