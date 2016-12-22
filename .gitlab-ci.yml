@@ -8,6 +8,8 @@ before_script:
   - rm -rf /root/.m2
   - mkdir -p /cache/.m2
   - ln -s /cache/.m2 /root/.m2
+  - git submodule init
+  - git submodule update
   
 cache:
   paths:
