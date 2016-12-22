@@ -1,0 +1,3 @@
+[submodule "HoTT-Decoder"]
+	path = HoTT-Decoder
+	url = git@git.assembla.com:hottdecoder.git
