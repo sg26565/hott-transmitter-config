@@ -17,6 +17,7 @@ import javax.swing.JTabbedPane;
 
 import gde.mdl.messages.Messages;
 import gde.model.BaseModel;
+import gde.util.ModelLoader;
 
 public class OpenDialog extends JDialog {
 	private final class OnCancelListener implements ActionListener {
@@ -77,7 +78,7 @@ public class OpenDialog extends JDialog {
 			return (ModelLoader) component;
 		}
 
-		return new ModelLoader();
+		throw new RuntimeException("Componet is not a model loader");
 	}
 
 	public BaseModel getModel() throws IOException {

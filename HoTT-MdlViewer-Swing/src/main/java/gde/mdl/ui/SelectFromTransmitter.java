@@ -17,8 +17,9 @@ import javax.swing.JScrollPane;
 import de.treichels.hott.HoTTSerialPort;
 import gde.mdl.messages.Messages;
 import gde.model.serial.SerialPortDefaultImpl;
+import gde.util.ModelLoader;
 
-public abstract class SelectFromTransmitter extends ModelLoader {
+public abstract class SelectFromTransmitter extends JPanel implements ModelLoader {
 	private final class PortSelectionListener implements ActionListener {
 		@Override
 		public void actionPerformed(final ActionEvent arg0) {
