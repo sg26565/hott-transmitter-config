@@ -25,10 +25,10 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 
@@ -183,6 +183,6 @@ public class SwingCurveImageGenerator implements CurveImageGenerator {
 		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
-		return PREFIX + Base64.encodeBase64String(baos.toByteArray());
+		return PREFIX + Base64.getEncoder().encodeToString(baos.toByteArray());
 	}
 }
