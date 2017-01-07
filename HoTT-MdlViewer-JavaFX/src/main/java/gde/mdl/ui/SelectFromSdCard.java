@@ -48,12 +48,13 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 		rootNode.setExpanded(true);
 		treeView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		treeView.setOnMouseClicked(e -> handleDoubleClick(e));
-		treeView.addEventHandler(EVENT_TYPE, event -> handleChange(event.getSource()));
+		treeView.addEventHandler(EVENT_TYPE, event -> loadTree(event.getSource()));
 		borderPane.setCenter(treeView);
-		comboBox.valueProperty().addListener((p, o, n) -> handleChange(rootNode));
+		comboBox.valueProperty().addListener((p, o, n) -> loadTree(rootNode));
+		rootNode.expandedProperty().addListener((p, o, n) -> loadTree(rootNode));
 	}
 
-	private void handleChange(final TreeItem<FileInfo> treeItem) {
+	private void loadTree(final TreeItem<String> treeItem) {
 		treeView.setDisable(true);
 		final String[] names;
 
