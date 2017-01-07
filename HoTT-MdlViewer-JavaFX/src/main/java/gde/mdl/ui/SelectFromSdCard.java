@@ -32,11 +32,16 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeItem.TreeModificationEvent;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.ImageView;
 
 /**
  * @author oli@treichels.de
  */
 public class SelectFromSdCard extends SelectFromTransmitter {
+	private static final String FILE_URL = SelectFromSdCard.class.getClassLoader().getResource("File.gif").toString();
+	private static final String OPEN_FOLDER_URL = SelectFromSdCard.class.getClassLoader().getResource("Folder_open.gif").toString();
+	private static final String CLOSED_FOLDER_URL = SelectFromSdCard.class.getClassLoader().getResource("Folder_closed.gif").toString();
+	private static final String ROOT_FOLDER_URL = SelectFromSdCard.class.getClassLoader().getResource("Root.gif").toString();
 	private final static EventType<TreeModificationEvent<String>> EVENT_TYPE = TreeItem.branchExpandedEvent();
 
 	private final TreeItem<String> rootNode = new TreeItem<>(Messages.getString("SelectFromSdCard.RootNodeLabel"));
@@ -52,6 +57,7 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 		borderPane.setCenter(treeView);
 		comboBox.valueProperty().addListener((p, o, n) -> loadTree(rootNode));
 		rootNode.expandedProperty().addListener((p, o, n) -> loadTree(rootNode));
+		rootNode.setGraphic(new ImageView(ROOT_FOLDER_URL));
 		loadTree(rootNode);
 	}
 
@@ -63,9 +69,11 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 			names = withPort(p -> p.listDir("/"));
 		} else if (treeItem instanceof TreeFileInfo) {
 			if (treeItem.isExpanded()) {
+				treeItem.setGraphic(new ImageView(OPEN_FOLDER_URL));
 				final FileInfo info = ((TreeFileInfo) treeItem).getInfo();
 				names = withPort(p -> p.listDir(info.getPath()));
-		} else {
+			} else {
+				treeItem.setGraphic(new ImageView(CLOSED_FOLDER_URL));
 				names = null;
 			}
 		} else {
@@ -73,14 +81,17 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 		}
 
 		if (names != null) {
-		treeItem.getChildren().clear();
-		for (final String name : names) {
-			final FileInfo info = withPort(p -> p.getFileInfo(name));
+			treeItem.getChildren().clear();
+			for (final String name : names) {
+				final FileInfo info = withPort(p -> p.getFileInfo(name));
 				final TreeFileInfo node = new TreeFileInfo(info);
 				if (info.getType() == FileType.Dir) {
 					node.setExpanded(false);
 					node.getChildren().add(new TreeItem<>("loading ..."));
 					node.expandedProperty().addListener((p, o, n) -> loadTree(node));
+					node.setGraphic(new ImageView(CLOSED_FOLDER_URL));
+				} else {
+					node.setGraphic(new ImageView(FILE_URL));
 				}
 				treeItem.getChildren().add(node);
 			}
