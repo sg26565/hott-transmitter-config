@@ -38,10 +38,11 @@ public class SelectFromMemory extends SelectFromTransmitter {
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		listView.setOnMouseClicked(e -> handleDoubleClick(e));
 		borderPane.setCenter(listView);
-		comboBox.valueProperty().addListener((p, o, n) -> handleChange());
+		comboBox.valueProperty().addListener((p, o, n) -> loadList());
+		loadList();
 	}
 
-	private void handleChange() {
+	private void loadList() {
 		listView.setDisable(true);
 		listView.getItems().clear();
 
