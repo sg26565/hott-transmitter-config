@@ -37,10 +37,10 @@ import javafx.scene.control.TreeView;
  * @author oli@treichels.de
  */
 public class SelectFromSdCard extends SelectFromTransmitter {
-	private final static EventType<TreeModificationEvent<FileInfo>> EVENT_TYPE = TreeItem.branchExpandedEvent();
+	private final static EventType<TreeModificationEvent<String>> EVENT_TYPE = TreeItem.branchExpandedEvent();
 
-	private final TreeItem<FileInfo> rootNode = new TreeItem<>(null);
-	private final TreeView<FileInfo> treeView = new TreeView<>(rootNode);
+	private final TreeItem<String> rootNode = new TreeItem<>(Messages.getString("SelectFromSdCard.RootNodeLabel"));
+	private final TreeView<String> treeView = new TreeView<>(rootNode);
 
 	public SelectFromSdCard() {
 		setTitle(Messages.getString("LoadFromSdCard"));
@@ -52,6 +52,7 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 		borderPane.setCenter(treeView);
 		comboBox.valueProperty().addListener((p, o, n) -> loadTree(rootNode));
 		rootNode.expandedProperty().addListener((p, o, n) -> loadTree(rootNode));
+		loadTree(rootNode);
 	}
 
 	private void loadTree(final TreeItem<String> treeItem) {
@@ -60,16 +61,29 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 
 		if (treeItem == rootNode) {
 			names = withPort(p -> p.listDir("/"));
-		} else if (treeItem.getValue() != null) {
-			names = withPort(p -> p.listDir(treeItem.getValue().getPath()));
+		} else if (treeItem instanceof TreeFileInfo) {
+			if (treeItem.isExpanded()) {
+				final FileInfo info = ((TreeFileInfo) treeItem).getInfo();
+				names = withPort(p -> p.listDir(info.getPath()));
 		} else {
-			names = new String[] {};
+				names = null;
+			}
+		} else {
+			names = null;
 		}
 
+		if (names != null) {
 		treeItem.getChildren().clear();
 		for (final String name : names) {
 			final FileInfo info = withPort(p -> p.getFileInfo(name));
-			treeItem.getChildren().add(new TreeItem<>(info));
+				final TreeFileInfo node = new TreeFileInfo(info);
+				if (info.getType() == FileType.Dir) {
+					node.setExpanded(false);
+					node.getChildren().add(new TreeItem<>("loading ..."));
+					node.expandedProperty().addListener((p, o, n) -> loadTree(node));
+				}
+				treeItem.getChildren().add(node);
+			}
 		}
 
 		treeView.setDisable(false);
@@ -77,12 +91,12 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 
 	@Override
 	protected Model result(final ButtonType b) {
-		final Model result = null;
+		Model result = null;
 
 		if (b.getButtonData() == ButtonData.OK_DONE) {
-			final TreeItem<FileInfo> item = treeView.getSelectionModel().getSelectedItem();
-			if (item != null) {
-				final FileInfo fileInfo = item.getValue();
+			final TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
+			if (item != null && item instanceof TreeFileInfo) {
+				final FileInfo fileInfo = ((TreeFileInfo) item).getInfo();
 
 				if (fileInfo != null && fileInfo.getType() == FileType.File && fileInfo.getName().endsWith(".mdl") && fileInfo.getSize() <= 0x3000 //$NON-NLS-1$
 						&& fileInfo.getSize() >= 0x2000) {
@@ -108,11 +122,13 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 						break;
 
 					default:
-						throw new HoTTException("InvalidModelType", typeChar); //$NON-NLS-1$
+						Controller.showExceptionDialog(new HoTTException("InvalidModelType", typeChar)); //$NON-NLS-1$
+						return null;
 					}
 
 					final String name = fileName.substring(1, fileName.length() - 4);
 					final ModelInfo info = new ModelInfo(0, name, type, null, null);
+					result = new Model(info, data);
 				}
 			}
 		}
