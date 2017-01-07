@@ -110,7 +110,10 @@ public class Controller extends Application {
 	public void onLoadFromFile() {
 		final FileChooser chooser = new FileChooser();
 		chooser.setTitle(Messages.getString("LoadFromFile"));
-		chooser.setInitialDirectory(new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR))));
+		final File dir = new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR)));
+		if (dir.exists() && dir.isDirectory()) {
+			chooser.setInitialDirectory(dir);
+		}
 		chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("MdlFileDescription"), "*.mdl"));
 
 		final File file = chooser.showOpenDialog(STAGE);
@@ -171,7 +174,10 @@ public class Controller extends Application {
 	public void onSave() {
 		final FileChooser chooser = new FileChooser();
 		chooser.setTitle(Messages.getString("Save"));
-		chooser.setInitialDirectory(new File(PREFS.get(LAST_SAVE_DIR, System.getProperty(Launcher.MDL_DIR))));
+		final File dir = new File(PREFS.get(LAST_SAVE_DIR, System.getProperty(Launcher.MDL_DIR)));
+		if (dir.exists() && dir.isDirectory()) {
+			chooser.setInitialDirectory(dir);
+		}
 		chooser.setInitialFileName(model.getFileName());
 		chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("SimpleGUI.HTML"), "*.html"));
 		chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("SimpleGUI.PDF"), "*.pdf"));
