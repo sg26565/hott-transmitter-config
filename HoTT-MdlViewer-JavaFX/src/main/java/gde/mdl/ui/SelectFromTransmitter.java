@@ -55,7 +55,7 @@ public abstract class SelectFromTransmitter extends Dialog<Model> {
 	}
 
 	protected void handleDoubleClick(final MouseEvent evt) {
-		if (evt.getButton() == MouseButton.PRIMARY && evt.getClickCount() == 2) {
+		if (evt.getButton() == MouseButton.PRIMARY && evt.getClickCount() == 2 && result(loadButtonType) != null) {
 			((Button) getDialogPane().lookupButton(loadButtonType)).fire();
 		}
 	}
