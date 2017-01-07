@@ -32,17 +32,23 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeItem.TreeModificationEvent;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
  * @author oli@treichels.de
  */
 public class SelectFromSdCard extends SelectFromTransmitter {
-	private static final String FILE_URL = SelectFromSdCard.class.getClassLoader().getResource("File.gif").toString();
-	private static final String OPEN_FOLDER_URL = SelectFromSdCard.class.getClassLoader().getResource("Folder_open.gif").toString();
-	private static final String CLOSED_FOLDER_URL = SelectFromSdCard.class.getClassLoader().getResource("Folder_closed.gif").toString();
-	private static final String ROOT_FOLDER_URL = SelectFromSdCard.class.getClassLoader().getResource("Root.gif").toString();
+	private static final Image FILE = LoadFile("File.gif");
+	private static final Image OPEN_FOLDER = LoadFile("Folder_open.gif");
+	private static final Image CLOSED_FOLDER = LoadFile("Folder_closed.gif");
+	private static final Image ROOT_FOLDER = LoadFile("Root.gif");
+
 	private final static EventType<TreeModificationEvent<String>> EVENT_TYPE = TreeItem.branchExpandedEvent();
+
+	private static Image LoadFile(final String fileName) {
+		return new Image(SelectFromSdCard.class.getClassLoader().getResource(fileName).toString());
+	}
 
 	private final TreeItem<String> rootNode = new TreeItem<>(Messages.getString("SelectFromSdCard.RootNodeLabel"));
 	private final TreeView<String> treeView = new TreeView<>(rootNode);
@@ -57,7 +63,7 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 		borderPane.setCenter(treeView);
 		comboBox.valueProperty().addListener((p, o, n) -> loadTree(rootNode));
 		rootNode.expandedProperty().addListener((p, o, n) -> loadTree(rootNode));
-		rootNode.setGraphic(new ImageView(ROOT_FOLDER_URL));
+		rootNode.setGraphic(new ImageView(ROOT_FOLDER));
 		loadTree(rootNode);
 	}
 
@@ -69,11 +75,11 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 			names = withPort(p -> p.listDir("/"));
 		} else if (treeItem instanceof TreeFileInfo) {
 			if (treeItem.isExpanded()) {
-				treeItem.setGraphic(new ImageView(OPEN_FOLDER_URL));
+				treeItem.setGraphic(new ImageView(OPEN_FOLDER));
 				final FileInfo info = ((TreeFileInfo) treeItem).getInfo();
 				names = withPort(p -> p.listDir(info.getPath()));
 			} else {
-				treeItem.setGraphic(new ImageView(CLOSED_FOLDER_URL));
+				treeItem.setGraphic(new ImageView(CLOSED_FOLDER));
 				names = null;
 			}
 		} else {
@@ -89,9 +95,9 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 					node.setExpanded(false);
 					node.getChildren().add(new TreeItem<>("loading ..."));
 					node.expandedProperty().addListener((p, o, n) -> loadTree(node));
-					node.setGraphic(new ImageView(CLOSED_FOLDER_URL));
+					node.setGraphic(new ImageView(CLOSED_FOLDER));
 				} else {
-					node.setGraphic(new ImageView(FILE_URL));
+					node.setGraphic(new ImageView(FILE));
 				}
 				treeItem.getChildren().add(node);
 			}
