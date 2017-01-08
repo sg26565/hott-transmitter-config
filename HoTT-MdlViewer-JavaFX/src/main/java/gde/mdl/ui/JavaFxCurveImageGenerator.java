@@ -170,8 +170,8 @@ public class JavaFxCurveImageGenerator implements CurveImageGenerator {
 			}
 		}
 
-		// run canvas.snapshot on the UI thread, suspend this thread and wait
-		// for completion
+		// run canvas.snapshot on the FX Application thread, suspend this thread
+		// and wait for completion
 		synchronized (this) {
 			Platform.runLater(() -> {
 				image = canvas.snapshot(null, null);
@@ -182,7 +182,7 @@ public class JavaFxCurveImageGenerator implements CurveImageGenerator {
 			try {
 				wait();
 			} catch (final InterruptedException e) {
-				throw new RuntimeException(e);
+				ExceptionDialog.show(e);
 			}
 		}
 

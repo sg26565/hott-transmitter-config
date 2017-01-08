@@ -2,11 +2,7 @@ package gde.mdl.ui;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 import javax.xml.bind.JAXBException;
@@ -29,19 +25,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
@@ -52,57 +41,8 @@ import javafx.stage.Stage;
 public class Controller extends Application {
 	private static final String LAST_LOAD_DIR = "lastLoadDir"; //$NON-NLS-1$
 	private static final String LAST_SAVE_DIR = "lastSaveDir"; //$NON-NLS-1$
-	private static final Logger LOG = Logger.getLogger(Controller.class.getName());
 	static final Preferences PREFS = Preferences.userNodeForPackage(Controller.class);
 	static Stage STAGE;
-
-	public static void showExceptionDialog(final Throwable throwable) {
-		if (!Platform.isFxApplicationThread()) {
-			Platform.runLater(() -> showExceptionDialog(throwable));
-		} else {
-			LOG.log(Level.SEVERE, throwable.getMessage(), throwable);
-			final Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle(Messages.getString("Error"));
-			alert.setHeaderText(null);
-
-			String message = throwable.getLocalizedMessage();
-			if (message == null) {
-				message = throwable.getMessage();
-			}
-			if (message == null) {
-				message = throwable.getClass().getSimpleName();
-			}
-
-			alert.setContentText(message);
-
-			// Create expandable Exception.
-			final StringWriter sw = new StringWriter();
-			final PrintWriter pw = new PrintWriter(sw);
-			throwable.printStackTrace(pw);
-			final String exceptionText = sw.toString();
-
-			final Label label = new Label("The exception stacktrace was:");
-
-			final TextArea textArea = new TextArea(exceptionText);
-			textArea.setEditable(false);
-			textArea.setWrapText(true);
-
-			textArea.setMaxWidth(Double.MAX_VALUE);
-			textArea.setMaxHeight(Double.MAX_VALUE);
-			GridPane.setVgrow(textArea, Priority.ALWAYS);
-			GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-			final GridPane expContent = new GridPane();
-			expContent.setMaxWidth(Double.MAX_VALUE);
-			expContent.add(label, 0, 0);
-			expContent.add(textArea, 0, 1);
-
-			// Set expandable Exception into the dialog pane.
-			alert.getDialogPane().setExpandableContent(expContent);
-
-			alert.showAndWait();
-		}
-	}
 
 	@FXML
 	private BorderPane borderPane;
@@ -112,9 +52,6 @@ public class Controller extends Application {
 
 	@FXML
 	private ContextMenu contextMenu;
-
-	@FXML
-	private Menu fileMenu;
 
 	@FXML
 	private Region overlay;
@@ -133,9 +70,9 @@ public class Controller extends Application {
 
 	@FXML
 	private WebView webview;
+
 	private Scene scene;
 	private RefreshService refreshService;
-
 	private final ObjectProperty<Model> modelProperty = new SimpleObjectProperty<>(null);
 
 	private void disableUI(final ReadOnlyBooleanProperty readOnlyBooleanProperty) {
@@ -185,7 +122,7 @@ public class Controller extends Application {
 			try {
 				modelProperty.set(Model.load(file));
 			} catch (final IOException e) {
-				showExceptionDialog(e);
+				ExceptionDialog.show(e);
 			}
 			onRefresh();
 		}
@@ -274,7 +211,7 @@ public class Controller extends Application {
 					break;
 				}
 			} catch (ReportException | IOException | DocumentException | JAXBException e) {
-				showExceptionDialog(e);
+				ExceptionDialog.show(e);
 			}
 		}
 	}

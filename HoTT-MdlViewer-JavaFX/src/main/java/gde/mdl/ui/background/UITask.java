@@ -1,6 +1,6 @@
 package gde.mdl.ui.background;
 
-import gde.mdl.ui.Controller;
+import gde.mdl.ui.ExceptionDialog;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.scene.Cursor;
@@ -15,7 +15,7 @@ public abstract class UITask<T> extends Task<T> {
 
 	@Override
 	protected void failed() {
-		Controller.showExceptionDialog(getException());
+		ExceptionDialog.show(getException());
 		super.failed();
 	}
 

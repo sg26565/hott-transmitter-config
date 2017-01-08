@@ -17,17 +17,12 @@
  */
 package gde.mdl.ui;
 
-import java.io.ByteArrayOutputStream;
-
 import gde.mdl.messages.Messages;
-import gde.model.HoTTException;
-import gde.model.enums.ModelType;
+import gde.mdl.ui.background.GetFileTask;
 import gde.model.serial.FileInfo;
 import gde.model.serial.FileType;
-import gde.model.serial.ModelInfo;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.scene.Cursor;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.SelectionMode;
@@ -38,7 +33,7 @@ import javafx.scene.control.TreeView;
  * @author oli@treichels.de
  */
 public class SelectFromSdCard extends SelectFromTransmitter {
-	private final TreeView<String> treeView = new TreeView<>();
+	final TreeView<String> treeView = new TreeView<>();
 
 	public SelectFromSdCard() {
 		setTitle(Messages.getString("LoadFromSdCard"));
@@ -61,50 +56,8 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 	@Override
 	protected Task<Model> getResult(final ButtonType b) {
 		if (b.getButtonData() == ButtonData.OK_DONE && hasResult()) {
-			final Task<Model> task = new Task<Model>() {
-				@Override
-				protected Model call() throws Exception {
-					final TreeFileInfo item = (TreeFileInfo) treeView.getSelectionModel().getSelectedItem();
-					final FileInfo fileInfo = item.getFileInfo();
-
-					final byte[] data = PortUtils.withPort(comboBox.getValue(), p -> {
-						try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-							p.readFile(fileInfo.getPath(), os);
-							return os.toByteArray();
-						}
-					});
-
-					final String fileName = fileInfo.getName();
-					// check model type
-					ModelType type;
-					final char typeChar = fileName.charAt(0);
-					switch (typeChar) {
-					case 'a':
-						type = ModelType.Winged;
-						break;
-
-					case 'h':
-						type = ModelType.Helicopter;
-						break;
-
-					default:
-						Controller.showExceptionDialog(new HoTTException("InvalidModelType", typeChar)); //$NON-NLS-1$
-						return null;
-					}
-
-					final String name = fileName.substring(1, fileName.length() - 4);
-					final ModelInfo info = new ModelInfo(0, name, type, null, null);
-					return new Model(info, data);
-				}
-			};
-
-			treeView.setDisable(true);
-			treeView.setCursor(Cursor.WAIT);
-
-			final Thread thread = new Thread(task);
-			thread.setDaemon(true);
-			thread.start();
-
+			final GetFileTask task = new GetFileTask(treeView, comboBox.getValue());
+			task.start();
 			return task;
 		}
 

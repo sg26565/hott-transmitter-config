@@ -45,7 +45,7 @@ public abstract class SelectFromTransmitter extends Dialog<Task<Model>> {
 			borderPane = loader.load();
 			getDialogPane().setContent(borderPane);
 		} catch (final IOException e) {
-			Controller.showExceptionDialog(e);
+			ExceptionDialog.show(e);
 		}
 
 		// set com ports

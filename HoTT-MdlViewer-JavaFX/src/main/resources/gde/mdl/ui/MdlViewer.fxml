@@ -15,7 +15,7 @@
 	<top>
 		<MenuBar>
 			<menus>
-				<Menu fx:id="fileMenu" mnemonicParsing="false" text="%File">
+				<Menu mnemonicParsing="false" text="%File">
 					<items>
 						<MenuItem mnemonicParsing="false" onAction="#onLoadFromFile" text="%LoadFromFile">
 							<accelerator>
