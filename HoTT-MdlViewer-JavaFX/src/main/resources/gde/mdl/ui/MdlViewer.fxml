@@ -71,7 +71,7 @@
 		</MenuBar>
 	</top>
 	<center>
-      <StackPane>
+      <StackPane fx:id="stackPane">
          <children>
       		<WebView fx:id="webview" onMouseClicked="#onMouseClicked" />
             <Region fx:id="overlay" disable="true" opacity="0.3" style="-fx-background-color: Gray;" visible="false" />

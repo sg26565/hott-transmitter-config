@@ -30,7 +30,8 @@ public class LoadFromMemoryService extends TransmitterService<List<ModelInfo>> {
 		return new Task<List<ModelInfo>>() {
 			@Override
 			protected List<ModelInfo> call() throws Exception {
-				return Arrays.asList(PortUtils.withPort(getPortName(), p -> p.getAllModelInfos()));
+				final ModelInfo[] infos = PortUtils.withPort(getPortName(), p -> p.getAllModelInfos());
+				return infos == null ? null : Arrays.asList(infos);
 			}
 		};
 	}
@@ -46,11 +47,13 @@ public class LoadFromMemoryService extends TransmitterService<List<ModelInfo>> {
 	@Override
 	protected void succeeded() {
 		listView.getItems().clear();
-		for (final ModelInfo info : getValue()) {
-			if (info.getModelName().length() > 0) {
-				final String item = String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', //$NON-NLS-1$
-						info.getModelName());
-				listView.getItems().add(item);
+		if (getValue() != null) {
+			for (final ModelInfo info : getValue()) {
+				if (info.getModelName().length() > 0) {
+					final String item = String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', //$NON-NLS-1$
+							info.getModelName());
+					listView.getItems().add(item);
+				}
 			}
 		}
 

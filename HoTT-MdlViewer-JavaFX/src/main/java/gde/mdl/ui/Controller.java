@@ -41,6 +41,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -54,42 +55,49 @@ public class Controller extends Application {
 	static Stage STAGE;
 
 	public static void showExceptionDialog(final Throwable throwable) {
-		LOG.log(Level.SEVERE, throwable.getMessage(), throwable);
-		final Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle(Messages.getString("Error"));
-		alert.setHeaderText(null);
-		alert.setContentText(throwable.getLocalizedMessage());
+		if (!Platform.isFxApplicationThread()) {
+			Platform.runLater(() -> showExceptionDialog(throwable));
+		} else {
+			LOG.log(Level.SEVERE, throwable.getMessage(), throwable);
+			final Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle(Messages.getString("Error"));
+			alert.setHeaderText(null);
+			alert.setContentText(throwable.getLocalizedMessage());
 
-		// Create expandable Exception.
-		final StringWriter sw = new StringWriter();
-		final PrintWriter pw = new PrintWriter(sw);
-		throwable.printStackTrace(pw);
-		final String exceptionText = sw.toString();
+			// Create expandable Exception.
+			final StringWriter sw = new StringWriter();
+			final PrintWriter pw = new PrintWriter(sw);
+			throwable.printStackTrace(pw);
+			final String exceptionText = sw.toString();
 
-		final Label label = new Label("The exception stacktrace was:");
+			final Label label = new Label("The exception stacktrace was:");
 
-		final TextArea textArea = new TextArea(exceptionText);
-		textArea.setEditable(false);
-		textArea.setWrapText(true);
+			final TextArea textArea = new TextArea(exceptionText);
+			textArea.setEditable(false);
+			textArea.setWrapText(true);
 
-		textArea.setMaxWidth(Double.MAX_VALUE);
-		textArea.setMaxHeight(Double.MAX_VALUE);
-		GridPane.setVgrow(textArea, Priority.ALWAYS);
-		GridPane.setHgrow(textArea, Priority.ALWAYS);
+			textArea.setMaxWidth(Double.MAX_VALUE);
+			textArea.setMaxHeight(Double.MAX_VALUE);
+			GridPane.setVgrow(textArea, Priority.ALWAYS);
+			GridPane.setHgrow(textArea, Priority.ALWAYS);
 
-		final GridPane expContent = new GridPane();
-		expContent.setMaxWidth(Double.MAX_VALUE);
-		expContent.add(label, 0, 0);
-		expContent.add(textArea, 0, 1);
+			final GridPane expContent = new GridPane();
+			expContent.setMaxWidth(Double.MAX_VALUE);
+			expContent.add(label, 0, 0);
+			expContent.add(textArea, 0, 1);
 
-		// Set expandable Exception into the dialog pane.
-		alert.getDialogPane().setExpandableContent(expContent);
+			// Set expandable Exception into the dialog pane.
+			alert.getDialogPane().setExpandableContent(expContent);
 
-		alert.showAndWait();
+			alert.showAndWait();
+		}
 	}
 
 	@FXML
 	private BorderPane borderPane;
+
+	@FXML
+	private StackPane stackPane;
 
 	@FXML
 	private ContextMenu contextMenu;
@@ -116,13 +124,17 @@ public class Controller extends Application {
 	private void disableUI(final ReadOnlyBooleanProperty readOnlyBooleanProperty) {
 		scene.cursorProperty().bind(Bindings.when(readOnlyBooleanProperty).then(Cursor.WAIT).otherwise(Cursor.DEFAULT));
 		overlay.visibleProperty().bind(readOnlyBooleanProperty);
+		webview.visibleProperty().bind(readOnlyBooleanProperty.not());
 		readOnlyBooleanProperty.addListener((p, o, n) -> borderPane.setDisable(n));
 	}
 
 	@FXML
 	public void initialize() {
 		refreshService = new RefreshService(webview);
+		final LoadingIndicator indicator = new LoadingIndicator();
+		indicator.visibleProperty().bind(overlay.visibleProperty());
 
+		stackPane.getChildren().add(indicator);
 		// FIXME: FXMLLoader does not set contextMenuEnabled correctly.
 		// Therefore, we have to disable it manually.
 		webview.setContextMenuEnabled(false);
