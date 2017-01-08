@@ -21,7 +21,9 @@ import gde.report.ReportException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -105,10 +107,14 @@ public class Controller extends Application {
 	@FXML
 	private Menu fileMenu;
 
-	private Model model;
-
 	@FXML
 	private Region overlay;
+
+	@FXML
+	private MenuItem refresh1;
+
+	@FXML
+	private MenuItem refresh2;
 
 	@FXML
 	private MenuItem save1;
@@ -121,6 +127,8 @@ public class Controller extends Application {
 	private Scene scene;
 	private RefreshService refreshService;
 
+	private final ObjectProperty<Model> modelProperty = new SimpleObjectProperty<>(null);
+
 	private void disableUI(final ReadOnlyBooleanProperty readOnlyBooleanProperty) {
 		scene.cursorProperty().bind(Bindings.when(readOnlyBooleanProperty).then(Cursor.WAIT).otherwise(Cursor.DEFAULT));
 		overlay.visibleProperty().bind(readOnlyBooleanProperty);
@@ -130,11 +138,18 @@ public class Controller extends Application {
 
 	@FXML
 	public void initialize() {
+		save1.disableProperty().bind(modelProperty.isNull());
+		save2.disableProperty().bind(modelProperty.isNull());
+		refresh1.disableProperty().bind(modelProperty.isNull());
+		refresh2.disableProperty().bind(modelProperty.isNull());
+
 		refreshService = new RefreshService(webview);
+
 		final LoadingIndicator indicator = new LoadingIndicator();
 		indicator.visibleProperty().bind(overlay.visibleProperty());
 
 		stackPane.getChildren().add(indicator);
+
 		// FIXME: FXMLLoader does not set contextMenuEnabled correctly.
 		// Therefore, we have to disable it manually.
 		webview.setContextMenuEnabled(false);
@@ -159,9 +174,7 @@ public class Controller extends Application {
 		if (file != null) {
 			PREFS.put(LAST_LOAD_DIR, file.getParentFile().getAbsolutePath());
 			try {
-				model = Model.load(file);
-				save1.setDisable(false);
-				save2.setDisable(false);
+				modelProperty.set(Model.load(file));
 			} catch (final IOException e) {
 				showExceptionDialog(e);
 			}
@@ -177,7 +190,7 @@ public class Controller extends Application {
 			final Task<Model> task = result.get();
 			disableUI(task.runningProperty());
 			task.setOnSucceeded(e -> {
-				model = task.getValue();
+				modelProperty.set(task.getValue());
 				onRefresh();
 			});
 		}
@@ -191,7 +204,7 @@ public class Controller extends Application {
 			final Task<Model> task = result.get();
 			disableUI(task.runningProperty());
 			task.setOnSucceeded(e -> {
-				model = task.getValue();
+				modelProperty.set(task.getValue());
 				onRefresh();
 			});
 		}
@@ -208,8 +221,8 @@ public class Controller extends Application {
 
 	@FXML
 	public void onRefresh() {
-		if (model != null) {
-			refreshService.start(model);
+		if (modelProperty.isNotNull().get()) {
+			refreshService.start(modelProperty.get());
 			disableUI(refreshService.runningProperty());
 		}
 	}
@@ -222,7 +235,7 @@ public class Controller extends Application {
 		if (dir.exists() && dir.isDirectory()) {
 			chooser.setInitialDirectory(dir);
 		}
-		chooser.setInitialFileName(model.getFileName());
+		chooser.setInitialFileName(modelProperty.get().getFileName());
 		chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("SimpleGUI.HTML"), "*.html"));
 		chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("SimpleGUI.PDF"), "*.pdf"));
 		chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("SimpleGUI.XML"), "*.xml"));
@@ -236,19 +249,19 @@ public class Controller extends Application {
 			try {
 				switch (extension) {
 				case "html":
-					model.saveHtml(fileToSave);
+					modelProperty.get().saveHtml(fileToSave);
 					break;
 
 				case "pdf":
-					model.savePdf(fileToSave);
+					modelProperty.get().savePdf(fileToSave);
 					break;
 
 				case "xml":
-					model.saveXml(fileToSave);
+					modelProperty.get().saveXml(fileToSave);
 					break;
 
 				case "mdl":
-					model.saveMdl(fileToSave);
+					modelProperty.get().saveMdl(fileToSave);
 					break;
 				}
 			} catch (ReportException | IOException | DocumentException | JAXBException e) {

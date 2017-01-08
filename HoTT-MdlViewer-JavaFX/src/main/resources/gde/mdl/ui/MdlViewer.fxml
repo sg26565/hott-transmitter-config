@@ -39,7 +39,7 @@
 							</accelerator>
 						</MenuItem>
 						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" onAction="#onRefresh" text="%Refresh">
+						<MenuItem fx:id="refresh1" mnemonicParsing="false" onAction="#onRefresh" text="%Refresh">
 							<accelerator>
 								<KeyCodeCombination alt="UP" code="F5" control="UP" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
@@ -62,7 +62,7 @@
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem fx:id="save2" disable="true" mnemonicParsing="false" onAction="#onSave" text="%Save" />
 						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" onAction="#onRefresh" text="%Refresh" />
+						<MenuItem fx:id="refresh2" mnemonicParsing="false" onAction="#onRefresh" text="%Refresh" />
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem mnemonicParsing="false" onAction="#onExit" text="%Exit" />
 					</items>
