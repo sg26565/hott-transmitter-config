@@ -117,9 +117,10 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 		final TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
 		if (item != null && item instanceof TreeFileInfo) {
 			final FileInfo fileInfo = ((TreeFileInfo) item).getFileInfo();
-
-			return fileInfo.getType() == FileType.File && fileInfo.getName().endsWith(".mdl") && fileInfo.getSize() <= 0x3000 //$NON-NLS-1$
-					&& fileInfo.getSize() >= 0x2000;
+			if (fileInfo != null) {
+				return fileInfo.getType() == FileType.File && fileInfo.getName().endsWith(".mdl") && fileInfo.getSize() <= 0x3000 //$NON-NLS-1$
+						&& fileInfo.getSize() >= 0x2000;
+			}
 		}
 
 		return false;
