@@ -30,6 +30,7 @@ import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import gde.model.Curve;
 import gde.model.CurvePoint;
 import gde.report.CurveImageGenerator;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -45,6 +46,8 @@ import javafx.scene.text.Font;
  * @author oli@treichels.de
  */
 public class JavaFxCurveImageGenerator implements CurveImageGenerator {
+	private Image image;
+
 	@Override
 	public String getImageSource(final Curve curve, final float scale, final boolean description) {
 		final boolean pitchCurve = curve.getPoint()[0].getPosition() == 0;
@@ -167,7 +170,22 @@ public class JavaFxCurveImageGenerator implements CurveImageGenerator {
 			}
 		}
 
-		final Image image = canvas.snapshot(null, null);
+		// run canvas.snapshot on the UI thread, suspend this thread and wait
+		// for completion
+		synchronized (this) {
+			Platform.runLater(() -> {
+				image = canvas.snapshot(null, null);
+				synchronized (JavaFxCurveImageGenerator.this) {
+					JavaFxCurveImageGenerator.this.notify();
+				}
+			});
+			try {
+				wait();
+			} catch (final InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+		}
+
 		final RenderedImage renderedImage = SwingFXUtils.fromFXImage(image, null);
 
 		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {

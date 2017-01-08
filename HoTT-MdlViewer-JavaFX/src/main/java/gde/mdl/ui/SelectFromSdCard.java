@@ -18,7 +18,6 @@
 package gde.mdl.ui;
 
 import java.io.ByteArrayOutputStream;
-import java.util.concurrent.Future;
 
 import gde.mdl.messages.Messages;
 import gde.model.HoTTException;
@@ -52,7 +51,6 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 		treeView.setRoot(rootNode);
 		treeView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		treeView.setOnMouseClicked(e -> handleDoubleClick(e));
-		treeView.setDisable(true); // will be enabled during load
 
 		borderPane.setCenter(treeView);
 
@@ -61,7 +59,7 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 	}
 
 	@Override
-	protected Future<Model> getResult(final ButtonType b) {
+	protected Task<Model> getResult(final ButtonType b) {
 		if (b.getButtonData() == ButtonData.OK_DONE && hasResult()) {
 			final Task<Model> task = new Task<Model>() {
 				@Override

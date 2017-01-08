@@ -17,12 +17,11 @@
  */
 package gde.mdl.ui;
 
-import java.util.concurrent.Future;
-
 import gde.mdl.messages.Messages;
 import gde.mdl.ui.background.GetModelDataTask;
 import gde.mdl.ui.background.LoadFromMemoryService;
 import gde.model.serial.ModelInfo;
+import javafx.concurrent.Task;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
@@ -48,7 +47,7 @@ public class SelectFromMemory extends SelectFromTransmitter {
 	}
 
 	@Override
-	protected Future<Model> getResult(final ButtonType b) {
+	protected Task<Model> getResult(final ButtonType b) {
 		if (b.getButtonData() == ButtonData.OK_DONE && hasResult()) {
 			final int index = listView.getSelectionModel().getSelectedIndex();
 			final ModelInfo info = service.getValue().get(index);

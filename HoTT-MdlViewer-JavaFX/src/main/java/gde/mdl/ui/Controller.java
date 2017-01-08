@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Optional;
-import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -17,10 +16,13 @@ import org.apache.commons.io.FilenameUtils;
 import com.itextpdf.text.DocumentException;
 
 import gde.mdl.messages.Messages;
-import gde.mdl.ui.background.FutureTask;
+import gde.mdl.ui.background.RefreshService;
 import gde.report.ReportException;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -108,17 +110,19 @@ public class Controller extends Application {
 
 	@FXML
 	private WebView webview;
+	private Scene scene;
+	private RefreshService refreshService;
 
-	private void disableUI(final boolean disable) {
-		final Cursor cursor = disable ? Cursor.WAIT : Cursor.DEFAULT;
-		borderPane.setDisable(disable);
-		borderPane.setCursor(cursor);
-		overlay.setVisible(disable);
-		overlay.setCursor(cursor);
+	private void disableUI(final ReadOnlyBooleanProperty readOnlyBooleanProperty) {
+		scene.cursorProperty().bind(Bindings.when(readOnlyBooleanProperty).then(Cursor.WAIT).otherwise(Cursor.DEFAULT));
+		overlay.visibleProperty().bind(readOnlyBooleanProperty);
+		readOnlyBooleanProperty.addListener((p, o, n) -> borderPane.setDisable(n));
 	}
 
 	@FXML
 	public void initialize() {
+		refreshService = new RefreshService(webview);
+
 		// FIXME: FXMLLoader does not set contextMenuEnabled correctly.
 		// Therefore, we have to disable it manually.
 		webview.setContextMenuEnabled(false);
@@ -156,24 +160,28 @@ public class Controller extends Application {
 	@FXML
 	public void onLoadFromMemory() {
 		final SelectFromTransmitter dialog = new SelectFromMemory();
-		final Optional<Future<Model>> result = dialog.showAndWait();
+		final Optional<Task<Model>> result = dialog.showAndWait();
 		if (result.isPresent()) {
-			disableUI(true);
-			final FutureTask task = new FutureTask(result.get());
-			task.setOnSucceeded(e -> onRefresh(task.getValue()));
-			task.start();
+			final Task<Model> task = result.get();
+			disableUI(task.runningProperty());
+			task.setOnSucceeded(e -> {
+				model = task.getValue();
+				onRefresh();
+			});
 		}
 	}
 
 	@FXML
 	public void onLoadFromSdCard() {
 		final SelectFromSdCard dialog = new SelectFromSdCard();
-		final Optional<Future<Model>> result = dialog.showAndWait();
+		final Optional<Task<Model>> result = dialog.showAndWait();
 		if (result.isPresent()) {
-			disableUI(true);
-			final FutureTask task = new FutureTask(result.get());
-			task.setOnSucceeded(e -> onRefresh(task.getValue()));
-			task.start();
+			final Task<Model> task = result.get();
+			disableUI(task.runningProperty());
+			task.setOnSucceeded(e -> {
+				model = task.getValue();
+				onRefresh();
+			});
 		}
 	}
 
@@ -189,21 +197,9 @@ public class Controller extends Application {
 	@FXML
 	public void onRefresh() {
 		if (model != null) {
-			disableUI(true);
-			Platform.runLater(() -> {
-				try {
-					webview.getEngine().loadContent(model.getHtml());
-					disableUI(false);
-				} catch (final IOException e) {
-					showExceptionDialog(e);
-				}
-			});
+			refreshService.start(model);
+			disableUI(refreshService.runningProperty());
 		}
-	}
-
-	private void onRefresh(final Model model) {
-		this.model = model;
-		onRefresh();
 	}
 
 	@FXML
@@ -252,7 +248,9 @@ public class Controller extends Application {
 	@Override
 	public void start(final Stage primaryStage) throws Exception {
 		final String title = Messages.getString("SimpleGUI.Title", System.getProperty(Launcher.PROGRAM_VERSION));
-		final Scene scene = new Scene(FXMLLoader.load(getClass().getResource("MdlViewer.fxml"), Messages.getResourceBundle()));
+		final FXMLLoader loader = new FXMLLoader(getClass().getResource("MdlViewer.fxml"), Messages.getResourceBundle());
+		loader.setController(this);
+		scene = new Scene(loader.load());
 		final Image icon = new Image(getClass().getResource("/icon.png").toString());
 		STAGE = primaryStage;
 

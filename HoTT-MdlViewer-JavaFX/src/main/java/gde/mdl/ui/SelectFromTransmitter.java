@@ -2,10 +2,10 @@ package gde.mdl.ui;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.Future;
 
 import gde.mdl.messages.Messages;
 import gde.model.serial.SerialPortDefaultImpl;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -23,7 +23,7 @@ import javafx.scene.layout.BorderPane;
  *
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-public abstract class SelectFromTransmitter extends Dialog<Future<Model>> {
+public abstract class SelectFromTransmitter extends Dialog<Task<Model>> {
 	/** List of serial port names */
 	private static final List<String> portNames = SerialPortDefaultImpl.getAvailablePorts();
 
@@ -71,7 +71,7 @@ public abstract class SelectFromTransmitter extends Dialog<Future<Model>> {
 	 *            dialog.
 	 * @return A Model instance for the selection or <code>null</code>.
 	 */
-	protected abstract Future<Model> getResult(final ButtonType buttonType);
+	protected abstract Task<Model> getResult(final ButtonType buttonType);
 
 	/**
 	 * Handle double click on an item. If a suitable item was selected close

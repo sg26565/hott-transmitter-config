@@ -106,7 +106,9 @@ public class TreeFileInfo extends TreeItem<String> {
 
 			if (task != null) {
 				task.setOnSucceeded(e -> {
-					setGraphic(new ImageView(OPEN_FOLDER));
+					if (fileInfo != null) {
+						setGraphic(new ImageView(OPEN_FOLDER));
+					}
 					getChildren().clear();
 					getChildren().addAll((List<TreeItem<String>>) e.getSource().getValue());
 				});
@@ -114,7 +116,10 @@ public class TreeFileInfo extends TreeItem<String> {
 				task.start();
 			}
 		} else {
-			setGraphic(new ImageView(CLOSED_FOLDER));
+			if (fileInfo != null) {
+				setGraphic(new ImageView(CLOSED_FOLDER));
+			}
+
 			// add loading pseudo child
 			getChildren().clear();
 			getChildren().add(new TreeItem<>(Messages.getString("SelectFromTransmitter.loading")));

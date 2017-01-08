@@ -2,14 +2,14 @@ package gde.mdl.ui.background;
 
 import gde.mdl.ui.Controller;
 import javafx.beans.binding.Bindings;
-import javafx.concurrent.Task;
+import javafx.concurrent.Service;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 
-public abstract class UITask<T> extends Task<T> {
+public abstract class UIService<T> extends Service<T> {
 	protected final Node view;
 
-	public UITask(final Node view) {
+	public UIService(final Node view) {
 		this.view = view;
 	}
 
@@ -19,12 +19,10 @@ public abstract class UITask<T> extends Task<T> {
 		super.failed();
 	}
 
+	@Override
 	public void start() {
 		view.getScene().cursorProperty().bind(Bindings.when(runningProperty()).then(Cursor.WAIT).otherwise(Cursor.DEFAULT));
 		runningProperty().addListener((p, o, n) -> view.setDisable(n));
-
-		final Thread thread = new Thread(this);
-		thread.setDaemon(true);
-		thread.start();
+		super.start();
 	}
 }
