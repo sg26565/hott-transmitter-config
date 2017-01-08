@@ -18,6 +18,7 @@
 package gde.mdl.ui;
 
 import java.io.ByteArrayOutputStream;
+import java.util.concurrent.Future;
 
 import gde.mdl.messages.Messages;
 import gde.model.HoTTException;
@@ -25,100 +26,50 @@ import gde.model.enums.ModelType;
 import gde.model.serial.FileInfo;
 import gde.model.serial.FileType;
 import gde.model.serial.ModelInfo;
-import javafx.event.EventType;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.scene.Cursor;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeItem.TreeModificationEvent;
 import javafx.scene.control.TreeView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * @author oli@treichels.de
  */
 public class SelectFromSdCard extends SelectFromTransmitter {
-	private static final Image FILE = LoadFile("File.gif");
-	private static final Image OPEN_FOLDER = LoadFile("Folder_open.gif");
-	private static final Image CLOSED_FOLDER = LoadFile("Folder_closed.gif");
-	private static final Image ROOT_FOLDER = LoadFile("Root.gif");
-
-	private final static EventType<TreeModificationEvent<String>> EVENT_TYPE = TreeItem.branchExpandedEvent();
-
-	private static Image LoadFile(final String fileName) {
-		return new Image(SelectFromSdCard.class.getClassLoader().getResource(fileName).toString());
-	}
-
-	private final TreeItem<String> rootNode = new TreeItem<>(Messages.getString("SelectFromSdCard.RootNodeLabel"));
-	private final TreeView<String> treeView = new TreeView<>(rootNode);
+	private final TreeView<String> treeView = new TreeView<>();
 
 	public SelectFromSdCard() {
 		setTitle(Messages.getString("LoadFromSdCard"));
 
-		rootNode.setExpanded(true);
+		final TreeFileInfo rootNode = new TreeFileInfo(treeView, Messages.getString("SelectFromSdCard.RootNodeLabel"));
+
+		// handle changes of serial port
+		rootNode.portNameProperty().bind(comboBox.valueProperty());
+
+		treeView.setRoot(rootNode);
 		treeView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		treeView.setOnMouseClicked(e -> handleDoubleClick(e));
-		treeView.addEventHandler(EVENT_TYPE, event -> loadTree(event.getSource()));
+		treeView.setDisable(true); // will be enabled during load
+
 		borderPane.setCenter(treeView);
-		comboBox.valueProperty().addListener((p, o, n) -> loadTree(rootNode));
-		rootNode.expandedProperty().addListener((p, o, n) -> loadTree(rootNode));
-		rootNode.setGraphic(new ImageView(ROOT_FOLDER));
-		loadTree(rootNode);
-	}
 
-	private void loadTree(final TreeItem<String> treeItem) {
-		treeView.setDisable(true);
-		final String[] names;
-
-		if (treeItem == rootNode) {
-			names = withPort(p -> p.listDir("/"));
-		} else if (treeItem instanceof TreeFileInfo) {
-			if (treeItem.isExpanded()) {
-				treeItem.setGraphic(new ImageView(OPEN_FOLDER));
-				final FileInfo info = ((TreeFileInfo) treeItem).getInfo();
-				names = withPort(p -> p.listDir(info.getPath()));
-			} else {
-				treeItem.setGraphic(new ImageView(CLOSED_FOLDER));
-				names = null;
-			}
-		} else {
-			names = null;
-		}
-
-		if (names != null) {
-			treeItem.getChildren().clear();
-			for (final String name : names) {
-				final FileInfo info = withPort(p -> p.getFileInfo(name));
-				final TreeFileInfo node = new TreeFileInfo(info);
-				if (info.getType() == FileType.Dir) {
-					node.setExpanded(false);
-					node.getChildren().add(new TreeItem<>("loading ..."));
-					node.expandedProperty().addListener((p, o, n) -> loadTree(node));
-					node.setGraphic(new ImageView(CLOSED_FOLDER));
-				} else {
-					node.setGraphic(new ImageView(FILE));
-				}
-				treeItem.getChildren().add(node);
-			}
-		}
-
-		treeView.setDisable(false);
+		// expand root node and trigger load
+		Platform.runLater(() -> rootNode.setExpanded(true));
 	}
 
 	@Override
-	protected Model result(final ButtonType b) {
-		Model result = null;
+	protected Future<Model> getResult(final ButtonType b) {
+		if (b.getButtonData() == ButtonData.OK_DONE && hasResult()) {
+			final Task<Model> task = new Task<Model>() {
+				@Override
+				protected Model call() throws Exception {
+					final TreeFileInfo item = (TreeFileInfo) treeView.getSelectionModel().getSelectedItem();
+					final FileInfo fileInfo = item.getFileInfo();
 
-		if (b.getButtonData() == ButtonData.OK_DONE) {
-			final TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
-			if (item != null && item instanceof TreeFileInfo) {
-				final FileInfo fileInfo = ((TreeFileInfo) item).getInfo();
-
-				if (fileInfo != null && fileInfo.getType() == FileType.File && fileInfo.getName().endsWith(".mdl") && fileInfo.getSize() <= 0x3000 //$NON-NLS-1$
-						&& fileInfo.getSize() >= 0x2000) {
-
-					final byte[] data = withPort(p -> {
+					final byte[] data = PortUtils.withPort(comboBox.getValue(), p -> {
 						try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 							p.readFile(fileInfo.getPath(), os);
 							return os.toByteArray();
@@ -145,11 +96,34 @@ public class SelectFromSdCard extends SelectFromTransmitter {
 
 					final String name = fileName.substring(1, fileName.length() - 4);
 					final ModelInfo info = new ModelInfo(0, name, type, null, null);
-					result = new Model(info, data);
+					return new Model(info, data);
 				}
-			}
+			};
+
+			treeView.setDisable(true);
+			treeView.setCursor(Cursor.WAIT);
+
+			final Thread thread = new Thread(task);
+			thread.setDaemon(true);
+			thread.start();
+
+			return task;
 		}
 
-		return result;
+		// not yet ready or cancel button
+		return null;
+	}
+
+	@Override
+	protected boolean hasResult() {
+		final TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
+		if (item != null && item instanceof TreeFileInfo) {
+			final FileInfo fileInfo = ((TreeFileInfo) item).getFileInfo();
+
+			return fileInfo.getType() == FileType.File && fileInfo.getName().endsWith(".mdl") && fileInfo.getSize() <= 0x3000 //$NON-NLS-1$
+					&& fileInfo.getSize() >= 0x2000;
+		}
+
+		return false;
 	}
 }

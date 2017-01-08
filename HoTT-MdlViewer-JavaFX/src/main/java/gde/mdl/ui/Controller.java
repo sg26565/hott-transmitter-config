@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -21,6 +23,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -45,17 +48,17 @@ public class Controller extends Application {
 	static final Preferences PREFS = Preferences.userNodeForPackage(Controller.class);
 	static Stage STAGE;
 
-	static void showExceptionDialog(final Exception e) {
-		LOG.log(Level.SEVERE, e.getMessage(), e);
+	public static void showExceptionDialog(final Throwable throwable) {
+		LOG.log(Level.SEVERE, throwable.getMessage(), throwable);
 		final Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle(Messages.getString("Error"));
 		alert.setHeaderText(null);
-		alert.setContentText(e.getLocalizedMessage());
+		alert.setContentText(throwable.getLocalizedMessage());
 
 		// Create expandable Exception.
 		final StringWriter sw = new StringWriter();
 		final PrintWriter pw = new PrintWriter(sw);
-		e.printStackTrace(pw);
+		throwable.printStackTrace(pw);
 		final String exceptionText = sw.toString();
 
 		final Label label = new Label("The exception stacktrace was:");
@@ -99,6 +102,7 @@ public class Controller extends Application {
 		// FIXME: FXMLLoader does not set contextMenuEnabled correctly.
 		// Therefore, we have to disable it manually.
 		webview.setContextMenuEnabled(false);
+
 	}
 
 	@FXML
@@ -133,20 +137,28 @@ public class Controller extends Application {
 	@FXML
 	public void onLoadFromMemory() {
 		final SelectFromTransmitter dialog = new SelectFromMemory();
-		final Optional<Model> result = dialog.showAndWait();
+		final Optional<Future<Model>> result = dialog.showAndWait();
 		if (result.isPresent()) {
-			model = result.get();
-			onRefresh();
+			try {
+				model = result.get().get();
+				onRefresh();
+			} catch (InterruptedException | ExecutionException e) {
+				showExceptionDialog(e);
+			}
 		}
 	}
 
 	@FXML
 	public void onLoadFromSdCard() {
 		final SelectFromSdCard dialog = new SelectFromSdCard();
-		final Optional<Model> result = dialog.showAndWait();
+		final Optional<Future<Model>> result = dialog.showAndWait();
 		if (result.isPresent()) {
-			model = result.get();
-			onRefresh();
+			try {
+				model = result.get().get();
+				onRefresh();
+			} catch (InterruptedException | ExecutionException e) {
+				showExceptionDialog(e);
+			}
 		}
 	}
 
@@ -162,11 +174,17 @@ public class Controller extends Application {
 	@FXML
 	public void onRefresh() {
 		if (model != null) {
-			try {
-				webview.getEngine().loadContent(model.getHtml());
-			} catch (final IOException e) {
-				showExceptionDialog(e);
-			}
+			webview.setCursor(Cursor.WAIT);
+			webview.setDisable(true);
+			Platform.runLater(() -> {
+				try {
+					webview.getEngine().loadContent(model.getHtml());
+					webview.setDisable(false);
+					webview.setCursor(Cursor.DEFAULT);
+				} catch (final IOException e) {
+					showExceptionDialog(e);
+				}
+			});
 		}
 	}
 

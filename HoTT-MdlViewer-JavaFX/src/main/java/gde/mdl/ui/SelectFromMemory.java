@@ -17,8 +17,11 @@
  */
 package gde.mdl.ui;
 
+import java.util.concurrent.Future;
+
 import gde.mdl.messages.Messages;
-import gde.model.enums.ModelType;
+import gde.mdl.ui.background.GetModelDataTask;
+import gde.mdl.ui.background.LoadFromMemoryService;
 import gde.model.serial.ModelInfo;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -29,46 +32,37 @@ import javafx.scene.control.SelectionMode;
  * @author oli@treichels.de
  */
 public class SelectFromMemory extends SelectFromTransmitter {
-	private ModelInfo infos[];
 	private final ListView<String> listView = new ListView<>();
+	private final LoadFromMemoryService service;
 
 	public SelectFromMemory() {
 		setTitle(Messages.getString("LoadFromMemory"));
 
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		listView.setOnMouseClicked(e -> handleDoubleClick(e));
+
 		borderPane.setCenter(listView);
-		comboBox.valueProperty().addListener((p, o, n) -> loadList());
-		loadList();
-	}
 
-	private void loadList() {
-		listView.setDisable(true);
-		listView.getItems().clear();
-
-		infos = withPort(p -> p.getAllModelInfos());
-
-		for (final ModelInfo info : infos) {
-			final String item = String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', //$NON-NLS-1$
-					info.getModelName());
-			listView.getItems().add(item);
-		}
-
-		listView.setDisable(false);
+		service = new LoadFromMemoryService(listView);
+		service.portNameProperty().bind(comboBox.valueProperty());
 	}
 
 	@Override
-	protected Model result(final ButtonType b) {
-		Model result = null;
-
-		if (b.getButtonData() == ButtonData.OK_DONE) {
+	protected Future<Model> getResult(final ButtonType b) {
+		if (b.getButtonData() == ButtonData.OK_DONE && hasResult()) {
 			final int index = listView.getSelectionModel().getSelectedIndex();
-			if (index != -1) {
-				final ModelInfo info = infos[index];
-				result = withPort(p -> new Model(info, p.getModelData(info)));
-			}
+			final ModelInfo info = service.getValue().get(index);
+			final GetModelDataTask task = new GetModelDataTask(listView, comboBox.getValue(), info);
+
+			task.start();
+			return task;
 		}
 
-		return result;
+		return null;
+	}
+
+	@Override
+	protected boolean hasResult() {
+		return listView.getSelectionModel().getSelectedIndex() != -1;
 	}
 }
