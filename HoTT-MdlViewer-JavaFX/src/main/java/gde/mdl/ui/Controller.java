@@ -64,7 +64,16 @@ public class Controller extends Application {
 			final Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Messages.getString("Error"));
 			alert.setHeaderText(null);
-			alert.setContentText(throwable.getLocalizedMessage());
+
+			String message = throwable.getLocalizedMessage();
+			if (message == null) {
+				message = throwable.getMessage();
+			}
+			if (message == null) {
+				message = throwable.getClass().getSimpleName();
+			}
+
+			alert.setContentText(message);
 
 			// Create expandable Exception.
 			final StringWriter sw = new StringWriter();
