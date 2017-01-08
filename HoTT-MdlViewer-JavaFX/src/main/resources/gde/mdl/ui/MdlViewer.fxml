@@ -7,13 +7,15 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gde.mdl.ui.Controller">
+<BorderPane fx:id="borderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gde.mdl.ui.Controller">
 	<top>
 		<MenuBar>
 			<menus>
-				<Menu mnemonicParsing="false" text="%File">
+				<Menu fx:id="fileMenu" mnemonicParsing="false" text="%File">
 					<items>
 						<MenuItem mnemonicParsing="false" onAction="#onLoadFromFile" text="%LoadFromFile">
 							<accelerator>
@@ -69,6 +71,11 @@
 		</MenuBar>
 	</top>
 	<center>
-		<WebView fx:id="webview" onMouseClicked="#onMouseClicked" />
+      <StackPane>
+         <children>
+      		<WebView fx:id="webview" onMouseClicked="#onMouseClicked" />
+            <Region fx:id="overlay" disable="true" opacity="0.3" style="-fx-background-color: Gray;" visible="false" />
+         </children>
+      </StackPane>
 	</center>
 </BorderPane>

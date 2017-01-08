@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +17,7 @@ import org.apache.commons.io.FilenameUtils;
 import com.itextpdf.text.DocumentException;
 
 import gde.mdl.messages.Messages;
+import gde.mdl.ui.background.FutureTask;
 import gde.report.ReportException;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -29,13 +29,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -84,9 +87,18 @@ public class Controller extends Application {
 	}
 
 	@FXML
+	private BorderPane borderPane;
+
+	@FXML
 	private ContextMenu contextMenu;
 
+	@FXML
+	private Menu fileMenu;
+
 	private Model model;
+
+	@FXML
+	private Region overlay;
 
 	@FXML
 	private MenuItem save1;
@@ -97,12 +109,19 @@ public class Controller extends Application {
 	@FXML
 	private WebView webview;
 
+	private void disableUI(final boolean disable) {
+		final Cursor cursor = disable ? Cursor.WAIT : Cursor.DEFAULT;
+		borderPane.setDisable(disable);
+		borderPane.setCursor(cursor);
+		overlay.setVisible(disable);
+		overlay.setCursor(cursor);
+	}
+
 	@FXML
 	public void initialize() {
 		// FIXME: FXMLLoader does not set contextMenuEnabled correctly.
 		// Therefore, we have to disable it manually.
 		webview.setContextMenuEnabled(false);
-
 	}
 
 	@FXML
@@ -139,12 +158,10 @@ public class Controller extends Application {
 		final SelectFromTransmitter dialog = new SelectFromMemory();
 		final Optional<Future<Model>> result = dialog.showAndWait();
 		if (result.isPresent()) {
-			try {
-				model = result.get().get();
-				onRefresh();
-			} catch (InterruptedException | ExecutionException e) {
-				showExceptionDialog(e);
-			}
+			disableUI(true);
+			final FutureTask task = new FutureTask(result.get());
+			task.setOnSucceeded(e -> onRefresh(task.getValue()));
+			task.start();
 		}
 	}
 
@@ -153,12 +170,10 @@ public class Controller extends Application {
 		final SelectFromSdCard dialog = new SelectFromSdCard();
 		final Optional<Future<Model>> result = dialog.showAndWait();
 		if (result.isPresent()) {
-			try {
-				model = result.get().get();
-				onRefresh();
-			} catch (InterruptedException | ExecutionException e) {
-				showExceptionDialog(e);
-			}
+			disableUI(true);
+			final FutureTask task = new FutureTask(result.get());
+			task.setOnSucceeded(e -> onRefresh(task.getValue()));
+			task.start();
 		}
 	}
 
@@ -174,18 +189,21 @@ public class Controller extends Application {
 	@FXML
 	public void onRefresh() {
 		if (model != null) {
-			webview.setCursor(Cursor.WAIT);
-			webview.setDisable(true);
+			disableUI(true);
 			Platform.runLater(() -> {
 				try {
 					webview.getEngine().loadContent(model.getHtml());
-					webview.setDisable(false);
-					webview.setCursor(Cursor.DEFAULT);
+					disableUI(false);
 				} catch (final IOException e) {
 					showExceptionDialog(e);
 				}
 			});
 		}
+	}
+
+	private void onRefresh(final Model model) {
+		this.model = model;
+		onRefresh();
 	}
 
 	@FXML

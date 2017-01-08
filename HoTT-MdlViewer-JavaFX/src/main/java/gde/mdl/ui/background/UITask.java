@@ -13,15 +13,25 @@ public abstract class UITask<T> extends Task<T> {
 	}
 
 	@Override
+	protected void cancelled() {
+		disableUI(false);
+		super.cancelled();
+	}
+
+	private void disableUI(final boolean disable) {
+		view.setDisable(disable);
+		view.setCursor(disable ? Cursor.WAIT : Cursor.DEFAULT);
+	}
+
+	@Override
 	protected void failed() {
 		Controller.showExceptionDialog(getException());
-		view.setDisable(false);
-		view.setCursor(Cursor.DEFAULT);
+		disableUI(false);
+		super.failed();
 	}
 
 	public void start() {
-		view.setCursor(Cursor.WAIT);
-		view.setDisable(true);
+		disableUI(true);
 		final Thread thread = new Thread(this);
 		thread.setDaemon(true);
 		thread.start();
@@ -29,7 +39,7 @@ public abstract class UITask<T> extends Task<T> {
 
 	@Override
 	protected void succeeded() {
-		view.setDisable(false);
-		view.setCursor(Cursor.DEFAULT);
+		disableUI(false);
+		super.succeeded();
 	}
 }

@@ -28,15 +28,18 @@ public abstract class TransmitterService<T> extends Service<T> {
 
 	@Override
 	protected void cancelled() {
-		view.setCursor(Cursor.DEFAULT);
-		view.setDisable(false);
+		disableUI(false);
 		super.cancelled();
+	}
+
+	private void disableUI(final boolean disable) {
+		view.setDisable(disable);
+		view.setCursor(disable ? Cursor.WAIT : Cursor.DEFAULT);
 	}
 
 	@Override
 	protected void failed() {
-		view.setCursor(Cursor.DEFAULT);
-		view.setDisable(false);
+		disableUI(false);
 		super.failed();
 	}
 
@@ -54,15 +57,13 @@ public abstract class TransmitterService<T> extends Service<T> {
 
 	@Override
 	public void start() {
-		view.setDisable(true);
-		view.setCursor(Cursor.WAIT);
+		disableUI(true);
 		super.start();
 	}
 
 	@Override
 	protected void succeeded() {
-		view.setCursor(Cursor.DEFAULT);
-		view.setDisable(false);
+		disableUI(false);
 		super.succeeded();
 	}
 }
