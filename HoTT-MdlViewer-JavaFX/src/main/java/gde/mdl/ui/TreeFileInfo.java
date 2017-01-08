@@ -14,13 +14,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class TreeFileInfo extends TreeItem<String> {
-	public static final Image FILE = LoadFile("File.gif");
-	public static final Image OPEN_FOLDER = LoadFile("Folder_open.gif");
-	public static final Image CLOSED_FOLDER = LoadFile("Folder_closed.gif");
-	public static final Image ROOT_FOLDER = LoadFile("Root.gif");
+	public static final Image FILE = LoadFile("/File.gif");
+	public static final Image OPEN_FOLDER = LoadFile("/Folder_open.gif");
+	public static final Image CLOSED_FOLDER = LoadFile("/Folder_closed.gif");
+	public static final Image ROOT_FOLDER = LoadFile("/Root.gif");
 
 	private static Image LoadFile(final String fileName) {
-		return new Image(SelectFromSdCard.class.getClassLoader().getResource(fileName).toString());
+		return new Image(SelectFromSdCard.class.getResource(fileName).toString());
 	}
 
 	private final FileInfo fileInfo;
