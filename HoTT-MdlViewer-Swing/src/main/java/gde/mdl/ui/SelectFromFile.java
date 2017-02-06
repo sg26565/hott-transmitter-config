@@ -7,13 +7,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.treichels.hott.HoTTDecoder;
 import gde.mdl.messages.Messages;
 import gde.model.BaseModel;
+import gde.util.ModelLoader;
 
-public class SelectFromFile extends ModelLoader {
+public class SelectFromFile extends JPanel implements ModelLoader {
 	private static final long serialVersionUID = 1L;
 
 	private final JFileChooser chooser = new JFileChooser();

@@ -8,6 +8,10 @@ public class Messages {
 	private static final String[] PACKAGE_NAMES = { "", "gde.model.", "gde.model.enums." };
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
+	public static ResourceBundle getResourceBundle() {
+		return RESOURCE_BUNDLE;
+	}
+
 	public static String getString(final String key, final Object... args) {
 		if (key == null) {
 			return null;

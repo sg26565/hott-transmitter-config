@@ -19,10 +19,10 @@ package gde.mdl.ui;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.util.Base64;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.codec.binary.Base64;
 import org.w3c.dom.Element;
 import org.xhtmlrenderer.extend.ReplacedElement;
 import org.xhtmlrenderer.extend.ReplacedElementFactory;
@@ -71,7 +71,7 @@ public class InlineImageReplacedElementFactory implements ReplacedElementFactory
 																						// "data:image/png;base64,"
 
 		try {
-			final ByteArrayInputStream is = new ByteArrayInputStream(Base64.decodeBase64(inlineData));
+			final ByteArrayInputStream is = new ByteArrayInputStream(Base64.getDecoder().decode(inlineData));
 			final BufferedImage image = ImageIO.read(is);
 
 			if (width == 0) {

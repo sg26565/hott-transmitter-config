@@ -21,6 +21,7 @@
 		<module>HoTT-MdlViewer-SWT</module>
 		<!-- module>HoTT-MdlViewer-Android</module -->
 		<module>MemoryDump</module>
+		<module>HoTT-MdlViewer-JavaFX</module>
 	</modules>
 
 	<organization>

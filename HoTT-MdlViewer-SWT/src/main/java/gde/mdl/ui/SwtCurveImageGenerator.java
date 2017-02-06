@@ -18,8 +18,8 @@
 package gde.mdl.ui;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Base64;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.eclipse.swt.SWT;
@@ -214,6 +214,6 @@ public class SwtCurveImageGenerator implements CurveImageGenerator {
 			e.printStackTrace();
 		}
 
-		return PREFIX + Base64.encodeBase64String(baos.toByteArray());
+		return PREFIX + Base64.getEncoder().encodeToString(baos.toByteArray());
 	}
 }
