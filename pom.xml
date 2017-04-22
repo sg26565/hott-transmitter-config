@@ -254,6 +254,11 @@
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
+				<artifactId>HoTT-MdlViewer-JavaFX</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-MdlViewer-SWT</artifactId>
 				<version>${project.version}</version>
 			</dependency>
