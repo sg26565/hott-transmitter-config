@@ -44,7 +44,7 @@ public class HelicopterModel extends BaseModel {
     private SwashplateMix swashplateMix;
     private SwashplateType swashplateType;
     private int throttleLimitWarning;
-    private boolean isThrottleMarkerActive;
+    private boolean throttleMarkerActive;
     private int throttleMarkerPosition;
 
     public HelicopterModel() {
@@ -159,7 +159,7 @@ public class HelicopterModel extends BaseModel {
     }
 
     public boolean isThrottleMarkerActive() {
-        return isThrottleMarkerActive;
+        return throttleMarkerActive;
     }
 
     public void setAutorotationC1TriggerPosition(final int autorotationPosition) {
@@ -214,8 +214,8 @@ public class HelicopterModel extends BaseModel {
         this.throttleLimitWarning = throttleLimitWarning;
     }
 
-    public void setThrottleMarkerActive(final boolean isThrottleMarkerActive) {
-        this.isThrottleMarkerActive = isThrottleMarkerActive;
+    public void setThrottleMarkerActive(final boolean throttleMarkerActive) {
+        this.throttleMarkerActive = throttleMarkerActive;
     }
 
     public void setThrottleMarkerPosition(final int throttleMarkerPosition) {

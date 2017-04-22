@@ -14,7 +14,7 @@ package gde.model;
 public class LapStore extends AbstractBase {
     private static final long serialVersionUID = 1L;
 
-    private boolean isActive;
+    private boolean active;
     private int viewLap;
     private int currentLap;
     private Lap[] laps;
@@ -32,11 +32,11 @@ public class LapStore extends AbstractBase {
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
     public void setActive(final boolean isActive) {
-        this.isActive = isActive;
+        this.active = isActive;
     }
 
     public void setCurrentLap(final int currentLap) {
