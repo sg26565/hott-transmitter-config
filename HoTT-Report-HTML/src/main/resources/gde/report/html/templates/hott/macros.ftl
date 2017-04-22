@@ -25,6 +25,8 @@
 	</#if>
 </#macro>
 
+<#macro sound index><#if index == 1026>--<#else>${index}</#if></#macro>
+
 <#macro reset><#assign row="even"/></#macro>
 
 <#macro d><#if row=="even">d0<#assign row="odd"/><#else>d1<#assign row="even"/></#if></#macro>

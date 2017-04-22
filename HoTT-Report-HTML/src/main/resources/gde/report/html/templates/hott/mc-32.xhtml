@@ -19,53 +19,55 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <@htmlsafe>
-<#include "macros.ftl">
+<#include "macros.ftl"/>
 	<head>
 		<title>${model.vendor} ${model.transmitterType} - ${model.modelName}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<#include "styles.ftl">
-		<#include "bookmarks.ftl">
+		<#include "styles.ftl"/>
+		<#include "bookmarks.ftl"/>
 	</head>
 	<body>
 		&nbsp;
 		<div class="navigation">
-			<#include "toc.ftl">
+			<#include "toc.ftl"/>
 		</div>
 		<div class="data">
-			<#include "baseSettings.ftl">
-			<#include "modelType.ftl">
-			<#include "servos.ftl">		
-			<#include "stickSettings.ftl">
-			<#include "controls.ftl">
-			<#include "drExpo.ftl">
-			<#include "channel1Curve.ftl">
-			<#include "controlSwitches.ftl">
-			<#include "logicalSwitches.ftl">
-			<#include "phaseSettings.ftl">
-			<#include "phaseAssignments.ftl">
-			<#include "phaseTrim.ftl">
-			<#include "nonDelayedChannels.ftl">
-			<#include "timersGeneral.ftl">
-			<#include "phaseTimer.ftl">
-			<#include "wingMix.ftl">
-			<#include "helicopterMix.ftl">
-			<#include "linearMixer.ftl">
-			<#include "curveMixer.ftl">
-			<#include "mixerActive.ftl">
-			<#include "mixOnlyChannel.ftl">
-			<#include "dualMixer.ftl">
-			<#include "swashplateMixer.ftl">
-			<#include "failSafe.ftl">
-			<#include "trainerPupil.ftl">
-			<#include "outputChannel.ftl">
-			<#include "profiTrim.ftl">
-			<#include "trimMemory.ftl">
-			<#include "telemetry.ftl">		
-			<#include "channelSequencer.ftl">
-			<#include "multiChannel.ftl">
-			<#include "ringLimiter.ftl">
-			<#include "mp3Player.ftl">
-			<#include "switches.ftl">
+			<#include "baseSettings.ftl"/>
+			<#include "modelType.ftl"/>
+			<#include "servos.ftl"/>		
+			<#include "stickSettings.ftl"/>
+			<#include "controls.ftl"/>
+			<#include "drExpo.ftl"/>
+			<#include "channel1Curve.ftl"/>
+			<#include "controlSwitches.ftl"/>
+			<#include "logicalSwitches.ftl"/>
+			<#include "announcements.ftl"/>
+			<#include "phaseSettings.ftl"/>
+			<#include "phaseAssignments.ftl"/>
+			<#include "phaseTrim.ftl"/>
+			<#include "nonDelayedChannels.ftl"/>
+			<#include "timersGeneral.ftl"/>
+			<#include "phaseTimer.ftl"/>
+			<#include "lapTimer.ftl"/>
+			<#include "wingMix.ftl"/>
+			<#include "helicopterMix.ftl"/>
+			<#include "linearMixer.ftl"/>
+			<#include "curveMixer.ftl"/>
+			<#include "mixerActive.ftl"/>
+			<#include "mixOnlyChannel.ftl"/>
+			<#include "dualMixer.ftl"/>
+			<#include "swashplateMixer.ftl"/>
+			<#include "failSafe.ftl"/>
+			<#include "trainerPupil.ftl"/>
+			<#include "outputChannel.ftl"/>
+			<#include "profiTrim.ftl"/>
+			<#include "trimMemory.ftl"/>
+			<#include "telemetry.ftl"/>		
+			<#include "channelSequencer.ftl"/>
+			<#include "multiChannel.ftl"/>
+			<#include "ringLimiter.ftl"/>
+			<#include "mp3Player.ftl"/>
+			<#include "switches.ftl"/>
 		</div>
 	</body>
 </@htmlsafe>

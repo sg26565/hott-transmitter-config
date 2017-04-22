@@ -17,7 +17,7 @@
 		</tr>
 		<tr class="<@d/>">
 			<th align="right">Varioton</th>
-			<td align="left"><@switch model.telemetry.varioTone/></td>
+			<td align="left"><#if model.varioToneSensor??>über ${model.varioToneSensor}, </#if><@switch model.telemetry.varioTone/></td>
 		</tr>
 		<#list model.telemetry.selectedSensor as sensor>
 			<tr class="<@d/>">
@@ -35,5 +35,21 @@
 			<th align="right">aktuelle Sensorseite</th>
 			<td align="left">${model.telemetry.currentSensorPage}</td>
 		</tr>
+		<tr class="<@d/>">
+			<th align="right">RX-Data</th>
+			<#if model.telemetryDataReceiveTime == 0>
+			<td align="left">Ein</td>
+			<#else>
+			<td align="left">${model.telemetryDataReceiveTime}</td>
+			</#if>
+		</tr>		
+		<#list model.userAlarmList as alarm>
+		<tr class="<@d/>">
+			<#if alarm_index == 0>
+			<th align="right" rowspan="${model.userAlarmList?size}" valign="top">Alarmeinstellung</th>
+			</#if>
+			<td align="left">Alarm ${alarm_index+1}: <@sound alarm/></td>
+		</tr>
+		</#list>						
 	</tbody>
 </table>

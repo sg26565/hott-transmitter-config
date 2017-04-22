@@ -25,6 +25,9 @@
 <#if model.logicalSwitch??>
 	<a href="#logicalSwitches">logische Schalter</a>
 </#if>
+<#if model.phase[0].switchAnnouncements??>
+	<a href="#announcements">Ankünden</a>
+</#if>
 <a href="#phaseSettings">Phaseneinstellungen</a>
 <a href="#phaseAssignments">Phasenzuweisung</a>
 <#if wingedModel??>
@@ -33,6 +36,9 @@
 <a href="#nonDelayedChannels">unverzögerte Kanäle</a>
 <a href="#timersGeneral">Uhren (allgemein)</a>
 <a href="#phaseTimer">Flugphasenuhren</a>
+<#if model.lapStore??>
+<a href="#lapTimer">Rundenzähler</a>
+</#if>
 <#if wingedModel??>
 	<div>Flächenmischer</div>
 	<#list model.phase as phase>

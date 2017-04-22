@@ -10,6 +10,7 @@
 				<th align="center">Motor</th>
 			</#if>
 			<th align="center">Umschaltzeit</th>
+			<th align="center">Ansage</th>
 		</tr>
 	</thead>
 
@@ -30,6 +31,7 @@
 						<td align="center">${phase.motorOn?string("ja","nein")}</td>
 					</#if>
 					<td align="center">${phase.phaseSwitchTime?string("0.0")}s</td>
+					<td align="center"><@sound phase.phaseAnnouncement/></td>
 				</tr>
 			</#if>
 		</#list>

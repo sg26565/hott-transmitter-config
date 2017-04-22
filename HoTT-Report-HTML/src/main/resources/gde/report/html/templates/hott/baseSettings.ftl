@@ -42,10 +42,21 @@
 			<th align="right">Steueranordnung</th>
 			<td align="left" colspan="3">${model.stickMode}</td>
 		</tr>
+		<#if model.module.type.name() == "SP" && model.spektrumMode??>
+		<tr class="<@d/>">
+			<th align="right">Modul</th>
+			<td align="left" colspan="3">${model.module.type} - ${model.spektrumMode}</td>
+		</tr>
+		<tr class="<@d/>">
+			<th align="right">Kanäle</th>
+			<td align="left" colspan="3">${model.spektrumChannelNumber}</td>
+		</tr>
+		<#else>
 		<tr class="<@d/>">
 			<th align="right">Modul</th>
 			<td align="left" colspan="3">${model.module.type}</td>
 		</tr>
+		</#if>
 		<tr class="<@d/>">
 			<th align="right">DSC-Ausgang</th>
 			<td align="left" colspan="3">${model.dscOutputType}</td>
@@ -73,6 +84,14 @@
 					<th align="right">Markierung</th>
 					<td align="left" colspan="3"><@switch model.getSwitch("MarkerKey")/></td>
 				</tr>
+				<tr class="<@d/>">
+					<th align="right">Markierung aktiv?</th>
+					<td align="left" colspan="3">${helicopterModel.throttleMarkerActive?string("ja","nein")}</td>
+				</tr>
+				<tr class="<@d/>">
+					<th align="right">Position</th>
+					<td align="left" colspan="3">${helicopterModel.throttleMarkerPosition}</td>
+				</tr>
 			</#if>
 			<tr class="<@d/>">
 				<th align="right">Einschaltwarnung</th>
@@ -88,6 +107,12 @@
 			</tr>
 		</#if>
 		<#if model.module.type.name() == "HoTT">
+			<#if model.receiverBindType??>
+				<tr class="<@d/>">
+					<th align="right">Empfänger Bindungstyp</th>
+					<td align="left" colspan="3">${model.receiverBindType}</td>
+				</tr>
+			</#if>
 			<#list model.receiver as receiver>
 				<tr class="<@d/> <@u receiver.bound/>">
 					<th class="d2" colspan="4">Empfänger ${receiver.number?number+1}</th>
@@ -105,6 +130,12 @@
 						<th align="right">Empfänger ID</th>
 						<td align="left" colspan="3">${hex(receiver.rfid?c)}</td>
 					</tr>
+					<#if receiver.firmwareType??>
+					<tr class="<@d/>">
+						<th align="right">Empfänger Firnware</th>
+						<td align="left" colspan="3">${receiver.firmwareType}</td>
+					</tr>
+					</#if>
 					<tr class="<@d/>">
 						<th align="right">Empfängerausgang</th>
 						<th align="center">Eingang</th>
