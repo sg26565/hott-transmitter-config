@@ -83,6 +83,28 @@ public class Switch extends AbstractBase {
         return b.toString();
     }
 
+    public String getName() {
+        final StringBuilder b = new StringBuilder();
+
+        b.append(function.toString());
+
+        if (qualifier != null) for (final Object q : qualifier) {
+            b.append(" "); //$NON-NLS-1$
+
+            if (q.getClass().isEnum())
+                try {
+                    final Method m = q.getClass().getMethod("toString"); //$NON-NLS-1$
+                    b.append(m.invoke(q));
+                } catch (final Exception e) {
+                    throw new RuntimeException(e);
+                }
+            else
+                b.append(q.toString());
+        }
+
+        return b.toString();
+    }
+
     public int getNumber() {
         return number;
     }

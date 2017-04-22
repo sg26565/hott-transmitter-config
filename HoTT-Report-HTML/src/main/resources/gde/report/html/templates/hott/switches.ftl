@@ -19,7 +19,7 @@
 		<#list model.switch as sw>
 			<#if sw?? && sw.assignment?? && sw.assignment.name() != "Unassigned">
 				<tr class="<@d/>">
-					<td align="center">${sw.id}</td>
+					<td align="center">${sw.name}</td>
 					<td align="center">${sw.assignment.name()}</td>
 					<td align="center"><@switch sw/></td>
 					<td align="center">${sw.type}</td>
