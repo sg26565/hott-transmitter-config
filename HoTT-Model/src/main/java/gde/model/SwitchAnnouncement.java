@@ -16,7 +16,7 @@ import gde.model.enums.AnnouncementType;
 public class SwitchAnnouncement extends AbstractBase {
     private static final long serialVersionUID = 1L;
 
-    private AnnouncementType announcmentType;
+    private AnnouncementType announcementType;
     private Switch sw;
     private int[] soundIndex;
 
@@ -36,11 +36,11 @@ public class SwitchAnnouncement extends AbstractBase {
         this.sw = sw;
     }
 
-    public AnnouncementType getAnnouncmentType() {
-        return announcmentType;
+    public AnnouncementType getAnnouncementType() {
+        return announcementType;
     }
 
-    public void setAnnouncmentType(AnnouncementType announcmentType) {
-        this.announcmentType = announcmentType;
+    public void setAnnouncementType(AnnouncementType announcmentType) {
+        this.announcementType = announcmentType;
     }
 }
