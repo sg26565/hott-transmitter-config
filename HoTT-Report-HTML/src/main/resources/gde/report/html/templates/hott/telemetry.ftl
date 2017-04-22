@@ -42,7 +42,8 @@
 			<#else>
 			<td align="left">${model.telemetryDataReceiveTime}</td>
 			</#if>
-		</tr>		
+		</tr>
+		<#if model.userAlarmList??>		
 		<#list model.userAlarmList as alarm>
 		<tr class="<@d/>">
 			<#if alarm_index == 0>
@@ -50,6 +51,7 @@
 			</#if>
 			<td align="left">Alarm ${alarm_index+1}: <@sound alarm/></td>
 		</tr>
-		</#list>						
+		</#list>
+		</#if>						
 	</tbody>
 </table>
