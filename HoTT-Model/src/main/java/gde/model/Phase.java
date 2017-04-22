@@ -36,6 +36,10 @@ public abstract class Phase extends AbstractBase {
     private double phaseSwitchTime;
     private Clock phaseTimer;
     private PhaseType phaseType;
+    private int[] digitalTrimValue;
+    private int[] digitalTrimStep;
+    private SwitchAnnouncement[] switchAnnouncements;
+    private int phaseAnnouncement;
 
     @Override
     public boolean equals(final Object obj) {
@@ -75,6 +79,14 @@ public abstract class Phase extends AbstractBase {
         return control;
     }
 
+    public int[] getDigitalTrimStep() {
+        return digitalTrimStep;
+    }
+
+    public int[] getDigitalTrimValue() {
+        return digitalTrimValue;
+    }
+
     @XmlElementWrapper(name = "dualRateExpos")
     public DualRateExpo[] getDualRateExpo() {
         return dualRateExpo;
@@ -84,6 +96,10 @@ public abstract class Phase extends AbstractBase {
     @XmlID
     public String getNumber() {
         return number;
+    }
+
+    public int getPhaseAnnouncement() {
+        return phaseAnnouncement;
     }
 
     public String getPhaseName() {
@@ -139,6 +155,14 @@ public abstract class Phase extends AbstractBase {
         control = controls;
     }
 
+    public void setDigitalTrimStep(final int[] digitalTrimStep) {
+        this.digitalTrimStep = digitalTrimStep;
+    }
+
+    public void setDigitalTrimValue(final int[] digitalTrimValue) {
+        this.digitalTrimValue = digitalTrimValue;
+    }
+
     public void setDualRateExpo(final DualRateExpo[] dualRateExpo) {
         this.dualRateExpo = dualRateExpo;
     }
@@ -153,6 +177,10 @@ public abstract class Phase extends AbstractBase {
 
     public void setNumber(final String number) {
         this.number = number;
+    }
+
+    public void setPhaseAnnouncement(final int phaseAnnouncement) {
+        this.phaseAnnouncement = phaseAnnouncement;
     }
 
     public void setPhaseName(final String phaseName) {
@@ -178,5 +206,13 @@ public abstract class Phase extends AbstractBase {
     @Override
     public String toString() {
         return String.format("Phase %d: %s", Integer.parseInt(getNumber()) + 1, getPhaseName()); //$NON-NLS-1$
+    }
+
+    public SwitchAnnouncement[] getSwitchAnnouncements() {
+        return switchAnnouncements;
+    }
+
+    public void setSwitchAnnouncements(SwitchAnnouncement[] switchAnnouncements) {
+        this.switchAnnouncements = switchAnnouncements;
     }
 }

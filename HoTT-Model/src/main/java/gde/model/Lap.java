@@ -9,19 +9,36 @@
  *
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package gde.model.enums;
+package gde.model;
 
-import java.util.ResourceBundle;
+public class Lap extends AbstractBase {
+    private static final long serialVersionUID = 1L;
 
-/**
- * @author oli@treichels.de
- */
-public enum SwitchFunction {
-    Autorotation, AutorotationC1, AutoTrim, ChannelSequencer, Clock, Combine, Control, CutOff, Diff, Dr_Expo, DualRate, Expo, InputControl, Logical, MarkerKey, Mixer, Phase, PlayPause, PowerWarning, ProfiTrim, ThrottleLimit, ToggleHigh, ToggleLow, Trainer, VarioTone, VoiceRepeat, VoiceTrigger, Volume, VolumeLeft, VolumeRight, Announcement;
+    private int minute;
+    private int second;
+    private int millisecond;
 
-    /** @return the locale-dependent message */
-    @Override
-    public String toString() {
-        return ResourceBundle.getBundle(getClass().getName()).getString(name());
+    public int getMillisecond() {
+        return millisecond;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public int getSecond() {
+        return second;
+    }
+
+    public void setMillisecond(final int millisecond) {
+        this.millisecond = millisecond;
+    }
+
+    public void setMinute(final int minute) {
+        this.minute = minute;
+    }
+
+    public void setSecond(final int second) {
+        this.second = second;
     }
 }

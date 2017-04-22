@@ -11,17 +11,6 @@
  */
 package gde.model.enums;
 
-import java.util.ResourceBundle;
-
-/**
- * @author oli@treichels.de
- */
-public enum SwitchFunction {
-    Autorotation, AutorotationC1, AutoTrim, ChannelSequencer, Clock, Combine, Control, CutOff, Diff, Dr_Expo, DualRate, Expo, InputControl, Logical, MarkerKey, Mixer, Phase, PlayPause, PowerWarning, ProfiTrim, ThrottleLimit, ToggleHigh, ToggleLow, Trainer, VarioTone, VoiceRepeat, VoiceTrigger, Volume, VolumeLeft, VolumeRight, Announcement;
-
-    /** @return the locale-dependent message */
-    @Override
-    public String toString() {
-        return ResourceBundle.getBundle(getClass().getName()).getString(name());
-    }
+public enum AnnouncementType {
+    Global, Phase
 }

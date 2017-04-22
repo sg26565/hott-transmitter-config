@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlID;
 
+import gde.model.enums.ReceiverFirmwareType;
+
 /**
  * @author oli
  */
@@ -28,6 +30,7 @@ public class Receiver extends AbstractBase {
     private String number;
     private long rfid;
     private boolean telemetry;
+    private ReceiverFirmwareType firmwareType;
 
     @Override
     public boolean equals(final Object obj) {
@@ -48,6 +51,10 @@ public class Receiver extends AbstractBase {
     @XmlElementWrapper(name = "channelMappings")
     public ChannelMapping[] getChannelMapping() {
         return channelMapping;
+    }
+
+    public ReceiverFirmwareType getFirmwareType() {
+        return firmwareType;
     }
 
     @XmlAttribute
@@ -86,6 +93,10 @@ public class Receiver extends AbstractBase {
 
     public void setChannelMapping(final ChannelMapping[] channemMapping) {
         channelMapping = channemMapping;
+    }
+
+    public void setFirmwareType(final ReceiverFirmwareType firmwareType) {
+        this.firmwareType = firmwareType;
     }
 
     public void setNumber(final int number) {

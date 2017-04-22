@@ -19,9 +19,13 @@ import javax.xml.bind.annotation.XmlIDREF;
 import gde.model.enums.DSCOutputType;
 import gde.model.enums.ExtPPMType;
 import gde.model.enums.ModelType;
+import gde.model.enums.ReceiverBindType;
 import gde.model.enums.ReceiverType;
+import gde.model.enums.SpektrumMode;
 import gde.model.enums.StickMode;
+import gde.model.enums.TelemetryAlarmType;
 import gde.model.enums.TransmitterType;
+import gde.model.enums.VarioToneSensor;
 import gde.model.enums.Vendor;
 
 /**
@@ -68,6 +72,17 @@ public class BaseModel extends AbstractBase {
     private long transmitterId;
     private TransmitterType transmitterType;
     private Vendor vendor;
+    private int spektrumChannelNumber;
+    private SpektrumMode spektrumMode;
+    private int[] volumeTrim;
+    private int[] globalTrimValue;
+    private int[] globalTrimStep;
+    private LapStore lapStore;
+    private ReceiverBindType receiverBindType;
+    private VarioToneSensor varioToneSensor;
+    private int telemetryDataReceiveTime;
+    private int[] userAlarmList;
+    private TelemetryAlarmType telemetryAlarmType;
 
     public BaseModel() {
         modelType = ModelType.Unknown;
@@ -199,6 +214,18 @@ public class BaseModel extends AbstractBase {
         return freeMixer;
     }
 
+    public int[] getGlobalTrimStep() {
+        return globalTrimStep;
+    }
+
+    public int[] getGlobalTrimValue() {
+        return globalTrimValue;
+    }
+
+    public LapStore getLapStore() {
+        return lapStore;
+    }
+
     @XmlElementWrapper(name = "logicalSwitches")
     @XmlIDREF
     public LogicalSwitch[] getLogicalSwitch() {
@@ -252,6 +279,10 @@ public class BaseModel extends AbstractBase {
         return receiver;
     }
 
+    public ReceiverBindType getReceiverBindType() {
+        return receiverBindType;
+    }
+
     public ReceiverType getReceiverType() {
         return receiverType;
     }
@@ -259,6 +290,14 @@ public class BaseModel extends AbstractBase {
     @XmlElementWrapper(name = "ringLimiters")
     public RingLimiter[] getRingLimiter() {
         return ringLimiter;
+    }
+
+    public int getSpektrumChannelNumber() {
+        return spektrumChannelNumber;
+    }
+
+    public SpektrumMode getSpektrumMode() {
+        return spektrumMode;
     }
 
     public StickMode getStickMode() {
@@ -286,6 +325,14 @@ public class BaseModel extends AbstractBase {
         return telemetry;
     }
 
+    public TelemetryAlarmType getTelemetryAlarmType() {
+        return telemetryAlarmType;
+    }
+
+    public int getTelemetryDataReceiveTime() {
+        return telemetryDataReceiveTime;
+    }
+
     public ThrottleSettings getThrottleSettings() {
         return throttleSettings;
     }
@@ -302,8 +349,20 @@ public class BaseModel extends AbstractBase {
         return transmitterType;
     }
 
+    public int[] getUserAlarmList() {
+        return userAlarmList;
+    }
+
+    public VarioToneSensor getVarioToneSensor() {
+        return varioToneSensor;
+    }
+
     public Vendor getVendor() {
         return vendor;
+    }
+
+    public int[] getVolumeTrim() {
+        return volumeTrim;
     }
 
     @Override
@@ -424,6 +483,18 @@ public class BaseModel extends AbstractBase {
         this.freeMixer = freeMixer;
     }
 
+    public void setGlobalTrimStep(final int[] globalTrimStep) {
+        this.globalTrimStep = globalTrimStep;
+    }
+
+    public void setGlobalTrimValue(final int[] globalTrimValue) {
+        this.globalTrimValue = globalTrimValue;
+    }
+
+    public void setLapStore(final LapStore lapStore) {
+        this.lapStore = lapStore;
+    }
+
     public void setLogicalSwitch(final LogicalSwitch[] logicalSwitches) {
         logicalSwitch = logicalSwitches;
     }
@@ -472,12 +543,24 @@ public class BaseModel extends AbstractBase {
         receiver = receivers;
     }
 
+    public void setReceiverBindType(final ReceiverBindType receiverBindType) {
+        this.receiverBindType = receiverBindType;
+    }
+
     public void setReceiverType(final ReceiverType reveiverType) {
         receiverType = reveiverType;
     }
 
     public void setRingLimiter(final RingLimiter[] ringLimiter) {
         this.ringLimiter = ringLimiter;
+    }
+
+    public void setSpektrumChannelNumber(final int spektrumChannelNumber) {
+        this.spektrumChannelNumber = spektrumChannelNumber;
+    }
+
+    public void setSpektrumMode(final SpektrumMode spektrumMode) {
+        this.spektrumMode = spektrumMode;
     }
 
     public void setStickMode(final StickMode stickMode) {
@@ -496,6 +579,14 @@ public class BaseModel extends AbstractBase {
         this.telemetry = telemetry;
     }
 
+    public void setTelemetryAlarmType(final TelemetryAlarmType telemetryAlarmType) {
+        this.telemetryAlarmType = telemetryAlarmType;
+    }
+
+    public void setTelemetryDataReceiveTime(final int telemetryDataReceiveTime) {
+        this.telemetryDataReceiveTime = telemetryDataReceiveTime;
+    }
+
     public void setThrottleSettings(final ThrottleSettings throttleSettings) {
         this.throttleSettings = throttleSettings;
     }
@@ -512,7 +603,19 @@ public class BaseModel extends AbstractBase {
         this.transmitterType = transmitterType;
     }
 
+    public void setUserAlarmList(final int[] userAlarmList) {
+        this.userAlarmList = userAlarmList;
+    }
+
+    public void setVarioToneSensor(final VarioToneSensor varioToneSensor) {
+        this.varioToneSensor = varioToneSensor;
+    }
+
     public void setVendor(final Vendor vendor) {
         this.vendor = vendor;
+    }
+
+    public void setVolumeTrim(final int[] volumeTrim) {
+        this.volumeTrim = volumeTrim;
     }
 }
