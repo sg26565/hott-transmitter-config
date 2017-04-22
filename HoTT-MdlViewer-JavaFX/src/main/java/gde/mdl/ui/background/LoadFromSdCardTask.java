@@ -10,24 +10,22 @@ import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 
 public class LoadFromSdCardTask extends TransmitterTask<List<TreeItem<String>>> {
-	private final String path;
+    private final String path;
 
-	public LoadFromSdCardTask(final Node view, final String portName, final String path) {
-		super(view, portName);
-		this.path = path;
-	}
+    public LoadFromSdCardTask(final Node view, final String portName, final String path) {
+        super(view, portName);
+        this.path = path;
+    }
 
-	@Override
-	protected List<TreeItem<String>> call() throws Exception {
-		final List<TreeItem<String>> result = new ArrayList<>();
-		final String[] names = PortUtils.withPort(portName, p -> p.listDir(path));
+    @Override
+    protected List<TreeItem<String>> call() throws Exception {
+        final List<TreeItem<String>> result = new ArrayList<>();
+        final String[] names = PortUtils.withPort(portName, p -> p.listDir(path));
 
-		if (names != null) {
-			for (final String name : names) {
-				final FileInfo info = PortUtils.withPort(portName, p -> p.getFileInfo(name));
-				result.add(new TreeFileInfo(view, info));
-			}
-		}
-		return result;
-	}
+        if (names != null) for (final String name : names) {
+            final FileInfo info = PortUtils.withPort(portName, p -> p.getFileInfo(name));
+            result.add(new TreeFileInfo(view, info));
+        }
+        return result;
+    }
 }

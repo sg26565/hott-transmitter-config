@@ -1,19 +1,13 @@
 /**
- *  HoTT Transmitter Config
- *  Copyright (C) 2013  Oliver Treichel
+ * HoTT Transmitter Config Copyright (C) 2013 Oliver Treichel
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package gde.model;
 
@@ -24,56 +18,46 @@ import javax.xml.bind.annotation.XmlAttribute;
  *
  */
 public class ChannelMapping extends AbstractBase {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private int inputChannel;
-	private int outputChannel;
+    private int inputChannel;
+    private int outputChannel;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final ChannelMapping other = (ChannelMapping) obj;
-		if (inputChannel != other.inputChannel) {
-			return false;
-		}
-		if (outputChannel != other.outputChannel) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        final ChannelMapping other = (ChannelMapping) obj;
+        if (inputChannel != other.inputChannel) return false;
+        if (outputChannel != other.outputChannel) return false;
+        return true;
+    }
 
-	@XmlAttribute
-	public int getInputChannel() {
-		return inputChannel;
-	}
+    @XmlAttribute
+    public int getInputChannel() {
+        return inputChannel;
+    }
 
-	@XmlAttribute
-	public int getOutputChannel() {
-		return outputChannel;
-	}
+    @XmlAttribute
+    public int getOutputChannel() {
+        return outputChannel;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + inputChannel;
-		result = prime * result + outputChannel;
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + inputChannel;
+        result = prime * result + outputChannel;
+        return result;
+    }
 
-	public void setInputChannel(final int inputChannel) {
-		this.inputChannel = inputChannel;
-	}
+    public void setInputChannel(final int inputChannel) {
+        this.inputChannel = inputChannel;
+    }
 
-	public void setOutputChannel(final int outputChannel) {
-		this.outputChannel = outputChannel;
-	}
+    public void setOutputChannel(final int outputChannel) {
+        this.outputChannel = outputChannel;
+    }
 }

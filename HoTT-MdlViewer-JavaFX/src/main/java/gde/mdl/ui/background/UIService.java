@@ -7,22 +7,22 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 
 public abstract class UIService<T> extends Service<T> {
-	protected final Node view;
+    protected final Node view;
 
-	public UIService(final Node view) {
-		this.view = view;
-	}
+    public UIService(final Node view) {
+        this.view = view;
+    }
 
-	@Override
-	protected void failed() {
-		ExceptionDialog.show(getException());
-		super.failed();
-	}
+    @Override
+    protected void failed() {
+        ExceptionDialog.show(getException());
+        super.failed();
+    }
 
-	@Override
-	public void start() {
-		view.getScene().cursorProperty().bind(Bindings.when(runningProperty()).then(Cursor.WAIT).otherwise(Cursor.DEFAULT));
-		runningProperty().addListener((p, o, n) -> view.setDisable(n));
-		super.start();
-	}
+    @Override
+    public void start() {
+        view.getScene().cursorProperty().bind(Bindings.when(runningProperty()).then(Cursor.WAIT).otherwise(Cursor.DEFAULT));
+        runningProperty().addListener((p, o, n) -> view.setDisable(n));
+        super.start();
+    }
 }

@@ -41,7 +41,7 @@ public class Launcher {
 
     /**
      * Initialize logfile.
-     * 
+     *
      * @throws SecurityException
      * @throws IOException
      */
@@ -68,7 +68,7 @@ public class Launcher {
 
     /**
      * Initialize system properties.
-     * 
+     *
      * @throws URISyntaxException
      * @throws IOException
      */
@@ -122,7 +122,7 @@ public class Launcher {
 
     /**
      * Start the application.
-     * 
+     *
      * @throws ClassNotFoundException
      * @throws NoSuchMethodException
      * @throws IllegalAccessException

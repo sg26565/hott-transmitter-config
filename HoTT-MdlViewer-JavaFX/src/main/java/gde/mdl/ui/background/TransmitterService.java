@@ -13,25 +13,25 @@ import javafx.scene.Node;
  *            The result parameter
  */
 public abstract class TransmitterService<T> extends UIService<T> {
-	private final StringProperty portNameProperty;
+    private final StringProperty portNameProperty;
 
-	protected TransmitterService(final Node view) {
-		super(view);
-		portNameProperty = new SimpleStringProperty(this, "portName");
+    protected TransmitterService(final Node view) {
+        super(view);
+        portNameProperty = new SimpleStringProperty(this, "portName");
 
-		// (re-)start this service on change of com port
-		portNameProperty().addListener((p, o, n) -> restart());
-	}
+        // (re-)start this service on change of com port
+        portNameProperty().addListener((p, o, n) -> restart());
+    }
 
-	public String getPortName() {
-		return portNameProperty.get();
-	}
+    public String getPortName() {
+        return portNameProperty.get();
+    }
 
-	public StringProperty portNameProperty() {
-		return portNameProperty;
-	}
+    public StringProperty portNameProperty() {
+        return portNameProperty;
+    }
 
-	public void setPortName(final String portName) {
-		portNameProperty.set(portName);
-	}
+    public void setPortName(final String portName) {
+        portNameProperty.set(portName);
+    }
 }
