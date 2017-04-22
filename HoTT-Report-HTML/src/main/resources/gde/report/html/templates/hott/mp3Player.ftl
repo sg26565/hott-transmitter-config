@@ -21,7 +21,7 @@
 				<th align="center">Modus</th>
 				<td align="left">${model.mp3Player.mode}</td>
 			</tr>
-			<#if model.transmitterType.name() == "mc28">
+			<#if model.getSwitch("Volume")??>
 			<tr class="<@d/>">
 				<th align="center">Lautstärke</th>
 				<td align="left">${model.mp3Player.volume}</td>
