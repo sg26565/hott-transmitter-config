@@ -59,6 +59,21 @@ public class ReportTest {
 	}
 
 	@Test
+	public void testMc28Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
+		final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc28").toURI()); //$NON-NLS-1$
+
+		for (final File file : dir.listFiles()) {
+			final BaseModel model = HoTTDecoder.decodeFile(file);
+
+			assertEquals(TransmitterType.mc28, model.getTransmitterType());
+
+			final String html = HTMLReport.generateHTML(model);
+			assertNotNull(html);
+			assertFalse(html.isEmpty());
+		}
+	}
+
+	@Test
 	public void testMc32Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
 		final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc32").toURI()); //$NON-NLS-1$
 

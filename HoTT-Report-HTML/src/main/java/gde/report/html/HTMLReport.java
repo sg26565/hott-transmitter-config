@@ -99,6 +99,8 @@ public class HTMLReport {
 		switch (model.getTransmitterType()) {
 		case mc16:
 		case mc20:
+		case mc26:
+		case mc28:
 		case mc32:
 		case mx20:
 			return genetateHTML("mc-32.xhtml", rootMap); //$NON-NLS-1$
