@@ -128,12 +128,12 @@
 						<configuration>
 							<headerType>gui</headerType>
 							<outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
-							<jar>HoTT-MdlViewer-SWT.jar</jar>
-							<dontWrapJar>true</dontWrapJar>
+							<jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
 							<errTitle>MdlViewer</errTitle>
 							<icon>icon.ico</icon>
 							<classPath>
 								<mainClass>gde.mdl.ui.Launcher</mainClass>
+								<addDependencies>false</addDependencies>
 							</classPath>
 							<jre>
 								<minVersion>1.8.0</minVersion>
