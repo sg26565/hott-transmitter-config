@@ -132,7 +132,7 @@
 					</tr>
 					<#if receiver.firmwareType??>
 					<tr class="<@d/>">
-						<th align="right">Empfänger Firnware</th>
+						<th align="right">Empfänger Firmware</th>
 						<td align="left" colspan="3">${receiver.firmwareType}</td>
 					</tr>
 					</#if>
