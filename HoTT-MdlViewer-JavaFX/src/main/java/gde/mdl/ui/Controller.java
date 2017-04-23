@@ -187,27 +187,33 @@ public class Controller extends Application {
             PREFS.put(LAST_SAVE_DIR, fileToSave.getParentFile().getAbsolutePath());
 
             final String extension = FilenameUtils.getExtension(fileToSave.getName()).toLowerCase();
-            try {
-                switch (extension) {
-                case "html":
-                    modelProperty.get().saveHtml(fileToSave);
-                    break;
+            final Model model = modelProperty.get();
 
-                case "pdf":
-                    modelProperty.get().savePdf(fileToSave);
-                    break;
+            final Runnable r = () -> {
+                try {
+                    switch (extension) {
+                    case "html":
+                        model.saveHtml(fileToSave);
+                        break;
 
-                case "xml":
-                    modelProperty.get().saveXml(fileToSave);
-                    break;
+                    case "pdf":
+                        model.savePdf(fileToSave);
+                        break;
 
-                case "mdl":
-                    modelProperty.get().saveMdl(fileToSave);
-                    break;
+                    case "xml":
+                        model.saveXml(fileToSave);
+                        break;
+
+                    case "mdl":
+                        model.saveMdl(fileToSave);
+                        break;
+                    }
+                } catch (ReportException | IOException | DocumentException | JAXBException e) {
+                    ExceptionDialog.show(e);
                 }
-            } catch (ReportException | IOException | DocumentException | JAXBException e) {
-                ExceptionDialog.show(e);
-            }
+            };
+
+            new Thread(r).start();
         }
     }
 
