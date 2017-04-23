@@ -73,6 +73,8 @@ public class Launcher {
     public static void initSystemProperties() throws URISyntaxException, IOException {
         // get the location of this class
         final URL url = Launcher.class.getProtectionDomain().getCodeSource().getLocation();
+        System.out.printf("Location: %s%n", url);
+
         File source = new File(url.toURI());
 
         if (source.getName().endsWith(".jar") || source.getName().endsWith(".exe")) { //$NON-NLS-1$
@@ -97,6 +99,8 @@ public class Launcher {
                 source = source.getParentFile();
         }
 
+        System.out.printf("Program version: %s%n", System.getProperty(PROGRAM_VERSION));
+
         // get the parent directory containing the jar file or the classes
         // directory
         File programDir = source.getParentFile();
@@ -110,6 +114,10 @@ public class Launcher {
         if (!System.getProperties().containsKey(MDL_DIR)) System.setProperty(MDL_DIR, System.getProperty(PROGRAM_DIR));
 
         if (!System.getProperties().containsKey(LOG_DIR)) System.setProperty(LOG_DIR, System.getProperty(PROGRAM_DIR));
+
+        System.out.printf("Program Dir: %s%n", System.getProperty(PROGRAM_DIR));
+        System.out.printf("MDL Dir: %s%n", System.getProperty(MDL_DIR));
+        System.out.printf("Log Dir: %s%n", System.getProperty(LOG_DIR));
     }
 
     public static void main(final String... args) throws Exception {

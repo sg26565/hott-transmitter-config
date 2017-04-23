@@ -28,6 +28,14 @@
 							<mainClass>gde.mdl.ui.Launcher</mainClass>
 						</transformer>
 					</transformers>
+					<filters>
+						<filter>
+							<artifact>gnu.io.RXTXcomm</artifact>
+							<includes>
+								<include>**</include>
+							</includes>
+						</filter>
+					</filters>
 				</configuration>
 				<executions>
 					<execution>
@@ -91,6 +99,73 @@
 						<goals>
 							<goal>single</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${project.build.directory}/${project.build.finalName}.exe</file>
+									<type>exe</type>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<type>exe</type>
+									<overWrite>true</overWrite>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<classifier>shaded</classifier>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<destFileName>${project.artifactId}-${project.version}.jar</destFileName>
+								</artifactItem>
+<!-- 								<artifactItem> -->
+<!-- 									<groupId>${project.groupId}</groupId> -->
+<!-- 									<artifactId>${project.artifactId}</artifactId> -->
+<!-- 									<version>${project.version}</version> -->
+<!-- 									<classifier>bin</classifier> -->
+<!-- 									<type>zip</type> -->
+<!-- 									<overWrite>true</overWrite> -->
+<!-- 								</artifactItem> -->
+							</artifactItems>
+							<outputDirectory>${project.build.directory}/../../../release</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

@@ -29,6 +29,14 @@
 							<mainClass>de.treichels.hott.MemoryDump</mainClass>
 						</transformer>
 					</transformers>
+					<filters>
+						<filter>
+							<artifact>gnu.io.RXTXcomm</artifact>
+							<includes>
+								<include>**</include>
+							</includes>
+						</filter>
+					</filters>
 				</configuration>
 				<executions>
 					<execution>
@@ -36,6 +44,95 @@
 						<goals>
 							<goal>shade</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.akathist.maven.plugins.launch4j</groupId>
+				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>1.7.16</version>
+				<executions>
+					<execution>
+						<id>console</id>
+						<phase>package</phase>
+						<goals>
+							<goal>launch4j</goal>
+						</goals>
+						<configuration>
+							<headerType>gui</headerType>
+							<outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
+							<jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
+							<errTitle>MemoryDump</errTitle>
+							<icon>icon.ico</icon>
+							<classPath>
+								<mainClass>de.treichels.hott.MemoryDump</mainClass>
+								<addDependencies>false</addDependencies>
+							</classPath>
+							<jre>
+								<minVersion>1.8.0</minVersion>
+							</jre>
+							<versionInfo>
+								<fileVersion>0.9.0.${buildNumber}</fileVersion>
+								<txtFileVersion>${project.version}</txtFileVersion>
+								<fileDescription>HoTT Transmitter Memory Dump Uitility</fileDescription>
+								<copyright>GPL V3</copyright>
+								<productVersion>0.9.0.${buildNumber}</productVersion>
+								<txtProductVersion>${project.version}</txtProductVersion>
+								<productName>${project.name}</productName>
+								<internalName>${project.groupId}.${project.artifactId}</internalName>
+								<originalFilename>${project.build.finalName}.exe</originalFilename>
+							</versionInfo>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${project.build.directory}/${project.build.finalName}.exe</file>
+									<type>exe</type>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<type>exe</type>
+									<overWrite>true</overWrite>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>${project.build.directory}/../../../release</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -50,6 +147,10 @@
 		<dependency>
 			<groupId>gnu.io.RXTXcomm</groupId>
 			<artifactId>RXTXcomm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
 	</dependencies>
 </project>
