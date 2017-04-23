@@ -68,6 +68,11 @@ public class HTMLReport {
 
         // extract font file
         final File fontFile = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf"); //$NON-NLS-1$ //$NON-NLS-2$
+        System.out.printf("Font file location: %s%n", fontFile.getAbsolutePath());
+        System.out.printf("Font file exists?: %s%n", fontFile.exists());
+        System.out.printf("Font file isFile?: %s%n", fontFile.isFile());
+        System.out.printf("Font file canRead?: %s%n", fontFile.canRead());
+
         if (!(fontFile.exists() && fontFile.isFile() && fontFile.canRead()))
             try (InputStream is = ClassLoader.getSystemResourceAsStream("Arial.ttf"); OutputStream os = new FileOutputStream(fontFile)) {
             IOUtils.copy(is, os);

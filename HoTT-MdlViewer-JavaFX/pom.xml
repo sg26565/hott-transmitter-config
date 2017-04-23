@@ -50,7 +50,7 @@
 							<goal>launch4j</goal>
 						</goals>
 						<configuration>
-							<headerType>gui</headerType>
+							<headerType>console</headerType>
 							<outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
 							<jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
 							<errTitle>MdlViewer</errTitle>
