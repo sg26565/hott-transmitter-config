@@ -28,6 +28,14 @@
 							<mainClass>gde.mdl.ui.Launcher</mainClass>
 						</transformer>
 					</transformers>
+					<filters>
+						<filter>
+							<artifact>gnu.io.RXTXcomm</artifact>
+							<includes>
+								<include>**</include>
+							</includes>
+						</filter>
+					</filters>
 				</configuration>
 				<executions>
 					<execution>

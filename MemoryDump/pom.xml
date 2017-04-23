@@ -29,6 +29,14 @@
 							<mainClass>de.treichels.hott.MemoryDump</mainClass>
 						</transformer>
 					</transformers>
+					<filters>
+						<filter>
+							<artifact>gnu.io.RXTXcomm</artifact>
+							<includes>
+								<include>**</include>
+							</includes>
+						</filter>
+					</filters>
 				</configuration>
 				<executions>
 					<execution>
