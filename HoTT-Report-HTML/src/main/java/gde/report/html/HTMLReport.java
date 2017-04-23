@@ -73,7 +73,7 @@ public class HTMLReport {
         System.out.printf("Font file isFile?: %s%n", fontFile.isFile());
         System.out.printf("Font file canRead?: %s%n", fontFile.canRead());
 
-        if (!(fontFile.exists() && fontFile.isFile() && fontFile.canRead()))
+        if (!(fontFile.exists() && fontFile.isFile() && fontFile.canRead() && fontFile.length() > 0))
             try (InputStream is = ClassLoader.getSystemResourceAsStream("Arial.ttf"); OutputStream os = new FileOutputStream(fontFile)) {
             IOUtils.copy(is, os);
             } catch (final IOException e) {
