@@ -43,19 +43,15 @@
 			<td align="left" colspan="3">${model.stickMode}</td>
 		</tr>
 		<#if model.module.type.name() == "SP" && model.spektrumMode??>
-		<tr class="<@d/>">
-			<th align="right">Modul</th>
-			<td align="left" colspan="3">${model.module.type} - ${model.spektrumMode}</td>
-		</tr>
-		<tr class="<@d/>">
-			<th align="right">Kanäle</th>
-			<td align="left" colspan="3">${model.spektrumChannelNumber}</td>
-		</tr>
+			<tr class="<@d/>">
+				<th align="right">Modul</th>
+				<td align="left" colspan="3">${model.module.type} - ${model.spektrumMode}, ${model.spektrumChannelNumber} Kanäle</td>
+			</tr>
 		<#else>
-		<tr class="<@d/>">
-			<th align="right">Modul</th>
-			<td align="left" colspan="3">${model.module.type}</td>
-		</tr>
+			<tr class="<@d/>">
+				<th align="right">Modul</th>
+				<td align="left" colspan="3">${model.module.type}<#if model.module.type.name() == "HoTT" && model.receiverBindType??>, Bindungstyp: ${model.receiverBindType}</#if></td>
+			</tr>
 		</#if>
 		<tr class="<@d/>">
 			<th align="right">DSC-Ausgang</th>
@@ -106,15 +102,17 @@
 				<td align="left" colspan="3">${model.autoTimerReset?string("ja","nein")}</td>
 			</tr>
 		</#if>
-		<#if model.module.type.name() == "HoTT">
-			<#if model.receiverBindType??>
+	</tbody>
+</table>
+			
+<#if model.module.type.name() == "HoTT">
+	<#list model.receiver as receiver>
+		<table>
+		
+				<@reset/>
+			
+			<tbody>
 				<tr class="<@d/>">
-					<th align="right">Empfänger Bindungstyp</th>
-					<td align="left" colspan="3">${model.receiverBindType}</td>
-				</tr>
-			</#if>
-			<#list model.receiver as receiver>
-				<tr class="<@d/> <@u receiver.bound/>">
 					<th class="d2" colspan="4">Empfänger ${receiver.number?number+1}</th>
 				</tr>
 				<tr class="<@d/> <@u receiver.bound/>">
@@ -151,7 +149,7 @@
 					</tr>
 					</#list>
 				</#if>
-			</#list>
-		</#if>
-	</tbody>
-</table>
+			</tbody>
+		</table>
+	</#list>
+</#if>
