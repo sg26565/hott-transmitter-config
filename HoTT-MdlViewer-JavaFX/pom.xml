@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>HoTT-MdlViewer-JavaFX</artifactId>
 	<name>HoTT MdlViewer for PC/Mac with JavaFX Graphical User Interface</name>
@@ -24,7 +25,8 @@
 					<createDependencyReducedPom>false</createDependencyReducedPom>
 					<shadedArtifactAttached>true</shadedArtifactAttached>
 					<transformers>
-						<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 							<mainClass>gde.mdl.ui.Launcher</mainClass>
 						</transformer>
 					</transformers>
@@ -81,11 +83,11 @@
 								<internalName>${project.groupId}.${project.artifactId}</internalName>
 								<originalFilename>${project.build.finalName}.exe</originalFilename>
 							</versionInfo>
-<!-- 							<splash> -->
-<!-- 								<file>splash.bmp</file> -->
-<!-- 								<waitForWindow>true</waitForWindow> -->
-<!-- 								<timeout>900</timeout> -->
-<!-- 							</splash> -->
+							<!-- <splash> -->
+							<!-- <file>splash.bmp</file> -->
+							<!-- <waitForWindow>true</waitForWindow> -->
+							<!-- <timeout>900</timeout> -->
+							<!-- </splash> -->
 						</configuration>
 					</execution>
 				</executions>
@@ -104,6 +106,73 @@
 						<goals>
 							<goal>single</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${project.build.directory}/${project.build.finalName}.exe</file>
+									<type>exe</type>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<type>exe</type>
+									<overWrite>true</overWrite>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<classifier>shaded</classifier>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<destFileName>${project.artifactId}-${project.version}.jar</destFileName>
+								</artifactItem>
+<!-- 								<artifactItem> -->
+<!-- 									<groupId>${project.groupId}</groupId> -->
+<!-- 									<artifactId>${project.artifactId}</artifactId> -->
+<!-- 									<version>${project.version}</version> -->
+<!-- 									<classifier>bin</classifier> -->
+<!-- 									<type>zip</type> -->
+<!-- 									<overWrite>true</overWrite> -->
+<!-- 								</artifactItem> -->
+							</artifactItems>
+							<outputDirectory>${project.build.directory}/../../../release</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
