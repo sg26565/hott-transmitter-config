@@ -79,7 +79,7 @@ public class Model {
     }
 
     public String getFileName() {
-        return info.getModelType() == ModelType.Helicopter ? "h" : "a" + info.getModelName();
+        return (info.getModelType() == ModelType.Helicopter ? "h" : "a") + info.getModelName();
     }
 
     public String getFileName(final String extension) {
