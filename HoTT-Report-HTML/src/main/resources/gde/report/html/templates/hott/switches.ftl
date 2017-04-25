@@ -26,7 +26,6 @@
 		
 				<tbody>
 		</#if>
-
 		<#assign n=n+1/>
 		<tr class="<@d/>">
 			<td align="center">${sw.name}</td>
@@ -35,7 +34,8 @@
 			<td align="center">${sw.type}</td>
 		</tr>
 	</#if>
-
 </#list>
-			</tbody>
-		</table>
+<#if n &gt; 0>
+	</tbody>
+</table>
+</#if>
