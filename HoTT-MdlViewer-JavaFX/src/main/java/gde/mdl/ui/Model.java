@@ -20,6 +20,7 @@ import gde.report.ReportException;
 import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;
 import gde.report.xml.XMLReport;
+import gde.util.Util;
 
 public class Model {
     public static Model load(final File file) throws IOException {
@@ -110,6 +111,12 @@ public class Model {
 
     public void savePdf(final File file) throws IOException, ReportException, DocumentException {
         PDFReport.save(file, getHtml());
+    }
+
+    public void saveTxt(final File file) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(Util.dumpData(data).getBytes());
+        }
     }
 
     public void saveXml(final File file) throws IOException, JAXBException {

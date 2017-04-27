@@ -181,6 +181,7 @@ public class Controller extends Application {
         chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("SimpleGUI.PDF"), "*.pdf"));
         chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("SimpleGUI.XML"), "*.xml"));
         chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("MdlFileDescription"), "*.mdl"));
+        chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("TextDump"), "*.txt"));
 
         final File fileToSave = chooser.showSaveDialog(STAGE);
         if (fileToSave != null) {
@@ -207,6 +208,9 @@ public class Controller extends Application {
                     case "mdl":
                         model.saveMdl(fileToSave);
                         break;
+
+                    case "txt":
+                        model.saveTxt(fileToSave);
                     }
                 } catch (ReportException | IOException | DocumentException | JAXBException e) {
                     ExceptionDialog.show(e);
