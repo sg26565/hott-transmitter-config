@@ -17,6 +17,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -31,6 +32,8 @@ import gde.model.BaseModel;
 import gde.model.enums.TransmitterType;
 
 public class ReportTest {
+    private static final FileFilter filter = f -> f.getName().endsWith(".mdl");
+
     @BeforeClass
     public static void setup() {
         System.setProperty("program.dir", "/tmp"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -41,7 +44,7 @@ public class ReportTest {
     public void testMc20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
         final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc20").toURI()); //$NON-NLS-1$
 
-        for (final File file : dir.listFiles()) {
+        for (final File file : dir.listFiles(filter)) {
             final BaseModel model = HoTTDecoder.decodeFile(file);
 
             assertEquals(TransmitterType.mc20, model.getTransmitterType());
@@ -56,7 +59,7 @@ public class ReportTest {
     public void testMc28Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
         final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc28").toURI()); //$NON-NLS-1$
 
-        for (final File file : dir.listFiles()) {
+        for (final File file : dir.listFiles(filter)) {
             final BaseModel model = HoTTDecoder.decodeFile(file);
 
             assertEquals(TransmitterType.mc28, model.getTransmitterType());
@@ -71,7 +74,7 @@ public class ReportTest {
     public void testMc32Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
         final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc32").toURI()); //$NON-NLS-1$
 
-        for (final File file : dir.listFiles()) {
+        for (final File file : dir.listFiles(filter)) {
             final BaseModel model = HoTTDecoder.decodeFile(file);
 
             assertEquals(TransmitterType.mc32, model.getTransmitterType());
@@ -86,7 +89,7 @@ public class ReportTest {
     public void testMx12Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
         final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx12").toURI()); //$NON-NLS-1$
 
-        for (final File file : dir.listFiles()) {
+        for (final File file : dir.listFiles(filter)) {
             final BaseModel model = HoTTDecoder.decodeFile(file);
 
             assertEquals(TransmitterType.mx12, model.getTransmitterType());
@@ -101,7 +104,7 @@ public class ReportTest {
     public void testMx16Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
         final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx16").toURI()); //$NON-NLS-1$
 
-        for (final File file : dir.listFiles()) {
+        for (final File file : dir.listFiles(filter)) {
             final BaseModel model = HoTTDecoder.decodeFile(file);
 
             assertEquals(TransmitterType.mx16, model.getTransmitterType());
@@ -116,7 +119,7 @@ public class ReportTest {
     public void testMx20Models() throws URISyntaxException, IOException, JAXBException, TemplateException {
         final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx20").toURI()); //$NON-NLS-1$
 
-        for (final File file : dir.listFiles()) {
+        for (final File file : dir.listFiles(filter)) {
             final BaseModel model = HoTTDecoder.decodeFile(file);
 
             assertEquals(TransmitterType.mx20, model.getTransmitterType());
