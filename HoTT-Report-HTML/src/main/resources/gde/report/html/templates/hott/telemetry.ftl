@@ -22,7 +22,7 @@
 		<#list model.telemetry.selectedSensor as sensor>
 			<tr class="<@d/>">
 				<#if sensor_index == 0>
-					<th align="right" rowspan="${model.telemetry.selectedSensor?size}" valign="top">ausgewählte Sensoren</th>
+					<th align="right" rowspan="${model.telemetry.selectedSensor?size}" valign="top">erkannte Sensoren</th>
 				</#if>
 					<td align="left">${sensor}</td>
 			</tr>
