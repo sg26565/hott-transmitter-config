@@ -23,9 +23,7 @@ import gde.model.enums.ReceiverBindType;
 import gde.model.enums.ReceiverType;
 import gde.model.enums.SpektrumMode;
 import gde.model.enums.StickMode;
-import gde.model.enums.TelemetryAlarmType;
 import gde.model.enums.TransmitterType;
-import gde.model.enums.VarioToneSensor;
 import gde.model.enums.Vendor;
 
 /**
@@ -79,10 +77,8 @@ public class BaseModel extends AbstractBase {
     private int[] globalTrimStep;
     private LapStore lapStore;
     private ReceiverBindType receiverBindType;
-    private VarioToneSensor varioToneSensor;
-    private int telemetryDataReceiveTime;
-    private int[] userAlarmList;
-    private TelemetryAlarmType telemetryAlarmType;
+    private SwitchAnnouncement[] switchAnnouncements;
+    private long escVoiceAnnounceFlag;
 
     public BaseModel() {
         modelType = ModelType.Unknown;
@@ -113,10 +109,16 @@ public class BaseModel extends AbstractBase {
         if (!Arrays.equals(controlSwitch, other.controlSwitch)) return false;
         if (dscOutputType != other.dscOutputType) return false;
         if (!Arrays.equals(dualMixer, other.dualMixer)) return false;
+        if (escVoiceAnnounceFlag != other.escVoiceAnnounceFlag) return false;
         if (extPpmType != other.extPpmType) return false;
         if (Double.doubleToLongBits(failSafeDelay) != Double.doubleToLongBits(other.failSafeDelay)) return false;
         if (failSafeSettingCheck != other.failSafeSettingCheck) return false;
         if (!Arrays.equals(freeMixer, other.freeMixer)) return false;
+        if (!Arrays.equals(globalTrimStep, other.globalTrimStep)) return false;
+        if (!Arrays.equals(globalTrimValue, other.globalTrimValue)) return false;
+        if (lapStore == null) {
+            if (other.lapStore != null) return false;
+        } else if (!lapStore.equals(other.lapStore)) return false;
         if (!Arrays.equals(logicalSwitch, other.logicalSwitch)) return false;
         if (memoryVersion != other.memoryVersion) return false;
         if (modelInfo == null) {
@@ -139,10 +141,15 @@ public class BaseModel extends AbstractBase {
             if (other.phaseAssignment != null) return false;
         } else if (!phaseAssignment.equals(other.phaseAssignment)) return false;
         if (!Arrays.equals(receiver, other.receiver)) return false;
+        if (receiverBindType != other.receiverBindType) return false;
+        if (receiverType != other.receiverType) return false;
         if (!Arrays.equals(ringLimiter, other.ringLimiter)) return false;
+        if (spektrumChannelNumber != other.spektrumChannelNumber) return false;
+        if (spektrumMode != other.spektrumMode) return false;
         if (stickMode != other.stickMode) return false;
         if (!Arrays.equals(stickTrim, other.stickTrim)) return false;
         if (!Arrays.equals(sw, other.sw)) return false;
+        if (!Arrays.equals(switchAnnouncements, other.switchAnnouncements)) return false;
         if (telemetry == null) {
             if (other.telemetry != null) return false;
         } else if (!telemetry.equals(other.telemetry)) return false;
@@ -155,6 +162,7 @@ public class BaseModel extends AbstractBase {
         if (transmitterId != other.transmitterId) return false;
         if (transmitterType != other.transmitterType) return false;
         if (vendor != other.vendor) return false;
+        if (!Arrays.equals(volumeTrim, other.volumeTrim)) return false;
         return true;
     }
 
@@ -199,6 +207,10 @@ public class BaseModel extends AbstractBase {
     @XmlElementWrapper(name = "dualMixers")
     public DualMixer[] getDualMixer() {
         return dualMixer;
+    }
+
+    public long getEscVoiceAnnounceFlag() {
+        return escVoiceAnnounceFlag;
     }
 
     public ExtPPMType getExtPpmType() {
@@ -321,16 +333,12 @@ public class BaseModel extends AbstractBase {
         return null;
     }
 
+    public SwitchAnnouncement[] getSwitchAnnouncements() {
+        return switchAnnouncements;
+    }
+
     public Telemetry getTelemetry() {
         return telemetry;
-    }
-
-    public TelemetryAlarmType getTelemetryAlarmType() {
-        return telemetryAlarmType;
-    }
-
-    public int getTelemetryDataReceiveTime() {
-        return telemetryDataReceiveTime;
     }
 
     public ThrottleSettings getThrottleSettings() {
@@ -347,14 +355,6 @@ public class BaseModel extends AbstractBase {
 
     public TransmitterType getTransmitterType() {
         return transmitterType;
-    }
-
-    public int[] getUserAlarmList() {
-        return userAlarmList;
-    }
-
-    public VarioToneSensor getVarioToneSensor() {
-        return varioToneSensor;
     }
 
     public Vendor getVendor() {
@@ -380,12 +380,16 @@ public class BaseModel extends AbstractBase {
         result = prime * result + Arrays.hashCode(controlSwitch);
         result = prime * result + (dscOutputType == null ? 0 : dscOutputType.hashCode());
         result = prime * result + Arrays.hashCode(dualMixer);
+        result = prime * result + (int) (escVoiceAnnounceFlag ^ escVoiceAnnounceFlag >>> 32);
         result = prime * result + (extPpmType == null ? 0 : extPpmType.hashCode());
         long temp;
         temp = Double.doubleToLongBits(failSafeDelay);
         result = prime * result + (int) (temp ^ temp >>> 32);
         result = prime * result + (failSafeSettingCheck ? 1231 : 1237);
         result = prime * result + Arrays.hashCode(freeMixer);
+        result = prime * result + Arrays.hashCode(globalTrimStep);
+        result = prime * result + Arrays.hashCode(globalTrimValue);
+        result = prime * result + (lapStore == null ? 0 : lapStore.hashCode());
         result = prime * result + Arrays.hashCode(logicalSwitch);
         result = prime * result + memoryVersion;
         result = prime * result + (modelInfo == null ? 0 : modelInfo.hashCode());
@@ -398,16 +402,22 @@ public class BaseModel extends AbstractBase {
         result = prime * result + Arrays.hashCode(phase);
         result = prime * result + (phaseAssignment == null ? 0 : phaseAssignment.hashCode());
         result = prime * result + Arrays.hashCode(receiver);
+        result = prime * result + (receiverBindType == null ? 0 : receiverBindType.hashCode());
+        result = prime * result + (receiverType == null ? 0 : receiverType.hashCode());
         result = prime * result + Arrays.hashCode(ringLimiter);
+        result = prime * result + spektrumChannelNumber;
+        result = prime * result + (spektrumMode == null ? 0 : spektrumMode.hashCode());
         result = prime * result + (stickMode == null ? 0 : stickMode.hashCode());
         result = prime * result + Arrays.hashCode(stickTrim);
         result = prime * result + Arrays.hashCode(sw);
+        result = prime * result + Arrays.hashCode(switchAnnouncements);
         result = prime * result + (telemetry == null ? 0 : telemetry.hashCode());
         result = prime * result + (throttleSettings == null ? 0 : throttleSettings.hashCode());
         result = prime * result + (trainerConfig == null ? 0 : trainerConfig.hashCode());
         result = prime * result + (int) (transmitterId ^ transmitterId >>> 32);
         result = prime * result + (transmitterType == null ? 0 : transmitterType.hashCode());
         result = prime * result + (vendor == null ? 0 : vendor.hashCode());
+        result = prime * result + Arrays.hashCode(volumeTrim);
         return result;
     }
 
@@ -465,6 +475,10 @@ public class BaseModel extends AbstractBase {
 
     public void setDualMixer(final DualMixer[] dualMixer) {
         this.dualMixer = dualMixer;
+    }
+
+    public void setEscVoiceAnnounceFlag(final long escVoiceAnnounceFlag) {
+        this.escVoiceAnnounceFlag = escVoiceAnnounceFlag;
     }
 
     public void setExtPpmType(final ExtPPMType extPpmType) {
@@ -575,16 +589,12 @@ public class BaseModel extends AbstractBase {
         sw = switches;
     }
 
+    public void setSwitchAnnouncements(final SwitchAnnouncement[] switchAnnouncements) {
+        this.switchAnnouncements = switchAnnouncements;
+    }
+
     public void setTelemetry(final Telemetry telemetry) {
         this.telemetry = telemetry;
-    }
-
-    public void setTelemetryAlarmType(final TelemetryAlarmType telemetryAlarmType) {
-        this.telemetryAlarmType = telemetryAlarmType;
-    }
-
-    public void setTelemetryDataReceiveTime(final int telemetryDataReceiveTime) {
-        this.telemetryDataReceiveTime = telemetryDataReceiveTime;
     }
 
     public void setThrottleSettings(final ThrottleSettings throttleSettings) {
@@ -601,14 +611,6 @@ public class BaseModel extends AbstractBase {
 
     public void setTransmitterType(final TransmitterType transmitterType) {
         this.transmitterType = transmitterType;
-    }
-
-    public void setUserAlarmList(final int[] userAlarmList) {
-        this.userAlarmList = userAlarmList;
-    }
-
-    public void setVarioToneSensor(final VarioToneSensor varioToneSensor) {
-        this.varioToneSensor = varioToneSensor;
     }
 
     public void setVendor(final Vendor vendor) {

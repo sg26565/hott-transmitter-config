@@ -11,9 +11,12 @@
  */
 package gde.model;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import gde.model.enums.SensorType;
+import gde.model.enums.TelemetryAlarmType;
+import gde.model.enums.VarioToneSensor;
 
 /**
  * @author oli
@@ -28,6 +31,15 @@ public class Telemetry extends AbstractBase {
     private int voiceDelay;
     private Switch voiceRepeat;
     private Switch voiceTrigger;
+    private VarioToneSensor varioToneSensor;
+    private int[] userAlarmList;
+    private int telemetryDataReceiveTime;
+    private TelemetryAlarmType telemetryAlarmType;
+    private int basicVoiceList;
+    private int GeneralAirVoiceList;
+    private int ElectricAirVoiceList;
+    private int VarioVoiceList;
+    private int GPSVoiceList;
 
     @Override
     public boolean equals(final Object obj) {
@@ -35,14 +47,23 @@ public class Telemetry extends AbstractBase {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         final Telemetry other = (Telemetry) obj;
+        if (ElectricAirVoiceList != other.ElectricAirVoiceList) return false;
+        if (GPSVoiceList != other.GPSVoiceList) return false;
+        if (GeneralAirVoiceList != other.GeneralAirVoiceList) return false;
+        if (VarioVoiceList != other.VarioVoiceList) return false;
+        if (basicVoiceList != other.basicVoiceList) return false;
         if (currentSensor != other.currentSensor) return false;
         if (currentSensorPage != other.currentSensorPage) return false;
         if (selectedSensor == null) {
             if (other.selectedSensor != null) return false;
         } else if (!selectedSensor.equals(other.selectedSensor)) return false;
+        if (telemetryAlarmType != other.telemetryAlarmType) return false;
+        if (telemetryDataReceiveTime != other.telemetryDataReceiveTime) return false;
+        if (!Arrays.equals(userAlarmList, other.userAlarmList)) return false;
         if (varioTone == null) {
             if (other.varioTone != null) return false;
         } else if (!varioTone.equals(other.varioTone)) return false;
+        if (varioToneSensor != other.varioToneSensor) return false;
         if (voiceDelay != other.voiceDelay) return false;
         if (voiceRepeat == null) {
             if (other.voiceRepeat != null) return false;
@@ -53,6 +74,10 @@ public class Telemetry extends AbstractBase {
         return true;
     }
 
+    public int getBasicVoiceList() {
+        return basicVoiceList;
+    }
+
     public SensorType getCurrentSensor() {
         return currentSensor;
     }
@@ -61,12 +86,44 @@ public class Telemetry extends AbstractBase {
         return currentSensorPage;
     }
 
+    public int getElectricAirVoiceList() {
+        return ElectricAirVoiceList;
+    }
+
+    public int getGeneralAirVoiceList() {
+        return GeneralAirVoiceList;
+    }
+
+    public int getGPSVoiceList() {
+        return GPSVoiceList;
+    }
+
     public Collection<SensorType> getSelectedSensor() {
         return selectedSensor;
     }
 
+    public TelemetryAlarmType getTelemetryAlarmType() {
+        return telemetryAlarmType;
+    }
+
+    public int getTelemetryDataReceiveTime() {
+        return telemetryDataReceiveTime;
+    }
+
+    public int[] getUserAlarmList() {
+        return userAlarmList;
+    }
+
     public Switch getVarioTone() {
         return varioTone;
+    }
+
+    public VarioToneSensor getVarioToneSensor() {
+        return varioToneSensor;
+    }
+
+    public int getVarioVoiceList() {
+        return VarioVoiceList;
     }
 
     public int getVoiceDelay() {
@@ -85,14 +142,27 @@ public class Telemetry extends AbstractBase {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ElectricAirVoiceList;
+        result = prime * result + GPSVoiceList;
+        result = prime * result + GeneralAirVoiceList;
+        result = prime * result + VarioVoiceList;
+        result = prime * result + basicVoiceList;
         result = prime * result + (currentSensor == null ? 0 : currentSensor.hashCode());
         result = prime * result + currentSensorPage;
         result = prime * result + (selectedSensor == null ? 0 : selectedSensor.hashCode());
+        result = prime * result + (telemetryAlarmType == null ? 0 : telemetryAlarmType.hashCode());
+        result = prime * result + telemetryDataReceiveTime;
+        result = prime * result + Arrays.hashCode(userAlarmList);
         result = prime * result + (varioTone == null ? 0 : varioTone.hashCode());
+        result = prime * result + (varioToneSensor == null ? 0 : varioToneSensor.hashCode());
         result = prime * result + voiceDelay;
         result = prime * result + (voiceRepeat == null ? 0 : voiceRepeat.hashCode());
         result = prime * result + (voiceTrigger == null ? 0 : voiceTrigger.hashCode());
         return result;
+    }
+
+    public void setBasicVoiceList(final int basicVoiceList) {
+        this.basicVoiceList = basicVoiceList;
     }
 
     public void setCurrentSensor(final SensorType currentSensor) {
@@ -103,12 +173,44 @@ public class Telemetry extends AbstractBase {
         this.currentSensorPage = currentSensorPage;
     }
 
+    public void setElectricAirVoiceList(final int electricAirVoiceList) {
+        ElectricAirVoiceList = electricAirVoiceList;
+    }
+
+    public void setGeneralAirVoiceList(final int generalAirVoiceList) {
+        GeneralAirVoiceList = generalAirVoiceList;
+    }
+
+    public void setGPSVoiceList(final int gPSVoiceList) {
+        GPSVoiceList = gPSVoiceList;
+    }
+
     public void setSelectedSensor(final Collection<SensorType> selectedSensor) {
         this.selectedSensor = selectedSensor;
     }
 
+    public void setTelemetryAlarmType(final TelemetryAlarmType telemetryAlarmType) {
+        this.telemetryAlarmType = telemetryAlarmType;
+    }
+
+    public void setTelemetryDataReceiveTime(final int telemetryDataReceiveTime) {
+        this.telemetryDataReceiveTime = telemetryDataReceiveTime;
+    }
+
+    public void setUserAlarmList(final int[] userAlarmList) {
+        this.userAlarmList = userAlarmList;
+    }
+
     public void setVarioTone(final Switch sw) {
         varioTone = sw;
+    }
+
+    public void setVarioToneSensor(final VarioToneSensor varioToneSensor) {
+        this.varioToneSensor = varioToneSensor;
+    }
+
+    public void setVarioVoiceList(final int varioVoiceList) {
+        VarioVoiceList = varioVoiceList;
     }
 
     public void setVoiceDelay(final int voiceDelay) {

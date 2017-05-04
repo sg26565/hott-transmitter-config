@@ -37,17 +37,17 @@
 		</tr>
 		<tr class="<@d/>">
 			<th align="right">RX-Data</th>
-			<#if model.telemetryDataReceiveTime == 0>
+			<#if model.telemetry.telemetryDataReceiveTime == 0>
 			<td align="left">Ein</td>
 			<#else>
-			<td align="left">${model.telemetryDataReceiveTime}</td>
+			<td align="left">${model.telemetry.telemetryDataReceiveTime}</td>
 			</#if>
 		</tr>
-		<#if model.userAlarmList??>		
-		<#list model.userAlarmList as alarm>
+		<#if model.telemetry.userAlarmList??>		
+		<#list model.telemetry.userAlarmList as alarm>
 		<tr class="<@d/>">
 			<#if alarm_index == 0>
-			<th align="right" rowspan="${model.userAlarmList?size}" valign="top">Alarmeinstellung</th>
+			<th align="right" rowspan="${model.telemetry.userAlarmList?size}" valign="top">Alarmeinstellung</th>
 			</#if>
 			<td align="left">Alarm ${alarm_index+1}: <@sound alarm/></td>
 		</tr>
