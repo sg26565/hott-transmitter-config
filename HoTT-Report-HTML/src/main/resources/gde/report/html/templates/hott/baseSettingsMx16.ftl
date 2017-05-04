@@ -42,6 +42,10 @@
 			<th align="right">Steueranordnung</th>
 			<td align="left" colspan="3">${model.stickMode}</td>
 		</tr>
+		<tr class="<@d/>">
+			<th align="right">Modul</th>
+			<td align="left" colspan="3">HoTT<#if model.receiverBindType??>, Bindungstyp: ${model.receiverBindType}</#if></td>
+		</tr>
 		<#if helicopterModel??>
 			<tr class="<@d/>">
 				<th align="right">Taumelscheibe</th>
