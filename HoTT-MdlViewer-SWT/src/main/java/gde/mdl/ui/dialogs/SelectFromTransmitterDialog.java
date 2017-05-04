@@ -1,10 +1,10 @@
 package gde.mdl.ui.dialogs;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -52,7 +52,7 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
         }
     }
 
-    final static Logger LOG = Logger.getLogger(SelectFromTransmitterDialog.class.getName());
+    final static Logger LOG = LogManager.getLogger(SelectFromTransmitterDialog.class);
     static final Preferences PREFS = Preferences.userNodeForPackage(SelectFromTransmitterDialog.class);
 
     private final List<String> portNames = SerialPortDefaultImpl.getAvailablePorts();
@@ -158,6 +158,6 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
         mb.setText(t.getClass().getSimpleName());
         mb.setMessage(t.getMessage() == null ? t.getClass().getSimpleName() : t.getMessage());
         mb.open();
-        LOG.log(Level.SEVERE, t.getMessage(), t);
+        LOG.error(t);
     }
 }

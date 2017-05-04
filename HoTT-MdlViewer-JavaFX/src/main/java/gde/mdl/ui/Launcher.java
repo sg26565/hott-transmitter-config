@@ -18,11 +18,9 @@ import java.net.URL;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import gde.mdl.messages.Messages;
 import javafx.application.Application;
@@ -31,38 +29,12 @@ import javafx.application.Application;
  * @author oli@treichels.de
  */
 public class Launcher {
+    private static final Logger LOG = LogManager.getLogger(Launcher.class);
 
     public static final String LOG_DIR = "log.dir"; //$NON-NLS-1$
     public static final String MDL_DIR = "mdl.dir"; //$NON-NLS-1$
     public static final String PROGRAM_DIR = "program.dir"; //$NON-NLS-1$
     public static final String PROGRAM_VERSION = "program.version"; //$NON-NLS-1$
-
-    /**
-     * Initialize logfile.
-     *
-     * @throws SecurityException
-     * @throws IOException
-     */
-    public static void initLogging() throws SecurityException, IOException {
-        final Logger global = Logger.getLogger(""); //$NON-NLS-1$
-
-        // remove console handler - we don't run from a command line
-        for (final Handler handler : global.getHandlers())
-            global.removeHandler(handler);
-
-        // Setup logfile
-        final Handler handler = new FileHandler(System.getProperty(LOG_DIR) + "/MdlViewer.log"); //$NON-NLS-1$
-        handler.setLevel(Level.INFO);
-        handler.setFormatter(new SimpleFormatter());
-
-        global.addHandler(handler);
-        global.setLevel(Level.INFO);
-
-        final Logger logger = Logger.getLogger(Launcher.class.getName());
-        logger.log(Level.INFO, "program.dir =  " + System.getProperty(PROGRAM_DIR)); //$NON-NLS-1$
-        logger.log(Level.INFO, "mdl.dir =  " + System.getProperty(MDL_DIR)); //$NON-NLS-1$
-        logger.log(Level.INFO, "log.dir =  " + System.getProperty(LOG_DIR)); //$NON-NLS-1$
-    }
 
     /**
      * Initialize system properties.
@@ -73,7 +45,6 @@ public class Launcher {
     public static void initSystemProperties() throws URISyntaxException, IOException {
         // get the location of this class
         final URL url = Launcher.class.getProtectionDomain().getCodeSource().getLocation();
-        System.out.printf("Location: %s%n", url);
 
         File source = new File(url.toURI());
 
@@ -99,8 +70,6 @@ public class Launcher {
                 source = source.getParentFile();
         }
 
-        System.out.printf("Program version: %s%n", System.getProperty(PROGRAM_VERSION));
-
         // get the parent directory containing the jar file or the classes
         // directory
         File programDir = source.getParentFile();
@@ -115,14 +84,13 @@ public class Launcher {
 
         if (!System.getProperties().containsKey(LOG_DIR)) System.setProperty(LOG_DIR, System.getProperty(PROGRAM_DIR));
 
-        System.out.printf("Program Dir: %s%n", System.getProperty(PROGRAM_DIR));
-        System.out.printf("MDL Dir: %s%n", System.getProperty(MDL_DIR));
-        System.out.printf("Log Dir: %s%n", System.getProperty(LOG_DIR));
+        LOG.info("program.dir =  " + System.getProperty(PROGRAM_DIR)); //$NON-NLS-1$
+        LOG.info("mdl.dir =  " + System.getProperty(MDL_DIR)); //$NON-NLS-1$
+        LOG.info("log.dir =  " + System.getProperty(LOG_DIR)); //$NON-NLS-1$
     }
 
     public static void main(final String... args) throws Exception {
         initSystemProperties();
-        initLogging();
         Application.launch(Controller.class, args);
     }
 }

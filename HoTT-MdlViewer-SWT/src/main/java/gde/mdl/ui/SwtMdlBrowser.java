@@ -1,7 +1,5 @@
 package gde.mdl.ui;
 
-import java.util.logging.Logger;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -11,8 +9,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class SwtMdlBrowser extends Composite {
-    final static Logger log = Logger.getLogger(SwtMdlBrowser.class.getName());
-
     public static final boolean IS_WINDOWS = System.getProperty("os.name").toLowerCase().startsWith("windows"); //$NON-NLS-1$ //$NON-NLS-2$
 
     public static final boolean IS_LINUX = System.getProperty("os.name").toLowerCase().startsWith("linux"); //$NON-NLS-1$ //$NON-NLS-2$

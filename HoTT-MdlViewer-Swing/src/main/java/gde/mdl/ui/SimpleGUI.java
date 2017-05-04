@@ -19,8 +19,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 import javax.swing.AbstractAction;
@@ -39,6 +37,8 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
@@ -88,7 +88,7 @@ public class SimpleGUI {
                 final BaseModel m = loader.getModel();
                 if (m != null) model = m;
             } catch (final Exception e) {
-                LOG.log(Level.SEVERE, "error during load", e);
+                LOG.error("error during load", e);
                 JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
             }
             return null;
@@ -124,7 +124,7 @@ public class SimpleGUI {
                     publish(html);
                 }
             } catch (final Exception e) {
-                LOG.log(Level.SEVERE, "error during refresh", e);
+                LOG.error("error during refresh", e);
                 JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
             }
 
@@ -216,7 +216,7 @@ public class SimpleGUI {
                     }
                 }
             } catch (final Exception e) {
-                LOG.log(Level.SEVERE, "error during save", e);
+                LOG.error("error during save", e);
                 JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
             }
 
@@ -233,7 +233,7 @@ public class SimpleGUI {
 
     private static final String LAST_SAVE_DIR = "lastSaveDir"; //$NON-NLS-1$
 
-    private static final Logger LOG = Logger.getLogger(SimpleGUI.class.getName());
+    private static final Logger LOG = LogManager.getLogger(SimpleGUI.class);
 
     static final Preferences PREFS = Preferences.userNodeForPackage(SimpleGUI.class);
     private final JFrame frame = new JFrame(Messages.getString("SimpleGUI.Title", System.getProperty(Launcher.PROGRAM_VERSION))); //$NON-NLS-1$
