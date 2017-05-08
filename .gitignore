@@ -1,3 +1,5 @@
 buildNumber.properties
-*/buildNumber.properties
-*/MdlViewer.log*
+.project
+.settings/
+.classpath
+target/
