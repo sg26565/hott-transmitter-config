@@ -11,9 +11,31 @@
  */
 package gde.model.enums;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * @author oli@treichels.de
  */
 public enum SensorType {
-    ElectricAirModule, ESC, GeneralAirModule, GeneralModule, GPS, None, Receiver, Vario
+    ElectricAirModule(1 << 2), ESC(1 << 5), GeneralModule(1 << 1), GPS(1 << 4), None(0), Receiver(1 << 0), Vario(1 << 3);
+
+    public static Collection<SensorType> forCode(final int code) {
+        return Stream.of(SensorType.values()).filter(s -> (s.getCode() & code) != 0).collect(Collectors.toList());
+    }
+
+    public static int getCode(final Collection<SensorType> sensors) {
+        return sensors.stream().mapToInt(SensorType::getCode).sum();
+    }
+
+    private final int code;
+
+    private SensorType(final int code) {
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
 }
