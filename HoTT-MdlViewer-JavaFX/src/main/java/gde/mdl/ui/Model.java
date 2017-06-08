@@ -32,23 +32,8 @@ public class Model {
         if (!fileName.endsWith(".mdl")) throw new HoTTException("InvalidFileName", fileName); //$NON-NLS-1$
 
         // check model type
-        ModelType modelType;
-        final char typeChar = fileName.charAt(0);
-        switch (typeChar) {
-        case 'a':
-            modelType = ModelType.Winged;
-            break;
-
-        case 'h':
-            modelType = ModelType.Helicopter;
-            break;
-
-        default:
-            throw new HoTTException("InvalidModelType", typeChar); //$NON-NLS-1$
-        }
-
+        final ModelType modelType = ModelType.forChar(fileName.charAt(0));
         final String modelName = fileName.substring(1, fileName.length() - 4);
-
         final ModelInfo info = new ModelInfo(0, modelName, modelType, null, null);
         final byte[] data = new byte[(int) file.length()];
         try (InputStream is = new FileInputStream(file)) {

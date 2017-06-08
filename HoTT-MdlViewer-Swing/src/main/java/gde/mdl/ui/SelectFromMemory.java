@@ -50,7 +50,7 @@ public class SelectFromMemory extends SelectFromTransmitter {
         public String getElementAt(final int index) {
             final ModelInfo info = modelInfos.get(index);
 
-            return String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', info.getModelName()); //$NON-NLS-1$
+            return String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType().getChar(), info.getModelName()); //$NON-NLS-1$
         }
 
         public ModelInfo getModelInfoAt(final int index) {

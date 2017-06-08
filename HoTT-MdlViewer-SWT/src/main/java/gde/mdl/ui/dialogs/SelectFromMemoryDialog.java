@@ -64,7 +64,7 @@ public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
                 for (final ModelInfo info : i)
                     if (info.getModelType() != ModelType.Unknown) {
                         infos.add(info);
-                        list.add(String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', //$NON-NLS-1$
+                        list.add(String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType().getChar(), //$NON-NLS-1$
                                 info.getModelName()));
                     }
             } catch (final Throwable t) {

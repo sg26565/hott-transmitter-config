@@ -29,7 +29,6 @@ import javax.swing.tree.TreeSelectionModel;
 import de.treichels.hott.HoTTDecoder;
 import gde.mdl.messages.Messages;
 import gde.model.BaseModel;
-import gde.model.HoTTException;
 import gde.model.enums.ModelType;
 import gde.model.serial.FileInfo;
 import gde.model.serial.FileType;
@@ -144,23 +143,8 @@ public class SelectFromSdCard extends SelectFromTransmitter {
             final String fileName = fileInfo.getName();
 
             // check model type
-            ModelType type;
-            final char typeChar = fileName.charAt(0);
-            switch (typeChar) {
-            case 'a':
-                type = ModelType.Winged;
-                break;
-
-            case 'h':
-                type = ModelType.Helicopter;
-                break;
-
-            default:
-                throw new HoTTException("InvalidModelType", typeChar); //$NON-NLS-1$
-            }
-
+            final ModelType type = ModelType.forChar(fileName.charAt(0));
             final String name = fileName.substring(1, fileName.length() - 4);
-
             final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
             try {

@@ -66,21 +66,7 @@ public class SerialTest {
 				case File:
 					final String fileName = info.getName();
 					if (fileName.endsWith(".mdl")) {
-						ModelType type;
-						final char typeChar = fileName.charAt(0);
-						switch (typeChar) {
-						case 'a':
-							type = ModelType.Winged;
-							break;
-
-						case 'h':
-							type = ModelType.Helicopter;
-							break;
-
-						default:
-							throw new HoTTException("InvalidModelType", typeChar);
-						}
-
+						final ModelType type = ModelType.forChar(fileName.charAt(0));
 						final String modelName = fileName.substring(1, fileName.length() - 4);
 
 						final ByteArrayOutputStream out = new ByteArrayOutputStream();

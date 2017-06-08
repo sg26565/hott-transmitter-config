@@ -299,24 +299,7 @@ public class SimpleGUI {
     }
 
     private String getFileName(final BaseModel model) {
-        // setup filename
-        final StringBuilder fileName = new StringBuilder();
-        switch (model.getModelType()) {
-        case Helicopter:
-            fileName.append('h');
-            break;
-
-        case Winged:
-            fileName.append('a');
-            break;
-
-        default:
-            break;
-        }
-
-        fileName.append(model.getModelName());
-
-        return fileName.toString();
+        return new StringBuilder().append(model.getModelType().getChar()).append(model.getModelName()).toString();
     }
 
     private void load() {

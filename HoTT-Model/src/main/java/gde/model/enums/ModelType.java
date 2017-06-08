@@ -12,24 +12,32 @@
 package gde.model.enums;
 
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 /**
  * @author oli@treichels.de
  */
 public enum ModelType {
-    Helicopter(0), Unknown(-1), Winged(1);
+    Helicopter(0, 'h'), Unknown(-1, 'x'), Winged(1, 'a'), Copter(2, 'q'), Boat(3, 'b'), Car(4, 'c'); // TODO: verify ids
+
+    public static ModelType forChar(final char c) {
+        return Stream.of(values()).filter(t -> t.c == c).findFirst().orElse(Unknown);
+    }
 
     public static ModelType forId(final int id) {
-        for (final ModelType t : ModelType.values())
-            if (id == t.id) return t;
-
-        return Unknown;
+        return Stream.of(values()).filter(t -> t.id == id).findFirst().orElse(Unknown);
     }
 
     private final int id;
+    private final char c;
 
-    private ModelType(final int id) {
+    private ModelType(final int id, final char c) {
         this.id = id;
+        this.c = c;
+    }
+
+    public char getChar() {
+        return c;
     }
 
     public int getId() {

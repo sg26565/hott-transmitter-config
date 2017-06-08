@@ -207,7 +207,7 @@ public class ExportModels {
 		final File dir = new File(PREFS.get(LAST_SAVE_DIR, System.getProperty("user.dir"))); //$NON-NLS-1$
 		fc.setCurrentDirectory(dir);
 		fc.setFileFilter(new FileNameExtensionFilter(description, extension));
-		fc.setSelectedFile(new File(dir, String.format("%c%s.mdl", info.getModelType() == ModelType.Winged ? 'a' : 'h', info.getModelName()))); //$NON-NLS-1$
+		fc.setSelectedFile(new File(dir, String.format("%c%s.mdl", info.getModelType().getChar(), info.getModelName()))); //$NON-NLS-1$
 
 		final int result = fc.showSaveDialog(frame);
 
@@ -264,7 +264,7 @@ public class ExportModels {
 							continue;
 						}
 
-						final char type = info.getModelType() == ModelType.Winged ? 'a' : 'h';
+						final char type = info.getModelType().getChar();
 						String name = info.getModelName();
 						if (name == null || name.length() == 0) {
 							name = String.format("Model%02d", info.getModelNumber()); //$NON-NLS-1$

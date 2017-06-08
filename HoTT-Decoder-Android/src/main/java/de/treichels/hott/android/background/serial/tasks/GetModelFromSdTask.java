@@ -62,21 +62,7 @@ public class GetModelFromSdTask extends TxTask<String, Void, BaseModel> {
     }
 
     // check model type (either 'a' or 'h')
-    ModelType modelType;
-    switch (fileName.charAt(0)) {
-    case 'a':
-      modelType = ModelType.Winged;
-      break;
-
-    case 'h':
-      modelType = ModelType.Helicopter;
-      break;
-
-    default:
-      setResultStatus(ResultStatus.error);
-      setResultMessage(getContext().getResources().getString(R.string.msg_invalid_file_type, fileName.charAt(0)));
-      return null;
-    }
+    final ModelType modelType=ModelType.forChar(fileName.charAt(0));
 
     // filenName = modelType + modelName + ".mdl"
     final String modelName = fileName.substring(1, fileName.length() - 4);

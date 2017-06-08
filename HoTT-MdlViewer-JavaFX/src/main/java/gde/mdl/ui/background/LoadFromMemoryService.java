@@ -5,7 +5,6 @@ import java.util.List;
 
 import gde.mdl.messages.Messages;
 import gde.mdl.ui.PortUtils;
-import gde.model.enums.ModelType;
 import gde.model.serial.ModelInfo;
 import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
@@ -48,7 +47,7 @@ public class LoadFromMemoryService extends TransmitterService<List<ModelInfo>> {
         listView.getItems().clear();
         if (getValue() != null) for (final ModelInfo info : getValue())
             if (info.getModelName().length() > 0) {
-                final String item = String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType() == ModelType.Helicopter ? 'h' : 'a', //$NON-NLS-1$
+                final String item = String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType().getChar(), //$NON-NLS-1$
                         info.getModelName());
                 listView.getItems().add(item);
             }
