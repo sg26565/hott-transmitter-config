@@ -11,14 +11,13 @@
  */
 package gde.model.serial;
 
+import java.util.stream.Stream;
+
 public enum ResponseCode {
     ACK(1), NACK(2), ERROR(3), CRC_ERROR(4), BUSY(5);
 
     public static ResponseCode forId(final int id) {
-        for (final ResponseCode r : ResponseCode.values())
-            if (id == r.id) return r;
-
-        return null;
+        return Stream.of(values()).filter(r -> r.id == id).findFirst().orElse(null);
     }
 
     private final int id;
