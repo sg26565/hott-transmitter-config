@@ -12,6 +12,7 @@
 package gde.model.enums;
 
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 /**
  * @author oli
@@ -21,10 +22,7 @@ public enum ReceiverType {
     E06(1), E08(0), E12(5), E16(7);
 
     public static ReceiverType forId(final int id) {
-        for (final ReceiverType receiverType : ReceiverType.values())
-            if (receiverType.id == id) return receiverType;
-
-        return null;
+        return Stream.of(values()).filter(s -> s.id == id).findFirst().orElse(null);
     }
 
     private final int id;

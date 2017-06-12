@@ -18,7 +18,9 @@ import java.util.ResourceBundle;
  *
  */
 public enum Section {
-    baseSettings, modelType, servos, stickSettings, controls0, drExpo0, channel1Curve0, controlSwitches, logicalSwitches, phaseSettings, phaseAssignments, phaseTrim, nonDelayedChannels, timersGeneral, phaseTimer, wingMix0, helicopterMix0, linearMixer, curveMixer, mixerActive, mixOnlyChannel, dualMixer, swashplateMixer, failSafe, trainerPupil, outputChannel, profiTrim, trimMemory, telemetry, channelSequencer, multiChannel, ringLimiter, mp3Player, switches;
+    baseSettings, modelType, servos, stickSettings, controls0, drExpo0, channel1Curve0, controlSwitches, logicalSwitches, phaseSettings, phaseAssignments,
+    phaseTrim, nonDelayedChannels, timersGeneral, phaseTimer, wingMix0, helicopterMix0, linearMixer, curveMixer, mixerActive, mixOnlyChannel, dualMixer,
+    swashplateMixer, failSafe, trainerPupil, outputChannel, profiTrim, trimMemory, telemetry, channelSequencer, multiChannel, ringLimiter, mp3Player, switches;
 
     public boolean isValidFor(final ModelType modelType) {
         switch (this) {

@@ -20,6 +20,10 @@ public class SwitchAnnouncement extends AbstractBase {
     private Switch sw;
     private int[] soundIndex;
 
+    public AnnouncementType getAnnouncementType() {
+        return announcementType;
+    }
+
     public int[] getSoundIndex() {
         return soundIndex;
     }
@@ -28,19 +32,15 @@ public class SwitchAnnouncement extends AbstractBase {
         return sw;
     }
 
+    public void setAnnouncementType(final AnnouncementType announcmentType) {
+        announcementType = announcmentType;
+    }
+
     public void setSoundIndex(final int[] soundIndex) {
         this.soundIndex = soundIndex;
     }
 
     public void setSwitch(final Switch sw) {
         this.sw = sw;
-    }
-
-    public AnnouncementType getAnnouncementType() {
-        return announcementType;
-    }
-
-    public void setAnnouncementType(AnnouncementType announcmentType) {
-        this.announcementType = announcmentType;
     }
 }

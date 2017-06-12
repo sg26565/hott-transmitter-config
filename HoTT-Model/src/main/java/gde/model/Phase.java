@@ -124,6 +124,10 @@ public abstract class Phase extends AbstractBase {
         return phaseType;
     }
 
+    public SwitchAnnouncement[] getSwitchAnnouncements() {
+        return switchAnnouncements;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -203,16 +207,12 @@ public abstract class Phase extends AbstractBase {
         this.phaseType = phaseType;
     }
 
+    public void setSwitchAnnouncements(final SwitchAnnouncement[] switchAnnouncements) {
+        this.switchAnnouncements = switchAnnouncements;
+    }
+
     @Override
     public String toString() {
         return String.format("Phase %d: %s", Integer.parseInt(getNumber()) + 1, getPhaseName()); //$NON-NLS-1$
-    }
-
-    public SwitchAnnouncement[] getSwitchAnnouncements() {
-        return switchAnnouncements;
-    }
-
-    public void setSwitchAnnouncements(SwitchAnnouncement[] switchAnnouncements) {
-        this.switchAnnouncements = switchAnnouncements;
     }
 }

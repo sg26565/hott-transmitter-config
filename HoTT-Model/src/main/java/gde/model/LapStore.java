@@ -35,8 +35,8 @@ public class LapStore extends AbstractBase {
         return active;
     }
 
-    public void setActive(final boolean isActive) {
-        this.active = isActive;
+    public void setActive(final boolean active) {
+        this.active = active;
     }
 
     public void setCurrentLap(final int currentLap) {

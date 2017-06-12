@@ -17,8 +17,8 @@ import java.util.ResourceBundle;
  * @author oli@treichels.de
  */
 public enum AileronFlapType {
-    FourAilFourFlap(4, 4), FourAilTwoFlap(4, 2), OneAil(1, 0), OneAilOneFlap(1, 1), TwoAil(2, 0), TwoAilFourFlap(2, 4), TwoAilOneFlap(2, 1), TwoAilTwoFlap(2,
-            2);
+    FourAilFourFlap(4, 4), FourAilTwoFlap(4, 2), OneAil(1, 0), OneAilOneFlap(1, 1), TwoAil(2, 0), TwoAilFourFlap(2, 4), TwoAilOneFlap(2, 1),
+    TwoAilTwoFlap(2, 2);
 
     private int ailerons;
     private int flaps;
