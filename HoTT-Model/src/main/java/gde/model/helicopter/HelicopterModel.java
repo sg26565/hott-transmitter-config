@@ -48,7 +48,11 @@ public class HelicopterModel extends BaseModel {
     private int throttleMarkerPosition;
 
     public HelicopterModel() {
-        super(ModelType.Helicopter);
+        this(ModelType.Helicopter);
+    }
+
+    public HelicopterModel(final ModelType cmodelType) {
+        super(cmodelType);
     }
 
     @Override

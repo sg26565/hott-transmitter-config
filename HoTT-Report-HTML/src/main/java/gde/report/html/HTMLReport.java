@@ -83,6 +83,7 @@ public class HTMLReport {
         final Map<String, Object> rootMap = new HashMap<>();
         rootMap.put("model", model); //$NON-NLS-1$
         rootMap.put("png", HTMLReport.CURVE_IMAGE_GENERATOR); //$NON-NLS-1$
+        // TODO: add other model types
         if (model instanceof WingedModel)
             rootMap.put("wingedModel", model); //$NON-NLS-1$
         else if (model instanceof HelicopterModel) rootMap.put("helicopterModel", model); //$NON-NLS-1$

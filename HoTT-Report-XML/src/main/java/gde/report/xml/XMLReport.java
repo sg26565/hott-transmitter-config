@@ -41,6 +41,7 @@ public class XMLReport {
     static {
         // setup JAXB
         try {
+            // TODO: add other model types
             CTX = JAXBContext.newInstance(WingedModel.class, WingedPhase.class, HelicopterModel.class, HelicopterPhase.class, LinearMixer.class,
                     CurveMixer.class);
             MARSHALLER = CTX.createMarshaller();

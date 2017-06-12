@@ -14,6 +14,13 @@ package gde.model.enums;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+import gde.model.BaseModel;
+import gde.model.HoTTException;
+import gde.model.boat.BoatModel;
+import gde.model.car.CarModel;
+import gde.model.helicopter.HelicopterModel;
+import gde.model.winged.WingedModel;
+
 /**
  * @author oli@treichels.de
  */
@@ -42,6 +49,28 @@ public enum ModelType {
 
     public int getId() {
         return id;
+    }
+
+    public BaseModel getModel() throws HoTTException {
+        switch (this) {
+        case Boat:
+            return new BoatModel();
+
+        case Car:
+            return new CarModel();
+
+        case Copter:
+            // return new CopterModel();
+
+        case Helicopter:
+            return new HelicopterModel();
+
+        case Winged:
+            return new WingedModel();
+
+        default:
+            throw new HoTTException("InvalidModelType", "unknown");
+        }
     }
 
     /** @return the locale-dependent message */
