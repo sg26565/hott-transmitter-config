@@ -21,7 +21,8 @@ import gde.model.HoTTException;
  * @author oli@treichels.de
  *
  */
-public interface SerialPort {
+public interface SerialPort extends AutoCloseable {
+    @Override
     public void close() throws IOException;
 
     public InputStream getInputStream() throws HoTTException;

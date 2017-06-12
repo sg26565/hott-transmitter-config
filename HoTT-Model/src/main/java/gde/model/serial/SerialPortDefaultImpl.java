@@ -29,7 +29,7 @@ import gnu.io.UnsupportedCommOperationException;
  * @author oli
  *
  */
-public class SerialPortDefaultImpl implements gde.model.serial.SerialPort, AutoCloseable {
+public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
     private static final int WRITE_BUFFER_SIZE = 2064;
     private static final int READ_BUFFER_SIZE = 2064;
 
