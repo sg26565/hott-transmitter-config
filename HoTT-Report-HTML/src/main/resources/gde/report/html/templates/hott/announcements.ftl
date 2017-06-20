@@ -21,8 +21,8 @@
 						<td align="center">${announcement_index + 1}</td>
 						<td align="center"><@switch announcement.switch/></td>
 						<td align="center">${announcement.announcementType}</td>
-						<td align="center"><@sound announcement.soundIndex[0]/></td>
-						<td align="center"><@sound announcement.soundIndex[1]/></td>
+						<td align="center"><@sound announcement.name[0]/></td>
+						<td align="center"><@sound announcement.name[1]/></td>
 					</tr>
 				</#list>
 			</tbody>

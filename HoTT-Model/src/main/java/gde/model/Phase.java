@@ -39,7 +39,7 @@ public abstract class Phase extends AbstractBase {
     private int[] digitalTrimValue;
     private int[] digitalTrimStep;
     private SwitchAnnouncement[] switchAnnouncements;
-    private int phaseAnnouncement;
+    private String phaseAnnouncement;
 
     @Override
     public boolean equals(final Object obj) {
@@ -98,7 +98,7 @@ public abstract class Phase extends AbstractBase {
         return number;
     }
 
-    public int getPhaseAnnouncement() {
+    public String getPhaseAnnouncement() {
         return phaseAnnouncement;
     }
 
@@ -183,7 +183,7 @@ public abstract class Phase extends AbstractBase {
         this.number = number;
     }
 
-    public void setPhaseAnnouncement(final int phaseAnnouncement) {
+    public void setPhaseAnnouncement(final String phaseAnnouncement) {
         this.phaseAnnouncement = phaseAnnouncement;
     }
 

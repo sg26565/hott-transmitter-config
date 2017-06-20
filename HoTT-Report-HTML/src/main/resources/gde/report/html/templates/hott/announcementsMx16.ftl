@@ -18,8 +18,8 @@
 				<tr class="<@d/> <@u announcement.switch.assignment?? && announcement.switch.assignment.name() != "Unassigned"/>">
 					<td align="center">${announcement_index + 1}</td>
 					<td align="center"><@switch announcement.switch/></td>
-					<td align="center"><@sound announcement.soundIndex[0]/></td>
-					<td align="center"><@sound announcement.soundIndex[1]/></td>
+					<td align="center"><@sound announcement.name[0]/></td>
+					<td align="center"><@sound announcement.name[1]/></td>
 				</tr>
 			</#list>
 		</tbody>

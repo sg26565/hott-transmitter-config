@@ -25,7 +25,7 @@
 	</#if>
 </#macro>
 
-<#macro sound index><#if index == 1026>--<#else>${index}</#if></#macro>
+<#macro sound name="--">${name}</#macro>
 
 <#macro reset><#assign row="even"/></#macro>
 

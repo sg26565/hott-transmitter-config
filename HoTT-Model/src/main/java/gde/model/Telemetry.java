@@ -32,7 +32,7 @@ public class Telemetry extends AbstractBase {
     private Switch voiceRepeat;
     private Switch voiceTrigger;
     private VarioToneSensor varioToneSensor;
-    private int[] userAlarmList;
+    private String[] userAlarmList;
     private int telemetryDataReceiveTime;
     private TelemetryAlarmType telemetryAlarmType;
     private int basicVoiceList;
@@ -110,7 +110,7 @@ public class Telemetry extends AbstractBase {
         return telemetryDataReceiveTime;
     }
 
-    public int[] getUserAlarmList() {
+    public String[] getUserAlarmList() {
         return userAlarmList;
     }
 
@@ -197,7 +197,7 @@ public class Telemetry extends AbstractBase {
         this.telemetryDataReceiveTime = telemetryDataReceiveTime;
     }
 
-    public void setUserAlarmList(final int[] userAlarmList) {
+    public void setUserAlarmList(final String[] userAlarmList) {
         this.userAlarmList = userAlarmList;
     }
 
