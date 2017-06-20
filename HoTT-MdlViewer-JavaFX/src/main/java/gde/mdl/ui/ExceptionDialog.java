@@ -3,10 +3,8 @@ package gde.mdl.ui;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import gde.mdl.messages.Messages;
+import gde.util.Util;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -15,8 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
 public class ExceptionDialog extends Alert {
-    private static final Logger LOG = LogManager.getLogger(ExceptionDialog.class);
-
     public static void show(final Throwable throwable) {
         Platform.runLater(() -> new ExceptionDialog(throwable).showAndWait());
     }
@@ -24,7 +20,7 @@ public class ExceptionDialog extends Alert {
     public ExceptionDialog(final Throwable throwable) {
         super(AlertType.ERROR);
 
-        LOG.error(throwable);
+        if (Util.DEBUG) throwable.printStackTrace();
 
         setTitle(Messages.getString("Error"));
         setHeaderText(null);

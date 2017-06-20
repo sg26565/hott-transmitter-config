@@ -13,17 +13,14 @@ package gde.model;
 
 import java.io.IOException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import gde.mdl.messages.Messages;
+import gde.util.Util;
 
 /**
  * @author oli@treichels.de
  */
 public class HoTTException extends IOException {
     private static final long serialVersionUID = 1L;
-    private static final Logger LOG = LogManager.getLogger(HoTTException.class);
     private Object[] args;
 
     public HoTTException() {
@@ -37,8 +34,7 @@ public class HoTTException extends IOException {
     public HoTTException(final String format, final Throwable cause, final Object... args) {
         super(format, cause);
         this.args = args;
-
-        LOG.error(getMessage(), cause);
+        if (Util.DEBUG) printStackTrace();
     }
 
     public HoTTException(final Throwable cause) {

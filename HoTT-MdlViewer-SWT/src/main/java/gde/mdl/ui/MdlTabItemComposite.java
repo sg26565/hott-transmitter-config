@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.prefs.Preferences;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.BusyIndicator;
@@ -35,9 +33,9 @@ import gde.model.BaseModel;
 import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;
 import gde.report.xml.XMLReport;
+import gde.util.Util;
 
 public class MdlTabItemComposite extends Composite {
-    private static final Logger LOG = LogManager.getLogger(MdlTabItemComposite.class);
     private static final String MDL = ".mdl"; //$NON-NLS-1$
     private static final String PDF = ".pdf"; //$NON-NLS-1$
     private static final String HTML = ".html"; //$NON-NLS-1$
@@ -78,8 +76,7 @@ public class MdlTabItemComposite extends Composite {
         loadMdlButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                LOG.debug("loadMdlButton.widgetSelected, event=" + evt); //$NON-NLS-1$
-                // MdlTabItemComposite.this.loadFromFile();
+                if (Util.DEBUG) System.out.printf("loadMdlButton.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
                 MdlTabItemComposite.this.loadFromFile();
             }
         });
@@ -111,7 +108,7 @@ public class MdlTabItemComposite extends Composite {
         saveMdlButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                LOG.debug("saveMdlButton.widgetSelected, event=" + evt); //$NON-NLS-1$
+                if (Util.DEBUG) System.out.printf("saveMdlButton.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
                 MdlTabItemComposite.this.save();
             }
         });
@@ -138,8 +135,7 @@ public class MdlTabItemComposite extends Composite {
             }
 
             @Override
-            public void keyReleased(final KeyEvent evt) {
-            }
+            public void keyReleased(final KeyEvent evt) {}
         });
 
         // Load from file menu item
@@ -148,7 +144,7 @@ public class MdlTabItemComposite extends Composite {
         loadMdlFromFileMenuItemMenuItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                LOG.debug("loadMdlMenuItem.widgetSelected, event=" + evt); //$NON-NLS-1$
+                if (Util.DEBUG) System.out.printf("loadMdlMenuItem.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
                 MdlTabItemComposite.this.loadFromFile();
             }
         });
@@ -159,7 +155,7 @@ public class MdlTabItemComposite extends Composite {
         loadMdlFromMemoryMenuItemMenuItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                LOG.debug("loadMdlMenuItem.widgetSelected, event=" + evt); //$NON-NLS-1$
+                if (Util.DEBUG) System.out.printf("loadMdlMenuItem.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
                 MdlTabItemComposite.this.loadFromMemory();
             }
         });
@@ -170,7 +166,7 @@ public class MdlTabItemComposite extends Composite {
         loadMdlFromSdCardMenuItemMenuItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                LOG.debug("loadMdlMenuItem.widgetSelected, event=" + evt); //$NON-NLS-1$
+                if (Util.DEBUG) System.out.printf("loadMdlMenuItem.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
                 MdlTabItemComposite.this.loadFromSdCard();
             }
         });
@@ -181,7 +177,7 @@ public class MdlTabItemComposite extends Composite {
         saveMdlMenuItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                LOG.debug("saveMdlMenuItem.widgetSelected, event=" + evt); //$NON-NLS-1$
+                if (Util.DEBUG) System.out.printf("saveMdlMenuItem.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
                 MdlTabItemComposite.this.save();
             }
         });
@@ -194,7 +190,7 @@ public class MdlTabItemComposite extends Composite {
         reloadMenuItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                LOG.debug("reloadMenuItem.widgetSelected, event=" + evt); //$NON-NLS-1$
+                if (Util.DEBUG) System.out.printf("reloadMenuItem.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
                 MdlTabItemComposite.this.updateView(false);
             }
         });
@@ -300,7 +296,7 @@ public class MdlTabItemComposite extends Composite {
         mb.setText(t.getClass().getSimpleName());
         mb.setMessage(t.getMessage() == null ? t.getClass().getSimpleName() : t.getMessage());
         mb.open();
-        LOG.error(t);
+        if (Util.DEBUG) t.printStackTrace();
     }
 
     private void updateView(final boolean isXML) {

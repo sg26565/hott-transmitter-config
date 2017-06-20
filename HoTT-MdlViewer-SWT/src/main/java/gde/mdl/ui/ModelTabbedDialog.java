@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import gde.mdl.messages.Messages;
+import gde.util.Util;
 
 public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
     // final static Logger log =
@@ -52,14 +53,14 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
             // //$NON-NLS-2$ //$NON-NLS-3$
             if (constructor != null) inst = constructor.newInstance(new Object[] { mainTabFolder, SWT.NONE });
         } catch (final Throwable t) {
-            t.printStackTrace();
+            if (Util.DEBUG) t.printStackTrace();
         }
         return (CTabItem) inst;
     }
 
     /**
      * query if the utility graphics tabulator should be displayed and updated
-     * 
+     *
      * @return the value of the property, if property does not exist return false (default behavior of Boolean)
      */
     public boolean isUtilityGraphicsTabRequested() {
@@ -78,7 +79,7 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
             else
                 rc = false;
         } catch (final Throwable t) {
-            t.printStackTrace();
+            if (Util.DEBUG) t.printStackTrace();
             rc = false;
         }
         return rc;
@@ -119,7 +120,7 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
             while (!dialogShell.isDisposed())
                 if (!display.readAndDispatch()) display.sleep();
         } catch (final Exception e) {
-            e.printStackTrace();
+            if (Util.DEBUG) e.printStackTrace();
         }
     }
 

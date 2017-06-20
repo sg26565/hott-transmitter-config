@@ -37,8 +37,6 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
@@ -48,6 +46,7 @@ import gde.model.BaseModel;
 import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;
 import gde.report.xml.XMLReport;
+import gde.util.Util;
 
 public class SimpleGUI {
     private final class ExitAction extends AbstractAction {
@@ -88,7 +87,7 @@ public class SimpleGUI {
                 final BaseModel m = loader.getModel();
                 if (m != null) model = m;
             } catch (final Exception e) {
-                LOG.error("error during load", e);
+                if (Util.DEBUG) e.printStackTrace();
                 JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
             }
             return null;
@@ -124,7 +123,7 @@ public class SimpleGUI {
                     publish(html);
                 }
             } catch (final Exception e) {
-                LOG.error("error during refresh", e);
+                if (Util.DEBUG) e.printStackTrace();
                 JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
             }
 
@@ -216,7 +215,7 @@ public class SimpleGUI {
                     }
                 }
             } catch (final Exception e) {
-                LOG.error("error during save", e);
+                if (Util.DEBUG) e.printStackTrace();
                 JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
             }
 
@@ -230,11 +229,7 @@ public class SimpleGUI {
     }
 
     static final String LAST_LOAD_DIR = "lastLoadDir"; //$NON-NLS-1$
-
     private static final String LAST_SAVE_DIR = "lastSaveDir"; //$NON-NLS-1$
-
-    private static final Logger LOG = LogManager.getLogger(SimpleGUI.class);
-
     static final Preferences PREFS = Preferences.userNodeForPackage(SimpleGUI.class);
     private final JFrame frame = new JFrame(Messages.getString("SimpleGUI.Title", System.getProperty(Launcher.PROGRAM_VERSION))); //$NON-NLS-1$
     private final Action exitAction = new ExitAction(Messages.getString("Exit")); //$NON-NLS-1$

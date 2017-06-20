@@ -12,14 +12,10 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import gde.mdl.messages.Messages;
+import gde.util.Util;
 
 public class Launcher {
-    private static final Logger LOG = LogManager.getLogger(Launcher.class);
-
     public static final String LOG_DIR = "log.dir"; //$NON-NLS-1$
     public static final String MDL_DIR = "mdl.dir"; //$NON-NLS-1$
     public static final String PROGRAM_DIR = "program.dir"; //$NON-NLS-1$
@@ -116,9 +112,11 @@ public class Launcher {
 
         if (!System.getProperties().containsKey(LOG_DIR)) System.setProperty(LOG_DIR, System.getProperty(PROGRAM_DIR));
 
-        LOG.info("program.dir =  " + System.getProperty(PROGRAM_DIR)); //$NON-NLS-1$
-        LOG.info("mdl.dir =  " + System.getProperty(MDL_DIR)); //$NON-NLS-1$
-        LOG.info("log.dir =  " + System.getProperty(LOG_DIR)); //$NON-NLS-1$
+        if (Util.DEBUG) {
+            System.out.printf("program.dir = %s%n", System.getProperty(PROGRAM_DIR)); //$NON-NLS-1$
+            System.out.printf("mdl.dir = %s%n", System.getProperty(MDL_DIR)); //$NON-NLS-1$
+            System.out.printf("log.dir = %s%n", System.getProperty(LOG_DIR)); //$NON-NLS-1$
+        }
     }
 
     public static void main(final String[] args) throws Exception {

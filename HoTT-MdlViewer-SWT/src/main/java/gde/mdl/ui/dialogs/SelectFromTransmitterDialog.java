@@ -3,8 +3,6 @@ package gde.mdl.ui.dialogs;
 import java.util.List;
 import java.util.prefs.Preferences;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -27,6 +25,7 @@ import de.treichels.hott.HoTTSerialPort;
 import gde.mdl.messages.Messages;
 import gde.model.BaseModel;
 import gde.model.serial.SerialPortDefaultImpl;
+import gde.util.Util;
 
 public abstract class SelectFromTransmitterDialog extends Dialog {
     private final class CancelListener implements Listener {
@@ -52,9 +51,7 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
         }
     }
 
-    final static Logger LOG = LogManager.getLogger(SelectFromTransmitterDialog.class);
     static final Preferences PREFS = Preferences.userNodeForPackage(SelectFromTransmitterDialog.class);
-
     private final List<String> portNames = SerialPortDefaultImpl.getAvailablePorts();
     protected HoTTSerialPort port = null;
     protected BaseModel model = null;
@@ -158,6 +155,6 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
         mb.setText(t.getClass().getSimpleName());
         mb.setMessage(t.getMessage() == null ? t.getClass().getSimpleName() : t.getMessage());
         mb.open();
-        LOG.error(t);
+        if (Util.DEBUG) t.printStackTrace();
     }
 }

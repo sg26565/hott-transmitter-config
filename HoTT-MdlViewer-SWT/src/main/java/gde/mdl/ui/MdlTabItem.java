@@ -21,6 +21,7 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Display;
 
 import gde.report.html.HTMLReport;
+import gde.util.Util;
 
 /**
  * tab item for DataExplorer integration of MDL reading and display purpose this tab item is target to be included in DataExplorer
@@ -57,7 +58,7 @@ public class MdlTabItem extends CTabItem {
         try {
             if (System.getProperty(Launcher.PROGRAM_VERSION) == null) Launcher.initSystemProperties();
         } catch (final Exception e) {
-            e.printStackTrace();
+            if (Util.DEBUG) e.printStackTrace();
         }
 
         setControl(new MdlTabItemComposite(parent));

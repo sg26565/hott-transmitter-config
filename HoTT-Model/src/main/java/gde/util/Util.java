@@ -16,6 +16,8 @@ package gde.util;
  *
  */
 public class Util {
+    public static final boolean DEBUG = Boolean.getBoolean("debug");
+
     public static String dumpData(final byte[] data) {
         return dumpData(data, 0);
     }
