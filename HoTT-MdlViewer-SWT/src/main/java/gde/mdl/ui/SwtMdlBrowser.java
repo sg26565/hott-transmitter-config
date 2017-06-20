@@ -8,6 +8,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import gde.util.Util;
+
 public class SwtMdlBrowser extends Composite {
     public static final boolean IS_WINDOWS = System.getProperty("os.name").toLowerCase().startsWith("windows"); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -66,7 +68,7 @@ public class SwtMdlBrowser extends Composite {
             }
             this.layout();
         } catch (final Exception e) {
-            e.printStackTrace();
+            if (Util.DEBUG) e.printStackTrace();
         }
     }
 }

@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import gde.mdl.messages.Messages;
 import gde.mdl.ui.composites.BaseConfiguration;
 import gde.mdl.ui.composites.DualExpoConfiguration;
+import gde.util.Util;
 
 public class ModelTreeDialog extends org.eclipse.swt.widgets.Dialog {
 
@@ -60,7 +61,7 @@ public class ModelTreeDialog extends org.eclipse.swt.widgets.Dialog {
             final ModelTreeDialog inst = new ModelTreeDialog(shell, SWT.NULL);
             inst.open();
         } catch (final Exception e) {
-            e.printStackTrace();
+            if (Util.DEBUG) e.printStackTrace();
         }
     }
 
@@ -167,7 +168,7 @@ public class ModelTreeDialog extends org.eclipse.swt.widgets.Dialog {
             while (!dialogShell.isDisposed())
                 if (!display.readAndDispatch()) display.sleep();
         } catch (final Exception e) {
-            e.printStackTrace();
+            if (Util.DEBUG) e.printStackTrace();
         }
     }
 }

@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Display;
 import gde.model.Curve;
 import gde.model.CurvePoint;
 import gde.report.CurveImageGenerator;
+import gde.util.Util;
 
 /**
  * Generate offline PNG image using SWT.
@@ -194,7 +195,7 @@ public class SwtCurveImageGenerator implements CurveImageGenerator {
             imageLoader.data = new ImageData[] { image.getImageData() };
             imageLoader.save(baos, SWT.IMAGE_PNG);
         } catch (final Exception e) {
-            e.printStackTrace();
+            if (Util.DEBUG) e.printStackTrace();
         }
 
         return PREFIX + Base64.getEncoder().encodeToString(baos.toByteArray());
