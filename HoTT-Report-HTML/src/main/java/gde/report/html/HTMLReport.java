@@ -69,12 +69,11 @@ public class HTMLReport {
         // extract font file
         final File fontFile = new File(System.getProperty("java.io.tmpdir"), "Arial.ttf"); //$NON-NLS-1$ //$NON-NLS-2$
 
-        if (!(fontFile.exists() && fontFile.isFile() && fontFile.canRead() && fontFile.length() > 0))
-            try (InputStream is = ClassLoader.getSystemResourceAsStream("Arial.ttf"); OutputStream os = new FileOutputStream(fontFile)) {
+        try (InputStream is = ClassLoader.getSystemResourceAsStream("Arial.ttf"); OutputStream os = new FileOutputStream(fontFile)) {
             IOUtils.copy(is, os);
-            } catch (final IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
-            }
+        }
     }
 
     public static String generateHTML(final BaseModel model) throws IOException, ReportException {
