@@ -33,6 +33,9 @@
 							</accelerator>
 						</MenuItem>
 						<SeparatorMenuItem mnemonicParsing="false" />
+						<MenuItem fx:id="sysVDF1" mnemonicParsing="false" onAction="#onLoadSystemVDF" text="%LoadSystemVDF"/>
+						<MenuItem fx:id="userVDF1" mnemonicParsing="false" onAction="#onLoadUserVDF" text="%LoadUserVDF"/>
+						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem fx:id="save1" disable="true" mnemonicParsing="false" onAction="#onSave" text="%Save">
 							<accelerator>
 								<KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -59,6 +62,9 @@
 						<MenuItem mnemonicParsing="false" onAction="#onLoadFromFile" text="%LoadFromFile" />
 						<MenuItem mnemonicParsing="false" onAction="#onLoadFromMemory" text="%LoadFromMemory" />
 						<MenuItem mnemonicParsing="false" onAction="#onLoadFromSdCard" text="%LoadFromSdCard" />
+						<SeparatorMenuItem mnemonicParsing="false" />
+						<MenuItem fx:id="sysVDF2" mnemonicParsing="false" onAction="#onLoadSystemVDF" text="%LoadSystemVDF"/>
+						<MenuItem fx:id="userVDF2" mnemonicParsing="false" onAction="#onLoadUserVDF" text="%LoadUserVDF"/>
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem fx:id="save2" disable="true" mnemonicParsing="false" onAction="#onSave" text="%Save" />
 						<SeparatorMenuItem mnemonicParsing="false" />

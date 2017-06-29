@@ -3,6 +3,7 @@ package gde.mdl.ui;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import javax.xml.bind.JAXBException;
@@ -11,8 +12,10 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.itextpdf.text.DocumentException;
 
+import de.treichels.hott.VDFDecoder;
 import gde.mdl.messages.Messages;
 import gde.mdl.ui.background.RefreshService;
+import gde.model.BaseModel;
 import gde.report.ReportException;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -69,6 +72,18 @@ public class Controller extends Application {
     private MenuItem save2;
 
     @FXML
+    private MenuItem sysVDF1;
+
+    @FXML
+    private MenuItem sysVDF2;
+
+    @FXML
+    private MenuItem userVDF1;
+
+    @FXML
+    private MenuItem userVDF2;
+
+    @FXML
     private WebView webview;
 
     private Scene scene;
@@ -88,6 +103,10 @@ public class Controller extends Application {
         save2.disableProperty().bind(modelProperty.isNull());
         refresh1.disableProperty().bind(modelProperty.isNull());
         refresh2.disableProperty().bind(modelProperty.isNull());
+        sysVDF1.disableProperty().bind(modelProperty.isNull());
+        userVDF1.disableProperty().bind(modelProperty.isNull());
+        sysVDF2.disableProperty().bind(modelProperty.isNull());
+        userVDF2.disableProperty().bind(modelProperty.isNull());
 
         refreshService = new RefreshService(webview);
 
@@ -151,6 +170,40 @@ public class Controller extends Application {
                 modelProperty.set(task.getValue());
                 onRefresh();
             });
+        }
+    }
+
+    @FXML
+    public void onLoadSystemVDF() throws IOException, BackingStoreException {
+        final FileChooser chooser = new FileChooser();
+        chooser.setTitle(Messages.getString("LoadSystemVDF"));
+        final File dir = new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR)));
+        if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
+        chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("VdfFileDescription"), "*.vdf"));
+
+        final File vdf = chooser.showOpenDialog(STAGE);
+        if (vdf != null) {
+            PREFS.put(LAST_LOAD_DIR, vdf.getParentFile().getAbsolutePath());
+            final BaseModel model = modelProperty.get().decode();
+            VDFDecoder.saveSystemPrefs(model.getTransmitterType(), VDFDecoder.getNames(vdf));
+            onRefresh();
+        }
+    }
+
+    @FXML
+    public void onLoadUserVDF() throws IOException, BackingStoreException {
+        final FileChooser chooser = new FileChooser();
+        chooser.setTitle(Messages.getString("LoadUserVDF"));
+        final File dir = new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR)));
+        if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
+        chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("VdfFileDescription"), "*.vdf"));
+
+        final File vdf = chooser.showOpenDialog(STAGE);
+        if (vdf != null) {
+            PREFS.put(LAST_LOAD_DIR, vdf.getParentFile().getAbsolutePath());
+            final BaseModel model = modelProperty.get().decode();
+            VDFDecoder.saveUserPrefs(model.getTransmitterType(), VDFDecoder.getNames(vdf));
+            onRefresh();
         }
     }
 
