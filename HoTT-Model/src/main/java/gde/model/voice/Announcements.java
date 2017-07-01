@@ -9,6 +9,13 @@ import java.util.prefs.Preferences;
 import gde.mdl.messages.Messages;
 import gde.model.enums.TransmitterType;
 
+/**
+ * A utility class to translate announcement number into names.
+ *
+ * The class also allows to load custom system and user void data files (.vdf) to read names from.
+ *
+ * @author oliver.treichel.gmx.de
+ */
 public class Announcements {
     public static enum VDFType {
         System, User

@@ -6,6 +6,11 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.LineUnavailableException;
 
+/**
+ * Representation of a single announcement in a voice data file (.vdf).
+ *
+ * @author oliver.treichel@gmx.de
+ */
 public class VoiceData {
     /** Default audio format 11 kHz 16-bit signed PCM mono */
     private static final AudioFormat AUDIO_FORMAT = new AudioFormat(Encoding.PCM_SIGNED, 11025, 16, 1, 2, 11025, false);

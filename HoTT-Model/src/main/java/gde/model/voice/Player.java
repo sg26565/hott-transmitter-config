@@ -11,6 +11,11 @@ import javax.sound.sampled.LineEvent.Type;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * A utility class that can play audio data.
+ *
+ * @author oliver.treichel@gmx.de
+ */
 public class Player {
     public static void play(final AudioFormat format, final byte[] data) throws LineUnavailableException, InterruptedException {
         play(format, data, 0, data.length, true);

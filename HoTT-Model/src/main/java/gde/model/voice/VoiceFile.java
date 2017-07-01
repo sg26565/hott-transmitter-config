@@ -2,6 +2,11 @@ package gde.model.voice;
 
 import java.util.List;
 
+/**
+ * Representation of a void data file (.vdf).
+ *
+ * @author oliver.treichel@gmx.de
+ */
 public class VoiceFile {
     public static final int VDF_CODE = 0x105f12cd;
     public static final int SYSTEM_TYPE1 = 0x000000fe;
