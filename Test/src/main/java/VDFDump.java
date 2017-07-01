@@ -5,8 +5,9 @@ import java.util.List;
 
 import javax.sound.sampled.LineUnavailableException;
 
-import de.treichels.hott.internal.decoder.VDFDecoder;
-import de.treichels.hott.internal.decoder.VoiceData;
+import de.treichels.hott.HoTTDecoder;
+import gde.model.voice.VoiceFile;
+import gde.model.voice.VoiceData;
 import gde.util.Util;
 
 public class VDFDump {
@@ -23,7 +24,7 @@ public class VDFDump {
         final File mc32_vdf = new File(mc32_dir, "Voice3_mc32_DE.vdf");
 
         // dump(mc32_vdf);
-        // play(mc32_vdf);
+        play(mc32_vdf);
 
         final File mc28_dir = new File("C:/Users/olive/Google Drive/Graupner/Official Version/33112_33116_33124_33020_33028_33032/SD card/Firmware/mc-28");
         final File mc28_vdf = new File(mc28_dir, "mc-28_German.vdf");
@@ -41,7 +42,7 @@ public class VDFDump {
 
     private static void play(final File vdf) throws IOException {
         System.out.println(vdf);
-        final VDFDecoder voiceFile = VDFDecoder.decode(vdf);
+        final VoiceFile voiceFile = HoTTDecoder.decodeVDF(vdf);
         final List<VoiceData> list = voiceFile.getVoiceData();
         list.stream().forEach(v -> {
             System.out.println(v.getName());

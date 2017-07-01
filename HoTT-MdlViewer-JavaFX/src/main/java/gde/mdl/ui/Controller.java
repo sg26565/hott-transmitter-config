@@ -2,9 +2,11 @@ package gde.mdl.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBException;
 
@@ -12,10 +14,12 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.itextpdf.text.DocumentException;
 
-import de.treichels.hott.Announcements;
+import de.treichels.hott.HoTTDecoder;
 import gde.mdl.messages.Messages;
 import gde.mdl.ui.background.RefreshService;
 import gde.model.BaseModel;
+import gde.model.voice.Announcements;
+import gde.model.voice.VoiceFile;
 import gde.report.ReportException;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -185,7 +189,9 @@ public class Controller extends Application {
         if (vdf != null) {
             PREFS.put(LAST_LOAD_DIR, vdf.getParentFile().getAbsolutePath());
             final BaseModel model = modelProperty.get().decode();
-            Announcements.saveSystemPrefs(model.getTransmitterType(), Announcements.getNames(vdf));
+            final VoiceFile vdfFile = HoTTDecoder.decodeVDF(vdf);
+            final List<String> names = vdfFile.getVoiceData().stream().map(v -> v.getName()).collect(Collectors.toList());
+            Announcements.saveSystemPrefs(model.getTransmitterType(), names);
             onRefresh();
         }
     }
@@ -202,7 +208,9 @@ public class Controller extends Application {
         if (vdf != null) {
             PREFS.put(LAST_LOAD_DIR, vdf.getParentFile().getAbsolutePath());
             final BaseModel model = modelProperty.get().decode();
-            Announcements.saveUserPrefs(model.getTransmitterType(), Announcements.getNames(vdf));
+            final VoiceFile vdfFile = HoTTDecoder.decodeVDF(vdf);
+            final List<String> names = vdfFile.getVoiceData().stream().map(v -> v.getName()).collect(Collectors.toList());
+            Announcements.saveUserPrefs(model.getTransmitterType(), names);
             onRefresh();
         }
     }
