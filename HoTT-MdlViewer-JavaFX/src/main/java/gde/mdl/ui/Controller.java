@@ -12,7 +12,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.itextpdf.text.DocumentException;
 
-import de.treichels.hott.VDFDecoder;
+import de.treichels.hott.Announcements;
 import gde.mdl.messages.Messages;
 import gde.mdl.ui.background.RefreshService;
 import gde.model.BaseModel;
@@ -185,7 +185,7 @@ public class Controller extends Application {
         if (vdf != null) {
             PREFS.put(LAST_LOAD_DIR, vdf.getParentFile().getAbsolutePath());
             final BaseModel model = modelProperty.get().decode();
-            VDFDecoder.saveSystemPrefs(model.getTransmitterType(), VDFDecoder.getNames(vdf));
+            Announcements.saveSystemPrefs(model.getTransmitterType(), Announcements.getNames(vdf));
             onRefresh();
         }
     }
@@ -202,7 +202,7 @@ public class Controller extends Application {
         if (vdf != null) {
             PREFS.put(LAST_LOAD_DIR, vdf.getParentFile().getAbsolutePath());
             final BaseModel model = modelProperty.get().decode();
-            VDFDecoder.saveUserPrefs(model.getTransmitterType(), VDFDecoder.getNames(vdf));
+            Announcements.saveUserPrefs(model.getTransmitterType(), Announcements.getNames(vdf));
             onRefresh();
         }
     }
