@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  */
 public enum TransmitterType {
     mc16(16004600), mc20(16004300), mc26(16007700), mc28(16007100), mc32(16004100), mx12(16003600), mx16(16003300), mx20(16003700), mz12(-1), mz18(-2),
-    mz24(16005200), unknown(0);
+    mz24(16005200), mz24Pro(16007200), unknown(0);
 
     public static TransmitterType forProductCode(final int productCode) {
         for (final TransmitterType t : TransmitterType.values())
