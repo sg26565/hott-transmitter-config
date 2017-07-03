@@ -1,0 +1,8 @@
+.button {
+	-fx-graphic: url('play-button-icon_16.png');
+	-fx-background-color: transparent;
+}
+
+.label {
+	-fx-font-weight: bold;
+}
