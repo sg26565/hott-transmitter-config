@@ -22,6 +22,7 @@
 		<!-- module>HoTT-MdlViewer-Android</module -->
 		<module>MemoryDump</module>
 		<module>HoTT-MdlViewer-JavaFX</module>
+		<module>VDFEditor</module>
 	</modules>
 
 	<organization>

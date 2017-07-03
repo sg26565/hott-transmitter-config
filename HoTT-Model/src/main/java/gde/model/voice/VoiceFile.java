@@ -2,6 +2,9 @@ package gde.model.voice;
 
 import java.util.List;
 
+import gde.model.enums.TransmitterType;
+import gde.model.voice.Announcements.VDFType;
+
 /**
  * Representation of a void data file (.vdf).
  *
@@ -56,8 +59,8 @@ public class VoiceFile {
         return dataSize;
     }
 
-    public int getTransmitterType() {
-        return transmitterType;
+    public TransmitterType getTransmitterType() {
+        return TransmitterType.forProductCode(transmitterType);
     }
 
     public int getType1() {
@@ -66,6 +69,19 @@ public class VoiceFile {
 
     public int getType2() {
         return type2;
+    }
+
+    public VDFType getVDFType() {
+        switch (type1) {
+        case SYSTEM_TYPE1:
+            return VDFType.System;
+
+        case USER_TYPE1:
+            return VDFType.User;
+
+        default:
+            throw new RuntimeException("unknown vdf type");
+        }
     }
 
     public int getVdfVersion() {

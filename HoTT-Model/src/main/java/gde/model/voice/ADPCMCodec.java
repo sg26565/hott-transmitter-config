@@ -1,10 +1,10 @@
 package gde.model.voice;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * Codec to encode / decode ADPCM (VOX) audio data.
@@ -26,6 +26,55 @@ public class ADPCMCodec {
     private static final int MIN_INDEX = 0;
     private static final int MAX_INDEX = STEP_SIZES.length - 1;
 
+    /**
+     * Decode 4-bit ADPCM encoded data to 16-bit signed PCM (compression ratio 1:4).
+     *
+     * @param data
+     *            ADPCM encoded data. Each byte contains two 4-bit samples.
+     * @return The PCM decoded data.
+     * @throws IOException
+     */
+    public static byte[] decode(final byte[] data) throws IOException {
+        return IOUtils.toByteArray(decode(new ByteArrayInputStream(data)));
+    }
+
+    /**
+     * Decode 4-bit ADPCM encoded data to 16-bit signed PCM (compression ratio 1:4).
+     *
+     * @param source
+     *            A stream of ADPCM encoded data. Each byte contains two 4-bit samples.
+     * @return A stream of PCM data.
+     * @throws IOException
+     */
+    public static InputStream decode(final InputStream source) throws IOException {
+        return new DecodingInputStream(source);
+    }
+
+    /**
+     * Encode 16-bit signed PCM data to 4-bit ADPCM encoded data (compression ratio 4:1).
+     *
+     * @param data
+     *            The PCM data.
+     *
+     * @return The ADPCM encoded data. Each byte contains two 4-bit samples.
+     * @throws IOException
+     */
+    public static byte[] encode(final byte[] data) throws IOException {
+        return IOUtils.toByteArray(encode(new ByteArrayInputStream(data)));
+    }
+
+    /**
+     * Encode 16-bit signed PCM data to 4-bit ADPCM encoded data (compression ratio 4:1).
+     *
+     * @param source
+     *            A stream of PCM data.
+     * @return A stream of ADPCM encoded data. Each byte contains two 4-bit samples.
+     * @throws IOException
+     */
+    public static InputStream encode(final InputStream source) throws IOException {
+        return new EncodingInputStream(source);
+    }
+
     /** index into step size table */
     private int index = 0;
 
@@ -39,7 +88,7 @@ public class ADPCMCodec {
      *            ADPCM encoded sample (4 bit)
      * @return The decoded PCM value (16 bit signed)
      */
-    private int decode(final int adpcm) {
+    int decode(final int adpcm) {
         // current step size
         final int ss = STEP_SIZES[index];
 
@@ -72,67 +121,20 @@ public class ADPCMCodec {
     }
 
     /**
-     * Decode 4-bit ADPCM encoded data to 16-bit signed PCM (compression ratio 1:4).
-     *
-     * @param adpcm
-     *            ADPCM encoded data. Each byte contains two 4-bit samples.
-     * @return The PCM decoded data.
-     * @throws IOException
-     */
-    public byte[] decodeADPCM(final byte[] adpcm) throws IOException {
-        final ByteArrayInputStream in = new ByteArrayInputStream(adpcm);
-        final ByteArrayOutputStream out = new ByteArrayOutputStream(adpcm.length * 4);
-        decodeADPCM(in, out);
-        return out.toByteArray();
-    }
-
-    /**
-     * Decode 4-bit ADPCM encoded data to 16-bit signed PCM (compression ratio 1:4).
-     *
-     * @param in
-     *            A stream of ADPCM encoded data. Each byte contains two 4-bit samples.
-     * @param out
-     *            A stream of PCM data.
-     * @throws IOException
-     */
-    public void decodeADPCM(final InputStream in, final OutputStream out) throws IOException {
-        reset();
-
-        while (in.available() > 0) {
-            final int b = in.read();
-            int pcm;
-
-            // decode high nibble
-            pcm = decode((b & 0xf0) >> 4);
-            // write low byte
-            out.write(pcm & 0x00ff);
-            // write high byte
-            out.write((pcm & 0xff00) >> 8);
-
-            // decode low nibble
-            pcm = decode(b & 0x0f);
-            // write low byte
-            out.write(pcm & 0x00ff);
-            // write high byte
-            out.write((pcm & 0xff00) >> 8);
-        }
-    }
-
-    /**
      * Encode a 16-bit signed PCM value to 4-bit ADPCM.
      *
      * @param pcm
      *            The PCM value (16 bit signed)
      * @return The ADPCM encoded sample (4 bit)
      */
-    private int encode(final int pcm) {
+    int encode(final int pcm) {
         final int ss = STEP_SIZES[index];
         int diff = pcm - last;
         int adpcm = 0;
 
         // sign
         if (diff < 0) {
-            adpcm |= 0x1000;
+            adpcm |= 0b1000;
             diff = -diff;
         }
 
@@ -157,54 +159,9 @@ public class ADPCMCodec {
     }
 
     /**
-     * Encode 16-bit signed PCM data to 4-bit ADPCM encoded data (compression ratio 4:1).
-     *
-     * @param pcm
-     *            The PCM data.
-     *
-     * @return The ADPCM encoded data. Each byte contains two 4-bit samples.
-     * @throws IOException
-     */
-    public byte[] encodeADPCM(final byte[] pcm) throws IOException {
-        final ByteArrayInputStream in = new ByteArrayInputStream(pcm);
-        final ByteArrayOutputStream out = new ByteArrayOutputStream(pcm.length / 4);
-        encodeADPCM(in, out);
-        return out.toByteArray();
-    }
-
-    /**
-     * Encode 16-bit signed PCM data to 4-bit ADPCM encoded data (compression ratio 4:1).
-     *
-     * @param in
-     *            A stream of PCM data.
-     * @param out
-     *            A stream of ADPCM encoded data. Each byte contains two 4-bit samples.
-     * @throws IOException
-     */
-    public void encodeADPCM(final InputStream in, final OutputStream out) throws IOException {
-        reset();
-
-        while (in.available() > 0) {
-            int pcm, adpcm;
-
-            // read 16 bit for high nibble
-            pcm = in.read() + (in.read() << 8);
-            adpcm = encode(pcm) << 4;
-
-            if (in.available() > 0) {
-                // read 16 bit for low nibble
-                pcm = in.read() + (in.read() << 8);
-                adpcm += encode(pcm);
-            }
-
-            out.write(adpcm);
-        }
-    }
-
-    /**
      * Reset state of the encoder/decoder.
      */
-    private void reset() {
+    void reset() {
         index = 0;
         last = 0;
     }

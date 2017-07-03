@@ -1,7 +1,9 @@
 package gde.model.voice;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -9,6 +11,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent.Type;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
@@ -17,24 +20,56 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author oliver.treichel@gmx.de
  */
 public class Player {
-    public static void play(final AudioFormat format, final byte[] data) throws LineUnavailableException, InterruptedException {
-        play(format, data, 0, data.length, true);
+    public static void play(final AudioFormat format, final byte[] data) throws LineUnavailableException, InterruptedException, IOException {
+        play(format, data, true);
     }
 
-    public static void play(final AudioFormat format, final byte[] data, final boolean sync) throws LineUnavailableException, InterruptedException {
+    public static void play(final AudioFormat format, final byte[] data, final boolean sync)
+            throws LineUnavailableException, InterruptedException, IOException {
         play(format, data, 0, data.length, sync);
     }
 
     public static void play(final AudioFormat format, final byte[] data, final int offset, final int buffersize)
-            throws LineUnavailableException, InterruptedException {
+            throws LineUnavailableException, InterruptedException, IOException {
         play(format, data, offset, buffersize, true);
     }
 
     public static void play(final AudioFormat format, final byte[] data, final int offset, final int buffersize, final boolean sync)
-            throws LineUnavailableException, InterruptedException {
-        final Clip clip = AudioSystem.getClip();
-        clip.open(format, data, offset, buffersize);
-        play(clip, sync);
+            throws LineUnavailableException, InterruptedException, IOException {
+        play(format, new ByteArrayInputStream(data, offset, buffersize), sync);
+    }
+
+    public static void play(final AudioFormat format, final InputStream stream) throws LineUnavailableException, IOException {
+        play(format, stream, true);
+    }
+
+    public static void play(final AudioFormat format, final InputStream stream, final boolean sync) throws LineUnavailableException, IOException {
+        final SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(format);
+
+        try {
+            sourceDataLine.open();
+            sourceDataLine.start();
+
+            final byte[] buffer = new byte[sourceDataLine.getBufferSize()];
+
+            while (stream.available() > 0) {
+                final int len = stream.read(buffer);
+                sourceDataLine.write(buffer, 0, len);
+            }
+
+            if (sync) sourceDataLine.drain();
+        } finally {
+            if (sourceDataLine.isRunning()) sourceDataLine.stop();
+            if (sourceDataLine.isOpen()) sourceDataLine.close();
+        }
+    }
+
+    public static void play(final AudioInputStream stream) throws LineUnavailableException, IOException {
+        play(stream, true);
+    }
+
+    public static void play(final AudioInputStream stream, final boolean sync) throws LineUnavailableException, IOException {
+        play(stream.getFormat(), stream, sync);
     }
 
     public static void play(final Clip clip) throws InterruptedException {
@@ -62,12 +97,7 @@ public class Player {
         play(file, true);
     }
 
-    public static void play(final File file, final boolean sync)
-            throws LineUnavailableException, IOException, UnsupportedAudioFileException, InterruptedException {
-        final AudioInputStream stream = AudioSystem.getAudioInputStream(file);
-        System.out.println(stream.getFormat());
-        final Clip clip = AudioSystem.getClip();
-        clip.open(stream);
-        play(clip, sync);
+    public static void play(final File file, final boolean sync) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+        play(AudioSystem.getAudioInputStream(file), sync);
     }
 }
