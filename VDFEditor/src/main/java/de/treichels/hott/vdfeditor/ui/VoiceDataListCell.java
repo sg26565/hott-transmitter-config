@@ -14,9 +14,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
@@ -25,11 +25,12 @@ import javafx.scene.layout.Priority;
 public class VoiceDataListCell extends ListCell<VoiceData> {
     private static final String STYLESHEET_LOCATION = VoiceDataListCell.class.getResource("style.css").toString();
     private static final List<File> TEMP_FILE_LIST = new ArrayList<>();
+    static final DataFormat DnD_DATA_FORMAT = new DataFormat(VoiceDataListCell.class.getName());
 
     private final Label indexLabel = new Label();
     private final Button playButton = new Button();
     private TextField textField = null;
-    private final HBox hBox;
+    private final HBox hBox = new HBox(indexLabel, playButton);
 
     public VoiceDataListCell() {
         getStylesheets().add(STYLESHEET_LOCATION);
@@ -44,17 +45,19 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
 
         indexLabel.setMinWidth(25);
         indexLabel.setAlignment(Pos.CENTER_RIGHT);
-
-        hBox = new HBox(indexLabel, playButton);
         hBox.setAlignment(Pos.CENTER_LEFT);
-        setGraphic(hBox);
+
+        // disable dnd on empty cells to prevent IndexOutOfBoundsExcetions
+        disableProperty().bind(itemProperty().isNull());
 
         // Start a drag operation
         setOnDragDetected(ev -> {
             deleteTempFiles();
 
-            // generate temporary .wav files for each selected item for DnD to desktop (eport of .wav file)
-            for (final VoiceData vd : getListView().getSelectionModel().getSelectedItems())
+            // generate temporary .wav files for each selected item for DnD to desktop (export of .wav file)
+            final ObservableList<VoiceData> selectedItems = getListView().getSelectionModel().getSelectedItems();
+
+            for (final VoiceData vd : selectedItems)
                 try {
                     final File wav = new File(System.getProperty("java.io.tmpdir"), vd.getName() + ".wav");
                     vd.writeWav(wav);
@@ -64,8 +67,14 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
                 }
 
             final ClipboardContent content = new ClipboardContent();
+            // files for DnD to Desktop
             content.putFiles(TEMP_FILE_LIST);
+
+            // item name for DnD to editor or text field
             content.putString(getItem().getName());
+
+            // serialize selected items for DnD to other VDFEditor instance
+            content.put(DnD_DATA_FORMAT, new ArrayList<>(selectedItems));
 
             final Dragboard db = startDragAndDrop(TransferMode.COPY_OR_MOVE);
             db.setContent(content);
@@ -75,12 +84,17 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
 
         // accept a drop
         setOnDragOver(ev -> {
-            if (ev.getGestureSource() == null && ev.getDragboard().hasFiles())
-                // allow only copy from desktop (import of .wav file)
-                ev.acceptTransferModes(TransferMode.COPY);
-            else if (ev.getGestureSource() instanceof VoiceDataListCell && ev.getGestureSource() != this)
+            if (ev.getGestureSource() instanceof VoiceDataListCell && ev.getGestureSource() != this)
                 // allow copy and move within the list
                 ev.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+
+            else if (ev.getDragboard().hasContent(DnD_DATA_FORMAT))
+                // allow copy between two VDFEditor instances
+                ev.acceptTransferModes(TransferMode.COPY);
+
+            else if (ev.getGestureSource() == null && ev.getDragboard().hasFiles())
+                // allow only copy from desktop (import of .wav file)
+                if (ev.getDragboard().getFiles().stream().allMatch(f -> f.getName().endsWith(".wav"))) ev.acceptTransferModes(TransferMode.COPY);
 
             ev.consume();
         });
@@ -99,39 +113,41 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
 
         // perform drop actions
         setOnDragDropped(ev -> {
-            if (ev.getGestureSource() == null && ev.getDragboard().hasFiles()) {
+            final ObservableList<VoiceData> items = getListView().getItems();
+            final Object gestureSource = ev.getGestureSource();
+            final int targetIndex = ((VoiceDataListCell) ev.getGestureTarget()).getIndex();
+            final Dragboard dragboard = ev.getDragboard();
+
+            if (gestureSource instanceof VoiceDataListCell && gestureSource != this) {
+                // DnD within the same list
+                final int sourceIndex = ((VoiceDataListCell) gestureSource).getIndex();
+                final VoiceData item = ((VoiceDataListCell) gestureSource).getItem();
+
+                // delete first to avoid hitting size limits
+                if (ev.getTransferMode() == TransferMode.MOVE) {
+                    items.remove(sourceIndex);
+                    getListView().getSelectionModel().clearSelection();
+                }
+
+                items.add(targetIndex > sourceIndex && ev.getTransferMode() == TransferMode.MOVE ? targetIndex - 1 : targetIndex, item);
+                ev.setDropCompleted(true);
+            } else if (dragboard.hasContent(DnD_DATA_FORMAT)) {
+                // DnD between VDFEditor instances
+                @SuppressWarnings("unchecked")
+                final ArrayList<VoiceData> droppedItems = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
+                for (final VoiceData vd : droppedItems)
+                    items.add(targetIndex, vd);
+                ev.setDropCompleted(true);
+            } else if (gestureSource == null && dragboard.hasFiles()) {
                 // import .wav file from desktop
-                final int toIndex = getIndex();
-                final ObservableList<VoiceData> items = getListView().getItems();
-                for (final File file : ev.getDragboard().getFiles())
-                    try {
-                        final VoiceData voiceData = VoiceData.readWav(file);
-                        items.add(toIndex, voiceData);
-                    } catch (UnsupportedAudioFileException | IOException e) {
-                        ExceptionDialog.show(e);
-                    }
-            } else if (ev.getGestureSource() instanceof VoiceDataListCell && ev.getGestureSource() != this) {
-                final VoiceDataListCell other = (VoiceDataListCell) ev.getGestureSource();
+                final List<File> files = dragboard.getFiles();
 
-                if (getListView() == other.getListView()) {
-                    final ListView<VoiceData> listView = getListView();
-
-                    int fromIndex = other.getIndex();
-                    int toIndex = getIndex();
-
-                    if (toIndex < fromIndex)
-                        fromIndex++;
-                    else
-                        toIndex++;
-
-                    final ObservableList<VoiceData> items = listView.getItems();
-                    items.add(toIndex, other.getItem());
-                    if (ev.getTransferMode() == TransferMode.MOVE) {
-                        items.remove(fromIndex);
-                        listView.getSelectionModel().clearSelection();
-                    }
-
+                try {
+                    for (final File file : files)
+                        if (file.getName().endsWith(".wav")) items.add(targetIndex, VoiceData.readWav(file));
                     ev.setDropCompleted(true);
+                } catch (UnsupportedAudioFileException | IOException e) {
+                    ExceptionDialog.show(e);
                 }
             }
 
@@ -163,7 +179,10 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
     public void startEdit() {
         textField = new TextField(getText());
         textField.setOnAction(ev -> {
-            getItem().setName(textField.getText());
+            String newName = textField.getText();
+            if (newName.length() > 17) newName = newName.substring(0, 17);
+
+            getItem().setName(newName);
             commitEdit(getItem());
         });
         setText(null);
@@ -176,9 +195,13 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
     public void updateItem(final VoiceData item, final boolean empty) {
         super.updateItem(item, empty);
 
-        if (!empty && item != null) {
+        if (empty) {
+            setText(null);
+            setGraphic(null);
+        } else {
             indexLabel.setText(Integer.toString(getIndex() + 1));
             setText(item.getName());
+            setGraphic(hBox);
         }
     }
 }

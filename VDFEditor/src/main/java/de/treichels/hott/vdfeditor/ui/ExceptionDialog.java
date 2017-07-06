@@ -14,6 +14,7 @@ import javafx.scene.layout.Priority;
 
 public class ExceptionDialog extends Alert {
     public static void show(final Throwable throwable) {
+        // throwable.printStackTrace();
         Platform.runLater(() -> new ExceptionDialog(throwable).showAndWait());
     }
 

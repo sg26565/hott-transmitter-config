@@ -1,16 +1,170 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>de.treichels.hott</groupId>
-    <artifactId>parent</artifactId>
-    <version>0.9-SNAPSHOT</version>
-  </parent>
-  <artifactId>VDFEditor</artifactId>
-  <name>VDFEditor</name>
-  <dependencies>
-  	<dependency>
-  		<groupId>de.treichels.hott</groupId>
-  		<artifactId>HoTT-Decoder</artifactId>
-  	</dependency>
-  </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.treichels.hott</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.9-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>VDFEditor</artifactId>
+	<name>VDFEditor</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<configuration>
+					<minimizeJar>true</minimizeJar>
+					<createDependencyReducedPom>false</createDependencyReducedPom>
+					<shadedArtifactAttached>true</shadedArtifactAttached>
+					<transformers>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+							<mainClass>de.treichels.hott.vdfeditor.ui.Launcher</mainClass>
+						</transformer>
+					</transformers>
+<!-- 					<filters> -->
+<!-- 						<filter> -->
+<!-- 							<artifact>gnu.io.RXTXcomm</artifact> -->
+<!-- 							<includes> -->
+<!-- 								<include>**</include> -->
+<!-- 							</includes> -->
+<!-- 						</filter> -->
+<!-- 					</filters> -->
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.akathist.maven.plugins.launch4j</groupId>
+				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>1.7.16</version>
+				<executions>
+					<execution>
+						<id>gui</id>
+						<phase>package</phase>
+						<goals>
+							<goal>launch4j</goal>
+						</goals>
+						<configuration>
+							<headerType>gui</headerType>
+							<outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
+							<jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
+							<errTitle>VDFEditor</errTitle>
+							<icon>icon.ico</icon>
+							<classPath>
+								<mainClass>de.treichels.hott.vdfeditor.ui.Launcher</mainClass>
+								<addDependencies>false</addDependencies>
+							</classPath>
+							<jre>
+								<minVersion>1.8.0</minVersion>
+							</jre>
+							<versionInfo>
+								<fileVersion>0.9.0.${buildNumber}</fileVersion>
+								<txtFileVersion>${project.version}</txtFileVersion>
+								<fileDescription>Launcher for VDF Editor</fileDescription>
+								<copyright>GPL V3</copyright>
+								<productVersion>0.9.0.${buildNumber}</productVersion>
+								<txtProductVersion>${project.version}</txtProductVersion>
+								<productName>${project.name}</productName>
+								<internalName>${project.groupId}.${project.artifactId}</internalName>
+								<originalFilename>${project.build.finalName}.exe</originalFilename>
+							</versionInfo>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>${project.basedir}/src/main/assembly/bin.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>assemble</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${project.build.directory}/${project.build.finalName}.exe</file>
+									<type>exe</type>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<type>exe</type>
+									<overWrite>true</overWrite>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<classifier>shaded</classifier>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<destFileName>${project.artifactId}-${project.version}.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>${project.build.directory}/../../../release</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTT-Decoder</artifactId>
+		</dependency>
+	</dependencies>
 </project>
