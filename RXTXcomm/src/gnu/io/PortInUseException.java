@@ -59,34 +59,34 @@ package gnu.io;
 
 /**
  * The port requested is currently in use
- * 
+ *
  * @author Trent Jarvi
  * @version %I%, %G%
  * @since JDK1.0
  */
 
 public class PortInUseException extends Exception {
-	/**
-		 * 
-		 */
-	private static final long serialVersionUID = 7233413293849446117L;
-	/**
-	 * the owner of the port requested.
-	 */
-	public String currentOwner;
+    /**
+    	 * 
+    	 */
+    private static final long serialVersionUID = 7233413293849446117L;
+    /**
+     * the owner of the port requested.
+     */
+    public String currentOwner;
 
-	public PortInUseException() {
-		super();
-	}
+    public PortInUseException() {
+        super();
+    }
 
-	/**
-	 * create a instance of the Exception and store the current owner
-	 *
-	 * @param str
-	 *            detailed information about the current owner
-	 */
-	PortInUseException(final String str) {
-		super(str);
-		currentOwner = str;
-	}
+    /**
+     * create a instance of the Exception and store the current owner
+     *
+     * @param str
+     *            detailed information about the current owner
+     */
+    PortInUseException(final String str) {
+        super(str);
+        currentOwner = str;
+    }
 }

@@ -70,14 +70,11 @@ public class InlineImageReplacedElementFactory implements ReplacedElementFactory
     }
 
     @Override
-    public void remove(final Element e) {
-    }
+    public void remove(final Element e) {}
 
     @Override
-    public void reset() {
-    }
+    public void reset() {}
 
     @Override
-    public void setFormSubmissionListener(final FormSubmissionListener listener) {
-    }
+    public void setFormSubmissionListener(final FormSubmissionListener listener) {}
 }

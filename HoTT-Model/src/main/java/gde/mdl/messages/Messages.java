@@ -43,6 +43,5 @@ public class Messages {
         return result;
     }
 
-    private Messages() {
-    }
+    private Messages() {}
 }

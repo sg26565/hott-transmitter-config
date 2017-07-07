@@ -66,5 +66,5 @@ import java.util.EventListener;
  */
 
 public interface SerialPortEventListener extends EventListener {
-	public abstract void serialEvent(SerialPortEvent ev);
+    public abstract void serialEvent(SerialPortEvent ev);
 }

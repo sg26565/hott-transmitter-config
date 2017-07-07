@@ -66,5 +66,5 @@ import java.util.EventListener;
  */
 
 public interface ParallelPortEventListener extends EventListener {
-	public abstract void parallelEvent(ParallelPortEvent ev);
+    public abstract void parallelEvent(ParallelPortEvent ev);
 }

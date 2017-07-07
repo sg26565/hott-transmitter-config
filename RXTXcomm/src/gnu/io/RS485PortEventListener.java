@@ -67,5 +67,5 @@ import java.util.EventListener;
  */
 
 public interface RS485PortEventListener extends EventListener {
-	public abstract void RS485Event(RS485PortEvent ev);
+    public abstract void RS485Event(RS485PortEvent ev);
 }

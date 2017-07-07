@@ -39,8 +39,7 @@ import gde.model.serial.FileType;
 public class SelectFromSdCard extends SelectFromTransmitter {
     private final class ExpandNodeListener implements TreeWillExpandListener {
         @Override
-        public void treeWillCollapse(final TreeExpansionEvent ev) throws ExpandVetoException {
-        }
+        public void treeWillCollapse(final TreeExpansionEvent ev) throws ExpandVetoException {}
 
         @Override
         public void treeWillExpand(final TreeExpansionEvent ev) throws ExpandVetoException {

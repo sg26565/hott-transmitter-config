@@ -18,8 +18,7 @@ package gde.report;
 public class ReportException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public ReportException() {
-    }
+    public ReportException() {}
 
     /**
      * @param message

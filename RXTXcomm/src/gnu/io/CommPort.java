@@ -62,80 +62,71 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
-* @author Trent Jarvi
-* @version %I%, %G%
-* @since JDK1.0
-*/
+ * @author Trent Jarvi
+ * @version %I%, %G%
+ * @since JDK1.0
+ */
 
 /**
  * CommPort
  */
 public abstract class CommPort extends Object {
-	private final static boolean debug = false;
-	protected String name;
+    private final static boolean debug = false;
+    protected String name;
 
-	public void close() {
-		if (debug) {
-			System.out.println("CommPort:close()");
-		}
+    public void close() {
+        if (debug) System.out.println("CommPort:close()");
 
-		try {
-			final CommPortIdentifier cp = CommPortIdentifier.getPortIdentifier(this);
-			if (cp != null) {
-				CommPortIdentifier.getPortIdentifier(this).internalClosePort();
-			}
-		} catch (final NoSuchPortException e) {
-		}
-	}
+        try {
+            final CommPortIdentifier cp = CommPortIdentifier.getPortIdentifier(this);
+            if (cp != null) CommPortIdentifier.getPortIdentifier(this).internalClosePort();
+        } catch (final NoSuchPortException e) {}
+    }
 
-	public abstract void disableReceiveFraming();
+    public abstract void disableReceiveFraming();
 
-	public abstract void disableReceiveThreshold();
+    public abstract void disableReceiveThreshold();
 
-	public abstract void disableReceiveTimeout();
+    public abstract void disableReceiveTimeout();
 
-	public abstract void enableReceiveFraming(int f) throws UnsupportedCommOperationException;
+    public abstract void enableReceiveFraming(int f) throws UnsupportedCommOperationException;
 
-	public abstract void enableReceiveThreshold(int thresh) throws UnsupportedCommOperationException;
+    public abstract void enableReceiveThreshold(int thresh) throws UnsupportedCommOperationException;
 
-	public abstract void enableReceiveTimeout(int time) throws UnsupportedCommOperationException;
+    public abstract void enableReceiveTimeout(int time) throws UnsupportedCommOperationException;
 
-	public abstract int getInputBufferSize();
+    public abstract int getInputBufferSize();
 
-	public abstract InputStream getInputStream() throws IOException;
+    public abstract InputStream getInputStream() throws IOException;
 
-	public String getName() {
-		if (debug) {
-			System.out.println("CommPort:getName()");
-		}
-		return name;
-	}
+    public String getName() {
+        if (debug) System.out.println("CommPort:getName()");
+        return name;
+    }
 
-	public abstract int getOutputBufferSize();
+    public abstract int getOutputBufferSize();
 
-	public abstract OutputStream getOutputStream() throws IOException;
+    public abstract OutputStream getOutputStream() throws IOException;
 
-	public abstract int getReceiveFramingByte();
+    public abstract int getReceiveFramingByte();
 
-	public abstract int getReceiveThreshold();
+    public abstract int getReceiveThreshold();
 
-	public abstract int getReceiveTimeout();
+    public abstract int getReceiveTimeout();
 
-	public abstract boolean isReceiveFramingEnabled();
+    public abstract boolean isReceiveFramingEnabled();
 
-	public abstract boolean isReceiveThresholdEnabled();;
+    public abstract boolean isReceiveThresholdEnabled();;
 
-	public abstract boolean isReceiveTimeoutEnabled();
+    public abstract boolean isReceiveTimeoutEnabled();
 
-	public abstract void setInputBufferSize(int size);
+    public abstract void setInputBufferSize(int size);
 
-	public abstract void setOutputBufferSize(int size);
+    public abstract void setOutputBufferSize(int size);
 
-	@Override
-	public String toString() {
-		if (debug) {
-			System.out.println("CommPort:toString()");
-		}
-		return name;
-	}
+    @Override
+    public String toString() {
+        if (debug) System.out.println("CommPort:toString()");
+        return name;
+    }
 }

@@ -36,7 +36,6 @@ public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
     public static List<String> getAvailablePorts() {
         final List<String> result = new ArrayList<>();
 
-        @SuppressWarnings("unchecked")
         final Enumeration<CommPortIdentifier> enumeration = CommPortIdentifier.getPortIdentifiers();
 
         while (enumeration.hasMoreElements()) {
