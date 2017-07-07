@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.treichels.hott</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.9-SNAPSHOT</version>
+		<version>0.9.0</version>
 	</parent>
 
 	<scm>
@@ -23,6 +23,7 @@
 					<minimizeJar>true</minimizeJar>
 					<createDependencyReducedPom>false</createDependencyReducedPom>
 					<shadedArtifactAttached>true</shadedArtifactAttached>
+					<finalName>${project.build.finalName}-shaded</finalName>
 					<transformers>
 						<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 							<mainClass>gde.mdl.ui.Launcher</mainClass>
@@ -60,7 +61,7 @@
 						<configuration>
 							<headerType>gui</headerType>
 							<outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
-							<jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
+							<jar>${project.build.directory}/${project.build.finalName}-shaded.jar</jar>
 							<errTitle>MdlViewer</errTitle>
 							<icon>icon.ico</icon>
 							<classPath>
@@ -71,12 +72,12 @@
 								<minVersion>1.8.0</minVersion>
 							</jre>
 							<versionInfo>
-								<fileVersion>0.9.0.${buildNumber}</fileVersion>
-								<txtFileVersion>${project.version}</txtFileVersion>
+								<fileVersion>${project.version}.${buildNumber}</fileVersion>
+								<txtFileVersion>${project.version}.${buildNumber}</txtFileVersion>
 								<fileDescription>Launcher for HoTT-MdlViewer-Swing</fileDescription>
 								<copyright>GPL V3</copyright>
-								<productVersion>0.9.0.${buildNumber}</productVersion>
-								<txtProductVersion>${project.version}</txtProductVersion>
+								<productVersion>${project.version}.${buildNumber}</productVersion>
+								<txtProductVersion>${project.version}.${buildNumber}</txtProductVersion>
 								<productName>${project.name}</productName>
 								<internalName>${project.groupId}.${project.artifactId}</internalName>
 								<originalFilename>${project.build.finalName}.exe</originalFilename>
@@ -143,6 +144,7 @@
 									<version>${project.version}</version>
 									<type>exe</type>
 									<overWrite>true</overWrite>
+									<destFileName>${project.build.finalName}.exe</destFileName>
 								</artifactItem>
 								<artifactItem>
 									<groupId>${project.groupId}</groupId>
