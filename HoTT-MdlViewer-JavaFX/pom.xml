@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>HoTT-MdlViewer-JavaFX</artifactId>
 	<name>HoTT MdlViewer for PC/Mac with JavaFX Graphical User Interface</name>
-
+	
 	<parent>
 		<groupId>de.treichels.hott</groupId>
 		<artifactId>parent</artifactId>
@@ -88,23 +88,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptors>
-						<descriptor>${project.basedir}/src/main/assembly/bin.xml</descriptor>
-					</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>assemble</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<executions>
@@ -145,23 +128,6 @@
 									<overWrite>true</overWrite>
 									<destFileName>${project.build.finalName}.exe</destFileName>
 								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>${project.artifactId}</artifactId>
-									<version>${project.version}</version>
-									<classifier>shaded</classifier>
-									<type>jar</type>
-									<overWrite>true</overWrite>
-									<destFileName>${project.artifactId}-${project.version}.jar</destFileName>
-								</artifactItem>
-<!-- 								<artifactItem> -->
-<!-- 									<groupId>${project.groupId}</groupId> -->
-<!-- 									<artifactId>${project.artifactId}</artifactId> -->
-<!-- 									<version>${project.version}</version> -->
-<!-- 									<classifier>bin</classifier> -->
-<!-- 									<type>zip</type> -->
-<!-- 									<overWrite>true</overWrite> -->
-<!-- 								</artifactItem> -->
 							</artifactItems>
 							<outputDirectory>${project.build.directory}/../../../release</outputDirectory>
 							<overWriteReleases>false</overWriteReleases>
