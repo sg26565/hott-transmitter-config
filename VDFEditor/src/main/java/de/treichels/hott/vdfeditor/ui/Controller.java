@@ -35,6 +35,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
@@ -174,7 +175,11 @@ public class Controller {
 
     @FXML
     public void onAbout() {
-        // TODO
+        final Alert alert = new Alert(AlertType.INFORMATION, RES.getString("about_text"), ButtonType.CLOSE); //$NON-NLS-1$
+        alert.setTitle(RES.getString("about"));
+        alert.setHeaderText(Launcher.getTitle());
+        alert.setGraphic(new ImageView(getClass().getResource("icon.png").toString()));
+        alert.showAndWait();
     }
 
     @FXML

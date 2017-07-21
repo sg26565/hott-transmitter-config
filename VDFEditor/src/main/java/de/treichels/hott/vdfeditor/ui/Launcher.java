@@ -3,11 +3,9 @@ package de.treichels.hott.vdfeditor.ui;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 
 import gde.mdl.messages.Messages;
 import javafx.application.Application;
@@ -20,30 +18,23 @@ import javafx.stage.Stage;
 public class Launcher extends Application {
     public static final String PROGRAM_VERSION = "program.version"; //$NON-NLS-1$
 
-    private static String getVersion() throws IOException, URISyntaxException {
-        // get the location of this class
-        final URL url = Launcher.class.getProtectionDomain().getCodeSource().getLocation();
-        final File source = new File(url.toURI());
-        final String version;
+    static String getTitle() {
+        return String.format("VDF Editor - %s", getVersion());
+    }
 
-        if (source.getName().endsWith(".jar") || source.getName().endsWith(".exe")) { //$NON-NLS-1$
+    static String getVersion() {
+        try {
+            // get the location of this class
+            final File source = new File(Launcher.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+
             // read program version from manifest
-            JarFile jarFile = null;
-            try {
-                jarFile = new JarFile(source);
-                final Manifest manifest = jarFile.getManifest();
-                final Attributes attributes = manifest.getMainAttributes();
-                version = Messages.getString("Launcher.Version", attributes.getValue("Implementation-Version"), //$NON-NLS-1$ //$NON-NLS-2$
-                        attributes.getValue("Implementation-Build"));
-                return version;
-            } finally {
-                if (jarFile != null) jarFile.close();
+            if (source.getName().endsWith(".jar") || source.getName().endsWith(".exe")) try (JarFile jarFile = new JarFile(source)) {
+                final Attributes attributes = jarFile.getManifest().getMainAttributes();
+                return Messages.getString("Launcher.Version", attributes.getValue("Implementation-Version"), attributes.getValue("Implementation-Build"));
             }
-        } else
-            version = Messages.getString("Launcher.Unknown");
+        } catch (final IOException | URISyntaxException e) {}
 
-        System.setProperty(Launcher.PROGRAM_VERSION, version);
-        return version;
+        return Messages.getString("Launcher.Unknown");
     }
 
     public static void main(final String[] args) {
@@ -63,7 +54,7 @@ public class Launcher extends Application {
         final Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(icon);
-        primaryStage.setTitle(String.format("VDF Editor - %s", getVersion()));
+        primaryStage.setTitle(getTitle());
         primaryStage.show();
     }
 }
