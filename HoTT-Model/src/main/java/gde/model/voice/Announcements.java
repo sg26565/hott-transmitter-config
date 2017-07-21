@@ -17,10 +17,6 @@ import gde.model.enums.TransmitterType;
  * @author oliver.treichel.gmx.de
  */
 public class Announcements {
-    public static enum VDFType {
-        System, User
-    }
-
     private static final String[] MC28_DEFAULT_ANNOUNCEMENTS = { "01.BEEP_START", "02.BEEP_SETUP", "03_BEEP_TIMER_GO", "04.BEEP_CLKBEEP3", "05.BEEP_CLKBEEP2",
             "06.BEEP_CLKBEEP1", "07.BEEP_CLKHIGH", "08.BEEP_CLKSEC", "09.BEEP_TRMCEN", "10.BEEP_TRMMOVE", "11.BEEP_JOG_VALUE", "12.BEEP_JOG_VALUE",
             "13.EEP_JOG_INCMOV", "14.BEEP_JOG_DECMO", "15.BEEP_JOG_UP", "16.BEEP_JOG_DN", "17.BEEP_WARNING", "18.BEEP_POWERDOWN", "19.BEEP_JOG_KEY",

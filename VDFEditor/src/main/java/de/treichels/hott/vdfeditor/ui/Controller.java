@@ -16,7 +16,7 @@ import com.sun.javafx.collections.ObservableListWrapper;
 import de.treichels.hott.HoTTDecoder;
 import gde.model.HoTTException;
 import gde.model.enums.TransmitterType;
-import gde.model.voice.Announcements.VDFType;
+import gde.model.voice.VDFType;
 import gde.model.voice.VoiceData;
 import gde.model.voice.VoiceFile;
 import javafx.beans.property.ObjectProperty;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gde.model.enums.TransmitterType;
-import gde.model.voice.Announcements.VDFType;
 
 /**
  * Representation of a void data file (.vdf).
