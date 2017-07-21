@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -51,8 +52,9 @@ public class Launcher extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        final Image icon = new Image(getClass().getResource("/icon.png").toString());
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("MainUI.fxml"));
+        final Image icon = new Image(getClass().getResource("icon.png").toString());
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle(Controller.class.getName());
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("MainUI.fxml"), resourceBundle);
         final Parent root = loader.load();
         final Controller controller = loader.getController();
         primaryStage.setOnCloseRequest(ev -> {

@@ -20,7 +20,7 @@
          <contextMenu>
             <ContextMenu fx:id="contextMenu">
               <items>
-                <MenuItem fx:id="contextMenuDelete" mnemonicParsing="false" onAction="#onDeleteSound" text="Delete" />
+                <MenuItem fx:id="contextMenuDelete" mnemonicParsing="false" onAction="#onDeleteSound" text="%delete_sound" />
               </items>
             </ContextMenu>
          </contextMenu>
@@ -31,61 +31,61 @@
          <children>
             <MenuBar>
               <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu mnemonicParsing="false" text="%file_menu">
                   <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onNew" text="New VDF">
+                        <MenuItem mnemonicParsing="false" onAction="#onNew" text="%new_vdf">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#onOpen" text="Open VDF">
+                        <MenuItem mnemonicParsing="false" onAction="#onOpen" text="%open_vdf">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="saveVDFMenuItem" mnemonicParsing="false" onAction="#onSave" text="Save VDF">
+                        <MenuItem fx:id="saveVDFMenuItem" mnemonicParsing="false" onAction="#onSave" text="%save_vdf">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" onAction="#onClose" text="Close">
+                    <MenuItem mnemonicParsing="false" onAction="#onClose" text="%close">
                            <accelerator>
                               <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
                   </items>
                 </Menu>
-                <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
+                <Menu fx:id="editMenu" mnemonicParsing="false" text="%edit_menu">
                   <items>
-                        <MenuItem fx:id="moveUpMenuItem" mnemonicParsing="false" onAction="#onMoveUp" text="Move Up">
+                        <MenuItem fx:id="moveUpMenuItem" mnemonicParsing="false" onAction="#onMoveUp" text="%move_up">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="U" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="moveDownMenuItem" mnemonicParsing="false" onAction="#onMoveDown" text="Move Down">
+                        <MenuItem fx:id="moveDownMenuItem" mnemonicParsing="false" onAction="#onMoveDown" text="%move_down">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="renameMenuItem" mnemonicParsing="false" onAction="#onRename" text="Rename">
+                        <MenuItem fx:id="renameMenuItem" mnemonicParsing="false" onAction="#onRename" text="%rename">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="playMenuItem" mnemonicParsing="false" onAction="#onPlay" text="Play">
+                        <MenuItem fx:id="playMenuItem" mnemonicParsing="false" onAction="#onPlay" text="%play">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#onAddSound" text="Add Sound">
+                        <MenuItem mnemonicParsing="false" onAction="#onAddSound" text="%add_sound">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="INSERT" control="UP" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
-                    <MenuItem fx:id="deleteSoundMenuItem" mnemonicParsing="false" onAction="#onDeleteSound" text="Delete Sound">
+                    <MenuItem fx:id="deleteSoundMenuItem" mnemonicParsing="false" onAction="#onDeleteSound" text="%delete_sound">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
@@ -97,9 +97,9 @@
             <Region styleClass="menu-bar" HBox.hgrow="SOMETIMES" />
             <MenuBar>
               <menus>
-                <Menu mnemonicParsing="false" text="Help">
+                <Menu mnemonicParsing="false" text="%help_menu">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#onAbout" text="About" />
+                    <MenuItem mnemonicParsing="false" onAction="#onAbout" text="%about" />
                   </items>
                 </Menu>
               </menus>
@@ -110,10 +110,10 @@
    <bottom>
       <HBox alignment="CENTER" spacing="3.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="VDF Type:" textAlignment="RIGHT" />
+            <Label text="%vdf_type" textAlignment="RIGHT" />
             <ComboBox fx:id="vdfTypeCombo" onAction="#onVDFTypeChanged" />
             <Region prefWidth="20.0" />
-            <Label text="Transmitter Type:" />
+            <Label text="%transmitter_type" />
             <ComboBox fx:id="transmitterTypeCombo" onAction="#onTransmitterTypeChanged" />
          </children>
          <padding>

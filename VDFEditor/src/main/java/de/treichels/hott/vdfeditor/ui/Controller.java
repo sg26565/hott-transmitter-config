@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -13,7 +14,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import com.sun.javafx.collections.ObservableListWrapper;
 
 import de.treichels.hott.HoTTDecoder;
-import gde.mdl.messages.Messages;
 import gde.model.HoTTException;
 import gde.model.enums.TransmitterType;
 import gde.model.voice.Announcements.VDFType;
@@ -43,9 +43,15 @@ import javafx.stage.Stage;
 
 @SuppressWarnings("restriction")
 public class Controller {
+    private static final String USER_HOME = "user.home"; //$NON-NLS-1$
+    private static final String _WAV = "*.wav"; //$NON-NLS-1$
+    private static final String _VDF = "*.vdf"; //$NON-NLS-1$
+    private static final String WAV = ".wav"; //$NON-NLS-1$
+    private static final String VDF = ".vdf"; //$NON-NLS-1$
     private static final String LAST_LOAD_DIR = "lastLoadDir"; //$NON-NLS-1$
     private static final String LAST_SAVE_DIR = "lastSaveDir"; //$NON-NLS-1$
     private static final Preferences PREFS = Preferences.userNodeForPackage(Controller.class);
+    private static final ResourceBundle RES = ResourceBundle.getBundle(Controller.class.getName());
 
     @FXML
     private ContextMenu contextMenu;
@@ -69,9 +75,9 @@ public class Controller {
     private MenuItem saveVDFMenuItem;
     @FXML
     private ComboBox<TransmitterType> transmitterTypeCombo;
+
     @FXML
     private ComboBox<VDFType> vdfTypeCombo;
-
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
     private boolean dirty = false;
     private File vdfFile = null;
@@ -79,8 +85,8 @@ public class Controller {
     boolean askSave() {
         if (!dirty) return true;
 
-        final Alert alert = new Alert(AlertType.WARNING, "Do you whant to save changes?", ButtonType.YES, ButtonType.NO);
-        alert.setHeaderText("File was modified!");
+        final Alert alert = new Alert(AlertType.WARNING, RES.getString("save_changes"), ButtonType.YES, ButtonType.NO); //$NON-NLS-1$
+        alert.setHeaderText(RES.getString("modified")); //$NON-NLS-1$
         final Optional<ButtonType> answer = alert.showAndWait();
         if (answer.get() == ButtonType.NO) return true;
 
@@ -121,7 +127,7 @@ public class Controller {
                 final List<File> files = ev.getDragboard().getFiles();
 
                 // import first .vdf file
-                final Optional<File> vdf = files.stream().filter(f -> f.getName().endsWith(".vdf")).findFirst();
+                final Optional<File> vdf = files.stream().filter(f -> f.getName().endsWith(VDF)).findFirst();
                 if (vdf.isPresent() && askSave()) {
                     vdfFile = vdf.get();
                     dirty = false;
@@ -133,7 +139,7 @@ public class Controller {
                 }
 
                 // import any .wav files
-                files.stream().filter(f -> f.getName().endsWith(".wav")).forEach(f -> {
+                files.stream().filter(f -> f.getName().endsWith(WAV)).forEach(f -> {
                     try {
                         items.add(VoiceData.readWav(f));
                     } catch (UnsupportedAudioFileException | IOException e) {
@@ -174,10 +180,10 @@ public class Controller {
     @FXML
     public void onAddSound() {
         final FileChooser chooser = new FileChooser();
-        chooser.setTitle("Load Sound File");
-        final File dir = new File(PREFS.get(LAST_LOAD_DIR, System.getProperty("user.home")));
+        chooser.setTitle(RES.getString("load_wav")); //$NON-NLS-1$
+        final File dir = new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(USER_HOME)));
         if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
-        chooser.getExtensionFilters().add(new ExtensionFilter("Wave Files", "*.wav"));
+        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("wav_files"), _WAV)); //$NON-NLS-1$
 
         final File wav = chooser.showOpenDialog(listView.getScene().getWindow());
         if (wav != null) try {
@@ -240,10 +246,10 @@ public class Controller {
     public void onOpen() throws IOException {
         if (askSave()) {
             final FileChooser chooser = new FileChooser();
-            chooser.setTitle("Load VDF File");
-            final File dir = new File(PREFS.get(LAST_LOAD_DIR, System.getProperty("user.home")));
+            chooser.setTitle(RES.getString("open_vdf")); //$NON-NLS-1$
+            final File dir = new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(USER_HOME)));
             if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
-            chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("VdfFileDescription"), "*.vdf"));
+            chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("vdf_files"), _VDF)); //$NON-NLS-1$
 
             final File vdf = chooser.showOpenDialog(listView.getScene().getWindow());
             if (vdf != null) {
@@ -274,10 +280,10 @@ public class Controller {
     @FXML
     public boolean onSave() {
         final FileChooser chooser = new FileChooser();
-        chooser.setTitle("Save VDF File");
-        final File dir = new File(PREFS.get(LAST_SAVE_DIR, System.getProperty("user.home")));
+        chooser.setTitle(RES.getString("save_vdf")); //$NON-NLS-1$
+        final File dir = new File(PREFS.get(LAST_SAVE_DIR, System.getProperty(USER_HOME)));
         if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
-        chooser.getExtensionFilters().add(new ExtensionFilter(Messages.getString("VdfFileDescription"), "*.vdf"));
+        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("vdf_files"), _VDF)); //$NON-NLS-1$
 
         final File vdf = chooser.showSaveDialog(listView.getScene().getWindow());
         if (vdf != null) {
@@ -356,9 +362,9 @@ public class Controller {
     private void setTitle() {
         final StringBuilder sb = new StringBuilder();
 
-        if (dirty) sb.append("*");
+        if (dirty) sb.append("*"); //$NON-NLS-1$
         if (vdfFile == null)
-            sb.append("<empty>");
+            sb.append(RES.getString("empty")); //$NON-NLS-1$
         else
             sb.append(vdfFile.getName());
 
@@ -368,7 +374,7 @@ public class Controller {
                 final int maxDataSize = HoTTDecoder.getMaxDataSize(voiceFile);
                 final int dataSize = voiceFile.getDataSize();
 
-                sb.append(String.format(" - %d kb / %d kb (%d%%)", dataSize / 1024, maxDataSize / 1024, dataSize * 100 / maxDataSize));
+                sb.append(String.format(" - %d kb / %d kb (%d%%)", dataSize / 1024, maxDataSize / 1024, dataSize * 100 / maxDataSize)); //$NON-NLS-1$
             } catch (final HoTTException e) {
                 ExceptionDialog.show(e);
             }
