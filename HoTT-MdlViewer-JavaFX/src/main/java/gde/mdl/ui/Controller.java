@@ -102,7 +102,7 @@ public class Controller extends Application {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         save1.disableProperty().bind(modelProperty.isNull());
         save2.disableProperty().bind(modelProperty.isNull());
         refresh1.disableProperty().bind(modelProperty.isNull());

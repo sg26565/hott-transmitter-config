@@ -1,22 +1,33 @@
 package gde.mdl.ui.background;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import gde.mdl.ui.Model;
 import javafx.concurrent.Task;
 import javafx.scene.web.WebView;
 
-public class RefreshService extends UIService<String> {
+public class RefreshService extends UIService<File> {
     private Model model;
+    private final File tempFile;
 
-    public RefreshService(final WebView view) {
+    public RefreshService(final WebView view) throws IOException {
         super(view);
+        tempFile = File.createTempFile(getClass().getName(), ".html");
+        tempFile.deleteOnExit();
     }
 
     @Override
-    protected Task<String> createTask() {
-        return new Task<String>() {
+    protected Task<File> createTask() {
+        return new Task<File>() {
             @Override
-            protected String call() throws Exception {
-                return model.getHtml();
+            protected File call() throws Exception {
+                try (FileWriter w = new FileWriter(tempFile)) {
+                    w.write(model.getHtml());
+                }
+
+                return tempFile;
             }
         };
     }
@@ -36,7 +47,8 @@ public class RefreshService extends UIService<String> {
 
     @Override
     protected void succeeded() {
-        ((WebView) view).getEngine().loadContent(getValue());
+        ((WebView) view).getEngine().load("file:/" + tempFile.getAbsolutePath());
+
         super.succeeded();
     }
 }
