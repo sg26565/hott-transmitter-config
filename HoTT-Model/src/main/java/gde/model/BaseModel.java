@@ -27,7 +27,7 @@ import gde.model.enums.TransmitterType;
 import gde.model.enums.Vendor;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class BaseModel extends AbstractBase {
     private static final long serialVersionUID = 1L;

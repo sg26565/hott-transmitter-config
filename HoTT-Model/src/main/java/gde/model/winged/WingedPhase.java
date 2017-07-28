@@ -19,7 +19,7 @@ import gde.model.Curve;
 import gde.model.Phase;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class WingedPhase extends Phase {

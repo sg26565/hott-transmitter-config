@@ -22,7 +22,7 @@ import gde.model.enums.MixerInputType;
 import gde.model.enums.MixerType;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public abstract class FreeMixer extends AbstractBase {
     private static final long serialVersionUID = 1L;

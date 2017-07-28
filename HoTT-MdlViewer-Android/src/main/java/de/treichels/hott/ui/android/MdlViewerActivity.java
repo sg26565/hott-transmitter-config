@@ -64,7 +64,7 @@ import de.treichels.hott.ui.android.html.SectionAdapter;
 /**
  * The main activity for the MdlViewer.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class MdlViewerActivity extends Activity implements ListView.OnItemClickListener {
   public static final String  CACHE_FILE_NAME   = "MdlViewer.html";                                      //$NON-NLS-1$

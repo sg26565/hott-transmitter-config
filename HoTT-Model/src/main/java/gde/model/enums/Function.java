@@ -14,7 +14,7 @@ package gde.model.enums;
 import java.util.ResourceBundle;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public enum Function {
     Aileron, Brake, Delta, Elevator, Flap, Nick, Pitch, Reduction, Roll, Rudder, TailRotor, Throttle, Unknown, VTail, Gyro;

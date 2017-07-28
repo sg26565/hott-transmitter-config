@@ -25,7 +25,7 @@ import gde.model.enums.RotorDirection;
 import gde.model.enums.SwashplateType;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 @XmlRootElement
 public class HelicopterModel extends BaseModel {

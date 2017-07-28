@@ -27,7 +27,7 @@ import org.xhtmlrenderer.simple.extend.FormSubmissionListener;
 import org.xhtmlrenderer.swing.ImageReplacedElement;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class InlineImageReplacedElementFactory implements ReplacedElementFactory {
     private static final String PREFIX = "data:image/png;base64,"; //$NON-NLS-1$

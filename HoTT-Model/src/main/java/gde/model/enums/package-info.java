@@ -10,7 +10,7 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 package gde.model.enums;

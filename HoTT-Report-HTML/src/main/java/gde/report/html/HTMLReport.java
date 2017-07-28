@@ -43,7 +43,7 @@ import gde.report.CurveImageGenerator;
 import gde.report.ReportException;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class HTMLReport {
     private static final Configuration CONFIGURATION;

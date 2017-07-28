@@ -12,7 +12,7 @@
 package gde.model.enums;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public enum SequenceStatus {

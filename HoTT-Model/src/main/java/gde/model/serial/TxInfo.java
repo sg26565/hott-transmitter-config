@@ -17,7 +17,7 @@ import java.util.Arrays;
 import gde.model.enums.TransmitterType;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public final class TxInfo implements Serializable {

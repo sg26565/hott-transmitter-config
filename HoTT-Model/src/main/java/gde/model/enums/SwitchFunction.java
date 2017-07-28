@@ -14,7 +14,7 @@ package gde.model.enums;
 import java.util.ResourceBundle;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public enum SwitchFunction {
     Autorotation, AutorotationC1, AutoTrim, ChannelSequencer, Clock, Combine, Control, CutOff, Diff, Dr_Expo, DualRate, Expo, InputControl, Logical, MarkerKey,

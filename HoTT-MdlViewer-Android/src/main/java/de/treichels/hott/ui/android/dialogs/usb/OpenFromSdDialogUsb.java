@@ -26,7 +26,7 @@ import de.treichels.hott.ui.android.dialogs.OpenFromSdDialog;
 /**
  * Read list of model via USB.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class OpenFromSdDialogUsb extends OpenFromSdDialog<UsbDevice> {
   private UsbDeviceHandler handler = null;

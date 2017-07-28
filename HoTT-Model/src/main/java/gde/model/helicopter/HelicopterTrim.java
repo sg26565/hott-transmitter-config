@@ -14,7 +14,7 @@ package gde.model.helicopter;
 import gde.model.AbstractBase;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class HelicopterTrim extends AbstractBase {
     private static final long serialVersionUID = 1L;

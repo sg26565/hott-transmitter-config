@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class FileInfo implements Serializable, Comparable<String> {
     private static final String EMPTY_STRING = ""; //$NON-NLS-1$

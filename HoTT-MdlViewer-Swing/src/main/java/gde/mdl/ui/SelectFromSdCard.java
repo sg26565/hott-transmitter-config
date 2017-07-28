@@ -34,7 +34,7 @@ import gde.model.serial.FileInfo;
 import gde.model.serial.FileType;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class SelectFromSdCard extends SelectFromTransmitter {
     private final class ExpandNodeListener implements TreeWillExpandListener {

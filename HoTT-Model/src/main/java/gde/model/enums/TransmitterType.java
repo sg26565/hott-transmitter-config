@@ -14,7 +14,7 @@ package gde.model.enums;
 import java.util.ResourceBundle;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public enum TransmitterType {
     mc16(16004600), mc20(16004300), mc26(16007700), mc28(16007100), mc32(16004100), mx12(16003600), mx16(16003300), mx20(16003700), mz12(-1), mz18(-2),

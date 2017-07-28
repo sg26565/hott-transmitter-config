@@ -27,7 +27,7 @@ import org.junit.Test;
 import com.madrobot.beans.IntrospectionException;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  * 
  */
 public class BindingManagerTest {

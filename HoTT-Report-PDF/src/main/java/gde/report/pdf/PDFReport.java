@@ -22,7 +22,7 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import com.itextpdf.text.DocumentException;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class PDFReport {
     public static void save(final File file, final String html) throws IOException, DocumentException {

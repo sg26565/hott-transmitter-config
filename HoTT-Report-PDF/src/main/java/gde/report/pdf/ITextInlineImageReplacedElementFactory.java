@@ -26,7 +26,7 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.codec.Base64;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class ITextInlineImageReplacedElementFactory implements ReplacedElementFactory {
     private static final String PREFIX = "data:image/png;base64,"; //$NON-NLS-1$

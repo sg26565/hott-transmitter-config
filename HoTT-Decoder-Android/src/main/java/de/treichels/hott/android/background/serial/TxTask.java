@@ -26,7 +26,7 @@ import de.treichels.hott.android.background.FailSafeAsyncTask;
 /**
  * An abstract {@link FailSafeAsyncTask} for communication with the transmitter that is independent form the communication channel (Usb or Bluetooth).
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public abstract class TxTask<Params, Progress, Result> extends FailSafeAsyncTask<Params, Progress, Result> {
   private final DeviceHandler<?> handler;

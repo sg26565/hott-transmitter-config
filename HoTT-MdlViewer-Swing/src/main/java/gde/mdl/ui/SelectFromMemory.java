@@ -27,7 +27,7 @@ import gde.model.enums.ModelType;
 import gde.model.serial.ModelInfo;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class SelectFromMemory extends SelectFromTransmitter {
     private class ArrayListModel extends AbstractListModel<String> {

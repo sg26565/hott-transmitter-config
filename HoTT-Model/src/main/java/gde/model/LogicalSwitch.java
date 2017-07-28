@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import gde.model.enums.LogicalSwitchMode;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class LogicalSwitch extends Switch {

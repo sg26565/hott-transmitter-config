@@ -12,7 +12,7 @@
 package gde.model.enums;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public enum DSCOutputType {
     PPM10, PPM16, PPM18, PPM24, PPM32;

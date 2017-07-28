@@ -29,7 +29,7 @@ import com.madrobot.beans.Introspector;
 import com.madrobot.beans.PropertyDescriptor;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  * 
  */
 public class BindingManager {

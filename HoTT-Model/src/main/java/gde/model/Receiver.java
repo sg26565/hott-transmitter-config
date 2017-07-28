@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlID;
 import gde.model.enums.ReceiverFirmwareType;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class Receiver extends AbstractBase {
     private static final long serialVersionUID = 1L;

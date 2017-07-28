@@ -12,7 +12,7 @@
 package gde.model.enums;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public enum HFModuleType {
     EXT_PPM, HoTT, SP;

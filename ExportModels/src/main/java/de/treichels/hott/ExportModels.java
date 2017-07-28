@@ -53,7 +53,7 @@ import gnu.io.RXTXCommDriver;
  */
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class ExportModels {
 	private final class ButtonCellRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {

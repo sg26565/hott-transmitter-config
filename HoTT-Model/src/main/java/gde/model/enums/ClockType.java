@@ -14,7 +14,7 @@ package gde.model.enums;
 import java.util.ResourceBundle;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public enum ClockType {
     CENTER, LapDisplay, LapTimer, PHASE1, PHASE2, PHASE3, ROUND, TOP;

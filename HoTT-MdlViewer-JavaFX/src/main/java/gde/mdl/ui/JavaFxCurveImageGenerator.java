@@ -37,7 +37,7 @@ import javafx.scene.text.Font;
 /**
  * Generate offline PNG image using Swing.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class JavaFxCurveImageGenerator implements CurveImageGenerator {
     private Image image;

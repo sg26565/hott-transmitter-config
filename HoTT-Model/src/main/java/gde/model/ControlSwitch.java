@@ -14,7 +14,7 @@ package gde.model;
 import javax.xml.bind.annotation.XmlIDREF;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class ControlSwitch extends Switch {

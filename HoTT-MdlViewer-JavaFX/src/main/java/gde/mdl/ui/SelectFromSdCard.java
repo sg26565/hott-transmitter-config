@@ -24,7 +24,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class SelectFromSdCard extends SelectFromTransmitter {
     final TreeView<String> treeView = new TreeView<>();

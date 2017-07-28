@@ -22,7 +22,7 @@ import gde.model.helicopter.HelicopterModel;
 import gde.model.winged.WingedModel;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public enum ModelType {
     Helicopter(0, 'h'), Unknown(-1, 'x'), Winged(1, 'a'), Copter(2, 'q'), Boat(3, 'b'), Car(4, 'c'); // TODO: verify ids

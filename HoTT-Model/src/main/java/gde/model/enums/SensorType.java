@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public enum SensorType {
     ElectricAirModule(1 << 2), ESC(1 << 5), GeneralModule(1 << 1), GPS(1 << 4), None(0), Receiver(1 << 0), Vario(1 << 3);

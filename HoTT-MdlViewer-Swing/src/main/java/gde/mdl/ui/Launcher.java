@@ -26,7 +26,7 @@ import gde.mdl.messages.Messages;
 import gde.util.Util;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class Launcher {
     public static final String LOG_DIR = "log.dir"; //$NON-NLS-1$

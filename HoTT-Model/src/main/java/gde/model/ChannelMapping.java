@@ -14,7 +14,7 @@ package gde.model;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class ChannelMapping extends AbstractBase {

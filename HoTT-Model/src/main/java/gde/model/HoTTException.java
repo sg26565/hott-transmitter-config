@@ -17,7 +17,7 @@ import gde.mdl.messages.Messages;
 import gde.util.Util;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class HoTTException extends IOException {
     private static final long serialVersionUID = 1L;

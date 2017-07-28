@@ -18,7 +18,7 @@ import java.io.OutputStream;
 import gde.model.HoTTException;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public interface SerialPort extends AutoCloseable {

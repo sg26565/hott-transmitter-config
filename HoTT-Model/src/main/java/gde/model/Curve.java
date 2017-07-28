@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import gde.model.enums.CurveType;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class Curve extends AbstractBase {

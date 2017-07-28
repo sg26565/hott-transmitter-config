@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import gde.model.enums.TrimMode;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class StickTrim extends AbstractBase {
     private static final long serialVersionUID = 1L;

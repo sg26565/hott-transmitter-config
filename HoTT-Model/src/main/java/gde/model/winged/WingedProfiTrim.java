@@ -17,7 +17,7 @@ import gde.model.AbstractBase;
 import gde.model.Switch;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class WingedProfiTrim extends AbstractBase {
     private static final long serialVersionUID = 1L;

@@ -33,7 +33,7 @@ import gde.report.CurveImageGenerator;
 /**
  * Generate offline PNG image using Swing.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class SwingCurveImageGenerator implements CurveImageGenerator {
     private BufferedImage getImage(final Curve curve, final float scale, final boolean description) {

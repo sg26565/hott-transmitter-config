@@ -28,7 +28,7 @@ import de.treichels.hott.android.background.serial.TxTask;
 /**
  * Load the specified model from transmitter memory.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class GetModelFromMemoryTask extends TxTask<Integer, Void, BaseModel> {
   public GetModelFromMemoryTask(final DeviceHandler<?> handler) {

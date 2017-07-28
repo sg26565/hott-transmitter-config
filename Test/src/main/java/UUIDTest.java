@@ -19,7 +19,7 @@ import java.util.UUID;
  */
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class UUIDTest {

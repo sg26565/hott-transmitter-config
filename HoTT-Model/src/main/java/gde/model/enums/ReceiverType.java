@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public enum ReceiverType {

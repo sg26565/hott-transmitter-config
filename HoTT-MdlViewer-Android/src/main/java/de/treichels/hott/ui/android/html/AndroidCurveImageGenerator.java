@@ -42,7 +42,7 @@ import android.util.Base64;
 /**
  * Android implementation of a {@link CurveImageGenerator}.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class AndroidCurveImageGenerator implements CurveImageGenerator {
     private Bitmap getBitmap(final Curve curve, final float scale, final boolean description) {

@@ -20,7 +20,7 @@ package de.treichels.hott.ui.android.dialogs;
 /**
  * A listener interface that listens for dialog close events.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public interface DialogClosedListener {
     public int CANCELED = 1;

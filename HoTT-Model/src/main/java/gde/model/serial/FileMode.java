@@ -12,7 +12,7 @@
 package gde.model.serial;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public enum FileMode {
     Read(1), Write(2), Create(11);

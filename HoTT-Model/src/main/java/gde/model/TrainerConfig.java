@@ -16,7 +16,7 @@ import java.util.Collection;
 import javax.xml.bind.annotation.XmlIDREF;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class TrainerConfig extends AbstractBase {
     private static final long serialVersionUID = 1L;

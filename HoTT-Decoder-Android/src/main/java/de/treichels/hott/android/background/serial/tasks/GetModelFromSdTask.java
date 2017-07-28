@@ -32,7 +32,7 @@ import de.treichels.hott.android.decoder.R;
 /**
  * Load the specified model from transmitter sd card.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class GetModelFromSdTask extends TxTask<String, Void, BaseModel> {
   private static final String FILE_EXTENSION_MDL = ".mdl"; //$NON-NLS-1$

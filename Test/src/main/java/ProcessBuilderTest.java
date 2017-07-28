@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class ProcessBuilderTest {
 	public static void main(final String[] args) throws IOException {

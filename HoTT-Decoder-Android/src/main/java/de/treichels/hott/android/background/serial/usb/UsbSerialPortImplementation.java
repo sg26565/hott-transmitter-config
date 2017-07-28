@@ -31,7 +31,7 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
 /**
  * An adapter that turns a UsbSerialPort into a SerialPort for the HoTTDecoder.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class UsbSerialPortImplementation implements SerialPort {
     static final int                  BUFFER_SIZE  = 2064;

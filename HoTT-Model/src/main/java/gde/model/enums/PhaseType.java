@@ -14,7 +14,7 @@ package gde.model.enums;
 import java.util.ResourceBundle;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public enum PhaseType {
     Acro, Acro_3D, Acro2, AirTow, Autorotation, Custom1, Custom10, Custom2, Custom3, Custom4, Custom5, Custom6, Custom7, Custom8, Custom9, Distance, Distance2,

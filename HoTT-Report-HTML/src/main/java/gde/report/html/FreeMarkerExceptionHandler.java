@@ -19,7 +19,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class FreeMarkerExceptionHandler implements TemplateExceptionHandler {

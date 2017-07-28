@@ -7,7 +7,7 @@ import javafx.scene.Node;
 /**
  * A background service that communicates with the transmitter.
  *
- * @author olive
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  * @param <T>
  *            The result parameter

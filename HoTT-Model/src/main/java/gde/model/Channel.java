@@ -22,7 +22,7 @@ import gde.model.enums.Function;
 import gde.model.enums.TrainerMode;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class Channel extends AbstractBase {
     private static final long serialVersionUID = 1L;

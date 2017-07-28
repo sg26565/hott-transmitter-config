@@ -14,7 +14,7 @@ package gde.model.helicopter;
 import gde.model.Phase;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class HelicopterPhase extends Phase {

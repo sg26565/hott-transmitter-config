@@ -39,7 +39,7 @@ import gde.model.serial.SerialPortDefaultImpl;
 import gde.util.Util;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class MemoryDump {
     private final class DumpThread extends Thread {

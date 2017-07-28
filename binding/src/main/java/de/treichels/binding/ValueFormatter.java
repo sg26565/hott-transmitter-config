@@ -18,7 +18,7 @@
 package de.treichels.binding;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  * 
  */
 public interface ValueFormatter {

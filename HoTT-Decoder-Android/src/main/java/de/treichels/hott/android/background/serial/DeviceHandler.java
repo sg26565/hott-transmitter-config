@@ -27,7 +27,7 @@ import android.content.Context;
  * A generic handler for communication devices. This allows to use the same code base for comminucation with the transmitter regardless of communication channel
  * in use. There are separate implementations of this class for USB and Bluetooth.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public abstract class DeviceHandler<DeviceType> {
   protected final Context context;

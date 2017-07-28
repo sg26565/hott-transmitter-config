@@ -19,7 +19,7 @@ import gde.model.enums.TelemetryAlarmType;
 import gde.model.enums.VarioToneSensor;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class Telemetry extends AbstractBase {
     private static final long serialVersionUID = 1L;

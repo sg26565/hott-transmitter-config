@@ -36,7 +36,7 @@ import de.treichels.hott.ui.android.R;
 /**
  * An {@link AsyncTask} that load data from an {@link Uri} and converts it into a {@link BaseModel}.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class GetModelFromUriTask extends FailSafeAsyncTask<Uri, Void, BaseModel> {
   private static final String FILE_EXTENSION_MDL = ".mdl"; //$NON-NLS-1$

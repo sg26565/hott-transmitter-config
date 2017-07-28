@@ -15,7 +15,7 @@ import gde.model.AbstractBase;
 import gde.model.Curve;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class HelicopterMixer extends AbstractBase {
     private static final long serialVersionUID = 1L;

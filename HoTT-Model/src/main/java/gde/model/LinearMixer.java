@@ -12,7 +12,7 @@
 package gde.model;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class LinearMixer extends CurveMixer {

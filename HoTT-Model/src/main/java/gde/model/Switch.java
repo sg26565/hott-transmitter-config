@@ -22,7 +22,7 @@ import gde.model.enums.SwitchFunction;
 import gde.model.enums.SwitchType;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class Switch extends AbstractBase {
     private static final long serialVersionUID = 1L;

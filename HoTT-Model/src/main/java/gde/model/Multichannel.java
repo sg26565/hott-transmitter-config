@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import gde.model.enums.MultichannelMode;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class Multichannel extends AbstractBase {
     private static final long serialVersionUID = 1L;

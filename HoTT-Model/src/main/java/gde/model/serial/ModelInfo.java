@@ -18,7 +18,7 @@ import gde.model.enums.ReceiverType;
 import gde.model.enums.TransmitterType;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class ModelInfo implements Serializable {

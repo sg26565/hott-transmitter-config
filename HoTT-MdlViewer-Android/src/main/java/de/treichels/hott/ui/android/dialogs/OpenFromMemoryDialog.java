@@ -26,7 +26,7 @@ import de.treichels.hott.ui.android.R;
 /**
  * A {@link DialogFragment} that shows a list of models from the transmitter memory and allows the user to select one of them.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public abstract class OpenFromMemoryDialog<DeviceType> extends AbstractTxDialog<ModelInfo, DeviceType> {
   private GenericListAdaper<ModelInfo> listAdapter = null;

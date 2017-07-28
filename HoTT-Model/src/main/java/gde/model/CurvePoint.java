@@ -14,7 +14,7 @@ package gde.model;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class CurvePoint extends AbstractBase {
     private static final long serialVersionUID = 1L;

@@ -15,7 +15,7 @@ import gde.model.Curve;
 import gde.report.CurveImageGenerator;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class DummyCurveImageGenerator implements CurveImageGenerator {

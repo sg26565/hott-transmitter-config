@@ -21,7 +21,7 @@ import java.nio.charset.Charset;
  * </ul>
  * </p>
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class HoTTReader {
   /** calculate CRC-16 checksum on the fly */

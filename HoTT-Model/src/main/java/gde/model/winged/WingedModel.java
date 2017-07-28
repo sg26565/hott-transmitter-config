@@ -26,7 +26,7 @@ import gde.model.enums.MotorOnC1Type;
 import gde.model.enums.TailType;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 @XmlRootElement
 public class WingedModel extends BaseModel {

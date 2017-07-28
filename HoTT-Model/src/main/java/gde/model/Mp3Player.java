@@ -14,7 +14,7 @@ package gde.model;
 import gde.model.enums.Mp3PlayerMode;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class Mp3Player extends AbstractBase {
     private static final long serialVersionUID = 1L;

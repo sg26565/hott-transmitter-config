@@ -23,7 +23,7 @@ import gde.model.BaseModel;
 import gde.model.winged.WingedModel;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class XMLReportTest {

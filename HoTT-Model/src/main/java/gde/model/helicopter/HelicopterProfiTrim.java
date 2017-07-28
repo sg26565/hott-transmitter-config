@@ -18,7 +18,7 @@ import gde.model.Switch;
 import gde.model.enums.CurveType;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class HelicopterProfiTrim extends AbstractBase {
     private static final long serialVersionUID = 1L;

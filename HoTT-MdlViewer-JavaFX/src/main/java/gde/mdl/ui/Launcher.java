@@ -24,7 +24,7 @@ import gde.util.Util;
 import javafx.application.Application;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class Launcher {
     public static final String LOG_DIR = "log.dir"; //$NON-NLS-1$

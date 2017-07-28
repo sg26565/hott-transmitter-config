@@ -22,7 +22,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class SelectFromMemory extends SelectFromTransmitter {
     private final ListView<String> listView = new ListView<>();

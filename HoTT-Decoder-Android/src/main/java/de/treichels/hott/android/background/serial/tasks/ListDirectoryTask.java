@@ -29,7 +29,7 @@ import de.treichels.hott.android.background.serial.TxTask;
 /**
  * List a directory on the sd card of the transmitter and return a list of {@link FileInfo} objects for each entry.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class ListDirectoryTask extends TxTask<String, FileInfo, List<FileInfo>> {
   public ListDirectoryTask(final DeviceHandler<?> handler) {

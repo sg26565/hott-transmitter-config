@@ -20,7 +20,7 @@ import gde.model.enums.ClockMode;
 import gde.model.enums.ClockType;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class Clock extends AbstractBase {
     private static final long serialVersionUID = 1L;

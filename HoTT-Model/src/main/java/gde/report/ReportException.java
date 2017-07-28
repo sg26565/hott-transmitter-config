@@ -12,7 +12,7 @@
 package gde.report;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class ReportException extends RuntimeException {

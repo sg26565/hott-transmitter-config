@@ -20,7 +20,7 @@ import java.nio.ByteOrder;
  */
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class ByteBufferTest {
 	public static void main(final String[] args) {

@@ -17,7 +17,7 @@ import gde.model.Curve;
  * An interface that generates an inline representation of a PNG image for a {@link Curve} object. Implementation should draw an in-memory image for the
  * {@link Curve} object, convert it into PNG format and compress the data as a base64 encoded string.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public interface CurveImageGenerator {
     public static final String PREFIX = "data:image/png;base64,"; //$NON-NLS-1$

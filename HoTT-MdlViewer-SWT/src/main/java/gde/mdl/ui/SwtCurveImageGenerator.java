@@ -33,7 +33,7 @@ import gde.util.Util;
 /**
  * Generate offline PNG image using SWT.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class SwtCurveImageGenerator implements CurveImageGenerator {
     private Image getImage(final Curve curve, final float scale, final boolean description) {

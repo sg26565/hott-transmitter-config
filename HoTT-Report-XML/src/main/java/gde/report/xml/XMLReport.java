@@ -32,7 +32,7 @@ import gde.model.winged.WingedModel;
 import gde.model.winged.WingedPhase;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class XMLReport {
     private static final JAXBContext CTX;

@@ -12,7 +12,7 @@
 package gde.util;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class Util {

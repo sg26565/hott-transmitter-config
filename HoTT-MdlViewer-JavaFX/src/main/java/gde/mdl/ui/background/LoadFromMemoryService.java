@@ -12,7 +12,7 @@ import javafx.scene.control.ListView;
 /**
  * Background service that loads a list of {@linkplain ModelInfo} from the transmitter and updates a {@link ListView} with it.
  *
- * @author olive
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class LoadFromMemoryService extends TransmitterService<List<ModelInfo>> {

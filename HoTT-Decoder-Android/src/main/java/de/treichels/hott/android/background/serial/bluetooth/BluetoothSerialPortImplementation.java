@@ -29,7 +29,7 @@ import android.bluetooth.BluetoothSocket;
 /**
  * An adapter that turns a UsbSerialPort into a SerialPort for the HoTTDecoder.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class BluetoothSerialPortImplementation implements SerialPort {
   private final BluetoothSocket socket;
