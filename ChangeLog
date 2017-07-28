@@ -1,5 +1,8 @@
 2017-07-28
 ==========
+	VDFEditor-0.9.0.36
+	- Updated VDFDecoder with information from Graupner
+	
 	VDFEditor-0.9.0.34
 	- Adapt quantifier values for ADPCM codec to be compatible with FUS
 	- Apply a high-pass filter to decoded ADPCM data 
