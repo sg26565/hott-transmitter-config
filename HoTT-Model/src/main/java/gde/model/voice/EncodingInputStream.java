@@ -29,12 +29,12 @@ final class EncodingInputStream extends InputStream {
         // read 16 bit for high nibble
         if (source.read(frame) == -1) return -1;
         pcm = frame[0] + (frame[1] << 8);
-        adpcm = codec.encode(pcm) << 4;
+        adpcm = codec.encode(pcm >> 4) << 4; // convert 16-bit to 12-bit and shift to high nibble
 
         // read 16 bit for low nibble
         if (source.read(frame) > 0) {
             pcm = frame[0] + (frame[1] << 8);
-            adpcm += codec.encode(pcm);
+            adpcm += codec.encode(pcm >> 4); // convert 16-bit to 12-bit
         }
 
         return adpcm;

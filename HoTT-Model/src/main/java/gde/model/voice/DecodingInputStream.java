@@ -34,14 +34,14 @@ final class DecodingInputStream extends InputStream {
             if (b == -1) return -1;
 
             // decode high nibble
-            pcm = codec.decode((b & 0xf0) >> 4);
+            pcm = codec.decode((b & 0xf0) >> 4) << 4; // convert 12-bit to 16-bit
             // write low byte
             buffer.add(pcm & 0x00ff);
             // write high byte
             buffer.add((pcm & 0xff00) >> 8);
 
             // decode low nibble
-            pcm = codec.decode(b & 0x0f);
+            pcm = codec.decode(b & 0x0f) << 4; // convert 12-bit to 16-bit
             // write low byte
             buffer.add(pcm & 0x00ff);
             // write high byte
