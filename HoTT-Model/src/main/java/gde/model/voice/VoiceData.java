@@ -80,7 +80,7 @@ public class VoiceData implements Serializable {
     }
 
     public InputStream getPcmInputStream() throws IOException {
-        return ADPCMCodec.decode(getRawInputStream());
+        return new HighPassFilterInputStream(ADPCMCodec.decode(getRawInputStream()));
     }
 
     public byte[] getRawData() {

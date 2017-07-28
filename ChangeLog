@@ -1,3 +1,10 @@
+2017-07-28
+==========
+	VDFEditor-0.9.0.34
+	- Adapt quantifier values for ADPCM codec to be compatible with FUS
+	- Apply a high-pass filter to decoded ADPCM data 
+	
 2017-07-27
+==========
 	HoTT-MdlViewer-JavaFX-0.9.0.125, HoTT-MdlViewer-Swing-0.9.0.93, HoTT-MdlViewer-SWT-0.9.0.80
-	Added new PPM32 DSC output type for MC-28 and MC-26 
+	- Added new PPM32 DSC output type for MC-28 and MC-26
