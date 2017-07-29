@@ -288,10 +288,12 @@ public class Controller {
         chooser.setTitle(RES.getString("save_vdf")); //$NON-NLS-1$
         final File dir = new File(PREFS.get(LAST_SAVE_DIR, System.getProperty(USER_HOME)));
         if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
+        if (vdfFile != null) chooser.setInitialFileName(vdfFile.getName());
         chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("vdf_files"), _VDF)); //$NON-NLS-1$
 
         final File vdf = chooser.showSaveDialog(listView.getScene().getWindow());
         if (vdf != null) {
+            vdfFile = vdf;
             ((Stage) listView.getScene().getWindow()).setTitle(vdf.getName());
             PREFS.put(LAST_SAVE_DIR, vdf.getParentFile().getAbsolutePath());
 
