@@ -80,7 +80,7 @@ public class VoiceData implements Serializable {
     }
 
     public InputStream getPcmInputStream() throws IOException {
-        return new HighPassFilterInputStream(ADPCMCodec.decode(getRawInputStream()));
+        return ADPCMCodec.decode(getRawInputStream());
     }
 
     public byte[] getRawData() {
@@ -101,7 +101,7 @@ public class VoiceData implements Serializable {
     }
 
     public void play() throws LineUnavailableException, InterruptedException, IOException {
-        Player.play(AUDIO_FORMAT, getPcmInputStream());
+        Player.play(AUDIO_FORMAT, new LowPassFilterInputStream(getPcmInputStream(), .75));
     }
 
     public void setName(final String name) {

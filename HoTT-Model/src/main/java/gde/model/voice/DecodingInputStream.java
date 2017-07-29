@@ -2,32 +2,28 @@ package gde.model.voice;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.Queue;
 
-final class DecodingInputStream extends InputStream {
+final class DecodingInputStream extends PCMFilterInputStream {
     private final ADPCMCodec codec = new ADPCMCodec();
-    private final InputStream source;
-    private final Queue<Integer> buffer = new LinkedList<>();
 
-    DecodingInputStream(final InputStream source) {
-        this.source = source;
+    DecodingInputStream(final InputStream in) {
+        super(in);
     }
 
     @Override
     public int available() throws IOException {
-        return source.available() * 4;
+        return in.available() * 4;
     }
 
     @Override
-    public void close() throws IOException {
-        source.close();
+    protected short filter(final short s) {
+        return 0;
     }
 
     @Override
     public int read() throws IOException {
         if (buffer.isEmpty()) {
-            final int b = source.read();
+            final int b = in.read();
             int pcm;
 
             // end of stream

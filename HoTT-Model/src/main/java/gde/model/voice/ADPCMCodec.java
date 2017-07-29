@@ -92,16 +92,16 @@ public class ADPCMCodec {
      */
     int decode(final int adpcm) {
         // current step size
-        final int ss = STEP_SIZES[index];
+        final int stepSize = STEP_SIZES[index];
 
         // calculate difference
-        int diff = ss / 8;
+        int diff = stepSize >> 3;
         // magnitude bit 3
-        if ((adpcm & 0b0100) != 0) diff += ss;
+        if ((adpcm & 0b0100) != 0) diff += stepSize;
         // magnitude bit 2
-        if ((adpcm & 0b0010) != 0) diff += ss / 2;
+        if ((adpcm & 0b0010) != 0) diff += stepSize >> 1;
         // magnitude bit 1
-        if ((adpcm & 0b0001) != 0) diff += ss / 4;
+        if ((adpcm & 0b0001) != 0) diff += stepSize >> 2;
         // sign
         if ((adpcm & 0b1000) != 0) diff = -diff;
 
@@ -130,30 +130,32 @@ public class ADPCMCodec {
      * @return The ADPCM encoded sample (4 bit)
      */
     int encode(final int pcm) {
-        final int ss = STEP_SIZES[index];
+        int stepSize = STEP_SIZES[index];
         int diff = pcm - last;
         int adpcm = 0;
 
         // sign
         if (diff < 0) {
-            adpcm |= 0b1000;
+            adpcm = 0b1000;
             diff = -diff;
         }
 
         // magnitude bit 3
-        if (diff > ss) {
+        if (diff >= stepSize) {
             adpcm |= 0b0100;
-            diff -= ss;
+            diff -= stepSize;
         }
 
         // magnitude bit 2
-        if (diff > ss / 2) {
+        stepSize >>= 1;
+        if (diff >= stepSize) {
             adpcm |= 0b0010;
-            diff -= ss / 2;
+            diff -= stepSize;
         }
 
         // magnitude bit 1
-        if (diff > ss / 4) adpcm |= 0b0001;
+        stepSize >>= 1;
+        if (diff >= stepSize) adpcm |= 0b0001;
 
         last = decode(adpcm);
 
