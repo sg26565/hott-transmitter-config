@@ -35,13 +35,13 @@ public class VoiceData implements Serializable {
 
     public static VoiceData readWav(final File wavFile) throws UnsupportedAudioFileException, IOException {
         // read from file
-        final AudioInputStream sourceAudioStream = AudioSystem.getAudioInputStream(wavFile);
+        AudioInputStream sourceAudioStream = AudioSystem.getAudioInputStream(wavFile);
 
         // convert audio format
-        final AudioInputStream convertedAudioStream = AudioSystem.getAudioInputStream(AUDIO_FORMAT, sourceAudioStream);
+        if (!sourceAudioStream.getFormat().matches(AUDIO_FORMAT)) sourceAudioStream = AudioSystem.getAudioInputStream(AUDIO_FORMAT, sourceAudioStream);
 
         // encode to ADPCM
-        final InputStream encodedStream = ADPCMCodec.encode(convertedAudioStream);
+        final InputStream encodedStream = ADPCMCodec.encode(sourceAudioStream);
 
         return new VoiceData(wavFile.getName().replaceAll(".wav$", ""), IOUtils.toByteArray(encodedStream));
     }

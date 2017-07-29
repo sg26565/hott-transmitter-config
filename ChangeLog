@@ -1,3 +1,11 @@
+2017-07-29
+==========
+	VDFEditor-0.9.0.40
+	- Convert .wav files only when necessary
+	
+	VDFEditor-0.9.0.39
+	- Apply low-pass filter for ADPCM playback
+	
 2017-07-28
 ==========
 	VDFEditor-0.9.0.36
@@ -5,7 +13,6 @@
 	
 	VDFEditor-0.9.0.34
 	- Adapt quantifier values for ADPCM codec to be compatible with FUS
-	- Apply a high-pass filter to decoded ADPCM data 
 	
 2017-07-27
 ==========
