@@ -80,7 +80,7 @@
                            </accelerator>
                         </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#onAddSound" text="%add_sound">
+                        <MenuItem fx:id="addSoundMenuItem" mnemonicParsing="false" onAction="#onAddSound" text="%add_sound">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="INSERT" control="UP" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>

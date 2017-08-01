@@ -25,6 +25,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -49,8 +50,9 @@ public class Controller {
     private static final String _VDF = "*.vdf"; //$NON-NLS-1$
     private static final String WAV = ".wav"; //$NON-NLS-1$
     private static final String VDF = ".vdf"; //$NON-NLS-1$
-    private static final String LAST_LOAD_DIR = "lastLoadDir"; //$NON-NLS-1$
-    private static final String LAST_SAVE_DIR = "lastSaveDir"; //$NON-NLS-1$
+    private static final String LAST_LOAD_VDF_DIR = "lastLoadVdfDir"; //$NON-NLS-1$
+    private static final String LAST_SAVE_VDF_DIR = "lastSaveVdfDir"; //$NON-NLS-1$
+    private static final String LAST_LOAD_WAV_DIR = "lastLoadWavDir"; //$NON-NLS-1$
     private static final Preferences PREFS = Preferences.userNodeForPackage(Controller.class);
     private static final ResourceBundle RES = ResourceBundle.getBundle(Controller.class.getName());
 
@@ -74,6 +76,8 @@ public class Controller {
     private MenuItem renameMenuItem;
     @FXML
     private MenuItem saveVDFMenuItem;
+    @FXML
+    MenuItem addSoundMenuItem;
     @FXML
     private ComboBox<TransmitterType> transmitterTypeCombo;
 
@@ -171,6 +175,9 @@ public class Controller {
         playMenuItem.disableProperty().bind(listView.getSelectionModel().selectedItemProperty().isNull());
         renameMenuItem.disableProperty().bind(listView.getSelectionModel().selectedItemProperty().isNull());
         deleteSoundMenuItem.disableProperty().bind(listView.getSelectionModel().selectedItemProperty().isNull());
+        addSoundMenuItem.disableProperty().bind(voiceFileProperty.isNull());
+
+        onNew();
     }
 
     @FXML
@@ -186,15 +193,19 @@ public class Controller {
     public void onAddSound() {
         final FileChooser chooser = new FileChooser();
         chooser.setTitle(RES.getString("load_wav")); //$NON-NLS-1$
-        final File dir = new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(USER_HOME)));
-        if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
+        final File dir = new File(PREFS.get(LAST_LOAD_WAV_DIR, System.getProperty(USER_HOME)));
+        if (dir != null && dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
         chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("wav_files"), _WAV)); //$NON-NLS-1$
 
         final File wav = chooser.showOpenDialog(listView.getScene().getWindow());
         if (wav != null) try {
+            PREFS.put(LAST_LOAD_WAV_DIR, wav.getParentFile().getAbsolutePath());
             final VoiceData newVoiceData = VoiceData.readWav(wav);
             final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
-            listView.getItems().add(selectedIndex, newVoiceData);
+            if (selectedIndex == -1)
+                listView.getItems().add(newVoiceData);
+            else
+                listView.getItems().add(selectedIndex, newVoiceData);
         } catch (UnsupportedAudioFileException | IOException e) {
             ExceptionDialog.show(e);
         }
@@ -252,13 +263,13 @@ public class Controller {
         if (askSave()) {
             final FileChooser chooser = new FileChooser();
             chooser.setTitle(RES.getString("open_vdf")); //$NON-NLS-1$
-            final File dir = new File(PREFS.get(LAST_LOAD_DIR, System.getProperty(USER_HOME)));
+            final File dir = new File(PREFS.get(LAST_LOAD_VDF_DIR, System.getProperty(USER_HOME)));
             if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
             chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("vdf_files"), _VDF)); //$NON-NLS-1$
 
             final File vdf = chooser.showOpenDialog(listView.getScene().getWindow());
             if (vdf != null) {
-                PREFS.put(LAST_LOAD_DIR, vdf.getParentFile().getAbsolutePath());
+                PREFS.put(LAST_LOAD_VDF_DIR, vdf.getParentFile().getAbsolutePath());
                 vdfFile = vdf;
                 dirty = false;
                 open(HoTTDecoder.decodeVDF(vdf));
@@ -286,7 +297,7 @@ public class Controller {
     public boolean onSave() {
         final FileChooser chooser = new FileChooser();
         chooser.setTitle(RES.getString("save_vdf")); //$NON-NLS-1$
-        final File dir = new File(PREFS.get(LAST_SAVE_DIR, System.getProperty(USER_HOME)));
+        final File dir = new File(PREFS.get(LAST_SAVE_VDF_DIR, System.getProperty(USER_HOME)));
         if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
         if (vdfFile != null) chooser.setInitialFileName(vdfFile.getName());
         chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("vdf_files"), _VDF)); //$NON-NLS-1$
@@ -295,7 +306,7 @@ public class Controller {
         if (vdf != null) {
             vdfFile = vdf;
             ((Stage) listView.getScene().getWindow()).setTitle(vdf.getName());
-            PREFS.put(LAST_SAVE_DIR, vdf.getParentFile().getAbsolutePath());
+            PREFS.put(LAST_SAVE_VDF_DIR, vdf.getParentFile().getAbsolutePath());
 
             try {
                 HoTTDecoder.encodeVDF(voiceFileProperty.get(), vdf);
@@ -366,7 +377,7 @@ public class Controller {
         setTitle();
     }
 
-    private void setTitle() {
+    void setTitle() {
         final StringBuilder sb = new StringBuilder();
 
         if (dirty) sb.append("*"); //$NON-NLS-1$
@@ -387,6 +398,7 @@ public class Controller {
             }
         }
 
-        ((Stage) listView.getScene().getWindow()).setTitle(sb.toString());
+        final Scene scene = listView.getScene();
+        if (scene != null) ((Stage) scene.getWindow()).setTitle(sb.toString());
     }
 }

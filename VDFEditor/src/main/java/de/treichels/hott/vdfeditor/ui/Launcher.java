@@ -54,7 +54,7 @@ public class Launcher extends Application {
         final Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(icon);
-        primaryStage.setTitle(getTitle());
+        controller.setTitle();
         primaryStage.show();
     }
 }
