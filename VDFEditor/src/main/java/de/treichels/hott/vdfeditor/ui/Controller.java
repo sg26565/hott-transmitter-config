@@ -197,18 +197,20 @@ public class Controller {
         if (dir != null && dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
         chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("wav_files"), _WAV)); //$NON-NLS-1$
 
-        final File wav = chooser.showOpenDialog(listView.getScene().getWindow());
-        if (wav != null) try {
-            PREFS.put(LAST_LOAD_WAV_DIR, wav.getParentFile().getAbsolutePath());
-            final VoiceData newVoiceData = VoiceData.readWav(wav);
-            final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
-            if (selectedIndex == -1)
-                listView.getItems().add(newVoiceData);
-            else
-                listView.getItems().add(selectedIndex, newVoiceData);
-        } catch (UnsupportedAudioFileException | IOException e) {
-            ExceptionDialog.show(e);
-        }
+        final List<File> wavs = chooser.showOpenMultipleDialog(listView.getScene().getWindow());
+        if (wavs != null) wavs.forEach(wav -> {
+            try {
+                PREFS.put(LAST_LOAD_WAV_DIR, wav.getParentFile().getAbsolutePath());
+                final VoiceData newVoiceData = VoiceData.readWav(wav);
+                final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
+                if (selectedIndex == -1)
+                    listView.getItems().add(newVoiceData);
+                else
+                    listView.getItems().add(selectedIndex, newVoiceData);
+            } catch (UnsupportedAudioFileException | IOException e) {
+                ExceptionDialog.show(e);
+            }
+        });
     }
 
     @FXML
