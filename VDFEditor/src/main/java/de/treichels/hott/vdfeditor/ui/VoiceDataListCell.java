@@ -130,7 +130,7 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
                     getListView().getSelectionModel().clearSelection();
                 }
 
-                items.add(targetIndex > sourceIndex && ev.getTransferMode() == TransferMode.MOVE ? targetIndex - 1 : targetIndex, item);
+                items.add(targetIndex, item);
                 ev.setDropCompleted(true);
             } else if (dragboard.hasContent(DnD_DATA_FORMAT)) {
                 // DnD between VDFEditor instances
