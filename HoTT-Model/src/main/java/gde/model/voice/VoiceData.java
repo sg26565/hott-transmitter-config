@@ -101,7 +101,7 @@ public class VoiceData implements Serializable {
     }
 
     public void play() throws LineUnavailableException, InterruptedException, IOException {
-        Player.play(AUDIO_FORMAT, new LowPassFilterInputStream(getPcmInputStream(), .75));
+        Player.play(AUDIO_FORMAT, getPcmInputStream());
     }
 
     public void setName(final String name) {
