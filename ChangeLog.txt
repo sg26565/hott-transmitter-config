@@ -1,5 +1,16 @@
+2017-08-07
+==========
+	VDFEditor-0.9.0.44
+	- Fixed bad sound quality in ADPCMCodec
+	
+2017-08-03
+==========
+	VDFEditor-0.9.0.43
+	- Add support for multi-select on add sound dialog
+	- Fix sorting of main list via drag&drop
+
 2017-08-01
-=========
+==========
 	VDFEditor-0.9.0.42
 	- Fixed add sound menu item for new empty VDF files
 	

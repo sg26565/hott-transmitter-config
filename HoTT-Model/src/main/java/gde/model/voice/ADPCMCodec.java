@@ -90,7 +90,7 @@ public class ADPCMCodec {
      *            ADPCM encoded sample (4 bit)
      * @return The decoded PCM value (12 bit signed)
      */
-    int decode(final int adpcm) {
+    short decode(final byte adpcm) {
         // current step size
         final int stepSize = STEP_SIZES[index];
 
@@ -119,7 +119,7 @@ public class ADPCMCodec {
         if (index < MIN_INDEX) index = MIN_INDEX;
         if (index > MAX_INDEX) index = MAX_INDEX;
 
-        return last;
+        return (short) last;
     }
 
     /**
@@ -129,10 +129,10 @@ public class ADPCMCodec {
      *            The PCM value (12 bit signed)
      * @return The ADPCM encoded sample (4 bit)
      */
-    int encode(final int pcm) {
+    byte encode(final short pcm) {
         int stepSize = STEP_SIZES[index];
         int diff = pcm - last;
-        int adpcm = 0;
+        byte adpcm = 0;
 
         // sign
         if (diff < 0) {
@@ -160,13 +160,5 @@ public class ADPCMCodec {
         last = decode(adpcm);
 
         return adpcm;
-    }
-
-    /**
-     * Reset state of the encoder/decoder.
-     */
-    void reset() {
-        index = 0;
-        last = 0;
     }
 }

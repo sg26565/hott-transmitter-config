@@ -5,38 +5,79 @@ import java.io.InputStream;
 
 final class EncodingInputStream extends InputStream {
     private final ADPCMCodec codec = new ADPCMCodec();
-    private final InputStream source;
+    private final byte[] buffer = new byte[2];
+    private final InputStream in;
 
-    EncodingInputStream(final InputStream source) {
-        this.source = source;
+    public EncodingInputStream(final InputStream in) {
+        this.in = in;
     }
 
     @Override
     public int available() throws IOException {
-        return (source.available() + 3) / 4;
+        // encoding reduces the data size by factor of 4
+        return (in.available() + 3) / 4;
     }
 
     @Override
     public void close() throws IOException {
-        source.close();
+        in.close();
+    }
+
+    @Override
+    public synchronized void mark(final int readlimit) {
+        in.mark(readlimit);
+    }
+
+    @Override
+    public boolean markSupported() {
+        return in.markSupported();
     }
 
     @Override
     public int read() throws IOException {
-        int pcm, adpcm;
-        final byte[] frame = new byte[2];
+        // read 16-bit for low nibble (unsigned)
+        int pcm = readShort();
+        int adpcm = -1;
 
-        // read 16 bit for high nibble
-        if (source.read(frame) == -1) return -1;
-        pcm = frame[0] + (frame[1] << 8);
-        adpcm = codec.encode(pcm >> 4) << 4; // convert 16-bit to 12-bit and shift to high nibble
+        if (pcm != -1) {
+            // convert to signed 16-bit and reduce to 12-bit
+            short signed = (short) ((short) pcm / 16);
 
-        // read 16 bit for low nibble
-        if (source.read(frame) > 0) {
-            pcm = frame[0] + (frame[1] << 8);
-            adpcm += codec.encode(pcm >> 4); // convert 16-bit to 12-bit
+            // convert to low nibble
+            adpcm = codec.encode(signed);
+
+            // read 16 bit for high nibble (unsigned)
+            pcm = readShort();
+            if (pcm != -1) {
+                // convert to signed 16-bit and reduce to 12-bit
+                signed = (short) ((short) pcm / 16);
+
+                // convert to high nibble
+                adpcm |= codec.encode(signed) << 4;
+            }
         }
 
         return adpcm;
+    }
+
+    /**
+     * Read unsigned 16-bit value from stream.
+     *
+     * @return
+     * @throws IOException
+     */
+    private int readShort() throws IOException {
+        final int len = in.read(buffer);
+        return len == -1 ? -1 : buffer[0] & 0xFF | (buffer[1] & 0xFF) << 8;
+    }
+
+    @Override
+    public synchronized void reset() throws IOException {
+        in.reset();
+    }
+
+    @Override
+    public long skip(final long n) throws IOException {
+        return in.skip(n);
     }
 }
