@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import java.util.stream.Collectors;
 
 import com.sun.javafx.collections.ObservableListWrapper;
 
@@ -159,13 +157,12 @@ public class Controller {
                 }
 
                 // import any sound files
-                files.stream().filter(Controller::isSoundFormat).forEach(f -> {
-                    try {
-                        items.add(VoiceData.readSoundFile(f));
-                    } catch (UnsupportedAudioFileException | IOException e) {
-                        ExceptionDialog.show(e);
-                    }
-                });
+                try {
+                    items.addAll(files.stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList()));
+                } catch (final RuntimeException e) {
+                    ExceptionDialog.show(e);
+                }
+
                 ev.setDropCompleted(true);
             }
 
@@ -215,19 +212,22 @@ public class Controller {
         chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("ogg_files"), _OGG)); //$NON-NLS-1$
 
         final List<File> files = chooser.showOpenMultipleDialog(listView.getScene().getWindow());
-        if (files != null) files.forEach(file -> {
+        if (files != null) {
+            // store dir in prefs
+            files.stream().filter(Controller::isSoundFormat).findFirst().map(File::getParentFile).map(File::getAbsolutePath)
+                    .ifPresent(s -> PREFS.put(LAST_LOAD_SOUND_DIR, s));
+
+            final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
+            final List<VoiceData> sounds = files.stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList());
             try {
-                PREFS.put(LAST_LOAD_SOUND_DIR, file.getParentFile().getAbsolutePath());
-                final VoiceData newVoiceData = VoiceData.readSoundFile(file);
-                final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
                 if (selectedIndex == -1)
-                    listView.getItems().add(newVoiceData);
+                    listView.getItems().addAll(sounds);
                 else
-                    listView.getItems().add(selectedIndex, newVoiceData);
-            } catch (UnsupportedAudioFileException | IOException e) {
+                    listView.getItems().addAll(selectedIndex, sounds);
+            } catch (final RuntimeException e) {
                 ExceptionDialog.show(e);
             }
-        });
+        }
     }
 
     @FXML
@@ -298,13 +298,11 @@ public class Controller {
 
     @FXML
     public void onPlay() {
-        listView.getSelectionModel().getSelectedItems().stream().forEach(vd -> {
-            try {
-                vd.play();
-            } catch (LineUnavailableException | InterruptedException | IOException e) {
-                ExceptionDialog.show(e);
-            }
-        });
+        try {
+            listView.getSelectionModel().getSelectedItems().forEach(VoiceData::play);
+        } catch (final RuntimeException e) {
+            ExceptionDialog.show(e);
+        }
     }
 
     @FXML
@@ -391,6 +389,7 @@ public class Controller {
             }
             setTitle();
         });
+
         dirty = false;
         listView.setItems(items);
         setTitle();

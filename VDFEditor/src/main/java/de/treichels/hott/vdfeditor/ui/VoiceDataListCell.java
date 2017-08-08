@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import java.util.stream.Collectors;
 
 import gde.model.voice.VoiceData;
 import javafx.collections.ObservableList;
@@ -32,13 +30,14 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
     private TextField textField = null;
     private final HBox hBox = new HBox(indexLabel, playButton);
 
+    @SuppressWarnings("unchecked")
     public VoiceDataListCell() {
         getStylesheets().add(STYLESHEET_LOCATION);
 
         playButton.setOnAction(event -> {
             try {
                 getItem().play();
-            } catch (LineUnavailableException | InterruptedException | IOException e) {
+            } catch (final RuntimeException e) {
                 ExceptionDialog.show(e);
             }
         });
@@ -132,23 +131,17 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
                 items.add(targetIndex, item);
                 ev.setDropCompleted(true);
             } else if (dragboard.hasContent(DnD_DATA_FORMAT)) {
-                // DnD between VDFEditor instances
-                @SuppressWarnings("unchecked")
-                final ArrayList<VoiceData> droppedItems = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
-                for (final VoiceData vd : droppedItems)
-                    items.add(targetIndex, vd);
+                items.addAll(targetIndex, (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT));
                 ev.setDropCompleted(true);
             } else if (gestureSource == null && dragboard.hasFiles()) {
-                // import .wav file from desktop
-                final List<File> files = dragboard.getFiles();
-
                 try {
-                    for (final File file : files)
-                        if (Controller.isSoundFormat(file)) items.add(targetIndex, VoiceData.readSoundFile(file));
-                    ev.setDropCompleted(true);
-                } catch (UnsupportedAudioFileException | IOException e) {
+                    // import .wav file from desktop
+                    items.addAll(dragboard.getFiles().stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList()));
+                } catch (final RuntimeException e) {
                     ExceptionDialog.show(e);
                 }
+
+                ev.setDropCompleted(true);
             }
 
             ev.consume();

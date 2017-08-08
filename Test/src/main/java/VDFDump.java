@@ -82,14 +82,6 @@ public class VDFDump {
         System.out.println(vdf);
         final VoiceFile voiceFile = HoTTDecoder.decodeVDF(vdf);
         final List<VoiceData> list = voiceFile.getVoiceData();
-        list.stream().forEach(v -> {
-            System.out.println(v.getName());
-            try {
-                v.play();
-            } catch (LineUnavailableException | InterruptedException | IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        });
+        list.stream().forEach(VoiceData::play);
     }
 }
