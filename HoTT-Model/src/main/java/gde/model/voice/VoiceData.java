@@ -29,28 +29,32 @@ public class VoiceData implements Serializable {
     /** Default audio format 11 kHz 16-bit signed PCM mono */
     public static final AudioFormat AUDIO_FORMAT = new AudioFormat(Encoding.PCM_SIGNED, 11025, 16, 1, 2, 11025, false);
 
-    public static VoiceData readSoundFile(final File soundFile) throws UnsupportedAudioFileException, IOException {
-        // read from file
-        final AudioInputStream sourceAudioStream = AudioSystem.getAudioInputStream(soundFile);
-        final AudioFormat sourceFormat = sourceAudioStream.getFormat();
-        final float rate = sourceFormat.getSampleRate();
-        final int channels = sourceFormat.getChannels();
+    public static VoiceData readSoundFile(final File soundFile) {
+        try {
+            // read from file
+            final AudioInputStream sourceAudioStream = AudioSystem.getAudioInputStream(soundFile);
+            final AudioFormat sourceFormat = sourceAudioStream.getFormat();
+            final float rate = sourceFormat.getSampleRate();
+            final int channels = sourceFormat.getChannels();
 
-        // convert to from MP3 or OGG to PCM
-        final AudioFormat pcmFormat = new AudioFormat(Encoding.PCM_SIGNED, rate, 16, channels, channels * 2, rate, false);
-        final AudioInputStream pcmAudioStream = sourceFormat.getEncoding() == Encoding.PCM_SIGNED ? sourceAudioStream
-                : AudioSystem.getAudioInputStream(pcmFormat, sourceAudioStream);
+            // convert to from MP3 or OGG to PCM
+            final AudioFormat pcmFormat = new AudioFormat(Encoding.PCM_SIGNED, rate, 16, channels, channels * 2, rate, false);
+            final AudioInputStream pcmAudioStream = sourceFormat.getEncoding() == Encoding.PCM_SIGNED ? sourceAudioStream
+                    : AudioSystem.getAudioInputStream(pcmFormat, sourceAudioStream);
 
-        // convert sample rate and channels
-        final AudioInputStream targetAudioStream = pcmFormat.matches(AUDIO_FORMAT) ? pcmAudioStream
-                : AudioSystem.getAudioInputStream(AUDIO_FORMAT, pcmAudioStream);
+            // convert sample rate and channels
+            final AudioInputStream targetAudioStream = pcmFormat.matches(AUDIO_FORMAT) ? pcmAudioStream
+                    : AudioSystem.getAudioInputStream(AUDIO_FORMAT, pcmAudioStream);
 
-        // encode to ADPCM
-        final InputStream encodedStream = ADPCMCodec.encode(targetAudioStream);
+            // encode to ADPCM
+            final InputStream encodedStream = ADPCMCodec.encode(targetAudioStream);
 
-        final String fileName = soundFile.getName();
-        final int dot = fileName.lastIndexOf(".");
-        return new VoiceData(fileName.substring(0, dot), IOUtils.toByteArray(encodedStream));
+            final String fileName = soundFile.getName();
+            final int dot = fileName.lastIndexOf(".");
+            return new VoiceData(fileName.substring(0, dot), IOUtils.toByteArray(encodedStream));
+        } catch (IOException | UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String name;
@@ -107,8 +111,12 @@ public class VoiceData implements Serializable {
         return result;
     }
 
-    public void play() throws LineUnavailableException, InterruptedException, IOException {
-        Player.play(AUDIO_FORMAT, getPcmInputStream());
+    public void play() {
+        try {
+            Player.play(AUDIO_FORMAT, getPcmInputStream());
+        } catch (LineUnavailableException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setName(final String name) {
