@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -52,8 +53,9 @@ public class Player {
 
             final byte[] buffer = new byte[sourceDataLine.getBufferSize()];
 
-            while (stream.available() > 0) {
+            while (true) {
                 final int len = stream.read(buffer);
+                if (len == -1) break;
                 sourceDataLine.write(buffer, 0, len);
             }
 
@@ -69,7 +71,15 @@ public class Player {
     }
 
     public static void play(final AudioInputStream stream, final boolean sync) throws LineUnavailableException, IOException {
-        play(stream.getFormat(), stream, sync);
+        final AudioFormat sourceFormat = stream.getFormat();
+        final float rate = sourceFormat.getSampleRate();
+        final int channels = sourceFormat.getChannels();
+        final AudioFormat targetFormat = new AudioFormat(Encoding.PCM_SIGNED, rate, 16, channels, channels * 2, rate, false);
+
+        if (sourceFormat.matches(targetFormat))
+            play(sourceFormat, stream, sync);
+        else
+            play(AudioSystem.getAudioInputStream(targetFormat, stream), sync);
     }
 
     public static void play(final Clip clip) throws InterruptedException {
@@ -93,8 +103,12 @@ public class Player {
         }
     }
 
-    public static void play(final File file) throws LineUnavailableException, IOException, UnsupportedAudioFileException, InterruptedException {
-        play(file, true);
+    public static void play(final File file) {
+        try {
+            play(file, true);
+        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void play(final File file, final boolean sync) throws LineUnavailableException, IOException, UnsupportedAudioFileException {

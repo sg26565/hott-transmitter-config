@@ -2,10 +2,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.sound.sampled.LineUnavailableException;
 
 import de.treichels.hott.HoTTDecoder;
+import gde.model.voice.Player;
 import gde.model.voice.VoiceData;
 import gde.model.voice.VoiceFile;
 import gde.util.Util;
@@ -65,9 +67,14 @@ public class VDFDump {
         // play(mc28_vdf);
         // exportWAV(mc28_vdf);
 
-        final File desktop = new File("C:/Users/olive/Desktop");
-        for (final File file : desktop.listFiles((dir, name) -> name.endsWith(".vdf")))
-            dump(file);
+        // final File desktop = new File("C:/Users/olive/Desktop");
+        // for (final File file : desktop.listFiles((dir, name) -> name.endsWith(".vdf")))
+        // dump(file);
+
+        final File sounds = new File("C:/Users/olive/Google Drive/Weatronic/Sounds/Sprache_BAT60_Anna");
+        Stream.of(sounds.listFiles()).filter(f -> f.getName().endsWith(".mp3")).forEach(Player::play);
+        Stream.of(sounds.listFiles()).filter(f -> f.getName().endsWith(".ogg")).forEach(Player::play);
+        Stream.of(sounds.listFiles()).filter(f -> f.getName().endsWith(".wav")).forEach(Player::play);
     }
 
     @SuppressWarnings("unused")

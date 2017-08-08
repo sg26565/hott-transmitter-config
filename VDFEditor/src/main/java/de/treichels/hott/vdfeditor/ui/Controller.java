@@ -47,14 +47,27 @@ import javafx.stage.Stage;
 public class Controller {
     private static final String USER_HOME = "user.home"; //$NON-NLS-1$
     private static final String _WAV = "*.wav"; //$NON-NLS-1$
+    private static final String _MP3 = "*.mp3"; //$NON-NLS-1$
+    private static final String _OGG = "*.ogg"; //$NON-NLS-1$
     private static final String _VDF = "*.vdf"; //$NON-NLS-1$
-    private static final String WAV = ".wav"; //$NON-NLS-1$
+    static final String WAV = ".wav"; //$NON-NLS-1$
+    private static final String MP3 = ".mp3"; //$NON-NLS-1$
+    private static final String OGG = ".ogg"; //$NON-NLS-1$
     private static final String VDF = ".vdf"; //$NON-NLS-1$
     private static final String LAST_LOAD_VDF_DIR = "lastLoadVdfDir"; //$NON-NLS-1$
     private static final String LAST_SAVE_VDF_DIR = "lastSaveVdfDir"; //$NON-NLS-1$
-    private static final String LAST_LOAD_WAV_DIR = "lastLoadWavDir"; //$NON-NLS-1$
+    private static final String LAST_LOAD_SOUND_DIR = "lastLoadSoundDir"; //$NON-NLS-1$
     private static final Preferences PREFS = Preferences.userNodeForPackage(Controller.class);
     private static final ResourceBundle RES = ResourceBundle.getBundle(Controller.class.getName());
+
+    public static boolean isSoundFormat(final File file) {
+        final String name = file.getName();
+        return name.endsWith(WAV) | name.endsWith(MP3) | name.endsWith(OGG);
+    }
+
+    public static boolean isVDF(final File file) {
+        return file.getName().endsWith(VDF);
+    }
 
     @FXML
     private ContextMenu contextMenu;
@@ -80,7 +93,6 @@ public class Controller {
     MenuItem addSoundMenuItem;
     @FXML
     private ComboBox<TransmitterType> transmitterTypeCombo;
-
     @FXML
     private ComboBox<VDFType> vdfTypeCombo;
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
@@ -106,7 +118,7 @@ public class Controller {
         // accept a drop into empty area
         listView.setOnDragOver(ev -> {
             if (ev.getGestureSource() == null && ev.getDragboard().hasFiles())
-                // allow only copy from desktop (import of .wav file)
+                // allow only copy from desktop (import of sound file)
                 ev.acceptTransferModes(TransferMode.COPY);
             ev.consume();
         });
@@ -128,11 +140,11 @@ public class Controller {
                     items.add(vd);
                 ev.setDropCompleted(true);
             } else if (ev.getDragboard().hasFiles()) {
-                // import .wav or .vdf files from desktop
+                // import sound or .vdf files from desktop
                 final List<File> files = ev.getDragboard().getFiles();
 
                 // import first .vdf file
-                final Optional<File> vdf = files.stream().filter(f -> f.getName().endsWith(VDF)).findFirst();
+                final Optional<File> vdf = files.stream().filter(Controller::isVDF).findFirst();
                 if (vdf.isPresent() && askSave()) {
                     vdfFile = vdf.get();
                     dirty = false;
@@ -143,10 +155,10 @@ public class Controller {
                     }
                 }
 
-                // import any .wav files
-                files.stream().filter(f -> f.getName().endsWith(WAV)).forEach(f -> {
+                // import any sound files
+                files.stream().filter(Controller::isSoundFormat).forEach(f -> {
                     try {
-                        items.add(VoiceData.readWav(f));
+                        items.add(VoiceData.readSoundFile(f));
                     } catch (UnsupportedAudioFileException | IOException e) {
                         ExceptionDialog.show(e);
                     }
@@ -192,16 +204,18 @@ public class Controller {
     @FXML
     public void onAddSound() {
         final FileChooser chooser = new FileChooser();
-        chooser.setTitle(RES.getString("load_wav")); //$NON-NLS-1$
-        final File dir = new File(PREFS.get(LAST_LOAD_WAV_DIR, System.getProperty(USER_HOME)));
+        chooser.setTitle(RES.getString("load_sound")); //$NON-NLS-1$
+        final File dir = new File(PREFS.get(LAST_LOAD_SOUND_DIR, System.getProperty(USER_HOME)));
         if (dir != null && dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
         chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("wav_files"), _WAV)); //$NON-NLS-1$
+        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("mp3_files"), _MP3)); //$NON-NLS-1$
+        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("ogg_files"), _OGG)); //$NON-NLS-1$
 
-        final List<File> wavs = chooser.showOpenMultipleDialog(listView.getScene().getWindow());
-        if (wavs != null) wavs.forEach(wav -> {
+        final List<File> files = chooser.showOpenMultipleDialog(listView.getScene().getWindow());
+        if (files != null) files.forEach(file -> {
             try {
-                PREFS.put(LAST_LOAD_WAV_DIR, wav.getParentFile().getAbsolutePath());
-                final VoiceData newVoiceData = VoiceData.readWav(wav);
+                PREFS.put(LAST_LOAD_SOUND_DIR, file.getParentFile().getAbsolutePath());
+                final VoiceData newVoiceData = VoiceData.readSoundFile(file);
                 final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
                 if (selectedIndex == -1)
                     listView.getItems().add(newVoiceData);

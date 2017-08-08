@@ -29,21 +29,28 @@ public class VoiceData implements Serializable {
     /** Default audio format 11 kHz 16-bit signed PCM mono */
     public static final AudioFormat AUDIO_FORMAT = new AudioFormat(Encoding.PCM_SIGNED, 11025, 16, 1, 2, 11025, false);
 
-    public static VoiceData readVox(final File voxFile) throws IOException {
-        return new VoiceData(voxFile.getName().replaceAll(".vox$", ""), Files.readAllBytes(voxFile.toPath()));
-    }
-
-    public static VoiceData readWav(final File wavFile) throws UnsupportedAudioFileException, IOException {
+    public static VoiceData readSoundFile(final File soundFile) throws UnsupportedAudioFileException, IOException {
         // read from file
-        AudioInputStream sourceAudioStream = AudioSystem.getAudioInputStream(wavFile);
+        final AudioInputStream sourceAudioStream = AudioSystem.getAudioInputStream(soundFile);
+        final AudioFormat sourceFormat = sourceAudioStream.getFormat();
+        final float rate = sourceFormat.getSampleRate();
+        final int channels = sourceFormat.getChannels();
 
-        // convert audio format
-        if (!sourceAudioStream.getFormat().matches(AUDIO_FORMAT)) sourceAudioStream = AudioSystem.getAudioInputStream(AUDIO_FORMAT, sourceAudioStream);
+        // convert to from MP3 or OGG to PCM
+        final AudioFormat pcmFormat = new AudioFormat(Encoding.PCM_SIGNED, rate, 16, channels, channels * 2, rate, false);
+        final AudioInputStream pcmAudioStream = sourceFormat.getEncoding() == Encoding.PCM_SIGNED ? sourceAudioStream
+                : AudioSystem.getAudioInputStream(pcmFormat, sourceAudioStream);
+
+        // convert sample rate and channels
+        final AudioInputStream targetAudioStream = pcmFormat.matches(AUDIO_FORMAT) ? pcmAudioStream
+                : AudioSystem.getAudioInputStream(AUDIO_FORMAT, pcmAudioStream);
 
         // encode to ADPCM
-        final InputStream encodedStream = ADPCMCodec.encode(sourceAudioStream);
+        final InputStream encodedStream = ADPCMCodec.encode(targetAudioStream);
 
-        return new VoiceData(wavFile.getName().replaceAll(".wav$", ""), IOUtils.toByteArray(encodedStream));
+        final String fileName = soundFile.getName();
+        final int dot = fileName.lastIndexOf(".");
+        return new VoiceData(fileName.substring(0, dot), IOUtils.toByteArray(encodedStream));
     }
 
     private String name;

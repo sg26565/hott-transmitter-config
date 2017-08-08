@@ -23,7 +23,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 public class VoiceDataListCell extends ListCell<VoiceData> {
-    private static final String WAV = ".wav";
     private static final String STYLESHEET_LOCATION = VoiceDataListCell.class.getResource("style.css").toString();
     private static final List<File> TEMP_FILE_LIST = new ArrayList<>();
     static final DataFormat DnD_DATA_FORMAT = new DataFormat(VoiceDataListCell.class.getName());
@@ -60,7 +59,7 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
 
             for (final VoiceData vd : selectedItems)
                 try {
-                    final File wav = new File(System.getProperty("java.io.tmpdir"), vd.getName() + WAV);
+                    final File wav = new File(System.getProperty("java.io.tmpdir"), vd.getName() + Controller.WAV);
                     vd.writeWav(wav);
                     TEMP_FILE_LIST.add(wav);
                 } catch (final IOException e) {
@@ -94,8 +93,8 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
                 ev.acceptTransferModes(TransferMode.COPY);
 
             else if (ev.getGestureSource() == null && ev.getDragboard().hasFiles())
-                // allow only copy from desktop (import of .wav file)
-                if (ev.getDragboard().getFiles().stream().allMatch(f -> f.getName().endsWith(WAV))) ev.acceptTransferModes(TransferMode.COPY);
+                // allow only copy from desktop (import of sound file)
+                if (ev.getDragboard().getFiles().stream().allMatch(Controller::isSoundFormat)) ev.acceptTransferModes(TransferMode.COPY);
 
             ev.consume();
         });
@@ -145,7 +144,7 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
 
                 try {
                     for (final File file : files)
-                        if (file.getName().endsWith(WAV)) items.add(targetIndex, VoiceData.readWav(file));
+                        if (Controller.isSoundFormat(file)) items.add(targetIndex, VoiceData.readSoundFile(file));
                     ev.setDropCompleted(true);
                 } catch (UnsupportedAudioFileException | IOException e) {
                     ExceptionDialog.show(e);
