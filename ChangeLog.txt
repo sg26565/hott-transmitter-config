@@ -2,6 +2,7 @@
 ==========
 	VDFEditor-0.9.0-45
 	- Support for .mp3 and .ogg sound files
+	- Made warning dialog for unsaved changes more explicit
 	
 2017-08-07
 ==========

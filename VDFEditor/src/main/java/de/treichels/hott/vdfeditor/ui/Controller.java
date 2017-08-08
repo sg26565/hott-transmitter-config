@@ -102,10 +102,13 @@ public class Controller {
     boolean askSave() {
         if (!dirty) return true;
 
-        final Alert alert = new Alert(AlertType.WARNING, RES.getString("save_changes"), ButtonType.YES, ButtonType.NO); //$NON-NLS-1$
+        final ButtonType discardButton = new ButtonType(RES.getString("discard_button"));
+        final ButtonType saveButton = new ButtonType(RES.getString("save_button"));
+        final Alert alert = new Alert(AlertType.WARNING, RES.getString("save_changes"), saveButton, discardButton, ButtonType.CANCEL); //$NON-NLS-1$
         alert.setHeaderText(RES.getString("modified")); //$NON-NLS-1$
         final Optional<ButtonType> answer = alert.showAndWait();
-        if (answer.get() == ButtonType.NO) return true;
+        if (answer.get() == discardButton) return true;
+        if (answer.get() == ButtonType.CANCEL) return false;
 
         return onSave();
     }
