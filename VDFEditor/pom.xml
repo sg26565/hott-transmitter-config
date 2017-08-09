@@ -25,15 +25,26 @@
 							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 							<mainClass>de.treichels.hott.vdfeditor.ui.Launcher</mainClass>
 						</transformer>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
 					</transformers>
-					<!-- <filters> -->
-					<!-- <filter> -->
-					<!-- <artifact>gnu.io.RXTXcomm</artifact> -->
-					<!-- <includes> -->
-					<!-- <include>**</include> -->
-					<!-- </includes> -->
-					<!-- </filter> -->
-					<!-- </filters> -->
+<!-- 					<filters> -->
+<!-- 						<filter> -->
+<!-- 							<artifact>gnu.io.RXTXcomm</artifact> -->
+<!-- 							<includes> -->
+<!-- 								<include>**</include> -->
+<!-- 							</includes> -->
+<!-- 						</filter> -->
+<!-- 						<filter> -->
+<!-- 							<artifact>com.googlecode.soundlibs</artifact> -->
+<!-- 							<includes> -->
+<!-- 								<include>javazoom/spi/mpeg/sampled/file/MpegAudioFileReader.class</include> -->
+<!-- 								<include>javazoom/spi/mpeg/sampled/convert/MpegFormatConversionProvider.class</include> -->
+<!-- 								<include>javazoom/spi/vorbis/sampled/file/VorbisAudioFileReader.class</include> -->
+<!-- 								<include>javazoom/spi/vorbis/sampled/convert/VorbisFormatConversionProvider.class</include> -->
+<!-- 							</includes> -->
+<!-- 						</filter> -->
+<!-- 					</filters> -->
 				</configuration>
 				<executions>
 					<execution>

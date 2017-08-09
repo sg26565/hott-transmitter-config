@@ -14,9 +14,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javazoom.spi.mpeg.sampled.convert.MpegFormatConversionProvider;
+import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
+import javazoom.spi.vorbis.sampled.convert.VorbisFormatConversionProvider;
+import javazoom.spi.vorbis.sampled.file.VorbisAudioFileReader;
 
 public class Launcher extends Application {
     public static final String PROGRAM_VERSION = "program.version"; //$NON-NLS-1$
+
+    // static references to mp3 and ogg decoders to keep them in the final jar
+    @SuppressWarnings("unused")
+    private static final Class<?>[] IGNORE = { MpegAudioFileReader.class, MpegFormatConversionProvider.class, VorbisAudioFileReader.class,
+            VorbisFormatConversionProvider.class };
 
     static String getTitle() {
         return String.format("VDF Editor - %s", getVersion());
