@@ -140,7 +140,8 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
             } else if (gestureSource == null && dragboard.hasFiles()) {
                 try {
                     // import .wav file from desktop
-                    items.addAll(dragboard.getFiles().stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList()));
+                    items.addAll(targetIndex,
+                            dragboard.getFiles().stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList()));
                 } catch (final RuntimeException e) {
                     ExceptionDialog.show(e);
                 }
