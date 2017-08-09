@@ -36,6 +36,7 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -115,6 +116,14 @@ public class Controller {
     public void initialize() {
         listView.setCellFactory(lv -> new VoiceDataListCell());
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        // clear selection if clicked on an empty row
+        listView.setOnMouseClicked(ev -> listView.getSelectionModel().clearSelection());
+
+        // clear selection if ESC key was pressed
+        listView.setOnKeyPressed(ev -> {
+            if (ev.getCode() == KeyCode.ESCAPE) listView.getSelectionModel().clearSelection();
+        });
 
         // accept a drop into empty area
         listView.setOnDragOver(ev -> {

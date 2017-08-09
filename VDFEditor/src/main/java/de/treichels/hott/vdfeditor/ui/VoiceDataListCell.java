@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import gde.model.voice.VoiceData;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,6 +34,9 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
     @SuppressWarnings("unchecked")
     public VoiceDataListCell() {
         getStylesheets().add(STYLESHEET_LOCATION);
+
+        // consume mouse events to prevent listView from processing them
+        setOnMouseClicked(Event::consume);
 
         playButton.setOnAction(event -> {
             try {
