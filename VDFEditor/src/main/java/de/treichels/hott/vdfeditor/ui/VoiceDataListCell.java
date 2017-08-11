@@ -51,10 +51,11 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
         setOnDragDetected(ev -> {
             deleteTempFiles();
 
-            // generate temporary .wav files for each selected item for DnD to desktop (export of .wav file)
+            // selected items
             final ObservableList<VoiceData> selectedItems = getListView().getSelectionModel().getSelectedItems();
 
-            for (final VoiceData vd : selectedItems)
+            // generate temporary .wav files for each selected item for DnD to desktop (export of .wav file)
+            selectedItems.forEach(vd -> {
                 try {
                     final File wav = new File(System.getProperty("java.io.tmpdir"), vd.getName() + Controller.WAV);
                     vd.writeWav(wav);
@@ -62,6 +63,7 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
                 } catch (final IOException e) {
                     ExceptionDialog.show(e);
                 }
+            });
 
             final ClipboardContent content = new ClipboardContent();
             // files for DnD to Desktop
@@ -114,37 +116,37 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
             ev.consume();
 
             try {
-            final ObservableList<VoiceData> items = getListView().getItems();
-            final Object gestureSource = ev.getGestureSource();
-            final int targetIndex = ((VoiceDataListCell) ev.getGestureTarget()).getIndex();
-            final Dragboard dragboard = ev.getDragboard();
+                final ObservableList<VoiceData> items = getListView().getItems();
+                final Object gestureSource = ev.getGestureSource();
+                final int targetIndex = ((VoiceDataListCell) ev.getGestureTarget()).getIndex();
+                final Dragboard dragboard = ev.getDragboard();
 
-            if (gestureSource instanceof VoiceDataListCell && gestureSource != this) {
-                // DnD within the same list
-                final int sourceIndex = ((VoiceDataListCell) gestureSource).getIndex();
-                final VoiceData item = ((VoiceDataListCell) gestureSource).getItem();
+                if (gestureSource instanceof VoiceDataListCell && gestureSource != this) {
+                    // DnD within the same list
+                    final int sourceIndex = ((VoiceDataListCell) gestureSource).getIndex();
+                    final VoiceData item = ((VoiceDataListCell) gestureSource).getItem();
 
-                // delete first to avoid hitting size limits
-                if (ev.getTransferMode() == TransferMode.MOVE) {
-                    items.remove(sourceIndex);
-                    getListView().getSelectionModel().clearSelection();
-                }
+                    // delete first to avoid hitting size limits
+                    if (ev.getTransferMode() == TransferMode.MOVE) {
+                        items.remove(sourceIndex);
+                        getListView().getSelectionModel().clearSelection();
+                    }
 
-                items.add(targetIndex, item);
-                ev.setDropCompleted(true);
-            } else if (dragboard.hasContent(DnD_DATA_FORMAT)) {
-                items.addAll(targetIndex, (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT));
-                ev.setDropCompleted(true);
-            } else if (gestureSource == null && dragboard.hasFiles()) {
+                    items.add(targetIndex, item);
+                    ev.setDropCompleted(true);
+                } else if (dragboard.hasContent(DnD_DATA_FORMAT)) {
+                    items.addAll(targetIndex, (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT));
+                    ev.setDropCompleted(true);
+                } else if (gestureSource == null && dragboard.hasFiles()) {
                     // import .wav file from desktop
                     final List<VoiceData> data = dragboard.getFiles().stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile)
                             .collect(Collectors.toList());
                     items.addAll(targetIndex, data);
                     ev.setDropCompleted(true);
                 }
-                } catch (final RuntimeException e) {
-                    ExceptionDialog.show(e);
-                }
+            } catch (final RuntimeException e) {
+                ExceptionDialog.show(e);
+            }
         });
 
         // cleanup
