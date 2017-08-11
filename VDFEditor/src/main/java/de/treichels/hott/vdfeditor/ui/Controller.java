@@ -98,6 +98,8 @@ public class Controller {
     private boolean dirty = false;
     private File vdfFile = null;
 
+    private HoTTException lastException = null;
+
     boolean askSave() {
         if (!dirty) return true;
 
@@ -139,40 +141,40 @@ public class Controller {
         // perform drop actions
         listView.setOnDragDropped(ev -> {
             try {
-            if (voiceFileProperty.get() == null) onNew();
-            final Dragboard dragboard = ev.getDragboard();
-            final ObservableList<VoiceData> items = listView.getItems();
+                if (voiceFileProperty.get() == null) onNew();
+                final Dragboard dragboard = ev.getDragboard();
+                final ObservableList<VoiceData> items = listView.getItems();
 
-            if (dragboard.hasContent(VoiceDataListCell.DnD_DATA_FORMAT)) {
-                // DnD between VDFEditor instances
-                @SuppressWarnings("unchecked")
-                final ArrayList<VoiceData> droppedItems = (ArrayList<VoiceData>) dragboard.getContent(VoiceDataListCell.DnD_DATA_FORMAT);
-                for (final VoiceData vd : droppedItems)
-                    items.add(vd);
-                ev.setDropCompleted(true);
-            } else if (ev.getDragboard().hasFiles()) {
-                // import sound or .vdf files from desktop
-                final List<File> files = ev.getDragboard().getFiles();
+                if (dragboard.hasContent(VoiceDataListCell.DnD_DATA_FORMAT)) {
+                    // DnD between VDFEditor instances
+                    @SuppressWarnings("unchecked")
+                    final ArrayList<VoiceData> droppedItems = (ArrayList<VoiceData>) dragboard.getContent(VoiceDataListCell.DnD_DATA_FORMAT);
+                    for (final VoiceData vd : droppedItems)
+                        items.add(vd);
+                    ev.setDropCompleted(true);
+                } else if (ev.getDragboard().hasFiles()) {
+                    // import sound or .vdf files from desktop
+                    final List<File> files = ev.getDragboard().getFiles();
 
-                // import first .vdf file
-                final Optional<File> vdf = files.stream().filter(Controller::isVDF).findFirst();
-                if (vdf.isPresent() && askSave()) {
-                    vdfFile = vdf.get();
-                    dirty = false;
-                    try {
-                        open(HoTTDecoder.decodeVDF(vdfFile));
-                    } catch (final IOException e) {
-                        ExceptionDialog.show(e);
+                    // import first .vdf file
+                    final Optional<File> vdf = files.stream().filter(Controller::isVDF).findFirst();
+                    if (vdf.isPresent() && askSave()) {
+                        vdfFile = vdf.get();
+                        dirty = false;
+                        try {
+                            open(HoTTDecoder.decodeVDF(vdfFile));
+                        } catch (final IOException e) {
+                            ExceptionDialog.show(e);
+                        }
                     }
-                }
 
-                // import any sound files
+                    // import any sound files
                     items.addAll(files.stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList()));
 
-                ev.setDropCompleted(true);
-            }
+                    ev.setDropCompleted(true);
+                }
 
-            ev.consume();
+                ev.consume();
             } catch (final RuntimeException e) {
                 ExceptionDialog.show(e);
             }
@@ -228,10 +230,10 @@ public class Controller {
                     .ifPresent(s -> PREFS.put(LAST_LOAD_SOUND_DIR, s));
             final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
             final List<VoiceData> sounds = files.stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList());
-                if (selectedIndex == -1)
-                    listView.getItems().addAll(sounds);
-                else
-                    listView.getItems().addAll(selectedIndex, sounds);
+            if (selectedIndex == -1)
+                listView.getItems().addAll(sounds);
+            else
+                listView.getItems().addAll(selectedIndex, sounds);
         }
     }
 
@@ -303,7 +305,7 @@ public class Controller {
 
     @FXML
     public void onPlay() {
-            listView.getSelectionModel().getSelectedItems().forEach(VoiceData::play);
+        listView.getSelectionModel().getSelectedItems().forEach(VoiceData::play);
     }
 
     @FXML
@@ -381,19 +383,41 @@ public class Controller {
         final ObservableListWrapper<VoiceData> items = new ObservableListWrapper<>(voiceFile.getVoiceData());
         items.addListener((ListChangeListener<VoiceData>) c -> {
             dirty = true;
-            try {
-                HoTTDecoder.verityVDF(voiceFileProperty.get());
-            } catch (final HoTTException e) {
-                while (c.next())
-                    items.removeAll(c.getAddedSubList());
-                ExceptionDialog.show(e);
-            }
+
+            while (c.next())
+                if (c.wasAdded()) {
+                    int lastIndex = c.getTo() - 1;
+
+                    // remove added entry until validation succeeds
+                    while (true)
+                        try {
+                            // validate VDF
+                            HoTTDecoder.verityVDF(voiceFileProperty.get());
+
+                            // validation succeeded - no exception was thrown
+                            // if there was an exception before, display it now and only once
+                            if (lastException != null) {
+                                ExceptionDialog.show(lastException);
+                                lastException = null;
+                            }
+                            break;
+                        } catch (final HoTTException e) {
+                            // validation failed, remove last added item and try again
+                            items.remove(lastIndex--);
+
+                            // store only first exception, ignore others
+                            if (lastException == null) lastException = e;
+                        }
+                }
+
             setTitle();
         });
 
         dirty = false;
         listView.setItems(items);
+
         setTitle();
+
     }
 
     void setTitle() {
