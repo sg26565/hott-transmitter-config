@@ -98,8 +98,6 @@ public class Controller {
     private boolean dirty = false;
     private File vdfFile = null;
 
-    private HoTTException lastException = null;
-
     boolean askSave() {
         if (!dirty) return true;
 
@@ -395,18 +393,11 @@ public class Controller {
                             HoTTDecoder.verityVDF(voiceFileProperty.get());
 
                             // validation succeeded - no exception was thrown
-                            // if there was an exception before, display it now and only once
-                            if (lastException != null) {
-                                ExceptionDialog.show(lastException);
-                                lastException = null;
-                            }
                             break;
                         } catch (final HoTTException e) {
                             // validation failed, remove last added item and try again
                             items.remove(lastIndex--);
-
-                            // store only first exception, ignore others
-                            if (lastException == null) lastException = e;
+                            ExceptionDialog.show(e);
                         }
                 }
 

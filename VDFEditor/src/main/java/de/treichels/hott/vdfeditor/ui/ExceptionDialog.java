@@ -13,9 +13,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
 public class ExceptionDialog extends Alert {
+    private static boolean SHOWING = false;
+
     public static void show(final Throwable throwable) {
-        // throwable.printStackTrace();
-        Platform.runLater(() -> new ExceptionDialog(throwable).showAndWait());
+        // show only one instance of the dialog at a time
+        if (!SHOWING) {
+            SHOWING = true;
+            Platform.runLater(() -> {
+                new ExceptionDialog(throwable).showAndWait();
+                SHOWING = false;
+            });
+        }
     }
 
     public ExceptionDialog(final Throwable throwable) {
