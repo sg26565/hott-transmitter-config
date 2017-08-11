@@ -226,17 +226,12 @@ public class Controller {
             // store dir in prefs
             files.stream().filter(Controller::isSoundFormat).findFirst().map(File::getParentFile).map(File::getAbsolutePath)
                     .ifPresent(s -> PREFS.put(LAST_LOAD_SOUND_DIR, s));
-
             final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
             final List<VoiceData> sounds = files.stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList());
-            try {
                 if (selectedIndex == -1)
                     listView.getItems().addAll(sounds);
                 else
                     listView.getItems().addAll(selectedIndex, sounds);
-            } catch (final RuntimeException e) {
-                ExceptionDialog.show(e);
-            }
         }
     }
 
@@ -308,11 +303,7 @@ public class Controller {
 
     @FXML
     public void onPlay() {
-        try {
             listView.getSelectionModel().getSelectedItems().forEach(VoiceData::play);
-        } catch (final RuntimeException e) {
-            ExceptionDialog.show(e);
-        }
     }
 
     @FXML

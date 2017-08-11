@@ -38,13 +38,7 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
         // consume mouse events to prevent listView from processing them
         setOnMouseClicked(Event::consume);
 
-        playButton.setOnAction(event -> {
-            try {
-                getItem().play();
-            } catch (final RuntimeException e) {
-                ExceptionDialog.show(e);
-            }
-        });
+        playButton.setOnAction(ev -> getItem().play());
 
         indexLabel.setMinWidth(25);
         indexLabel.setAlignment(Pos.CENTER_RIGHT);
