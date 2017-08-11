@@ -47,6 +47,7 @@ public class Launcher extends Application {
     }
 
     public static void main(final String[] args) {
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> ExceptionDialog.show(e));
         launch(args);
     }
 
@@ -60,6 +61,7 @@ public class Launcher extends Application {
         primaryStage.setOnCloseRequest(ev -> {
             if (!controller.askSave()) ev.consume();
         });
+
         final Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(icon);
