@@ -138,6 +138,7 @@ public class Controller {
 
         // perform drop actions
         listView.setOnDragDropped(ev -> {
+            try {
             if (voiceFileProperty.get() == null) onNew();
             final Dragboard dragboard = ev.getDragboard();
             final ObservableList<VoiceData> items = listView.getItems();
@@ -166,16 +167,15 @@ public class Controller {
                 }
 
                 // import any sound files
-                try {
                     items.addAll(files.stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList()));
-                } catch (final RuntimeException e) {
-                    ExceptionDialog.show(e);
-                }
 
                 ev.setDropCompleted(true);
             }
 
             ev.consume();
+            } catch (final RuntimeException e) {
+                ExceptionDialog.show(e);
+            }
         });
 
         editMenu.disableProperty().bind(voiceFileProperty.isNull());

@@ -110,6 +110,10 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
 
         // perform drop actions
         setOnDragDropped(ev -> {
+            // prevent listview from handling this event
+            ev.consume();
+
+            try {
             final ObservableList<VoiceData> items = getListView().getItems();
             final Object gestureSource = ev.getGestureSource();
             final int targetIndex = ((VoiceDataListCell) ev.getGestureTarget()).getIndex();
@@ -132,18 +136,15 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
                 items.addAll(targetIndex, (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT));
                 ev.setDropCompleted(true);
             } else if (gestureSource == null && dragboard.hasFiles()) {
-                try {
                     // import .wav file from desktop
-                    items.addAll(targetIndex,
-                            dragboard.getFiles().stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList()));
+                    final List<VoiceData> data = dragboard.getFiles().stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile)
+                            .collect(Collectors.toList());
+                    items.addAll(targetIndex, data);
+                    ev.setDropCompleted(true);
+                }
                 } catch (final RuntimeException e) {
                     ExceptionDialog.show(e);
                 }
-
-                ev.setDropCompleted(true);
-            }
-
-            ev.consume();
         });
 
         // cleanup
