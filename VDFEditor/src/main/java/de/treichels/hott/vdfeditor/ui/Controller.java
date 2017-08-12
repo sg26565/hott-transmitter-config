@@ -37,7 +37,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
@@ -67,6 +67,7 @@ public class Controller {
     private static final Preferences PREFS = Preferences.userNodeForPackage(Controller.class);
     private static final ResourceBundle RES = ResourceBundle.getBundle(Controller.class.getName());
     private static final List<File> TEMP_FILE_LIST = new ArrayList<>();
+    static final Image ICON = new Image(Controller.class.getResource("icon.png").toString());
 
     /**
      * Delete temporary file that were created during drag&drop.
@@ -193,6 +194,7 @@ public class Controller {
         final ButtonType discardButton = new ButtonType(RES.getString("discard_button"));
         final ButtonType saveButton = new ButtonType(RES.getString("save_button"));
         final Alert alert = new Alert(AlertType.WARNING, RES.getString("save_changes"), saveButton, discardButton, ButtonType.CANCEL); //$NON-NLS-1$
+        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
         alert.setHeaderText(RES.getString("modified")); //$NON-NLS-1$
         final Optional<ButtonType> answer = alert.showAndWait();
 
@@ -288,7 +290,7 @@ public class Controller {
         final Alert alert = new Alert(AlertType.INFORMATION, RES.getString("about_text"), ButtonType.CLOSE); //$NON-NLS-1$
         alert.setTitle(RES.getString("about"));
         alert.setHeaderText(Launcher.getTitle());
-        alert.setGraphic(new ImageView(getClass().getResource("icon.png").toString()));
+        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
         alert.showAndWait();
     }
 

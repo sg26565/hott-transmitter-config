@@ -3,7 +3,6 @@ package de.treichels.hott.vdfeditor.ui;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import gde.mdl.messages.Messages;
 import gde.util.Util;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -11,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.stage.Stage;
 
 public class ExceptionDialog extends Alert {
     private static boolean SHOWING = false;
@@ -31,7 +31,7 @@ public class ExceptionDialog extends Alert {
 
         if (Util.DEBUG) throwable.printStackTrace();
 
-        setTitle(Messages.getString("Error"));
+        ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(Controller.ICON);
         setHeaderText(null);
 
         String message = throwable.getLocalizedMessage();
