@@ -257,7 +257,6 @@ public class Controller {
         transmitterTypeCombo.getItems().remove(TransmitterType.mz12);
         transmitterTypeCombo.getItems().remove(TransmitterType.mz18);
         transmitterTypeCombo.getItems().remove(TransmitterType.mz24);
-        transmitterTypeCombo.getItems().remove(TransmitterType.mz24Pro);
         transmitterTypeCombo.getItems().remove(TransmitterType.unknown);
 
         // disable items if no vdf was loaded
@@ -558,6 +557,16 @@ public class Controller {
      */
     @FXML
     public boolean onSave() {
+        final VoiceFile voiceFile = voiceFileProperty.get();
+        // sanity check for system voice files to prevent transmitter malfunction
+        if (voiceFile.getVdfType() == VDFType.System && voiceFile.getVoiceData().size() < 253) {
+            final Alert alert = new Alert(AlertType.ERROR, RES.getString("system_vdf_too_small_body"));
+            ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
+            alert.setHeaderText(RES.getString("system_vdf_too_small_title"));
+            alert.showAndWait();
+            return false;
+        }
+
         final FileChooser chooser = new FileChooser();
         chooser.setTitle(RES.getString("save_vdf")); //$NON-NLS-1$
 
