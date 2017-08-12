@@ -497,6 +497,7 @@ public class Controller {
             dirty = false;
 
             open(new VoiceFile());
+            updateVDFVersion();
         }
     }
 
@@ -590,13 +591,18 @@ public class Controller {
         return false;
     }
 
+    /**
+     * Handle event for change in transmitter type.
+     *
+     * @param ev
+     */
     @FXML
-    public void onTransmitterTypeChanged(final ActionEvent ev) {
+    public void onTransmitterTypeChanged() {
         final VoiceFile voiceFile = voiceFileProperty.get();
         final TransmitterType oldTtransmitterType = voiceFile.getTransmitterType();
-        voiceFile.setTransmitterType(transmitterTypeCombo.getValue());
 
         try {
+            voiceFile.setTransmitterType(transmitterTypeCombo.getValue());
             HoTTDecoder.verityVDF(voiceFile);
             setTitle();
         } catch (final HoTTException e) {
@@ -605,16 +611,21 @@ public class Controller {
             ExceptionDialog.show(e);
         }
 
-        ev.consume();
+        updateVDFVersion();
     }
 
+    /**
+     * Handle event for change in VDF type.
+     *
+     * @param ev
+     */
     @FXML
-    public void onVDFTypeChanged(final ActionEvent ev) {
+    public void onVDFTypeChanged() {
         final VoiceFile voiceFile = voiceFileProperty.get();
         final VDFType oldVDFType = voiceFile.getVdfType();
-        voiceFile.setVdfType(vdfTypeCombo.getValue());
 
         try {
+            voiceFile.setVdfType(vdfTypeCombo.getValue());
             HoTTDecoder.verityVDF(voiceFile);
             setTitle();
         } catch (final HoTTException e) {
@@ -623,7 +634,17 @@ public class Controller {
             ExceptionDialog.show(e);
         }
 
-        ev.consume();
+        updateVDFVersion();
+    }
+
+    @FXML
+    public void onVDFVersionChanged() {
+        final String vdfVersion = vdfVersionCombo.getValue();
+
+        if (vdfVersion != null) {
+            final VoiceFile voiceFile = voiceFileProperty.get();
+            voiceFile.setVdfVersion((int) (Float.valueOf(vdfVersion) * 1000.0f));
+        }
     }
 
     /**
@@ -718,5 +739,44 @@ public class Controller {
 
         final Scene scene = listView.getScene();
         if (scene != null) ((Stage) scene.getWindow()).setTitle(sb.toString());
+    }
+
+    private void updateVDFVersion() {
+        final VoiceFile voiceFile = voiceFileProperty.get();
+        final ObservableList<String> items = vdfVersionCombo.getItems();
+
+        items.clear();
+        if (voiceFile.getVdfType() == VDFType.User)
+            items.add(Float.toString(2.5f));
+        else
+            switch (voiceFile.getTransmitterType()) {
+            case mc16:
+            case mc20:
+            case mc32:
+            case mx12:
+            case mx16:
+            case mx20:
+                items.addAll(Float.toString(2.0f), Float.toString(3.0f));
+                break;
+
+            case mc26:
+            case mc28:
+                items.add(Float.toString(3.0f));
+                break;
+
+            case mz12:
+            case mz18:
+            case mz24:
+            case mz24Pro:
+                items.addAll(Float.toString(2.0f), Float.toString(3.0f));
+                break;
+
+            case unknown:
+            default:
+                break;
+
+            }
+
+        if (!items.contains(vdfVersionCombo.getValue())) vdfVersionCombo.setValue(items.size() == 0 ? "--" : items.get(0));
     }
 }

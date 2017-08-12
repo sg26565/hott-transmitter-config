@@ -1,5 +1,13 @@
+2017-08-12
+==========
+	VDFEditor-0.9.0-56
+	- add vdf version combo
+	
 2017-08-11
 ==========
+	VDFEditor-0.9.0-55
+	- prevent multiple exception dialogs at the same time
+	
 	VDFEditor-0.9.0-54
 	- add a filter to show all supported sound formats
 	- fix removal of entries that exceed the size limit of the VDF
