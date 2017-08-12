@@ -15,6 +15,7 @@ public class VoiceFile {
     private TransmitterType transmitterType;
     private VDFType vdfType;
     private int vdfVersion;
+    private CountryCode country = CountryCode.eu;
 
     public VoiceFile() {
         vdfType = VDFType.User;
@@ -22,11 +23,17 @@ public class VoiceFile {
         voiceData = new ArrayList<>();
     }
 
-    public VoiceFile(final VDFType vdfType, final TransmitterType transmitterType, final int vdfVersion, final List<VoiceData> voiceData) {
+    public VoiceFile(final VDFType vdfType, final TransmitterType transmitterType, final int vdfVersion, final int countryCode,
+            final List<VoiceData> voiceData) {
         this.vdfType = vdfType;
         this.transmitterType = transmitterType;
         this.voiceData = voiceData;
         this.vdfVersion = vdfVersion;
+        country = CountryCode.forCode(countryCode);
+    }
+
+    public CountryCode getCountry() {
+        return country;
     }
 
     public int getDataSize() {
@@ -51,6 +58,10 @@ public class VoiceFile {
 
     public List<VoiceData> getVoiceData() {
         return voiceData;
+    }
+
+    public void setCountry(final CountryCode country) {
+        this.country = country;
     }
 
     public void setTransmitterType(final TransmitterType transmitterType) {

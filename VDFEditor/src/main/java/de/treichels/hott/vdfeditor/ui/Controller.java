@@ -16,6 +16,7 @@ import com.sun.javafx.collections.ObservableListWrapper;
 import de.treichels.hott.HoTTDecoder;
 import gde.model.HoTTException;
 import gde.model.enums.TransmitterType;
+import gde.model.voice.CountryCode;
 import gde.model.voice.VDFType;
 import gde.model.voice.VoiceData;
 import gde.model.voice.VoiceFile;
@@ -181,6 +182,8 @@ public class Controller {
     private ComboBox<VDFType> vdfTypeCombo;
     @FXML
     private ComboBox<String> vdfVersionCombo;
+    @FXML
+    private ComboBox<CountryCode> countryCodeCombo;
 
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
     private boolean dirty = false;
@@ -222,17 +225,15 @@ public class Controller {
         final int vdfVersion = voiceFile.getVdfVersion();
         final int voiceCount = voiceFile.getVoiceData().size();
         final TransmitterType transmitterType = voiceFile.getTransmitterType();
+        boolean valid = true;
 
-        int expectedCount = 0;
+        if (vdfVersion == 2000 && voiceCount != 250 && voiceCount != 253)
+            valid = false;
+        else if (vdfVersion == 3000 && (transmitterType == TransmitterType.mc26 || transmitterType == TransmitterType.mc28) && voiceCount != 432)
+            valid = false;
+        else if (vdfVersion == 3000 && voiceCount != 284) valid = false;
 
-        if (vdfVersion == 2000)
-            expectedCount = 250;
-        else if (vdfVersion == 3000) if (transmitterType == TransmitterType.mc26 || transmitterType == TransmitterType.mc28)
-            expectedCount = 432;
-        else
-            expectedCount = 284;
-
-        if (voiceCount != expectedCount) {
+        if (!valid) {
             final Alert alert = new Alert(AlertType.ERROR, RES.getString("system_vdf_too_small_body"));
             ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
             alert.setHeaderText(RES.getString("system_vdf_too_small_title"));
@@ -288,6 +289,7 @@ public class Controller {
         // setup combo boxes
         vdfVersionCombo.getItems().addAll(Float.toString(2.0f), Float.toString(2.5f), Float.toString(3.0f));
         vdfTypeCombo.getItems().addAll(VDFType.values());
+        countryCodeCombo.getItems().addAll(CountryCode.values());
         transmitterTypeCombo.getItems().addAll(TransmitterType.values());
         transmitterTypeCombo.getItems().remove(TransmitterType.mz12);
         transmitterTypeCombo.getItems().remove(TransmitterType.mz18);
@@ -297,7 +299,8 @@ public class Controller {
         // disable items if no vdf was loaded
         final BooleanBinding noVdf = voiceFileProperty.isNull();
         vdfVersionCombo.disableProperty().bind(noVdf);
-        vdfTypeCombo.disableProperty().bind(noVdf);
+        vdfTypeCombo.disableProperty().bind(noVdf);;
+        countryCodeCombo.disableProperty().bind(noVdf);
         transmitterTypeCombo.disableProperty().bind(noVdf);
         editMenu.disableProperty().bind(noVdf);
         saveVDFMenuItem.disableProperty().bind(noVdf);
@@ -370,6 +373,12 @@ public class Controller {
     @FXML
     public void onClose() {
         if (askSave()) System.exit(0);
+    }
+
+    @FXML
+    public void onCountryCodeChanged() {
+        final VoiceFile voiceFile = voiceFileProperty.get();
+        voiceFile.setCountry(countryCodeCombo.getValue());
     }
 
     /**
@@ -713,6 +722,7 @@ public class Controller {
         voiceFileProperty.set(voiceFile);
         vdfTypeCombo.setValue(voiceFile.getVdfType());
         vdfVersionCombo.setValue(Float.toString(voiceFile.getVdfVersion() / 1000.0f));
+        countryCodeCombo.setValue(voiceFile.getCountry());
         transmitterTypeCombo.setValue(voiceFile.getTransmitterType());
 
         final ObservableListWrapper<VoiceData> items = new ObservableListWrapper<>(voiceFile.getVoiceData());

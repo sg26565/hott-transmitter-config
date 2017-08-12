@@ -116,6 +116,9 @@
             <Label text="%vdf_type" textAlignment="RIGHT" />
             <ComboBox fx:id="vdfTypeCombo" onAction="#onVDFTypeChanged" />
             <Region prefWidth="20.0" />
+            <Label text="%country_code" />
+            <ComboBox fx:id="countryCodeCombo" onAction="#onCountryCodeChanged" />
+            <Region prefWidth="20.0" />
             <Label text="%transmitter_type" />
             <ComboBox fx:id="transmitterTypeCombo" onAction="#onTransmitterTypeChanged" />
          </children>
