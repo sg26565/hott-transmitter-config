@@ -674,7 +674,7 @@ public class Controller {
     private void open(final VoiceFile voiceFile) {
         voiceFileProperty.set(voiceFile);
         vdfTypeCombo.setValue(voiceFile.getVdfType());
-        vdfVersionCombo.setValue(String.format("%1.1f", voiceFile.getVdfVersion() / 1000.0));
+        vdfVersionCombo.setValue(Float.toString(voiceFile.getVdfVersion() / 1000.0f));
         transmitterTypeCombo.setValue(voiceFile.getTransmitterType());
 
         final ObservableListWrapper<VoiceData> items = new ObservableListWrapper<>(voiceFile.getVoiceData());
