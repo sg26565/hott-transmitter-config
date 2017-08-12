@@ -94,6 +94,9 @@ public class Controller {
     private ComboBox<TransmitterType> transmitterTypeCombo;
     @FXML
     private ComboBox<VDFType> vdfTypeCombo;
+    @FXML
+    private ComboBox<String> vdfVersionCombo;
+
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
     private boolean dirty = false;
     private File vdfFile = null;
@@ -180,6 +183,8 @@ public class Controller {
 
         editMenu.disableProperty().bind(voiceFileProperty.isNull());
         saveVDFMenuItem.disableProperty().bind(voiceFileProperty.isNull());
+        vdfVersionCombo.getItems().addAll(Float.toString(2.0f), Float.toString(2.5f), Float.toString(3.0f));
+        vdfVersionCombo.disableProperty().bind(voiceFileProperty.isNull());
         vdfTypeCombo.getItems().addAll(VDFType.values());
         vdfTypeCombo.disableProperty().bind(voiceFileProperty.isNull());
         transmitterTypeCombo.getItems().addAll(TransmitterType.values());
@@ -376,6 +381,7 @@ public class Controller {
     private void open(final VoiceFile voiceFile) {
         voiceFileProperty.set(voiceFile);
         vdfTypeCombo.setValue(voiceFile.getVdfType());
+        vdfVersionCombo.setValue(String.format("%1.1f", voiceFile.getVdfVersion() / 1000.0));
         transmitterTypeCombo.setValue(voiceFile.getTransmitterType());
 
         final ObservableListWrapper<VoiceData> items = new ObservableListWrapper<>(voiceFile.getVoiceData());
