@@ -14,6 +14,7 @@ public class VoiceFile {
     private final List<VoiceData> voiceData;
     private TransmitterType transmitterType;
     private VDFType vdfType;
+    private int vdfVersion;
 
     public VoiceFile() {
         vdfType = VDFType.User;
@@ -21,10 +22,11 @@ public class VoiceFile {
         voiceData = new ArrayList<>();
     }
 
-    public VoiceFile(final VDFType vdfType, final TransmitterType transmitterType, final List<VoiceData> voiceData) {
+    public VoiceFile(final VDFType vdfType, final TransmitterType transmitterType, final int vdfVersion, final List<VoiceData> voiceData) {
         this.vdfType = vdfType;
         this.transmitterType = transmitterType;
         this.voiceData = voiceData;
+        this.vdfVersion = vdfVersion;
     }
 
     public int getDataSize() {
@@ -37,6 +39,10 @@ public class VoiceFile {
 
     public VDFType getVdfType() {
         return vdfType;
+    }
+
+    public int getVdfVersion() {
+        return vdfVersion;
     }
 
     public int getVoiceCount() {
@@ -53,5 +59,9 @@ public class VoiceFile {
 
     public void setVdfType(final VDFType type) {
         vdfType = type;
+    }
+
+    public void setVdfVersion(final int vdfVersion) {
+        this.vdfVersion = vdfVersion;
     }
 }
