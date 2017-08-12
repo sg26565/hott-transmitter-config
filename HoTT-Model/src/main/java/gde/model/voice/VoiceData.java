@@ -58,6 +58,7 @@ public class VoiceData implements Serializable {
     }
 
     private String name;
+
     private final byte[] data;
 
     public VoiceData(final String name, final byte[] data) {
@@ -121,6 +122,11 @@ public class VoiceData implements Serializable {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("VoiceData [name=%s]", name);
     }
 
     public void writeVox(final File voxFile) throws IOException {

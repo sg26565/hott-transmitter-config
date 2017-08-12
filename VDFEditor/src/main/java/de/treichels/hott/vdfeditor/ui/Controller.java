@@ -290,6 +290,7 @@ public class Controller {
     @FXML
     public void onOpen() throws IOException {
         if (askSave()) {
+            dirty = false;
             final FileChooser chooser = new FileChooser();
             chooser.setTitle(RES.getString("open_vdf")); //$NON-NLS-1$
             final File dir = new File(PREFS.get(LAST_LOAD_VDF_DIR, System.getProperty(USER_HOME)));
@@ -299,9 +300,7 @@ public class Controller {
             final File vdf = chooser.showOpenDialog(listView.getScene().getWindow());
             if (vdf != null) {
                 PREFS.put(LAST_LOAD_VDF_DIR, vdf.getParentFile().getAbsolutePath());
-                vdfFile = vdf;
-                dirty = false;
-                open(HoTTDecoder.decodeVDF(vdf));
+                open(vdf);
             }
         }
     }
@@ -376,6 +375,18 @@ public class Controller {
         }
 
         ev.consume();
+    }
+
+    public void open(final File vdf) {
+        if (askSave()) {
+            vdfFile = vdf;
+
+            try {
+                open(HoTTDecoder.decodeVDF(vdf));
+            } catch (final IOException e) {
+                ExceptionDialog.show(e);
+            }
+        }
     }
 
     private void open(final VoiceFile voiceFile) {
