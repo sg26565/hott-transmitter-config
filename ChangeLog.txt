@@ -1,5 +1,8 @@
 2017-08-12
 ==========
+	VDFEditor-0.9.0-59
+	- check entry count for system VDF files v2: 250, v3: for mc-26/mc-28 432, v3: for other transmitters 284
+	
 	VDFEditor-0.9.0-56
 	- add vdf version combo
 	

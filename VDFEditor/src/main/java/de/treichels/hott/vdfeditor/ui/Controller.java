@@ -209,6 +209,41 @@ public class Controller {
     }
 
     /**
+     * sanity check for system voice files to prevent transmitter malfunction
+     *
+     * @return
+     */
+    private boolean checkSize() {
+        final VoiceFile voiceFile = voiceFileProperty.get();
+
+        // User VDFs are always ok
+        if (voiceFile.getVdfType() == VDFType.User) return true;
+
+        final int vdfVersion = voiceFile.getVdfVersion();
+        final int voiceCount = voiceFile.getVoiceData().size();
+        final TransmitterType transmitterType = voiceFile.getTransmitterType();
+
+        int expectedCount = 0;
+
+        if (vdfVersion == 2000)
+            expectedCount = 250;
+        else if (vdfVersion == 3000) if (transmitterType == TransmitterType.mc26 || transmitterType == TransmitterType.mc28)
+            expectedCount = 432;
+        else
+            expectedCount = 284;
+
+        if (voiceCount != expectedCount) {
+            final Alert alert = new Alert(AlertType.ERROR, RES.getString("system_vdf_too_small_body"));
+            ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
+            alert.setHeaderText(RES.getString("system_vdf_too_small_title"));
+            alert.showAndWait();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Factory method to create new {@link VoiceDataListCell} objects.
      *
      * @param listView
@@ -557,15 +592,7 @@ public class Controller {
      */
     @FXML
     public boolean onSave() {
-        final VoiceFile voiceFile = voiceFileProperty.get();
-        // sanity check for system voice files to prevent transmitter malfunction
-        if (voiceFile.getVdfType() == VDFType.System && voiceFile.getVoiceData().size() < 253) {
-            final Alert alert = new Alert(AlertType.ERROR, RES.getString("system_vdf_too_small_body"));
-            ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
-            alert.setHeaderText(RES.getString("system_vdf_too_small_title"));
-            alert.showAndWait();
-            return false;
-        }
+        if (!checkSize()) return false;
 
         final FileChooser chooser = new FileChooser();
         chooser.setTitle(RES.getString("save_vdf")); //$NON-NLS-1$
