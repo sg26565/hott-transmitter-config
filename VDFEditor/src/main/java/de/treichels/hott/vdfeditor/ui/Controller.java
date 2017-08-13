@@ -218,6 +218,7 @@ public class Controller {
      */
     private boolean checkSize() {
         final VoiceFile voiceFile = voiceFileProperty.get();
+        final VDFType vdfType = voiceFile.getVdfType();
         final int vdfVersion = voiceFile.getVdfVersion();
         final int voiceCount = voiceFile.getVoiceData().size();
         final CountryCode countryCode = voiceFile.getCountry();
@@ -225,7 +226,7 @@ public class Controller {
         boolean valid = true;
 
         // User VDFs are always ok
-        if (voiceFile.getVdfType() == VDFType.User) {
+        if (vdfType == VDFType.User) {
             if (transmitterType == TransmitterType.mc26 || transmitterType == TransmitterType.mc28)
                 valid = voiceCount <= 40;
             else
@@ -245,6 +246,16 @@ public class Controller {
             alert.setHeaderText(RES.getString("system_vdf_too_small_title"));
             alert.showAndWait();
             return false;
+        }
+
+        // display a disclaimer when saving a system vdf
+        if (valid && vdfType == VDFType.System) {
+            final ButtonType accept = new ButtonType(RES.getString("accept_button"));
+            final Alert alert = new Alert(AlertType.WARNING, RES.getString("system_vdf_disclaimer_body"), accept, ButtonType.CANCEL);
+            ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
+            alert.setHeaderText(RES.getString("system_vdf_disclaimer_title"));
+            final Optional<ButtonType> result = alert.showAndWait();
+            return result.isPresent() && result.get() == accept;
         }
 
         return true;
