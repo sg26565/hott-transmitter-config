@@ -181,7 +181,7 @@ public class Controller {
     @FXML
     private ComboBox<VDFType> vdfTypeCombo;
     @FXML
-    private ComboBox<String> vdfVersionCombo;
+    private ComboBox<Float> vdfVersionCombo;
     @FXML
     private ComboBox<CountryCode> countryCodeCombo;
 
@@ -218,20 +218,26 @@ public class Controller {
      */
     private boolean checkSize() {
         final VoiceFile voiceFile = voiceFileProperty.get();
-
-        // User VDFs are always ok
-        if (voiceFile.getVdfType() == VDFType.User) return true;
-
         final int vdfVersion = voiceFile.getVdfVersion();
         final int voiceCount = voiceFile.getVoiceData().size();
+        final CountryCode countryCode = voiceFile.getCountry();
         final TransmitterType transmitterType = voiceFile.getTransmitterType();
         boolean valid = true;
 
-        if (vdfVersion == 2000 && voiceCount != 250 && voiceCount != 253)
-            valid = false;
-        else if (vdfVersion == 3000 && (transmitterType == TransmitterType.mc26 || transmitterType == TransmitterType.mc28) && voiceCount != 432)
-            valid = false;
-        else if (vdfVersion == 3000 && voiceCount != 284) valid = false;
+        // User VDFs are always ok
+        if (voiceFile.getVdfType() == VDFType.User) {
+            if (transmitterType == TransmitterType.mc26 || transmitterType == TransmitterType.mc28)
+                valid = voiceCount <= 40;
+            else
+                valid = voiceCount <= 10;
+        } else if (vdfVersion == 2000) {
+            if (countryCode == CountryCode.eu)
+                valid = voiceCount == 250;
+            else
+                valid = voiceCount == 253;
+        } else if (vdfVersion == 2500)
+            valid = voiceCount == 284;
+        else if (vdfVersion == 3000) valid = voiceCount == 432;
 
         if (!valid) {
             final Alert alert = new Alert(AlertType.ERROR, RES.getString("system_vdf_too_small_body"));
@@ -287,7 +293,7 @@ public class Controller {
         listView.setOnDragDropped(this::onDragDropped);
 
         // setup combo boxes
-        vdfVersionCombo.getItems().addAll(Float.toString(2.0f), Float.toString(2.5f), Float.toString(3.0f));
+        vdfVersionCombo.getItems().addAll(2.0f, 2.5f, 3.0f);
         vdfTypeCombo.getItems().addAll(VDFType.values());
         countryCodeCombo.getItems().addAll(CountryCode.values());
         transmitterTypeCombo.getItems().addAll(TransmitterType.values());
@@ -686,11 +692,11 @@ public class Controller {
 
     @FXML
     public void onVDFVersionChanged() {
-        final String vdfVersion = vdfVersionCombo.getValue();
+        final Float vdfVersion = vdfVersionCombo.getValue();
 
         if (vdfVersion != null) {
             final VoiceFile voiceFile = voiceFileProperty.get();
-            voiceFile.setVdfVersion((int) (Float.valueOf(vdfVersion) * 1000.0f));
+            voiceFile.setVdfVersion((int) (vdfVersion * 1000));
         }
     }
 
@@ -721,7 +727,7 @@ public class Controller {
     private void open(final VoiceFile voiceFile) {
         voiceFileProperty.set(voiceFile);
         vdfTypeCombo.setValue(voiceFile.getVdfType());
-        vdfVersionCombo.setValue(Float.toString(voiceFile.getVdfVersion() / 1000.0f));
+        vdfVersionCombo.setValue(voiceFile.getVdfVersion() / 1000.0f);
         countryCodeCombo.setValue(voiceFile.getCountry());
         transmitterTypeCombo.setValue(voiceFile.getTransmitterType());
 
@@ -791,12 +797,12 @@ public class Controller {
 
     private void updateVDFVersion() {
         final VoiceFile voiceFile = voiceFileProperty.get();
-        final ObservableList<String> items = vdfVersionCombo.getItems();
+        final ObservableList<Float> items = vdfVersionCombo.getItems();
 
-        items.clear();
-        if (voiceFile.getVdfType() == VDFType.User)
-            items.add(Float.toString(2.5f));
-        else
+        if (voiceFile.getVdfType() == VDFType.User) {
+            items.removeAll(2.0f, 3.0f);
+            if (!items.contains(2.5f)) items.add(2.5f);
+        } else
             switch (voiceFile.getTransmitterType()) {
             case mc16:
             case mc20:
@@ -804,27 +810,27 @@ public class Controller {
             case mx12:
             case mx16:
             case mx20:
-                items.addAll(Float.toString(2.0f), Float.toString(3.0f));
-                break;
-
-            case mc26:
-            case mc28:
-                items.add(Float.toString(3.0f));
-                break;
-
             case mz12:
             case mz18:
             case mz24:
             case mz24Pro:
-                items.addAll(Float.toString(2.0f), Float.toString(3.0f));
+                items.remove(3.0f);
+                if (!items.contains(2.0f)) items.add(2.0f);
+                if (!items.contains(2.5f)) items.add(2.5f);
+                break;
+
+            case mc26:
+            case mc28:
+                items.removeAll(2.0f, 2.5f);
+                if (!items.contains(3.0f)) items.add(3.0f);
                 break;
 
             case unknown:
             default:
+                items.clear();
                 break;
-
             }
 
-        if (!items.contains(vdfVersionCombo.getValue())) vdfVersionCombo.setValue(items.size() == 0 ? "--" : items.get(0));
+        if (!items.contains(vdfVersionCombo.getValue())) vdfVersionCombo.setValue(items.size() == 0 ? 0.0f : items.get(0));
     }
 }

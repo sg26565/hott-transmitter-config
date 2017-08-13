@@ -1,29 +1,37 @@
+2017-08-13
+==========
+	VDFEditor-0.9.0-63
+	- improved size checks
+	
 2017-08-12
 ==========
-	VDFEditor-0.9.0-59
+	VDFEditor-0.9.0.62
+	- support for country code
+	 	
+	VDFEditor-0.9.0.59
 	- check entry count for system VDF files v2: 250, v3: for mc-26/mc-28 432, v3: for other transmitters 284
 	
-	VDFEditor-0.9.0-56
+	VDFEditor-0.9.0.56
 	- add vdf version combo
 	
 2017-08-11
 ==========
-	VDFEditor-0.9.0-55
+	VDFEditor-0.9.0.55
 	- prevent multiple exception dialogs at the same time
 	
-	VDFEditor-0.9.0-54
+	VDFEditor-0.9.0.54
 	- add a filter to show all supported sound formats
 	- fix removal of entries that exceed the size limit of the VDF
 
 2017-08-09
 ==========
-	VDFEditor-0.9.0-53
+	VDFEditor-0.9.0.53
 	- add functions to clear selection
 	- insert file before drop target on DnD 
 	
 2017-08-08
 ==========
-	VDFEditor-0.9.0-45
+	VDFEditor-0.9.0.45
 	- Support for .mp3 and .ogg sound files
 	- Made warning dialog for unsaved changes more explicit
 	- Avoid multiple warnings when importing more than one sound file
