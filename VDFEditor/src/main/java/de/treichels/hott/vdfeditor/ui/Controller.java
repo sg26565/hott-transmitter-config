@@ -807,10 +807,6 @@ public class Controller {
         final VoiceFile voiceFile = voiceFileProperty.get();
         final ObservableList<Float> items = vdfVersionCombo.getItems();
 
-        if (voiceFile.getVdfType() == VDFType.User) {
-            items.removeAll(2.0f, 3.0f);
-            if (!items.contains(2.5f)) items.add(2.5f);
-        } else
             switch (voiceFile.getTransmitterType()) {
             case mc16:
             case mc20:
@@ -824,7 +820,9 @@ public class Controller {
             case mz24:
             case mz24Pro:
                 items.remove(3.0f);
-                if (!items.contains(2.0f)) items.add(2.0f);
+            if (voiceFile.getVdfType() == VDFType.User)
+                items.remove(2.0f);
+            else if (!items.contains(2.0f)) items.add(2.0f);
                 if (!items.contains(2.5f)) items.add(2.5f);
                 break;
 
