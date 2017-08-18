@@ -753,7 +753,7 @@ public class Controller {
                     int lastIndex = c.getTo() - 1;
 
                     // check for duplicate entries
-                    for (int i = fistIndex; i <= lastIndex; i++) {
+                    for (int i = fistIndex; i <= lastIndex && i < items.size(); i++) {
                         final VoiceData voiceData1 = items.get(i);
                         final String name1 = voiceData1.getName();
                         final int hash1 = Arrays.hashCode(voiceData1.getRawData());
