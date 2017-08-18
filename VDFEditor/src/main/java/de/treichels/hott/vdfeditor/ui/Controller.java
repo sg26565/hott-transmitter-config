@@ -637,6 +637,11 @@ public class Controller {
             PREFS.put(LAST_SAVE_VDF_DIR, vdf.getParentFile().getAbsolutePath());
 
             try {
+                if (vdf.equals(vdfFile) && voiceFileProperty.get().getVdfType() == VDFType.System) {
+                    ErrorDialog.show(RES.getString("will_not_overwrite_system_vdf"), RES.getString("system_vdf_exists"), vdf.getName());
+                    return false;
+                }
+
                 HoTTDecoder.encodeVDF(voiceFileProperty.get(), vdf);
                 vdfFile = vdf;
                 dirty = false;
