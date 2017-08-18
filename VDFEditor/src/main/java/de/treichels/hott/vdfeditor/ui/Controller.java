@@ -142,7 +142,7 @@ public class Controller {
 
         // allow copy and move within the list only
         if (ev.getGestureSource() instanceof VoiceDataListCell && ev.getGestureTarget() instanceof VoiceDataListCell && ev.getGestureSource() != ev.getTarget())
-            ev.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            ev.acceptTransferModes(TransferMode.MOVE);
 
         // allow copy between two VDFEditor instances
         else if (ev.getDragboard().hasContent(DnD_DATA_FORMAT) && ev.getGestureSource() != ev.getTarget())
@@ -486,13 +486,9 @@ public class Controller {
                 final int sourceIndex = ((VoiceDataListCell) source).getIndex();
                 final VoiceData item = ((VoiceDataListCell) source).getItem();
 
-                // delete first to avoid hitting size limits
-                if (ev.getTransferMode() == TransferMode.MOVE) {
-                    items.remove(sourceIndex);
-                    listView.getSelectionModel().clearSelection();
-                }
-
+                items.remove(sourceIndex);
                 items.add(targetIndex, item);
+                listView.getSelectionModel().clearSelection();
             } else if (dragboard.hasContent(DnD_DATA_FORMAT))
                 // DnD between VDFEditor instances
                 items.addAll(targetIndex, (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT));

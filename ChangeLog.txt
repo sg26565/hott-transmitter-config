@@ -1,6 +1,15 @@
+2017-08-18
+==========
+	VDFEditor-0.9.0.65
+	- display disclaimer when saving system VDFs
+	- add new mz-12PRO transmitter
+	- add mz-12, mz-18 and mz-24 transmitters
+	- prevent duplicate entries in the voice list
+	- do not allow to overwrite existing system VDFs
+	
 2017-08-13
 ==========
-	VDFEditor-0.9.0-63
+	VDFEditor-0.9.0.63
 	- improved size checks
 	
 2017-08-12
