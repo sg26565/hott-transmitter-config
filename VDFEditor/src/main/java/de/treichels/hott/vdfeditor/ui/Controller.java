@@ -308,9 +308,6 @@ public class Controller {
         vdfTypeCombo.getItems().addAll(VDFType.values());
         countryCodeCombo.getItems().addAll(CountryCode.values());
         transmitterTypeCombo.getItems().addAll(TransmitterType.values());
-        transmitterTypeCombo.getItems().remove(TransmitterType.mz12);
-        transmitterTypeCombo.getItems().remove(TransmitterType.mz18);
-        transmitterTypeCombo.getItems().remove(TransmitterType.mz24);
         transmitterTypeCombo.getItems().remove(TransmitterType.unknown);
 
         // disable items if no vdf was loaded
