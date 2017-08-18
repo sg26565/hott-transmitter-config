@@ -3,6 +3,7 @@ package de.treichels.hott.vdfeditor.ui;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -748,7 +749,37 @@ public class Controller {
             while (c.next())
                 // if an item was added, check if the size limit was reached
                 if (c.wasAdded()) {
+                    final int fistIndex = c.getFrom();
                     int lastIndex = c.getTo() - 1;
+
+                    // check for duplicate entries
+                    for (int i = fistIndex; i <= lastIndex; i++) {
+                        final VoiceData voiceData1 = items.get(i);
+                        final String name1 = voiceData1.getName();
+                        final int hash1 = Arrays.hashCode(voiceData1.getRawData());
+
+                        for (int j = 0; j < items.size(); j++) {
+                            if (j == i) continue;
+
+                            final VoiceData voiceData2 = items.get(j);
+                            final String name2 = voiceData2.getName();
+                            final int hash2 = Arrays.hashCode(voiceData2.getRawData());
+
+                            if (name1.equals(name2)) {
+                                items.remove(i);
+                                lastIndex--;
+                                ErrorDialog.show(RES.getString("duplicate_entry"), RES.getString("duplicate_name"), name1);
+                                break;
+                            }
+
+                            if (hash1 == hash2) {
+                                items.remove(i);
+                                lastIndex--;
+                                ErrorDialog.show(RES.getString("duplicate_entry"), RES.getString("duplicate_sound"), name1, name2);
+                                break;
+                            }
+                        }
+                    }
 
                     // remove added entries until validation succeeds
                     while (true)
@@ -807,36 +838,36 @@ public class Controller {
         final VoiceFile voiceFile = voiceFileProperty.get();
         final ObservableList<Float> items = vdfVersionCombo.getItems();
 
-            switch (voiceFile.getTransmitterType()) {
-            case mc16:
-            case mc20:
-            case mc32:
-            case mx12:
-            case mx16:
-            case mx20:
-            case mz12:
+        switch (voiceFile.getTransmitterType()) {
+        case mc16:
+        case mc20:
+        case mc32:
+        case mx12:
+        case mx16:
+        case mx20:
+        case mz12:
         case mz12Pro:
-            case mz18:
-            case mz24:
-            case mz24Pro:
-                items.remove(3.0f);
+        case mz18:
+        case mz24:
+        case mz24Pro:
+            items.remove(3.0f);
             if (voiceFile.getVdfType() == VDFType.User)
                 items.remove(2.0f);
             else if (!items.contains(2.0f)) items.add(2.0f);
-                if (!items.contains(2.5f)) items.add(2.5f);
-                break;
+            if (!items.contains(2.5f)) items.add(2.5f);
+            break;
 
-            case mc26:
-            case mc28:
-                items.removeAll(2.0f, 2.5f);
-                if (!items.contains(3.0f)) items.add(3.0f);
-                break;
+        case mc26:
+        case mc28:
+            items.removeAll(2.0f, 2.5f);
+            if (!items.contains(3.0f)) items.add(3.0f);
+            break;
 
-            case unknown:
-            default:
-                items.clear();
-                break;
-            }
+        case unknown:
+        default:
+            items.clear();
+            break;
+        }
 
         if (!items.contains(vdfVersionCombo.getValue())) vdfVersionCombo.setValue(items.size() == 0 ? 0.0f : items.get(0));
     }
