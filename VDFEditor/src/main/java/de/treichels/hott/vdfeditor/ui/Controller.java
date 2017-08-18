@@ -822,6 +822,7 @@ public class Controller {
             case mx16:
             case mx20:
             case mz12:
+        case mz12Pro:
             case mz18:
             case mz24:
             case mz24Pro:
