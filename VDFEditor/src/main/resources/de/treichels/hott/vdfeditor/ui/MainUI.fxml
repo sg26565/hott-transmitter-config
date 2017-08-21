@@ -43,6 +43,14 @@
                               <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
+                        <Menu mnemonicParsing="false" text="%restore_menu">
+                          <items>
+                              <Menu fx:id="voice2_menu" mnemonicParsing="false" text="%voice2" />
+                              <Menu fx:id="voice2_microcopter_menu" mnemonicParsing="false" text="%voice2_microcopter" />
+                              <Menu fx:id="voice3_menu" mnemonicParsing="false" text="%voice3" />
+                              <Menu fx:id="voice3_mc28_menu" mnemonicParsing="false" text="%voice3_mc28" />
+                          </items>
+                        </Menu>
                         <MenuItem fx:id="saveVDFMenuItem" mnemonicParsing="false" onAction="#onSave" text="%save_vdf">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />

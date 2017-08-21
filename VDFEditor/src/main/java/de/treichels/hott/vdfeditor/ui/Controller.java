@@ -2,12 +2,16 @@ package de.treichels.hott.vdfeditor.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 
@@ -137,12 +141,42 @@ public class Controller {
     private MenuItem saveVDFAsMenuItem;
     @FXML
     private MenuItem replaceSoundMenuItem;
+    @FXML
+    Menu voice2_menu;
+    @FXML
+    Menu voice2_microcopter_menu;
+    @FXML
+    Menu voice3_menu;
+    @FXML
+    Menu voice3_mc28_menu;
 
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
     private final SimpleBooleanProperty systemVDFProperty = new SimpleBooleanProperty();
-
     private final SimpleBooleanProperty dirtyProperty = new SimpleBooleanProperty(false);
     private final SimpleObjectProperty<File> vdfFileProperty = new SimpleObjectProperty<>(null);
+
+    private void addRestoreFiles(final Menu menu, final String location) {
+        final SortedMap<String, MenuItem> items = new TreeMap<>();
+
+        for (final Language l : Language.values()) {
+            final String path = String.format("restore/%s_%s.vdf", location, l.name());
+            final URL url = getClass().getResource(path);
+            if (url != null) {
+                final String language = l.toString();
+                final MenuItem menuItem = new MenuItem(language);
+                menuItem.setOnAction(ev -> {
+                    try {
+                        open(new File(url.toURI()));
+                    } catch (final URISyntaxException e) {
+                        ExceptionDialog.show(e);
+                    }
+                });
+                items.put(language, menuItem);
+            }
+        }
+
+        menu.getItems().addAll(items.values());
+    }
 
     public boolean askSave() {
         // no need to save
@@ -287,6 +321,11 @@ public class Controller {
         renameMenuItem.disableProperty().bind(noSelection);
         deleteSoundMenuItem.disableProperty().bind(noSelection);
         replaceSoundMenuItem.disableProperty().bind(noSelection);
+
+        addRestoreFiles(voice2_menu, "Voice2");
+        addRestoreFiles(voice2_microcopter_menu, "Voice2_Microcopter");
+        addRestoreFiles(voice3_menu, "Voice3");
+        addRestoreFiles(voice3_mc28_menu, "Voice3_mc28");
 
         // always start with an empty vdf
         onNew();
