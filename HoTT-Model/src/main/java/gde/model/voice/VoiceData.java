@@ -63,7 +63,7 @@ public class VoiceData implements Serializable {
 
     public VoiceData(final String name, final byte[] data) {
         this.name = name;
-        this.data = data;
+        this.data = data == null ? new byte[0] : data;
     }
 
     @Override
