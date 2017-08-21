@@ -112,49 +112,6 @@ public class Controller {
         return file.getName().endsWith(VDF);
     }
 
-    /**
-     * Handle DnD event when the mouse pointer enters a node.
-     *
-     * @param ev
-     */
-    static void onDragEntered(final DragEvent ev) {
-        if (!ev.getTarget().equals(ev.getGestureSource())) ((Node) ev.getTarget()).setOpacity(0.3d);
-        ev.consume();
-    }
-
-    /**
-     * Handle DnD event when the mouse pointer leaves a node.
-     *
-     * @param ev
-     */
-    static void onDragExited(final DragEvent ev) {
-        ((Node) ev.getTarget()).setOpacity(1.0d);
-        ev.consume();
-    }
-
-    /**
-     * Report supported transfer modes for the node under the mouse pointer.
-     *
-     * @param ev
-     */
-    static void onDragOver(final DragEvent ev) {
-        final Dragboard dragboard = ev.getDragboard();
-
-        // allow copy and move within the list only
-        if (ev.getGestureSource() instanceof VoiceDataListCell && ev.getGestureTarget() instanceof VoiceDataListCell && ev.getGestureSource() != ev.getTarget())
-            ev.acceptTransferModes(TransferMode.MOVE);
-
-        // allow copy between two VDFEditor instances
-        else if (ev.getDragboard().hasContent(DnD_DATA_FORMAT) && ev.getGestureSource() != ev.getTarget())
-            ev.acceptTransferModes(TransferMode.COPY);
-
-        // allow copy from desktop and filter on supported file formats
-        else if (ev.getGestureSource() == null && dragboard.hasFiles())
-            if (dragboard.getFiles().stream().anyMatch(Controller::isDnDFile)) ev.acceptTransferModes(TransferMode.COPY);
-
-        ev.consume();
-    }
-
     @FXML
     private ContextMenu contextMenu;
     @FXML
@@ -273,9 +230,9 @@ public class Controller {
 
         // setup DnD
         cell.setOnDragDetected(this::onDragDetected);
-        cell.setOnDragOver(Controller::onDragOver);
-        cell.setOnDragEntered(Controller::onDragEntered);
-        cell.setOnDragExited(Controller::onDragExited);
+        cell.setOnDragOver(ev -> onDragOver(ev, cell));
+        cell.setOnDragEntered(this::onDragEntered);
+        cell.setOnDragExited(this::onDragExited);
         cell.setOnDragDropped(this::onDragDropped);
         cell.setOnDragDone(Controller::deleteTempFiles);
 
@@ -508,6 +465,87 @@ public class Controller {
         }
 
         ev.setDropCompleted(true);
+        ev.consume();
+    }
+
+    /**
+     * Handle DnD event when the mouse pointer enters a node.
+     *
+     * @param ev
+     */
+    private void onDragEntered(final DragEvent ev) {
+        if ((!systemVDFProperty.get() || ev.getGestureSource() == null) && !ev.getTarget().equals(ev.getGestureSource()))
+            ((Node) ev.getTarget()).setOpacity(0.3d);
+        ev.consume();
+    }
+
+    /**
+     * Handle DnD event when the mouse pointer leaves a node.
+     *
+     * @param ev
+     */
+    private void onDragExited(final DragEvent ev) {
+        ((Node) ev.getTarget()).setOpacity(1.0d);
+        ev.consume();
+    }
+
+    /**
+     * Report supported transfer modes for the node under the mouse pointer.
+     *
+     * @param ev
+     *            The event.
+     * @param target
+     *            The node that triggered the event. Note, that we can't use {@link DragEvent#getGestureTarget()} here, because the drag is still in progress
+     *            and {@link DragEvent#getGestureTarget()} would return null. We also can't use {@link DragEvent#getTarget()}, as this could be a cild of the
+     *            node triggering the event (e.g. an internal label).
+     */
+    private void onDragOver(final DragEvent ev, final Node target) {
+        final Dragboard dragboard = ev.getDragboard();
+        final ObservableList<VoiceData> items = listView.getItems();
+        final Object source = ev.getGestureSource();
+        final int targetIndex = target instanceof VoiceDataListCell ? ((VoiceDataListCell) target).getIndex() : items.size();
+        final boolean isSystemVDF = systemVDFProperty.get();
+
+        if (source instanceof VoiceDataListCell) {
+            // DnD within the same list
+
+            if (!isSystemVDF && target instanceof VoiceDataListCell && source != target)
+                // allow only for user VDFs and if source != target
+                ev.acceptTransferModes(TransferMode.MOVE);
+
+        } else if (source == null)
+            // DnD from external source
+
+            if (dragboard.hasContent(DnD_DATA_FORMAT)) {
+            // external source is another VDFEditor
+
+            if (isSystemVDF) {
+            // allow only one item to replace an existing item for system VDFs
+            @SuppressWarnings("unchecked")
+            final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
+            if (list.size() == 1 && targetIndex < items.size()) ev.acceptTransferModes(TransferMode.COPY);
+            } else
+            // allow multiple items for user VDFs
+            ev.acceptTransferModes(TransferMode.COPY);
+
+            } else if (dragboard.hasFiles()) {
+            // DnD from desktop
+            final List<File> files = dragboard.getFiles();
+
+            if (files.stream().allMatch(Controller::isVDF) && files.size() == 1)
+            // only one VDF file was dragged
+            ev.acceptTransferModes(TransferMode.COPY);
+            else if (files.stream().allMatch(Controller::isSoundFormat))
+                // only sound files were dragged
+                if (isSystemVDF) {
+                if (files.size() == 1 && targetIndex < items.size())
+                    // allow only one sound file to be dropped replacing an existing sound for system VDFs
+                    ev.acceptTransferModes(TransferMode.COPY);
+                } else
+                // allow multiple sound files for user VDFs
+                ev.acceptTransferModes(TransferMode.COPY);
+            }
+
         ev.consume();
     }
 
