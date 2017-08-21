@@ -387,9 +387,9 @@ public class Controller {
         final ObservableList<VoiceData> selectedItems = listView.getSelectionModel().getSelectedItems();
 
         // DnD to desktop: generate temporary .wav files for each selected item for DnD to desktop (export of .wav file)
-        selectedItems.forEach(vd -> {
+        selectedItems.stream().filter(vd -> vd.getRawData().length > 0).forEach(vd -> {
             try {
-                final File wav = new File(System.getProperty("java.io.tmpdir"), vd.getName() + Controller.WAV);
+                final File wav = new File(System.getProperty("java.io.tmpdir"), vd.getName().replaceAll("[^a-zA-Z0-9.-_]", "_") + Controller.WAV);
                 vd.writeWav(wav);
                 TEMP_FILE_LIST.add(wav);
             } catch (final IOException e) {
@@ -776,12 +776,12 @@ public class Controller {
      */
     public void open(final File vdf) {
         if (askSave()) try {
-                open(HoTTDecoder.decodeVDF(vdf));
+            open(HoTTDecoder.decodeVDF(vdf));
             vdfFileProperty.set(vdf);
-            } catch (final IOException e) {
-                ExceptionDialog.show(e);
-            }
+        } catch (final IOException e) {
+            ExceptionDialog.show(e);
         }
+    }
 
     /**
      * Load a new VDF from data model.
