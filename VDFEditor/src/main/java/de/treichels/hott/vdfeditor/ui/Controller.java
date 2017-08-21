@@ -267,7 +267,7 @@ public class Controller {
         });
 
         // accept a drop into empty area of listview
-        listView.setOnDragOver(Controller::onDragOver);
+        listView.setOnDragOver(ev -> onDragOver(ev, listView));
 
         // perform drop actions on listview
         listView.setOnDragDropped(this::onDragDropped);
@@ -394,7 +394,7 @@ public class Controller {
      *
      * @param ev
      */
-    void onDragDetected(final MouseEvent ev) {
+    private void onDragDetected(final MouseEvent ev) {
         deleteTempFiles(null);
 
         final ClipboardContent content = new ClipboardContent();
@@ -438,8 +438,7 @@ public class Controller {
      *
      * @param ev
      */
-    @SuppressWarnings("unchecked")
-    void onDragDropped(final DragEvent ev) {
+    private void onDragDropped(final DragEvent ev) {
         try {
             if (voiceFileProperty.get() == null) onNew();
 
@@ -448,28 +447,49 @@ public class Controller {
             final Object source = ev.getGestureSource();
             final Object target = ev.getGestureTarget();
             final int targetIndex = target instanceof VoiceDataListCell ? ((VoiceDataListCell) target).getIndex() : items.size();
+            final boolean isSystemVDF = systemVDFProperty.get();
 
             if (source instanceof VoiceDataListCell && target instanceof VoiceDataListCell && source != target) {
                 // DnD within the same list
+
+                if (!isSystemVDF) {
+                    // only for user VDFs
                 final int sourceIndex = ((VoiceDataListCell) source).getIndex();
                 final VoiceData item = ((VoiceDataListCell) source).getItem();
 
                 items.remove(sourceIndex);
                 items.add(targetIndex, item);
                 listView.getSelectionModel().clearSelection();
-            } else if (dragboard.hasContent(DnD_DATA_FORMAT))
-                // DnD between VDFEditor instances
-                items.addAll(targetIndex, (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT));
+                }
+            } else if (source == null)
+                // DnD from external source
 
-            else if (ev.getDragboard().hasFiles()) {
-                // import sound or .vdf files from desktop
+                if (dragboard.hasContent(DnD_DATA_FORMAT)) {
+                // external source is another VDFEditor
+
+                @SuppressWarnings("unchecked")
+                final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
+
+                if (isSystemVDF)
+                // replace item at target index with first item
+                items.set(targetIndex, list.get(0));
+                else
+                // insert all items at target index
+                items.addAll(targetIndex, list);
+
+                } else if (ev.getDragboard().hasFiles()) {
+                // DnD from desktop
                 final List<File> files = dragboard.getFiles();
 
                 // import first .vdf file
-                files.stream().filter(Controller::isVDF).findFirst().ifPresent(this::open);
+                if (files.stream().allMatch(Controller::isVDF)) open(files.get(0));
 
                 // import any sound files
-                items.addAll(targetIndex, files.stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList()));
+                if (files.stream().allMatch(Controller::isSoundFormat)) if (isSystemVDF)
+                // replace item at target index with first file
+                items.set(targetIndex, VoiceData.readSoundFile(files.get(0)));
+                else
+                items.addAll(targetIndex, files.stream().map(VoiceData::readSoundFile).collect(Collectors.toList()));
             }
         } catch (final RuntimeException e) {
             ExceptionDialog.show(e);
@@ -825,7 +845,7 @@ public class Controller {
                                 break;
                             }
 
-                            if (hash1 == hash2) {
+                            if (hash1 != 1 && hash1 == hash2) {
                                 items.remove(i);
                                 lastIndex--;
                                 ErrorDialog.show(RES.getString("duplicate_entry"), RES.getString("duplicate_sound"), name1, name2);
