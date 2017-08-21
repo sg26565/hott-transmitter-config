@@ -23,6 +23,7 @@ import gde.model.voice.VoiceData;
 import gde.model.voice.VoiceFile;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -141,9 +142,16 @@ public class Controller {
     @FXML
     private ComboBox<Float> vdfVersionCombo;
     @FXML
-    private ComboBox<CountryCode> countryCodeCombo;
 
+    private ComboBox<CountryCode> countryCodeCombo;
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
+    private final SimpleBooleanProperty systemVDFProperty = new SimpleBooleanProperty() {
+        @Override
+        public boolean get() {
+            return voiceFileProperty.get() != null && voiceFileProperty.get().getVdfType() == VDFType.System;
+        }
+    };
+
     private final SimpleBooleanProperty dirtyProperty = new SimpleBooleanProperty(false);
     private File vdfFile = null;
 
@@ -278,15 +286,15 @@ public class Controller {
         countryCodeCombo.disableProperty().bind(noVdf);
         transmitterTypeCombo.disableProperty().bind(noVdf);
         editMenu.disableProperty().bind(noVdf);
-        saveVDFMenuItem.disableProperty().bind(noVdf);
-        addSoundMenuItem.disableProperty().bind(noVdf);
         saveVDFMenuItem.disableProperty().bind(noVdf.or(dirtyProperty.not()));
+        addSoundMenuItem.disableProperty().bind(noVdf.or(systemVDFProperty));
 
         // disable menu items id no row was selected
         final BooleanBinding noSelection = listView.getSelectionModel().selectedItemProperty().isNull();
+
         contextMenuDelete.disableProperty().bind(noSelection);
-        moveDownMenuItem.disableProperty().bind(noSelection);
-        moveUpMenuItem.disableProperty().bind(noSelection);
+        moveDownMenuItem.disableProperty().bind(noSelection.or(systemVDFProperty));
+        moveUpMenuItem.disableProperty().bind(noSelection.or(systemVDFProperty));
         playMenuItem.disableProperty().bind(noSelection);
         renameMenuItem.disableProperty().bind(noSelection);
         deleteSoundMenuItem.disableProperty().bind(noSelection);
@@ -353,8 +361,7 @@ public class Controller {
 
     @FXML
     public void onCountryCodeChanged() {
-        final VoiceFile voiceFile = voiceFileProperty.get();
-        voiceFile.setCountry(countryCodeCombo.getValue());
+        voiceFileProperty.get().setCountry(countryCodeCombo.getValue());
     }
 
     /**
@@ -558,6 +565,8 @@ public class Controller {
      */
     @FXML
     public void onMoveDown() {
+        if (!systemVDFProperty.get()) {
+            // only for user VDFs
         final MultipleSelectionModel<VoiceData> selectionModel = listView.getSelectionModel();
         final VoiceData selectedItem = selectionModel.getSelectedItem();
         final int selectedIndex = selectionModel.getSelectedIndex();
@@ -568,12 +577,15 @@ public class Controller {
         selectionModel.clearSelection();
         selectionModel.select(selectedIndex + 1);
     }
+    }
 
     /**
      * Move the selected item up in the list.
      */
     @FXML
     public void onMoveUp() {
+        if (!systemVDFProperty.get()) {
+            // only for user VDFs
         final MultipleSelectionModel<VoiceData> selectionModel = listView.getSelectionModel();
         final VoiceData selectedItem = selectionModel.getSelectedItem();
         final int selectedIndex = selectionModel.getSelectedIndex();
@@ -583,6 +595,7 @@ public class Controller {
         items.add(selectedIndex - 1, selectedItem);
         selectionModel.clearSelection();
         selectionModel.select(selectedIndex - 1);
+    }
     }
 
     /**
