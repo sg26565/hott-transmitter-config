@@ -130,8 +130,6 @@ public class Controller {
     @FXML
     private ComboBox<TransmitterType> transmitterTypeCombo;
     @FXML
-    private ComboBox<VDFType> vdfTypeCombo;
-    @FXML
     private ComboBox<Float> vdfVersionCombo;
     @FXML
     private ComboBox<CountryCode> countryCodeCombo;
@@ -265,7 +263,6 @@ public class Controller {
 
         // setup combo boxes
         vdfVersionCombo.getItems().addAll(2.0f, 2.5f, 3.0f);
-        vdfTypeCombo.getItems().addAll(VDFType.values());
         countryCodeCombo.getItems().addAll(CountryCode.values());
         transmitterTypeCombo.getItems().addAll(TransmitterType.values());
         transmitterTypeCombo.getItems().remove(TransmitterType.unknown);
@@ -273,7 +270,6 @@ public class Controller {
         // disable items if no vdf was loaded
         final BooleanBinding noVdf = voiceFileProperty.isNull();
         vdfVersionCombo.disableProperty().bind(noVdf);
-        vdfTypeCombo.disableProperty().bind(noVdf);;
         countryCodeCombo.disableProperty().bind(noVdf);
         transmitterTypeCombo.disableProperty().bind(noVdf);
         editMenu.disableProperty().bind(noVdf);
@@ -608,8 +604,10 @@ public class Controller {
     @FXML
     public void onNew() {
         if (askSave()) {
+            final VoiceFile voiceFile = new VoiceFile();
+            voiceFile.setVdfType(VDFType.User);
             vdfFileProperty.set(null);
-            open(new VoiceFile());
+            open(voiceFile);
             updateVDFVersion();
         }
     }
@@ -732,30 +730,6 @@ public class Controller {
         updateVDFVersion();
     }
 
-    /**
-     * Handle event for change in VDF type.
-     *
-     * @param ev
-     */
-    @FXML
-    public void onVDFTypeChanged() {
-        final VoiceFile voiceFile = voiceFileProperty.get();
-        final VDFType oldVDFType = voiceFile.getVdfType();
-
-        try {
-            voiceFile.setVdfType(vdfTypeCombo.getValue());
-            HoTTDecoder.verityVDF(voiceFile);
-            setTitle();
-        } catch (final HoTTException e) {
-            voiceFile.setVdfType(oldVDFType);
-            vdfTypeCombo.setValue(oldVDFType);
-            ExceptionDialog.show(e);
-        }
-
-        systemVDFProperty.setValue(voiceFile.getVdfType() == VDFType.System);
-        updateVDFVersion();
-    }
-
     @FXML
     public void onVDFVersionChanged() {
         final Float vdfVersion = vdfVersionCombo.getValue();
@@ -787,7 +761,6 @@ public class Controller {
      */
     private void open(final VoiceFile voiceFile) {
         voiceFileProperty.set(voiceFile);
-        vdfTypeCombo.setValue(voiceFile.getVdfType());
         systemVDFProperty.setValue(voiceFile.getVdfType() == VDFType.System);
         vdfVersionCombo.setValue(voiceFile.getVdfVersion() / 1000.0f);
         countryCodeCombo.setValue(voiceFile.getCountry());
@@ -926,7 +899,8 @@ public class Controller {
                 final int maxDataSize = HoTTDecoder.getMaxDataSize(voiceFile);
                 final int dataSize = voiceFile.getDataSize();
 
-                sb.append(String.format(" - %d kb / %d kb (%d%%)", dataSize / 1024, maxDataSize / 1024, dataSize * 100 / maxDataSize)); //$NON-NLS-1$
+                sb.append(String.format(" - %d kb / %d kb (%d%%) - %s VDF", dataSize / 1024, maxDataSize / 1024, dataSize * 100 / maxDataSize, //$NON-NLS-1$
+                        voiceFile.getVdfType()));
             } catch (final HoTTException e) {
                 ExceptionDialog.show(e);
             }

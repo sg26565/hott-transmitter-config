@@ -123,8 +123,6 @@
             <Label text="%vdf_version" />
             <ComboBox fx:id="vdfVersionCombo" onAction="#onVDFVersionChanged" />
             <Region prefWidth="20.0" />
-            <Label text="%vdf_type" textAlignment="RIGHT" />
-            <ComboBox fx:id="vdfTypeCombo" onAction="#onVDFTypeChanged" />
             <Region prefWidth="20.0" />
             <Label text="%country_code" />
             <ComboBox fx:id="countryCodeCombo" onAction="#onCountryCodeChanged" />
