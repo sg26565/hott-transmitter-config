@@ -62,7 +62,7 @@ public class VoiceData implements Serializable {
     private final byte[] data;
 
     public VoiceData(final String name, final byte[] data) {
-        this.name = name;
+        setName(name);
         this.data = data == null ? new byte[0] : data;
     }
 
@@ -121,7 +121,7 @@ public class VoiceData implements Serializable {
     }
 
     public void setName(final String name) {
-        this.name = name;
+        this.name = name.length() > 17 ? name.substring(0, 18) : name;
     }
 
     @Override
