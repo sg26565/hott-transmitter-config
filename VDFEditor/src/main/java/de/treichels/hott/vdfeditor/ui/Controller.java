@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -51,6 +52,7 @@ import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 @SuppressWarnings("restriction")
 public class Controller {
@@ -80,16 +82,6 @@ public class Controller {
     private static void deleteTempFiles(final DragEvent ev) {
         TEMP_FILE_LIST.stream().forEach(f -> f.delete());
         TEMP_FILE_LIST.clear();
-    }
-
-    /**
-     * Check if the file can be used for DnD (i.e. if it is a sound file or a VDF).
-     *
-     * @param file
-     * @return
-     */
-    public static boolean isDnDFile(final File file) {
-        return isSoundFormat(file) || isVDF(file);
     }
 
     /**
@@ -144,6 +136,11 @@ public class Controller {
     @FXML
 
     private ComboBox<CountryCode> countryCodeCombo;
+    @FXML
+    private MenuItem saveVDFAsMenuItem;
+    @FXML
+    private MenuItem replaceSoundMenuItem;
+
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
     private final SimpleBooleanProperty systemVDFProperty = new SimpleBooleanProperty() {
         @Override
@@ -286,7 +283,8 @@ public class Controller {
         countryCodeCombo.disableProperty().bind(noVdf);
         transmitterTypeCombo.disableProperty().bind(noVdf);
         editMenu.disableProperty().bind(noVdf);
-        saveVDFMenuItem.disableProperty().bind(noVdf.or(dirtyProperty.not()));
+        saveVDFMenuItem.disableProperty().bind(noVdf.or(vdfFileProperty.isNull()).or(dirtyProperty.not()).or(systemVDFProperty));
+        saveVDFAsMenuItem.disableProperty().bind(noVdf);
         addSoundMenuItem.disableProperty().bind(noVdf.or(systemVDFProperty));
 
         // disable menu items id no row was selected
@@ -298,6 +296,7 @@ public class Controller {
         playMenuItem.disableProperty().bind(noSelection);
         renameMenuItem.disableProperty().bind(noSelection);
         deleteSoundMenuItem.disableProperty().bind(noSelection);
+        replaceSoundMenuItem.disableProperty().bind(noSelection);
 
         // always start with an empty vdf
         onNew();
@@ -322,20 +321,7 @@ public class Controller {
      */
     @FXML
     public void onAddSound() {
-        final FileChooser chooser = new FileChooser();
-        chooser.setTitle(RES.getString("load_sound")); //$NON-NLS-1$
-
-        // use dir from preferences
-        final File dir = new File(PREFS.get(LAST_LOAD_SOUND_DIR, System.getProperty(USER_HOME)));
-        if (dir != null && dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
-
-        // setup file name filter
-        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("sound_files"), _WAV, _MP3, _OGG)); //$NON-NLS-1$
-        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("wav_files"), _WAV)); //$NON-NLS-1$
-        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("mp3_files"), _MP3)); //$NON-NLS-1$
-        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("ogg_files"), _OGG)); //$NON-NLS-1$
-
-        final List<File> files = chooser.showOpenMultipleDialog(listView.getScene().getWindow());
+        final List<File> files = selectSound(true);
         if (files != null) {
             // store dir in preferences
             files.stream().filter(Controller::isSoundFormat).findFirst().map(File::getParentFile).map(File::getAbsolutePath)
@@ -680,6 +666,21 @@ public class Controller {
     }
 
     /**
+     * Replace the selected item.
+     */
+    @FXML
+    public void onReplaceSound() {
+        final List<File> files = selectSound(false);
+        if (files != null && files.size() > 0) {
+            final File file = files.get(0);
+            if (file != null && file.exists()) {
+                final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
+                listView.getItems().set(selectedIndex, VoiceData.readSoundFile(file));
+            }
+        }
+    }
+
+    /**
      * Show dialog to save the current VDF.
      * <p>
      * This method will remember the directory being used.
@@ -689,6 +690,19 @@ public class Controller {
     @FXML
     public boolean onSave() {
         if (!checkSize() || !dirtyProperty.get()) return false;
+        return save(vdfFileProperty.get());
+    }
+
+    /**
+     * Show dialog to save the current VDF under a new name.
+     * <p>
+     * This method will remember the directory being used.
+     *
+     * @return
+     */
+    @FXML
+    public boolean onSaveAs() {
+        if (!checkSize()) return false;
 
         final FileChooser chooser = new FileChooser();
         chooser.setTitle(RES.getString("save_vdf")); //$NON-NLS-1$
@@ -697,37 +711,11 @@ public class Controller {
         final File dir = new File(PREFS.get(LAST_SAVE_VDF_DIR, System.getProperty(USER_HOME)));
         if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
 
-        // set default file name
-        if (vdfFile != null) chooser.setInitialFileName(vdfFile.getName());
-
         // setup file name filter
         chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("vdf_files"), _VDF)); //$NON-NLS-1$
 
         final File vdf = chooser.showSaveDialog(listView.getScene().getWindow());
-        if (vdf != null) {
-            // store dir in preferences
-            PREFS.put(LAST_SAVE_VDF_DIR, vdf.getParentFile().getAbsolutePath());
-
-            try {
-                if (vdf.equals(vdfFile) && voiceFileProperty.get().getVdfType() == VDFType.System) {
-                    ErrorDialog.show(RES.getString("will_not_overwrite_system_vdf"), RES.getString("system_vdf_exists"), vdf.getName());
-                    return false;
-                }
-
-                HoTTDecoder.encodeVDF(voiceFileProperty.get(), vdf);
-                vdfFile = vdf;
-                dirtyProperty.set(false);
-                setTitle();
-
-                // everything ok
-                return true;
-            } catch (final IOException e) {
-                ExceptionDialog.show(e);
-            }
-        }
-
-        // something went wrong
-        return false;
+        return save(vdf);
     }
 
     /**
@@ -880,6 +868,55 @@ public class Controller {
         listView.setItems(items);
 
         setTitle();
+    }
+
+    private boolean save(final File vdf) {
+        if (vdf != null) {
+            // store dir in preferences
+            PREFS.put(LAST_SAVE_VDF_DIR, vdf.getParentFile().getAbsolutePath());
+
+            try {
+                if (vdf.exists() && isVDF(vdf)) {
+                    final VoiceFile voiceFile = HoTTDecoder.decodeVDF(vdf);
+                    if (voiceFile.getVdfType() == VDFType.System) {
+                        ErrorDialog.show(RES.getString("will_not_overwrite_system_vdf"), RES.getString("system_vdf_exists"), vdf.getName());
+                        return false;
+                    }
+                }
+
+                HoTTDecoder.encodeVDF(voiceFileProperty.get(), vdf);
+                vdfFileProperty.set(vdf);
+                dirtyProperty.set(false);
+                setTitle();
+
+                // everything ok
+                return true;
+            } catch (final IOException e) {
+                ExceptionDialog.show(e);
+            }
+        }
+
+        // something went wrong
+        return false;
+    }
+
+    private List<File> selectSound(final boolean multiSelect) {
+        final FileChooser chooser = new FileChooser();
+        chooser.setTitle(RES.getString("load_sound")); //$NON-NLS-1$
+
+        // use dir from preferences
+        final File dir = new File(PREFS.get(LAST_LOAD_SOUND_DIR, System.getProperty(USER_HOME)));
+        if (dir != null && dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
+
+        // setup file name filter
+        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("sound_files"), _WAV, _MP3, _OGG)); //$NON-NLS-1$
+        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("wav_files"), _WAV)); //$NON-NLS-1$
+        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("mp3_files"), _MP3)); //$NON-NLS-1$
+        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("ogg_files"), _OGG)); //$NON-NLS-1$
+
+        final Window window = listView.getScene().getWindow();
+
+        return multiSelect ? chooser.showOpenMultipleDialog(window) : Collections.singletonList(chooser.showOpenDialog(window));
     }
 
     /**

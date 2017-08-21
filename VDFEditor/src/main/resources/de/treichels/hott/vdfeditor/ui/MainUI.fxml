@@ -48,6 +48,11 @@
                               <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
+                        <MenuItem fx:id="saveVDFAsMenuItem" mnemonicParsing="false" onAction="#onSaveAs" text="%save_vdf_as">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                     <MenuItem mnemonicParsing="false" onAction="#onClose" text="%close">
                            <accelerator>
@@ -83,6 +88,11 @@
                         <MenuItem fx:id="addSoundMenuItem" mnemonicParsing="false" onAction="#onAddSound" text="%add_sound">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="INSERT" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="replaceSoundMenuItem" mnemonicParsing="false" onAction="#onReplaceSound" text="%replace_sound">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="INSERT" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
                     <MenuItem fx:id="deleteSoundMenuItem" mnemonicParsing="false" onAction="#onDeleteSound" text="%delete_sound">
