@@ -144,12 +144,12 @@ public class Controller {
     private ComboBox<CountryCode> countryCodeCombo;
 
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
-    private boolean dirty = false;
+    private final SimpleBooleanProperty dirtyProperty = new SimpleBooleanProperty(false);
     private File vdfFile = null;
 
     public boolean askSave() {
         // no need to save
-        if (!dirty) return true;
+        if (!dirtyProperty.get()) return true;
 
         // show waring dialog
         final ButtonType discardButton = new ButtonType(RES.getString("discard_button"));
@@ -160,7 +160,10 @@ public class Controller {
         final Optional<ButtonType> answer = alert.showAndWait();
 
         // yes, discard changes
-        if (answer.get() == discardButton) return true;
+        if (answer.get() == discardButton) {
+            dirtyProperty.set(false);
+            return true;
+        }
 
         // cancel, do nothing
         if (answer.get() == ButtonType.CANCEL) return false;
@@ -277,6 +280,7 @@ public class Controller {
         editMenu.disableProperty().bind(noVdf);
         saveVDFMenuItem.disableProperty().bind(noVdf);
         addSoundMenuItem.disableProperty().bind(noVdf);
+        saveVDFMenuItem.disableProperty().bind(noVdf.or(dirtyProperty.not()));
 
         // disable menu items id no row was selected
         final BooleanBinding noSelection = listView.getSelectionModel().selectedItemProperty().isNull();
@@ -588,8 +592,6 @@ public class Controller {
     public void onNew() {
         if (askSave()) {
             vdfFile = null;
-            dirty = false;
-
             open(new VoiceFile());
             updateVDFVersion();
         }
@@ -605,7 +607,6 @@ public class Controller {
     @FXML
     public void onOpen() throws IOException {
         if (askSave()) {
-            dirty = false;
             final FileChooser chooser = new FileChooser();
             chooser.setTitle(RES.getString("open_vdf")); //$NON-NLS-1$
 
@@ -650,7 +651,7 @@ public class Controller {
      */
     @FXML
     public boolean onSave() {
-        if (!checkSize()) return false;
+        if (!checkSize() || !dirtyProperty.get()) return false;
 
         final FileChooser chooser = new FileChooser();
         chooser.setTitle(RES.getString("save_vdf")); //$NON-NLS-1$
@@ -678,7 +679,7 @@ public class Controller {
 
                 HoTTDecoder.encodeVDF(voiceFileProperty.get(), vdf);
                 vdfFile = vdf;
-                dirty = false;
+                dirtyProperty.set(false);
                 setTitle();
 
                 // everything ok
@@ -783,7 +784,7 @@ public class Controller {
 
         // add a change listener to the list to prevent invalid VDFs
         items.addListener((ListChangeListener<VoiceData>) c -> {
-            dirty = true;
+            dirtyProperty.set(true);
 
             while (c.next())
                 // if an item was added, check if the size limit was reached
@@ -838,7 +839,7 @@ public class Controller {
             setTitle();
         });
 
-        dirty = false;
+        dirtyProperty.set(false);
         listView.setItems(items);
 
         setTitle();
@@ -850,7 +851,7 @@ public class Controller {
     void setTitle() {
         final StringBuilder sb = new StringBuilder();
 
-        if (dirty) sb.append("*"); //$NON-NLS-1$
+        if (dirtyProperty.get()) sb.append("*"); //$NON-NLS-1$
 
         if (vdfFile == null)
             sb.append(RES.getString("empty")); //$NON-NLS-1$
