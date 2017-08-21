@@ -2,7 +2,7 @@ package de.treichels.hott.vdfeditor.ui;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +16,7 @@ import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.sun.javafx.collections.ObservableListWrapper;
@@ -164,9 +165,9 @@ public class Controller {
                 final String language = l.toString();
                 final MenuItem menuItem = new MenuItem(language);
                 menuItem.setOnAction(ev -> {
-                    try {
-                        open(new File(url.toURI()));
-                    } catch (final URISyntaxException e) {
+                    try (InputStream is = getClass().getResourceAsStream(path)) {
+                        if (askSave()) open(HoTTDecoder.decodeVDF(IOUtils.toByteArray(is)));
+                    } catch (final IOException e) {
                         ExceptionDialog.show(e);
                     }
                 });
