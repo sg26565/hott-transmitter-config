@@ -49,12 +49,13 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
 
     @Override
     public void startEdit() {
-        textField = new TextField(getText());
+        if (controller.systemVDFProperty.get())
+            // strip index number from name
+            textField = new TextField(getText().substring(getIndex() > 98 ? 4 : 3));
+        else
+            textField = new TextField(getText());
         textField.setOnAction(ev -> {
-            String newName = textField.getText();
-            if (newName.length() > 17) newName = newName.substring(0, 17);
-
-            getItem().setName(newName);
+            getItem().setName(textField.getText());
             commitEdit(getItem());
         });
         setText(null);

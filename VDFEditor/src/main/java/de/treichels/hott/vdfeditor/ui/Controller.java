@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.prefs.Preferences;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -149,7 +150,7 @@ public class Controller {
     Menu voice3_mc28_menu;
 
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
-    private final SimpleBooleanProperty systemVDFProperty = new SimpleBooleanProperty();
+    final SimpleBooleanProperty systemVDFProperty = new SimpleBooleanProperty();
     private final SimpleBooleanProperty dirtyProperty = new SimpleBooleanProperty(false);
     private final SimpleObjectProperty<File> vdfFileProperty = new SimpleObjectProperty<>(null);
 
@@ -208,13 +209,12 @@ public class Controller {
      */
     private boolean checkSize() {
         final VoiceFile voiceFile = voiceFileProperty.get();
-        final VDFType vdfType = voiceFile.getVdfType();
 
         try {
             HoTTDecoder.verityVDF(voiceFile);
 
             // display a disclaimer when saving a system vdf
-            if (vdfType == VDFType.System) {
+            if (systemVDFProperty.get()) {
                 final ButtonType accept = new ButtonType(RES.getString("accept_button"));
                 final Alert alert = new Alert(AlertType.WARNING, RES.getString("system_vdf_disclaimer_body"), accept, ButtonType.CANCEL);
                 ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
@@ -815,6 +815,12 @@ public class Controller {
                                 break;
                             }
                         }
+
+                        // enforce name for system VDFs
+                        if (systemVDFProperty.get()) {
+                            final Pattern pattern = Pattern.compile(String.format("^%02d[._].*$", i + 1));
+                            if (!pattern.matcher(name1).matches()) voiceData1.setName(String.format("%02d.%s", i + 1, name1));
+                        }
                     }
 
                     // remove added entries until validation succeeds
@@ -847,12 +853,9 @@ public class Controller {
             PREFS.put(LAST_SAVE_VDF_DIR, vdf.getParentFile().getAbsolutePath());
 
             try {
-                if (vdf.exists() && isVDF(vdf)) {
-                    final VoiceFile voiceFile = HoTTDecoder.decodeVDF(vdf);
-                    if (voiceFile.getVdfType() == VDFType.System) {
-                        ErrorDialog.show(RES.getString("will_not_overwrite_system_vdf"), RES.getString("system_vdf_exists"), vdf.getName());
-                        return false;
-                    }
+                if (vdf.exists() && isVDF(vdf) && systemVDFProperty.get()) {
+                    ErrorDialog.show(RES.getString("will_not_overwrite_system_vdf"), RES.getString("system_vdf_exists"), vdf.getName());
+                    return false;
                 }
 
                 HoTTDecoder.encodeVDF(voiceFileProperty.get(), vdf);
