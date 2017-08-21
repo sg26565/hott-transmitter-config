@@ -128,15 +128,12 @@
    <bottom>
       <HBox alignment="CENTER" spacing="3.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="%vdf_version" />
-            <ComboBox fx:id="vdfVersionCombo" onAction="#onVDFVersionChanged" />
-            <Region prefWidth="20.0" />
-            <Region prefWidth="20.0" />
             <Label text="%country_code" />
             <ComboBox fx:id="countryCodeCombo" onAction="#onCountryCodeChanged" />
             <Region prefWidth="20.0" />
             <Label text="%transmitter_type" />
             <ComboBox fx:id="transmitterTypeCombo" onAction="#onTransmitterTypeChanged" />
+            <Region layoutX="82.0" layoutY="13.0" prefWidth="20.0" />
          </children>
          <padding>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

@@ -134,8 +134,6 @@ public class Controller {
     @FXML
     private ComboBox<TransmitterType> transmitterTypeCombo;
     @FXML
-    private ComboBox<Float> vdfVersionCombo;
-    @FXML
     private ComboBox<CountryCode> countryCodeCombo;
     @FXML
     private MenuItem saveVDFAsMenuItem;
@@ -211,43 +209,22 @@ public class Controller {
     private boolean checkSize() {
         final VoiceFile voiceFile = voiceFileProperty.get();
         final VDFType vdfType = voiceFile.getVdfType();
-        final int vdfVersion = voiceFile.getVdfVersion();
-        final int voiceCount = voiceFile.getVoiceData().size();
-        final CountryCode countryCode = voiceFile.getCountry();
-        final TransmitterType transmitterType = voiceFile.getTransmitterType();
-        boolean valid = true;
 
-        // User VDFs are always ok
-        if (vdfType == VDFType.User) {
-            if (transmitterType == TransmitterType.mc26 || transmitterType == TransmitterType.mc28)
-                valid = voiceCount <= 40;
-            else
-                valid = voiceCount <= 10;
-        } else if (vdfVersion == 2000) {
-            if (countryCode == CountryCode.eu)
-                valid = voiceCount == 250;
-            else
-                valid = voiceCount == 253;
-        } else if (vdfVersion == 2500)
-            valid = voiceCount == 284;
-        else if (vdfVersion == 3000) valid = voiceCount == 432;
+        try {
+            HoTTDecoder.verityVDF(voiceFile);
 
-        if (!valid) {
-            final Alert alert = new Alert(AlertType.ERROR, RES.getString("system_vdf_too_small_body"));
-            ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
-            alert.setHeaderText(RES.getString("system_vdf_too_small_title"));
-            alert.showAndWait();
+            // display a disclaimer when saving a system vdf
+            if (vdfType == VDFType.System) {
+                final ButtonType accept = new ButtonType(RES.getString("accept_button"));
+                final Alert alert = new Alert(AlertType.WARNING, RES.getString("system_vdf_disclaimer_body"), accept, ButtonType.CANCEL);
+                ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
+                alert.setHeaderText(RES.getString("system_vdf_disclaimer_title"));
+                final Optional<ButtonType> result = alert.showAndWait();
+                return result.isPresent() && result.get() == accept;
+            }
+        } catch (final HoTTException e) {
+            ExceptionDialog.show(e);
             return false;
-        }
-
-        // display a disclaimer when saving a system vdf
-        if (valid && vdfType == VDFType.System) {
-            final ButtonType accept = new ButtonType(RES.getString("accept_button"));
-            final Alert alert = new Alert(AlertType.WARNING, RES.getString("system_vdf_disclaimer_body"), accept, ButtonType.CANCEL);
-            ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
-            alert.setHeaderText(RES.getString("system_vdf_disclaimer_title"));
-            final Optional<ButtonType> result = alert.showAndWait();
-            return result.isPresent() && result.get() == accept;
         }
 
         return true;
@@ -296,14 +273,12 @@ public class Controller {
         listView.setOnDragDropped(this::onDragDropped);
 
         // setup combo boxes
-        vdfVersionCombo.getItems().addAll(2.0f, 2.5f, 3.0f);
         countryCodeCombo.getItems().addAll(CountryCode.values());
         transmitterTypeCombo.getItems().addAll(TransmitterType.values());
         transmitterTypeCombo.getItems().remove(TransmitterType.unknown);
 
         // disable items if no vdf was loaded
         final BooleanBinding noVdf = voiceFileProperty.isNull();
-        vdfVersionCombo.disableProperty().bind(noVdf);
         countryCodeCombo.disableProperty().bind(noVdf);
         transmitterTypeCombo.disableProperty().bind(noVdf);
         editMenu.disableProperty().bind(noVdf);
@@ -645,9 +620,10 @@ public class Controller {
         if (askSave()) {
             final VoiceFile voiceFile = new VoiceFile();
             voiceFile.setVdfType(VDFType.User);
+            voiceFile.setTransmitterType(TransmitterType.mc28);
+            voiceFile.setVdfVersion(3000);
             vdfFileProperty.set(null);
             open(voiceFile);
-            updateVDFVersion();
         }
     }
 
@@ -753,29 +729,25 @@ public class Controller {
      */
     @FXML
     public void onTransmitterTypeChanged() {
+        final TransmitterType newTransmitterType = transmitterTypeCombo.getValue();
+        if (newTransmitterType == null) return;
+
         final VoiceFile voiceFile = voiceFileProperty.get();
         final TransmitterType oldTtransmitterType = voiceFile.getTransmitterType();
+        final int oldVdfVersion = voiceFile.getVdfVersion();
 
-        try {
-            voiceFile.setTransmitterType(transmitterTypeCombo.getValue());
+        if (oldTtransmitterType != newTransmitterType) try {
+            voiceFile.setTransmitterType(newTransmitterType);
+            if (newTransmitterType == TransmitterType.mc26 || newTransmitterType == TransmitterType.mc28)
+                voiceFile.setVdfVersion(3000);
+            else if (oldVdfVersion == 3000) voiceFile.setVdfVersion(2500);
             HoTTDecoder.verityVDF(voiceFile);
             setTitle();
         } catch (final HoTTException e) {
-            voiceFile.setTransmitterType(oldTtransmitterType);
-            transmitterTypeCombo.setValue(oldTtransmitterType);
             ExceptionDialog.show(e);
-        }
-
-        updateVDFVersion();
-    }
-
-    @FXML
-    public void onVDFVersionChanged() {
-        final Float vdfVersion = vdfVersionCombo.getValue();
-
-        if (vdfVersion != null) {
-            final VoiceFile voiceFile = voiceFileProperty.get();
-            voiceFile.setVdfVersion((int) (vdfVersion * 1000));
+            voiceFile.setTransmitterType(oldTtransmitterType);
+            voiceFile.setVdfVersion(oldVdfVersion);
+            transmitterTypeCombo.setValue(oldTtransmitterType);
         }
     }
 
@@ -786,8 +758,8 @@ public class Controller {
      */
     public void open(final File vdf) {
         if (askSave()) try {
-            open(HoTTDecoder.decodeVDF(vdf));
             vdfFileProperty.set(vdf);
+            open(HoTTDecoder.decodeVDF(vdf));
         } catch (final IOException e) {
             ExceptionDialog.show(e);
         }
@@ -801,9 +773,8 @@ public class Controller {
     private void open(final VoiceFile voiceFile) {
         voiceFileProperty.set(voiceFile);
         systemVDFProperty.setValue(voiceFile.getVdfType() == VDFType.System);
-        vdfVersionCombo.setValue(voiceFile.getVdfVersion() / 1000.0f);
-        countryCodeCombo.setValue(voiceFile.getCountry());
         transmitterTypeCombo.setValue(voiceFile.getTransmitterType());
+        countryCodeCombo.setValue(voiceFile.getCountry());
 
         final ObservableListWrapper<VoiceData> items = new ObservableListWrapper<>(voiceFile.getVoiceData());
 
@@ -938,8 +909,8 @@ public class Controller {
                 final int maxDataSize = HoTTDecoder.getMaxDataSize(voiceFile);
                 final int dataSize = voiceFile.getDataSize();
 
-                sb.append(String.format(" - %d kb / %d kb (%d%%) - %s VDF", dataSize / 1024, maxDataSize / 1024, dataSize * 100 / maxDataSize, //$NON-NLS-1$
-                        voiceFile.getVdfType()));
+                sb.append(String.format(" - %d kb / %d kb (%d%%) - %s VDF V%s", dataSize / 1024, maxDataSize / 1024, dataSize * 100 / maxDataSize, //$NON-NLS-1$
+                        voiceFile.getVdfType(), Float.toString(voiceFile.getVdfVersion() / 1000.0f)));
             } catch (final HoTTException e) {
                 ExceptionDialog.show(e);
             }
@@ -947,43 +918,5 @@ public class Controller {
 
         final Scene scene = listView.getScene();
         if (scene != null) ((Stage) scene.getWindow()).setTitle(sb.toString());
-    }
-
-    private void updateVDFVersion() {
-        final VoiceFile voiceFile = voiceFileProperty.get();
-        final ObservableList<Float> items = vdfVersionCombo.getItems();
-
-        switch (voiceFile.getTransmitterType()) {
-        case mc16:
-        case mc20:
-        case mc32:
-        case mx12:
-        case mx16:
-        case mx20:
-        case mz12:
-        case mz12Pro:
-        case mz18:
-        case mz24:
-        case mz24Pro:
-            items.remove(3.0f);
-            if (voiceFile.getVdfType() == VDFType.User)
-                items.remove(2.0f);
-            else if (!items.contains(2.0f)) items.add(2.0f);
-            if (!items.contains(2.5f)) items.add(2.5f);
-            break;
-
-        case mc26:
-        case mc28:
-            items.removeAll(2.0f, 2.5f);
-            if (!items.contains(3.0f)) items.add(3.0f);
-            break;
-
-        case unknown:
-        default:
-            items.clear();
-            break;
-        }
-
-        if (!items.contains(vdfVersionCombo.getValue())) vdfVersionCombo.setValue(items.size() == 0 ? 0.0f : items.get(0));
     }
 }
