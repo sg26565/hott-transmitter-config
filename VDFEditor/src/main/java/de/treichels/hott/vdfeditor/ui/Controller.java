@@ -237,7 +237,7 @@ public class Controller {
      * @return
      */
     private VoiceDataListCell createListCell(final ListView<VoiceData> listView) {
-        final VoiceDataListCell cell = new VoiceDataListCell();
+        final VoiceDataListCell cell = new VoiceDataListCell(this);
 
         // setup DnD
         cell.setOnDragDetected(this::onDragDetected);
@@ -376,7 +376,7 @@ public class Controller {
         if (systemVDFProperty.get())
             selectedIndices.stream().forEach(i -> items.set(i, new VoiceData(String.format("%d.%s", i + 1, RES.getString("empty")), null)));
         else
-        // sort indices in reverse order and remove from high to low
+            // sort indices in reverse order and remove from high to low
             selectedIndices.stream().sorted((i, j) -> j - i).forEach(i -> items.remove(i.intValue()));
 
         // fix selection - select the item after the last deleted one
@@ -458,12 +458,12 @@ public class Controller {
 
                 if (!isSystemVDF) {
                     // only for user VDFs
-                final int sourceIndex = ((VoiceDataListCell) source).getIndex();
-                final VoiceData item = ((VoiceDataListCell) source).getItem();
+                    final int sourceIndex = ((VoiceDataListCell) source).getIndex();
+                    final VoiceData item = ((VoiceDataListCell) source).getItem();
 
-                items.remove(sourceIndex);
-                items.add(targetIndex, item);
-                listView.getSelectionModel().clearSelection();
+                    items.remove(sourceIndex);
+                    items.add(targetIndex, item);
+                    listView.getSelectionModel().clearSelection();
                 }
             } else if (source == null)
                 // DnD from external source
@@ -494,7 +494,7 @@ public class Controller {
                 items.set(targetIndex, VoiceData.readSoundFile(files.get(0)));
                 else
                 items.addAll(targetIndex, files.stream().map(VoiceData::readSoundFile).collect(Collectors.toList()));
-            }
+                }
         } catch (final RuntimeException e) {
             ExceptionDialog.show(e);
         }
@@ -591,16 +591,16 @@ public class Controller {
     public void onMoveDown() {
         if (!systemVDFProperty.get()) {
             // only for user VDFs
-        final MultipleSelectionModel<VoiceData> selectionModel = listView.getSelectionModel();
-        final VoiceData selectedItem = selectionModel.getSelectedItem();
-        final int selectedIndex = selectionModel.getSelectedIndex();
-        final ObservableList<VoiceData> items = listView.getItems();
+            final MultipleSelectionModel<VoiceData> selectionModel = listView.getSelectionModel();
+            final VoiceData selectedItem = selectionModel.getSelectedItem();
+            final int selectedIndex = selectionModel.getSelectedIndex();
+            final ObservableList<VoiceData> items = listView.getItems();
 
-        items.remove(selectedIndex);
-        items.add(selectedIndex + 1, selectedItem);
-        selectionModel.clearSelection();
-        selectionModel.select(selectedIndex + 1);
-    }
+            items.remove(selectedIndex);
+            items.add(selectedIndex + 1, selectedItem);
+            selectionModel.clearSelection();
+            selectionModel.select(selectedIndex + 1);
+        }
     }
 
     /**
@@ -610,16 +610,16 @@ public class Controller {
     public void onMoveUp() {
         if (!systemVDFProperty.get()) {
             // only for user VDFs
-        final MultipleSelectionModel<VoiceData> selectionModel = listView.getSelectionModel();
-        final VoiceData selectedItem = selectionModel.getSelectedItem();
-        final int selectedIndex = selectionModel.getSelectedIndex();
-        final ObservableList<VoiceData> items = listView.getItems();
+            final MultipleSelectionModel<VoiceData> selectionModel = listView.getSelectionModel();
+            final VoiceData selectedItem = selectionModel.getSelectedItem();
+            final int selectedIndex = selectionModel.getSelectedIndex();
+            final ObservableList<VoiceData> items = listView.getItems();
 
-        items.remove(selectedIndex);
-        items.add(selectedIndex - 1, selectedItem);
-        selectionModel.clearSelection();
-        selectionModel.select(selectedIndex - 1);
-    }
+            items.remove(selectedIndex);
+            items.add(selectedIndex - 1, selectedItem);
+            selectionModel.clearSelection();
+            selectionModel.select(selectedIndex - 1);
+        }
     }
 
     /**

@@ -13,12 +13,15 @@ import javafx.scene.layout.Priority;
 public class VoiceDataListCell extends ListCell<VoiceData> {
     private static final String STYLESHEET_LOCATION = VoiceDataListCell.class.getResource("style.css").toString();
 
+    private final Controller controller;
     private final Label indexLabel = new Label();
     private final Button playButton = new Button();
     private TextField textField = null;
     private final HBox hBox = new HBox(indexLabel, playButton);
 
-    public VoiceDataListCell() {
+    public VoiceDataListCell(final Controller controller) {
+        this.controller = controller;
+
         getStylesheets().add(STYLESHEET_LOCATION);
 
         // consume mouse events to prevent listView from processing them
