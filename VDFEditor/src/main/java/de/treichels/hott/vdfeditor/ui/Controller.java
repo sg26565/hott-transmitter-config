@@ -370,10 +370,14 @@ public class Controller {
     @FXML
     public void onDeleteSound() {
         final MultipleSelectionModel<VoiceData> selectionModel = listView.getSelectionModel();
+        final ObservableList<VoiceData> items = listView.getItems();
 
         final ObservableList<Integer> selectedIndices = selectionModel.getSelectedIndices();
+        if (systemVDFProperty.get())
+            selectedIndices.stream().forEach(i -> items.set(i, new VoiceData(String.format("%d.%s", i + 1, RES.getString("empty")), null)));
+        else
         // sort indices in reverse order and remove from high to low
-        selectedIndices.stream().sorted((i, j) -> j - i).forEach(i -> listView.getItems().remove(i.intValue()));
+            selectedIndices.stream().sorted((i, j) -> j - i).forEach(i -> items.remove(i.intValue()));
 
         // fix selection - select the item after the last deleted one
         final int index = selectionModel.getSelectedIndex() + 1;
