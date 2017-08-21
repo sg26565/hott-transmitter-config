@@ -134,7 +134,6 @@ public class Controller {
     @FXML
     private ComboBox<Float> vdfVersionCombo;
     @FXML
-
     private ComboBox<CountryCode> countryCodeCombo;
     @FXML
     private MenuItem saveVDFAsMenuItem;
@@ -142,15 +141,10 @@ public class Controller {
     private MenuItem replaceSoundMenuItem;
 
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
-    private final SimpleBooleanProperty systemVDFProperty = new SimpleBooleanProperty() {
-        @Override
-        public boolean get() {
-            return voiceFileProperty.get() != null && voiceFileProperty.get().getVdfType() == VDFType.System;
-        }
-    };
+    private final SimpleBooleanProperty systemVDFProperty = new SimpleBooleanProperty();
 
     private final SimpleBooleanProperty dirtyProperty = new SimpleBooleanProperty(false);
-    private File vdfFile = null;
+    private final SimpleObjectProperty<File> vdfFileProperty = new SimpleObjectProperty<>(null);
 
     public boolean askSave() {
         // no need to save
@@ -174,7 +168,7 @@ public class Controller {
         if (answer.get() == ButtonType.CANCEL) return false;
 
         // call save dialog and load new file only if save succeeds
-        return onSave();
+        return vdfFileProperty.get() == null ? onSaveAs() : onSave();
     }
 
     /**
@@ -614,7 +608,7 @@ public class Controller {
     @FXML
     public void onNew() {
         if (askSave()) {
-            vdfFile = null;
+            vdfFileProperty.set(null);
             open(new VoiceFile());
             updateVDFVersion();
         }
@@ -761,6 +755,7 @@ public class Controller {
             ExceptionDialog.show(e);
         }
 
+        systemVDFProperty.setValue(voiceFile.getVdfType() == VDFType.System);
         updateVDFVersion();
     }
 
@@ -780,18 +775,13 @@ public class Controller {
      * @param vdf
      */
     public void open(final File vdf) {
-        if (askSave()) {
-            final File oldVdf = vdfFile;
-
-            try {
-                vdfFile = vdf;
+        if (askSave()) try {
                 open(HoTTDecoder.decodeVDF(vdf));
+            vdfFileProperty.set(vdf);
             } catch (final IOException e) {
-                vdfFile = oldVdf;
                 ExceptionDialog.show(e);
             }
         }
-    }
 
     /**
      * Load a new VDF from data model.
@@ -801,6 +791,7 @@ public class Controller {
     private void open(final VoiceFile voiceFile) {
         voiceFileProperty.set(voiceFile);
         vdfTypeCombo.setValue(voiceFile.getVdfType());
+        systemVDFProperty.setValue(voiceFile.getVdfType() == VDFType.System);
         vdfVersionCombo.setValue(voiceFile.getVdfVersion() / 1000.0f);
         countryCodeCombo.setValue(voiceFile.getCountry());
         transmitterTypeCombo.setValue(voiceFile.getTransmitterType());
@@ -927,10 +918,10 @@ public class Controller {
 
         if (dirtyProperty.get()) sb.append("*"); //$NON-NLS-1$
 
-        if (vdfFile == null)
+        if (vdfFileProperty.get() == null)
             sb.append(RES.getString("empty")); //$NON-NLS-1$
         else
-            sb.append(vdfFile.getName());
+            sb.append(vdfFileProperty.get().getName());
 
         if (voiceFileProperty.isNotNull().get()) {
             final VoiceFile voiceFile = voiceFileProperty.get();
