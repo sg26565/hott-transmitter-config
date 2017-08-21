@@ -664,13 +664,10 @@ public class Controller {
      */
     @FXML
     public void onReplaceSound() {
-        final List<File> files = selectSound(false);
-        if (files != null && files.size() > 0) {
-            final File file = files.get(0);
-            if (file != null && file.exists()) {
-                final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
-                listView.getItems().set(selectedIndex, VoiceData.readSoundFile(file));
-            }
+        final File file = selectSound(false).get(0);
+        if (file != null && file.exists()) {
+            final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
+            listView.getItems().set(selectedIndex, VoiceData.readSoundFile(file));
         }
     }
 
