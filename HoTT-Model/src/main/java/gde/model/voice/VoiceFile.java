@@ -15,7 +15,7 @@ public class VoiceFile {
     private TransmitterType transmitterType;
     private VDFType vdfType;
     private int vdfVersion;
-    private CountryCode country = CountryCode.eu;
+    private CountryCode country = CountryCode.GLOBAL;
 
     public VoiceFile() {
         vdfType = VDFType.User;

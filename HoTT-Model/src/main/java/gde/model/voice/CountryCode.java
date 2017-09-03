@@ -4,10 +4,10 @@ import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 public enum CountryCode {
-    eu(0), us(1), kr(2), cn(3), jp(4);
+    GLOBAL(0), US(1), KR(2), CN(3), JP(4);
 
     public static CountryCode forCode(final int countryCode) {
-        return Stream.of(CountryCode.values()).filter(c -> c.getCode() == countryCode).findFirst().orElse(eu);
+        return Stream.of(CountryCode.values()).filter(c -> c.getCode() == countryCode).findFirst().orElse(GLOBAL);
     }
 
     private final int code;
