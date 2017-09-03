@@ -1,5 +1,9 @@
 2017-09-03
 ==========
+	VDFEditor-0.9.0.69
+	- updated MP3 & OGG sound libraries
+	- renamed Europe to Global
+	
 	VDFEditor-0.9.0.68
 	- Add undo / redo functions
 	- Play audio in a background to keep the UI responsible
