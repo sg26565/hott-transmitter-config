@@ -71,6 +71,15 @@
                 </Menu>
                 <Menu fx:id="editMenu" mnemonicParsing="false" text="%edit_menu">
                   <items>
+                        <MenuItem fx:id="undoMenuItem" mnemonicParsing="false" onAction="#onUndo" text="%undo">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <MenuItem fx:id="redoMenuItem" mnemonicParsing="false" onAction="#onRedo" text="%redo">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="moveUpMenuItem" mnemonicParsing="false" onAction="#onMoveUp" text="%move_up">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="U" control="DOWN" meta="UP" shift="UP" shortcut="UP" />

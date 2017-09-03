@@ -14,7 +14,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +21,13 @@ import org.apache.commons.lang3.StringUtils;
 import com.sun.javafx.collections.ObservableListWrapper;
 
 import de.treichels.hott.HoTTDecoder;
+import de.treichels.hott.vdfeditor.actions.InsertAction;
+import de.treichels.hott.vdfeditor.actions.MoveAction;
+import de.treichels.hott.vdfeditor.actions.MoveDownAction;
+import de.treichels.hott.vdfeditor.actions.MoveUpAction;
+import de.treichels.hott.vdfeditor.actions.RemoveAction;
+import de.treichels.hott.vdfeditor.actions.ReplaceAction;
+import de.treichels.hott.vdfeditor.actions.UndoBuffer;
 import gde.model.HoTTException;
 import gde.model.enums.TransmitterType;
 import gde.model.voice.CountryCode;
@@ -142,18 +148,23 @@ public class Controller {
     @FXML
     private MenuItem replaceSoundMenuItem;
     @FXML
-    Menu voice2_menu;
+    private Menu voice2_menu;
     @FXML
-    Menu voice2_microcopter_menu;
+    private Menu voice2_microcopter_menu;
     @FXML
-    Menu voice3_menu;
+    private Menu voice3_menu;
     @FXML
-    Menu voice3_mc28_menu;
+    private Menu voice3_mc28_menu;
+    @FXML
+    private MenuItem undoMenuItem;
+    @FXML
+    private MenuItem redoMenuItem;
 
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
     final SimpleBooleanProperty systemVDFProperty = new SimpleBooleanProperty();
     private final SimpleBooleanProperty dirtyProperty = new SimpleBooleanProperty(false);
     private final SimpleObjectProperty<File> vdfFileProperty = new SimpleObjectProperty<>(null);
+    final UndoBuffer<VoiceData> undoBuffer = new UndoBuffer<>();
 
     private void addRestoreFiles(final Menu menu, final String location) {
         final SortedMap<String, MenuItem> items = new TreeMap<>();
@@ -303,6 +314,9 @@ public class Controller {
         addRestoreFiles(voice3_menu, "Voice3");
         addRestoreFiles(voice3_mc28_menu, "Voice3_mc28");
 
+        undoMenuItem.disableProperty().bind(undoBuffer.canUndo().not());
+        redoMenuItem.disableProperty().bind(undoBuffer.canRedo().not());
+
         // always start with an empty vdf
         onNew();
     }
@@ -332,13 +346,13 @@ public class Controller {
             files.stream().filter(Controller::isSoundFormat).findFirst().map(File::getParentFile).map(File::getAbsolutePath)
                     .ifPresent(s -> PREFS.put(LAST_LOAD_SOUND_DIR, s));
 
-            int selectedIndex = listView.getSelectionModel().getSelectedIndex();
+            final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
 
             // add to end of the list if no item was selected
-            if (selectedIndex == -1) selectedIndex = listView.getItems().size();
+            final int index = selectedIndex == -1 ? listView.getItems().size() : selectedIndex;
 
-            listView.getItems().addAll(selectedIndex,
-                    files.stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).collect(Collectors.toList()));
+            // insert all sound files at index
+            files.stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).forEach(item -> undoBuffer.push(new InsertAction<>(index, item)));
         }
     }
 
@@ -361,14 +375,15 @@ public class Controller {
     @FXML
     public void onDeleteSound() {
         final MultipleSelectionModel<VoiceData> selectionModel = listView.getSelectionModel();
-        final ObservableList<VoiceData> items = listView.getItems();
-
         final ObservableList<Integer> selectedIndices = selectionModel.getSelectedIndices();
+
         if (systemVDFProperty.get())
-            selectedIndices.stream().forEach(i -> items.set(i, new VoiceData(String.format("%d.%s", i + 1, RES.getString("empty")), null)));
+            // keep number of items constant in system VDFs by replacing selected item(s) with an empty place holder
+            selectedIndices.stream()
+                    .forEach(i -> undoBuffer.push(new ReplaceAction<>(i, new VoiceData(String.format("%02d.%s", i + 1, RES.getString("empty")), null))));
         else
             // sort indices in reverse order and remove from high to low
-            selectedIndices.stream().sorted((i, j) -> j - i).forEach(i -> items.remove(i.intValue()));
+            selectedIndices.stream().sorted((i, j) -> j - i).forEach(i -> undoBuffer.push(new RemoveAction<>(i)));
 
         // fix selection - select the item after the last deleted one
         final int index = selectionModel.getSelectedIndex() + 1;
@@ -438,10 +453,9 @@ public class Controller {
             if (voiceFileProperty.get() == null) onNew();
 
             final Dragboard dragboard = ev.getDragboard();
-            final ObservableList<VoiceData> items = listView.getItems();
             final Object source = ev.getGestureSource();
             final Object target = ev.getGestureTarget();
-            final int targetIndex = target instanceof VoiceDataListCell ? ((VoiceDataListCell) target).getIndex() : items.size();
+            final int targetIndex = target instanceof VoiceDataListCell ? ((VoiceDataListCell) target).getIndex() : listView.getItems().size();
             final boolean isSystemVDF = systemVDFProperty.get();
 
             if (source instanceof VoiceDataListCell && target instanceof VoiceDataListCell && source != target) {
@@ -450,10 +464,8 @@ public class Controller {
                 if (!isSystemVDF) {
                     // only for user VDFs
                     final int sourceIndex = ((VoiceDataListCell) source).getIndex();
-                    final VoiceData item = ((VoiceDataListCell) source).getItem();
 
-                    items.remove(sourceIndex);
-                    items.add(targetIndex, item);
+                    undoBuffer.push(new MoveAction<>(sourceIndex, targetIndex));
                     listView.getSelectionModel().clearSelection();
                 }
             } else if (source == null)
@@ -467,10 +479,10 @@ public class Controller {
 
                 if (isSystemVDF)
                 // replace item at target index with first item
-                items.set(targetIndex, list.get(0));
+                undoBuffer.push(new ReplaceAction<>(targetIndex, list.get(0)));
                 else
                 // insert all items at target index
-                items.addAll(targetIndex, list);
+                list.forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
 
                 } else if (ev.getDragboard().hasFiles()) {
                 // DnD from desktop
@@ -482,9 +494,9 @@ public class Controller {
                 // import any sound files
                 if (files.stream().allMatch(Controller::isSoundFormat)) if (isSystemVDF)
                 // replace item at target index with first file
-                items.set(targetIndex, VoiceData.readSoundFile(files.get(0)));
+                undoBuffer.push(new ReplaceAction<>(targetIndex, VoiceData.readSoundFile(files.get(0))));
                 else
-                items.addAll(targetIndex, files.stream().map(VoiceData::readSoundFile).collect(Collectors.toList()));
+                files.stream().map(VoiceData::readSoundFile).forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
                 }
         } catch (final RuntimeException e) {
             ExceptionDialog.show(e);
@@ -527,9 +539,9 @@ public class Controller {
      */
     private void onDragOver(final DragEvent ev, final Node target) {
         final Dragboard dragboard = ev.getDragboard();
-        final ObservableList<VoiceData> items = listView.getItems();
+        final int itemCount = listView.getItems().size();
         final Object source = ev.getGestureSource();
-        final int targetIndex = target instanceof VoiceDataListCell ? ((VoiceDataListCell) target).getIndex() : items.size();
+        final int targetIndex = target instanceof VoiceDataListCell ? ((VoiceDataListCell) target).getIndex() : itemCount;
         final boolean isSystemVDF = systemVDFProperty.get();
 
         if (source instanceof VoiceDataListCell) {
@@ -549,7 +561,7 @@ public class Controller {
             // allow only one item to replace an existing item for system VDFs
             @SuppressWarnings("unchecked")
             final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
-            if (list.size() == 1 && targetIndex < items.size()) ev.acceptTransferModes(TransferMode.COPY);
+            if (list.size() == 1 && targetIndex < itemCount) ev.acceptTransferModes(TransferMode.COPY);
             } else
             // allow multiple items for user VDFs
             ev.acceptTransferModes(TransferMode.COPY);
@@ -564,7 +576,7 @@ public class Controller {
             else if (files.stream().allMatch(Controller::isSoundFormat))
                 // only sound files were dragged
                 if (isSystemVDF) {
-                if (files.size() == 1 && targetIndex < items.size())
+                if (files.size() == 1 && targetIndex < itemCount)
                     // allow only one sound file to be dropped replacing an existing sound for system VDFs
                     ev.acceptTransferModes(TransferMode.COPY);
                 } else
@@ -581,16 +593,11 @@ public class Controller {
     @FXML
     public void onMoveDown() {
         if (!systemVDFProperty.get()) {
-            // only for user VDFs
-            final MultipleSelectionModel<VoiceData> selectionModel = listView.getSelectionModel();
-            final VoiceData selectedItem = selectionModel.getSelectedItem();
-            final int selectedIndex = selectionModel.getSelectedIndex();
-            final ObservableList<VoiceData> items = listView.getItems();
+            final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
 
-            items.remove(selectedIndex);
-            items.add(selectedIndex + 1, selectedItem);
-            selectionModel.clearSelection();
-            selectionModel.select(selectedIndex + 1);
+            undoBuffer.push(new MoveDownAction<>(selectedIndex));
+            listView.getSelectionModel().clearSelection();
+            listView.getSelectionModel().select(selectedIndex + 1);
         }
     }
 
@@ -600,16 +607,11 @@ public class Controller {
     @FXML
     public void onMoveUp() {
         if (!systemVDFProperty.get()) {
-            // only for user VDFs
-            final MultipleSelectionModel<VoiceData> selectionModel = listView.getSelectionModel();
-            final VoiceData selectedItem = selectionModel.getSelectedItem();
-            final int selectedIndex = selectionModel.getSelectedIndex();
-            final ObservableList<VoiceData> items = listView.getItems();
+            final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
 
-            items.remove(selectedIndex);
-            items.add(selectedIndex - 1, selectedItem);
-            selectionModel.clearSelection();
-            selectionModel.select(selectedIndex - 1);
+            undoBuffer.push(new MoveUpAction<>(selectedIndex));
+            listView.getSelectionModel().clearSelection();
+            listView.getSelectionModel().select(selectedIndex - 1);
         }
     }
 
@@ -665,6 +667,13 @@ public class Controller {
         listView.getSelectionModel().getSelectedItems().forEach(VoiceData::play);
     }
 
+    @FXML
+    public void onRedo() {
+        undoBuffer.redo();
+        listView.refresh();
+        setTitle();
+    }
+
     /**
      * Rename the selected item.
      */
@@ -681,7 +690,7 @@ public class Controller {
         final File file = selectSound(false).get(0);
         if (file != null && file.exists()) {
             final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
-            listView.getItems().set(selectedIndex, VoiceData.readSoundFile(file));
+            undoBuffer.push(new ReplaceAction<>(selectedIndex, VoiceData.readSoundFile(file)));
         }
     }
 
@@ -752,6 +761,13 @@ public class Controller {
         }
     }
 
+    @FXML
+    public void onUndo() {
+        undoBuffer.undo();
+        listView.refresh();
+        setTitle();
+    }
+
     /**
      * Load a new VDF from file. Ask for save if current VDF was modified.
      *
@@ -777,20 +793,17 @@ public class Controller {
         transmitterTypeCombo.setValue(voiceFile.getTransmitterType());
         countryCodeCombo.setValue(voiceFile.getCountry());
 
-        final ObservableListWrapper<VoiceData> items = new ObservableListWrapper<>(voiceFile.getVoiceData());
-
+        final ObservableList<VoiceData> items = new ObservableListWrapper<>(voiceFile.getVoiceData());
         // add a change listener to the list to prevent invalid VDFs
         items.addListener((ListChangeListener<VoiceData>) c -> {
-            dirtyProperty.set(true);
-
             while (c.next())
                 // if an item was added, check if the size limit was reached
                 if (c.wasAdded()) {
                     final int fistIndex = c.getFrom();
-                    int lastIndex = c.getTo() - 1;
+                    int lastIndex = c.getTo();
 
                     // check for duplicate entries
-                    for (int i = fistIndex; i <= lastIndex && i < items.size(); i++) {
+                    for (int i = fistIndex; i < lastIndex && i < items.size(); i++) {
                         final VoiceData voiceData1 = items.get(i);
                         final String name1 = voiceData1.getName();
                         final int hash1 = Arrays.hashCode(voiceData1.getRawData());
@@ -803,14 +816,14 @@ public class Controller {
                             final int hash2 = Arrays.hashCode(voiceData2.getRawData());
 
                             if (name1.equals(name2)) {
-                                items.remove(i);
+                                undoBuffer.pop();
                                 lastIndex--;
                                 ErrorDialog.show(RES.getString("duplicate_entry"), RES.getString("duplicate_name"), name1);
                                 break;
                             }
 
                             if (hash1 != 1 && hash1 == hash2) {
-                                items.remove(i);
+                                undoBuffer.pop();
                                 lastIndex--;
                                 ErrorDialog.show(RES.getString("duplicate_entry"), RES.getString("duplicate_sound"), name1, name2);
                                 break;
@@ -834,7 +847,8 @@ public class Controller {
                             break;
                         } catch (final HoTTException e) {
                             // validation failed, remove last added item and try again
-                            items.remove(lastIndex--);
+                            undoBuffer.pop();
+                            lastIndex--;
                             ExceptionDialog.show(e);
                         }
                 }
@@ -844,6 +858,7 @@ public class Controller {
 
         dirtyProperty.set(false);
         listView.setItems(items);
+        undoBuffer.setItems(items);
 
         setTitle();
     }
@@ -898,6 +913,7 @@ public class Controller {
      * Set stage title with information about the current VDF.
      */
     void setTitle() {
+        dirtyProperty.set(undoBuffer.getIndex() != 0);
         final StringBuilder sb = new StringBuilder();
 
         if (dirtyProperty.get()) sb.append("*"); //$NON-NLS-1$

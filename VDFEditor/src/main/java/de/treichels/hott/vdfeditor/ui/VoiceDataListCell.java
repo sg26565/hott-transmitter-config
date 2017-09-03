@@ -1,5 +1,6 @@
 package de.treichels.hott.vdfeditor.ui;
 
+import de.treichels.hott.vdfeditor.actions.RenameAction;
 import gde.model.voice.VoiceData;
 import javafx.event.Event;
 import javafx.geometry.Pos;
@@ -55,7 +56,8 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
         else
             textField = new TextField(getText());
         textField.setOnAction(ev -> {
-            getItem().setName(textField.getText());
+            final String newName = textField.getText();
+            controller.undoBuffer.push(new RenameAction(getIndex(), newName));
             commitEdit(getItem());
         });
         setText(null);
