@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioFormat.Encoding;
@@ -21,6 +23,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author oliver.treichel@gmx.de
  */
 public class Player {
+    private static final Lock lock = new ReentrantLock();
+
     public static void play(final AudioFormat format, final byte[] data) throws LineUnavailableException, InterruptedException, IOException {
         play(format, data, true);
     }
@@ -45,25 +49,32 @@ public class Player {
     }
 
     public static void play(final AudioFormat format, final InputStream stream, final boolean sync) throws LineUnavailableException, IOException {
-        final SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(format);
+        new Thread(() -> {
+            SourceDataLine sourceDataLine = null;
 
-        try {
-            sourceDataLine.open();
-            sourceDataLine.start();
+            try {
+                lock.lock();
+                sourceDataLine = AudioSystem.getSourceDataLine(format);
+                sourceDataLine.open();
+                sourceDataLine.start();
 
-            final byte[] buffer = new byte[sourceDataLine.getBufferSize()];
+                final byte[] buffer = new byte[sourceDataLine.getBufferSize()];
 
-            while (true) {
-                final int len = stream.read(buffer);
-                if (len == -1) break;
-                sourceDataLine.write(buffer, 0, len);
+                while (true) {
+                    final int len = stream.read(buffer);
+                    if (len == -1) break;
+                    sourceDataLine.write(buffer, 0, len);
+                }
+
+                if (sync) sourceDataLine.drain();
+            } catch (LineUnavailableException | IOException e) {
+                throw new RuntimeException(e);
+            } finally {
+                lock.unlock();
+                if (sourceDataLine != null && sourceDataLine.isRunning()) sourceDataLine.stop();
+                if (sourceDataLine != null && sourceDataLine.isOpen()) sourceDataLine.close();
             }
-
-            if (sync) sourceDataLine.drain();
-        } finally {
-            if (sourceDataLine.isRunning()) sourceDataLine.stop();
-            if (sourceDataLine.isOpen()) sourceDataLine.close();
-        }
+        }, "Audio playback thread").start();
     }
 
     public static void play(final AudioInputStream stream) throws LineUnavailableException, IOException {
