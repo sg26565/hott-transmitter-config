@@ -31,4 +31,6 @@ public interface SerialPort extends AutoCloseable {
     public boolean isOpen();
 
     public void open() throws HoTTException;
+
+    public void reset() throws HoTTException;
 }

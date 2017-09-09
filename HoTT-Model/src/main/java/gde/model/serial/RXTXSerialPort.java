@@ -109,4 +109,9 @@ public class RXTXSerialPort implements gde.model.serial.SerialPort {
             throw new HoTTException(e);
         }
     }
+
+    @Override
+    public void reset() throws HoTTException {
+        // nothing
+    }
 }

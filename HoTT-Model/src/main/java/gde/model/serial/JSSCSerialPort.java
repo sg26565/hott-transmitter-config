@@ -17,6 +17,10 @@ import static jssc.SerialPort.FLOWCONTROL_NONE;
 import static jssc.SerialPort.MASK_RXCHAR;
 import static jssc.SerialPort.MASK_TXEMPTY;
 import static jssc.SerialPort.PARITY_NONE;
+import static jssc.SerialPort.PURGE_RXABORT;
+import static jssc.SerialPort.PURGE_RXCLEAR;
+import static jssc.SerialPort.PURGE_TXABORT;
+import static jssc.SerialPort.PURGE_TXCLEAR;
 import static jssc.SerialPort.STOPBITS_1;
 
 import java.io.IOException;
@@ -139,6 +143,17 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
         if (DEBUG) System.out.println(Util.dumpData(bytes));
 
         if (bytes != null) readBuffer.write(bytes);
+    }
+
+    @Override
+    public void reset() throws HoTTException {
+        try {
+            readBuffer.reset();
+            writeBuffer.reset();
+            port.purgePort(PURGE_RXABORT + PURGE_RXCLEAR + PURGE_TXABORT + PURGE_TXCLEAR);
+        } catch (final SerialPortException e) {
+            throw new HoTTException(e);
+        }
     }
 
     @Override
