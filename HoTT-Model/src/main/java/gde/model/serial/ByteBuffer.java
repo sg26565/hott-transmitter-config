@@ -1,9 +1,12 @@
 package gde.model.serial;
 
+import java.io.IOException;
+
 import gde.util.Util;
 
 public class ByteBuffer {
-    private static boolean DEBUG = Util.DEBUG;
+    private final boolean DEBUG = Util.DEBUG;
+    private final int TIMEOUT = 10000;
 
     private final int size;
     private final byte[] buffer;
@@ -17,8 +20,13 @@ public class ByteBuffer {
 
     /** The number of bytes available for read. */
     public int available() {
-        if (DEBUG) System.out.printf("available=%d%n", limit - index);
         return (int) (limit - index);
+    }
+
+    private void block() throws InterruptedException {
+        synchronized (buffer) {
+            buffer.wait(1000);
+        }
     }
 
     /** The buffer holds data from {@link #index} inclusive to {@link #limit} exclusive. */
@@ -51,21 +59,24 @@ public class ByteBuffer {
 
         // increment index
         index++;
-        if (DEBUG) System.out.printf("read: index=%d(%d), limit=%d, byte=%d%n", index, i, limit, buffer[i]);
+
+        unblock();
 
         return buffer[i] & 0xff;
     }
 
     /** Bulk read method. Read up to data.length bytes from the buffer. Return the actual number of bytes read. */
     public synchronized int read(final byte[] data) {
+        final int available = available();
+
         // buffer underflow
-        if (available() == 0) return 0;
+        if (available == 0) return 0;
 
         // index in buffer
         final int i = (int) (index % size);
 
         // increment index
-        final int len = Math.min(data.length, available());
+        final int len = Math.min(data.length, available);
         index += len;
 
         // space from index to end of buffer
@@ -80,26 +91,78 @@ public class ByteBuffer {
             System.arraycopy(buffer, 0, data, x, len - x);
         }
 
-        if (DEBUG) System.out.printf("read: index=%d(%d, %d), limit=%d%n%s", index, i, x, limit, Util.dumpData(data));
+        unblock();
+
         return len;
     }
 
     /** The number of bytes remaining for write. */
     public int remaining() {
-        if (DEBUG) System.out.printf("remaining=%d%n", size - limit + index);
         return size - available();
+    }
+
+    public void reset() {
+        index = limit = 0;
+    }
+
+    private void unblock() {
+        synchronized (buffer) {
+            if (DEBUG) System.out.println("unclock");
+            buffer.notifyAll();
+        }
+    }
+
+    /**
+     * Block current thread until at least amount bytes become available for reading.
+     *
+     * @throws InterruptedException
+     */
+    public void waitRead(final int amount) throws IOException {
+        final long start = System.currentTimeMillis();
+        while (available() < amount) {
+            if (DEBUG) System.out.printf("Not enough data available for read, blocking: requested=%d, available=%d%n", amount, available());
+            try {
+                block();
+            } catch (final InterruptedException e) {
+                throw new IOException(e);
+            }
+            if (System.currentTimeMillis() - start > TIMEOUT) throw new IOException("read timeout");
+        }
+    }
+
+    /**
+     * Block current thread until at least amount bytes become available for writing.
+     *
+     * @throws InterruptedException
+     */
+    public void waitWrite(final int amount) throws IOException {
+        final long start = System.currentTimeMillis();
+        while (remaining() < amount) {
+            if (DEBUG) System.out.printf("Not enough data available for write, blocking: requested=%d, available=%d%n", amount, available());
+            try {
+                block();
+            } catch (final InterruptedException e) {
+                throw new IOException(e);
+            }
+            if (System.currentTimeMillis() - start > TIMEOUT) throw new IOException("write timeout");
+        }
     }
 
     /** Bulk write method. Write up to data.length bytes to the buffer. Return the actual number of bytes written. */
     public synchronized int write(final byte[] data) {
+        final int remaining = remaining();
+
         // buffer overflow
-        if (remaining() == 0) return 0;
+        if (remaining == 0) {
+            System.err.printf("buffer overflow: %d byte were lost!%n%s%n", data.length, Util.dumpData(data));
+            return 0;
+        }
 
         // limit in buffer
         final int l = (int) (limit % size);
 
         // increment limit
-        final int len = Math.min(data.length, remaining());
+        final int len = Math.min(data.length, remaining);
         limit += len;
 
         // space from limit to end of buffer
@@ -114,14 +177,19 @@ public class ByteBuffer {
             System.arraycopy(data, x, buffer, 0, len - x);
         }
 
-        if (DEBUG) System.out.printf("write: index=%d, limit=%d(%d, %d)%n%s", index, limit, l, x, Util.dumpData(data));
+        unblock();
+
         return len;
     }
 
     /** Write a single byte to the buffer. Return false if buffer was full. */
     public synchronized boolean write(final int b) {
+        final int remaining = remaining();
         // buffer overflow
-        if (remaining() == 0) return false;
+        if (remaining == 0) {
+            System.err.printf("buffer overflow: %d wase lost!%n", b & 0xff);
+            return false;
+        }
 
         // limit in buffer
         final int l = (int) (limit % size);
@@ -130,7 +198,9 @@ public class ByteBuffer {
         limit++;
 
         buffer[l] = (byte) b;
-        if (DEBUG) System.out.printf("write: index=%d, limit=%d(%d), byte=%d%n", index, limit, l, b);
+
+        unblock();
+
         return true;
     }
 }

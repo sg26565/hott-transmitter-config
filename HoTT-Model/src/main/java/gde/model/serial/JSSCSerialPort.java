@@ -49,6 +49,10 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
 
         @Override
         public int read() throws IOException {
+            // block until data is available
+            while (readBuffer.available() == 0)
+                readBuffer.waitRead(1);
+
             return readBuffer.read();
         }
     }
@@ -65,14 +69,18 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
 
         @Override
         public void write(final int b) throws IOException {
-            if (writeBuffer.remaining() == 0) flush();
-            writeBuffer.write(b);
+            if (writeBuffer.remaining() == 0) {
+                flush();
+                writeBuffer.waitWrite(1);
+            }
+
+            writeBuffer.write(b & 0xff);
         }
     }
 
     private static boolean DEBUG = Util.DEBUG;
-    private static final int READ_BUFFER_SIZE = 2062;
-    private static final int WRITE_BUFFER_SIZE = 2062;
+    private static final int READ_BUFFER_SIZE = 4096;
+    private static final int WRITE_BUFFER_SIZE = 4096;
 
     public static List<String> getAvailablePorts() {
         return Arrays.asList(SerialPortList.getPortNames());
@@ -137,11 +145,9 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
     }
 
     private void readFromPort() throws SerialPortException, IOException {
-        if (DEBUG) System.out.printf("Read: %d bytes available%n", port.getInputBufferBytesCount());
+        if (DEBUG) System.out.printf("readFromPort: %d bytes available%n", port.getInputBufferBytesCount());
 
         final byte[] bytes = port.readBytes();
-        if (DEBUG) System.out.println(Util.dumpData(bytes));
-
         if (bytes != null) readBuffer.write(bytes);
     }
 
@@ -158,7 +164,8 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
 
     @Override
     public void serialEvent(final SerialPortEvent event) {
-        if (DEBUG) System.out.printf("Event: port=%s, type=%d, value=%d%n", event.getPortName(), event.getEventType(), event.getEventValue());
+        if (DEBUG) System.out.printf("serialEvent: port=%s, type=%s(%d), value=%d%n", event.getPortName(), event.getEventType() == 1 ? "RXCHAR" : "TXEMPTY",
+                event.getEventType(), event.getEventValue());
 
         try {
             if (event.isRXCHAR()) readFromPort();
@@ -170,11 +177,13 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
     }
 
     private void writeToPort() throws SerialPortException {
-        if (writeBuffer.available() > 0) {
-            if (DEBUG) System.out.printf("Write: %d to write%n", writeBuffer.available());
-            final byte[] bytes = new byte[writeBuffer.available()];
+        final int available = writeBuffer.available();
+
+        if (available > 0) {
+            if (DEBUG) System.out.printf("writeToPort: %d bytes to write%n", available);
+            // write max 512 bytes to serial port
+            final byte[] bytes = new byte[Math.min(available, 512)];
             writeBuffer.read(bytes);
-            if (DEBUG) System.out.println(Util.dumpData(bytes));
             port.writeBytes(bytes);
         }
     }
