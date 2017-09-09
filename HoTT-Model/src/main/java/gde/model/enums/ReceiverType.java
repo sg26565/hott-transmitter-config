@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  *
  */
 public enum ReceiverType {
-    E06(1), E08(0), E12(5), E16(7);
+    E06(1), E08(0), E09(3), E12(5), E16(7);
 
     public static ReceiverType forId(final int id) {
         return Stream.of(values()).filter(s -> s.id == id).findFirst().orElse(null);
