@@ -33,9 +33,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import gde.mdl.messages.Messages;
+import gde.model.serial.JSSCSerialPort;
 import gde.model.serial.ResponseCode;
 import gde.model.serial.SerialPort;
-import gde.model.serial.SerialPortDefaultImpl;
 import gde.util.Util;
 
 /**
@@ -48,7 +48,7 @@ public class MemoryDump {
             final String portName = (String) comboBox.getSelectedItem();
             if (portName == null || portName.length() == 0) return;
 
-            final SerialPort portImpl = new SerialPortDefaultImpl(portName);
+            final SerialPort portImpl = new JSSCSerialPort(portName);
 
             dumpButton.setText(Messages.getString("Abort")); //$NON-NLS-1$
             saveButton.setEnabled(false);
@@ -170,7 +170,7 @@ public class MemoryDump {
     private DumpThread dumpThread = null;
 
     private void showDialog() {
-        for (final String s : SerialPortDefaultImpl.getAvailablePorts())
+        for (final String s : JSSCSerialPort.getAvailablePorts())
             comboBox.addItem(s);
 
         dumpButton.addActionListener(new StartButtonActionListener());

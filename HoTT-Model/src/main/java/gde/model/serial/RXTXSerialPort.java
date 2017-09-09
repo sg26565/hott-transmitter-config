@@ -29,7 +29,7 @@ import gnu.io.UnsupportedCommOperationException;
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
-public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
+public class RXTXSerialPort implements gde.model.serial.SerialPort {
     private static final int WRITE_BUFFER_SIZE = 2064;
     private static final int READ_BUFFER_SIZE = 2064;
 
@@ -53,7 +53,7 @@ public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
     /**
      * @param name
      */
-    public SerialPortDefaultImpl(final String name) {
+    public RXTXSerialPort(final String name) {
         this.name = name;
     }
 
@@ -94,7 +94,7 @@ public class SerialPortDefaultImpl implements gde.model.serial.SerialPort {
     public void open() throws HoTTException {
         try {
             final CommPortIdentifier identifier = CommPortIdentifier.getPortIdentifier(name);
-            port = (SerialPort) identifier.open(SerialPortDefaultImpl.class.getName(), 1000);
+            port = (SerialPort) identifier.open(RXTXSerialPort.class.getName(), 1000);
             port.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             port.setDTR(false);
             port.setRTS(false);

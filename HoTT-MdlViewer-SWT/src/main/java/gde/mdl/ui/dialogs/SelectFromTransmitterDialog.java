@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Widget;
 import de.treichels.hott.HoTTSerialPort;
 import gde.mdl.messages.Messages;
 import gde.model.BaseModel;
-import gde.model.serial.SerialPortDefaultImpl;
+import gde.model.serial.JSSCSerialPort;
 import gde.util.Util;
 
 public abstract class SelectFromTransmitterDialog extends Dialog {
@@ -52,7 +52,7 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
     }
 
     static final Preferences PREFS = Preferences.userNodeForPackage(SelectFromTransmitterDialog.class);
-    private final List<String> portNames = SerialPortDefaultImpl.getAvailablePorts();
+    private final List<String> portNames = JSSCSerialPort.getAvailablePorts();
     protected HoTTSerialPort port = null;
     protected BaseModel model = null;
     private Combo combo;
@@ -145,7 +145,7 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
     private void portSelected(final String portName) {
         if (portName != null && portName.length() > 0 && portNames.contains(portName)) {
             PREFS.put("portName", portName);
-            port = new HoTTSerialPort(new SerialPortDefaultImpl(portName));
+            port = new HoTTSerialPort(new JSSCSerialPort(portName));
             onReload();
         }
     }

@@ -162,9 +162,5 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math3</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>gnu.io.RXTXcomm</groupId>
-			<artifactId>RXTXcomm</artifactId>
-		</dependency>
 	</dependencies>
 </project>

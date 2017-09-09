@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import gde.mdl.messages.Messages;
-import gde.model.serial.SerialPortDefaultImpl;
+import gde.model.serial.JSSCSerialPort;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +24,7 @@ import javafx.scene.layout.BorderPane;
  */
 public abstract class SelectFromTransmitter extends Dialog<Task<Model>> {
     /** List of serial port names */
-    private static final List<String> portNames = SerialPortDefaultImpl.getAvailablePorts();
+    private static final List<String> portNames = JSSCSerialPort.getAvailablePorts();
 
     @FXML
     public ComboBox<String> comboBox;

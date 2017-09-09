@@ -1,24 +1,31 @@
+import static jssc.SerialPort.BAUDRATE_115200;
+import static jssc.SerialPort.DATABITS_8;
+import static jssc.SerialPort.FLOWCONTROL_NONE;
+import static jssc.SerialPort.PARITY_NONE;
+import static jssc.SerialPort.STOPBITS_1;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import de.treichels.hott.HoTTDecoder;
 import de.treichels.hott.HoTTSerialPort;
 import de.treichels.hott.internal.decoder.BaseDecoder;
+import de.treichels.hott.internal.io.HoTTWriter;
 import gde.model.BaseModel;
 import gde.model.enums.ModelType;
 import gde.model.serial.FileInfo;
 import gde.model.serial.FileMode;
 import gde.model.serial.ModelInfo;
-import gde.model.serial.SerialPort;
-import gde.model.serial.SerialPortDefaultImpl;
 import gde.model.serial.TxInfo;
 import gde.util.Util;
+import jssc.SerialPort;
+import jssc.SerialPortList;
 
 public class SerialTest {
-    private static SerialPort portImpl;
     private static HoTTSerialPort port;
 
     private static void fileReadWriteTest() throws IOException {
@@ -90,18 +97,45 @@ public class SerialTest {
     }
 
     public static void main(final String[] args) throws Exception {
-        final List<String> ports = SerialPortDefaultImpl.getAvailablePorts();
-        System.out.println(ports);
+        Stream.of(SerialPortList.getPortNames()).forEach(System.out::println);
+        final SerialPort port = new jssc.SerialPort("COM5");
+        System.out.println(port.openPort());
+        System.out.println(port.setParams(BAUDRATE_115200, DATABITS_8, STOPBITS_1, PARITY_NONE, false, false));
+        System.out.println(port.setFlowControlMode(FLOWCONTROL_NONE));
+        System.out.println(port.getInputBufferBytesCount());
+        System.out.println(port.getOutputBufferBytesCount());
 
-        portImpl = new SerialPortDefaultImpl(ports.get(0));
-        port = new HoTTSerialPort(portImpl);
+        final HoTTWriter w = new HoTTWriter();
+        w.writeUnsignedByte(0);
+        w.writeUnsignedByte(1);
+        w.writeUnsignedByte(1 ^ 0xFF);
+        w.resetCRC();
+        w.writeUnsignedShort(0);
+        w.writeUnsignedByte(0);
+        w.writeUnsignedByte(0x11);
+        w.writeUnsignedByte(w.getCRC());
 
-        writeScreenTest();
-        readModelsFromMemoryTest();
-        transmitterInfoTest();
-        readTransmitterMemoryTest();
-        fileReadWriteTest();
-        list("/");
+        final byte[] request = w.getData();
+        System.out.println(Util.dumpData(request));
+        port.writeBytes(request);
+        final byte[] response = port.readBytes();
+        System.out.println(Util.dumpData(response));
+
+        System.out.println(port.closePort());
+        // final List<String> ports = RXTXSerialPort.getAvailablePorts();
+        // System.out.println(ports);
+
+        // portImpl = new RXTXSerialPort(ports.get(0));
+        // port = new HoTTSerialPort(portImpl);
+
+        // port.open();
+
+        // writeScreenTest();
+        // readModelsFromMemoryTest();
+        // transmitterInfoTest();
+        // readTransmitterMemoryTest();
+        // fileReadWriteTest();
+        // list("/");
 
         // for (final String name : port.listDir("/MP3")) {
         // System.out.println(name);

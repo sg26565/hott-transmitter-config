@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 
 import de.treichels.hott.HoTTSerialPort;
 import gde.mdl.messages.Messages;
-import gde.model.serial.SerialPortDefaultImpl;
+import gde.model.serial.JSSCSerialPort;
 import gde.util.ModelLoader;
 
 public abstract class SelectFromTransmitter extends JPanel implements ModelLoader {
@@ -26,7 +26,7 @@ public abstract class SelectFromTransmitter extends JPanel implements ModelLoade
             final String portName = (String) comboBox.getSelectedItem();
             if (portName != null && portName.length() > 0 && portNames.contains(portName)) {
                 SimpleGUI.PREFS.put("portName", portName);
-                port = new HoTTSerialPort(new SerialPortDefaultImpl(portName));
+                port = new HoTTSerialPort(new JSSCSerialPort(portName));
                 onReload();
             }
         }
@@ -34,7 +34,7 @@ public abstract class SelectFromTransmitter extends JPanel implements ModelLoade
 
     private static final long serialVersionUID = 1L;
 
-    private static final List<String> portNames = SerialPortDefaultImpl.getAvailablePorts();
+    private static final List<String> portNames = JSSCSerialPort.getAvailablePorts();
     protected HoTTSerialPort port = null;
     private final JComboBox<String> comboBox = new JComboBox<>();
     protected final WaitLayerUI<JScrollPane> layerUI = new WaitLayerUI<>();
@@ -45,7 +45,7 @@ public abstract class SelectFromTransmitter extends JPanel implements ModelLoade
         for (final String s : portNames)
             comboBox.addItem(s);
         final String portName = SimpleGUI.PREFS.get("portName", (String) comboBox.getSelectedItem());
-        if (portName != null && portName.length() > 0 && portNames.contains(portName)) port = new HoTTSerialPort(new SerialPortDefaultImpl(portName));
+        if (portName != null && portName.length() > 0 && portNames.contains(portName)) port = new HoTTSerialPort(new JSSCSerialPort(portName));
         final PortSelectionListener listener = new PortSelectionListener();
         comboBox.addActionListener(listener);
 
