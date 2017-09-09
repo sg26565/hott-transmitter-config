@@ -11,7 +11,6 @@
  */
 package gde.model.serial;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -23,7 +22,7 @@ import gde.model.HoTTException;
  */
 public interface SerialPort extends AutoCloseable {
     @Override
-    public void close() throws IOException;
+    public void close() throws HoTTException;
 
     public InputStream getInputStream() throws HoTTException;
 
