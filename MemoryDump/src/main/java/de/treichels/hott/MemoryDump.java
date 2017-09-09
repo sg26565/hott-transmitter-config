@@ -63,12 +63,12 @@ public class MemoryDump {
                 for (int i = 0; dumpThread != null && i < 4096; i++) {
                     ResponseCode rc = ResponseCode.NACK;
 
-                    final int address = 0x100 * i;
+                    final int address = 0x800 * i;
                     if (i % 128 == 0) messageArea.append("\n"); //$NON-NLS-1$
 
                     while (rc != ResponseCode.ACK && dumpThread != null) {
                         try {
-                            data = port.readMemoryBlock(address, 0x100);
+                            data = port.readMemoryBlock(address, 0x800);
                             rc = ResponseCode.ACK;
                         } catch (final Exception e) {
                             if (e instanceof HoTTSerialPortException)
