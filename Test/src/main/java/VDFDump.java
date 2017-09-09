@@ -7,24 +7,26 @@ import java.util.stream.Stream;
 import javax.sound.sampled.LineUnavailableException;
 
 import de.treichels.hott.HoTTDecoder;
-import gde.model.voice.Player;
 import gde.model.voice.VoiceData;
 import gde.model.voice.VoiceFile;
 import gde.util.Util;
 
 public class VDFDump {
-    private static void dump(final File vdf) throws IOException {
+    public static void dump(final File vdf) {
+        System.out.println(vdf);
         final File out = new File(vdf.getParentFile(), vdf.getName().replaceAll(".vdf", ".txt"));
-        final byte[] bytes = Files.readAllBytes(vdf.toPath());
-        final String dumpData = Util.dumpData(bytes);
-        Files.write(out.toPath(), dumpData.getBytes());
+        try {
+            final byte[] bytes = Files.readAllBytes(vdf.toPath());
+            Files.write(out.toPath(), Util.dumpData(bytes).getBytes());
+        } catch (final IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
-    @SuppressWarnings("unused")
-    private static void exportVOX(final File vdf) throws IOException {
-        final VoiceFile voiceFile = HoTTDecoder.decodeVDF(vdf);
-        final List<VoiceData> list = voiceFile.getVoiceData();
-        list.stream().forEach(v -> {
+    public static void exportAllVox(final File vdf) throws IOException {
+        System.out.println(vdf);
+        HoTTDecoder.decodeVDF(vdf).getVoiceData().forEach(v -> {
             System.out.println(v.getName());
             final File vox = new File(vdf.getParentFile(), v.getName() + ".vox");
             try {
@@ -36,8 +38,8 @@ public class VDFDump {
         });
     }
 
-    @SuppressWarnings("unused")
-    private static void exportWAV(final File vdf) throws IOException {
+    public static void exportAllWav(final File vdf) throws IOException {
+        System.out.println(vdf);
         final VoiceFile voiceFile = HoTTDecoder.decodeVDF(vdf);
         final List<VoiceData> list = voiceFile.getVoiceData();
         list.stream().forEach(v -> {
@@ -71,17 +73,28 @@ public class VDFDump {
         // for (final File file : desktop.listFiles((dir, name) -> name.endsWith(".vdf")))
         // dump(file);
 
-        final File sounds = new File("C:/Users/olive/Google Drive/Weatronic/Sounds/Sprache_BAT60_Anna");
-        Stream.of(sounds.listFiles()).filter(f -> f.getName().endsWith(".mp3")).forEach(Player::play);
-        Stream.of(sounds.listFiles()).filter(f -> f.getName().endsWith(".ogg")).forEach(Player::play);
-        Stream.of(sounds.listFiles()).filter(f -> f.getName().endsWith(".wav")).forEach(Player::play);
+        // final File sounds = new File("C:/Users/olive/Google Drive/Weatronic/Sounds/Sprache_BAT60_Anna");
+        // Stream.of(sounds.listFiles()).filter(f -> f.getName().endsWith(".mp3")).forEach(Player::play);
+        // Stream.of(sounds.listFiles()).filter(f -> f.getName().endsWith(".ogg")).forEach(Player::play);
+        // Stream.of(sounds.listFiles()).filter(f -> f.getName().endsWith(".wav")).forEach(Player::play);
+
+        final File vdfDir = new File("C:/Users/olive/Google Drive/Graupner/VDFEditor/Voice Files/VoiceFile");
+        Stream.of(vdfDir.listFiles()).filter(s -> s.getName().endsWith(".vdf")).forEach(VDFDump::dump);
+
+        // File vdfDir = new File("C:/Users/olive/Google Drive/Graupner/Official Version/33112_33116_33124_33020_33028_33032/SD card/HoTT_Voice_Files");
+        // Stream.of(vdfDir.listFiles()).filter(s -> s.getName().endsWith(".vdf")).forEach(VDFDump::dump);
+
+        // final File vdfDir = new File("C:/Users/olive/Desktop");
+        // Stream.of(vdfDir.listFiles()).filter(s -> s.getName().endsWith(".vdf")).forEach(VDFDump::dump);
     }
 
-    @SuppressWarnings("unused")
-    private static void play(final File vdf) throws IOException {
+    public static void playAll(final File vdf) {
         System.out.println(vdf);
-        final VoiceFile voiceFile = HoTTDecoder.decodeVDF(vdf);
-        final List<VoiceData> list = voiceFile.getVoiceData();
-        list.stream().forEach(VoiceData::play);
+        try {
+            HoTTDecoder.decodeVDF(vdf).getVoiceData().forEach(VoiceData::play);
+        } catch (final IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
