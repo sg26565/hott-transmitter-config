@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import de.treichels.hott.HoTTSerialPort;
+import de.treichels.hott.internal.commands.ADPCMPlay;
 import de.treichels.hott.internal.commands.ADPCMReadData;
 import de.treichels.hott.internal.commands.ADPCMReadDevice;
 import de.treichels.hott.internal.commands.ADPCMReadDevice.Response;
@@ -10,8 +11,6 @@ import de.treichels.hott.internal.commands.ADPCMReadInfoSectorCount;
 import de.treichels.hott.internal.io.BaseResponse;
 import gde.model.serial.JSSCSerialPort;
 import gde.model.serial.ResponseCode;
-import gde.model.voice.Player;
-import gde.model.voice.VoiceData;
 
 public class ADPCMTest {
     private static void getADPCMInfo(final HoTTSerialPort port, final boolean user) throws IOException {
@@ -56,9 +55,10 @@ public class ADPCMTest {
             final byte[] data = r4.getData();
             bb.put(data);
 
-            final VoiceData vd = new VoiceData(r3.getName(), bb.array());
-            Player.waitDone();
-            vd.play();
+            port.doCommand(new ADPCMPlay(i));
+            // final VoiceData vd = new VoiceData(r3.getName(), bb.array());
+            // Player.waitDone();
+            // vd.play();
         }
     }
 
