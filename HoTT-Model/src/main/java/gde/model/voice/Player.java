@@ -125,4 +125,9 @@ public class Player {
     public static void play(final File file, final boolean sync) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
         play(AudioSystem.getAudioInputStream(file), sync);
     }
+
+    public static void waitDone() {
+        lock.lock();
+        lock.unlock();
+    }
 }
