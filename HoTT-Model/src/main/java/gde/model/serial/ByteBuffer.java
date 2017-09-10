@@ -6,7 +6,7 @@ import gde.util.Util;
 
 public class ByteBuffer {
     private final boolean DEBUG = Util.DEBUG;
-    private final int TIMEOUT = 3000;
+    private final int TIMEOUT = 200;
 
     private final int size;
     private final byte[] buffer;
@@ -25,7 +25,7 @@ public class ByteBuffer {
 
     private void block() throws InterruptedException {
         synchronized (buffer) {
-            buffer.wait(1000);
+            buffer.wait(20);
         }
     }
 

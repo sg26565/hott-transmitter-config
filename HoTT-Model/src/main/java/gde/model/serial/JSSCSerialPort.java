@@ -182,7 +182,7 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
         if (available > 0) {
             if (DEBUG) System.out.printf("writeToPort: %d bytes to write%n", available);
             // write max 512 bytes to serial port
-            final byte[] bytes = new byte[Math.min(available, 512)];
+            final byte[] bytes = new byte[available];
             writeBuffer.read(bytes);
             port.writeBytes(bytes);
         }
