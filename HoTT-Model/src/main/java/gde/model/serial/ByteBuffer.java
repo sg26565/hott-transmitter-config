@@ -6,7 +6,7 @@ import gde.util.Util;
 
 public class ByteBuffer {
     private final boolean DEBUG = Util.DEBUG;
-    private final int TIMEOUT = 10000;
+    private final int TIMEOUT = 3000;
 
     private final int size;
     private final byte[] buffer;
