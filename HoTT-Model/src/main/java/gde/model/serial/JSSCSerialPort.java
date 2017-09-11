@@ -50,8 +50,15 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
         @Override
         public int read() throws IOException {
             // block until data is available
-            while (readBuffer.available() == 0)
-                readBuffer.waitRead(1);
+            while (readBuffer.available() == 0) {
+                try {
+                    readFromPort();
+                } catch (final SerialPortException e) {
+                    throw new IOException(e);
+                }
+
+                if (readBuffer.available() == 0) readBuffer.waitRead(1);
+            }
 
             return readBuffer.read();
         }
@@ -182,7 +189,7 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
         if (available > 0) {
             if (DEBUG) System.out.printf("writeToPort: %d bytes to write%n", available);
             // write max 512 bytes to serial port
-            final byte[] bytes = new byte[available];
+            final byte[] bytes = new byte[Math.min(available, 512)];
             writeBuffer.read(bytes);
             port.writeBytes(bytes);
         }
