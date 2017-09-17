@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import de.treichels.hott.HoTTSerialPort;
 import de.treichels.hott.internal.decoder.VDFDecoder;
 import gde.model.serial.JSSCSerialPort;
+import gde.model.serial.UpdateHandler;
 import gde.model.voice.Player;
 import gde.model.voice.VoiceData;
 import gde.model.voice.VoiceFile;
@@ -12,6 +13,18 @@ import gde.model.voice.VoiceFileInfo;
 import gde.model.voice.VoiceInfo;
 
 public class ADPCMTest {
+    private static class MyUpdateHandler implements UpdateHandler {
+        @Override
+        public boolean isCancelled() {
+            return false;
+        }
+
+        @Override
+        public void update(final int step, final int count) {
+            System.out.printf("%d/%d%n", step, count);
+        }
+    }
+
     private static void getADPCMInfo(final HoTTSerialPort port, final boolean user) throws IOException {
         final String type = user ? "User" : "System";
 
@@ -31,7 +44,12 @@ public class ADPCMTest {
             Player.waitDone();
             vd.play();
             Player.waitDone();
+            port.playSound(user ? i + 432 : i);
         }
+    }
+
+    private static VoiceFile loadVoiceFile(final HoTTSerialPort port, final boolean user) throws IOException {
+        return port.loadVoiceFile(user, new MyUpdateHandler());
     }
 
     public static void main(final String[] args) throws IOException {
@@ -41,16 +59,17 @@ public class ADPCMTest {
             port.open();
 
             // getADPCMInfo(port, true);
-            getADPCMInfo(port, false);
+            // getADPCMInfo(port, false);
 
             // sendVoiceFile(port, new File("C:/Users/olive/Desktop/user.vdf"));
-            sendVoiceFile(port, new File("C:/Users/olive/Desktop/system.vdf"));
+            // sendVoiceFile(port, new File("C:/Users/olive/Desktop/system.vdf"));
+            final VoiceFile voiceFile = loadVoiceFile(port, true);
         }
     }
 
     private static void sendVoiceFile(final HoTTSerialPort port, final File file) throws IOException {
         final byte[] data = Files.readAllBytes(file.toPath());
         final VoiceFile vdf = VDFDecoder.decodeVDF(data);
-        port.sendVoiceFile(vdf, (i, c) -> System.out.printf("%d/%d%n", i, c));
+        port.sendVoiceFile(vdf, new MyUpdateHandler());
     }
 }

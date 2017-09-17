@@ -21,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.sun.javafx.collections.ObservableListWrapper;
 
 import de.treichels.hott.HoTTDecoder;
+import de.treichels.hott.HoTTSerialPort;
 import de.treichels.hott.vdfeditor.actions.InsertAction;
 import de.treichels.hott.vdfeditor.actions.MoveAction;
 import de.treichels.hott.vdfeditor.actions.MoveDownAction;
@@ -159,12 +160,18 @@ public class Controller {
     private MenuItem undoMenuItem;
     @FXML
     private MenuItem redoMenuItem;
+    @FXML
+    private MenuItem playOnTransmitter;
+    @FXML
+    private MenuItem writeToTransmitter;
 
     private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
     final SimpleBooleanProperty systemVDFProperty = new SimpleBooleanProperty();
     private final SimpleBooleanProperty dirtyProperty = new SimpleBooleanProperty(false);
     private final SimpleObjectProperty<File> vdfFileProperty = new SimpleObjectProperty<>(null);
     final UndoBuffer<VoiceData> undoBuffer = new UndoBuffer<>();
+    private final ObjectProperty<HoTTSerialPort> serialPortProperty = new SimpleObjectProperty<>();
+    private final DialogController dialogController = new DialogController(serialPortProperty);
 
     private void addRestoreFiles(final Menu menu, final String location) {
         final SortedMap<String, MenuItem> items = new TreeMap<>();
@@ -263,7 +270,7 @@ public class Controller {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         // set factory method
         listView.setCellFactory(this::createListCell);
 
@@ -290,13 +297,14 @@ public class Controller {
         transmitterTypeCombo.getItems().remove(TransmitterType.unknown);
 
         // disable items if no vdf was loaded
-        final BooleanBinding noVdf = voiceFileProperty.isNull();
+        final BooleanBinding noVdf = voiceFileProperty.isNull(); // TODO check for empty voiceFile
         countryCodeCombo.disableProperty().bind(noVdf);
         transmitterTypeCombo.disableProperty().bind(noVdf);
         editMenu.disableProperty().bind(noVdf);
         saveVDFMenuItem.disableProperty().bind(noVdf.or(vdfFileProperty.isNull()).or(dirtyProperty.not()).or(systemVDFProperty));
         saveVDFAsMenuItem.disableProperty().bind(noVdf);
         addSoundMenuItem.disableProperty().bind(noVdf.or(systemVDFProperty));
+        writeToTransmitter.disableProperty().bind(noVdf);
 
         // disable menu items id no row was selected
         final BooleanBinding noSelection = listView.getSelectionModel().selectedItemProperty().isNull();
@@ -305,6 +313,7 @@ public class Controller {
         moveDownMenuItem.disableProperty().bind(noSelection.or(systemVDFProperty));
         moveUpMenuItem.disableProperty().bind(noSelection.or(systemVDFProperty));
         playMenuItem.disableProperty().bind(noSelection);
+        playOnTransmitter.disableProperty().bind(noSelection.or(serialPortProperty.isNull()));
         renameMenuItem.disableProperty().bind(noSelection);
         deleteSoundMenuItem.disableProperty().bind(noSelection);
         replaceSoundMenuItem.disableProperty().bind(noSelection);
@@ -587,6 +596,26 @@ public class Controller {
         ev.consume();
     }
 
+    @FXML
+    public void onLoadSystemVoiceFile() {
+        if (askSave()) {
+            final TransmitterTask task = new LoadVoiceFileTask(RES.getString("load_system_voicefiles"), false);
+            dialogController.openDialog(task);
+            final VoiceFile voiceFile = dialogController.getResult();
+            if (voiceFile != null) open(voiceFile);
+        }
+    }
+
+    @FXML
+    public void onLoadUserVoiceFile() {
+        if (askSave()) {
+            final TransmitterTask task = new LoadVoiceFileTask(RES.getString("load_user_voicefiles"), true);
+            dialogController.openDialog(task);
+            final VoiceFile voiceFile = dialogController.getResult();
+            if (voiceFile != null) open(voiceFile);
+        }
+    }
+
     /**
      * Move the selected item down in the list.
      */
@@ -665,6 +694,15 @@ public class Controller {
     @FXML
     public void onPlay() {
         listView.getSelectionModel().getSelectedItems().forEach(VoiceData::play);
+    }
+
+    @FXML
+    public void onPlayOnTransmitter() throws IOException {
+        final int selectedIndex = listView.getSelectionModel().getSelectedIndex();// TODO add system voice offset for user files
+        try (HoTTSerialPort port = serialPortProperty.get()) {
+            port.open();
+            port.playSound(selectedIndex);
+        }
     }
 
     @FXML
@@ -766,6 +804,12 @@ public class Controller {
         undoBuffer.undo();
         listView.refresh();
         setTitle();
+    }
+
+    @FXML
+    public void onWriteToTransmitter() {
+        final TransmitterTask task = new SendVoiceFileTask(RES.getString("write_to_transmitter"), voiceFileProperty.get());
+        dialogController.openDialog(task);
     }
 
     /**
