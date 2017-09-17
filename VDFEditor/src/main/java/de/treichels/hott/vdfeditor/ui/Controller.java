@@ -483,8 +483,9 @@ public class Controller {
                 final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
 
                 if (isSystemVDF)
-                // replace item at target index with first item
-                undoBuffer.push(new ReplaceAction<>(targetIndex, list.get(0)));
+                // replace items beginning at target index with list items
+                for (int i = 0; i < list.size(); i++)
+                undoBuffer.push(new ReplaceAction<>(targetIndex + i, list.get(i)));
                 else
                 // insert all items at target index
                 list.forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
@@ -498,8 +499,9 @@ public class Controller {
 
                 // import any sound files
                 if (files.stream().allMatch(Controller::isSoundFormat)) if (isSystemVDF)
-                // replace item at target index with first file
-                undoBuffer.push(new ReplaceAction<>(targetIndex, VoiceData.readSoundFile(files.get(0))));
+                // replace items beginning at target index with files
+                for (int i = 0; i < files.size(); i++)
+                undoBuffer.push(new ReplaceAction<>(targetIndex + i, VoiceData.readSoundFile(files.get(i))));
                 else
                 files.stream().map(VoiceData::readSoundFile).forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
                 }
@@ -563,10 +565,10 @@ public class Controller {
             // external source is another VDFEditor
 
             if (isSystemVDF) {
-            // allow only one item to replace an existing item for system VDFs
+            // allow multiple items to replace an existing items for system VDFs if they fit in the list
             @SuppressWarnings("unchecked")
             final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
-            if (list.size() == 1 && targetIndex < itemCount) ev.acceptTransferModes(TransferMode.COPY);
+            if (targetIndex + list.size() <= itemCount) ev.acceptTransferModes(TransferMode.COPY);
             } else
             // allow multiple items for user VDFs
             ev.acceptTransferModes(TransferMode.COPY);
@@ -581,8 +583,8 @@ public class Controller {
             else if (files.stream().allMatch(Controller::isSoundFormat))
                 // only sound files were dragged
                 if (isSystemVDF) {
-                if (files.size() == 1 && targetIndex < itemCount)
-                    // allow only one sound file to be dropped replacing an existing sound for system VDFs
+                if (targetIndex + files.size() <= itemCount)
+                    // allow only multiple sound files to replace existing sounds for system VDFs it they fit in the existing list
                     ev.acceptTransferModes(TransferMode.COPY);
                 } else
                 // allow multiple sound files for user VDFs
