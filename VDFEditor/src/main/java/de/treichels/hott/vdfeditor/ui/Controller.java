@@ -176,6 +176,8 @@ public class Controller {
 
     private final DialogController dialogController = new DialogController(serialPortProperty);
 
+    private boolean mute = false;
+
     private void addRestoreFiles(final Menu menu, final String location) {
         final SortedMap<String, MenuItem> items = new TreeMap<>();
 
@@ -376,7 +378,16 @@ public class Controller {
 
     @FXML
     public void onCountryCodeChanged() {
-        voiceFile.setCountry(countryCodeCombo.getValue());
+        final CountryCode oldCountry = voiceFile.getCountry();
+
+        try {
+            voiceFile.setCountry(countryCodeCombo.getValue());
+            verify();
+        } catch (final HoTTException e) {
+            ExceptionDialog.show(e);
+            voiceFile.setCountry(oldCountry);
+            countryCodeCombo.setValue(oldCountry);
+        }
     }
 
     /**
@@ -699,10 +710,19 @@ public class Controller {
 
     @FXML
     public void onPlayOnTransmitter() throws IOException {
-        final int selectedIndex = listView.getSelectionModel().getSelectedIndex();// TODO add system voice offset for user files
+        final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
+        int offset = 0;
+
+        if (!systemVDFBinding.get()) {
+            // temporarily switch to system vdf
+            voiceFile.setVdfType(VDFType.System);
+            offset = HoTTDecoder.getMaxVoiceCount(voiceFile);
+            voiceFile.setVdfType(VDFType.User);
+        }
+
         try (HoTTSerialPort port = serialPortProperty.get()) {
             port.open();
-            port.playSound(selectedIndex);
+            port.playSound(selectedIndex + offset);
         }
     }
 
@@ -789,7 +809,9 @@ public class Controller {
             if (newTransmitterType == TransmitterType.mc26 || newTransmitterType == TransmitterType.mc28)
                 voiceFile.setVdfVersion(3000);
             else if (oldVdfVersion == 3000) voiceFile.setVdfVersion(2500);
-            HoTTDecoder.verityVDF(voiceFile);
+
+            verify();
+
             setTitle();
         } catch (final HoTTException e) {
             ExceptionDialog.show(e);
@@ -840,7 +862,7 @@ public class Controller {
         final ObservableList<VoiceData> items = new ObservableListWrapper<>(voiceFile.getVoiceData());
         // add a change listener to the list to prevent invalid VDFs
         items.addListener((ListChangeListener<VoiceData>) c -> {
-            while (c.next())
+            while (!mute && c.next())
                 // if an item was added, check if the size limit was reached
                 if (c.wasAdded()) {
                     final int fistIndex = c.getFrom();
@@ -980,5 +1002,23 @@ public class Controller {
 
         final Scene scene = listView.getScene();
         if (scene != null) ((Stage) scene.getWindow()).setTitle(sb.toString());
+    }
+
+    private void verify() throws HoTTException {
+        final int maxVoiceCount = HoTTDecoder.getMaxVoiceCount(voiceFile);
+        int voiceCount = voiceFile.getVoiceCount();
+        final ObservableList<VoiceData> voiceData = listView.getItems();
+
+        mute = true;
+        // remove extra items
+        while (voiceCount-- > maxVoiceCount)
+            voiceData.remove(voiceCount);
+
+        // add missing items
+        if (systemVDFBinding.get()) while (++voiceCount < maxVoiceCount)
+            voiceData.add(new VoiceData(String.format("%02d.%s", voiceCount + 1, RES.getString("empty")), null));
+        mute = false;
+
+        HoTTDecoder.verityVDF(voiceFile);
     }
 }
