@@ -37,7 +37,6 @@ import gde.model.voice.VoiceData;
 import gde.model.voice.VoiceFile;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -85,6 +84,7 @@ public class Controller {
     private static final Preferences PREFS = Preferences.userNodeForPackage(Controller.class);
     private static final ResourceBundle RES = ResourceBundle.getBundle(Controller.class.getName());
     private static final List<File> TEMP_FILE_LIST = new ArrayList<>();
+
     static final Image ICON = new Image(Controller.class.getResource("icon.png").toString());
 
     /**
@@ -165,9 +165,9 @@ public class Controller {
     @FXML
     private MenuItem writeToTransmitter;
 
-    private final ObjectProperty<VoiceFile> voiceFileProperty = new SimpleObjectProperty<>();
-    final SimpleBooleanProperty systemVDFProperty = new SimpleBooleanProperty();
-    private final SimpleBooleanProperty dirtyProperty = new SimpleBooleanProperty(false);
+    final VoiceFile voiceFile = new VoiceFile(VDFType.User, TransmitterType.mc32, 2500, 0);
+    private final BooleanBinding systemVDFBinding = voiceFile.vdfTypeProperty().isEqualTo(VDFType.System);
+    private final BooleanBinding dirtyProperty = voiceFile.dirtyProperty();
     private final SimpleObjectProperty<File> vdfFileProperty = new SimpleObjectProperty<>(null);
     final UndoBuffer<VoiceData> undoBuffer = new UndoBuffer<>();
     private final ObjectProperty<HoTTSerialPort> serialPortProperty = new SimpleObjectProperty<>();
@@ -210,7 +210,7 @@ public class Controller {
 
         // yes, discard changes
         if (answer.get() == discardButton) {
-            dirtyProperty.set(false);
+            voiceFile.clean();
             return true;
         }
 
@@ -227,13 +227,11 @@ public class Controller {
      * @return
      */
     private boolean checkSize() {
-        final VoiceFile voiceFile = voiceFileProperty.get();
-
         try {
             HoTTDecoder.verityVDF(voiceFile);
 
             // display a disclaimer when saving a system vdf
-            if (systemVDFProperty.get()) {
+            if (systemVDFBinding.get()) {
                 final ButtonType accept = new ButtonType(RES.getString("accept_button"));
                 final Alert alert = new Alert(AlertType.WARNING, RES.getString("system_vdf_disclaimer_body"), accept, ButtonType.CANCEL);
                 ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
@@ -297,21 +295,21 @@ public class Controller {
         transmitterTypeCombo.getItems().remove(TransmitterType.unknown);
 
         // disable items if no vdf was loaded
-        final BooleanBinding noVdf = voiceFileProperty.isNull(); // TODO check for empty voiceFile
-        countryCodeCombo.disableProperty().bind(noVdf);
-        transmitterTypeCombo.disableProperty().bind(noVdf);
-        editMenu.disableProperty().bind(noVdf);
-        saveVDFMenuItem.disableProperty().bind(noVdf.or(vdfFileProperty.isNull()).or(dirtyProperty.not()).or(systemVDFProperty));
-        saveVDFAsMenuItem.disableProperty().bind(noVdf);
-        addSoundMenuItem.disableProperty().bind(noVdf.or(systemVDFProperty));
-        writeToTransmitter.disableProperty().bind(noVdf);
+        final BooleanBinding empty = voiceFile.voiceCountProperty().isEqualTo(0);
+        countryCodeCombo.disableProperty().bind(empty);
+        transmitterTypeCombo.disableProperty().bind(empty);
+        editMenu.disableProperty().bind(empty);
+        saveVDFMenuItem.disableProperty().bind(empty.or(vdfFileProperty.isNull()).or(dirtyProperty.not()).or(systemVDFBinding));
+        saveVDFAsMenuItem.disableProperty().bind(empty);
+        addSoundMenuItem.disableProperty().bind(empty.or(systemVDFBinding));
+        writeToTransmitter.disableProperty().bind(empty);
 
         // disable menu items id no row was selected
         final BooleanBinding noSelection = listView.getSelectionModel().selectedItemProperty().isNull();
 
         contextMenuDelete.disableProperty().bind(noSelection);
-        moveDownMenuItem.disableProperty().bind(noSelection.or(systemVDFProperty));
-        moveUpMenuItem.disableProperty().bind(noSelection.or(systemVDFProperty));
+        moveDownMenuItem.disableProperty().bind(noSelection.or(systemVDFBinding));
+        moveUpMenuItem.disableProperty().bind(noSelection.or(systemVDFBinding));
         playMenuItem.disableProperty().bind(noSelection);
         playOnTransmitter.disableProperty().bind(noSelection.or(serialPortProperty.isNull()));
         renameMenuItem.disableProperty().bind(noSelection);
@@ -375,7 +373,7 @@ public class Controller {
 
     @FXML
     public void onCountryCodeChanged() {
-        voiceFileProperty.get().setCountry(countryCodeCombo.getValue());
+        voiceFile.setCountry(countryCodeCombo.getValue());
     }
 
     /**
@@ -386,7 +384,7 @@ public class Controller {
         final MultipleSelectionModel<VoiceData> selectionModel = listView.getSelectionModel();
         final ObservableList<Integer> selectedIndices = selectionModel.getSelectedIndices();
 
-        if (systemVDFProperty.get())
+        if (systemVDFBinding.get())
             // keep number of items constant in system VDFs by replacing selected item(s) with an empty place holder
             selectedIndices.stream()
                     .forEach(i -> undoBuffer.push(new ReplaceAction<>(i, new VoiceData(String.format("%02d.%s", i + 1, RES.getString("empty")), null))));
@@ -459,13 +457,11 @@ public class Controller {
      */
     private void onDragDropped(final DragEvent ev) {
         try {
-            if (voiceFileProperty.get() == null) onNew();
-
             final Dragboard dragboard = ev.getDragboard();
             final Object source = ev.getGestureSource();
             final Object target = ev.getGestureTarget();
             final int targetIndex = target instanceof VoiceDataListCell ? ((VoiceDataListCell) target).getIndex() : listView.getItems().size();
-            final boolean isSystemVDF = systemVDFProperty.get();
+            final boolean isSystemVDF = systemVDFBinding.get();
 
             if (source instanceof VoiceDataListCell && target instanceof VoiceDataListCell && source != target) {
                 // DnD within the same list
@@ -521,7 +517,7 @@ public class Controller {
      * @param ev
      */
     private void onDragEntered(final DragEvent ev) {
-        if ((!systemVDFProperty.get() || ev.getGestureSource() == null) && !ev.getTarget().equals(ev.getGestureSource()))
+        if ((!systemVDFBinding.get() || ev.getGestureSource() == null) && !ev.getTarget().equals(ev.getGestureSource()))
             ((Node) ev.getTarget()).setOpacity(0.3d);
         ev.consume();
     }
@@ -551,7 +547,7 @@ public class Controller {
         final int itemCount = listView.getItems().size();
         final Object source = ev.getGestureSource();
         final int targetIndex = target instanceof VoiceDataListCell ? ((VoiceDataListCell) target).getIndex() : itemCount;
-        final boolean isSystemVDF = systemVDFProperty.get();
+        final boolean isSystemVDF = systemVDFBinding.get();
 
         if (source instanceof VoiceDataListCell) {
             // DnD within the same list
@@ -601,8 +597,8 @@ public class Controller {
         if (askSave()) {
             final TransmitterTask task = new LoadVoiceFileTask(RES.getString("load_system_voicefiles"), false);
             dialogController.openDialog(task);
-            final VoiceFile voiceFile = dialogController.getResult();
-            if (voiceFile != null) open(voiceFile);
+            final VoiceFile result = dialogController.getResult();
+            if (result != null) open(result);
         }
     }
 
@@ -611,8 +607,8 @@ public class Controller {
         if (askSave()) {
             final TransmitterTask task = new LoadVoiceFileTask(RES.getString("load_user_voicefiles"), true);
             dialogController.openDialog(task);
-            final VoiceFile voiceFile = dialogController.getResult();
-            if (voiceFile != null) open(voiceFile);
+            final VoiceFile result = dialogController.getResult();
+            if (result != null) open(result);
         }
     }
 
@@ -621,7 +617,7 @@ public class Controller {
      */
     @FXML
     public void onMoveDown() {
-        if (!systemVDFProperty.get()) {
+        if (!systemVDFBinding.get()) {
             final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
 
             undoBuffer.push(new MoveDownAction<>(selectedIndex));
@@ -635,7 +631,7 @@ public class Controller {
      */
     @FXML
     public void onMoveUp() {
-        if (!systemVDFProperty.get()) {
+        if (!systemVDFBinding.get()) {
             final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
 
             undoBuffer.push(new MoveUpAction<>(selectedIndex));
@@ -650,7 +646,7 @@ public class Controller {
     @FXML
     public void onNew() {
         if (askSave()) {
-            final VoiceFile voiceFile = new VoiceFile();
+            voiceFile.getVoiceData().clear();
             voiceFile.setVdfType(VDFType.User);
             voiceFile.setTransmitterType(TransmitterType.mc28);
             voiceFile.setVdfVersion(3000);
@@ -780,7 +776,6 @@ public class Controller {
         final TransmitterType newTransmitterType = transmitterTypeCombo.getValue();
         if (newTransmitterType == null) return;
 
-        final VoiceFile voiceFile = voiceFileProperty.get();
         final TransmitterType oldTtransmitterType = voiceFile.getTransmitterType();
         final int oldVdfVersion = voiceFile.getVdfVersion();
 
@@ -808,7 +803,7 @@ public class Controller {
 
     @FXML
     public void onWriteToTransmitter() {
-        final TransmitterTask task = new SendVoiceFileTask(RES.getString("write_to_transmitter"), voiceFileProperty.get());
+        final TransmitterTask task = new SendVoiceFileTask(RES.getString("write_to_transmitter"), voiceFile);
         dialogController.openDialog(task);
     }
 
@@ -831,9 +826,9 @@ public class Controller {
      *
      * @param voiceFile
      */
-    private void open(final VoiceFile voiceFile) {
-        voiceFileProperty.set(voiceFile);
-        systemVDFProperty.setValue(voiceFile.getVdfType() == VDFType.System);
+    private void open(final VoiceFile other) {
+        voiceFile.copy(other);
+
         transmitterTypeCombo.setValue(voiceFile.getTransmitterType());
         countryCodeCombo.setValue(voiceFile.getCountry());
 
@@ -875,7 +870,7 @@ public class Controller {
                         }
 
                         // enforce name for system VDFs
-                        if (systemVDFProperty.get()) {
+                        if (systemVDFBinding.get()) {
                             final Pattern pattern = Pattern.compile(String.format("^%02d[._].*$", i + 1));
                             if (!pattern.matcher(name1).matches()) voiceData1.setName(String.format("%02d.%s", i + 1, name1));
                         }
@@ -885,7 +880,7 @@ public class Controller {
                     while (true)
                         try {
                             // validate VDF
-                            HoTTDecoder.verityVDF(voiceFileProperty.get());
+                            HoTTDecoder.verityVDF(voiceFile);
 
                             // validation succeeded - no exception was thrown
                             break;
@@ -900,7 +895,7 @@ public class Controller {
             setTitle();
         });
 
-        dirtyProperty.set(false);
+        voiceFile.clean();
         listView.setItems(items);
         undoBuffer.setItems(items);
 
@@ -913,14 +908,14 @@ public class Controller {
             PREFS.put(LAST_SAVE_VDF_DIR, vdf.getParentFile().getAbsolutePath());
 
             try {
-                if (vdf.exists() && isVDF(vdf) && systemVDFProperty.get()) {
+                if (vdf.exists() && isVDF(vdf) && systemVDFBinding.get()) {
                     ErrorDialog.show(RES.getString("will_not_overwrite_system_vdf"), RES.getString("system_vdf_exists"), vdf.getName());
                     return false;
                 }
 
-                HoTTDecoder.encodeVDF(voiceFileProperty.get(), vdf);
+                HoTTDecoder.encodeVDF(voiceFile, vdf);
                 vdfFileProperty.set(vdf);
-                dirtyProperty.set(false);
+                voiceFile.clean();
                 setTitle();
 
                 // everything ok
@@ -957,7 +952,6 @@ public class Controller {
      * Set stage title with information about the current VDF.
      */
     void setTitle() {
-        dirtyProperty.set(undoBuffer.getIndex() != 0);
         final StringBuilder sb = new StringBuilder();
 
         if (dirtyProperty.get()) sb.append("*"); //$NON-NLS-1$
@@ -967,17 +961,14 @@ public class Controller {
         else
             sb.append(vdfFileProperty.get().getName());
 
-        if (voiceFileProperty.isNotNull().get()) {
-            final VoiceFile voiceFile = voiceFileProperty.get();
-            try {
-                final int maxDataSize = HoTTDecoder.getMaxDataSize(voiceFile);
-                final int dataSize = voiceFile.getDataSize();
+        try {
+            final int maxDataSize = HoTTDecoder.getMaxDataSize(voiceFile);
+            final int dataSize = voiceFile.getDataSize();
 
-                sb.append(String.format(" - %d kb / %d kb (%d%%) - %s VDF V%s", dataSize / 1024, maxDataSize / 1024, dataSize * 100 / maxDataSize, //$NON-NLS-1$
-                        voiceFile.getVdfType(), Float.toString(voiceFile.getVdfVersion() / 1000.0f)));
-            } catch (final HoTTException e) {
-                ExceptionDialog.show(e);
-            }
+            sb.append(String.format(" - %d kb / %d kb (%d%%) - %s VDF V%s", dataSize / 1024, maxDataSize / 1024, dataSize * 100 / maxDataSize, //$NON-NLS-1$
+                    voiceFile.getVdfType(), Float.toString(voiceFile.getVdfVersion() / 1000.0f)));
+        } catch (final HoTTException e) {
+            ExceptionDialog.show(e);
         }
 
         final Scene scene = listView.getScene();

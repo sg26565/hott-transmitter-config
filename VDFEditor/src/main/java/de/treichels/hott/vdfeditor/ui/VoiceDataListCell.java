@@ -1,6 +1,7 @@
 package de.treichels.hott.vdfeditor.ui;
 
 import de.treichels.hott.vdfeditor.actions.RenameAction;
+import gde.model.voice.VDFType;
 import gde.model.voice.VoiceData;
 import javafx.event.Event;
 import javafx.geometry.Pos;
@@ -50,11 +51,12 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
 
     @Override
     public void startEdit() {
-        if (controller.systemVDFProperty.get())
+        if (controller.voiceFile.getVdfType() == VDFType.System)
             // strip index number from name
             textField = new TextField(getText().substring(getIndex() > 98 ? 4 : 3));
         else
             textField = new TextField(getText());
+
         textField.setOnAction(ev -> {
             final String newName = textField.getText();
             controller.undoBuffer.push(new RenameAction(getIndex(), newName));
