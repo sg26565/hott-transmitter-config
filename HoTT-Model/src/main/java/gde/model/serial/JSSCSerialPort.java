@@ -132,6 +132,11 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
     }
 
     @Override
+    public String getPortName() {
+        return name;
+    }
+
+    @Override
     public boolean isOpen() {
         return port != null && port.isOpened();
     }

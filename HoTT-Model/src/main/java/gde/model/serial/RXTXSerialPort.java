@@ -86,6 +86,11 @@ public class RXTXSerialPort implements gde.model.serial.SerialPort {
     }
 
     @Override
+    public String getPortName() {
+        return name;
+    }
+
+    @Override
     public boolean isOpen() {
         return port != null;
     }

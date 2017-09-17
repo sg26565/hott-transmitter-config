@@ -28,6 +28,8 @@ public interface SerialPort extends AutoCloseable {
 
     public OutputStream getOutputStream() throws HoTTException;
 
+    public String getPortName();
+
     public boolean isOpen();
 
     public void open() throws HoTTException;
