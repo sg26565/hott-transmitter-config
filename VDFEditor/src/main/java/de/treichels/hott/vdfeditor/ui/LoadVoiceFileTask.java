@@ -14,7 +14,6 @@ final class LoadVoiceFileTask extends TransmitterTask {
     @Override
     protected VoiceFile call() throws Exception {
         try (HoTTSerialPort port = getPort()) {
-            if (port.isOpen()) port.close();
             port.open();
             return port.loadVoiceFile(user, this);
         }
