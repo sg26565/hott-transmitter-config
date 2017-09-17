@@ -119,6 +119,20 @@
                         </MenuItem>
                   </items>
                 </Menu>
+                  <Menu mnemonicParsing="false" text="%transmitter_menu">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onLoadUserVoiceFile" text="%load_user_voicefiles" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadSystemVoiceFile" text="%load_system_voicefiles" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="playOnTransmitter" mnemonicParsing="false" onAction="#onPlayOnTransmitter" text="%play_on_transmitter">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="writeToTransmitter" mnemonicParsing="false" onAction="#onWriteToTransmitter" text="%write_to_transmitter" />
+                    </items>
+                  </Menu>
               </menus>
             </MenuBar>
             <Region styleClass="menu-bar" HBox.hgrow="SOMETIMES" />
