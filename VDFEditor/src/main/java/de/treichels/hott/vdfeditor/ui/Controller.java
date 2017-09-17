@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.prefs.Preferences;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
@@ -84,6 +85,7 @@ public class Controller {
     private static final Preferences PREFS = Preferences.userNodeForPackage(Controller.class);
     private static final ResourceBundle RES = ResourceBundle.getBundle(Controller.class.getName());
     private static final List<File> TEMP_FILE_LIST = new ArrayList<>();
+    private static final Pattern NAME_PATTERN = Pattern.compile("^[0-9]+([._])(.*)$");
 
     static final Image ICON = new Image(Controller.class.getResource("icon.png").toString());
 
@@ -162,15 +164,16 @@ public class Controller {
     private MenuItem redoMenuItem;
     @FXML
     private MenuItem playOnTransmitter;
+
     @FXML
     private MenuItem writeToTransmitter;
-
     final VoiceFile voiceFile = new VoiceFile(VDFType.User, TransmitterType.mc32, 2500, 0);
     private final BooleanBinding systemVDFBinding = voiceFile.vdfTypeProperty().isEqualTo(VDFType.System);
     private final BooleanBinding dirtyProperty = voiceFile.dirtyProperty();
     private final SimpleObjectProperty<File> vdfFileProperty = new SimpleObjectProperty<>(null);
     final UndoBuffer<VoiceData> undoBuffer = new UndoBuffer<>();
     private final ObjectProperty<HoTTSerialPort> serialPortProperty = new SimpleObjectProperty<>();
+
     private final DialogController dialogController = new DialogController(serialPortProperty);
 
     private void addRestoreFiles(final Menu menu, final String location) {
@@ -873,8 +876,10 @@ public class Controller {
 
                         // enforce name for system VDFs
                         if (systemVDFBinding.get()) {
-                            final Pattern pattern = Pattern.compile(String.format("^%02d[._].*$", i + 1));
-                            if (!pattern.matcher(name1).matches()) voiceData1.setName(String.format("%02d.%s", i + 1, name1));
+                            final Matcher matcher = NAME_PATTERN.matcher(name1);
+                            final String newName = matcher.matches() ? String.format("%02d%s%s", i + 1, matcher.group(1), matcher.group(2))
+                                    : String.format("%02d.%s", i + 1, name1);
+                            voiceData1.setName(newName);
                         }
                     }
 
