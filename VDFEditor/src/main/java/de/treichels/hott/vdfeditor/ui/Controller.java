@@ -943,11 +943,6 @@ public class Controller {
             PREFS.put(LAST_SAVE_VDF_DIR, vdf.getParentFile().getAbsolutePath());
 
             try {
-                if (vdf.exists() && isVDF(vdf) && systemVDFBinding.get()) {
-                    ErrorDialog.show(RES.getString("will_not_overwrite_system_vdf"), RES.getString("system_vdf_exists"), vdf.getName());
-                    return false;
-                }
-
                 HoTTDecoder.encodeVDF(voiceFile, vdf);
                 vdfFileProperty.set(vdf);
                 voiceFile.clean();
