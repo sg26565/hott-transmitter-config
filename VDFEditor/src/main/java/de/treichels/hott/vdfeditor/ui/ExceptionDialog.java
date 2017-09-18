@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class ExceptionDialog extends Alert {
     private static boolean SHOWING = false;
 
-    public static void show(final Throwable throwable) {
+    public synchronized static void show(final Throwable throwable) {
         // show only one instance of the dialog at a time
         if (!SHOWING) {
             SHOWING = true;

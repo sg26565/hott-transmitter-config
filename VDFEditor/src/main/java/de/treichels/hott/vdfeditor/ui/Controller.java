@@ -37,6 +37,7 @@ import gde.model.voice.CountryCode;
 import gde.model.voice.VDFType;
 import gde.model.voice.VoiceData;
 import gde.model.voice.VoiceFile;
+import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -386,14 +387,9 @@ public class Controller {
     public void onCountryCodeChanged() {
         final CountryCode oldCountry = voiceFile.getCountry();
 
-        try {
-            voiceFile.setCountry(countryCodeCombo.getValue());
-            verify();
-        } catch (final HoTTException e) {
-            ExceptionDialog.show(e);
-            voiceFile.setCountry(oldCountry);
-            countryCodeCombo.setValue(oldCountry);
-        }
+        voiceFile.setCountry(countryCodeCombo.getValue());
+        if (!verify()) voiceFile.setCountry(oldCountry);
+        Platform.runLater(() -> countryCodeCombo.setValue(oldCountry));
     }
 
     /**
@@ -816,14 +812,18 @@ public class Controller {
                 voiceFile.setVdfVersion(3000);
             else if (oldVdfVersion == 3000) voiceFile.setVdfVersion(2500);
 
-            verify();
-
-            setTitle();
-        } catch (final HoTTException e) {
+            if (verify())
+                setTitle();
+            else {
+                voiceFile.setTransmitterType(oldTtransmitterType);
+                voiceFile.setVdfVersion(oldVdfVersion);
+                Platform.runLater(() -> transmitterTypeCombo.setValue(oldTtransmitterType));
+            }
+        } catch (final Exception e) {
             ExceptionDialog.show(e);
             voiceFile.setTransmitterType(oldTtransmitterType);
             voiceFile.setVdfVersion(oldVdfVersion);
-            transmitterTypeCombo.setValue(oldTtransmitterType);
+            Platform.runLater(() -> transmitterTypeCombo.setValue(oldTtransmitterType));
         }
     }
 
@@ -1005,21 +1005,30 @@ public class Controller {
         if (scene != null) ((Stage) scene.getWindow()).setTitle(sb.toString());
     }
 
-    private void verify() throws HoTTException {
-        final int maxVoiceCount = HoTTDecoder.getMaxVoiceCount(voiceFile);
-        int voiceCount = voiceFile.getVoiceCount();
-        final ObservableList<VoiceData> voiceData = listView.getItems();
+    private boolean verify() {
+        try {
+            final int maxVoiceCount = HoTTDecoder.getMaxVoiceCount(voiceFile);
+            int voiceCount = voiceFile.getVoiceCount();
+            final ObservableList<VoiceData> voiceData = listView.getItems();
 
-        mute = true;
-        // remove extra items
-        while (voiceCount-- > maxVoiceCount)
-            voiceData.remove(voiceCount);
+            // remove extra items
+            if (voiceCount > maxVoiceCount && new MessageDialog(AlertType.CONFIRMATION, RES.getString("delete_entries_header"),
+                    RES.getString("delete_entries_message"), voiceCount - maxVoiceCount).showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
+                return false;
 
-        // add missing items
-        if (systemVDFBinding.get()) while (++voiceCount < maxVoiceCount)
-            voiceData.add(new VoiceData(String.format("%02d.%s", voiceCount + 1, RES.getString("empty")), null));
-        mute = false;
+            mute = true;
+            while (voiceCount-- > maxVoiceCount)
+                voiceData.remove(voiceCount);
 
-        HoTTDecoder.verityVDF(voiceFile);
+            // add missing items
+            if (systemVDFBinding.get()) while (++voiceCount < maxVoiceCount)
+                voiceData.add(new VoiceData(String.format("%02d.%s", voiceCount + 1, RES.getString("empty")), null));
+            mute = false;
+
+            HoTTDecoder.verityVDF(voiceFile);
+            return true;
+        } catch (final HoTTException e) {
+            return false;
+        }
     }
 }
