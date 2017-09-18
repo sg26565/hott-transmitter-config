@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.SortedMap;
@@ -153,8 +154,6 @@ public class Controller {
     @FXML
     private Menu voice2_menu;
     @FXML
-    private Menu voice2_microcopter_menu;
-    @FXML
     private Menu voice3_menu;
     @FXML
     private Menu voice3_mc28_menu;
@@ -178,14 +177,13 @@ public class Controller {
 
     private boolean mute = false;
 
-    private void addRestoreFiles(final Menu menu, final String location) {
-        final SortedMap<String, MenuItem> items = new TreeMap<>();
-
+    private void addRestoreFiles(final Map<String, MenuItem> items, final Menu menu, final String location, final String variant) {
         for (final Language l : Language.values()) {
-            final String path = String.format("restore/%s_%s.vdf", location, l.name());
+            final String path = variant == null ? String.format("restore/%s_%s.vdf", location, l.name())
+                    : String.format("restore/%s_%s_%s.vdf", location, l.name(), variant);
             final URL url = getClass().getResource(path);
             if (url != null) {
-                final String language = l.toString();
+                final String language = variant == null ? l.toString() : String.format("%s (%s)", l.toString(), variant);
                 final MenuItem menuItem = new MenuItem(language);
                 menuItem.setOnAction(ev -> {
                     try (InputStream is = getClass().getResourceAsStream(path)) {
@@ -197,6 +195,15 @@ public class Controller {
                 items.put(language, menuItem);
             }
         }
+    }
+
+    private void addRestoreFiles(final Menu menu, final String location, final String... variants) {
+        final SortedMap<String, MenuItem> items = new TreeMap<>();
+
+        addRestoreFiles(items, menu, location, null);
+
+        for (final String variant : variants)
+            addRestoreFiles(items, menu, location, variant);
 
         menu.getItems().addAll(items.values());
     }
@@ -321,10 +328,9 @@ public class Controller {
         deleteSoundMenuItem.disableProperty().bind(noSelection);
         replaceSoundMenuItem.disableProperty().bind(noSelection);
 
-        addRestoreFiles(voice2_menu, "Voice2");
-        addRestoreFiles(voice2_microcopter_menu, "Voice2_Microcopter");
-        addRestoreFiles(voice3_menu, "Voice3");
-        addRestoreFiles(voice3_mc28_menu, "Voice3_mc28");
+        addRestoreFiles(voice2_menu, "Voice2", "Microcopter");
+        addRestoreFiles(voice3_menu, "Voice3", "Team");
+        addRestoreFiles(voice3_mc28_menu, "Voice3_mc28", "Team");
 
         undoMenuItem.disableProperty().bind(undoBuffer.canUndo().not());
         redoMenuItem.disableProperty().bind(undoBuffer.canRedo().not());

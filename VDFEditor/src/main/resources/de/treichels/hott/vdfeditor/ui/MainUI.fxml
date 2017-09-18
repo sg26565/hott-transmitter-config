@@ -46,7 +46,6 @@
                         <Menu mnemonicParsing="false" text="%restore_menu">
                           <items>
                               <Menu fx:id="voice2_menu" mnemonicParsing="false" text="%voice2" />
-                              <Menu fx:id="voice2_microcopter_menu" mnemonicParsing="false" text="%voice2_microcopter" />
                               <Menu fx:id="voice3_menu" mnemonicParsing="false" text="%voice3" />
                               <Menu fx:id="voice3_mc28_menu" mnemonicParsing="false" text="%voice3_mc28" />
                           </items>
