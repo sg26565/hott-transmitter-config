@@ -890,14 +890,14 @@ public class Controller {
                             if (name1.equals(name2)) {
                                 undoBuffer.pop();
                                 lastIndex--;
-                                ErrorDialog.show(RES.getString("duplicate_entry"), RES.getString("duplicate_name"), name1);
+                                MessageDialog.show(AlertType.ERROR, RES.getString("duplicate_entry"), RES.getString("duplicate_name"), name1);
                                 break;
                             }
 
                             if (hash1 != 1 && hash1 == hash2) {
                                 undoBuffer.pop();
                                 lastIndex--;
-                                ErrorDialog.show(RES.getString("duplicate_entry"), RES.getString("duplicate_sound"), name1, name2);
+                                MessageDialog.show(AlertType.ERROR, RES.getString("duplicate_entry"), RES.getString("duplicate_sound"), name1, name2);
                                 break;
                             }
                         }
