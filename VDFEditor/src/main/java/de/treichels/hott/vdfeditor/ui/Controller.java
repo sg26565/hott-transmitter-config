@@ -612,9 +612,8 @@ public class Controller {
 
     @FXML
     public void onLoadSystemVoiceFile() {
-        if (askSave()) {
-            final TransmitterTask task = new LoadVoiceFileTask(RES.getString("load_system_voicefiles"), false);
-            dialogController.openDialog(task);
+        if (askSave() && turnRfOutOff()) {
+            dialogController.openDialog(new LoadVoiceFileTask(RES.getString("load_system_voicefiles"), false));
             final VoiceFile result = dialogController.getResult();
             if (result != null) open(result);
         }
@@ -622,9 +621,8 @@ public class Controller {
 
     @FXML
     public void onLoadUserVoiceFile() {
-        if (askSave()) {
-            final TransmitterTask task = new LoadVoiceFileTask(RES.getString("load_user_voicefiles"), true);
-            dialogController.openDialog(task);
+        if (askSave() && turnRfOutOff()) {
+            dialogController.openDialog(new LoadVoiceFileTask(RES.getString("load_user_voicefiles"), true));
             final VoiceFile result = dialogController.getResult();
             if (result != null) open(result);
         }
@@ -836,8 +834,7 @@ public class Controller {
 
     @FXML
     public void onWriteToTransmitter() {
-        final TransmitterTask task = new SendVoiceFileTask(RES.getString("write_to_transmitter"), voiceFile);
-        dialogController.openDialog(task);
+        if (turnRfOutOff()) dialogController.openDialog(new SendVoiceFileTask(RES.getString("write_to_transmitter"), voiceFile));
     }
 
     /**
@@ -1003,6 +1000,11 @@ public class Controller {
 
         final Scene scene = listView.getScene();
         if (scene != null) ((Stage) scene.getWindow()).setTitle(sb.toString());
+    }
+
+    private boolean turnRfOutOff() {
+        return new MessageDialog(AlertType.CONFIRMATION, RES.getString("rf_off_header"), RES.getString("rf_off_message")).showAndWait()
+                .orElse(ButtonType.CANCEL) == ButtonType.OK;
     }
 
     private boolean verify() {

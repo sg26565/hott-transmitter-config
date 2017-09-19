@@ -15,6 +15,8 @@ final class LoadVoiceFileTask extends TransmitterTask {
     protected VoiceFile call() throws Exception {
         try (HoTTSerialPort port = getPort()) {
             port.open();
+            port.turnRfOutOff();
+            port.delay();
             return port.loadVoiceFile(user, this);
         }
     }
