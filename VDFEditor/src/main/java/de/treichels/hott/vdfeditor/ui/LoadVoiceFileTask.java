@@ -1,6 +1,7 @@
 package de.treichels.hott.vdfeditor.ui;
 
 import de.treichels.hott.HoTTSerialPort;
+import gde.model.HoTTException;
 import gde.model.voice.VoiceFile;
 
 final class LoadVoiceFileTask extends TransmitterTask {
@@ -17,6 +18,9 @@ final class LoadVoiceFileTask extends TransmitterTask {
             port.open();
             port.turnRfOutOff();
             port.delay();
+
+            if (user && port.getVoiceInfo(false).getVoiceVersion() == 2000) throw new HoTTException("NoUerVoiceFiles");
+
             return port.loadVoiceFile(user, this);
         }
     }

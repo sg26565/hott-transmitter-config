@@ -120,7 +120,7 @@
                 </Menu>
                   <Menu mnemonicParsing="false" text="%transmitter_menu">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#onLoadUserVoiceFile" text="%load_user_voicefiles" />
+                      <MenuItem fx:id="loadUserVoiceFiles" mnemonicParsing="false" onAction="#onLoadUserVoiceFile" text="%load_user_voicefiles" />
                         <MenuItem mnemonicParsing="false" onAction="#onLoadSystemVoiceFile" text="%load_system_voicefiles" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="playOnTransmitter" mnemonicParsing="false" onAction="#onPlayOnTransmitter" text="%play_on_transmitter">

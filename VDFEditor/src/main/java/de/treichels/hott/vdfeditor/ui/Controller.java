@@ -168,6 +168,9 @@ public class Controller {
     private MenuItem writeToTransmitter;
     @FXML
     private ComboBox<Float> vdfVersionCombo;
+    @FXML
+    private MenuItem loadUserVoiceFiles;
+
     final VoiceFile voiceFile = new VoiceFile(VDFType.User, TransmitterType.mc32, 2500, 0);
     private final BooleanBinding systemVDFBinding = voiceFile.vdfTypeProperty().isEqualTo(VDFType.System);
     private final BooleanBinding dirtyProperty = voiceFile.dirtyProperty();
@@ -319,6 +322,9 @@ public class Controller {
         addSoundMenuItem.disableProperty().bind(empty.or(systemVDFBinding));
         writeToTransmitter.disableProperty().bind(empty);
 
+        // no user voice files for vdf version 2.0
+        // loadUserVoiceFiles.disableProperty().bind(vdfVersionCombo.valueProperty().isEqualTo(2.0f));
+
         // disable menu items id no row was selected
         final BooleanBinding noSelection = listView.getSelectionModel().selectedItemProperty().isNull();
 
@@ -390,13 +396,13 @@ public class Controller {
         final CountryCode oldCountry = voiceFile.getCountry();
 
         try {
-        voiceFile.setCountry(countryCodeCombo.getValue());
+            voiceFile.setCountry(countryCodeCombo.getValue());
             verify();
         } catch (final HoTTException e) {
             if (e.getCause() != null) ExceptionDialog.show(e);
             voiceFile.setCountry(oldCountry);
-        Platform.runLater(() -> countryCodeCombo.setValue(oldCountry));
-    }
+            Platform.runLater(() -> countryCodeCombo.setValue(oldCountry));
+        }
     }
 
     /**
@@ -819,7 +825,7 @@ public class Controller {
                 updateVdfVersion(oldVdfVersion == 3000 ? 2500 : oldVdfVersion);
 
             verify();
-                setTitle();
+            setTitle();
         } catch (final Exception e) {
             if (e.getCause() != null) ExceptionDialog.show(e);
             voiceFile.setTransmitterType(oldTtransmitterType);
@@ -1047,24 +1053,24 @@ public class Controller {
     }
 
     private void verify() throws HoTTException {
-            final int maxVoiceCount = HoTTDecoder.getMaxVoiceCount(voiceFile);
-            int voiceCount = voiceFile.getVoiceCount();
-            final ObservableList<VoiceData> voiceData = listView.getItems();
+        final int maxVoiceCount = HoTTDecoder.getMaxVoiceCount(voiceFile);
+        int voiceCount = voiceFile.getVoiceCount();
+        final ObservableList<VoiceData> voiceData = listView.getItems();
 
-            // remove extra items
-            if (voiceCount > maxVoiceCount && new MessageDialog(AlertType.CONFIRMATION, RES.getString("delete_entries_header"),
-                    RES.getString("delete_entries_message"), voiceCount - maxVoiceCount).showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
+        // remove extra items
+        if (voiceCount > maxVoiceCount && new MessageDialog(AlertType.CONFIRMATION, RES.getString("delete_entries_header"),
+                RES.getString("delete_entries_message"), voiceCount - maxVoiceCount).showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
             throw new HoTTException(null);
 
-            mute = true;
-            while (voiceCount-- > maxVoiceCount)
-                voiceData.remove(voiceCount);
+        mute = true;
+        while (voiceCount-- > maxVoiceCount)
+            voiceData.remove(voiceCount);
 
-            // add missing items
-            if (systemVDFBinding.get()) while (++voiceCount < maxVoiceCount)
-                voiceData.add(new VoiceData(String.format("%02d.%s", voiceCount + 1, RES.getString("empty")), null));
-            mute = false;
+        // add missing items
+        if (systemVDFBinding.get()) while (++voiceCount < maxVoiceCount)
+            voiceData.add(new VoiceData(String.format("%02d.%s", voiceCount + 1, RES.getString("empty")), null));
+        mute = false;
 
-            HoTTDecoder.verityVDF(voiceFile);
+        HoTTDecoder.verityVDF(voiceFile);
     }
 }
