@@ -25,6 +25,7 @@ class DialogController {
     private final Stage stage = new Stage();
     private final ObjectProperty<HoTTSerialPort> serialPort;
     private TransmitterTask task = null;
+    private Thread thread = null;
 
     @FXML
     private ComboBox<String> portCombo;
@@ -47,9 +48,11 @@ class DialogController {
         }
     }
 
-    public void closeDialog(final WorkerStateEvent ev) {
+    public synchronized void closeDialog(final WorkerStateEvent ev) {
         final Throwable t = ev.getSource().getException();
         if (t != null) ExceptionDialog.show(t);
+        if (thread != null) thread.interrupt();
+        thread = null;
         stage.hide();
     }
 
@@ -66,12 +69,15 @@ class DialogController {
     @FXML
     private void onPortChanged() throws HoTTException {
         final String portName = portCombo.getValue();
-        final JSSCSerialPort implementation = new JSSCSerialPort(portName);
-        final HoTTSerialPort port = new HoTTSerialPort(implementation);
-        if (serialPort.get() != null) serialPort.get().close();
-        serialPort.set(port);
 
-        startTask();
+        if (portName != null) {
+            final JSSCSerialPort implementation = new JSSCSerialPort(portName);
+            final HoTTSerialPort port = new HoTTSerialPort(implementation);
+            if (serialPort.get() != null) serialPort.get().close();
+            serialPort.set(port);
+
+            startTask();
+        }
     }
 
     public void openDialog(final TransmitterTask task) {
@@ -93,10 +99,11 @@ class DialogController {
         stage.showAndWait();
     }
 
-    private void startTask() {
-        if (serialPort.get() != null) {
+    private synchronized void startTask() {
+        if (thread == null && serialPort.get() != null) {
             task.setPort(serialPort.get());
-            new Thread(task).start();
+            thread = new Thread(task);
+            thread.start();
         }
     }
 }
