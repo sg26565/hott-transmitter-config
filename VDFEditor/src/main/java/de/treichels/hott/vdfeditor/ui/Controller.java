@@ -164,9 +164,10 @@ public class Controller {
     private MenuItem redoMenuItem;
     @FXML
     private MenuItem playOnTransmitter;
-
     @FXML
     private MenuItem writeToTransmitter;
+    @FXML
+    private ComboBox<Float> vdfVersionCombo;
     final VoiceFile voiceFile = new VoiceFile(VDFType.User, TransmitterType.mc32, 2500, 0);
     private final BooleanBinding systemVDFBinding = voiceFile.vdfTypeProperty().isEqualTo(VDFType.System);
     private final BooleanBinding dirtyProperty = voiceFile.dirtyProperty();
@@ -309,6 +310,7 @@ public class Controller {
 
         // disable items if no vdf was loaded
         final BooleanBinding empty = voiceFile.voiceCountProperty().isEqualTo(0);
+        vdfVersionCombo.disableProperty().bind(empty);
         countryCodeCombo.disableProperty().bind(empty);
         transmitterTypeCombo.disableProperty().bind(empty);
         editMenu.disableProperty().bind(empty);
@@ -387,9 +389,14 @@ public class Controller {
     public void onCountryCodeChanged() {
         final CountryCode oldCountry = voiceFile.getCountry();
 
+        try {
         voiceFile.setCountry(countryCodeCombo.getValue());
-        if (!verify()) voiceFile.setCountry(oldCountry);
+            verify();
+        } catch (final HoTTException e) {
+            if (e.getCause() != null) ExceptionDialog.show(e);
+            voiceFile.setCountry(oldCountry);
         Platform.runLater(() -> countryCodeCombo.setValue(oldCountry));
+    }
     }
 
     /**
@@ -807,18 +814,14 @@ public class Controller {
         if (oldTtransmitterType != newTransmitterType) try {
             voiceFile.setTransmitterType(newTransmitterType);
             if (newTransmitterType == TransmitterType.mc26 || newTransmitterType == TransmitterType.mc28)
-                voiceFile.setVdfVersion(3000);
-            else if (oldVdfVersion == 3000) voiceFile.setVdfVersion(2500);
+                updateVdfVersion(3000);
+            else
+                updateVdfVersion(oldVdfVersion == 3000 ? 2500 : oldVdfVersion);
 
-            if (verify())
+            verify();
                 setTitle();
-            else {
-                voiceFile.setTransmitterType(oldTtransmitterType);
-                voiceFile.setVdfVersion(oldVdfVersion);
-                Platform.runLater(() -> transmitterTypeCombo.setValue(oldTtransmitterType));
-            }
         } catch (final Exception e) {
-            ExceptionDialog.show(e);
+            if (e.getCause() != null) ExceptionDialog.show(e);
             voiceFile.setTransmitterType(oldTtransmitterType);
             voiceFile.setVdfVersion(oldVdfVersion);
             Platform.runLater(() -> transmitterTypeCombo.setValue(oldTtransmitterType));
@@ -830,6 +833,24 @@ public class Controller {
         undoBuffer.undo();
         listView.refresh();
         setTitle();
+    }
+
+    @FXML
+    public void onVdfVersionChanged() {
+        final Float vdfVersion = vdfVersionCombo.getValue();
+        if (vdfVersion == null) return;
+
+        final int oldVdfVersion = voiceFile.getVdfVersion();
+        final int newVdfVersion = (int) (vdfVersion * 1000);
+
+        if (oldVdfVersion != newVdfVersion) try {
+            updateVdfVersion(newVdfVersion);
+            verify();
+            setTitle();
+        } catch (final HoTTException e) {
+            if (e.getCause() != null) ExceptionDialog.show(e);
+            Platform.runLater(() -> updateVdfVersion(oldVdfVersion));
+        }
     }
 
     @FXML
@@ -861,6 +882,7 @@ public class Controller {
 
         transmitterTypeCombo.setValue(voiceFile.getTransmitterType());
         countryCodeCombo.setValue(voiceFile.getCountry());
+        updateVdfVersion(voiceFile.getVdfVersion());
 
         final ObservableList<VoiceData> items = new ObservableListWrapper<>(voiceFile.getVoiceData());
         // add a change listener to the list to prevent invalid VDFs
@@ -1007,8 +1029,24 @@ public class Controller {
                 .orElse(ButtonType.CANCEL) == ButtonType.OK;
     }
 
-    private boolean verify() {
-        try {
+    private void updateVdfVersion(final int value) {
+        final ObservableList<Float> items = vdfVersionCombo.getItems();
+
+        if (value == 3000) {
+            items.remove(2.0f);
+            items.remove(2.5f);
+            if (!items.contains(3.0f)) items.add(3.0f);
+        } else {
+            if (!items.contains(2.0f)) items.add(2.0f);
+            if (!items.contains(2.5f)) items.add(2.5f);
+            items.remove(3.0f);
+        }
+
+        voiceFile.setVdfVersion(value);
+        vdfVersionCombo.setValue(voiceFile.getVdfVersion() / 1000f);
+    }
+
+    private void verify() throws HoTTException {
             final int maxVoiceCount = HoTTDecoder.getMaxVoiceCount(voiceFile);
             int voiceCount = voiceFile.getVoiceCount();
             final ObservableList<VoiceData> voiceData = listView.getItems();
@@ -1016,7 +1054,7 @@ public class Controller {
             // remove extra items
             if (voiceCount > maxVoiceCount && new MessageDialog(AlertType.CONFIRMATION, RES.getString("delete_entries_header"),
                     RES.getString("delete_entries_message"), voiceCount - maxVoiceCount).showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
-                return false;
+            throw new HoTTException(null);
 
             mute = true;
             while (voiceCount-- > maxVoiceCount)
@@ -1028,9 +1066,5 @@ public class Controller {
             mute = false;
 
             HoTTDecoder.verityVDF(voiceFile);
-            return true;
-        } catch (final HoTTException e) {
-            return false;
-        }
     }
 }
