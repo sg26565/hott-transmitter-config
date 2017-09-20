@@ -83,6 +83,7 @@ class DialogController {
     public void openDialog(final TransmitterTask task) {
         this.task = task;
 
+        portCombo.getItems().clear();
         portCombo.getItems().addAll(JSSCSerialPort.getAvailablePorts());
         portCombo.disableProperty().bind(task.runningProperty());
         if (serialPort.get() != null) portCombo.setValue(serialPort.get().getPortName());
