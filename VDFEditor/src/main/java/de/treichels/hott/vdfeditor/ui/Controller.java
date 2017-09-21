@@ -315,10 +315,9 @@ public class Controller {
         vdfVersionCombo.disableProperty().bind(empty);
         countryCodeCombo.disableProperty().bind(empty);
         transmitterTypeCombo.disableProperty().bind(empty);
-        editMenu.disableProperty().bind(empty);
         saveVDFMenuItem.disableProperty().bind(empty.or(vdfFileProperty.isNull()).or(dirtyProperty.not()).or(systemVDFBinding));
         saveVDFAsMenuItem.disableProperty().bind(empty);
-        addSoundMenuItem.disableProperty().bind(empty.or(systemVDFBinding));
+        addSoundMenuItem.disableProperty().bind(systemVDFBinding);
         writeToTransmitter.disableProperty().bind(empty);
 
         // no user voice files for vdf version 2.0
@@ -670,7 +669,7 @@ public class Controller {
 
     /**
      * Create a new empty VDF. Ask to save the old VDF if it was modified.
-     * 
+     *
      * @throws HoTTException
      */
     @FXML
@@ -820,11 +819,7 @@ public class Controller {
 
         if (oldTtransmitterType != newTransmitterType) try {
             voiceFile.setTransmitterType(newTransmitterType);
-            if (newTransmitterType == TransmitterType.mc26 || newTransmitterType == TransmitterType.mc28)
-                updateVdfVersion(3000);
-            else
-                updateVdfVersion(oldVdfVersion == 3000 ? 2500 : oldVdfVersion);
-
+            updateVdfVersion();
             verify();
             setTitle();
         } catch (final Exception e) {
@@ -851,12 +846,14 @@ public class Controller {
         final int newVdfVersion = (int) (vdfVersion * 1000);
 
         if (oldVdfVersion != newVdfVersion) try {
-            updateVdfVersion(newVdfVersion);
+            voiceFile.setVdfVersion(newVdfVersion);
+            updateVdfVersion();
             verify();
             setTitle();
         } catch (final HoTTException e) {
             if (e.getCause() != null) ExceptionDialog.show(e);
-            Platform.runLater(() -> updateVdfVersion(oldVdfVersion));
+            voiceFile.setVdfVersion(oldVdfVersion);
+            Platform.runLater(() -> updateVdfVersion());
         }
     }
 
@@ -890,7 +887,7 @@ public class Controller {
 
         transmitterTypeCombo.setValue(voiceFile.getTransmitterType());
         countryCodeCombo.setValue(voiceFile.getCountry());
-        updateVdfVersion(voiceFile.getVdfVersion());
+        updateVdfVersion();
 
         final ObservableList<VoiceData> items = new ObservableListWrapper<>(voiceFile.getVoiceData());
         // add a change listener to the list to prevent invalid VDFs
@@ -1032,20 +1029,39 @@ public class Controller {
         if (scene != null) ((Stage) scene.getWindow()).setTitle(sb.toString());
     }
 
-    private void updateVdfVersion(final int value) {
+    private void updateVdfVersion() {
         final ObservableList<Float> items = vdfVersionCombo.getItems();
+        final TransmitterType transmitterType = voiceFile.getTransmitterType();
+        final int version;
 
-        if (value == 3000) {
+        if (transmitterType == TransmitterType.mc26 || transmitterType == TransmitterType.mc28) {
+            version = 3000;
             items.remove(2.0f);
             items.remove(2.5f);
             if (!items.contains(3.0f)) items.add(3.0f);
+        } else if (transmitterType == TransmitterType.mz12 || transmitterType == TransmitterType.mz18 || transmitterType == TransmitterType.mz24) {
+            version = 2000;
+            if (!items.contains(2.0f)) items.add(2.0f);
+            items.remove(2.5f);
+            items.remove(3.0f);
+        } else if (transmitterType == TransmitterType.mz12Pro || transmitterType == TransmitterType.mz24Pro) {
+            version = 2500;
+            items.remove(2.0f);
+            if (!items.contains(2.5f)) items.add(2.5f);
+            items.remove(3.0f);
+        } else if (voiceFile.getVdfType() == VDFType.User) {
+            version = 2500;
+            items.remove(2.0f);
+            if (!items.contains(2.5f)) items.add(2.5f);
+            items.remove(3.0f);
         } else {
+            version = voiceFile.getVdfVersion() == 3000 ? 2500 : voiceFile.getVdfVersion();
             if (!items.contains(2.0f)) items.add(2.0f);
             if (!items.contains(2.5f)) items.add(2.5f);
             items.remove(3.0f);
         }
 
-        voiceFile.setVdfVersion(value);
+        voiceFile.setVdfVersion(version);
         vdfVersionCombo.setValue(voiceFile.getVdfVersion() / 1000f);
     }
 
