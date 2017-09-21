@@ -177,7 +177,6 @@ public class Controller {
     private final SimpleObjectProperty<File> vdfFileProperty = new SimpleObjectProperty<>(null);
     final UndoBuffer<VoiceData> undoBuffer = new UndoBuffer<>();
     private final ObjectProperty<HoTTSerialPort> serialPortProperty = new SimpleObjectProperty<>();
-
     private final DialogController dialogController = new DialogController(serialPortProperty);
 
     private boolean mute = false;
@@ -624,8 +623,8 @@ public class Controller {
     }
 
     @FXML
-    public void onLoadSystemVoiceFile() {
-        if (askSave() && turnRfOutOff()) {
+    public void onLoadSystemVoiceFile() throws HoTTException {
+        if (askSave()) {
             dialogController.openDialog(new LoadVoiceFileTask(RES.getString("load_system_voicefiles"), false));
             final VoiceFile result = dialogController.getResult();
             if (result != null) open(result);
@@ -633,8 +632,8 @@ public class Controller {
     }
 
     @FXML
-    public void onLoadUserVoiceFile() {
-        if (askSave() && turnRfOutOff()) {
+    public void onLoadUserVoiceFile() throws HoTTException {
+        if (askSave()) {
             dialogController.openDialog(new LoadVoiceFileTask(RES.getString("load_user_voicefiles"), true));
             final VoiceFile result = dialogController.getResult();
             if (result != null) open(result);
@@ -671,9 +670,11 @@ public class Controller {
 
     /**
      * Create a new empty VDF. Ask to save the old VDF if it was modified.
+     * 
+     * @throws HoTTException
      */
     @FXML
-    public void onNew() {
+    public void onNew() throws HoTTException {
         if (askSave()) {
             voiceFile.getVoiceData().clear();
             voiceFile.setVdfType(VDFType.User);
@@ -861,7 +862,7 @@ public class Controller {
 
     @FXML
     public void onWriteToTransmitter() {
-        if (turnRfOutOff()) dialogController.openDialog(new SendVoiceFileTask(RES.getString("write_to_transmitter"), voiceFile));
+        dialogController.openDialog(new SendVoiceFileTask(RES.getString("write_to_transmitter"), voiceFile));
     }
 
     /**
@@ -882,8 +883,9 @@ public class Controller {
      * Load a new VDF from data model.
      *
      * @param voiceFile
+     * @throws HoTTException
      */
-    private void open(final VoiceFile other) {
+    private void open(final VoiceFile other) throws HoTTException {
         voiceFile.copy(other);
 
         transmitterTypeCombo.setValue(voiceFile.getTransmitterType());
@@ -958,7 +960,7 @@ public class Controller {
         voiceFile.clean();
         listView.setItems(items);
         undoBuffer.setItems(items);
-
+        verify();
         setTitle();
     }
 
@@ -1028,11 +1030,6 @@ public class Controller {
 
         final Scene scene = listView.getScene();
         if (scene != null) ((Stage) scene.getWindow()).setTitle(sb.toString());
-    }
-
-    private boolean turnRfOutOff() {
-        return new MessageDialog(AlertType.CONFIRMATION, RES.getString("rf_off_header"), RES.getString("rf_off_message")).showAndWait()
-                .orElse(ButtonType.CANCEL) == ButtonType.OK;
     }
 
     private void updateVdfVersion(final int value) {

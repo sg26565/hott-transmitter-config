@@ -156,10 +156,12 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
         }
     }
 
-    private void readFromPort() throws SerialPortException, IOException {
+    private synchronized void readFromPort() throws SerialPortException, IOException {
         if (DEBUG) System.out.printf("readFromPort: %d bytes available%n", port.getInputBufferBytesCount());
 
         final byte[] bytes = port.readBytes();
+        if (DEBUG) System.out.println(Util.dumpData(bytes));
+
         if (bytes != null) readBuffer.write(bytes);
     }
 
@@ -188,7 +190,7 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
         }
     }
 
-    private void writeToPort() throws SerialPortException {
+    private synchronized void writeToPort() throws SerialPortException {
         final int available = writeBuffer.available();
 
         if (available > 0) {
@@ -196,6 +198,7 @@ public class JSSCSerialPort implements SerialPort, SerialPortEventListener {
             // write max 512 bytes to serial port
             final byte[] bytes = new byte[Math.min(available, 512)];
             writeBuffer.read(bytes);
+            if (DEBUG) System.out.println(Util.dumpData(bytes));
             port.writeBytes(bytes);
         }
     }

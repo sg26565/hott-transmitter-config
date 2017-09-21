@@ -60,9 +60,11 @@ public class ByteBuffer {
         // increment index
         index++;
 
+        final int result = buffer[i] & 0xff;
+
         unblock();
 
-        return buffer[i] & 0xff;
+        return result;
     }
 
     /** Bulk read method. Read up to data.length bytes from the buffer. Return the actual number of bytes read. */
@@ -107,7 +109,7 @@ public class ByteBuffer {
 
     private void unblock() {
         synchronized (buffer) {
-            // if (DEBUG) System.out.println("unclock");
+            // if (DEBUG) System.out.println("unblock");
             buffer.notifyAll();
         }
     }
@@ -154,7 +156,7 @@ public class ByteBuffer {
 
         // buffer overflow
         if (remaining == 0) {
-            System.err.printf("buffer overflow: %d byte were lost!%n%s%n", data.length, Util.dumpData(data));
+            System.err.printf("buffer overflow: %d bytes were lost!%n%s%n", data.length, Util.dumpData(data));
             return 0;
         }
 
