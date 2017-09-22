@@ -171,7 +171,7 @@ public class Controller {
     @FXML
     private MenuItem loadUserVoiceFiles;
 
-    final VoiceFile voiceFile = new VoiceFile(VDFType.User, TransmitterType.mc32, 2500, 0);
+    final VoiceFile voiceFile = new VoiceFile(VDFType.User, TransmitterType.mc28, 3000, 0);
     private final BooleanBinding systemVDFBinding = voiceFile.vdfTypeProperty().isEqualTo(VDFType.System);
     private final BooleanBinding dirtyProperty = voiceFile.dirtyProperty();
     private final SimpleObjectProperty<File> vdfFileProperty = new SimpleObjectProperty<>(null);

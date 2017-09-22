@@ -1,6 +1,7 @@
 package gde.model.voice;
 
 import gde.model.enums.TransmitterType;
+import javafx.beans.InvalidationListener;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.IntegerProperty;
@@ -20,7 +21,8 @@ public class VoiceFile {
     private final class DirtyBinding extends BooleanBinding {
         @Override
         protected boolean computeValue() {
-            return !VoiceFile.this.equals(savedState);
+            final VoiceFile voiceFile = VoiceFile.this;
+            return !voiceFile.equals(voiceFile.savedState);
         }
     }
 
@@ -37,12 +39,41 @@ public class VoiceFile {
     private final ObjectProperty<VDFType> vdfType = new SimpleObjectProperty<>();
     private final IntegerProperty vdfVersion = new SimpleIntegerProperty();
     private final ObservableList<VoiceData> voiceData;
-    private final IntegerBinding sizeBinding = new SizeBinding();
-    private final BooleanBinding dirtyProperty = new DirtyBinding();
+    private final IntegerBinding sizeBinding;
+    private final BooleanBinding dirtyProperty;
 
     private VoiceFile() {
         voiceData = FXCollections.observableArrayList();
+        sizeBinding = null;
+        dirtyProperty = null;
         savedState = null;
+    }
+
+    public VoiceFile(final VDFType vdfType, final TransmitterType transmitterType, final int vdfVersion, final CountryCode country) {
+        this(vdfType, transmitterType, vdfVersion, country, FXCollections.observableArrayList());
+    }
+
+    public VoiceFile(final VDFType vdfType, final TransmitterType transmitterType, final int vdfVersion, final CountryCode country,
+            final ObservableList<VoiceData> voiceData) {
+        sizeBinding = new SizeBinding();
+        dirtyProperty = new DirtyBinding();
+
+        setVdfType(vdfType);
+        setTransmitterType(transmitterType);
+        setVdfVersion(vdfVersion);
+        setCountry(country);
+
+        this.voiceData = voiceData;
+        this.voiceData.addListener((ListChangeListener<VoiceData>) c -> sizeBinding.invalidate());
+        savedState = new VoiceFile();
+        clean();
+
+        this.country.addListener((a, b, c) -> dirtyProperty.invalidate());
+        this.transmitterType.addListener((a, b, c) -> dirtyProperty.invalidate());
+        this.vdfType.addListener((a, b, c) -> dirtyProperty.invalidate());
+        this.vdfVersion.addListener((a, b, c) -> dirtyProperty.invalidate());
+        this.voiceData.addListener((ListChangeListener<VoiceData>) c -> dirtyProperty.invalidate());
+        this.voiceData.addListener((InvalidationListener) c -> dirtyProperty.invalidate());
     }
 
     public VoiceFile(final VDFType vdfType, final TransmitterType transmitterType, final int vdfVersion, final int countryCode) {
@@ -51,34 +82,24 @@ public class VoiceFile {
 
     public VoiceFile(final VDFType vdfType, final TransmitterType transmitterType, final int vdfVersion, final int countryCode,
             final ObservableList<VoiceData> voiceData) {
-        setVdfType(vdfType);
-        setTransmitterType(transmitterType);
-        setVdfVersion(vdfVersion);
-        setCountry(CountryCode.forCode(countryCode));
-        this.voiceData = voiceData;
-        this.voiceData.addListener((ListChangeListener<VoiceData>) c -> sizeBinding.invalidate());
-        savedState = new VoiceFile();
-        savedState.copy(this);
-
-        country.addListener((a, b, c) -> dirtyProperty.invalidate());
-        this.transmitterType.addListener((a, b, c) -> dirtyProperty.invalidate());
-        this.vdfType.addListener((a, b, c) -> dirtyProperty.invalidate());
-        this.vdfVersion.addListener((a, b, c) -> dirtyProperty.invalidate());
-        this.voiceData.addListener((ListChangeListener<VoiceData>) c -> dirtyProperty.invalidate());
+        this(vdfType, transmitterType, vdfVersion, CountryCode.forCode(countryCode), voiceData);
     }
 
     public void clean() {
-        savedState.copy(this);
-        dirtyProperty.invalidate();
+        if (savedState != null) savedState.copy(this);
+        if (dirtyProperty != null) dirtyProperty.invalidate();
     }
 
     public void copy(final VoiceFile other) {
+        if (other == this) return;
+
         setCountry(other.getCountry());
         setTransmitterType(other.getTransmitterType());
         setVdfType(other.getVdfType());
         setVdfVersion(other.getVdfVersion());
         voiceData.clear();
-        voiceData.addAll(other.getVoiceData());
+        other.getVoiceData().forEach(v -> voiceData.add(new VoiceData(v.getName(), v.getRawData())));
+        clean();
     }
 
     public ObjectProperty<CountryCode> countryProperty() {
