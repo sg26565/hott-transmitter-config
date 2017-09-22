@@ -1,12 +1,16 @@
 package de.treichels.hott.vdfeditor.ui;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -843,6 +847,24 @@ public class Controller {
         undoBuffer.undo();
         listView.refresh();
         setTitle();
+    }
+
+    @FXML
+    public void onUserManual() throws IOException {
+        // try translated manual first
+        InputStream is = getClass().getResourceAsStream(String.format("VDFEditor_%s.pdf", Locale.getDefault().getCountry()));
+
+        // fall-back
+        if (is == null) is = getClass().getResourceAsStream("VDFEditor.pdf");
+
+        if (is != null) {
+            final File tempFile = new File(System.getProperty("java.io.tmpdir"), "VDFEditor_Manual.pdf");
+            tempFile.deleteOnExit();
+            try (OutputStream os = new FileOutputStream(tempFile)) {
+                IOUtils.copy(is, os);
+            }
+            Desktop.getDesktop().open(tempFile);
+        }
     }
 
     @FXML
