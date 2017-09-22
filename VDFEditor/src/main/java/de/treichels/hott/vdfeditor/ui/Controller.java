@@ -5,13 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
@@ -153,12 +151,6 @@ public class Controller {
     @FXML
     private MenuItem replaceSoundMenuItem;
     @FXML
-    private Menu voice2_menu;
-    @FXML
-    private Menu voice3_menu;
-    @FXML
-    private Menu voice3_mc28_menu;
-    @FXML
     private MenuItem undoMenuItem;
     @FXML
     private MenuItem redoMenuItem;
@@ -170,6 +162,8 @@ public class Controller {
     private ComboBox<Float> vdfVersionCombo;
     @FXML
     private MenuItem loadUserVoiceFiles;
+    @FXML
+    private Menu restoreMenu;
 
     final VoiceFile voiceFile = new VoiceFile(VDFType.User, TransmitterType.mc28, 3000, 0);
     private final BooleanBinding systemVDFBinding = voiceFile.vdfTypeProperty().isEqualTo(VDFType.System);
@@ -181,35 +175,51 @@ public class Controller {
 
     private boolean mute = false;
 
-    private void addRestoreFiles(final Map<String, MenuItem> items, final Menu menu, final String location, final String variant) {
+    private void addRestoreFiles() {
+        final Map<String, Menu> menus = new TreeMap<>();
+
+        for (final TransmitterType t : TransmitterType.values()) {
+            if (t == TransmitterType.unknown) continue;
+
+            final Menu menu = new Menu(t.toString());
+            final Map<String, MenuItem> items = new TreeMap<>();
+
+            addRestoreFiles(items, t, null);
+            addRestoreFiles(items, t, "Microcopter");
+            addRestoreFiles(items, t, "Team");
+
+            menu.getItems().addAll(items.values());
+            menus.put(t.toString(), menu);
+        }
+
+        restoreMenu.getItems().addAll(menus.values());
+    }
+
+    private void addRestoreFiles(final Map<String, MenuItem> items, final TransmitterType t, final String variant) {
+        final String location = t == TransmitterType.mc26 || t == TransmitterType.mc28 ? "Voice3_mc28" : "Voice3";
+
         for (final Language l : Language.values()) {
             final String path = variant == null ? String.format("restore/%s_%s.vdf", location, l.name())
                     : String.format("restore/%s_%s_%s.vdf", location, l.name(), variant);
+
             final URL url = getClass().getResource(path);
             if (url != null) {
-                final String language = variant == null ? l.toString() : String.format("%s (%s)", l.toString(), variant);
-                final MenuItem menuItem = new MenuItem(language);
+                final String text = variant == null ? l.toString() : String.format("%s (%s)", l.toString(), variant);
+                final MenuItem menuItem = new MenuItem(text);
                 menuItem.setOnAction(ev -> {
                     try (InputStream is = getClass().getResourceAsStream(path)) {
-                        if (askSave()) open(HoTTDecoder.decodeVDF(IOUtils.toByteArray(is)));
+                        if (askSave()) {
+                            final VoiceFile vf = HoTTDecoder.decodeVDF(IOUtils.toByteArray(is));
+                            vf.setTransmitterType(t);
+                            open(vf);
+                        }
                     } catch (final IOException e) {
                         ExceptionDialog.show(e);
                     }
                 });
-                items.put(language, menuItem);
+                items.put(text, menuItem);
             }
         }
-    }
-
-    private void addRestoreFiles(final Menu menu, final String location, final String... variants) {
-        final SortedMap<String, MenuItem> items = new TreeMap<>();
-
-        addRestoreFiles(items, menu, location, null);
-
-        for (final String variant : variants)
-            addRestoreFiles(items, menu, location, variant);
-
-        menu.getItems().addAll(items.values());
     }
 
     public boolean askSave() {
@@ -335,9 +345,7 @@ public class Controller {
         deleteSoundMenuItem.disableProperty().bind(noSelection);
         replaceSoundMenuItem.disableProperty().bind(noSelection);
 
-        addRestoreFiles(voice2_menu, "Voice2", "Microcopter");
-        addRestoreFiles(voice3_menu, "Voice3", "Team");
-        addRestoreFiles(voice3_mc28_menu, "Voice3_mc28", "Team");
+        addRestoreFiles();
 
         undoMenuItem.disableProperty().bind(undoBuffer.canUndo().not());
         redoMenuItem.disableProperty().bind(undoBuffer.canRedo().not());
@@ -902,14 +910,14 @@ public class Controller {
                     for (int i = fistIndex; i < lastIndex && i < items.size(); i++) {
                         final VoiceData voiceData1 = items.get(i);
                         final String name1 = voiceData1.getName();
-                        final int hash1 = Arrays.hashCode(voiceData1.getRawData());
+                        // final int hash1 = Arrays.hashCode(voiceData1.getRawData());
 
                         for (int j = 0; j < items.size(); j++) {
                             if (j == i) continue;
 
                             final VoiceData voiceData2 = items.get(j);
                             final String name2 = voiceData2.getName();
-                            final int hash2 = Arrays.hashCode(voiceData2.getRawData());
+                            // final int hash2 = Arrays.hashCode(voiceData2.getRawData());
 
                             if (name1.equals(name2)) {
                                 undoBuffer.pop();
@@ -918,12 +926,12 @@ public class Controller {
                                 break;
                             }
 
-                            if (hash1 != 1 && hash1 == hash2) {
-                                undoBuffer.pop();
-                                lastIndex--;
-                                MessageDialog.show(AlertType.ERROR, RES.getString("duplicate_entry"), RES.getString("duplicate_sound"), name1, name2);
-                                break;
-                            }
+                            // if (hash1 != 1 && hash1 == hash2) {
+                            // undoBuffer.pop();
+                            // lastIndex--;
+                            // MessageDialog.show(AlertType.ERROR, RES.getString("duplicate_entry"), RES.getString("duplicate_sound"), name1, name2);
+                            // break;
+                            // }
                         }
 
                         // enforce name for system VDFs
@@ -954,10 +962,10 @@ public class Controller {
             setTitle();
         });
 
-        voiceFile.clean();
         listView.setItems(items);
         undoBuffer.setItems(items);
-        verify();
+        verify(false);
+        voiceFile.clean();
         setTitle();
     }
 
@@ -1066,12 +1074,16 @@ public class Controller {
     }
 
     private void verify() throws HoTTException {
+        verify(true);
+    }
+
+    private void verify(final boolean showDialog) throws HoTTException {
         final int maxVoiceCount = HoTTDecoder.getMaxVoiceCount(voiceFile);
         int voiceCount = voiceFile.getVoiceCount();
         final ObservableList<VoiceData> voiceData = listView.getItems();
 
         // remove extra items
-        if (voiceCount > maxVoiceCount && new MessageDialog(AlertType.CONFIRMATION, RES.getString("delete_entries_header"),
+        if (voiceCount > maxVoiceCount && showDialog && new MessageDialog(AlertType.CONFIRMATION, RES.getString("delete_entries_header"),
                 RES.getString("delete_entries_message"), voiceCount - maxVoiceCount).showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
             throw new HoTTException(null);
 
