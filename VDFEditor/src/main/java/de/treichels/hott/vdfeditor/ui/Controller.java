@@ -1,8 +1,6 @@
 package de.treichels.hott.vdfeditor.ui;
 
 import java.awt.Desktop;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,15 +18,7 @@ import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
 import javax.print.PrintException;
-import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
-import javax.print.ServiceUI;
-import javax.print.SimpleDoc;
-import javax.print.attribute.HashPrintRequestAttributeSet;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -93,10 +83,12 @@ public class Controller {
     private static final String _WAV = "*.wav"; //$NON-NLS-1$
     private static final String _MP3 = "*.mp3"; //$NON-NLS-1$
     private static final String _OGG = "*.ogg"; //$NON-NLS-1$
+    private static final String _PDF = "*.pdf"; //$NON-NLS-1$
     private static final String _VDF = "*.vdf"; //$NON-NLS-1$
     private static final String WAV = ".wav"; //$NON-NLS-1$
     private static final String MP3 = ".mp3"; //$NON-NLS-1$
     private static final String OGG = ".ogg"; //$NON-NLS-1$
+    private static final String PDF = ".pdf"; //$NON-NLS-1$
     private static final String VDF = ".vdf"; //$NON-NLS-1$
     private static final String LAST_LOAD_VDF_DIR = "lastLoadVdfDir"; //$NON-NLS-1$
     private static final String LAST_SAVE_VDF_DIR = "lastSaveVdfDir"; //$NON-NLS-1$
@@ -769,22 +761,29 @@ public class Controller {
 
     @FXML
     public void onPrint() throws ReportException, IOException, DocumentException, PrintException {
-        final String name = vdfFileProperty.isNull().get() ? "" : vdfFileProperty.get().getName();
-        final String title = String.format("%s VDF V%s", voiceFile.getVdfType(), Float.toString(voiceFile.getVdfVersion() / 1000.0f));
-        final String version = Launcher.getTitle();
-        final String html = HTMLReport.generateHTML(name, title, version, voiceFile);
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PDFReport.save(baos, html);
+        final FileChooser chooser = new FileChooser();
+        chooser.setTitle(RES.getString("print")); //$NON-NLS-1$
 
-        final PrintService[] printServices = PrintServiceLookup.lookupPrintServices(DocFlavor.SERVICE_FORMATTED.PAGEABLE, null);
-        if (printServices != null && printServices.length > 0) {
-            final PrintService printService = ServiceUI.printDialog(null, 0, 0, printServices, null, null, new HashPrintRequestAttributeSet());
-            final DocPrintJob printJob = printService.createPrintJob();
+        // use dir from preferences
+        final File dir = new File(PREFS.get(LAST_SAVE_VDF_DIR, System.getProperty(USER_HOME)));
+        if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
 
-            try (final InputStream is = new ByteArrayInputStream(baos.toByteArray())) {
-                final Doc doc = new SimpleDoc(is, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
-                printJob.print(doc, null);
-            }
+        // setup file name filter
+        chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("pdf_files"), _PDF)); //$NON-NLS-1$
+
+        // preset report name
+        if (vdfFileProperty.get() != null) {
+            final String fileName = vdfFileProperty.get().getName().replaceAll(VDF, PDF);
+            chooser.setInitialFileName(fileName);
+        }
+
+        final File pdf = chooser.showSaveDialog(listView.getScene().getWindow());
+        if (pdf != null) {
+            final String name = vdfFileProperty.isNull().get() ? "" : vdfFileProperty.get().getName();
+            final String title = String.format("%s VDF V%s", voiceFile.getVdfType(), Float.toString(voiceFile.getVdfVersion() / 1000.0f));
+            final String version = Launcher.getTitle();
+            final String html = HTMLReport.generateHTML(name, title, version, voiceFile);
+            PDFReport.save(pdf, html);
         }
     }
 
