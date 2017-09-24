@@ -1,6 +1,6 @@
 2017-09-24
 ==========
-	VDFEditor-0.9.0.80
+	VDFEditor-0.9.0.81
 	- English user manual
 
 2017-09-22
