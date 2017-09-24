@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -852,10 +851,10 @@ public class Controller {
     @FXML
     public void onUserManual() throws IOException {
         // try translated manual first
-        InputStream is = getClass().getResourceAsStream(String.format("VDFEditor_%s.pdf", Locale.getDefault().getCountry()));
+        InputStream is = getClass().getResourceAsStream(String.format("VDFEditor_%s.pdf", System.getProperty("user.language").toUpperCase()));
 
         // fall-back
-        if (is == null) is = getClass().getResourceAsStream("VDFEditor.pdf");
+        if (is == null) is = getClass().getResourceAsStream("VDFEditor_EN.pdf");
 
         if (is != null) {
             final File tempFile = new File(System.getProperty("java.io.tmpdir"), "VDFEditor_Manual.pdf");
