@@ -154,5 +154,13 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTT-Report-HTML</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTT-Report-PDF</artifactId>
+		</dependency>
 	</dependencies>
 </project>

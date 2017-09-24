@@ -1,6 +1,8 @@
 package de.treichels.hott.vdfeditor.ui;
 
 import java.awt.Desktop;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,9 +20,20 @@ import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.ServiceUI;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.itextpdf.text.DocumentException;
 import com.sun.javafx.collections.ObservableListWrapper;
 
 import de.treichels.hott.HoTTDecoder;
@@ -38,6 +51,9 @@ import gde.model.voice.CountryCode;
 import gde.model.voice.VDFType;
 import gde.model.voice.VoiceData;
 import gde.model.voice.VoiceFile;
+import gde.report.ReportException;
+import gde.report.html.HTMLReport;
+import gde.report.pdf.PDFReport;
 import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
@@ -324,14 +340,15 @@ public class Controller {
         transmitterTypeCombo.getItems().remove(TransmitterType.unknown);
 
         // disable items if no vdf was loaded
-        final BooleanBinding empty = voiceFile.voiceCountProperty().isEqualTo(0);
-        vdfVersionCombo.disableProperty().bind(empty);
-        countryCodeCombo.disableProperty().bind(empty);
-        transmitterTypeCombo.disableProperty().bind(empty);
-        saveVDFMenuItem.disableProperty().bind(empty.or(vdfFileProperty.isNull()).or(dirtyProperty.not()).or(systemVDFBinding));
-        saveVDFAsMenuItem.disableProperty().bind(empty);
+        // final BooleanBinding empty = voiceFile.voiceCountProperty().isEqualTo(0);
+        // vdfVersionCombo.disableProperty().bind(empty);
+        // countryCodeCombo.disableProperty().bind(empty);
+        // transmitterTypeCombo.disableProperty().bind(empty);
+        // saveVDFMenuItem.disableProperty().bind(empty.or(vdfFileProperty.isNull()).or(dirtyProperty.not()).or(systemVDFBinding));
+        saveVDFMenuItem.disableProperty().bind(vdfFileProperty.isNull().or(dirtyProperty.not()));
+        // saveVDFAsMenuItem.disableProperty().bind(empty);
         addSoundMenuItem.disableProperty().bind(systemVDFBinding);
-        writeToTransmitter.disableProperty().bind(empty);
+        // writeToTransmitter.disableProperty().bind(empty);
 
         // no user voice files for vdf version 2.0
         // loadUserVoiceFiles.disableProperty().bind(vdfVersionCombo.valueProperty().isEqualTo(2.0f));
@@ -747,6 +764,27 @@ public class Controller {
         try (HoTTSerialPort port = serialPortProperty.get()) {
             port.open();
             port.playSound(selectedIndex + offset);
+        }
+    }
+
+    @FXML
+    public void onPrint() throws ReportException, IOException, DocumentException, PrintException {
+        final String name = vdfFileProperty.isNull().get() ? "" : vdfFileProperty.get().getName();
+        final String title = String.format("%s VDF V%s", voiceFile.getVdfType(), Float.toString(voiceFile.getVdfVersion() / 1000.0f));
+        final String version = Launcher.getTitle();
+        final String html = HTMLReport.generateHTML(name, title, version, voiceFile);
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PDFReport.save(baos, html);
+
+        final PrintService[] printServices = PrintServiceLookup.lookupPrintServices(DocFlavor.SERVICE_FORMATTED.PAGEABLE, null);
+        if (printServices != null && printServices.length > 0) {
+            final PrintService printService = ServiceUI.printDialog(null, 0, 0, printServices, null, null, new HashPrintRequestAttributeSet());
+            final DocPrintJob printJob = printService.createPrintJob();
+
+            try (final InputStream is = new ByteArrayInputStream(baos.toByteArray())) {
+                final Doc doc = new SimpleDoc(is, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+                printJob.print(doc, null);
+            }
         }
     }
 

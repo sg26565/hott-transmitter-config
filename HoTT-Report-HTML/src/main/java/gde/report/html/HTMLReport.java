@@ -35,9 +35,11 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import freemarker.template.TemplateNotFoundException;
 import gde.model.BaseModel;
 import gde.model.HoTTException;
 import gde.model.helicopter.HelicopterModel;
+import gde.model.voice.VoiceFile;
 import gde.model.winged.WingedModel;
 import gde.report.CurveImageGenerator;
 import gde.report.ReportException;
@@ -52,9 +54,9 @@ public class HTMLReport {
 
     static {
         // setup freemarker
-        CONFIGURATION = new Configuration(Configuration.VERSION_2_3_23);
+        CONFIGURATION = new Configuration(Configuration.VERSION_2_3_26);
         CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8"); //$NON-NLS-1$
-        CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_23));
+        CONFIGURATION.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_26));
         CUSTOM_EXCEPTION_HANDLER = new FreeMarkerExceptionHandler();
 
         // setup CurveImageGenerator
@@ -103,6 +105,29 @@ public class HTMLReport {
         default:
             throw new HoTTException("InvalidTransmitterType", model.getTransmitterType()); //$NON-NLS-1$
         }
+    }
+
+    public static String generateHTML(final String name, final String title, final String version, final VoiceFile voiceFile)
+            throws TemplateNotFoundException, IOException {
+        CONFIGURATION.setClassForTemplateLoading(HTMLReport.class, "templates/hott");
+
+        final Map<String, Object> rootMap = new HashMap<>();
+        rootMap.put("name", name);
+        rootMap.put("title", title);
+        rootMap.put("version", version);
+        rootMap.put("voicefile", voiceFile);
+
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final Template template = CONFIGURATION.getTemplate("voicefile.ftl");
+
+        try {
+            template.process(rootMap, new OutputStreamWriter(baos, "UTF-8"));
+        } catch (final TemplateException e) {
+            throw new ReportException(e);
+        }
+
+        return baos.toString();
+
     }
 
     private static String genetateHTML(final String templateName, final Map<String, Object> rootMap)
