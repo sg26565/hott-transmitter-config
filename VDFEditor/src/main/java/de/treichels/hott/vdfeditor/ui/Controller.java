@@ -1105,7 +1105,8 @@ public class Controller {
             items.remove(2.0f);
             items.remove(2.5f);
             if (!items.contains(3.0f)) items.add(3.0f);
-        } else if (transmitterType == TransmitterType.mz12 || transmitterType == TransmitterType.mz18 || transmitterType == TransmitterType.mz24) {
+        } else if (transmitterType == TransmitterType.mz12 || transmitterType == TransmitterType.mz18 || transmitterType == TransmitterType.mz24
+                || transmitterType == TransmitterType.x8e || transmitterType == TransmitterType.x8n) {
             version = 2000;
             if (!items.contains(2.0f)) items.add(2.0f);
             items.remove(2.5f);
