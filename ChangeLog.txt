@@ -2,6 +2,7 @@
 ==========
 	VDFEditor-0.9.0.86
 	- updated English manual
+	- added X-8N and X-8E radios
 	
 2017-09-24
 ==========
