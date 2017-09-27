@@ -22,7 +22,7 @@
 				}
 			
 				@bottom-right {
-					content: "Page " counter(page);
+					content: "Seite " counter(page);
 				}
 			}
 			
@@ -110,7 +110,7 @@
 			<caption>Voice Data File</caption>
 
 			<tr>
-				<th class="d2">VDF Type</th>
+				<th class="d2">VDF Typ</th>
 				<td>${voicefile.vdfType}</td>
 			</tr>
 			<tr>
@@ -118,25 +118,25 @@
 				<td>v${(voicefile.vdfVersion/1000)?string["0.0"]}</td>
 			</tr>
 			<tr>
-				<th class="d2">Radio Type</th>
+				<th class="d2">Sendertyp</th>
 				<td>${voicefile.transmitterType}</td>
 			</tr>
 			<tr>
-				<th class="d2">Country</th>
+				<th class="d2">L&auml;nderkennung</th>
 				<td>${voicefile.country}</td>
 			</tr>
 			<tr>
-				<th class="d2">Voice Count</th>
+				<th class="d2">Ansagen</th>
 				<td>${voicefile.voiceCount}</td>
 			</tr>
 			<tr>
-				<th class="d2">total Size</th>
+				<th class="d2">Gesamtgr&ouml;&szlig;e</th>
 				<td>${(voicefile.dataSize / 1024)?round} kb</td>
 			</tr>
 		</table>
 
 		<table style="border-width: 0px;">
-			<caption>Announcements</caption>
+			<caption>Ansagen</caption>
 			
 			<colgroup>
 				<col width="33%"/>
@@ -158,7 +158,7 @@
 							<tr>
 								<th class="d2">Pos.</th>
 								<th>Name</th>
-								<th>Size</th>
+								<th>Gr&ouml;&szlig;e</th>
 							</tr>
 						</thead>
 						

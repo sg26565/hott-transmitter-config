@@ -1,5 +1,10 @@
 2017-09-25
 ==========
+	VDFEditor-0.9.0.88
+	- three column layout for reports
+	
+2017-09-25
+==========
 	VDFEditor-0.9.0.86
 	- updated English manual
 	- added X-8N and X-8E radios
