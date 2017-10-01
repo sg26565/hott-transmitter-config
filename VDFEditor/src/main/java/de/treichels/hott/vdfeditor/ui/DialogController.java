@@ -90,7 +90,7 @@ class DialogController {
             if (serialPort.get() != null && serialPort.get().isOpen()) serialPort.get().close();
             serialPort.set(port);
 
-            if (thread != null || dialog.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
+            if (thread != null || dialog.showAndWait().filter(r -> r == ButtonType.OK).isPresent())
                 closeDialog(null);
             else {
                 task.setPort(serialPort.get());

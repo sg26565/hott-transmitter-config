@@ -11,12 +11,21 @@
  */
 package gde.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.Properties;
+
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  *
  */
 public class Util {
+    private static final String OFFLINE = "offline";
     public static final boolean DEBUG = Boolean.getBoolean("debug");
+    private static final String LATEST_VERSIONS_URL = "https://drive.google.com/uc?export=download&id=0B_uPguA0xiT4SUl1V1VKYXFjWHc";
+    private static final Properties latestVersions = new Properties();
 
     public static String dumpData(final byte[] data) {
         return dumpData(data, 0);
@@ -71,5 +80,16 @@ public class Util {
         }
 
         return sb.toString();
+    }
+
+    public static String getLatestVersion(final String key) {
+        if (latestVersions.isEmpty()) try (InputStream is = new URL(LATEST_VERSIONS_URL).openStream(); InputStreamReader reader = new InputStreamReader(is)) {
+            latestVersions.load(reader);
+            latestVersions.setProperty(OFFLINE, Boolean.FALSE.toString());
+        } catch (final IOException e) {
+            latestVersions.setProperty(OFFLINE, Boolean.TRUE.toString());
+        }
+
+        return latestVersions.getProperty(key, null);
     }
 }

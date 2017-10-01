@@ -35,6 +35,7 @@ import de.treichels.hott.vdfeditor.actions.MoveUpAction;
 import de.treichels.hott.vdfeditor.actions.RemoveAction;
 import de.treichels.hott.vdfeditor.actions.ReplaceAction;
 import de.treichels.hott.vdfeditor.actions.UndoBuffer;
+import gde.mdl.messages.Messages;
 import gde.model.HoTTException;
 import gde.model.enums.TransmitterType;
 import gde.model.voice.CountryCode;
@@ -44,6 +45,7 @@ import gde.model.voice.VoiceFile;
 import gde.report.ReportException;
 import gde.report.html.HTMLReport;
 import gde.report.pdf.PDFReport;
+import gde.util.Util;
 import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
@@ -252,7 +254,7 @@ public class Controller {
         }
 
         // cancel, do nothing
-        if (answer.get() == ButtonType.CANCEL) return false;
+        if (!answer.isPresent() || answer.get() == ButtonType.CANCEL) return false;
 
         // call save dialog and load new file only if save succeeds
         return vdfFileProperty.get() == null ? onSaveAs() : onSave();
@@ -364,6 +366,8 @@ public class Controller {
 
         // always start with an empty vdf
         onNew();
+
+        updateCheck(false);
     }
 
     /**
@@ -371,11 +375,7 @@ public class Controller {
      */
     @FXML
     public void onAbout() {
-        final Alert alert = new Alert(AlertType.INFORMATION, RES.getString("about_text"), ButtonType.CLOSE); //$NON-NLS-1$
-        alert.setTitle(RES.getString("about"));
-        alert.setHeaderText(Launcher.getTitle());
-        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
-        alert.showAndWait();
+        new MessageDialog(AlertType.INFORMATION, Launcher.getTitle(), true, RES.getString("about_text")).showAndWait();
     }
 
     /**
@@ -886,6 +886,11 @@ public class Controller {
     }
 
     @FXML
+    public void onUpdateCheck() {
+        updateCheck(true);
+    }
+
+    @FXML
     public void onUserManual() throws IOException {
         // try translated manual first
         InputStream is = getClass().getResourceAsStream(String.format("VDFEditor_%s.pdf", System.getProperty("user.language").toUpperCase()));
@@ -1093,6 +1098,20 @@ public class Controller {
 
         final Scene scene = listView.getScene();
         if (scene != null) ((Stage) scene.getWindow()).setTitle(sb.toString());
+    }
+
+    private void updateCheck(final boolean verbose) {
+        final String currentVersion = Launcher.getVersion();
+        final String latestVersion = Util.getLatestVersion("VDFEditor");
+
+        if (currentVersion.equals(Messages.getString("Launcher.Unknown"))) {
+            if (verbose) MessageDialog.show(AlertType.WARNING, RES.getString("unknown_version"), RES.getString("unknown_version_text"));
+        } else if (latestVersion == null) {
+            if (verbose) MessageDialog.show(AlertType.WARNING, RES.getString("offline"), RES.getString("offline_text"));
+        } else if (latestVersion.equals(currentVersion)) {
+            if (verbose) MessageDialog.show(AlertType.INFORMATION, RES.getString("uptodate"), RES.getString("uptodate_text"));
+        } else
+            MessageDialog.show(AlertType.INFORMATION, RES.getString("update_available"), true, RES.getString("update_available_text"), latestVersion);
     }
 
     private void updateVdfVersion() {

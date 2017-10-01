@@ -136,6 +136,7 @@
                 <Menu mnemonicParsing="false" text="%help_menu">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#onAbout" text="%about" />
+                        <MenuItem mnemonicParsing="false" onAction="#onUpdateCheck" text="%update_check" />
                         <MenuItem mnemonicParsing="false" onAction="#onUserManual" text="%user_manual" />
                   </items>
                 </Menu>
