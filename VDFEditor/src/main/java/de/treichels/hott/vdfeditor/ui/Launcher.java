@@ -10,9 +10,11 @@ import java.util.jar.JarFile;
 import gde.mdl.messages.Messages;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javazoom.spi.mpeg.sampled.convert.MpegFormatConversionProvider;
 import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
@@ -66,6 +68,11 @@ public class Launcher extends Application {
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(icon);
         controller.setTitle();
+
+        final Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+        primaryStage.maxHeightProperty().set(screenSize.getHeight());
+        primaryStage.maxWidthProperty().set(screenSize.getWidth());
+
         primaryStage.show();
     }
 }
