@@ -11,8 +11,6 @@
 	</properties>
 
 	<modules>
-		<module>RXTXcomm</module>
-		<!-- <module>binding</module> -->
 		<module>HoTT-Model</module>
 		<module>Hott-Decoder/HoTT-Decoder</module>
 		<module>HoTT-Report-HTML</module>
@@ -226,11 +224,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>de.treichels.binding</groupId>
-				<artifactId>binding</artifactId>
-				<version>${project.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-Model</artifactId>
