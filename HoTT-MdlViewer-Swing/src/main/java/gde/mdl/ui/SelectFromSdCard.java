@@ -61,6 +61,7 @@ public class SelectFromSdCard extends SelectFromTransmitter {
             final String[] names;
 
             try {
+                lock.lock();
                 port.open();
 
                 if (node == rootNode)
@@ -77,6 +78,8 @@ public class SelectFromSdCard extends SelectFromTransmitter {
                 }
             } finally {
                 port.close();
+                delay();
+                lock.unlock();
             }
 
             return null;
@@ -147,10 +150,13 @@ public class SelectFromSdCard extends SelectFromTransmitter {
             final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
             try {
+                lock.lock();
                 port.open();
                 port.readFile(fileInfo.getPath(), os);
             } finally {
                 port.close();
+                delay();
+                lock.unlock();
             }
 
             final ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
@@ -169,10 +175,13 @@ public class SelectFromSdCard extends SelectFromTransmitter {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
         try {
+            lock.lock();
             port.open();
             port.readFile(fileInfo.getPath(), os);
         } finally {
             port.close();
+            delay();
+            lock.unlock();
         }
 
         return os.toByteArray();

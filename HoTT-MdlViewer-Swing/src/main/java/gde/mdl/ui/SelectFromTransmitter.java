@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
@@ -26,18 +28,32 @@ public abstract class SelectFromTransmitter extends JPanel implements ModelLoade
             final String portName = (String) comboBox.getSelectedItem();
             if (portName != null && portName.length() > 0 && portNames.contains(portName)) {
                 SimpleGUI.PREFS.put("portName", portName);
-                port = new HoTTSerialPort(new JSSCSerialPort(portName));
+                try {
+                    lock.lock();
+                    port = new HoTTSerialPort(new JSSCSerialPort(portName));
+                } finally {
+                    lock.unlock();
+                }
                 onReload();
             }
         }
     }
 
     private static final long serialVersionUID = 1L;
-
     private static final List<String> portNames = JSSCSerialPort.getAvailablePorts();
+
+    protected static void delay() {
+        try {
+            Thread.sleep(1000);
+        } catch (final InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected HoTTSerialPort port = null;
     private final JComboBox<String> comboBox = new JComboBox<>();
     protected final WaitLayerUI<JScrollPane> layerUI = new WaitLayerUI<>();
+    protected Lock lock = new ReentrantLock();
 
     protected abstract JComponent getSelectionComponent();
 
@@ -45,7 +61,12 @@ public abstract class SelectFromTransmitter extends JPanel implements ModelLoade
         for (final String s : portNames)
             comboBox.addItem(s);
         final String portName = SimpleGUI.PREFS.get("portName", (String) comboBox.getSelectedItem());
-        if (portName != null && portName.length() > 0 && portNames.contains(portName)) port = new HoTTSerialPort(new JSSCSerialPort(portName));
+        if (portName != null && portName.length() > 0 && portNames.contains(portName)) try {
+            lock.lock();
+            port = new HoTTSerialPort(new JSSCSerialPort(portName));
+        } finally {
+            lock.unlock();
+        }
         final PortSelectionListener listener = new PortSelectionListener();
         comboBox.addActionListener(listener);
 

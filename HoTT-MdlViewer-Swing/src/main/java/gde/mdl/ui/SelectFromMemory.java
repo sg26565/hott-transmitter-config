@@ -75,10 +75,13 @@ public class SelectFromMemory extends SelectFromTransmitter {
             final ModelInfo infos[];
 
             try {
+                lock.lock();
                 port.open();
                 infos = port.getAllModelInfos();
             } finally {
                 port.close();
+                delay();
+                lock.unlock();
             }
 
             for (final ModelInfo info : infos)
@@ -121,10 +124,13 @@ public class SelectFromMemory extends SelectFromTransmitter {
         if (selectedIndex == -1) return null;
 
         try {
+            lock.lock();
             port.open();
             return HoTTDecoder.decodeMemory(port, model.getModelNumerAt(selectedIndex));
         } finally {
             port.close();
+            delay();
+            lock.unlock();
         }
     }
 
@@ -133,10 +139,13 @@ public class SelectFromMemory extends SelectFromTransmitter {
         if (selectedIndex == -1) return null;
 
         try {
+            lock.lock();
             port.open();
             return port.getModelData(model.getModelInfoAt(selectedIndex));
         } finally {
             port.close();
+            delay();
+            lock.unlock();
         }
     }
 

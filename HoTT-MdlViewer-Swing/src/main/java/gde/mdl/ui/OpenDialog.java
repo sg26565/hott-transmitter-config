@@ -76,7 +76,7 @@ public class OpenDialog extends JDialog {
         final Component component = tabbedPane.getSelectedComponent();
         if (component != null && component instanceof ModelLoader) return (ModelLoader) component;
 
-        throw new RuntimeException("Componet is not a model loader");
+        throw new RuntimeException("Component is not a model loader");
     }
 
     public BaseModel getModel() throws IOException {
