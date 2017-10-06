@@ -90,6 +90,7 @@
 	</profiles>
 
 	<build>
+		<finalName>MdlViewer-Plugin-for-DataExplorer-${project.version}.${buildNumber}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -139,6 +140,7 @@
 								<minVersion>1.8.0</minVersion>
 							</jre>
 							<versionInfo>
+								<companyName>Oliver Treichel</companyName>
 								<fileVersion>${project.version}.${buildNumber}</fileVersion>
 								<txtFileVersion>${project.version}.${buildNumber}</txtFileVersion>
 								<fileDescription>Launcher for HoTT-MdlViewer-SWT</fileDescription>
