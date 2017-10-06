@@ -31,14 +31,6 @@
 							<mainClass>gde.mdl.ui.Launcher</mainClass>
 						</transformer>
 					</transformers>
-					<filters>
-						<filter>
-							<artifact>gnu.io.RXTXcomm</artifact>
-							<includes>
-								<include>**</include>
-							</includes>
-						</filter>
-					</filters>
 				</configuration>
 				<executions>
 					<execution>
@@ -159,10 +151,6 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math3</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>gnu.io.RXTXcomm</groupId>
-			<artifactId>RXTXcomm</artifactId>
 		</dependency>
 	</dependencies>
 </project>
