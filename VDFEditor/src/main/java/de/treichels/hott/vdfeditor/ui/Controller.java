@@ -784,6 +784,7 @@ public class Controller {
             final String version = Launcher.getTitle();
             final String html = HTMLReport.generateHTML(name, title, version, voiceFile);
             PDFReport.save(pdf, html);
+            Desktop.getDesktop().open(pdf);
         }
     }
 
