@@ -1,3 +1,21 @@
+2017-10-06
+==========
+	MdlViewer-0.9.0.167
+	- removed dependency on RXTXComm
+	
+	MdlViewer-Swing-0.9.0.135
+	- fixed communication with mc-28
+	- removed dependency on RXTXComm
+
+	MdlViewer-Plugin-for-DataExplorer-0.9.0122
+	- removed dependency on RXTXComm
+	
+	VDFEdior-0.9.0.110	
+	- open pdf viewer after report generation
+		
+	VDFEdior-0.9.0.109	
+	- removed dependency on RXTXComm
+	
 2017-10-04
 ==========
 	VDFEditor-0.9.0.100
