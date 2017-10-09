@@ -1,89 +1,71 @@
 /**
- *  HoTT Transmitter Config
- *  Copyright (C) 2013  Oliver Treichel
+ * HoTT Transmitter Config Copyright (C) 2013 Oliver Treichel
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package gde.model.helicopter;
 
 import gde.model.AbstractBase;
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class HelicopterTrim extends AbstractBase {
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  private int               nickStickTrim;
-  private int               rollStickTrim;
-  private int               tailStickTrim;
+    private int nickStickTrim;
+    private int rollStickTrim;
+    private int tailStickTrim;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        final HelicopterTrim other = (HelicopterTrim) obj;
+        if (nickStickTrim != other.nickStickTrim) return false;
+        if (rollStickTrim != other.rollStickTrim) return false;
+        if (tailStickTrim != other.tailStickTrim) return false;
+        return true;
     }
-    if (obj == null) {
-      return false;
+
+    public int getNickStickTrim() {
+        return nickStickTrim;
     }
-    if (getClass() != obj.getClass()) {
-      return false;
+
+    public int getRollStickTrim() {
+        return rollStickTrim;
     }
-    final HelicopterTrim other = (HelicopterTrim) obj;
-    if (nickStickTrim != other.nickStickTrim) {
-      return false;
+
+    public int getTailStickTrim() {
+        return tailStickTrim;
     }
-    if (rollStickTrim != other.rollStickTrim) {
-      return false;
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + nickStickTrim;
+        result = prime * result + rollStickTrim;
+        result = prime * result + tailStickTrim;
+        return result;
     }
-    if (tailStickTrim != other.tailStickTrim) {
-      return false;
+
+    public void setNickStickTrim(final int nickStickTrim) {
+        this.nickStickTrim = nickStickTrim;
     }
-    return true;
-  }
 
-  public int getNickStickTrim() {
-    return nickStickTrim;
-  }
+    public void setRollStickTrim(final int rollStickTrim) {
+        this.rollStickTrim = rollStickTrim;
+    }
 
-  public int getRollStickTrim() {
-    return rollStickTrim;
-  }
-
-  public int getTailStickTrim() {
-    return tailStickTrim;
-  }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + nickStickTrim;
-    result = prime * result + rollStickTrim;
-    result = prime * result + tailStickTrim;
-    return result;
-  }
-
-  public void setNickStickTrim(final int nickStickTrim) {
-    this.nickStickTrim = nickStickTrim;
-  }
-
-  public void setRollStickTrim(final int rollStickTrim) {
-    this.rollStickTrim = rollStickTrim;
-  }
-
-  public void setTailStickTrim(final int tailStickTrim) {
-    this.tailStickTrim = tailStickTrim;
-  }
+    public void setTailStickTrim(final int tailStickTrim) {
+        this.tailStickTrim = tailStickTrim;
+    }
 }

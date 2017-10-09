@@ -31,7 +31,7 @@ import android.widget.TextView;
 /**
  * An {@link BaseAdapter} that supports the display of a list of communication devices in a {@link Spinner}.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public abstract class DeviceAdapter<DeviceType> extends BaseAdapter {
   protected final Context                      context;

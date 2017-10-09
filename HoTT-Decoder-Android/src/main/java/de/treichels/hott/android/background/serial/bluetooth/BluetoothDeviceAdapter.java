@@ -24,7 +24,7 @@ import de.treichels.hott.android.background.serial.DeviceAdapter;
 /**
  * An {@link DeviceAdapter} that holds a list of {@link BluetoothDevice} objects.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class BluetoothDeviceAdapter extends DeviceAdapter<BluetoothDevice> {
 

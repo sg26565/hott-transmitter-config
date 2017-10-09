@@ -35,7 +35,7 @@ import com.madrobot.beans.PropertyDescriptor;
 import de.treichels.binding.BindingManager;
 
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class BindingActivity extends Activity {
   public static final String NAMESPACE_BEANS = "http://android.treichels.de/beans";

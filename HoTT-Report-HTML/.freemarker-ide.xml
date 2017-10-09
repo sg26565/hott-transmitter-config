@@ -1,0 +1,9 @@
+<config>
+	<context-values>
+		<resource path="src/main/resources/gde/report/html/templates/wea/modelconfig.ftl">
+			<value key="model" object-class="de.treichels.wea.bat64.gen.Root"/>
+		</resource>
+	</context-values>
+	<macro-library>
+	</macro-library>
+</config>

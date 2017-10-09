@@ -1,0 +1,218 @@
+2017-10-09
+==========
+	VDFEditor-0.9.0.111
+	- new voice files for microcopter
+	
+2017-10-06
+==========
+	MdlViewer-0.9.0.167
+	- removed dependency on RXTXComm
+	
+	MdlViewer-Swing-0.9.0.135
+	- fixed communication with mc-28
+	- removed dependency on RXTXComm
+
+	MdlViewer-Plugin-for-DataExplorer-0.9.0122
+	- removed dependency on RXTXComm
+	
+	VDFEdior-0.9.0.110	
+	- open pdf viewer after report generation
+		
+	VDFEdior-0.9.0.109	
+	- removed dependency on RXTXComm
+	
+2017-10-04
+==========
+	VDFEditor-0.9.0.100
+	- fixed bug in transmitter communication
+	
+2017-10-02
+==========
+	VDFEditor-0.9.0.99
+	- set maximum windows size to visual bounds of screen
+	
+2017-10-01
+==========
+	VDFEditor-0.9.0.98
+	- automatic update check
+
+2017-09-25
+==========
+	VDFEditor-0.9.0.88
+	- three column layout for reports
+	
+2017-09-25
+==========
+	VDFEditor-0.9.0.86
+	- updated English manual
+	- added X-8N and X-8E radios
+	
+2017-09-24
+==========
+	VDFEditor-0.9.0.85
+	- Slovak translation
+	
+	VDFEditor-0.9.0.84
+	- added printing support
+
+	VDFEditor-0.9.0.81
+	- English user manual
+
+2017-09-22
+==========
+	VDFEditor-0.9.0.78
+	- Microcopter files for mc-28
+	
+	VDFEditor-0.9.0.77
+	- generate Voice2 file on-the-fly from Voice3 files
+	- new structure in restore menu
+	- added user manual
+
+2017-09-21
+==========
+	VDFEditor-0.9.0.76
+	- turn rf off after selection of com port
+	- ask for com port every time to allow switching between ports without restart
+	- use 253 entries in v2 vdfs regardless of country version 
+	
+2017-09-20
+==========
+	VDFEditor-0.9.0.75
+	- added product codes for mz-12 and mz-12PRO
+	
+2017-09-19
+==========
+	VDFEditor-0.9.0.74
+	- turn RF output off before loading or sending files from / to transmitter
+	- re-add vdf version combo box
+	- don't try to load user voice files for vdf version 2.0
+	- interrupt background task on cancel
+	- fix loading / sending of voice2 files
+	
+2017-09-18
+==========
+	VDFEditor-0.9.0.73
+	- added Team voice files
+	- moved Microcopter voice files into Voice2 menu
+	- removed warning message when overwriting system vdfs
+	- fixed typo in German title for loading user vdfs from transmitter 
+	
+2017-09-17
+==========
+	VDFEditor-0.9.0.72
+	- added support to load/send voice files from/to transmitter
+	- enable multi-drop for system vdf's
+	- fix number of entries when changing transmitter type or country
+	- enforce naming convention for system vdf's
+	- latest voice3 files for German and French
+	- fix dirty flag (unset on save)
+	
+2017-09-03
+==========
+	VDFEditor-0.9.0.69
+	- updated MP3 & OGG sound libraries
+	- renamed Europe to Global
+	
+	VDFEditor-0.9.0.68
+	- Add undo / redo functions
+	- Play audio in a background to keep the UI responsible
+	
+2017-08-21
+==========
+	VDFEditor-0.9.0.67
+	- Add restore option for system VDFs
+	- Enforce index number in name for system VDFs
+	- Preserve size and order for system VDFs
+	- Add an empty placeholder on delete for system VDFs
+	- removed option to change VDF type
+	- removed option to change VDF version (will be set automatically)
+	- improved file limit checks
+	 
+2017-08-18
+==========
+	VDFEditor-0.9.0.65
+	- display disclaimer when saving system VDFs
+	- add new mz-12PRO transmitter
+	- add mz-12, mz-18 and mz-24 transmitters
+	- prevent duplicate entries in the voice list
+	- do not allow to overwrite existing system VDFs
+	
+2017-08-13
+==========
+	VDFEditor-0.9.0.63
+	- improved size checks
+	
+2017-08-12
+==========
+	VDFEditor-0.9.0.62
+	- support for country code
+	 	
+	VDFEditor-0.9.0.59
+	- check entry count for system VDF files v2: 250, v3: for mc-26/mc-28 432, v3: for other transmitters 284
+	
+	VDFEditor-0.9.0.56
+	- add vdf version combo
+	
+2017-08-11
+==========
+	VDFEditor-0.9.0.55
+	- prevent multiple exception dialogs at the same time
+	
+	VDFEditor-0.9.0.54
+	- add a filter to show all supported sound formats
+	- fix removal of entries that exceed the size limit of the VDF
+
+2017-08-09
+==========
+	VDFEditor-0.9.0.53
+	- add functions to clear selection
+	- insert file before drop target on DnD 
+	
+2017-08-08
+==========
+	VDFEditor-0.9.0.45
+	- Support for .mp3 and .ogg sound files
+	- Made warning dialog for unsaved changes more explicit
+	- Avoid multiple warnings when importing more than one sound file
+	
+2017-08-07
+==========
+	VDFEditor-0.9.0.44
+	- Fixed bad sound quality in ADPCMCodec
+	
+2017-08-03
+==========
+	VDFEditor-0.9.0.43
+	- Add support for multi-select on add sound dialog
+	- Fix sorting of main list via drag&drop
+
+2017-08-01
+==========
+	VDFEditor-0.9.0.42
+	- Fixed add sound menu item for new empty VDF files
+	
+2017-07-31
+==========
+	HoTT-MdlViewer-JavaFX-0.9.0.134, HoTT-MdlViewer-Swing-0.9.0.102, HoTT-MdlViewer-SWT-0.9.0.89
+	- Fix MC20Decoder. Allow all eight logical switches instead of only four.
+	
+2017-07-29
+==========
+	VDFEditor-0.9.0.40
+	- Convert .wav files only when necessary
+	
+	VDFEditor-0.9.0.39
+	- Apply low-pass filter for ADPCM playback
+	
+2017-07-28
+==========
+	VDFEditor-0.9.0.36
+	- Updated VDFDecoder with information from Graupner
+	
+	VDFEditor-0.9.0.34
+	- Adapt quantifier values for ADPCM codec to be compatible with FUS
+	
+2017-07-27
+==========
+	HoTT-MdlViewer-JavaFX-0.9.0.125, HoTT-MdlViewer-Swing-0.9.0.93, HoTT-MdlViewer-SWT-0.9.0.80
+	- Added new PPM32 DSC output type for MC-28 and MC-26

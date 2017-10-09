@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane fx:id="borderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" >
+	<top>
+		<MenuBar>
+			<menus>
+				<Menu mnemonicParsing="false" text="%File">
+					<items>
+						<MenuItem mnemonicParsing="false" onAction="#onLoadFromFile" text="%LoadFromFile">
+							<accelerator>
+								<KeyCodeCombination alt="UP" code="F1" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+							</accelerator>
+						</MenuItem>
+						<MenuItem mnemonicParsing="false" onAction="#onLoadFromMemory" text="%LoadFromMemory">
+							<accelerator>
+								<KeyCodeCombination alt="UP" code="F2" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+							</accelerator>
+						</MenuItem>
+						<MenuItem mnemonicParsing="false" onAction="#onLoadFromSdCard" text="%LoadFromSdCard">
+							<accelerator>
+								<KeyCodeCombination alt="UP" code="F3" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+							</accelerator>
+						</MenuItem>
+						<SeparatorMenuItem mnemonicParsing="false" />
+						<MenuItem fx:id="sysVDF1" mnemonicParsing="false" onAction="#onLoadSystemVDF" text="%LoadSystemVDF"/>
+						<MenuItem fx:id="userVDF1" mnemonicParsing="false" onAction="#onLoadUserVDF" text="%LoadUserVDF"/>
+						<SeparatorMenuItem mnemonicParsing="false" />
+						<MenuItem fx:id="save1" disable="true" mnemonicParsing="false" onAction="#onSave" text="%Save">
+							<accelerator>
+								<KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+							</accelerator>
+						</MenuItem>
+						<SeparatorMenuItem mnemonicParsing="false" />
+						<MenuItem fx:id="refresh1" mnemonicParsing="false" onAction="#onRefresh" text="%Refresh">
+							<accelerator>
+								<KeyCodeCombination alt="UP" code="F5" control="UP" meta="UP" shift="UP" shortcut="UP" />
+							</accelerator>
+						</MenuItem>
+						<SeparatorMenuItem mnemonicParsing="false" />
+						<MenuItem mnemonicParsing="false" onAction="#onExit" text="%Exit">
+							<accelerator>
+								<KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+							</accelerator>
+						</MenuItem>
+					</items>
+				</Menu>
+			</menus>
+			<contextMenu>
+				<ContextMenu fx:id="contextMenu">
+					<items>
+						<MenuItem mnemonicParsing="false" onAction="#onLoadFromFile" text="%LoadFromFile" />
+						<MenuItem mnemonicParsing="false" onAction="#onLoadFromMemory" text="%LoadFromMemory" />
+						<MenuItem mnemonicParsing="false" onAction="#onLoadFromSdCard" text="%LoadFromSdCard" />
+						<SeparatorMenuItem mnemonicParsing="false" />
+						<MenuItem fx:id="sysVDF2" mnemonicParsing="false" onAction="#onLoadSystemVDF" text="%LoadSystemVDF"/>
+						<MenuItem fx:id="userVDF2" mnemonicParsing="false" onAction="#onLoadUserVDF" text="%LoadUserVDF"/>
+						<SeparatorMenuItem mnemonicParsing="false" />
+						<MenuItem fx:id="save2" disable="true" mnemonicParsing="false" onAction="#onSave" text="%Save" />
+						<SeparatorMenuItem mnemonicParsing="false" />
+						<MenuItem fx:id="refresh2" mnemonicParsing="false" onAction="#onRefresh" text="%Refresh" />
+						<SeparatorMenuItem mnemonicParsing="false" />
+						<MenuItem mnemonicParsing="false" onAction="#onExit" text="%Exit" />
+					</items>
+				</ContextMenu>
+			</contextMenu>
+		</MenuBar>
+	</top>
+	<center>
+      <StackPane fx:id="stackPane">
+         <children>
+      		<WebView fx:id="webview" onMouseClicked="#onMouseClicked" />
+            <Region fx:id="overlay" disable="true" opacity="0.3" style="-fx-background-color: Gray;" visible="false" />
+         </children>
+      </StackPane>
+	</center>
+</BorderPane>

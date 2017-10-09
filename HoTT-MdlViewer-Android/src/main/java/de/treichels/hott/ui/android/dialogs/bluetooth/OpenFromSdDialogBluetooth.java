@@ -26,7 +26,7 @@ import de.treichels.hott.ui.android.dialogs.OpenFromSdDialog;
 /**
  * Read list of model via BlueTooth.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class OpenFromSdDialogBluetooth extends OpenFromSdDialog<BluetoothDevice> {
   private BluetoothDeviceHandler handler = null;

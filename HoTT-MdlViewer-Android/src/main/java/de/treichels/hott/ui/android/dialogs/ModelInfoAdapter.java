@@ -32,7 +32,7 @@ import de.treichels.hott.android.background.serial.tasks.GetAllModelsTask;
  * This class provides an adapter for {@link ModelInfo} instances. It will load all defined models from the transmitter memory and generate {@link View} objects
  * for use in a {@link ListView} for each model.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class ModelInfoAdapter extends GenericListAdaper<ModelInfo> {
   private final DeviceHandler<?> handler;

@@ -24,7 +24,7 @@ import android.util.Log;
  * An {@link AsyncTask} that is fail safe. The task can report success or failure via a status, a text message and an optional throwavble. Subclasses need to
  * implement the doInBackgroundFailSafe method which is allowed to throw exceptions.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public abstract class FailSafeAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
   public enum ResultStatus {

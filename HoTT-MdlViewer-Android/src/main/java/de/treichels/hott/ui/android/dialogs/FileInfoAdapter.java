@@ -33,7 +33,7 @@ import de.treichels.hott.android.background.serial.tasks.ListDirectoryTask;
  * This class provides an adapter for {@link FileInfo} objects. It will list files and directories from the transmitter sd card and generate {@link View}
  * objects for use in a {@link ListView} for each of them.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class FileInfoAdapter extends GenericListAdaper<FileInfo> {
   private final DeviceHandler<?> handler;

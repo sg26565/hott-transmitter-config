@@ -1,6 +1,6 @@
 <table>
 	<#if helicopterModel??>
-		<caption><a name="modelType"/>Helicoptertyp</caption>
+		<caption><a name="modelType"/>Helikoptertyp</caption>
 	
 		<@reset/>
 		

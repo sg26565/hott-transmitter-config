@@ -25,6 +25,7 @@
 	<a href="#swashplateMixer">Taumelscheibenmischer</a>
 </#if>
 <a href="#failSafe">Fail Safe</a>
+<a href="#announcements">Ankünden</a>		
 <a href="#telemetry">Telemetrie</a>		
 <a href="#trainerPupil">Lehrer/Schüler</a>
 <a href="#stickTrim">Knüppeltrimmung</a>		

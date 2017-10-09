@@ -200,6 +200,11 @@
 								<td colspan="2"/>
 							</#if>
 						</tr>
+						<tr class="<@d/>">
+							<th align="right">HR&rarr;WK-Offset</th>
+							<td align="center">${phase.multiFlapMixer[5].value[0]}%</td>								
+							<td colspan="7" align="left"><@switch phase.multiFlapMixer[5].switch/></td>								
+						</tr>
 					</#if>
 
 					<#if wingedModel.aileronFlapType.ailerons&gt;1>

@@ -27,13 +27,13 @@ import de.treichels.hott.android.background.serial.TxTask;
 /**
  * A {@link DeviceHandler} for {@link UsbDevice} objects.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class UsbDeviceHandler extends DeviceHandler<UsbDevice> {
   /**
    * A broadcast receiver that waits for {@link TxTask.ACTION_USB_PERMISSION} action intent and notifies a waiting thread.
    *
-   * @author oli
+   * @author Oliver Treichel &lt;oli@treichels.de&gt;
    */
   final class Unlocker extends BroadcastReceiver {
     @Override

@@ -30,7 +30,7 @@ import de.treichels.hott.android.background.serial.TxTask;
 /**
  * Retrieve a list of all model names from the transmitter.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class GetAllModelsTask extends TxTask<Void, ModelInfo, List<ModelInfo>> {
   public GetAllModelsTask(final DeviceHandler<?> handler) {

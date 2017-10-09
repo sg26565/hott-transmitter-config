@@ -9,7 +9,7 @@ package de.treichels.android.bluetoohtest;
  * 
  * Each instance can be reused multiple times by calling the reset() method.
  * 
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 class CRC16 {
   /** pre-calculated lookup table */

@@ -40,7 +40,7 @@ import de.treichels.hott.ui.android.R;
 /**
  * An abstract dialog that provides a spinner to select a communication device and uses this device to retrieve a list of models to select from.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public abstract class AbstractTxDialog<ResultType, DeviceType> extends DialogFragment implements OnItemClickListener {
   private DialogClosedListener      closedListener      = null;

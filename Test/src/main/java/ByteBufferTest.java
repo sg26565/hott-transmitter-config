@@ -20,16 +20,16 @@ import java.nio.ByteOrder;
  */
 
 /**
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class ByteBufferTest {
-  public static void main(final String[] args) {
-    final byte[] data = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07 };
-    final ByteBuffer bb = ByteBuffer.wrap(data);
-    bb.order(ByteOrder.LITTLE_ENDIAN);
+	public static void main(final String[] args) {
+		final byte[] data = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07 };
+		final ByteBuffer bb = ByteBuffer.wrap(data);
+		bb.order(ByteOrder.LITTLE_ENDIAN);
 
-    System.out.printf("Short: %#04x (%1$d)\n", bb.getShort(0));
-    System.out.printf("Short: %#08x (%1$d)\n", bb.getInt(0));
-    System.out.printf("Short: %#016x (%1$d)\n", bb.getLong(0));
-  }
+		System.out.printf("Short: %#04x (%1$d)\n", bb.getShort(0));
+		System.out.printf("Short: %#08x (%1$d)\n", bb.getInt(0));
+		System.out.printf("Short: %#016x (%1$d)\n", bb.getLong(0));
+	}
 }

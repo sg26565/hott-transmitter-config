@@ -42,10 +42,17 @@
 			<th align="right">Steueranordnung</th>
 			<td align="left" colspan="3">${model.stickMode}</td>
 		</tr>
-		<tr class="<@d/>">
-			<th align="right">Modul</th>
-			<td align="left" colspan="3">${model.module.type}</td>
-		</tr>
+		<#if model.module.type.name() == "SP" && model.spektrumMode??>
+			<tr class="<@d/>">
+				<th align="right">Modul</th>
+				<td align="left" colspan="3">${model.module.type} - ${model.spektrumMode}, ${model.spektrumChannelNumber} Kanäle</td>
+			</tr>
+		<#else>
+			<tr class="<@d/>">
+				<th align="right">Modul</th>
+				<td align="left" colspan="3">${model.module.type}<#if model.module.type.name() == "HoTT" && model.receiverBindType??>, Bindungstyp: ${model.receiverBindType}</#if></td>
+			</tr>
+		</#if>
 		<tr class="<@d/>">
 			<th align="right">DSC-Ausgang</th>
 			<td align="left" colspan="3">${model.dscOutputType}</td>
@@ -73,6 +80,14 @@
 					<th align="right">Markierung</th>
 					<td align="left" colspan="3"><@switch model.getSwitch("MarkerKey")/></td>
 				</tr>
+				<tr class="<@d/>">
+					<th align="right">Markierung aktiv?</th>
+					<td align="left" colspan="3">${helicopterModel.throttleMarkerActive?string("ja","nein")}</td>
+				</tr>
+				<tr class="<@d/>">
+					<th align="right">Position</th>
+					<td align="left" colspan="3">${helicopterModel.throttleMarkerPosition}</td>
+				</tr>
 			</#if>
 			<tr class="<@d/>">
 				<th align="right">Einschaltwarnung</th>
@@ -87,12 +102,18 @@
 				<td align="left" colspan="3">${model.autoTimerReset?string("ja","nein")}</td>
 			</tr>
 		</#if>
-		<#if model.module.type.name() == "HoTT">
-			<#list model.receiver as receiver>
-				<tr class="<@d/> <@u receiver.bound/>">
-					<th class="d2" colspan="4">Empfänger ${receiver.number?number+1}</th>
-				</tr>
-				<tr class="<@d/> <@u receiver.bound/>">
+	</tbody>
+</table>
+			
+<#if model.module.type.name() == "HoTT">
+	<#list model.receiver as receiver>
+		<table  class="<@u receiver.bound/>">
+			<caption>Empfänger ${receiver.number?number+1}</caption>
+		
+			<@reset/>
+			
+			<tbody>
+				<tr class="<@d/>">
 					<th align="right">gebunden</th>
 					<td align="left" colspan="3">${receiver.bound?string("ja","nein")}</td>
 				</tr>
@@ -105,6 +126,12 @@
 						<th align="right">Empfänger ID</th>
 						<td align="left" colspan="3">${hex(receiver.rfid?c)}</td>
 					</tr>
+					<#if receiver.firmwareType??>
+					<tr class="<@d/>">
+						<th align="right">Empfänger Firmware</th>
+						<td align="left" colspan="3">${receiver.firmwareType}</td>
+					</tr>
+					</#if>
 					<tr class="<@d/>">
 						<th align="right">Empfängerausgang</th>
 						<th align="center">Eingang</th>
@@ -120,7 +147,7 @@
 					</tr>
 					</#list>
 				</#if>
-			</#list>
-		</#if>
-	</tbody>
-</table>
+			</tbody>
+		</table>
+	</#list>
+</#if>

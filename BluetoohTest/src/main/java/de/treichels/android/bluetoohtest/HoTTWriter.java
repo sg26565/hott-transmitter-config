@@ -22,7 +22,7 @@ import java.util.Arrays;
  * </ul>
  * </p>
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class HoTTWriter {
   /** calculate CRC-16 checksum on the fly */

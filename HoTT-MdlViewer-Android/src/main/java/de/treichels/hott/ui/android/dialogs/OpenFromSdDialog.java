@@ -26,7 +26,7 @@ import android.widget.AdapterView;
 /**
  * A {@link DialogFragment} that shows a list of files from the transmitter sd card and allows the user to select one of them.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public abstract class OpenFromSdDialog<DeviceType> extends AbstractTxDialog<String, DeviceType> {
   private FileInfoAdapter listAdapter = null;

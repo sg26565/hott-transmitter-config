@@ -27,7 +27,7 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
 /**
  * An {@link OutputStream} that writes to a supplied {@link UsbSerialPort}.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 class UsbSerialDriverOutputStream extends OutputStream {
     private final byte[]        buffer = new byte[UsbSerialPortImplementation.BUFFER_SIZE];

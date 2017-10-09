@@ -17,7 +17,7 @@ import de.treichels.hott.android.background.serial.DeviceInfo;
 /**
  * A {@link DeviceHandler} for {@link BluetoothDevice} objects.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class BluetoothDeviceHandler extends DeviceHandler<BluetoothDevice> {
   /**

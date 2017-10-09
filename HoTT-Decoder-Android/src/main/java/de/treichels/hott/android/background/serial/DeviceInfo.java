@@ -20,7 +20,7 @@ package de.treichels.hott.android.background.serial;
 /**
  * A data holder class that hold information about communication devices (i.e. USB or Bluetooth) on the mobile device.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class DeviceInfo<DeviceType> {
   private DeviceType device;

@@ -1,159 +1,227 @@
 /**
- *  HoTT Transmitter Config
- *  Copyright (C) 2013  Oliver Treichel
+ * HoTT Transmitter Config Copyright (C) 2013 Oliver Treichel
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package gde.model;
 
-import gde.model.enums.SensorType;
-
+import java.util.Arrays;
 import java.util.Collection;
 
+import gde.model.enums.SensorType;
+import gde.model.enums.TelemetryAlarmType;
+import gde.model.enums.VarioToneSensor;
+
 /**
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class Telemetry extends AbstractBase {
-  private static final long      serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  private SensorType             currentSensor;
-  private int                    currentSensorPage;
-  private Collection<SensorType> selectedSensor;
-  private Switch                 varioTone;
-  private int                    voiceDelay;
-  private Switch                 voiceRepeat;
-  private Switch                 voiceTrigger;
+    private SensorType currentSensor;
+    private int currentSensorPage;
+    private Collection<SensorType> selectedSensor;
+    private Switch varioTone;
+    private int voiceDelay;
+    private Switch voiceRepeat;
+    private Switch voiceTrigger;
+    private VarioToneSensor varioToneSensor;
+    private String[] userAlarmList;
+    private int telemetryDataReceiveTime;
+    private TelemetryAlarmType telemetryAlarmType;
+    private int basicVoiceList;
+    private int GeneralAirVoiceList;
+    private int ElectricAirVoiceList;
+    private int VarioVoiceList;
+    private int GPSVoiceList;
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        final Telemetry other = (Telemetry) obj;
+        if (ElectricAirVoiceList != other.ElectricAirVoiceList) return false;
+        if (GPSVoiceList != other.GPSVoiceList) return false;
+        if (GeneralAirVoiceList != other.GeneralAirVoiceList) return false;
+        if (VarioVoiceList != other.VarioVoiceList) return false;
+        if (basicVoiceList != other.basicVoiceList) return false;
+        if (currentSensor != other.currentSensor) return false;
+        if (currentSensorPage != other.currentSensorPage) return false;
+        if (selectedSensor == null) {
+            if (other.selectedSensor != null) return false;
+        } else if (!selectedSensor.equals(other.selectedSensor)) return false;
+        if (telemetryAlarmType != other.telemetryAlarmType) return false;
+        if (telemetryDataReceiveTime != other.telemetryDataReceiveTime) return false;
+        if (!Arrays.equals(userAlarmList, other.userAlarmList)) return false;
+        if (varioTone == null) {
+            if (other.varioTone != null) return false;
+        } else if (!varioTone.equals(other.varioTone)) return false;
+        if (varioToneSensor != other.varioToneSensor) return false;
+        if (voiceDelay != other.voiceDelay) return false;
+        if (voiceRepeat == null) {
+            if (other.voiceRepeat != null) return false;
+        } else if (!voiceRepeat.equals(other.voiceRepeat)) return false;
+        if (voiceTrigger == null) {
+            if (other.voiceTrigger != null) return false;
+        } else if (!voiceTrigger.equals(other.voiceTrigger)) return false;
+        return true;
     }
-    if (obj == null) {
-      return false;
+
+    public int getBasicVoiceList() {
+        return basicVoiceList;
     }
-    if (getClass() != obj.getClass()) {
-      return false;
+
+    public SensorType getCurrentSensor() {
+        return currentSensor;
     }
-    final Telemetry other = (Telemetry) obj;
-    if (currentSensor != other.currentSensor) {
-      return false;
+
+    public int getCurrentSensorPage() {
+        return currentSensorPage;
     }
-    if (currentSensorPage != other.currentSensorPage) {
-      return false;
+
+    public int getElectricAirVoiceList() {
+        return ElectricAirVoiceList;
     }
-    if (selectedSensor == null) {
-      if (other.selectedSensor != null) {
-        return false;
-      }
-    } else if (!selectedSensor.equals(other.selectedSensor)) {
-      return false;
+
+    public int getGeneralAirVoiceList() {
+        return GeneralAirVoiceList;
     }
-    if (varioTone == null) {
-      if (other.varioTone != null) {
-        return false;
-      }
-    } else if (!varioTone.equals(other.varioTone)) {
-      return false;
+
+    public int getGPSVoiceList() {
+        return GPSVoiceList;
     }
-    if (voiceDelay != other.voiceDelay) {
-      return false;
+
+    public Collection<SensorType> getSelectedSensor() {
+        return selectedSensor;
     }
-    if (voiceRepeat == null) {
-      if (other.voiceRepeat != null) {
-        return false;
-      }
-    } else if (!voiceRepeat.equals(other.voiceRepeat)) {
-      return false;
+
+    public TelemetryAlarmType getTelemetryAlarmType() {
+        return telemetryAlarmType;
     }
-    if (voiceTrigger == null) {
-      if (other.voiceTrigger != null) {
-        return false;
-      }
-    } else if (!voiceTrigger.equals(other.voiceTrigger)) {
-      return false;
+
+    public int getTelemetryDataReceiveTime() {
+        return telemetryDataReceiveTime;
     }
-    return true;
-  }
 
-  public SensorType getCurrentSensor() {
-    return currentSensor;
-  }
+    public String[] getUserAlarmList() {
+        return userAlarmList;
+    }
 
-  public int getCurrentSensorPage() {
-    return currentSensorPage;
-  }
+    public Switch getVarioTone() {
+        return varioTone;
+    }
 
-  public Collection<SensorType> getSelectedSensor() {
-    return selectedSensor;
-  }
+    public VarioToneSensor getVarioToneSensor() {
+        return varioToneSensor;
+    }
 
-  public Switch getVarioTone() {
-    return varioTone;
-  }
+    public int getVarioVoiceList() {
+        return VarioVoiceList;
+    }
 
-  public int getVoiceDelay() {
-    return voiceDelay;
-  }
+    public int getVoiceDelay() {
+        return voiceDelay;
+    }
 
-  public Switch getVoiceRepeat() {
-    return voiceRepeat;
-  }
+    public Switch getVoiceRepeat() {
+        return voiceRepeat;
+    }
 
-  public Switch getVoiceTrigger() {
-    return voiceTrigger;
-  }
+    public Switch getVoiceTrigger() {
+        return voiceTrigger;
+    }
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (currentSensor == null ? 0 : currentSensor.hashCode());
-    result = prime * result + currentSensorPage;
-    result = prime * result + (selectedSensor == null ? 0 : selectedSensor.hashCode());
-    result = prime * result + (varioTone == null ? 0 : varioTone.hashCode());
-    result = prime * result + voiceDelay;
-    result = prime * result + (voiceRepeat == null ? 0 : voiceRepeat.hashCode());
-    result = prime * result + (voiceTrigger == null ? 0 : voiceTrigger.hashCode());
-    return result;
-  }
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ElectricAirVoiceList;
+        result = prime * result + GPSVoiceList;
+        result = prime * result + GeneralAirVoiceList;
+        result = prime * result + VarioVoiceList;
+        result = prime * result + basicVoiceList;
+        result = prime * result + (currentSensor == null ? 0 : currentSensor.hashCode());
+        result = prime * result + currentSensorPage;
+        result = prime * result + (selectedSensor == null ? 0 : selectedSensor.hashCode());
+        result = prime * result + (telemetryAlarmType == null ? 0 : telemetryAlarmType.hashCode());
+        result = prime * result + telemetryDataReceiveTime;
+        result = prime * result + Arrays.hashCode(userAlarmList);
+        result = prime * result + (varioTone == null ? 0 : varioTone.hashCode());
+        result = prime * result + (varioToneSensor == null ? 0 : varioToneSensor.hashCode());
+        result = prime * result + voiceDelay;
+        result = prime * result + (voiceRepeat == null ? 0 : voiceRepeat.hashCode());
+        result = prime * result + (voiceTrigger == null ? 0 : voiceTrigger.hashCode());
+        return result;
+    }
 
-  public void setCurrentSensor(final SensorType currentSensor) {
-    this.currentSensor = currentSensor;
-  }
+    public void setBasicVoiceList(final int basicVoiceList) {
+        this.basicVoiceList = basicVoiceList;
+    }
 
-  public void setCurrentSensorPage(final int currentSensorPage) {
-    this.currentSensorPage = currentSensorPage;
-  }
+    public void setCurrentSensor(final SensorType currentSensor) {
+        this.currentSensor = currentSensor;
+    }
 
-  public void setSelectedSensor(final Collection<SensorType> selectedSensor) {
-    this.selectedSensor = selectedSensor;
-  }
+    public void setCurrentSensorPage(final int currentSensorPage) {
+        this.currentSensorPage = currentSensorPage;
+    }
 
-  public void setVarioTone(final Switch sw) {
-    varioTone = sw;
-  }
+    public void setElectricAirVoiceList(final int electricAirVoiceList) {
+        ElectricAirVoiceList = electricAirVoiceList;
+    }
 
-  public void setVoiceDelay(final int voiceDelay) {
-    this.voiceDelay = voiceDelay;
-  }
+    public void setGeneralAirVoiceList(final int generalAirVoiceList) {
+        GeneralAirVoiceList = generalAirVoiceList;
+    }
 
-  public void setVoiceRepeat(final Switch sw) {
-    voiceRepeat = sw;
-  }
+    public void setGPSVoiceList(final int gPSVoiceList) {
+        GPSVoiceList = gPSVoiceList;
+    }
 
-  public void setVoiceTrigger(final Switch sw) {
-    voiceTrigger = sw;
-  }
+    public void setSelectedSensor(final Collection<SensorType> selectedSensor) {
+        this.selectedSensor = selectedSensor;
+    }
+
+    public void setTelemetryAlarmType(final TelemetryAlarmType telemetryAlarmType) {
+        this.telemetryAlarmType = telemetryAlarmType;
+    }
+
+    public void setTelemetryDataReceiveTime(final int telemetryDataReceiveTime) {
+        this.telemetryDataReceiveTime = telemetryDataReceiveTime;
+    }
+
+    public void setUserAlarmList(final String[] userAlarmList) {
+        this.userAlarmList = userAlarmList;
+    }
+
+    public void setVarioTone(final Switch sw) {
+        varioTone = sw;
+    }
+
+    public void setVarioToneSensor(final VarioToneSensor varioToneSensor) {
+        this.varioToneSensor = varioToneSensor;
+    }
+
+    public void setVarioVoiceList(final int varioVoiceList) {
+        VarioVoiceList = varioVoiceList;
+    }
+
+    public void setVoiceDelay(final int voiceDelay) {
+        this.voiceDelay = voiceDelay;
+    }
+
+    public void setVoiceRepeat(final Switch sw) {
+        voiceRepeat = sw;
+    }
+
+    public void setVoiceTrigger(final Switch sw) {
+        voiceTrigger = sw;
+    }
 }

@@ -28,7 +28,7 @@ import de.treichels.hott.ui.android.R;
 /**
  * A {@link BaseAdapter}, that is backed by a list.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public abstract class GenericListAdaper<T> extends BaseAdapter {
   private final Context context;

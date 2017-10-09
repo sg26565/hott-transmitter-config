@@ -17,34 +17,34 @@
  */
 
 /**
- * @author oli
- * 
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
+ *
  */
 public class XorTest {
-  public static void main(final String[] args) {
-    int i = 0;
-    byte b = 0;
-    byte b1;
+	public static void main(final String[] args) {
+		int i = 0;
+		byte b = 0;
+		byte b1;
 
-    while (i < 1024) {
-      b1 = (byte) (b ^ 0xff);
+		while (i < 1024) {
+			b1 = (byte) (b ^ 0xff);
 
-      System.out.printf("%04d: 0x%02x - 0x%02x\n", i, b, b1);
+			System.out.printf("%04d: 0x%02x - 0x%02x\n", i, b, b1);
 
-      i++;
-      b++;
-    }
+			i++;
+			b++;
+		}
 
-    b = (byte) 0x84;
-    b1 = (byte) (b ^ 0xff);
+		b = (byte) 0x84;
+		b1 = (byte) (b ^ 0xff);
 
-    System.out.printf("%04d: 0x%02x - 0x%02x\n", i, b, b1);
+		System.out.printf("%04d: 0x%02x - 0x%02x\n", i, b, b1);
 
-    b = (byte) 0xff;
-    b1 = (byte) 0xff;
-    final short s = (short) ((b & 0xFF) + ((b1 & 0xFF) << 8));
+		b = (byte) 0xff;
+		b1 = (byte) 0xff;
+		final short s = (short) ((b & 0xFF) + ((b1 & 0xFF) << 8));
 
-    System.out.printf("%04d: 0x%02x - 0x%02x\n", s, b, b1);
+		System.out.printf("%04d: 0x%02x - 0x%02x\n", s, b, b1);
 
-  }
+	}
 }

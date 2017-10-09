@@ -32,7 +32,7 @@ import de.treichels.hott.ui.android.MdlViewerActivity;
 /**
  * An {@link AsyncTask} that generates an HTML report for a model configuration.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class GenerateHtmlTask extends FailSafeAsyncTask<BaseModel, Void, String> {
   static {

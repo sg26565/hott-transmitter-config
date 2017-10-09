@@ -36,7 +36,7 @@ import de.treichels.hott.ui.android.R;
 /**
  * An {@link Adapter} for navigation items on a drawer.
  *
- * @author oli@treichels.de
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class SectionAdapter extends BaseAdapter {
     private final LayoutInflater inflater;

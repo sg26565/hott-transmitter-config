@@ -26,7 +26,7 @@ import de.treichels.hott.ui.android.dialogs.OpenFromMemoryDialog;
 /**
  * Read list of model via BlueTooth.
  *
- * @author oli
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class OpenFromMemoryDialogBluetooth extends OpenFromMemoryDialog<BluetoothDevice> {
   private BluetoothDeviceHandler handler = null;
