@@ -68,7 +68,6 @@ class SpeechDialogController {
     public synchronized void closeDialog(final WorkerStateEvent ev) {
         final Throwable t = ev == null ? null : ev.getSource().getException();
 
-
         if (t != null) {
             String text;
             if (t instanceof UnknownHostException)
@@ -100,14 +99,12 @@ class SpeechDialogController {
     private void onStart(final Event ev) {
         if (thread != null)
             closeDialog(null);
-        else {
-            if (!this.textArea.textProperty().getValue().isEmpty()) {
+        else if (!this.textArea.textProperty().getValue().isEmpty()) {
                 task.setText(this.textArea.textProperty().getValue());
                 task.setLanguage(this.languages.get(this.selectedLanguage));
                 progressBar.setProgress(-1.0f);
                 thread = new Thread(task);
                 thread.start();
-            }
         }
     }
 

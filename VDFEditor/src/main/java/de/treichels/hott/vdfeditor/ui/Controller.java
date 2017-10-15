@@ -405,9 +405,8 @@ public class Controller {
     @FXML
     public void onAddSoundFromText() {
         s2tController.openDialog(new Text2SpeechTask());
-        File file = s2tController.getResult();
-        if (file != null)
-        {
+        final File file = s2tController.getResult();
+        if (file != null) {
             addSound(file);
             TEMP_FILE_LIST.add(file);
         }
@@ -829,7 +828,11 @@ public class Controller {
     @FXML
     public void onReplaceSoundFromText() {
         s2tController.openDialog(new Text2SpeechTask());
-        replaceSound(s2tController.getResult());
+        final File file = s2tController.getResult();
+        if (file != null) {
+            replaceSound(file);
+            TEMP_FILE_LIST.add(file);
+        }
     }
 
     /**
