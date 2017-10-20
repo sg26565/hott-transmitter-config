@@ -37,10 +37,5 @@
 			<groupId>org.scream3r</groupId>
 			<artifactId>jssc</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.tts</groupId>
-			<artifactId>voicerss</artifactId>
-			<version>1.0.0</version>
-		</dependency>
 	</dependencies>
 </project>
