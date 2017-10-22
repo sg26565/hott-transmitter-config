@@ -36,10 +36,6 @@
 			<artifactId>commons-io</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTT-MdlViewer-Swing</artifactId>
-		</dependency>
-		<dependency>
 		    <groupId>org.scream3r</groupId>
 		    <artifactId>jssc</artifactId>
 		</dependency>

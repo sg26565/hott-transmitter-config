@@ -255,31 +255,6 @@
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>de.treichels.hott</groupId>
-				<artifactId>HoTT-MdlViewer-Swing</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.treichels.hott</groupId>
-				<artifactId>HoTT-MdlViewer-JavaFX</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.treichels.hott</groupId>
-				<artifactId>HoTT-MdlViewer-SWT</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.treichels.hott</groupId>
-				<artifactId>HoTT-MdlViewer-Android</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.treichels.hott</groupId>
-				<artifactId>MemoryDump</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.12</version>
