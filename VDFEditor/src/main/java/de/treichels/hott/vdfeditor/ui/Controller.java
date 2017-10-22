@@ -210,6 +210,7 @@ public class Controller {
             addRestoreFiles(items, t, null);
             addRestoreFiles(items, t, "Microcopter");
             addRestoreFiles(items, t, "Team");
+            addRestoreFiles(items, t, "Team-schnell");
 
             menu.getItems().addAll(items.values());
             menus.put(t.toString(), menu);
@@ -242,6 +243,26 @@ public class Controller {
                 });
                 items.put(text, menuItem);
             }
+        }
+    }
+
+    private void addSound(final File file) {
+        if (file != null) addSound(Arrays.asList(file));
+    }
+
+    private void addSound(final List<File> files) {
+        if (files != null) {
+            // store dir in preferences
+            files.stream().filter(Controller::isSoundFormat).findFirst().map(File::getParentFile).map(File::getAbsolutePath)
+                    .ifPresent(s -> PREFS.put(LAST_LOAD_SOUND_DIR, s));
+
+            final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
+
+            // add to end of the list if no item was selected
+            final int index = selectedIndex == -1 ? listView.getItems().size() : selectedIndex;
+
+            // insert all sound files at index
+            files.stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).forEach(item -> undoBuffer.push(new InsertAction<>(index, item)));
         }
     }
 
@@ -535,33 +556,33 @@ public class Controller {
                 // DnD from external source
 
                 if (dragboard.hasContent(DnD_DATA_FORMAT)) {
-                    // external source is another VDFEditor
+                // external source is another VDFEditor
 
-                    @SuppressWarnings("unchecked")
-                    final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
+                @SuppressWarnings("unchecked")
+                final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
 
-                    if (isSystemVDF)
-                        // replace items beginning at target index with list items
-                        for (int i = 0; i < list.size(); i++)
-                            undoBuffer.push(new ReplaceAction<>(targetIndex + i, list.get(i)));
-                    else
-                        // insert all items at target index
-                        list.forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
+                if (isSystemVDF)
+                // replace items beginning at target index with list items
+                for (int i = 0; i < list.size(); i++)
+                undoBuffer.push(new ReplaceAction<>(targetIndex + i, list.get(i)));
+                else
+                // insert all items at target index
+                list.forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
 
                 } else if (ev.getDragboard().hasFiles()) {
-                    // DnD from desktop
-                    final List<File> files = dragboard.getFiles();
+                // DnD from desktop
+                final List<File> files = dragboard.getFiles();
 
-                    // import first .vdf file
-                    if (files.stream().allMatch(Controller::isVDF)) open(files.get(0));
+                // import first .vdf file
+                if (files.stream().allMatch(Controller::isVDF)) open(files.get(0));
 
-                    // import any sound files
-                    if (files.stream().allMatch(Controller::isSoundFormat)) if (isSystemVDF)
-                        // replace items beginning at target index with files
-                        for (int i = 0; i < files.size(); i++)
-                            undoBuffer.push(new ReplaceAction<>(targetIndex + i, VoiceData.readSoundFile(files.get(i))));
-                    else
-                        files.stream().map(VoiceData::readSoundFile).forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
+                // import any sound files
+                if (files.stream().allMatch(Controller::isSoundFormat)) if (isSystemVDF)
+                // replace items beginning at target index with files
+                for (int i = 0; i < files.size(); i++)
+                undoBuffer.push(new ReplaceAction<>(targetIndex + i, VoiceData.readSoundFile(files.get(i))));
+                else
+                files.stream().map(VoiceData::readSoundFile).forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
                 }
         } catch (final RuntimeException e) {
             ExceptionDialog.show(e);
@@ -620,33 +641,33 @@ public class Controller {
             // DnD from external source
 
             if (dragboard.hasContent(DnD_DATA_FORMAT)) {
-                // external source is another VDFEditor
+            // external source is another VDFEditor
 
-                if (isSystemVDF) {
-                    // allow multiple items to replace an existing items for system VDFs if they fit in the list
-                    @SuppressWarnings("unchecked")
-                    final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
-                    if (targetIndex + list.size() <= itemCount) ev.acceptTransferModes(TransferMode.COPY);
-                } else
-                    // allow multiple items for user VDFs
-                    ev.acceptTransferModes(TransferMode.COPY);
+            if (isSystemVDF) {
+            // allow multiple items to replace an existing items for system VDFs if they fit in the list
+            @SuppressWarnings("unchecked")
+            final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
+            if (targetIndex + list.size() <= itemCount) ev.acceptTransferModes(TransferMode.COPY);
+            } else
+            // allow multiple items for user VDFs
+            ev.acceptTransferModes(TransferMode.COPY);
 
             } else if (dragboard.hasFiles()) {
-                // DnD from desktop
-                final List<File> files = dragboard.getFiles();
+            // DnD from desktop
+            final List<File> files = dragboard.getFiles();
 
-                if (files.stream().allMatch(Controller::isVDF) && files.size() == 1)
-                    // only one VDF file was dragged
+            if (files.stream().allMatch(Controller::isVDF) && files.size() == 1)
+            // only one VDF file was dragged
+            ev.acceptTransferModes(TransferMode.COPY);
+            else if (files.stream().allMatch(Controller::isSoundFormat))
+                // only sound files were dragged
+                if (isSystemVDF) {
+                if (targetIndex + files.size() <= itemCount)
+                    // allow only multiple sound files to replace existing sounds for system VDFs it they fit in the existing list
                     ev.acceptTransferModes(TransferMode.COPY);
-                else if (files.stream().allMatch(Controller::isSoundFormat))
-                    // only sound files were dragged
-                    if (isSystemVDF) {
-                        if (targetIndex + files.size() <= itemCount)
-                            // allow only multiple sound files to replace existing sounds for system VDFs it they fit in the existing list
-                            ev.acceptTransferModes(TransferMode.COPY);
-                    } else
-                        // allow multiple sound files for user VDFs
-                        ev.acceptTransferModes(TransferMode.COPY);
+                } else
+                // allow multiple sound files for user VDFs
+                ev.acceptTransferModes(TransferMode.COPY);
             }
 
         ev.consume();
@@ -1053,6 +1074,13 @@ public class Controller {
         setTitle();
     }
 
+    private void replaceSound(final File file) {
+        if (file != null && file.exists()) {
+            final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
+            undoBuffer.push(new ReplaceAction<>(selectedIndex, VoiceData.readSoundFile(file)));
+        }
+    }
+
     private boolean save(final File vdf) {
         if (vdf != null) {
             // store dir in preferences
@@ -1196,33 +1224,5 @@ public class Controller {
         mute = false;
 
         HoTTDecoder.verityVDF(voiceFile);
-    }
-
-    private void replaceSound(File file) {
-        if (file != null && file.exists()) {
-            final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
-            undoBuffer.push(new ReplaceAction<>(selectedIndex, VoiceData.readSoundFile(file)));
-        }
-    }
-
-    private void addSound(File file) {
-        if (file != null)
-            addSound(Arrays.asList(file));
-    }
-
-    private void addSound(List<File> files) {
-        if (files != null) {
-            // store dir in preferences
-            files.stream().filter(Controller::isSoundFormat).findFirst().map(File::getParentFile).map(File::getAbsolutePath)
-                    .ifPresent(s -> PREFS.put(LAST_LOAD_SOUND_DIR, s));
-
-            final int selectedIndex = listView.getSelectionModel().getSelectedIndex();
-
-            // add to end of the list if no item was selected
-            final int index = selectedIndex == -1 ? listView.getItems().size() : selectedIndex;
-
-            // insert all sound files at index
-            files.stream().filter(Controller::isSoundFormat).map(VoiceData::readSoundFile).forEach(item -> undoBuffer.push(new InsertAction<>(index, item)));
-        }
     }
 }
