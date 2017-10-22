@@ -227,57 +227,57 @@
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-Model</artifactId>
-				<version>${project.version}</version>
+				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-Decoder</artifactId>
-				<version>${project.version}</version>
+				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-Decoder-Android</artifactId>
-				<version>${project.version}</version>
+				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-Report-HTML</artifactId>
-				<version>${project.version}</version>
+				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-Report-PDF</artifactId>
-				<version>${project.version}</version>
+				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-Report-XML</artifactId>
-				<version>${project.version}</version>
+				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-MdlViewer-Swing</artifactId>
-				<version>${project.version}</version>
+				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-MdlViewer-JavaFX</artifactId>
-				<version>${project.version}</version>
+				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-MdlViewer-SWT</artifactId>
-				<version>${project.version}</version>
+				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>HoTT-MdlViewer-Android</artifactId>
-				<version>${project.version}</version>
+				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>de.treichels.hott</groupId>
 				<artifactId>MemoryDump</artifactId>
-				<version>${project.version}</version>
+				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
