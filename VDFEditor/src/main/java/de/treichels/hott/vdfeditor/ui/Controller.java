@@ -398,7 +398,7 @@ public class Controller {
         // always start with an empty vdf
         onNew();
 
-        updateCheck(false);
+        // updateCheck(false);
     }
 
     /**

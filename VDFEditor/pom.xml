@@ -66,13 +66,13 @@
 								<companyName>Oliver Treichel</companyName>
 								<fileVersion>${project.version}.${buildNumber}</fileVersion>
 								<txtFileVersion>${project.version}.${buildNumber}</txtFileVersion>
-								<fileDescription>Launcher for VDF Editor</fileDescription>
+								<fileDescription>VDF Editor</fileDescription>
 								<copyright>GPL V3</copyright>
 								<productVersion>${project.version}.${buildNumber}</productVersion>
 								<txtProductVersion>${project.version}.${buildNumber}</txtProductVersion>
 								<productName>${project.name}</productName>
 								<internalName>${project.groupId}.${project.artifactId}</internalName>
-								<originalFilename>${project.build.finalName}.exe</originalFilename>
+								<originalFilename>VDFEditor.exe</originalFilename>
 							</versionInfo>
 						</configuration>
 					</execution>
