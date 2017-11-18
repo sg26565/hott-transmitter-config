@@ -30,7 +30,8 @@ public class Launcher extends Application {
             VorbisFormatConversionProvider.class };
 
     static String getTitle() {
-        return String.format("VDF Editor - %s", getVersion());
+        return Boolean.getBoolean("offline") ? String.format("VDF Editor - %s (offline version)", getVersion())
+                : String.format("VDF Editor - %s", getVersion());
     }
 
     static String getVersion() {

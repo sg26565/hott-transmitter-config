@@ -186,6 +186,8 @@ public class Controller {
     private MenuItem loadUserVoiceFiles;
     @FXML
     private Menu restoreMenu;
+    @FXML
+    private MenuItem updateCheck;
 
     final VoiceFile voiceFile = new VoiceFile(VDFType.User, TransmitterType.mc28, 3000, 0);
     private final BooleanBinding systemVDFBinding = voiceFile.vdfTypeProperty().isEqualTo(VDFType.System);
@@ -398,7 +400,12 @@ public class Controller {
         // always start with an empty vdf
         onNew();
 
-        // updateCheck(false);
+        if (Boolean.getBoolean("offline"))
+            // hide update check menu item
+            updateCheck.setVisible(false);
+        else
+            // do update check on startup
+            updateCheck(false);
     }
 
     /**
@@ -1150,6 +1157,9 @@ public class Controller {
     }
 
     private void updateCheck(final boolean verbose) {
+        // skipp if offline
+        if (Boolean.getBoolean("offline")) return;
+
         final String currentVersion = Launcher.getVersion();
         final String latestVersion = Util.getLatestVersion("VDFEditor");
 
