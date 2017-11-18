@@ -9,7 +9,7 @@
 
 	<artifactId>VDFEditor</artifactId>
 	<name>VDFEditor</name>
-	<version>0.9.2</version>
+	<version>0.9.3</version>
 
 	<build>
 		<plugins>
@@ -53,7 +53,7 @@
 							<headerType>gui</headerType>
 							<outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
 							<jar>${project.build.directory}/${project.build.finalName}-shaded.jar</jar>
-							<errTitle>VDFEditor</errTitle>
+							<errTitle>${project.name}</errTitle>
 							<icon>icon.ico</icon>
 							<classPath>
 								<mainClass>de.treichels.hott.vdfeditor.ui.Launcher</mainClass>
@@ -65,14 +65,52 @@
 							<versionInfo>
 								<companyName>Oliver Treichel</companyName>
 								<fileVersion>${project.version}.${buildNumber}</fileVersion>
-								<txtFileVersion>${project.version}.${buildNumber}</txtFileVersion>
-								<fileDescription>VDF Editor</fileDescription>
+								<txtFileVersion>v${project.version} build ${buildNumber}</txtFileVersion>
+								<fileDescription>VDFEditor</fileDescription>
 								<copyright>GPL V3</copyright>
 								<productVersion>${project.version}.${buildNumber}</productVersion>
-								<txtProductVersion>${project.version}.${buildNumber}</txtProductVersion>
+								<txtProductVersion>v${project.version} build ${buildNumber}</txtProductVersion>
 								<productName>${project.name}</productName>
 								<internalName>${project.groupId}.${project.artifactId}</internalName>
-								<originalFilename>VDFEditor.exe</originalFilename>
+								<originalFilename>${project.build.finalName}.exe</originalFilename>
+							</versionInfo>
+						</configuration>
+					</execution>
+					<execution>
+						<id>graupner</id>
+						<phase>package</phase>
+						<goals>
+							<goal>launch4j</goal>
+						</goals>
+						<configuration>
+							<headerType>gui</headerType>
+							<outfile>${project.build.directory}/${project.name}.exe</outfile>
+							<jar>${project.build.directory}/${project.build.finalName}-shaded.jar</jar>
+							<errTitle>${project.name}</errTitle>
+							<icon>icon.ico</icon>
+							<classPath>
+								<mainClass>de.treichels.hott.vdfeditor.ui.Launcher</mainClass>
+								<addDependencies>false</addDependencies>
+							</classPath>
+							<jre>
+								<minVersion>1.8.0</minVersion>
+								<opts>
+									<opt>-Doffline=true</opt>
+								</opts>
+							</jre>
+							<versionInfo>
+								<companyName>Oliver Treichel</companyName>
+								<fileVersion>${project.version}.${buildNumber}</fileVersion>
+								<txtFileVersion>v${project.version} build ${buildNumber}
+									(offline version)</txtFileVersion>
+								<fileDescription>VDFEditor</fileDescription>
+								<copyright>GPL V3</copyright>
+								<productVersion>${project.version}.${buildNumber}</productVersion>
+								<txtProductVersion>v${project.version} build ${buildNumber}
+									(offline version)</txtProductVersion>
+								<productName>${project.name}</productName>
+								<internalName>${project.groupId}.${project.artifactId}</internalName>
+								<originalFilename>${project.name}.exe</originalFilename>
 							</versionInfo>
 						</configuration>
 					</execution>

@@ -1,3 +1,9 @@
+2017-11-18
+==========
+	VDFEditor-0.9.3.125
+	- added offline mode for inclusion into Firmware Upgrade Studio
+	- re-enabled automatic update check on startup for online version
+
 2017-11-17
 ==========
 	VDFEditor-0.9.2.117
