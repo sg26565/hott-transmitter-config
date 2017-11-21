@@ -1,6 +1,6 @@
 2017-11-21
 ==========
-	VDFEditor-0.9.3.132
+	VDFEditor-0.9.3.135
 	- fixed error in report for empty announcements 
 	
 2017-11-18
