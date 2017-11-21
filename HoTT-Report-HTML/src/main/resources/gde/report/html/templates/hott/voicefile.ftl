@@ -10,15 +10,15 @@
 				size: a4;
 				
 				@top-left {
-					content: "${name}";
+					content: "${name?xhtml}";
 				}
 			
 				@top-right {
-					content: "${.now}";
+					content: "${.now?xhtml}";
 				}
 			
 				@bottom-left {
-					content: "${version}";
+					content: "${version?xhtml}";
 				}
 			
 				@bottom-right {
@@ -111,7 +111,7 @@
 
 			<tr>
 				<th class="d2">VDF Type</th>
-				<td>${voicefile.vdfType}</td>
+				<td>${voicefile.vdfType?xhtml}</td>
 			</tr>
 			<tr>
 				<th class="d2">VDF Version</th>
@@ -119,11 +119,11 @@
 			</tr>
 			<tr>
 				<th class="d2">Radio Type</th>
-				<td>${voicefile.transmitterType}</td>
+				<td>${voicefile.transmitterType?xhtml}</td>
 			</tr>
 			<tr>
 				<th class="d2">Country</th>
-				<td>${voicefile.country}</td>
+				<td>${voicefile.country?xhtml}</td>
 			</tr>
 			<tr>
 				<th class="d2">Voice Count</th>
@@ -165,7 +165,7 @@
 						<tbody>
 							<#list column as cell><tr class="${cell?item_parity}">
 								<th class="d2">${cell?counter + size * column?index}</th>
-								<td>${cell.name}</td>
+								<td>${cell.name?xhtml}</td>
 								<td align="right">${cell.rawData?size}</td>
 							</tr></#list>
 						</tbody>		
