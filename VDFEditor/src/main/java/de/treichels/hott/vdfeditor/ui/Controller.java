@@ -1,41 +1,10 @@
 package de.treichels.hott.vdfeditor.ui;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.TreeMap;
-import java.util.prefs.Preferences;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.print.PrintException;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import com.itextpdf.text.DocumentException;
 import com.sun.javafx.collections.ObservableListWrapper;
-
 import de.treichels.hott.HoTTDecoder;
 import de.treichels.hott.HoTTSerialPort;
-import de.treichels.hott.vdfeditor.actions.InsertAction;
-import de.treichels.hott.vdfeditor.actions.MoveAction;
-import de.treichels.hott.vdfeditor.actions.MoveDownAction;
-import de.treichels.hott.vdfeditor.actions.MoveUpAction;
-import de.treichels.hott.vdfeditor.actions.RemoveAction;
-import de.treichels.hott.vdfeditor.actions.ReplaceAction;
-import de.treichels.hott.vdfeditor.actions.UndoBuffer;
+import de.treichels.hott.vdfeditor.actions.*;
 import gde.mdl.messages.Messages;
 import gde.model.HoTTException;
 import gde.model.enums.TransmitterType;
@@ -56,28 +25,28 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.MultipleSelectionModel;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.print.PrintException;
+import java.awt.*;
+import java.io.*;
+import java.net.URL;
+import java.util.*;
+import java.util.List;
+import java.util.prefs.Preferences;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("restriction")
 public class Controller {
@@ -105,43 +74,32 @@ public class Controller {
 
     /**
      * Delete temporary file that were created during drag&drop.
-     *
-     * @param ev
      */
-    private static void deleteTempFiles(final DragEvent ev) {
-        TEMP_FILE_LIST.stream().forEach(f -> f.delete());
+    private static void deleteTempFiles(@SuppressWarnings("unused") DragEvent ev) {
+        //noinspection ResultOfMethodCallIgnored
+        TEMP_FILE_LIST.forEach(File::delete);
         TEMP_FILE_LIST.clear();
     }
 
     /**
      * Check if the file is a supported sound file.
-     *
-     * @param file
-     * @return
      */
-    public static boolean isSoundFormat(final File file) {
+    private static boolean isSoundFormat(final File file) {
         final String name = file.getName();
         return name.endsWith(WAV) | name.endsWith(MP3) | name.endsWith(OGG);
     }
 
     /**
      * Check if the file is a VDF.
-     *
-     * @param file
-     * @return
      */
-    public static boolean isVDF(final File file) {
+    private static boolean isVDF(final File file) {
         return file.getName().endsWith(VDF);
     }
 
     @FXML
-    private ContextMenu contextMenu;
-    @FXML
     private MenuItem contextMenuDelete;
     @FXML
     private MenuItem deleteSoundMenuItem;
-    @FXML
-    private Menu editMenu;
     @FXML
     private Menu addMenu;
     @FXML
@@ -159,19 +117,9 @@ public class Controller {
     @FXML
     private MenuItem saveVDFMenuItem;
     @FXML
-    private MenuItem addSoundMenuItem;
-    @FXML
-    private MenuItem addSoundTextMenuItem;
-    @FXML
     private ComboBox<TransmitterType> transmitterTypeCombo;
     @FXML
     private ComboBox<CountryCode> countryCodeCombo;
-    @FXML
-    private MenuItem saveVDFAsMenuItem;
-    @FXML
-    private MenuItem replaceSoundMenuItem;
-    @FXML
-    private MenuItem replaceSoundFromTextMenuItem;
     @FXML
     private MenuItem undoMenuItem;
     @FXML
@@ -179,11 +127,7 @@ public class Controller {
     @FXML
     private MenuItem playOnTransmitter;
     @FXML
-    private MenuItem writeToTransmitter;
-    @FXML
     private ComboBox<Float> vdfVersionCombo;
-    @FXML
-    private MenuItem loadUserVoiceFiles;
     @FXML
     private Menu restoreMenu;
     @FXML
@@ -193,7 +137,7 @@ public class Controller {
     private final BooleanBinding systemVDFBinding = voiceFile.vdfTypeProperty().isEqualTo(VDFType.System);
     private final BooleanBinding dirtyProperty = voiceFile.dirtyProperty();
     private final SimpleObjectProperty<File> vdfFileProperty = new SimpleObjectProperty<>(null);
-    final UndoBuffer<VoiceData> undoBuffer = new UndoBuffer<>();
+    UndoBuffer<VoiceData> undoBuffer;
     private final ObjectProperty<HoTTSerialPort> serialPortProperty = new SimpleObjectProperty<>();
     private final DialogController dialogController = new DialogController(serialPortProperty);
     private final SpeechDialogController s2tController = new SpeechDialogController();
@@ -249,7 +193,7 @@ public class Controller {
     }
 
     private void addSound(final File file) {
-        if (file != null) addSound(Arrays.asList(file));
+        if (file != null) addSound(Collections.singletonList(file));
     }
 
     private void addSound(final List<File> files) {
@@ -268,7 +212,7 @@ public class Controller {
         }
     }
 
-    public boolean askSave() {
+    boolean askSave() {
         // no need to save
         if (!dirtyProperty.get()) return true;
 
@@ -281,7 +225,7 @@ public class Controller {
         final Optional<ButtonType> answer = alert.showAndWait();
 
         // yes, discard changes
-        if (answer.get() == discardButton) {
+        if (answer.isPresent() && answer.get() == discardButton) {
             voiceFile.clean();
             return true;
         }
@@ -295,8 +239,6 @@ public class Controller {
 
     /**
      * sanity check for system voice files to prevent transmitter malfunction
-     *
-     * @return
      */
     private boolean checkSize() {
         try {
@@ -321,11 +263,8 @@ public class Controller {
 
     /**
      * Factory method to create new {@link VoiceDataListCell} objects.
-     *
-     * @param listView
-     * @return
      */
-    private VoiceDataListCell createListCell(final ListView<VoiceData> listView) {
+    private VoiceDataListCell createListCell(@SuppressWarnings("unused") final ListView<VoiceData> listView) {
         final VoiceDataListCell cell = new VoiceDataListCell(this);
 
         // setup DnD
@@ -394,11 +333,11 @@ public class Controller {
 
         addRestoreFiles();
 
-        undoMenuItem.disableProperty().bind(undoBuffer.canUndo().not());
-        redoMenuItem.disableProperty().bind(undoBuffer.canRedo().not());
-
         // always start with an empty vdf
         onNew();
+
+        undoMenuItem.disableProperty().bind(undoBuffer.getCanUndoProperty().not());
+        redoMenuItem.disableProperty().bind(undoBuffer.getCanRedoProperty().not());
 
         if (Boolean.getBoolean("offline"))
             // hide update check menu item
@@ -472,8 +411,7 @@ public class Controller {
 
         if (systemVDFBinding.get())
             // keep number of items constant in system VDFs by replacing selected item(s) with an empty place holder
-            selectedIndices.stream()
-                    .forEach(i -> undoBuffer.push(new ReplaceAction<>(i, new VoiceData(String.format("%02d.%s", i + 1, RES.getString("empty")), null))));
+            selectedIndices.forEach(i -> undoBuffer.push(new ReplaceAction<>(i, new VoiceData(String.format("%02d.%s", i + 1, RES.getString("empty")), null))));
         else
             // sort indices in reverse order and remove from high to low
             selectedIndices.stream().sorted((i, j) -> j - i).forEach(i -> undoBuffer.push(new RemoveAction<>(i)));
@@ -494,8 +432,6 @@ public class Controller {
      * <li><b>Another VDFEditor instance</b>: Serialize any selected item into the clipboard.</li>
      * <li><b>other (e.g. text editor)</b>: Add the name of any selected item as comma separated list to the clibboard.</li>
      * </ul>
-     *
-     * @param ev
      */
     private void onDragDetected(final MouseEvent ev) {
         deleteTempFiles(null);
@@ -521,7 +457,7 @@ public class Controller {
         content.put(DnD_DATA_FORMAT, new ArrayList<>(selectedItems));
 
         // other: item name for DnD to editor or text field
-        content.putString(StringUtils.join(selectedItems.stream().map(vd -> vd.getName()).toArray(), ","));
+        content.putString(StringUtils.join(selectedItems.stream().map(VoiceData::getName).toArray(), ","));
 
         final Dragboard db = ((Node) ev.getSource()).startDragAndDrop(TransferMode.COPY_OR_MOVE);
         db.setContent(content);
@@ -538,8 +474,6 @@ public class Controller {
      * <li><b>DnD between VDFEditor instances</b>: Deserialize items from the clipboard.</li>
      * <li><b>DnD from desktop</b>: import any sound or vdf files.</li>
      * </ul>
-     *
-     * @param ev
      */
     private void onDragDropped(final DragEvent ev) {
         try {
@@ -563,33 +497,32 @@ public class Controller {
                 // DnD from external source
 
                 if (dragboard.hasContent(DnD_DATA_FORMAT)) {
-                // external source is another VDFEditor
+                    // external source is another VDFEditor
 
-                @SuppressWarnings("unchecked")
-                final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
+                    @SuppressWarnings("unchecked") final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
 
-                if (isSystemVDF)
-                // replace items beginning at target index with list items
-                for (int i = 0; i < list.size(); i++)
-                undoBuffer.push(new ReplaceAction<>(targetIndex + i, list.get(i)));
-                else
-                // insert all items at target index
-                list.forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
+                    if (isSystemVDF)
+                        // replace items beginning at target index with list items
+                        for (int i = 0; i < list.size(); i++)
+                            undoBuffer.push(new ReplaceAction<>(targetIndex + i, list.get(i)));
+                    else
+                        // insert all items at target index
+                        list.forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
 
                 } else if (ev.getDragboard().hasFiles()) {
-                // DnD from desktop
-                final List<File> files = dragboard.getFiles();
+                    // DnD from desktop
+                    final List<File> files = dragboard.getFiles();
 
-                // import first .vdf file
-                if (files.stream().allMatch(Controller::isVDF)) open(files.get(0));
+                    // import first .vdf file
+                    if (files.stream().allMatch(Controller::isVDF)) open(files.get(0));
 
-                // import any sound files
-                if (files.stream().allMatch(Controller::isSoundFormat)) if (isSystemVDF)
-                // replace items beginning at target index with files
-                for (int i = 0; i < files.size(); i++)
-                undoBuffer.push(new ReplaceAction<>(targetIndex + i, VoiceData.readSoundFile(files.get(i))));
-                else
-                files.stream().map(VoiceData::readSoundFile).forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
+                    // import any sound files
+                    if (files.stream().allMatch(Controller::isSoundFormat)) if (isSystemVDF)
+                        // replace items beginning at target index with files
+                        for (int i = 0; i < files.size(); i++)
+                            undoBuffer.push(new ReplaceAction<>(targetIndex + i, VoiceData.readSoundFile(files.get(i))));
+                    else
+                        files.stream().map(VoiceData::readSoundFile).forEach(item -> undoBuffer.push(new InsertAction<>(targetIndex, item)));
                 }
         } catch (final RuntimeException e) {
             ExceptionDialog.show(e);
@@ -601,8 +534,6 @@ public class Controller {
 
     /**
      * Handle DnD event when the mouse pointer enters a node.
-     *
-     * @param ev
      */
     private void onDragEntered(final DragEvent ev) {
         if ((!systemVDFBinding.get() || ev.getGestureSource() == null) && !ev.getTarget().equals(ev.getGestureSource()))
@@ -612,8 +543,6 @@ public class Controller {
 
     /**
      * Handle DnD event when the mouse pointer leaves a node.
-     *
-     * @param ev
      */
     private void onDragExited(final DragEvent ev) {
         ((Node) ev.getTarget()).setOpacity(1.0d);
@@ -623,12 +552,10 @@ public class Controller {
     /**
      * Report supported transfer modes for the node under the mouse pointer.
      *
-     * @param ev
-     *            The event.
-     * @param target
-     *            The node that triggered the event. Note, that we can't use {@link DragEvent#getGestureTarget()} here, because the drag is still in progress
-     *            and {@link DragEvent#getGestureTarget()} would return null. We also can't use {@link DragEvent#getTarget()}, as this could be a cild of the
-     *            node triggering the event (e.g. an internal label).
+     * @param ev     The event.
+     * @param target The node that triggered the event. Note, that we can't use {@link DragEvent#getGestureTarget()} here, because the drag is still in progress
+     *               and {@link DragEvent#getGestureTarget()} would return null. We also can't use {@link DragEvent#getTarget()}, as this could be a cild of the
+     *               node triggering the event (e.g. an internal label).
      */
     private void onDragOver(final DragEvent ev, final Node target) {
         final Dragboard dragboard = ev.getDragboard();
@@ -648,33 +575,32 @@ public class Controller {
             // DnD from external source
 
             if (dragboard.hasContent(DnD_DATA_FORMAT)) {
-            // external source is another VDFEditor
+                // external source is another VDFEditor
 
-            if (isSystemVDF) {
-            // allow multiple items to replace an existing items for system VDFs if they fit in the list
-            @SuppressWarnings("unchecked")
-            final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
-            if (targetIndex + list.size() <= itemCount) ev.acceptTransferModes(TransferMode.COPY);
-            } else
-            // allow multiple items for user VDFs
-            ev.acceptTransferModes(TransferMode.COPY);
+                if (isSystemVDF) {
+                    // allow multiple items to replace an existing items for system VDFs if they fit in the list
+                    @SuppressWarnings("unchecked") final ArrayList<VoiceData> list = (ArrayList<VoiceData>) dragboard.getContent(DnD_DATA_FORMAT);
+                    if (targetIndex + list.size() <= itemCount) ev.acceptTransferModes(TransferMode.COPY);
+                } else
+                    // allow multiple items for user VDFs
+                    ev.acceptTransferModes(TransferMode.COPY);
 
             } else if (dragboard.hasFiles()) {
-            // DnD from desktop
-            final List<File> files = dragboard.getFiles();
+                // DnD from desktop
+                final List<File> files = dragboard.getFiles();
 
-            if (files.stream().allMatch(Controller::isVDF) && files.size() == 1)
-            // only one VDF file was dragged
-            ev.acceptTransferModes(TransferMode.COPY);
-            else if (files.stream().allMatch(Controller::isSoundFormat))
-                // only sound files were dragged
-                if (isSystemVDF) {
-                if (targetIndex + files.size() <= itemCount)
-                    // allow only multiple sound files to replace existing sounds for system VDFs it they fit in the existing list
+                if (files.stream().allMatch(Controller::isVDF) && files.size() == 1)
+                    // only one VDF file was dragged
                     ev.acceptTransferModes(TransferMode.COPY);
-                } else
-                // allow multiple sound files for user VDFs
-                ev.acceptTransferModes(TransferMode.COPY);
+                else if (files.stream().allMatch(Controller::isSoundFormat))
+                    // only sound files were dragged
+                    if (isSystemVDF) {
+                        if (targetIndex + files.size() <= itemCount)
+                            // allow only multiple sound files to replace existing sounds for system VDFs it they fit in the existing list
+                            ev.acceptTransferModes(TransferMode.COPY);
+                    } else
+                        // allow multiple sound files for user VDFs
+                        ev.acceptTransferModes(TransferMode.COPY);
             }
 
         ev.consume();
@@ -728,8 +654,6 @@ public class Controller {
 
     /**
      * Create a new empty VDF. Ask to save the old VDF if it was modified.
-     *
-     * @throws HoTTException
      */
     @FXML
     public void onNew() throws HoTTException {
@@ -747,8 +671,6 @@ public class Controller {
      * Show file selector to open a VDF.
      * <p>
      * The method will remember the directory being used.
-     *
-     * @throws IOException
      */
     @FXML
     public void onOpen() throws IOException {
@@ -864,24 +786,19 @@ public class Controller {
     }
 
     /**
-     * Show dialog to save the current VDF.
+     * Show dialog to save the currentAction VDF.
      * <p>
      * This method will remember the directory being used.
-     *
-     * @return
      */
     @FXML
     public boolean onSave() {
-        if (!checkSize() || !dirtyProperty.get()) return false;
-        return save(vdfFileProperty.get());
+        return checkSize() && dirtyProperty.get() && save(vdfFileProperty.get());
     }
 
     /**
-     * Show dialog to save the current VDF under a new name.
+     * Show dialog to save the currentAction VDF under a new name.
      * <p>
      * This method will remember the directory being used.
-     *
-     * @return
      */
     @FXML
     public boolean onSaveAs() {
@@ -903,8 +820,6 @@ public class Controller {
 
     /**
      * Handle event for change in transmitter type.
-     *
-     * @param ev
      */
     @FXML
     public void onTransmitterTypeChanged() {
@@ -973,7 +888,7 @@ public class Controller {
         } catch (final HoTTException e) {
             if (e.getCause() != null) ExceptionDialog.show(e);
             voiceFile.setVdfVersion(oldVdfVersion);
-            Platform.runLater(() -> updateVdfVersion());
+            Platform.runLater(this::updateVdfVersion);
         }
     }
 
@@ -983,11 +898,9 @@ public class Controller {
     }
 
     /**
-     * Load a new VDF from file. Ask for save if current VDF was modified.
-     *
-     * @param vdf
+     * Load a new VDF from file. Ask for save if currentAction VDF was modified.
      */
-    public void open(final File vdf) {
+    private void open(final File vdf) {
         if (askSave()) try {
             vdfFileProperty.set(vdf);
             open(HoTTDecoder.decodeVDF(vdf));
@@ -998,9 +911,6 @@ public class Controller {
 
     /**
      * Load a new VDF from data model.
-     *
-     * @param voiceFile
-     * @throws HoTTException
      */
     private void open(final VoiceFile other) throws HoTTException {
         voiceFile.copy(other);
@@ -1075,7 +985,7 @@ public class Controller {
         });
 
         listView.setItems(items);
-        undoBuffer.setItems(items);
+        undoBuffer = new UndoBuffer<>(items);
         verify(false);
         voiceFile.clean();
         setTitle();
@@ -1116,7 +1026,7 @@ public class Controller {
 
         // use dir from preferences
         final File dir = new File(PREFS.get(LAST_LOAD_SOUND_DIR, System.getProperty(USER_HOME)));
-        if (dir != null && dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
+        if (dir.exists() && dir.isDirectory()) chooser.setInitialDirectory(dir);
 
         // setup file name filter
         chooser.getExtensionFilters().add(new ExtensionFilter(RES.getString("sound_files"), _WAV, _MP3, _OGG)); //$NON-NLS-1$
@@ -1130,7 +1040,7 @@ public class Controller {
     }
 
     /**
-     * Set stage title with information about the current VDF.
+     * Set stage title with information about the currentAction VDF.
      */
     void setTitle() {
         final StringBuilder sb = new StringBuilder();
@@ -1164,11 +1074,13 @@ public class Controller {
         final String latestVersion = Util.getLatestVersion("VDFEditor");
 
         if (currentVersion.equals(Messages.getString("Launcher.Unknown"))) {
-            if (verbose) MessageDialog.show(AlertType.WARNING, RES.getString("unknown_version"), RES.getString("unknown_version_text"));
+            if (verbose)
+                MessageDialog.show(AlertType.WARNING, RES.getString("unknown_version"), RES.getString("unknown_version_text"));
         } else if (latestVersion == null) {
             if (verbose) MessageDialog.show(AlertType.WARNING, RES.getString("offline"), RES.getString("offline_text"));
         } else if (latestVersion.equals(currentVersion)) {
-            if (verbose) MessageDialog.show(AlertType.INFORMATION, RES.getString("uptodate"), RES.getString("uptodate_text"));
+            if (verbose)
+                MessageDialog.show(AlertType.INFORMATION, RES.getString("uptodate"), RES.getString("uptodate_text"));
         } else
             MessageDialog.show(AlertType.INFORMATION, RES.getString("update_available"), true, RES.getString("update_available_text"), latestVersion);
     }

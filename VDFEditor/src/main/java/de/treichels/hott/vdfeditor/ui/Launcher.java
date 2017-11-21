@@ -22,8 +22,6 @@ import javazoom.spi.vorbis.sampled.convert.VorbisFormatConversionProvider;
 import javazoom.spi.vorbis.sampled.file.VorbisAudioFileReader;
 
 public class Launcher extends Application {
-    public static final String PROGRAM_VERSION = "program.version"; //$NON-NLS-1$
-
     // static references to mp3 and ogg decoders to keep them in the final jar
     @SuppressWarnings("unused")
     private static final Class<?>[] IGNORE = { MpegAudioFileReader.class, MpegFormatConversionProvider.class, VorbisAudioFileReader.class,
@@ -44,7 +42,9 @@ public class Launcher extends Application {
                 final Attributes attributes = jarFile.getManifest().getMainAttributes();
                 return Messages.getString("Launcher.Version", attributes.getValue("Implementation-Version"), attributes.getValue("Implementation-Build"));
             }
-        } catch (final IOException | URISyntaxException e) {}
+        } catch (final IOException | URISyntaxException e) {
+            // ignore
+        }
 
         return Messages.getString("Launcher.Unknown");
     }

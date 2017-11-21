@@ -10,24 +10,22 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.events.EventTarget;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Worker;
-import javafx.concurrent.Worker.State;
 import javafx.scene.control.Alert;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-public class MessageDialog extends Alert {
-    public static void show(final AlertType alertType, final String header, final boolean html, final String message, final Object... args) {
+class MessageDialog extends Alert {
+    static void show(final AlertType alertType, final String header, final boolean html, final String message, final Object... args) {
         Platform.runLater(() -> new MessageDialog(alertType, header, html, message, args).showAndWait());
     }
 
-    public static void show(final AlertType alertType, final String header, final String message, final Object... args) {
+    static void show(final AlertType alertType, final String header, final String message, final Object... args) {
         Platform.runLater(() -> new MessageDialog(alertType, header, false, message, args).showAndWait());
     }
 
-    public MessageDialog(final AlertType alertType, final String header, final boolean html, final String message, final Object... args) {
+    MessageDialog(final AlertType alertType, final String header, final boolean html, final String message, final Object... args) {
         super(alertType);
 
         ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(Controller.ICON);
@@ -41,7 +39,7 @@ public class MessageDialog extends Alert {
             engine.loadContent(text);
             webView.setPrefSize(400, 400);
             getDialogPane().setContent(webView);
-            engine.getLoadWorker().stateProperty().addListener((ChangeListener<State>) (observable, oldState, newState) -> {
+            engine.getLoadWorker().stateProperty().addListener((observable, oldState, newState) -> {
                 if (newState == Worker.State.SUCCEEDED) {
                     // loop though all <a> tags
                     final NodeList links = engine.getDocument().getElementsByTagName("a");
@@ -61,7 +59,7 @@ public class MessageDialog extends Alert {
             setContentText(text);
     }
 
-    public MessageDialog(final AlertType alertType, final String header, final String message, final Object... args) {
+    MessageDialog(final AlertType alertType, final String header, final String message, final Object... args) {
         this(alertType, header, false, message, args);
     }
 

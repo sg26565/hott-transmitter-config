@@ -1,12 +1,12 @@
 package de.treichels.hott.vdfeditor.actions;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class UndoBufferTest {
     private List<String> items;

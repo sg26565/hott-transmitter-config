@@ -21,7 +21,7 @@ public class VoiceDataListCell extends ListCell<VoiceData> {
     private TextField textField = null;
     private final HBox hBox = new HBox(indexLabel, playButton);
 
-    public VoiceDataListCell(final Controller controller) {
+    VoiceDataListCell(final Controller controller) {
         this.controller = controller;
 
         getStylesheets().add(STYLESHEET_LOCATION);

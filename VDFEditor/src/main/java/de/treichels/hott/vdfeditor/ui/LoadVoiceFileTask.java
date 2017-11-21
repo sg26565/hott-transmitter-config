@@ -7,7 +7,7 @@ import gde.model.voice.VoiceFile;
 final class LoadVoiceFileTask extends TransmitterTask {
     private final boolean user;
 
-    public LoadVoiceFileTask(final String title, final boolean user) {
+    LoadVoiceFileTask(final String title, final boolean user) {
         super(title);
         this.user = user;
     }

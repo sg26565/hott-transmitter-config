@@ -43,7 +43,7 @@ class SpeechDialogController {
     @FXML
     private Button abortButton;
 
-    public SpeechDialogController() {
+    SpeechDialogController() {
         try {
             final FXMLLoader loader = new FXMLLoader(getClass().getResource("SpeechDialog.fxml"), RES);
             loader.setController(this);

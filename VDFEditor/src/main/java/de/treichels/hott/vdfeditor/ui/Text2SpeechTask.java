@@ -22,7 +22,7 @@ final class Text2SpeechTask extends Task<File> {
         return voiceRSS.getText();
     }
 
-    public void setLanguage(final VoiceRssLanguage language) {
+    void setLanguage(final VoiceRssLanguage language) {
         voiceRSS.setLanguage(language);
     }
 

@@ -6,7 +6,7 @@ import gde.model.voice.VoiceFile;
 final class SendVoiceFileTask extends TransmitterTask {
     private final VoiceFile voiceFile;
 
-    public SendVoiceFileTask(final String title, final VoiceFile voiceFile) {
+    SendVoiceFileTask(final String title, final VoiceFile voiceFile) {
         super(title);
         this.voiceFile = voiceFile;
     }

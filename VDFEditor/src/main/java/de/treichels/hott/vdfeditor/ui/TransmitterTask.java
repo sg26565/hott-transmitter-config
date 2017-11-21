@@ -8,7 +8,7 @@ import javafx.concurrent.Task;
 public abstract class TransmitterTask extends Task<VoiceFile> implements UpdateHandler {
     private HoTTSerialPort port;
 
-    public TransmitterTask(final String title) {
+    TransmitterTask(final String title) {
         updateTitle(title);
     }
 

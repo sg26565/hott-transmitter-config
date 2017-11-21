@@ -1,8 +1,5 @@
-import javafx.scene.control.Label
-import javafx.scene.layout.VBox
-import tornadofx.App
-import tornadofx.View
-import tornadofx.launch
+import javafx.scene.paint.Color
+import tornadofx.*
 
 fun main(args: Array<String>) = launch<MyApp>(args)
 
@@ -11,9 +8,16 @@ class MyApp : App() {
 }
 
 class MyView : View() {
-	override val root = VBox()
-	
-	init {
-		root.children += Label("Hello, Wolrd!")
+	override val root = vbox {
+		val button = button {
+			text = "Press me!"
+		}
+		val label = label {
+			text = "not pressed"
+		}
+
+		button.action {
+			label.text = "pressed"
+		}
 	}
 }

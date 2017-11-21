@@ -18,7 +18,7 @@
     <center>
         <ListView fx:id="listView" editable="true" prefHeight="800.0" prefWidth="500.0" BorderPane.alignment="CENTER">
             <contextMenu>
-                <ContextMenu fx:id="contextMenu">
+                <ContextMenu>
                     <items>
                         <MenuItem fx:id="contextMenuDelete" mnemonicParsing="false" onAction="#onDeleteSound" text="%delete_sound" />
                     </items>
@@ -28,11 +28,8 @@
     </center>
     <top>
         <HBox>
-            <children>
                 <MenuBar>
-                    <menus>
                         <Menu mnemonicParsing="false" text="%file_menu">
-                            <items>
                                 <MenuItem mnemonicParsing="false" onAction="#onNew" text="%new_vdf">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -49,7 +46,7 @@
                                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator>
                                 </MenuItem>
-                                <MenuItem fx:id="saveVDFAsMenuItem" mnemonicParsing="false" onAction="#onSaveAs" text="%save_vdf_as">
+                                <MenuItem mnemonicParsing="false" onAction="#onSaveAs" text="%save_vdf_as">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                                     </accelerator>
@@ -62,10 +59,8 @@
                                         <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator>
                                 </MenuItem>
-                            </items>
                         </Menu>
-                        <Menu fx:id="editMenu" mnemonicParsing="false" text="%edit_menu">
-                            <items>
+                        <Menu mnemonicParsing="false" text="%edit_menu">
                                 <MenuItem fx:id="undoMenuItem" mnemonicParsing="false" onAction="#onUndo" text="%undo">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -98,24 +93,24 @@
                                 </MenuItem>
                                 <SeparatorMenuItem mnemonicParsing="false" />
                                 <Menu fx:id="addMenu" mnemonicParsing="false" text="%add_sound">
-                                    <MenuItem fx:id="addSoundMenuItem" mnemonicParsing="false" onAction="#onAddSound" text="%from_file">
+                                    <MenuItem mnemonicParsing="false" onAction="#onAddSound" text="%from_file">
                                         <accelerator>
                                             <KeyCodeCombination alt="UP" code="INSERT" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                         </accelerator>
                                     </MenuItem>
-                                    <MenuItem fx:id="addSoundTextMenuItem" mnemonicParsing="false" onAction="#onAddSoundFromText" text="%from_text">
+                                    <MenuItem  mnemonicParsing="false" onAction="#onAddSoundFromText" text="%from_text">
                                         <accelerator>
                                             <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                         </accelerator>
                                     </MenuItem>
                                 </Menu>
                                 <Menu fx:id="replaceMenu" mnemonicParsing="false" text="%replace_sound">
-                                    <MenuItem fx:id="replaceSoundMenuItem" mnemonicParsing="false" onAction="#onReplaceSound" text="%from_file">
+                                    <MenuItem  mnemonicParsing="false" onAction="#onReplaceSound" text="%from_file">
                                         <accelerator>
                                             <KeyCodeCombination alt="UP" code="INSERT" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
                                         </accelerator>
                                     </MenuItem>
-                                    <MenuItem fx:id="replaceSoundFromTextMenuItem" mnemonicParsing="false" onAction="#onReplaceSoundFromText" text="%from_text">
+                                    <MenuItem mnemonicParsing="false" onAction="#onReplaceSoundFromText" text="%from_text">
                                         <accelerator>
                                             <KeyCodeCombination alt="UP" code="T" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
                                         </accelerator>
@@ -126,11 +121,9 @@
                                         <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator>
                                 </MenuItem>
-                            </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="%transmitter_menu">
-                            <items>
-                                <MenuItem fx:id="loadUserVoiceFiles" mnemonicParsing="false" onAction="#onLoadUserVoiceFile" text="%load_user_voicefiles" />
+                                <MenuItem mnemonicParsing="false" onAction="#onLoadUserVoiceFile" text="%load_user_voicefiles" />
                                 <MenuItem mnemonicParsing="false" onAction="#onLoadSystemVoiceFile" text="%load_system_voicefiles" />
                                 <SeparatorMenuItem mnemonicParsing="false" />
                                 <MenuItem fx:id="playOnTransmitter" mnemonicParsing="false" onAction="#onPlayOnTransmitter" text="%play_on_transmitter">
@@ -139,29 +132,21 @@
                                     </accelerator>
                                 </MenuItem>
                                 <SeparatorMenuItem mnemonicParsing="false" />
-                                <MenuItem fx:id="writeToTransmitter" mnemonicParsing="false" onAction="#onWriteToTransmitter" text="%write_to_transmitter" />
-                            </items>
+                                <MenuItem mnemonicParsing="false" onAction="#onWriteToTransmitter" text="%write_to_transmitter" />
                         </Menu>
-                    </menus>
                 </MenuBar>
                 <Region styleClass="menu-bar" HBox.hgrow="SOMETIMES" />
                 <MenuBar>
-                    <menus>
                         <Menu mnemonicParsing="false" text="%help_menu">
-                            <items>
                                 <MenuItem mnemonicParsing="false" onAction="#onAbout" text="%about" />
                                 <MenuItem fx:id="updateCheck" mnemonicParsing="false" onAction="#onUpdateCheck" text="%update_check" />
                                 <MenuItem mnemonicParsing="false" onAction="#onUserManual" text="%user_manual" />
-                            </items>
                         </Menu>
-                    </menus>
                 </MenuBar>
-            </children>
         </HBox>
     </top>
     <bottom>
         <HBox alignment="CENTER" spacing="3.0" BorderPane.alignment="CENTER">
-            <children>
                 <Label text="%vdf_version" />
                 <ComboBox fx:id="vdfVersionCombo" onAction="#onVdfVersionChanged" />
                 <Region layoutX="82.0" layoutY="13.0" HBox.hgrow="SOMETIMES" />
@@ -170,7 +155,6 @@
                 <Region HBox.hgrow="SOMETIMES" />
                 <Label text="%transmitter_type" />
                 <ComboBox fx:id="transmitterTypeCombo" onAction="#onTransmitterTypeChanged" />
-            </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
