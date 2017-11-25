@@ -22,10 +22,12 @@ import java.util.Properties;
  *
  */
 public class Util {
-    private static final String OFFLINE = "offline";
-    public static final boolean DEBUG = Boolean.getBoolean("debug");
+    private static final String PARAM_OFFLINE = "offline";
+    private static final String PARAM_DEBUG = "debug";
     private static final String LATEST_VERSIONS_URL = "https://drive.google.com/uc?export=download&id=0B_uPguA0xiT4SUl1V1VKYXFjWHc";
     private static final Properties latestVersions = new Properties();
+    public static final boolean OFFLINE = Boolean.getBoolean(PARAM_OFFLINE);
+    public static final boolean DEBUG = Boolean.getBoolean(PARAM_DEBUG);
 
     public static String dumpData(final byte[] data) {
         return dumpData(data, 0);
@@ -85,9 +87,9 @@ public class Util {
     public static String getLatestVersion(final String key) {
         if (latestVersions.isEmpty()) try (InputStream is = new URL(LATEST_VERSIONS_URL).openStream(); InputStreamReader reader = new InputStreamReader(is)) {
             latestVersions.load(reader);
-            latestVersions.setProperty(OFFLINE, Boolean.FALSE.toString());
+            latestVersions.setProperty(PARAM_OFFLINE, Boolean.FALSE.toString());
         } catch (final IOException e) {
-            latestVersions.setProperty(OFFLINE, Boolean.TRUE.toString());
+            latestVersions.setProperty(PARAM_OFFLINE, Boolean.TRUE.toString());
         }
 
         return latestVersions.getProperty(key, null);

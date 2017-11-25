@@ -127,11 +127,11 @@
 			</tr>
 			<tr>
 				<th class="d2">Voice Count</th>
-				<td>${voicefile.voiceCount}</td>
+				<td>${voicefile.size}</td>
 			</tr>
 			<tr>
 				<th class="d2">total Size</th>
-				<td>${(voicefile.dataSize / 1024)?round} kb</td>
+				<td>${(voicefile.rawDataSize / 1024)?round} kb</td>
 			</tr>
 		</table>
 
@@ -145,8 +145,8 @@
 			</colgroup>
 							
 			<tr valign="top">
-				<#assign size=(voicefile.voiceData?size / 3)?ceiling>
-				<#list voicefile.voiceData?chunk(size) as column><td>
+				<#assign size=(voicefile.voiceList?size / 3)?ceiling>
+				<#list voicefile.voiceList?chunk(size) as column><td>
 					<table style="width: 100%">
 						<colgroup>
 							<col width="6em"/>

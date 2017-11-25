@@ -190,7 +190,7 @@ public class Controller extends Application {
             PREFS.put(LAST_LOAD_DIR, vdf.getParentFile().getAbsolutePath());
             final BaseModel model = modelProperty.get().decode();
             final VoiceFile vdfFile = HoTTDecoder.decodeVDF(vdf);
-            final List<String> names = vdfFile.getVoiceData().stream().map(v -> v.getName()).collect(Collectors.toList());
+            final List<String> names = vdfFile.getVoiceList().stream().map(v -> v.getName()).collect(Collectors.toList());
             Announcements.saveSystemPrefs(model.getTransmitterType(), names);
             onRefresh();
         }
@@ -209,7 +209,7 @@ public class Controller extends Application {
             PREFS.put(LAST_LOAD_DIR, vdf.getParentFile().getAbsolutePath());
             final BaseModel model = modelProperty.get().decode();
             final VoiceFile vdfFile = HoTTDecoder.decodeVDF(vdf);
-            final List<String> names = vdfFile.getVoiceData().stream().map(v -> v.getName()).collect(Collectors.toList());
+            final List<String> names = vdfFile.getVoiceList().stream().map(v -> v.getName()).collect(Collectors.toList());
             Announcements.saveUserPrefs(model.getTransmitterType(), names);
             onRefresh();
         }

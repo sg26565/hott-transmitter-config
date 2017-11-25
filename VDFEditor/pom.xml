@@ -10,7 +10,7 @@
 	<artifactId>VDFEditor</artifactId>
 	<name>VDFEditor</name>
 
-	<build>
+    <build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -136,38 +136,14 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>${project.artifactId}</artifactId>
-									<version>${project.version}</version>
-									<type>exe</type>
-									<overWrite>true</overWrite>
-									<destFileName>${project.build.finalName}.exe</destFileName>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>${project.build.directory}/../../../release</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>true</overWriteSnapshots>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
+        </plugins>
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTT-Model</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Decoder</artifactId>
@@ -184,5 +160,9 @@
 			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Report-PDF</artifactId>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>no.tornado</groupId>
+			<artifactId>tornadofx</artifactId>
+		</dependency>
+    </dependencies>
 </project>
