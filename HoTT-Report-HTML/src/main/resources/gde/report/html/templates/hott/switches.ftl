@@ -1,5 +1,5 @@
 <#assign n=0 />
-<#list model.switch as sw>	
+<#list model.switch?sort_by("assignment") as sw>
 	<#if sw?? && sw.assignment?? && sw.assignment.name() != "Unassigned">
 		<#if n % 40 == 0>
 			<#if n &gt; 0>
