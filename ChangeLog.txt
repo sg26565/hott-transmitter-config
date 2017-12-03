@@ -1,3 +1,14 @@
+2017-12-03
+==========
+	VDFEditor-0.9.3.145
+	- complete re-write using Kotlin programming language
+	- automatically launch VDFEditor by double click on .vdf File
+	- new icons
+
+	MdlViewer-0.9.3.185
+	- automatically launch MdlViewer by double click on .mdl File
+	- new icons
+
 2017-11-21
 ==========
 	VDFEditor-0.9.3.135

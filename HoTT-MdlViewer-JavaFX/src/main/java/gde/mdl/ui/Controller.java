@@ -1,19 +1,6 @@
 package gde.mdl.ui;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
-import java.util.stream.Collectors;
-
-import javax.xml.bind.JAXBException;
-
-import org.apache.commons.io.FilenameUtils;
-
 import com.itextpdf.text.DocumentException;
-
 import de.treichels.hott.HoTTDecoder;
 import gde.mdl.messages.Messages;
 import gde.mdl.ui.background.RefreshService;
@@ -44,6 +31,16 @@ import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import org.apache.commons.io.FilenameUtils;
+
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+import java.util.stream.Collectors;
 
 public class Controller extends Application {
     private static final String LAST_LOAD_DIR = "lastLoadDir"; //$NON-NLS-1$
@@ -122,11 +119,26 @@ public class Controller extends Application {
         // FIXME: FXMLLoader does not set contextMenuEnabled correctly.
         // Therefore, we have to disable it manually.
         webview.setContextMenuEnabled(false);
+
+        List<String> params = getParameters().getUnnamed();
+        if (params != null && params.size() > 0 && params.get(0).endsWith(".mdl")) {
+            Platform.runLater(() -> load(new File(params.get(0))));
+        }
     }
 
     @FXML
     public void onExit() {
         Platform.exit();
+    }
+
+    private void load(File file) {
+        PREFS.put(LAST_LOAD_DIR, file.getParentFile().getAbsolutePath());
+        try {
+            modelProperty.set(Model.load(file));
+        } catch (final IOException e) {
+            ExceptionDialog.show(e);
+        }
+        onRefresh();
     }
 
     @FXML
@@ -139,13 +151,7 @@ public class Controller extends Application {
 
         final File file = chooser.showOpenDialog(STAGE);
         if (file != null) {
-            PREFS.put(LAST_LOAD_DIR, file.getParentFile().getAbsolutePath());
-            try {
-                modelProperty.set(Model.load(file));
-            } catch (final IOException e) {
-                ExceptionDialog.show(e);
-            }
-            onRefresh();
+            load(file);
         }
     }
 
@@ -190,7 +196,7 @@ public class Controller extends Application {
             PREFS.put(LAST_LOAD_DIR, vdf.getParentFile().getAbsolutePath());
             final BaseModel model = modelProperty.get().decode();
             final VoiceFile vdfFile = HoTTDecoder.decodeVDF(vdf);
-            final List<String> names = vdfFile.getVoiceData().stream().map(v -> v.getName()).collect(Collectors.toList());
+            final List<String> names = vdfFile.getVoiceList().stream().map(v -> v.getName()).collect(Collectors.toList());
             Announcements.saveSystemPrefs(model.getTransmitterType(), names);
             onRefresh();
         }
@@ -209,7 +215,7 @@ public class Controller extends Application {
             PREFS.put(LAST_LOAD_DIR, vdf.getParentFile().getAbsolutePath());
             final BaseModel model = modelProperty.get().decode();
             final VoiceFile vdfFile = HoTTDecoder.decodeVDF(vdf);
-            final List<String> names = vdfFile.getVoiceData().stream().map(v -> v.getName()).collect(Collectors.toList());
+            final List<String> names = vdfFile.getVoiceList().stream().map(v -> v.getName()).collect(Collectors.toList());
             Announcements.saveUserPrefs(model.getTransmitterType(), names);
             onRefresh();
         }
@@ -254,24 +260,24 @@ public class Controller extends Application {
             final Runnable r = () -> {
                 try {
                     switch (extension) {
-                    case "html":
-                        model.saveHtml(fileToSave);
-                        break;
+                        case "html":
+                            model.saveHtml(fileToSave);
+                            break;
 
-                    case "pdf":
-                        model.savePdf(fileToSave);
-                        break;
+                        case "pdf":
+                            model.savePdf(fileToSave);
+                            break;
 
-                    case "xml":
-                        model.saveXml(fileToSave);
-                        break;
+                        case "xml":
+                            model.saveXml(fileToSave);
+                            break;
 
-                    case "mdl":
-                        model.saveMdl(fileToSave);
-                        break;
+                        case "mdl":
+                            model.saveMdl(fileToSave);
+                            break;
 
-                    case "txt":
-                        model.saveTxt(fileToSave);
+                        case "txt":
+                            model.saveTxt(fileToSave);
                     }
                 } catch (ReportException | IOException | DocumentException | JAXBException e) {
                     ExceptionDialog.show(e);
