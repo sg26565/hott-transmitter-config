@@ -467,8 +467,14 @@ class MainView : View() {
         // ask to save modified VDF and terminate vm on window close
         primaryStage.setOnCloseRequest { ev -> ev.consume(); onClose() }
 
-        // always start with an empty vdf
-        onNew()
+        val params = app.parameters.unnamed
+        if (params.size > 0) {
+            val file = File(params[0])
+            if (isVDF(file)) open(file) else onNew()
+        } else {
+            // always start with an empty vdf
+            onNew()
+        }
     }
 
     /**
