@@ -35,7 +35,7 @@ import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.Font;
 
 /**
- * Generate offline PNG image using Swing.
+ * Generate offline PNG image using JavaFX.
  *
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
