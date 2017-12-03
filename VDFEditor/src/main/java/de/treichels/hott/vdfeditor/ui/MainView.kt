@@ -1068,14 +1068,13 @@ class MainView : View() {
      * Load a new VDF from data model.
      */
     private fun open(other: VoiceFile) {
-        undoBuffer.clear()
         voiceFile.copy(other)
 
         transmitterTypeCombo.value = voiceFile.transmitterType
         countryCodeCombo.value = voiceFile.country
         updateVdfVersion()
 
-        val items = ObservableListWrapper(voiceFile.voiceList)
+        val items = voiceFile.voiceList
         // add a change listener to the list to prevent invalid VDFs
         items.onChange { change ->
             while (!mute && change.next())
@@ -1136,8 +1135,9 @@ class MainView : View() {
 
         listView.items = items
         undoBuffer.items = items
-        verify(false)
+        undoBuffer.clear()
         voiceFile.clean()
+        verify(false)
         setStageTitle()
     }
 
