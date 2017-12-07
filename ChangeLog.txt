@@ -1,11 +1,18 @@
+2017-12-07
+==========
+    VDFEditor-0.9.3.147
+    - updated Italian voice files
+    - added speed and volume controls to Text2Speech dialog
+
 2017-12-03
 ==========
-	VDFEditor-0.9.3.145
+	VDFEditor-0.9.3.146
 	- complete re-write using Kotlin programming language
 	- automatically launch VDFEditor by double click on .vdf File
 	- new icons
 
-	MdlViewer-0.9.3.185
+	MdlViewer-0.9.3.186
+	- sort switches by name
 	- automatically launch MdlViewer by double click on .mdl File
 	- new icons
 

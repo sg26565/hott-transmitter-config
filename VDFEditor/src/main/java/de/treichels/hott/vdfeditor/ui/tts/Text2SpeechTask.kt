@@ -20,6 +20,8 @@ internal class Text2SpeechTask : Task<File>() {
             voiceRSS.text = text
         }
 
+    var volume = 1.0
+
     var speed: Int
         get() = voiceRSS.speed
         set(speed) {

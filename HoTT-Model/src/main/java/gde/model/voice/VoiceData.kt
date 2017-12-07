@@ -12,7 +12,7 @@ import javax.sound.sampled.AudioFormat.Encoding
 /** Default audio format 11 kHz 16-bit signed PCM mono  */
 private val audioFormat = AudioFormat(Encoding.PCM_SIGNED, 11025f, 16, 1, 2, 11025f, false)
 
-fun readSoundFile(soundFile: File): VoiceData {
+fun readSoundFile(soundFile: File, volume: Double = 1.0): VoiceData {
     // read from file
     val sourceAudioStream = AudioSystem.getAudioInputStream(soundFile)
     val sourceFormat = sourceAudioStream.format
@@ -33,7 +33,7 @@ fun readSoundFile(soundFile: File): VoiceData {
         AudioSystem.getAudioInputStream(audioFormat, pcmAudioStream)
 
     // encode to ADPCM
-    val encodedStream = ADPCMCodec.encode(targetAudioStream)
+    val encodedStream = ADPCMCodec.encode(targetAudioStream, volume)
 
     val fileName = soundFile.name
     val dot = fileName.lastIndexOf(".")

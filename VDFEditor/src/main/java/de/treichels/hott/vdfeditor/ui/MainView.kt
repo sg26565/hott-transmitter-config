@@ -1,6 +1,5 @@
 package de.treichels.hott.vdfeditor.ui
 
-import com.sun.javafx.collections.ObservableListWrapper
 import de.treichels.hott.HoTTDecoder
 import de.treichels.hott.HoTTSerialPort
 import de.treichels.hott.vdfeditor.actions.*
@@ -351,7 +350,7 @@ class MainView : View() {
         }
     }
 
-    private fun addSound(vararg files: File) {
+    private fun addSound(vararg files: File, volume: Double = 1.0) {
         // store dir in preferences
         files.filter(::isSoundFormat).map(File::getParentFile).map(File::getAbsolutePath).firstOrNull()?.apply {
             preferences { put(LAST_LOAD_SOUND_DIR, this@apply) }
@@ -361,7 +360,7 @@ class MainView : View() {
         val index = if (selectedIndex == -1) listView.items.size else selectedIndex
 
         // insert all sound files at index
-        files.filter(::isSoundFormat).map(::readSoundFile).forEach { undoBuffer.push(InsertAction(index, it)) }
+        files.filter(::isSoundFormat).map({ readSoundFile(it, volume) }).forEach { undoBuffer.push(InsertAction(index, it)) }
     }
 
     /**
@@ -500,7 +499,7 @@ class MainView : View() {
 
             success { file ->
                 tempFiles.add(file)
-                addSound(file)
+                addSound(file, volume = volume)
             }
         }
     }
@@ -654,7 +653,7 @@ class MainView : View() {
                             for (i in files.indices)
                                 undoBuffer.push(ReplaceAction(targetIndex + i, readSoundFile(files[i])))
                         else
-                            files.stream().map(::readSoundFile).forEach { undoBuffer.push(InsertAction(targetIndex, it)) }
+                            files.stream().map({ readSoundFile(it) }).forEach { undoBuffer.push(InsertAction(targetIndex, it)) }
                 }
             }
         } catch (e: RuntimeException) {
@@ -927,7 +926,7 @@ class MainView : View() {
 
             success { file ->
                 tempFiles.add(file)
-                replaceSound(file)
+                replaceSound(file, volume = volume)
             }
         }
     }
@@ -1144,9 +1143,9 @@ class MainView : View() {
     /**
      * Replace selected sound from file
      */
-    private fun replaceSound(file: File?) {
+    private fun replaceSound(file: File?, volume: Double = 1.0) {
         if (file != null && file.exists()) {
-            undoBuffer.push(ReplaceAction(selectedIndex, readSoundFile(file)))
+            undoBuffer.push(ReplaceAction(selectedIndex, readSoundFile(file, volume)))
         }
     }
 

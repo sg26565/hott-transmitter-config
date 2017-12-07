@@ -5,11 +5,8 @@ import de.treichels.hott.vdfeditor.ui.MessageDialog
 import gde.model.voice.VoiceRssLanguage
 import javafx.concurrent.Task
 import javafx.geometry.Pos
+import javafx.scene.control.*
 import javafx.scene.control.Alert.AlertType
-import javafx.scene.control.Button
-import javafx.scene.control.ComboBox
-import javafx.scene.control.ProgressBar
-import javafx.scene.control.TextArea
 import javafx.scene.layout.Priority
 import javafx.stage.Modality
 import javafx.stage.StageStyle
@@ -28,18 +25,24 @@ internal class SpeechDialog : View() {
     private var languageComboBox by singleAssign<ComboBox<VoiceRssLanguage>>()
     private var startButton by singleAssign<Button>()
     private var abortButton by singleAssign<Button>()
+    private var volumeSlider by singleAssign<Slider>()
+    private var speedSlider by singleAssign<Slider>()
 
     // Helpers
     private val language: VoiceRssLanguage
         get() = languageComboBox.selectionModel.selectedItem
     private val text: String
         get() = textArea.textProperty().value
+    private val volume: Double
+        get() = volumeSlider.value / 2.0
+    private val speed: Int
+        get() = speedSlider.value.toInt() * 2 - 10
 
     override val root = vbox {
         spacing = 5.0
         padding = insets(all = 10)
-        prefWidth = 600.0
-        prefHeight = 300.0
+        prefWidth = 850.0
+        prefHeight = 200.0
 
         label(messages["descr_label"])
 
@@ -62,21 +65,59 @@ internal class SpeechDialog : View() {
             label(messages["language_label"])
 
             languageComboBox = combobox {
-                setOnAction { onLanguageChanged() }
+                items = listOf(*VoiceRssLanguage.values()).observable()
+
+                setOnAction {
+                    preferences { put(PREFERRED_LANGUAGE, language.name) }
+                }
+
+                // get preferred language from prefs
+                preferences {
+                    selectionModel.select(VoiceRssLanguage.forString(get(PREFERRED_LANGUAGE, "de_de")))
+                }
             }
 
             region {
                 hgrow = Priority.SOMETIMES
             }
 
-            startButton = button(messages["start_button"]) {
-                isDefaultButton = true
-                action { onStart() }
+            label(messages["volume"])
+
+            volumeSlider = slider {
+                valueProperty().onChange {
+                    preferences { putDouble("prefVolume", it) }
+                }
+
+                preferences {
+                    value = getDouble("prefVolume", 5.0)
+                }
+
+                min = 1.0
+                max = 10.0
+                isShowTickMarks = true
+                isShowTickLabels = true
+                blockIncrement = 0.5
+                majorTickUnit = 1.0
+                minorTickCount = 1
             }
 
-            abortButton = button(messages["abort_button"]) {
-                isCancelButton = true
-                action { onAbort() }
+            label(messages["speed"])
+            speedSlider = slider {
+                valueProperty().onChange {
+                    preferences { putDouble("prefSpeed", it) }
+                }
+
+                preferences {
+                    value = getDouble("prefSpeed", 5.0)
+                }
+
+                min = 0.0
+                max = 10.0
+                isShowTickMarks = true
+                isShowTickLabels = true
+                blockIncrement = 0.5
+                majorTickUnit = 1.0
+                minorTickCount = 1
             }
         }
 
@@ -92,17 +133,25 @@ internal class SpeechDialog : View() {
                 }
             }
         }
+
+        hbox {
+            alignment = Pos.BASELINE_RIGHT
+            spacing = 10.0
+
+            startButton = button(messages["start_button"]) {
+                isDefaultButton = true
+                action { onStart() }
+            }
+
+            abortButton = button(messages["abort_button"]) {
+                isCancelButton = true
+                action { onAbort() }
+            }
+        }
     }
 
     init {
         title = messages["title"]
-
-        // get preferred language from prefs
-        preferences {
-            val prefLanguage = VoiceRssLanguage.forString(get(PREFERRED_LANGUAGE, "de_de"))
-            languageComboBox.items = listOf(*VoiceRssLanguage.values()).observable()
-            languageComboBox.selectionModel.select(prefLanguage)
-        }
     }
 
     private fun onFail(t: Throwable) {
@@ -121,14 +170,12 @@ internal class SpeechDialog : View() {
         close()
     }
 
-    private fun onLanguageChanged() {
-        // save selected language as new preferred language
-        preferences { put(PREFERRED_LANGUAGE, language.name) }
-    }
-
     private fun onStart() {
         task?.text = text
         task?.language = language
+        task?.volume = volume
+        task?.speed = speed
+
         progressBar.progress = -1.0
 
         bgTask = runAsync {
@@ -145,7 +192,6 @@ internal class SpeechDialog : View() {
         progressBar.progress = 0.0
 
         textArea.text = ""
-        textArea.requestFocus()
 
         // disable start button if text area contains no text or the task is already running
         startButton.disableProperty().bind(textArea.lengthProperty().isEqualTo(0).or(task.runningProperty()))
@@ -153,5 +199,7 @@ internal class SpeechDialog : View() {
         openModal(stageStyle = StageStyle.UTILITY, modality = Modality.APPLICATION_MODAL)?.setOnCloseRequest {
             onAbort()
         }
+
+        textArea.requestFocus()
     }
 }

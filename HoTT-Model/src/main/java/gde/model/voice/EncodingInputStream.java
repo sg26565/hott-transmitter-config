@@ -7,9 +7,11 @@ final class EncodingInputStream extends InputStream {
     private final ADPCMCodec codec = new ADPCMCodec();
     private final byte[] buffer = new byte[2];
     private final InputStream in;
+    private final double volume;
 
-    public EncodingInputStream(final InputStream in) {
+    public EncodingInputStream(final InputStream in, double volume) {
         this.in = in;
+        this.volume = volume;
     }
 
     @Override
@@ -41,7 +43,7 @@ final class EncodingInputStream extends InputStream {
 
         if (pcm != -1) {
             // convert to signed 16-bit and reduce to 12-bit
-            short signed = (short) ((short) pcm / 16);
+            short signed = (short) (((short) pcm / 16) * volume);
 
             // convert to low nibble
             adpcm = codec.encode(signed);
@@ -50,7 +52,7 @@ final class EncodingInputStream extends InputStream {
             pcm = readShort();
             if (pcm != -1) {
                 // convert to signed 16-bit and reduce to 12-bit
-                signed = (short) ((short) pcm / 16);
+                signed = (short) (((short) pcm / 16) * volume);
 
                 // convert to high nibble
                 adpcm |= codec.encode(signed) << 4;

@@ -100,7 +100,7 @@ enum class SampleRate {
     _8KHZ, _11KHZ, _12KHZ, _16KHZ, _22KHZ, _24KHZ, _32KHZ, _44KHZ, _48KHZ
 }
 
-class VoiceRSS(val apiKey: String = VOICE_RSS_DEFAULT_API_KEY, var text: String = "", var language: VoiceRssLanguage = VoiceRssLanguage.de_de, var speed: Int = 0, var codec: Codec = Codec.WAV, var format: Format = Format.pcm_11khz_16bit_mono, var isBase64: Boolean = false) : Text2Speech {
+class VoiceRSS(val apiKey: String = VOICE_RSS_DEFAULT_API_KEY, var text: String = "", var language: VoiceRssLanguage = VoiceRssLanguage.de_de, var speed: Int = 0, var codec: Codec = Codec.WAV, var format: Format = Format.pcm_22khz_16bit_mono, var isBase64: Boolean = false) : Text2Speech {
     // Give file a fancy name
     // remove unsafe characters
     // shorten to 17 characters

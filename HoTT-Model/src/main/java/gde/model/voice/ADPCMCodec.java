@@ -74,7 +74,12 @@ public class ADPCMCodec {
      * @throws IOException
      */
     public static InputStream encode(final InputStream source) throws IOException {
-        return new EncodingInputStream(source);
+        return encode(source, 1.0);
+    }
+
+    public static InputStream encode(final InputStream source, double volume) throws IOException {
+        EncodingInputStream result = new EncodingInputStream(source, volume);
+        return result;
     }
 
     /** index into step size table */
