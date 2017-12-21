@@ -1,7 +1,7 @@
 package de.treichels.hott.vdfeditor.ui.tts
 
-import gde.model.voice.VoiceRSS
-import gde.model.voice.VoiceRssLanguage
+import de.treichels.hott.model.voice.VoiceRSS
+import de.treichels.hott.model.voice.VoiceRssLanguage
 import javafx.concurrent.Task
 import java.io.File
 

@@ -28,10 +28,10 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import gde.mdl.messages.Messages;
-import gde.model.enums.ModelType;
-import gde.model.serial.ModelInfo;
-import gde.model.serial.SerialPortDefaultImpl;
+import de.treichels.hott.mdl.messages.Messages;
+import de.treichels.hott.model.enums.ModelType;
+import de.treichels.hott.model.serial.ModelInfo;
+import de.treichels.hott.model.serial.SerialPortDefaultImpl;
 import gnu.io.RXTXCommDriver;
 
 /**

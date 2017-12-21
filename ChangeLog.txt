@@ -118,8 +118,8 @@
 2017-09-21
 ==========
 	VDFEditor-0.9.0.76
-	- turn rf off after selection of com port
-	- ask for com port every time to allow switching between ports without restart
+	- turn rf off after selection of com serialPort
+	- ask for com serialPort every time to allow switching between ports without restart
 	- use 253 entries in v2 vdfs regardless of country version 
 	
 2017-09-20

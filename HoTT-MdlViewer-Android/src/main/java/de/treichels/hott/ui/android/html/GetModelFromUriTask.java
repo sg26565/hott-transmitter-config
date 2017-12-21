@@ -17,8 +17,8 @@
  */
 package de.treichels.hott.ui.android.html;
 
-import gde.model.BaseModel;
-import gde.model.enums.ModelType;
+import de.treichels.hott.model.BaseModel;
+import de.treichels.hott.model.enums.ModelType;
 
 import java.io.InputStream;
 

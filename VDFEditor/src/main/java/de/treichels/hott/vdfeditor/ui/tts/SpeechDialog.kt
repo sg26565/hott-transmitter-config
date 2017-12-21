@@ -1,8 +1,8 @@
 package de.treichels.hott.vdfeditor.ui.tts
 
-import de.treichels.hott.vdfeditor.ui.ExceptionDialog
 import de.treichels.hott.vdfeditor.ui.MessageDialog
-import gde.model.voice.VoiceRssLanguage
+import de.treichels.hott.model.voice.VoiceRssLanguage
+import de.treichels.hott.util.ExceptionDialog
 import javafx.concurrent.Task
 import javafx.geometry.Pos
 import javafx.scene.control.*

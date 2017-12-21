@@ -17,8 +17,8 @@
  */
 package de.treichels.hott.ui.android.dialogs;
 
-import gde.model.serial.FileInfo;
-import gde.model.serial.FileType;
+import de.treichels.hott.model.serial.FileInfo;
+import de.treichels.hott.model.serial.FileType;
 import android.app.DialogFragment;
 import android.view.View;
 import android.widget.AdapterView;

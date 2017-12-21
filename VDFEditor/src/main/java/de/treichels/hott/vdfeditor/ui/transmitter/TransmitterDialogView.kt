@@ -1,9 +1,9 @@
 package de.treichels.hott.vdfeditor.ui.transmitter
 
-import de.treichels.hott.HoTTSerialPort
-import de.treichels.hott.vdfeditor.ui.ExceptionDialog
+import de.treichels.decoder.HoTTSerialPort
 import de.treichels.hott.vdfeditor.ui.MessageDialog
-import gde.model.serial.JSSCSerialPort
+import de.treichels.hott.model.serial.JSSCSerialPort
+import de.treichels.hott.util.ExceptionDialog
 import javafx.concurrent.Task
 import javafx.geometry.Pos
 import javafx.scene.control.*
@@ -18,7 +18,8 @@ class TransmitterDialogView : View() {
     // rf off confirmation dialog
     private val dialog = MessageDialog(AlertType.CONFIRMATION, messages["rf_off_header"], messages["rf_off_message"])
 
-    private var task: TransmitterTask? = null
+    // variables
+    private var task: TransmitterTask<*>? = null
     private var bgTask: Task<Unit?>? = null
     private var serialPort: HoTTSerialPort? = null
 
@@ -77,76 +78,79 @@ class TransmitterDialogView : View() {
 
             startButton = button {
                 text = messages["start_button"]
-                action { onStart() }
+                action(this@TransmitterDialogView::start)
             }
 
             button(messages["abort_button"]) {
-                action { onAbort() }
+                action(this@TransmitterDialogView::stop)
             }
         }
     }
 
-    private fun onStart() {
+    private fun start() {
         preferences { put("comPort", portCombo.value) }
         dialog.showAndWait().ifPresent {
-            when (it) {
-                ButtonType.OK -> {
-                    if (serialPort?.isOpen == true) serialPort?.close()
-                    serialPort = HoTTSerialPort(JSSCSerialPort(portCombo.value))
-                    task?.port = serialPort
-                    bgTask = runAsync {
-                        task?.run()
-                    } success {
-                        close()
-                    } fail (this@TransmitterDialogView::onFail)
-                }
-                else -> onAbort()
-            }
+            if (it == ButtonType.OK) {
+                if (serialPort?.isOpen == true) serialPort?.close()
+                serialPort = HoTTSerialPort(JSSCSerialPort(portCombo.value))
+                task?.serialPort = serialPort
+                bgTask = runAsync {
+                    task?.run()
+                }.success {
+                    close()
+                }.fail(this::fail)
+            } else stop()
         }
     }
 
-    private fun onAbort() {
-        task?.cancel()
+    private fun stop() {
         bgTask?.cancel()
         close()
     }
 
-    private fun onFail(t: Throwable) {
+    private fun fail(t: Throwable) {
         ExceptionDialog.show(t)
-        onAbort()
+        stop()
     }
 
-    fun openDialog(task: TransmitterTask) {
+    fun openDialog(task: TransmitterTask<*>) {
+        this.task = task
+        task.fail(this::fail)
+
         // cleanup
+        bgTask = null
         serialPort = null
-        portCombo.value = null
-        portCombo.items.clear()
 
         // bind task properties
-        this.task = task
-        task.fail (this::onFail)
         portCombo.disableWhen(task.runningProperty())
         startButton.disableWhen(task.runningProperty().or(portCombo.valueProperty().isNull))
         progressBar.progressProperty().bind(task.progressProperty())
         message.textProperty().bind(task.messageProperty())
 
-        // (re-) load available com ports
-        runAsync {
-            JSSCSerialPort.getAvailablePorts()
-        } success { ports ->
-            portCombo.items.addAll(ports)
+        // update port combo
+        with (portCombo) {
+            value = null
+            items.clear()
 
-            // restore last used com port
-            preferences {
-                val prefPort: String? = get("comPort", null)
-                portCombo.value = if (prefPort != null && portCombo.items.contains(prefPort)) prefPort else null
-            }
-        } fail (this::onFail)
+            // (re-) load available com ports
+            runAsync {
+                JSSCSerialPort.getAvailablePorts()
+            } success { ports ->
+                items.clear()
+                items.addAll(ports)
+
+                // restore last used com serialPort
+                preferences {
+                    val prefPort: String? = get("comPort", null)
+                    value = if (prefPort != null && items.contains(prefPort)) prefPort else null
+                }
+            } fail this@TransmitterDialogView::fail
+        }
 
         // open model dialog
         openModal(stageStyle = StageStyle.UTILITY, modality = Modality.APPLICATION_MODAL)?.apply {
             titleProperty()?.bind(task.titleProperty())
-            setOnCloseRequest { onAbort() }
+            setOnCloseRequest { stop() }
         }
     }
 }

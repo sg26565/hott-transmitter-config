@@ -8,7 +8,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<kotlin.version>1.2.0</kotlin.version>
+		<kotlin.version>1.2.10</kotlin.version>
 	</properties>
 
 	<modules>
@@ -52,6 +52,11 @@
 				<artifactId>kotlin-maven-plugin</artifactId>
 				<groupId>org.jetbrains.kotlin</groupId>
 				<version>${kotlin.version}</version>
+				<configuration>
+					<args>
+						<arg>-Xcoroutines=enable</arg>
+					</args>
+				</configuration>
 				<executions>
 					<execution>
 						<id>kotlin-compile</id>
@@ -235,6 +240,10 @@
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-reflect</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlinx</groupId>
+			<artifactId>kotlinx-coroutines-core</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -338,7 +347,7 @@
 			<dependency>
 				<groupId>no.tornado</groupId>
 				<artifactId>tornadofx</artifactId>
-				<version>1.7.12</version>
+				<version>1.7.14</version>
 			</dependency>
 			<dependency>
 				<groupId>org.jetbrains.kotlin</groupId>
@@ -354,6 +363,11 @@
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-test-junit</artifactId>
 				<version>${kotlin.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jetbrains.kotlinx</groupId>
+				<artifactId>kotlinx-coroutines-core</artifactId>
+				<version>0.20</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

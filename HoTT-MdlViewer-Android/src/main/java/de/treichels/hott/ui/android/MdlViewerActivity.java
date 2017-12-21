@@ -17,11 +17,11 @@
  */
 package de.treichels.hott.ui.android;
 
-import gde.model.BaseModel;
-import gde.model.enums.ModelType;
-import gde.model.enums.Section;
-import gde.model.enums.TransmitterType;
-import gde.model.serial.ModelInfo;
+import de.treichels.hott.model.BaseModel;
+import de.treichels.hott.model.enums.ModelType;
+import de.treichels.hott.model.enums.Section;
+import de.treichels.hott.model.enums.TransmitterType;
+import de.treichels.hott.model.serial.ModelInfo;
 
 import java.net.MalformedURLException;
 

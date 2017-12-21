@@ -1,14 +1,13 @@
 package de.treichels.hott.vdfeditor.ui
 
 import de.treichels.hott.vdfeditor.actions.RenameAction
-import gde.model.voice.VDFType
-import gde.model.voice.VoiceData
+import de.treichels.hott.model.voice.VDFType
+import de.treichels.hott.model.voice.VoiceData
 import javafx.geometry.Pos
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.ListCell
 import javafx.scene.control.TextField
-import javafx.scene.layout.HBox
 import javafx.scene.layout.Priority
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight

@@ -1,6 +1,6 @@
 package de.treichels.hott.vdfeditor.actions
 
-import gde.model.voice.VoiceData
+import de.treichels.hott.model.voice.VoiceData
 
 /**
  * Abstract base class for undoable actions for mutable lists of type <T>.

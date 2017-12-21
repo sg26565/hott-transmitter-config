@@ -1,20 +1,21 @@
 package de.treichels.hott.vdfeditor.ui
 
-import de.treichels.hott.HoTTDecoder
-import de.treichels.hott.HoTTSerialPort
+import de.treichels.decoder.HoTTDecoder
+import de.treichels.decoder.HoTTSerialPort
 import de.treichels.hott.vdfeditor.actions.*
 import de.treichels.hott.vdfeditor.ui.transmitter.LoadVoiceFileTask
 import de.treichels.hott.vdfeditor.ui.transmitter.SendVoiceFileTask
 import de.treichels.hott.vdfeditor.ui.transmitter.TransmitterDialogView
 import de.treichels.hott.vdfeditor.ui.tts.SpeechDialog
 import de.treichels.hott.vdfeditor.ui.tts.Text2SpeechTask
-import gde.mdl.messages.Messages
-import gde.model.HoTTException
-import gde.model.enums.TransmitterType
-import gde.model.voice.*
-import gde.report.html.HTMLReport
-import gde.report.pdf.PDFReport
-import gde.util.Util
+import de.treichels.hott.messages.Messages
+import de.treichels.hott.model.HoTTException
+import de.treichels.hott.model.enums.TransmitterType
+import de.treichels.hott.model.voice.*
+import de.treichels.hott.report.html.HTMLReport
+import de.treichels.hott.report.pdf.PDFReport
+import de.treichels.hott.util.ExceptionDialog
+import de.treichels.hott.util.Util
 import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
 import javafx.geometry.Pos
@@ -133,94 +134,78 @@ class MainView : View() {
             hbox {
                 menubar {
                     menu(messages["file_menu"]) {
-                        item(messages["new_vdf"]) {
+                        item(messages["new_vdf"], "Shortcut+N") {
                             action { onNew() }
-                            accelerator = KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN)
                         }
-                        item(messages["open_vdf"]) {
+                        item(messages["open_vdf"], "Shortcut+O") {
                             action { onOpen() }
-                            accelerator = KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN)
                         }
                         restoreMenu = menu(messages["restore_menu"])
-                        item(messages["save_vdf"]) {
+                        item(messages["save_vdf"],"Shortcut+S") {
                             enableWhen(vdfFileProperty.isNotNull.and(voiceFile.dirtyBinding))
                             action { onSave() }
-                            accelerator = KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN)
                         }
-                        item(messages["save_vdf_as"]) {
+                        item(messages["save_vdf_as"], "Shortcut+Shift+S") {
                             action { onSaveVDFAs() }
-                            accelerator = KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN, KeyCodeCombination.SHIFT_DOWN)
                         }
                         separator()
-                        item(messages["print"]) {
+                        item(messages["print"],"Shortcut+Alt+P") {
                             action { onPrint() }
-                            accelerator = KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN, KeyCodeCombination.SHIFT_DOWN)
                         }
-                        item(messages["close"]) {
+                        item(messages["close"], "Alt+F4") {
                             action { onClose() }
-                            accelerator = KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN)
                         }
                     }
                     menu(messages["edit_menu"]) {
-                        item(messages["undo"]) {
+                        item(messages["undo"],"ShortCut+Z") {
                             enableWhen(undoBuffer.canUndoProperty())
                             action { onUndo() }
-                            accelerator = KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN)
                         }
-                        item(messages["redo"]) {
+                        item(messages["redo"],"ShortCut+Y") {
                             action { onRedo() }
                             enableWhen(undoBuffer.canRedoProperty())
-                            accelerator = KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN)
                         }
                         separator()
-                        item(messages["move_up"]) {
+                        item(messages["move_up"],"ShortCut+U") {
                             disableWhen(noSelection.or(selectionModel.selectedIndexProperty().eq(0)).or(voiceFile.systenVDFProperty))
                             action { onMoveUp() }
-                            accelerator = KeyCodeCombination(KeyCode.U, KeyCombination.CONTROL_DOWN)
                         }
-                        item(messages["move_down"]) {
+                        item(messages["move_down"],"ShortCut+D") {
                             disableWhen(noSelection.or(selectionModel.selectedIndexProperty().eq(listView.itemsProperty().integerBinding(op = { it?.size ?: 0 }).subtract(1)).or(voiceFile.systenVDFProperty)))
                             action { onMoveDown() }
-                            accelerator = KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN)
                         }
-                        item(messages["rename"]) {
+                        item(messages["rename"],"ShortCut+R") {
                             disableWhen(noSelection)
                             action { onRename() }
-                            accelerator = KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN)
                         }
                         separator()
-                        item(messages["play"]) {
+                        item(messages["play"],"ShortCut+P") {
                             disableWhen(noSelection)
                             action { onPlay() }
-                            accelerator = KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN)
                         }
                         separator()
                         menu(messages["add_sound"]) {
                             disableWhen(voiceFile.systenVDFProperty)
-                            item(messages["from_file"]) {
+                            item(messages["from_file"],"Insert") {
                                 action { onAddSound() }
-                                accelerator = KeyCodeCombination(KeyCode.INSERT)
                             }
-                            item(messages["from_text"]) {
+                            item(messages["from_text"],"ShortCut+T") {
                                 action { onAddSoundFromText() }
                                 accelerator = KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN)
                             }
                         }
                         menu(messages["replace_sound"]) {
                             disableWhen(noSelection)
-                            item(messages["from_file"]) {
+                            item(messages["from_file"],"Shift+Insert") {
                                 action { onReplaceSound() }
-                                accelerator = KeyCodeCombination(KeyCode.INSERT, KeyCodeCombination.SHIFT_DOWN)
                             }
-                            item(messages["from_text"]) {
+                            item(messages["from_text"], "Shortcut+Shift+T") {
                                 action { onReplaceSoundFromText() }
-                                accelerator = KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN, KeyCodeCombination.SHIFT_DOWN)
                             }
                         }
-                        item(messages["delete_sound"]) {
+                        item(messages["delete_sound"], "Delete") {
                             disableWhen(noSelection)
                             action { onDeleteSound() }
-                            accelerator = KeyCodeCombination(KeyCode.DELETE)
                         }
                     }
                     menu(messages["transmitter_menu"]) {
@@ -231,10 +216,9 @@ class MainView : View() {
                             action { onLoadSystemVoiceFile() }
                         }
                         separator()
-                        item(messages["play_on_transmitter"]) {
+                        item(messages["play_on_transmitter"],"ShortCut+Shift+P") {
                             disableWhen(noSelection.or(serialPortProperty.isNull))
                             action { onPlayOnTransmitter() }
-                            accelerator = KeyCodeCombination(KeyCode.P, KeyCodeCombination.CONTROL_DOWN, KeyCodeCombination.SHIFT_DOWN)
                         }
                         separator()
                         item(messages["write_to_transmitter"]) {
@@ -480,7 +464,7 @@ class MainView : View() {
      * Show about dialog.
      */
     private fun onAbout() {
-        MessageDialog(AlertType.INFORMATION, getTitle(), true, messages["about_text"]).showAndWait()
+        MessageDialog(AlertType.INFORMATION, VDFEditor.title, true, messages["about_text"]).showAndWait()
     }
 
     /**
@@ -745,12 +729,12 @@ class MainView : View() {
      */
     private fun onLoadSystemVoiceFile() {
         if (askSave()) {
-            val task = LoadVoiceFileTask(messages["load_system_voicefiles"], false)
-            transmitterDialogView.openDialog(task)
-
-            task.success { voiceFile ->
-                serialPort = task.port
-                if (voiceFile != null) open(voiceFile)
+            LoadVoiceFileTask(messages["load_system_voicefiles"], false).apply {
+                transmitterDialogView.openDialog(this)
+                success { voiceFile ->
+                    serialPort = serialPort
+                    if (voiceFile != null) open(voiceFile)
+                }
             }
         }
     }
@@ -760,12 +744,12 @@ class MainView : View() {
      */
     private fun onLoadUserVoiceFile() {
         if (askSave()) {
-            val task = LoadVoiceFileTask(messages["load_user_voicefiles"], true)
-            transmitterDialogView.openDialog(task)
-
-            task.success { voiceFile ->
-                serialPort = task.port
-                if (voiceFile != null) open(voiceFile)
+            LoadVoiceFileTask(messages["load_user_voicefiles"], true).apply {
+                transmitterDialogView.openDialog(this)
+                success { voiceFile ->
+                    serialPort = serialPort
+                    if (voiceFile != null) open(voiceFile)
+                }
             }
         }
     }
@@ -887,7 +871,7 @@ class MainView : View() {
         if (pdf != null) {
             val name = vdfFile?.name ?: ""
             val title = "${voiceFile.vdfType} VDF V${voiceFile.vdfVersion / 1000.0f}"
-            val version = getTitle()
+            val version = VDFEditor.title
             val html = HTMLReport.generateHTML(name, title, version, voiceFile)
             PDFReport.save(pdf, html)
             Desktop.getDesktop().open(pdf)
@@ -1046,8 +1030,7 @@ class MainView : View() {
      * Upload VDF to transmitter
      */
     private fun onWriteToTransmitter() {
-        val task = SendVoiceFileTask(messages["write_to_transmitter"], voiceFile)
-        transmitterDialogView.openDialog(task)
+        transmitterDialogView.openDialog(SendVoiceFileTask(messages["write_to_transmitter"], voiceFile))
     }
 
     /**
@@ -1240,7 +1223,7 @@ class MainView : View() {
         // skipp if offline
         if (Util.OFFLINE) return
 
-        val currentVersion = getVersion()
+        val currentVersion = VDFEditor.version
         val latestVersion = Util.getLatestVersion("VDFEditor")
 
         if (currentVersion == Messages.getString("Launcher.Unknown")) {

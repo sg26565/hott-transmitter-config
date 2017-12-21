@@ -1,4 +1,5 @@
 import javafx.scene.paint.Color
+import javafx.stage.StageStyle
 import tornadofx.*
 
 fun main(args: Array<String>) = launch<MyApp>(args)
@@ -9,15 +10,14 @@ class MyApp : App() {
 
 class MyView : View() {
 	override val root = vbox {
-		val button = button {
-			text = "Press me!"
-		}
-		val label = label {
-			text = "not pressed"
-		}
-
-		button.action {
-			label.text = "pressed"
+		button("Press Me") {
+			action {
+				openInternalWindow(MyFragment::class)
+			}
 		}
 	}
+}
+
+class MyFragment: Fragment() {
+	override val root = label("This is a popup")
 }
