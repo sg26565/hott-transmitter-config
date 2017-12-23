@@ -11,11 +11,14 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.hott.model.serial.FileType
+import de.treichels.hott.model.enums.ModelType
+import de.treichels.hott.model.serial.FileInfo
+import de.treichels.hott.model.serial.ModelInfo
 import javafx.beans.binding.BooleanBinding
 import javafx.scene.control.SelectionMode
 import javafx.scene.control.TreeView
 import tornadofx.*
+import java.io.ByteArrayOutputStream
 import java.util.concurrent.Callable
 
 /**
@@ -24,34 +27,54 @@ import java.util.concurrent.Callable
 class SelectFromSdCard : SelectFromTransmitter() {
     private val treeView = TreeView<String>()
 
-    override fun isReady(): BooleanBinding = object : BooleanBinding() {
+    override fun isReady() = object : BooleanBinding() {
         override fun computeValue(): Boolean {
-            val item = treeView.selectionModel.selectedItem
+            val item = treeView.selectionModel.selectedItem as? TreeFileInfo
 
-            if (item != null && item is TreeFileInfo) {
-                val fileInfo = item.fileInfo
-                if (fileInfo != null)
-                    return (fileInfo.type == FileType.File && fileInfo.name.endsWith(".mdl") && fileInfo.size <= 0x3000 && fileInfo.size >= 0x2000)
-            }
+            return item != null && item.isReady
+        }
 
-            return false
+        init {
+            // invalidate this BooleanBinding when treeView selection changes
+            treeView.selectionModel.selectedItemProperty().addListener { _ -> invalidate() }
         }
     }
 
+    /**
+     * A [Callable] that retrieves the model data for the provided [FileInfo] from the SD card in the transmitter.
+     */
     override fun getResultCallable(): Callable<Model>? {
-        val fileInfo = (treeView.selectionModel.selectedItem as? TreeFileInfo)?.fileInfo
+        val item = treeView.selectionModel.selectedItem as? TreeFileInfo
+        val fileInfo = item?.fileInfo
 
-        return if (fileInfo != null) serialPort?.getModel(fileInfo) else null
+        return if (fileInfo != null) {
+            Callable {
+                val fileName = fileInfo.name
+                val type = ModelType.forChar(fileName[0])
+                val name = fileName.substring(1, fileName.length - 4)
+                val modelInfo = ModelInfo(0, name, type, null, null)
+                val data = serialPort?.use { p ->
+                    p.open()
+                    ByteArrayOutputStream().use { stream ->
+                        p.readFile(fileInfo.path, stream)
+                        stream.toByteArray()
+                    }
+                }
+
+                Model(modelInfo, data)
+            }
+        } else null
     }
 
     override fun refreshUITask() = treeView.runAsyncWithOverlay {
-        TreeFileInfo(messages["RootLabel"], serialPort)
+        TreeFileInfo(messages["root"], treeView, serialPort!!)
     }.ui {
         treeView.root = it
+        it.isExpanded = true
     }
 
     init {
-        title = messages["LoadFromSdCard"]
+        title = messages["select_from_sdcard_title"]
 
         root.center = treeView.apply {
             selectionModel.selectionMode = SelectionMode.SINGLE

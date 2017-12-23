@@ -15,10 +15,10 @@ import de.treichels.decoder.HoTTSerialPort
 import de.treichels.hott.model.serial.FileInfo
 import de.treichels.hott.model.serial.FileType
 import javafx.scene.control.TreeItem
+import javafx.scene.control.TreeView
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import tornadofx.*
-import tornadofx.FX.Companion.log
 import tornadofx.FX.Companion.messages
 
 private fun image(fileName: String): Image = Image(TreeFileInfo::class.java.getResource(fileName).toString())
@@ -28,27 +28,24 @@ private val openFolderImage = image("/Folder_open.gif")
 private val closedFolderImage = image("/Folder_closed.gif")
 private val rootFolderImage = image("/Root.gif")
 
-class TreeFileInfo(value: String, port: HoTTSerialPort? = null, internal val fileInfo: FileInfo? = null) : TreeItem<String>(value) {
-    // secondary constructor - retrieve value form fileInfo
-    internal constructor(info: FileInfo) : this(info.name, fileInfo = info)
-
+class TreeFileInfo(name: String, private val treeView: TreeView<String>, private val serialPort: HoTTSerialPort, internal val fileInfo: FileInfo? = null) : TreeItem<String>(name) {
     // helper
     private val isRoot = fileInfo == null
     private val isDir = fileInfo?.type == FileType.Dir
     private val isFile = fileInfo?.type == FileType.File
 
-    private val serialPort: HoTTSerialPort = port ?: getRoot().serialPort
+    internal val isReady
+        get() = fileInfo != null && isFile && value.endsWith(".mdl") && fileInfo.size <= 0x3000 && fileInfo.size >= 0x2000
 
     init {
         isExpanded = false
 
-        // update treeitem children on expand
+        // update treeItem children on expand
         expandedProperty().addListener { _ -> update() }
 
         when {
             isRoot -> {
                 graphic = ImageView(rootFolderImage)
-                isExpanded = true
             }
 
             isDir -> {
@@ -59,11 +56,6 @@ class TreeFileInfo(value: String, port: HoTTSerialPort? = null, internal val fil
                 graphic = ImageView(fileImage)
             }
         }
-    }
-
-    private fun getRoot(): TreeFileInfo {
-        val p: TreeFileInfo? = parent as? TreeFileInfo
-        return p?.getRoot() ?: this
     }
 
     private fun loading() {
@@ -79,37 +71,37 @@ class TreeFileInfo(value: String, port: HoTTSerialPort? = null, internal val fil
         when {
             isRoot -> {
                 if (isExpanded) {
-                    loading()
                     loadFromSdCard("/")
+                } else {
+                    loading()
                 }
             }
 
             isDir -> {
                 if (isExpanded) {
                     graphic = ImageView(openFolderImage)
-                    loading()
                     loadFromSdCard(fileInfo!!.path)
                 } else {
                     graphic = ImageView(closedFolderImage)
+                    loading()
                 }
             }
         }
     }
 
     private fun loadFromSdCard(path: String) {
-        log.info("loading entries for path $path from sd-card")
-
-        runAsync {
+        treeView.runAsyncWithOverlay {
             serialPort.use { p ->
-                log.info("start of background task")
                 p.open()
                 p.listDir(path).map { name ->
-                    log.info(name)
                     p.getFileInfo(name)
-                }.map { info -> TreeFileInfo(info) }
+                }.map { info ->
+                    TreeFileInfo(info.name, treeView, serialPort, info).apply {
+                        if (isDir) loading()
+                    }
+                }
             }
         }.success { list ->
-            log.info("end of background task")
             children.clear()
             children.addAll(list)
         }

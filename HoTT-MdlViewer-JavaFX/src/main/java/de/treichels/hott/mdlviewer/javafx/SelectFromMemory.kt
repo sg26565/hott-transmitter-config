@@ -39,11 +39,20 @@ class SelectFromMemory : SelectFromTransmitter() {
         val index = listView.selectionModel.selectedIndex
         val modelInfo = modelInfoList?.get(index)
 
-        return if (modelInfo != null) serialPort?.getModel(modelInfo) else null
+        return if (modelInfo != null) {
+            Callable {
+                val modelData = serialPort?.use { p ->
+                    p.open()
+                    p.getModelData(modelInfo)
+                }
+
+                Model(modelInfo, modelData)
+            }
+        } else null
     }
 
     init {
-        title = messages["LoadFromMemory"]
+        title = messages["select_from_memory_title"]
 
         // add to UI
         root.center {

@@ -39,8 +39,8 @@ abstract class SelectFromTransmitter : View() {
     private var portCombo by singleAssign<ComboBox<String>>()
     private var startButton by singleAssign<Button>()
 
-    // asynchronous result task - updated when the start button was pressed
-    private var resultTask: Task<Model>? = null
+    // asynchronous result - updated when the start button was pressed
+    private var result: Callable<Model>? = null
 
     // the current serial port - updated when the com port changes
     protected var serialPort: HoTTSerialPort? = null
@@ -52,7 +52,7 @@ abstract class SelectFromTransmitter : View() {
                 padding = insets(5.0)
                 alignment = Pos.CENTER_RIGHT
 
-                label(messages["SerialPort"]) {
+                label(messages["serial_port"]) {
                     font = Font.font(14.0)
                     padding = insets(right = 5.0)
                 }
@@ -67,11 +67,11 @@ abstract class SelectFromTransmitter : View() {
             buttonbar {
                 padding = insets(5.0)
 
-                startButton = button(messages["Load"], ButtonData.OK_DONE) {
+                startButton = button(messages["load"], ButtonData.OK_DONE) {
                     action { start() }
                 }
 
-                button(messages["Cancel"], ButtonData.CANCEL_CLOSE) {
+                button(messages["cancel"], ButtonData.CANCEL_CLOSE) {
                     action { close() }
                 }
             }
@@ -84,7 +84,7 @@ abstract class SelectFromTransmitter : View() {
     abstract protected fun refreshUITask(): Task<*>
 
     /**
-     * Subclass contract: A [Callable] that computes the [Model] result of the dialog in background
+     * Subclass contract: A [Task] that computes the [Model] result of the dialog in background
      */
     abstract protected fun getResultCallable(): Callable<Model>?
 
@@ -96,7 +96,7 @@ abstract class SelectFromTransmitter : View() {
     /**
      * Client contract: A [Task] that returns the [Model]
      */
-    fun getResult(): Task<Model>? = resultTask
+    fun getResult(): Callable<Model>? = result
 
     /**
      * The com port was changed, update bindings.
@@ -125,7 +125,7 @@ abstract class SelectFromTransmitter : View() {
      * Start result computation in background and close dialog.
      */
     private fun start() {
-        resultTask = getResultCallable()?.start()
+        result = getResultCallable()
         close()
     }
 
@@ -140,7 +140,7 @@ abstract class SelectFromTransmitter : View() {
      * Open a new dialog and return it's [Stage].
      */
     fun openDialog(): Stage? {
-        resultTask = null
+        result = null
 
         // disable start button - will be re-enabled in portChanged()
         startButton.disableProperty().unbind()

@@ -85,7 +85,7 @@ class Controller : View() {
 
                 contextmenu {
                     this@Controller.contextMenu = this
-                    item(messages["load_form_file"]) { action { loadFromFile() } }
+                    item(messages["load_from_file"]) { action { loadFromFile() } }
                     item(messages["load_from_memory"]) { action { loadFromMemory() } }
                     item(messages["load_from_sdcard"]) { action { loadFromSdCard() } }
                     separator()
@@ -128,15 +128,13 @@ class Controller : View() {
     }
 
     init {
-        log.info(this.javaClass.name)
-
         val params = app.parameters.unnamed
         if (params != null && params.size > 0 && params[0].endsWith(".mdl")) {
             Platform.runLater { load(File(params[0])) }
         }
 
-        primaryStage.icons.add(Image(javaClass.getResource("/icon.png").toString()))
-        primaryStage.title = messages["title"]// TODO, System.getProperty(MdlViewer.version))
+        title = "${messages["title"]} ${MdlViewer.version}"
+        setStageIcon(Image(javaClass.getResource("/icon.png").toString()))
     }
 
     private fun exit() {
@@ -164,24 +162,32 @@ class Controller : View() {
 
     private fun loadFromMemory() {
         selectFromMemory.openDialog()
-        selectFromMemory.getResult()?.apply {
-            disableUI(runningProperty())
-            success {
-                modelProperty.set(value)
+        val result = selectFromMemory.getResult()
+
+        if (result != null)
+            webView.runAsyncWithOverlay {
+                result.call()
+            }.apply {
+                disableUI(runningProperty())
+            }.success {
+                modelProperty.set(it)
                 refreshModel()
             }
-        }
     }
 
     private fun loadFromSdCard() {
         selectFromSDCard.openDialog()
-        selectFromSDCard.getResult()?.apply {
-            disableUI(runningProperty())
-            success {
-                modelProperty.set(value)
+        val result = selectFromSDCard.getResult()
+
+        if (result != null)
+            webView.runAsyncWithOverlay {
+                result.call()
+            }.apply {
+                disableUI(runningProperty())
+            }.success {
+                modelProperty.set(it)
                 refreshModel()
             }
-        }
     }
 
     private fun loadSystemVDF() {
@@ -231,14 +237,14 @@ class Controller : View() {
             val tempFile = File.createTempFile("Model", ".html")
             tempFile.deleteOnExit()
 
-            val task = webView.runAsyncWithOverlay {
+            webView.runAsyncWithOverlay {
                 FileWriter(tempFile).use { it.write(m.html) }
-            } ui {
+            }.apply {
+                disableUI(runningProperty())
+            }.ui {
                 webView.engine.load("file:/${tempFile.absolutePath}")
                 runLater { tempFile.delete() }
             }
-
-            disableUI(task.runningProperty())
         }
     }
 
