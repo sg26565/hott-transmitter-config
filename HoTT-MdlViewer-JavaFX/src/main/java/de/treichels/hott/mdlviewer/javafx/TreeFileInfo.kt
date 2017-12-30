@@ -11,7 +11,7 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.model.serial.FileInfo
 import de.treichels.hott.model.serial.FileType
 import javafx.scene.control.TreeItem
@@ -21,14 +21,17 @@ import javafx.scene.image.ImageView
 import tornadofx.*
 import tornadofx.FX.Companion.messages
 
-private fun image(fileName: String): Image = Image(TreeFileInfo::class.java.getResource(fileName).toString())
-
-private val fileImage = image("/File.gif")
-private val openFolderImage = image("/Folder_open.gif")
-private val closedFolderImage = image("/Folder_closed.gif")
-private val rootFolderImage = image("/Root.gif")
 
 class TreeFileInfo(name: String, private val treeView: TreeView<String>, private val serialPort: HoTTSerialPort, internal val fileInfo: FileInfo? = null) : TreeItem<String>(name) {
+    companion object {
+        private fun image(fileName: String): Image = Image(TreeFileInfo::class.java.getResource(fileName).toString())
+
+        private val fileImage = image("/File.gif")
+        private val openFolderImage = image("/Folder_open.gif")
+        private val closedFolderImage = image("/Folder_closed.gif")
+        private val rootFolderImage = image("/Root.gif")
+    }
+
     // helper
     private val isRoot = fileInfo == null
     private val isDir = fileInfo?.type == FileType.Dir

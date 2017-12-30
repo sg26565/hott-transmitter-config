@@ -11,24 +11,18 @@
  */
 package de.treichels.hott.mdlviewer.swt;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Base64;
-
+import de.treichels.hott.model.Curve;
+import de.treichels.hott.model.CurvePoint;
 import de.treichels.hott.report.html.CurveImageGenerator;
+import de.treichels.hott.util.Util;
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.ImageLoader;
+import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.Display;
 
-import de.treichels.hott.model.Curve;
-import de.treichels.hott.model.CurvePoint;
-import de.treichels.hott.util.Util;
+import java.io.ByteArrayOutputStream;
+import java.util.Base64;
 
 /**
  * Generate offline PNG image using SWT.
@@ -38,7 +32,7 @@ import de.treichels.hott.util.Util;
 public class SwtCurveImageGenerator implements CurveImageGenerator {
     private Image getImage(final Curve curve, final float scale, final boolean description) {
         // pitch curves start with 0% instead of -100%
-        final boolean pitchCurve = curve.getPoint()[0].getPosition() == 0;
+        final boolean pitchCurve = curve.getPoint().get(0).getPosition() == 0;
 
         Image image = null;
         GC g = null;
@@ -195,7 +189,7 @@ public class SwtCurveImageGenerator implements CurveImageGenerator {
             imageLoader.data = new ImageData[] { image.getImageData() };
             imageLoader.save(baos, SWT.IMAGE_PNG);
         } catch (final Exception e) {
-            if (Util.DEBUG) e.printStackTrace();
+            if (Util.INSTANCE.getDEBUG()) e.printStackTrace();
         }
 
         return PREFIX + Base64.getEncoder().encodeToString(baos.toByteArray());

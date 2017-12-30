@@ -11,29 +11,23 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.hott.messages.Messages
-import de.treichels.hott.util.ExceptionDialog
 import tornadofx.*
+import tornadofx.FX.Companion.messages
 import java.io.File
 import java.util.jar.JarFile
 import java.util.logging.LogManager
-
-fun main(args: Array<String>) {
-    Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
-    launch<MdlViewer>(args)
-}
 
 class MdlViewer : App() {
     companion object {
         private val sourceLocation = File(MdlViewer::class.java.protectionDomain.codeSource.location.toURI())
 
         val version: String by lazy {
-            var result = Messages.getString("Launcher.Unknown")
+            var result = messages["unknown"]
 
             if (sourceLocation.name.endsWith(".jar") || sourceLocation.name.endsWith(".exe"))
                 JarFile(sourceLocation).use { jarFile ->
                     val attributes = jarFile.manifest.mainAttributes
-                    result = Messages.getString("Launcher.Version", attributes.getValue("Implementation-Version"), attributes.getValue("Implementation-Build"))
+                    result = "v${attributes.getValue("Implementation-Version")}.${attributes.getValue("Implementation-Build")}"
                 }
 
             result
@@ -49,8 +43,9 @@ class MdlViewer : App() {
     }
 
     init {
+        // setup logging
         LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
     }
 
-    override val primaryView = Controller::class
+    override val primaryView = MainView::class
 }

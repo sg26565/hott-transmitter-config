@@ -1,9 +1,9 @@
-import de.treichels.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.model.enums.ModelType
 import de.treichels.hott.model.serial.JSSCSerialPort
 
 fun main(args: Array<String>) {
-    val availablePorts = JSSCSerialPort.getAvailablePorts()
+    val availablePorts = JSSCSerialPort.availablePorts
 
     for (i in 1..10) {
         val port = JSSCSerialPort(availablePorts.first())

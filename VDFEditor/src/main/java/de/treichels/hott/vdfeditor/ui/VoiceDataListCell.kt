@@ -59,7 +59,7 @@ class VoiceDataListCell internal constructor(private val controller: MainView) :
 
         textField = textfield {
             text = when (controller.voiceFile.vdfType) {
-            // strip index number from name
+            // strip index number from portName
                 VDFType.System -> cellText.substring(if (index > 98) 4 else 3)
                 else -> cellText
             }

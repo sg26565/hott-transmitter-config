@@ -20,7 +20,7 @@
 				<@reset/>
 
 				<#list phase.control as control>
-					<tr class="<@d/> <@u (phase.number == "0" || control.mode.name() != "Global")/>">
+					<tr class="<@d/> <@u (phase.number == 0 || control.mode.name() != "Global")/>">
 						<#if helicopterModel?? && control.number?number == 15>
 							<td align="center">Gaslimiter</td>
 						<#else>

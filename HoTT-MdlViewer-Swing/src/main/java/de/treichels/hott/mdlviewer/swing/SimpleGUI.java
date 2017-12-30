@@ -87,7 +87,7 @@ public class SimpleGUI {
                 final BaseModel m = loader.getModel();
                 if (m != null) model = m;
             } catch (final Exception e) {
-                if (Util.DEBUG) e.printStackTrace();
+                if (Util.INSTANCE.getDEBUG()) e.printStackTrace();
                 JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
             }
             return null;
@@ -123,7 +123,7 @@ public class SimpleGUI {
                     publish(html);
                 }
             } catch (final Exception e) {
-                if (Util.DEBUG) e.printStackTrace();
+                if (Util.INSTANCE.getDEBUG()) e.printStackTrace();
                 JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
             }
 
@@ -215,7 +215,7 @@ public class SimpleGUI {
                     }
                 }
             } catch (final Exception e) {
-                if (Util.DEBUG) e.printStackTrace();
+                if (Util.INSTANCE.getDEBUG()) e.printStackTrace();
                 JOptionPane.showMessageDialog(frame, e, Messages.getString("Error"), JOptionPane.ERROR_MESSAGE);
             }
 

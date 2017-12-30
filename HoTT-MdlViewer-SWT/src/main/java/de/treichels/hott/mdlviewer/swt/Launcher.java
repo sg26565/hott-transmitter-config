@@ -41,7 +41,7 @@ public class Launcher {
             // nope - we need to add it
 
             // determine correct swt jar
-            String osName = System.getProperty("os.name").toLowerCase(); //$NON-NLS-1$
+            String osName = System.getProperty("os.portName").toLowerCase(); //$NON-NLS-1$
             if (osName.startsWith("linux"))
                 osName = "linux"; //$NON-NLS-1$
             else if (osName.startsWith("windows"))
@@ -113,7 +113,7 @@ public class Launcher {
 
         if (!System.getProperties().containsKey(LOG_DIR)) System.setProperty(LOG_DIR, System.getProperty(PROGRAM_DIR));
 
-        if (Util.DEBUG) {
+        if (Util.INSTANCE.getDEBUG()) {
             System.out.printf("program.dir = %s%n", System.getProperty(PROGRAM_DIR)); //$NON-NLS-1$
             System.out.printf("mdl.dir = %s%n", System.getProperty(MDL_DIR)); //$NON-NLS-1$
             System.out.printf("log.dir = %s%n", System.getProperty(LOG_DIR)); //$NON-NLS-1$

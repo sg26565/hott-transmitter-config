@@ -11,7 +11,7 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.model.enums.ModelType
 import de.treichels.hott.model.serial.ModelInfo
 import javafx.beans.binding.BooleanBinding
@@ -67,7 +67,6 @@ class SelectFromMemory : SelectFromTransmitter() {
     /**
      * Refresh a [ListView] with a list of all models from the transmitter memory using the [HoTTSerialPort] from parent.
      */
-    @Synchronized
     private fun ListView<String>.loadFromMemory(): Task<*> {
         items.clear()
 
@@ -79,7 +78,7 @@ class SelectFromMemory : SelectFromTransmitter() {
             serialPort?.use { p ->
                 p.open()
                 p.allModelInfos
-            }?.filter { it?.modelType != ModelType.Unknown } ?: listOf()
+            }?.filter { it.modelType != ModelType.Unknown } ?: listOf()
         }.success { list ->
             // save result
             modelInfoList = list
@@ -88,7 +87,7 @@ class SelectFromMemory : SelectFromTransmitter() {
             items.clear()
 
             // translate list of ModelInfo to list of String
-            items.addAll(list.map { info -> String.format("%02d: %c%s.mdl", info.modelNumber + 1, info.modelType?.char, info.modelName) })
+            items.addAll(list.map { info -> String.format("%02d: %c%s.mdl", info.modelNumber + 1, info.modelType.char, info.modelName) })
         }
     }
 }

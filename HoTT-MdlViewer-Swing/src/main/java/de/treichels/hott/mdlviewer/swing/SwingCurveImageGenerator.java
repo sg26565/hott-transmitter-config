@@ -11,24 +11,18 @@
  */
 package de.treichels.hott.mdlviewer.swing;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Base64;
-
-import javax.imageio.ImageIO;
-
+import de.treichels.hott.model.Curve;
+import de.treichels.hott.model.CurvePoint;
 import de.treichels.hott.report.html.CurveImageGenerator;
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 
-import de.treichels.hott.model.Curve;
-import de.treichels.hott.model.CurvePoint;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Base64;
 
 /**
  * Generate offline PNG image using Swing.
@@ -37,7 +31,7 @@ import de.treichels.hott.model.CurvePoint;
  */
 public class SwingCurveImageGenerator implements CurveImageGenerator {
     private BufferedImage getImage(final Curve curve, final float scale, final boolean description) {
-        final boolean pitchCurve = curve.getPoint()[0].getPosition() == 0;
+        final boolean pitchCurve = curve.getPoint().get(0).getPosition() == 0;
 
         final BufferedImage image = new BufferedImage((int) (10 + 200 * scale), (int) (10 + 250 * scale), BufferedImage.TYPE_INT_RGB);
 

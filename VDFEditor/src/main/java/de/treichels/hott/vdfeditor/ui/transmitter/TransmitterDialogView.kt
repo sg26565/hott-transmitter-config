@@ -1,6 +1,6 @@
 package de.treichels.hott.vdfeditor.ui.transmitter
 
-import de.treichels.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.vdfeditor.ui.MessageDialog
 import de.treichels.hott.model.serial.JSSCSerialPort
 import de.treichels.hott.util.ExceptionDialog
@@ -134,7 +134,7 @@ class TransmitterDialogView : View() {
 
             // (re-) load available com ports
             runAsync {
-                JSSCSerialPort.getAvailablePorts()
+                JSSCSerialPort.availablePorts
             } success { ports ->
                 items.clear()
                 items.addAll(ports)

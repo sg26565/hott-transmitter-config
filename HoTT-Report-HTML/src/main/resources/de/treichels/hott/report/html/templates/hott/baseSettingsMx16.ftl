@@ -129,7 +129,7 @@
 
 		<@reset/>
 		<#list model.phase as phase>
-			<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
+			<#if phase.number != -1 && phase.phaseType.name() != "Unused">
 				<tr class="<@d/>">
 					<th align="right">Phase ${phase.number?number+1}</th>
 					<td align="center">${phase.phaseName}</td>

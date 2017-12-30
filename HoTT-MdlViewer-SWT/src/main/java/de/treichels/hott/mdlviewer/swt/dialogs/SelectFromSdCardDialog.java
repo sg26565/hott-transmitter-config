@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 
-import de.treichels.decoder.HoTTDecoder;
+import de.treichels.hott.decoder.HoTTDecoder;
 import de.treichels.hott.model.enums.ModelType;
 import de.treichels.hott.model.serial.FileInfo;
 import de.treichels.hott.model.serial.FileType;
@@ -96,7 +96,7 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
                         }
 
                         final ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
-                        model = HoTTDecoder.decodeStream(type, name, is);
+                        model = HoTTDecoder.INSTANCE.decodeStream(type, name, is);
                     }
                 }
             } catch (final Throwable t) {

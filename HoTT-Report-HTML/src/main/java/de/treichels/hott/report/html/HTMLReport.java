@@ -92,7 +92,7 @@ public class HTMLReport {
         CONFIGURATION.setClassForTemplateLoading(HTMLReport.class, "templates/hott");
 
         final Map<String, Object> rootMap = new HashMap<>();
-        rootMap.put("name", name);
+        rootMap.put("portName", name);
         rootMap.put("title", title);
         rootMap.put("version", version);
         rootMap.put("voicefile", voiceFile);

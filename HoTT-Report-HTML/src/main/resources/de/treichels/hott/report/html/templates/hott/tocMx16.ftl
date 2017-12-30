@@ -4,7 +4,7 @@
 <a href="#controls0">Gebereinstellungen</a>
 <div>DualRate Expo</div>
 <#list model.phase as phase>
-	<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
+	<#if phase.number != -1 && phase.phaseType.name() != "Unused">
 		<a class="i1" href="#drExpo${phase.number}">${phase?string}</a>
 	</#if>
 </#list>
@@ -15,7 +15,7 @@
 <#if helicopterModel??>
 	<div>Helikoptermix</div>
 	<#list model.phase as phase>
-		<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
+		<#if phase.number != -1 && phase.phaseType.name() != "Unused">
 			<a class="i1" href="#helicopterMix${phase.number}">${phase?string}</a>
 		</#if>
 	</#list>

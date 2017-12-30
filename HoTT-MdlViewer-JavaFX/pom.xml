@@ -29,7 +29,7 @@
 					<transformers>
 						<transformer
 							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-							<mainClass>Launcher</mainClass>
+							<mainClass>de.treichels.hott.mdlviewer.javafx.MainKt</mainClass>
 						</transformer>
 					</transformers>
 				</configuration>

@@ -1,19 +1,17 @@
 package de.treichels.hott.mdlviewer.swing;
 
-import java.awt.BorderLayout;
+import de.treichels.hott.decoder.HoTTDecoder;
+import de.treichels.hott.messages.Messages;
+import de.treichels.hott.model.BaseModel;
+import de.treichels.hott.util.ModelLoader;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import de.treichels.decoder.HoTTDecoder;
-import de.treichels.hott.messages.Messages;
-import de.treichels.hott.model.BaseModel;
-import de.treichels.hott.util.ModelLoader;
 
 public class SelectFromFile extends JPanel implements ModelLoader {
     private static final long serialVersionUID = 1L;
@@ -21,7 +19,7 @@ public class SelectFromFile extends JPanel implements ModelLoader {
     private final JFileChooser chooser = new JFileChooser();
     private File file = null;
 
-    public SelectFromFile() {
+    SelectFromFile() {
         chooser.setControlButtonsAreShown(false);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.setMultiSelectionEnabled(false);
@@ -37,7 +35,7 @@ public class SelectFromFile extends JPanel implements ModelLoader {
     public BaseModel getModel() throws IOException {
         if (file == null) return null;
 
-        return HoTTDecoder.decodeFile(file);
+        return HoTTDecoder.INSTANCE.decodeFile(file);
     }
 
     @Override

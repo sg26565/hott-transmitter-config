@@ -17,7 +17,7 @@
 		
 		<tbody>
 			<#list wingedModel.phase as phase>
-				<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
+				<#if phase.number != -1 && phase.phaseType.name() != "Unused">
 					<tr class="<@d/>">
 						<td align="center">${phase?string}</td>
 						<td align="center">${phase.wingTrim.elevatorPhaseTrim}%</td>

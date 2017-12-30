@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 
-import de.treichels.decoder.HoTTSerialPort;
+import de.treichels.hott.decoder.HoTTSerialPort;
 import de.treichels.hott.messages.Messages;
 import de.treichels.hott.model.BaseModel;
 import de.treichels.hott.model.serial.JSSCSerialPort;
@@ -52,7 +52,7 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
     }
 
     static final Preferences PREFS = Preferences.userNodeForPackage(SelectFromTransmitterDialog.class);
-    private final List<String> portNames = JSSCSerialPort.getAvailablePorts();
+    private final List<String> portNames = JSSCSerialPort.Companion.getAvailablePorts();
     protected HoTTSerialPort port = null;
     protected BaseModel model = null;
     private Combo combo;
@@ -155,6 +155,6 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
         mb.setText(t.getClass().getSimpleName());
         mb.setMessage(t.getMessage() == null ? t.getClass().getSimpleName() : t.getMessage());
         mb.open();
-        if (Util.DEBUG) t.printStackTrace();
+        if (Util.INSTANCE.getDEBUG()) t.printStackTrace();
     }
 }

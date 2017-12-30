@@ -4,7 +4,7 @@
 	<bookmark href="#controls0" name="Gebereinstellungen" />
 	<bookmark href="#drExpo0" name="DualRate Expo">
 		<#list model.phase as phase>
-			<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
+			<#if phase.number != -1 && phase.phaseType.name() != "Unused">
 				<bookmark href="#drExpo${phase.number}" name="${phase?string}" />
 			</#if>
 		</#list>
@@ -16,7 +16,7 @@
 	<#if helicopterModel??>
 		<bookmark href="#helicopterMix0" name="Helikoptermix">
 			<#list model.phase as phase>
-				<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
+				<#if phase.number != -1 && phase.phaseType.name() != "Unused">
 					<bookmark href="#helicopterMix${phase.number}" name="${phase?string}" />
 				</#if>
 			</#list>

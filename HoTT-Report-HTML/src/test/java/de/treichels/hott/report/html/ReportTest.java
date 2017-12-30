@@ -12,24 +12,18 @@
 
 package de.treichels.hott.report.html;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import de.treichels.hott.decoder.HoTTDecoder;
+import de.treichels.hott.model.BaseModel;
+import de.treichels.hott.model.enums.TransmitterType;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import javax.xml.bind.JAXBException;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import de.treichels.decoder.HoTTDecoder;
-import freemarker.template.TemplateException;
-import de.treichels.hott.model.BaseModel;
-import de.treichels.hott.model.enums.TransmitterType;
+import static org.junit.Assert.*;
 
 public class ReportTest {
     private static final FileFilter filter = f -> f.getName().endsWith(".mdl");
@@ -42,10 +36,10 @@ public class ReportTest {
 
     @Test
     public void testMc20Models() throws URISyntaxException, IOException {
-        final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc20").toURI()); //$NON-NLS-1$
+        final File dir = new File(ClassLoader.getSystemResource("de/treichels/hott/report/html/models/mc20").toURI()); //$NON-NLS-1$
 
         for (final File file : dir.listFiles(filter)) {
-            final BaseModel model = HoTTDecoder.decodeFile(file);
+            final BaseModel model = HoTTDecoder.INSTANCE.decodeFile(file);
 
             assertEquals(TransmitterType.mc20, model.getTransmitterType());
 
@@ -57,10 +51,10 @@ public class ReportTest {
 
     @Test
     public void testMc28Models() throws URISyntaxException, IOException {
-        final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc28").toURI()); //$NON-NLS-1$
+        final File dir = new File(ClassLoader.getSystemResource("de/treichels/hott/report/html/models/mc28").toURI()); //$NON-NLS-1$
 
         for (final File file : dir.listFiles(filter)) {
-            final BaseModel model = HoTTDecoder.decodeFile(file);
+            final BaseModel model = HoTTDecoder.INSTANCE.decodeFile(file);
 
             assertEquals(TransmitterType.mc28, model.getTransmitterType());
 
@@ -72,10 +66,10 @@ public class ReportTest {
 
     @Test
     public void testMc32Models() throws URISyntaxException, IOException {
-        final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mc32").toURI()); //$NON-NLS-1$
+        final File dir = new File(ClassLoader.getSystemResource("de/treichels/hott/report/html/models/mc32").toURI()); //$NON-NLS-1$
 
         for (final File file : dir.listFiles(filter)) {
-            final BaseModel model = HoTTDecoder.decodeFile(file);
+            final BaseModel model = HoTTDecoder.INSTANCE.decodeFile(file);
 
             assertEquals(TransmitterType.mc32, model.getTransmitterType());
 
@@ -87,10 +81,10 @@ public class ReportTest {
 
     @Test
     public void testMx12Models() throws URISyntaxException, IOException {
-        final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx12").toURI()); //$NON-NLS-1$
+        final File dir = new File(ClassLoader.getSystemResource("de/treichels/hott/report/html/models/mx12").toURI()); //$NON-NLS-1$
 
         for (final File file : dir.listFiles(filter)) {
-            final BaseModel model = HoTTDecoder.decodeFile(file);
+            final BaseModel model = HoTTDecoder.INSTANCE.decodeFile(file);
 
             assertEquals(TransmitterType.mx12, model.getTransmitterType());
 
@@ -102,10 +96,10 @@ public class ReportTest {
 
     @Test
     public void testMx16Models() throws URISyntaxException, IOException {
-        final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx16").toURI()); //$NON-NLS-1$
+        final File dir = new File(ClassLoader.getSystemResource("de/treichels/hott/report/html/models/mx16").toURI()); //$NON-NLS-1$
 
         for (final File file : dir.listFiles(filter)) {
-            final BaseModel model = HoTTDecoder.decodeFile(file);
+            final BaseModel model = HoTTDecoder.INSTANCE.decodeFile(file);
 
             assertEquals(TransmitterType.mx16, model.getTransmitterType());
 
@@ -117,10 +111,10 @@ public class ReportTest {
 
     @Test
     public void testMx20Models() throws URISyntaxException, IOException {
-        final File dir = new File(ClassLoader.getSystemResource("gde/report/html/models/mx20").toURI()); //$NON-NLS-1$
+        final File dir = new File(ClassLoader.getSystemResource("de/treichels/hott/report/html/models/mx20").toURI()); //$NON-NLS-1$
 
         for (final File file : dir.listFiles(filter)) {
-            final BaseModel model = HoTTDecoder.decodeFile(file);
+            final BaseModel model = HoTTDecoder.INSTANCE.decodeFile(file);
 
             assertEquals(TransmitterType.mx20, model.getTransmitterType());
 

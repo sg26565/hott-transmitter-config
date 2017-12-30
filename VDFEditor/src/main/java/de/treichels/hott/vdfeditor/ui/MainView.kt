@@ -1,13 +1,7 @@
 package de.treichels.hott.vdfeditor.ui
 
-import de.treichels.decoder.HoTTDecoder
-import de.treichels.decoder.HoTTSerialPort
-import de.treichels.hott.vdfeditor.actions.*
-import de.treichels.hott.vdfeditor.ui.transmitter.LoadVoiceFileTask
-import de.treichels.hott.vdfeditor.ui.transmitter.SendVoiceFileTask
-import de.treichels.hott.vdfeditor.ui.transmitter.TransmitterDialogView
-import de.treichels.hott.vdfeditor.ui.tts.SpeechDialog
-import de.treichels.hott.vdfeditor.ui.tts.Text2SpeechTask
+import de.treichels.hott.decoder.HoTTDecoder
+import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.model.HoTTException
 import de.treichels.hott.model.enums.TransmitterType
@@ -16,6 +10,12 @@ import de.treichels.hott.report.html.HTMLReport
 import de.treichels.hott.report.pdf.PDFReport
 import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.util.Util
+import de.treichels.hott.vdfeditor.actions.*
+import de.treichels.hott.vdfeditor.ui.transmitter.LoadVoiceFileTask
+import de.treichels.hott.vdfeditor.ui.transmitter.SendVoiceFileTask
+import de.treichels.hott.vdfeditor.ui.transmitter.TransmitterDialogView
+import de.treichels.hott.vdfeditor.ui.tts.SpeechDialog
+import de.treichels.hott.vdfeditor.ui.tts.Text2SpeechTask
 import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
 import javafx.geometry.Pos
@@ -285,14 +285,14 @@ class MainView : View() {
         TransmitterType.values().filter { it != TransmitterType.unknown }.forEach { transmitterType ->
             restoreMenu.items.add(Menu(transmitterType.toString()).apply {
                 for (variant in listOf(null, "Mikrocopter", "Team", "Team-schnell")) {
-                    // base name
+                    // base portName
                     val baseName = when (transmitterType) {
                         TransmitterType.mc26, TransmitterType.mc28 -> "Voice3_mc28"
                         else -> "Voice3"
                     }
 
                     for (language in Language.values()) {
-                        // menu name
+                        // menu portName
                         val menuName = when (variant) {
                             null -> "$language"
                             else -> "$language ($variant)"
@@ -499,7 +499,7 @@ class MainView : View() {
     }
 
     /**
-     * Check that VDF is still valid after changing the country code
+     * Check that VDF is still valid after changing the country pcmd
      */
     private fun onCountryCodeChanged() {
         val oldCountry = voiceFile.country
@@ -543,7 +543,7 @@ class MainView : View() {
      *
      *  * **Drop on desktop**: Create temporary .wav files for any selected item and add the path to the clipboard.
      *  * **Another VDFEditor instance**: Serialize any selected item into the clipboard.
-     *  * **other (e.g. text editor)**: Add the name of any selected item as comma separated list to the clipboard.
+     *  * **other (e.g. text editor)**: Add the portName of any selected item as comma separated list to the clipboard.
      */
     private fun onDragDetected(ev: MouseEvent) {
         deleteTempFiles()
@@ -569,7 +569,7 @@ class MainView : View() {
         // VDFEditor: serialize selected items for DnD to other VDFEditor instance
         content.put(dndDataFormat, selectedItems.toTypedArray())
 
-        // other: item name for DnD to editor or text field
+        // other: item portName for DnD to editor or text field
         content.putString(selectedItems.joinToString(",", transform = VoiceData::name))
 
         // add content to dragboard and start DnD
@@ -808,7 +808,7 @@ class MainView : View() {
                 if (dir.exists() && dir.isDirectory) chooser.initialDirectory = dir
             }
 
-            // setup file name filter
+            // setup file portName filter
             chooser.extensionFilters.add(ExtensionFilter(messages["vdf_files"], EXT_VDF))
 
             val vdf = chooser.showOpenDialog(primaryStage)
@@ -858,10 +858,10 @@ class MainView : View() {
             if (dir.exists() && dir.isDirectory) chooser.initialDirectory = dir
         }
 
-        // setup file name filter
+        // setup file portName filter
         chooser.extensionFilters.add(ExtensionFilter(messages["pdf_files"], EXT_PDF))
 
-        // preset report name
+        // preset report portName
         if (vdfFile != null) {
             val fileName = vdfFile.name.replace(VDF, PDF)
             chooser.initialFileName = fileName
@@ -921,7 +921,7 @@ class MainView : View() {
     private fun onSaveVDF(): Boolean = isDirty and checkSizeBeforeSave() and save(vdfFile)
 
     /**
-     * Show dialog to save the currentAction VDF under a new name.
+     * Show dialog to save the currentAction VDF under a new portName.
      *
      * This method will remember the directory being used.
      */
@@ -937,7 +937,7 @@ class MainView : View() {
             if (dir.exists() && dir.isDirectory) chooser.initialDirectory = dir
         }
 
-        // setup file name filter
+        // setup file portName filter
         chooser.extensionFilters.add(ExtensionFilter(messages["vdf_files"], EXT_VDF))
 
         val vdf = chooser.showSaveDialog(listView.scene.window)
@@ -1084,7 +1084,7 @@ class MainView : View() {
                             }
                         }
 
-                        // enforce name for system VDFs
+                        // enforce portName for system VDFs
                         if (isSystemVDF) {
                             val matcher = namePattern.matcher(name1)
                             val newName = if (matcher.matches())
@@ -1170,7 +1170,7 @@ class MainView : View() {
             if (dir.exists() && dir.isDirectory) chooser.initialDirectory = dir
         }
 
-        // setup file name filter
+        // setup file portName filter
         chooser.extensionFilters.add(ExtensionFilter(messages["sound_files"], EXT_WAV, EXT_MP3, EXT_OGG))
         chooser.extensionFilters.add(ExtensionFilter(messages["wav_files"], EXT_WAV))
         chooser.extensionFilters.add(ExtensionFilter(messages["mp3_files"], EXT_MP3))

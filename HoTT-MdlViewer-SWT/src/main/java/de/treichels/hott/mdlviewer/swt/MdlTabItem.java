@@ -27,9 +27,9 @@ import de.treichels.hott.util.Util;
  * tab item for DataExplorer integration of MDL reading and display purpose this tab item is target to be included in DataExplorer
  */
 public class MdlTabItem extends CTabItem {
-    public static final boolean IS_WINDOWS = System.getProperty("os.name").toLowerCase().startsWith("windows"); //$NON-NLS-1$ //$NON-NLS-2$
-    public static final boolean IS_LINUX = System.getProperty("os.name").toLowerCase().startsWith("linux"); //$NON-NLS-1$ //$NON-NLS-2$
-    public static final boolean IS_MAC = System.getProperty("os.name").toLowerCase().startsWith("mac"); //$NON-NLS-1$ //$NON-NLS-2$
+    public static final boolean IS_WINDOWS = System.getProperty("os.portName").toLowerCase().startsWith("windows"); //$NON-NLS-1$ //$NON-NLS-2$
+    public static final boolean IS_LINUX = System.getProperty("os.portName").toLowerCase().startsWith("linux"); //$NON-NLS-1$ //$NON-NLS-2$
+    public static final boolean IS_MAC = System.getProperty("os.portName").toLowerCase().startsWith("mac"); //$NON-NLS-1$ //$NON-NLS-2$
 
     public final static int WIDGET_FONT_SIZE = MdlTabItem.IS_MAC ? 12 : (MdlTabItem.IS_LINUX ? 8 : 9) * 96 / Display.getDefault().getDPI().y;
     public final static String WIDGET_FONT_NAME = MdlTabItem.IS_WINDOWS ? "Microsoft Sans Serif" : "Sans Serif"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -58,7 +58,7 @@ public class MdlTabItem extends CTabItem {
         try {
             if (System.getProperty(Launcher.PROGRAM_VERSION) == null) Launcher.initSystemProperties();
         } catch (final Exception e) {
-            if (Util.DEBUG) e.printStackTrace();
+            if (Util.INSTANCE.getDEBUG()) e.printStackTrace();
         }
 
         setControl(new MdlTabItemComposite(parent));

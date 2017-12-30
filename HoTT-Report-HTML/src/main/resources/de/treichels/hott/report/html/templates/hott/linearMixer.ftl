@@ -1,6 +1,6 @@
 <#assign show=false/>
 <#list model.freeMixer as mixer>
-	<#if mixer.fromChannel.number != "0" && mixer.toChannel.number != "0" && mixer_index < 8>
+	<#if mixer.fromChannel.number != 0 && mixer.toChannel.number != 0 && mixer_index < 8>
 		<#assign show=true/>
 		<#break>
 	</#if>
@@ -26,7 +26,7 @@
 	<tbody>	
 		<#list model.freeMixer as mixer>
 			<#if mixer_index < 8>
-				<tr class="<@d/> <@u mixer.fromChannel.number != "0" && mixer.toChannel.number != "0"/>">
+				<tr class="<@d/> <@u mixer.fromChannel.number != 0 && mixer.toChannel.number != 0/>">
 					<td align="center">LinearMix ${mixer.number?number+1}</td>
 					<td align="center">${mixer.inputType}</td>
 					<td align="center"><#if mixer.fromChannel.virtual>S<#else>${mixer.fromChannel.number}</#if> &rarr; ${mixer.toChannel.number}</td>

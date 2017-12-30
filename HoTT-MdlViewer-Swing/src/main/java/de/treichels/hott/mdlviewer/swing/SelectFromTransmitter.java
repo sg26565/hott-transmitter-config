@@ -16,7 +16,7 @@ import javax.swing.JLayer;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import de.treichels.decoder.HoTTSerialPort;
+import de.treichels.hott.decoder.HoTTSerialPort;
 import de.treichels.hott.messages.Messages;
 import de.treichels.hott.model.serial.JSSCSerialPort;
 import de.treichels.hott.util.ModelLoader;
@@ -40,7 +40,7 @@ public abstract class SelectFromTransmitter extends JPanel implements ModelLoade
     }
 
     private static final long serialVersionUID = 1L;
-    private static final List<String> portNames = JSSCSerialPort.getAvailablePorts();
+    private static final List<String> portNames = JSSCSerialPort.Companion.getAvailablePorts();
 
     protected static void delay() {
         try {

@@ -1,5 +1,5 @@
 <#list model.phase as phase>
-	<#if phase.number != "-1" && phase.phaseType.name() != "Unused">
+	<#if phase.number != -1 && phase.phaseType.name() != "Unused">
 		<table>
 			<caption><a name="drExpo${phase.number}"/>DualRate Expo - ${phase?string}</caption>
 			

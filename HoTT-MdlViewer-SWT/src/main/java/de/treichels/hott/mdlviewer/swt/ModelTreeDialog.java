@@ -61,7 +61,7 @@ public class ModelTreeDialog extends org.eclipse.swt.widgets.Dialog {
             final ModelTreeDialog inst = new ModelTreeDialog(shell, SWT.NULL);
             inst.open();
         } catch (final Exception e) {
-            if (Util.DEBUG) e.printStackTrace();
+            if (Util.INSTANCE.getDEBUG()) e.printStackTrace();
         }
     }
 
@@ -168,7 +168,7 @@ public class ModelTreeDialog extends org.eclipse.swt.widgets.Dialog {
             while (!dialogShell.isDisposed())
                 if (!display.readAndDispatch()) display.sleep();
         } catch (final Exception e) {
-            if (Util.DEBUG) e.printStackTrace();
+            if (Util.INSTANCE.getDEBUG()) e.printStackTrace();
         }
     }
 }

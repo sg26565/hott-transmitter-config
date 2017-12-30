@@ -101,7 +101,7 @@ enum class SampleRate {
 }
 
 class VoiceRSS(val apiKey: String = VOICE_RSS_DEFAULT_API_KEY, var text: String = "", var language: VoiceRssLanguage = VoiceRssLanguage.de_de, var speed: Int = 0, var codec: Codec = Codec.WAV, var format: Format = Format.pcm_22khz_16bit_mono, var isBase64: Boolean = false) : Text2Speech {
-    // Give file a fancy name
+    // Give file a fancy portName
     // remove unsafe characters
     // shorten to 17 characters
     val file: File

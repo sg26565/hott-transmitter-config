@@ -11,7 +11,7 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.model.serial.JSSCSerialPort
 import de.treichels.hott.util.ExceptionDialog
 import javafx.beans.binding.BooleanBinding
@@ -84,19 +84,14 @@ abstract class SelectFromTransmitter : View() {
     abstract protected fun refreshUITask(): Task<*>
 
     /**
-     * Subclass contract: A [Task] that computes the [Model] result of the dialog in background
+     * Subclass contract: A [Callable] that computes the [Model] result of the dialog in background
      */
     abstract protected fun getResultCallable(): Callable<Model>?
 
     /**
-     * Subclass contract: A [Boolean] that tells whether the use has selected something that cam be computed as [Model]
+     * Subclass contract: A [Boolean] that tells whether the user has selected something that cam be computed as [Model]
      */
     abstract protected fun isReady(): BooleanBinding
-
-    /**
-     * Client contract: A [Task] that returns the [Model]
-     */
-    fun getResult(): Callable<Model>? = result
 
     /**
      * The com port was changed, update bindings.
@@ -109,15 +104,17 @@ abstract class SelectFromTransmitter : View() {
 
                 serialPort = HoTTSerialPort(JSSCSerialPort(portName))
                 refreshUITask().apply {
-                    portCombo.disableProperty().bind(runningProperty())
-                    startButton.disableProperty().bind(runningProperty().or(portCombo.valueProperty().isNull).or(isReady().not()))
+                    portCombo.disableWhen(runningProperty())
+                    startButton.disableWhen(runningProperty().or(isReady().not()))
                 }.fail {
                     ExceptionDialog.show(it)
                     close()
                 }
             } else {
-                startButton.disableProperty().bind(portCombo.valueProperty().isNull.or(isReady().not()))
+                startButton.disableWhen(isReady().not())
             }
+        } else {
+            startButton.disableWhen(portCombo.valueProperty().isNull.or(isReady().not()))
         }
     }
 
@@ -139,7 +136,7 @@ abstract class SelectFromTransmitter : View() {
     /**
      * Open a new dialog and return it's [Stage].
      */
-    fun openDialog(): Stage? {
+    fun openDialog(): Callable<Model>? {
         result = null
 
         // disable start button - will be re-enabled in portChanged()
@@ -153,7 +150,7 @@ abstract class SelectFromTransmitter : View() {
 
             // (re-) load available com ports
             runAsync {
-                JSSCSerialPort.getAvailablePorts()
+                JSSCSerialPort.availablePorts
             }.success { portNames ->
                 items.addAll(portNames)
                 preferences {
@@ -167,8 +164,10 @@ abstract class SelectFromTransmitter : View() {
         }
 
         // open model dialog
-        return openModal(stageStyle = StageStyle.UTILITY, modality = Modality.APPLICATION_MODAL, block = true)?.apply {
+        openModal(stageStyle = StageStyle.UTILITY, modality = Modality.APPLICATION_MODAL, block = true)?.apply {
             setOnCloseRequest { close() }
         }
+
+        return result
     }
 }

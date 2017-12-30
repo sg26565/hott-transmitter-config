@@ -11,20 +11,15 @@
  */
 package de.treichels.hott.mdlviewer.swing;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.AbstractListModel;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingWorker;
-
-import de.treichels.decoder.HoTTDecoder;
+import de.treichels.hott.decoder.HoTTDecoder;
 import de.treichels.hott.model.BaseModel;
 import de.treichels.hott.model.enums.ModelType;
 import de.treichels.hott.model.serial.ModelInfo;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
@@ -72,7 +67,7 @@ public class SelectFromMemory extends SelectFromTransmitter {
         protected Void doInBackground() throws Exception {
             layerUI.start();
             list.setEnabled(false);
-            final ModelInfo infos[];
+            final List<ModelInfo> infos;
 
             try {
                 lock.lock();
@@ -126,7 +121,7 @@ public class SelectFromMemory extends SelectFromTransmitter {
         try {
             lock.lock();
             port.open();
-            return HoTTDecoder.decodeMemory(port, model.getModelNumerAt(selectedIndex));
+            return HoTTDecoder.INSTANCE.decodeMemory(port, model.getModelNumerAt(selectedIndex));
         } finally {
             port.close();
             delay();

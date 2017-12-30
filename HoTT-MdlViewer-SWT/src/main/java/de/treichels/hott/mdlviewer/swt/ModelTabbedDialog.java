@@ -53,7 +53,7 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
             // //$NON-NLS-2$ //$NON-NLS-3$
             if (constructor != null) inst = constructor.newInstance(mainTabFolder, SWT.NONE);
         } catch (final Throwable t) {
-            if (Util.DEBUG) t.printStackTrace();
+            if (Util.INSTANCE.getDEBUG()) t.printStackTrace();
         }
         return (CTabItem) inst;
     }
@@ -79,7 +79,7 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
             else
                 rc = false;
         } catch (final Throwable t) {
-            if (Util.DEBUG) t.printStackTrace();
+            if (Util.INSTANCE.getDEBUG()) t.printStackTrace();
             rc = false;
         }
         return rc;
@@ -120,7 +120,7 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
             while (!dialogShell.isDisposed())
                 if (!display.readAndDispatch()) display.sleep();
         } catch (final Exception e) {
-            if (Util.DEBUG) e.printStackTrace();
+            if (Util.INSTANCE.getDEBUG()) e.printStackTrace();
         }
     }
 

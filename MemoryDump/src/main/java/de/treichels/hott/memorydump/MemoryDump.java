@@ -30,8 +30,8 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.treichels.decoder.HoTTSerialPort;
-import de.treichels.decoder.HoTTSerialPortException;
+import de.treichels.hott.decoder.HoTTSerialPort;
+import de.treichels.hott.decoder.HoTTSerialPortException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import de.treichels.hott.messages.Messages;
@@ -81,7 +81,7 @@ public class MemoryDump {
 
                         switch (rc) {
                         case ACK:
-                            final String text = Util.dumpData(data, address);
+                            final String text = Util.INSTANCE.dumpData(data, address);
                             textArea.append(text);
                             textArea.setCaretPosition(textArea.getText().length());
                             messageArea.append("."); //$NON-NLS-1$
@@ -172,7 +172,7 @@ public class MemoryDump {
     private DumpThread dumpThread = null;
 
     private void showDialog() {
-        for (final String s : JSSCSerialPort.getAvailablePorts())
+        for (final String s : JSSCSerialPort.Companion.getAvailablePorts())
             comboBox.addItem(s);
 
         dumpButton.addActionListener(new StartButtonActionListener());

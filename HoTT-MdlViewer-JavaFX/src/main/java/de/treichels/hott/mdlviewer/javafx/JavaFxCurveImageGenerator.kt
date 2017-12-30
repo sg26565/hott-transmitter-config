@@ -67,93 +67,91 @@ class JavaFxCurveImageGenerator : CurveImageGenerator {
                 strokeLine((5 + 100 * scale).toDouble(), 5.0, (5 + 100 * scale).toDouble(), (5 + 250 * scale).toDouble())
             }
 
-            if (curve.point != null) {
-                lineWidth = 1.0
-                setLineDashes(0.0)
-                font = Font.font("Arial", 12.0) //$NON-NLS-1$
-                stroke = Color.BLACK
+            lineWidth = 1.0
+            setLineDashes(0.0)
+            font = Font.font("Arial", 12.0) //$NON-NLS-1$
+            stroke = Color.BLACK
 
-                val numPoints = curve.point.count { it.isEnabled }
-                val xVals = DoubleArray(numPoints)
-                val yVals = DoubleArray(numPoints)
+            val numPoints = curve.point.count { it.isEnabled }
+            val xVals = DoubleArray(numPoints)
+            val yVals = DoubleArray(numPoints)
 
-                var i = 0
-                for (p in curve.point)
-                    if (p.isEnabled) {
-                        when (i) {
-                            0 -> xVals[i] = (if (pitchCurve) 0 else -100).toDouble()
-                            numPoints - 1 -> xVals[i] = 100.0
-                            else -> xVals[i] = p.position.toDouble()
-                        }
-                        yVals[i] = p.value.toDouble()
+            var i = 0
+            for (p in curve.point)
+                if (p.isEnabled) {
+                    when (i) {
+                        0 -> xVals[i] = (if (pitchCurve) 0 else -100).toDouble()
+                        numPoints - 1 -> xVals[i] = 100.0
+                        else -> xVals[i] = p.position.toDouble()
+                    }
+                    yVals[i] = p.value.toDouble()
 
-                        // draw dot and point number
-                        if (description) {
-                            val x0: Double
-                            val y0: Double
-                            if (pitchCurve) {
-                                x0 = 5 + xVals[i] * 2.0 * scale.toDouble()
-                                y0 = 5 + (225 - yVals[i] * 2) * scale
-                            } else {
-                                x0 = 5 + (100 + xVals[i]) * scale
-                                y0 = 5 + (125 - yVals[i]) * scale
-                            }
-
-                            strokeOval(x0 - 2, y0 - 2, 4.0, 4.0)
-                            clearRect(x0 - 6, y0 - 16, 8.0, 12.0)
-                            strokeText(Integer.toString(p.number + 1), x0 - 3, y0 - 5)
+                    // draw dot and point number
+                    if (description) {
+                        val x0: Double
+                        val y0: Double
+                        if (pitchCurve) {
+                            x0 = 5 + xVals[i] * 2.0 * scale.toDouble()
+                            y0 = 5 + (225 - yVals[i] * 2) * scale
+                        } else {
+                            x0 = 5 + (100 + xVals[i]) * scale
+                            y0 = 5 + (125 - yVals[i]) * scale
                         }
 
+                        strokeOval(x0 - 2, y0 - 2, 4.0, 4.0)
+                        clearRect(x0 - 6, y0 - 16, 8.0, 12.0)
+                        strokeText(Integer.toString(p.number + 1), x0 - 3, y0 - 5)
+                    }
+
+                    i++
+                }
+
+            lineWidth = 2.0
+
+            if (numPoints > 2 && curve.isSmoothing) {
+                // spline interpolate the curve points
+                val s = SplineInterpolator()
+                val function = s.interpolate(xVals, yVals)
+
+                beginPath()
+
+                if (pitchCurve) {
+                    moveTo(5.0, 5 + (225 - yVals[0] * 2) * scale)
+                    var x = 6.0
+                    while (x < 4 + 200 * scale) {
+                        lineTo(x, 5 + (225 - function.value((x - 5) / scale.toDouble() / 2.0) * 2) * scale)
+                        x++
+                    }
+                } else {
+                    moveTo(5.0, 5 + (125 - yVals[0]) * scale)
+                    var x = 6.0
+                    while (x < 4 + 200 * scale) {
+                        lineTo(x, 5 + (125 - function.value((x - 5) / scale - 100)) * scale)
+                        x++
+                    }
+                }
+
+                stroke()
+            } else {
+                beginPath()
+
+                if (pitchCurve) {
+                    moveTo(5 + xVals[0] * 2.0 * scale.toDouble(), 5 + (225 - yVals[0] * 2) * scale)
+                    i = 1
+                    while (i < numPoints) {
+                        lineTo(5 + xVals[i] * 2.0 * scale.toDouble(), 5 + (225 - yVals[i] * 2) * scale)
                         i++
                     }
-
-                lineWidth = 2.0
-
-                if (numPoints > 2 && curve.isSmoothing) {
-                    // spline interpolate the curve points
-                    val s = SplineInterpolator()
-                    val function = s.interpolate(xVals, yVals)
-
-                    beginPath()
-
-                    if (pitchCurve) {
-                        moveTo(5.0, 5 + (225 - yVals[0] * 2) * scale)
-                        var x = 6.0
-                        while (x < 4 + 200 * scale) {
-                            lineTo(x, 5 + (225 - function.value((x - 5) / scale.toDouble() / 2.0) * 2) * scale)
-                            x++
-                        }
-                    } else {
-                        moveTo(5.0, 5 + (125 - yVals[0]) * scale)
-                        var x = 6.0
-                        while (x < 4 + 200 * scale) {
-                            lineTo(x, 5 + (125 - function.value((x - 5) / scale - 100)) * scale)
-                            x++
-                        }
-                    }
-
-                    stroke()
                 } else {
-                    beginPath()
-
-                    if (pitchCurve) {
-                        moveTo(5 + xVals[0] * 2.0 * scale.toDouble(), 5 + (225 - yVals[0] * 2) * scale)
-                        i = 1
-                        while (i < numPoints) {
-                            lineTo(5 + xVals[i] * 2.0 * scale.toDouble(), 5 + (225 - yVals[i] * 2) * scale)
-                            i++
-                        }
-                    } else {
-                        moveTo(5 + (100 + xVals[0]) * scale, 5 + (125 - yVals[0]) * scale)
-                        i = 1
-                        while (i < numPoints) {
-                            lineTo(5 + (100 + xVals[i]) * scale, 5 + (125 - yVals[i]) * scale)
-                            i++
-                        }
+                    moveTo(5 + (100 + xVals[0]) * scale, 5 + (125 - yVals[0]) * scale)
+                    i = 1
+                    while (i < numPoints) {
+                        lineTo(5 + (100 + xVals[i]) * scale, 5 + (125 - yVals[i]) * scale)
+                        i++
                     }
-
-                    stroke()
                 }
+
+                stroke()
             }
         }
 

@@ -51,15 +51,15 @@ class VoiceData(name: String, val rawData: ByteArray) : Serializable, Observable
         }
 
     val audioInputStream: AudioInputStream
-        @Throws(IOException::class)
+
         get() = AudioInputStream(pcmInputStream, audioFormat, 2L * rawData.size.toLong())
 
     val pcmData: ByteArray
-        @Throws(IOException::class)
+
         get() = ADPCMCodec.decode(rawData)
 
     val pcmInputStream: InputStream
-        @Throws(IOException::class)
+
         get() = ADPCMCodec.decode(rawInputStream)
 
     val rawInputStream: InputStream
@@ -76,15 +76,15 @@ class VoiceData(name: String, val rawData: ByteArray) : Serializable, Observable
     }
 
     override fun toString(): String {
-        return String.format("VoiceData [name=%s]", this.name)
+        return String.format("VoiceData [portName=%s]", this.name)
     }
 
-    @Throws(IOException::class)
+
     fun writeVox(voxFile: File) {
         Files.write(voxFile.toPath(), rawData)
     }
 
-    @Throws(IOException::class)
+
     fun writeWav(wavFile: File) {
         AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, wavFile)
     }

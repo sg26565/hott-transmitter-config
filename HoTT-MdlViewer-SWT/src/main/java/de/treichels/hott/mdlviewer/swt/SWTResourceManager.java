@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Widget;
 import de.treichels.hott.messages.Messages;
 
 /**
- * Class to manage SWT resources (Font, Color, Image and Cursor) There are no restrictions on the use of this code.
+ * Class to manage SWT resources (Font, Color, Image and Cursor) There are no restrictions on the use of this pcmd.
  */
 public class SWTResourceManager {
 

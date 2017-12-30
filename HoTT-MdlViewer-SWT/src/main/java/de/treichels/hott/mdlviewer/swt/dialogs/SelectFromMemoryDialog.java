@@ -1,20 +1,14 @@
 package de.treichels.hott.mdlviewer.swt.dialogs;
 
-import java.util.ArrayList;
-
+import de.treichels.hott.decoder.HoTTDecoder;
+import de.treichels.hott.model.enums.ModelType;
+import de.treichels.hott.model.serial.ModelInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Widget;
+import org.eclipse.swt.widgets.*;
 
-import de.treichels.decoder.HoTTDecoder;
-import de.treichels.hott.model.enums.ModelType;
-import de.treichels.hott.model.serial.ModelInfo;
+import java.util.ArrayList;
 
 public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
     // handle double click
@@ -36,7 +30,7 @@ public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
 
                 try {
                     port.open();
-                    model = HoTTDecoder.decodeMemory(port, modelNumber);
+                    model = HoTTDecoder.INSTANCE.decodeMemory(port, modelNumber);
                 } finally {
                     port.close();
                 }
@@ -51,7 +45,7 @@ public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
         @Override
         public void run() {
             try {
-                final ModelInfo[] i;
+                final java.util.List<ModelInfo> i;
 
                 try {
                     port.open();

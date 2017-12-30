@@ -11,27 +11,23 @@
  */
 package de.treichels.hott.mdlviewer.swing;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import javax.swing.JComponent;
-import javax.swing.JTree;
-import javax.swing.SwingWorker;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeWillExpandListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.ExpandVetoException;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-
-import de.treichels.decoder.HoTTDecoder;
+import de.treichels.hott.decoder.HoTTDecoder;
 import de.treichels.hott.messages.Messages;
 import de.treichels.hott.model.BaseModel;
 import de.treichels.hott.model.enums.ModelType;
 import de.treichels.hott.model.serial.FileInfo;
 import de.treichels.hott.model.serial.FileType;
+
+import javax.swing.*;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeWillExpandListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
@@ -160,7 +156,7 @@ public class SelectFromSdCard extends SelectFromTransmitter {
             }
 
             final ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
-            result = HoTTDecoder.decodeStream(type, name, is);
+            result = HoTTDecoder.INSTANCE.decodeStream(type, name, is);
         }
 
         return result;
