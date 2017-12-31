@@ -3,7 +3,7 @@ package de.treichels.hott.vdfeditor.actions
 import javafx.beans.property.ReadOnlyBooleanProperty
 import tornadofx.*
 
-class UndoBuffer<T>(var items: MutableList<T>) {
+class UndoBuffer<T>(val items: MutableList<T>) {
     // current action pointer
     internal var index: Int = 0
         private set
