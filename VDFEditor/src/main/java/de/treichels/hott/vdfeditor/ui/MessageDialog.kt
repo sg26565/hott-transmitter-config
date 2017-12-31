@@ -10,7 +10,6 @@ import org.w3c.dom.events.EventTarget
 import tornadofx.*
 import java.awt.Desktop
 import java.net.URI
-import java.util.*
 
 internal class MessageDialog(alertType: Alert.AlertType, header: String, html: Boolean, message: String, vararg args: Any) : Alert(alertType) {
     init {

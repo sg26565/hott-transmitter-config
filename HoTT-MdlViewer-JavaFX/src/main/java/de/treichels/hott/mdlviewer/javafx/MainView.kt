@@ -11,7 +11,6 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.hott.decoder.HoTTDecoder
 import de.treichels.hott.mdlviewer.javafx.Model.Companion.loadModel
 import de.treichels.hott.model.voice.Announcements
 import javafx.application.Platform
@@ -21,13 +20,11 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.concurrent.Task
 import javafx.scene.Cursor
 import javafx.scene.control.ContextMenu
-import javafx.scene.image.Image
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 import javafx.scene.web.WebView
 import javafx.stage.FileChooser
 import javafx.stage.FileChooser.ExtensionFilter
-import kotlinx.coroutines.experimental.async
 import org.apache.commons.io.FilenameUtils
 import tornadofx.*
 import java.io.File
@@ -156,7 +153,7 @@ class MainView : View() {
         }
 
         title = "${messages["title"]} ${MdlViewer.version}"
-        setStageIcon(Image(javaClass.getResource("/icon.png").toString()))
+        setStageIcon(resources.image("icon.png"))
     }
 
     /**
@@ -314,7 +311,7 @@ class MainView : View() {
             preferences { put(LAST_SAVE_DIR, parentFile.absolutePath) }
             val extension = FilenameUtils.getExtension(name).toLowerCase()
 
-            async {
+            runAsync {
                 when (extension) {
                     "html" -> model?.saveHtml(this@apply)
 
