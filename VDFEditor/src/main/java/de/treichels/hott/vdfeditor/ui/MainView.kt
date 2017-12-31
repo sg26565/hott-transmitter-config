@@ -5,7 +5,10 @@ import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.model.HoTTException
 import de.treichels.hott.model.enums.TransmitterType
-import de.treichels.hott.model.voice.*
+import de.treichels.hott.model.voice.CountryCode
+import de.treichels.hott.model.voice.VDFType
+import de.treichels.hott.model.voice.VoiceData
+import de.treichels.hott.model.voice.VoiceFile
 import de.treichels.hott.report.html.HTMLReport
 import de.treichels.hott.report.pdf.PDFReport
 import de.treichels.hott.util.ExceptionDialog
@@ -15,9 +18,9 @@ import de.treichels.hott.vdfeditor.ui.transmitter.LoadVoiceFileTask
 import de.treichels.hott.vdfeditor.ui.transmitter.SendVoiceFileTask
 import de.treichels.hott.vdfeditor.ui.transmitter.TransmitterDialogView
 import de.treichels.hott.vdfeditor.ui.tts.SpeechDialog
-import de.treichels.hott.vdfeditor.ui.tts.Text2SpeechTask
 import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
+import javafx.collections.ListChangeListener
 import javafx.geometry.Pos
 import javafx.scene.Node
 import javafx.scene.control.*
@@ -36,6 +39,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.lang.IllegalStateException
 import java.util.regex.Pattern
+import javax.sound.sampled.AudioInputStream
 
 // constants
 private const val EXT_WAV = "*.wav"
@@ -93,7 +97,7 @@ class MainView : View() {
     private var serialPort by serialPortProperty
     private val vdfFileProperty = SimpleObjectProperty<File>(null)
     private var vdfFile by vdfFileProperty
-    private val isSystemVDF by voiceFile.systenVDFProperty
+    private val isSystemVDF by voiceFile.systemVDFProperty
     private val isDirty by voiceFile.dirtyBinding
 
     // controls
@@ -115,6 +119,7 @@ class MainView : View() {
     override val root = borderpane {
         center {
             listView = listview {
+                items = voiceFile.voiceList
                 editableProperty().value = true
                 prefHeight = 800.0
                 prefWidth = 500.0
@@ -123,7 +128,7 @@ class MainView : View() {
                 contextmenu {
                     item(messages["delete_sound"]) {
                         // cannot use nosSelection here because listView is not yet initialized
-                        disableWhen(this@listview.selectionModel.selectedItemProperty().isNull)
+                        disableWhen(voiceFile.systemVDFProperty.or(this@listview.selectionModel.selectedItemProperty().isNull))
                         action { onDeleteSound() }
                     }
                 }
@@ -141,7 +146,7 @@ class MainView : View() {
                             action { onOpen() }
                         }
                         restoreMenu = menu(messages["restore_menu"])
-                        item(messages["save_vdf"],"Shortcut+S") {
+                        item(messages["save_vdf"], "Shortcut+S") {
                             enableWhen(vdfFileProperty.isNotNull.and(voiceFile.dirtyBinding))
                             action { onSave() }
                         }
@@ -149,7 +154,7 @@ class MainView : View() {
                             action { onSaveVDFAs() }
                         }
                         separator()
-                        item(messages["print"],"Shortcut+Alt+P") {
+                        item(messages["print"], "Shortcut+Alt+P") {
                             action { onPrint() }
                         }
                         item(messages["close"], "Alt+F4") {
@@ -157,46 +162,46 @@ class MainView : View() {
                         }
                     }
                     menu(messages["edit_menu"]) {
-                        item(messages["undo"],"ShortCut+Z") {
+                        item(messages["undo"], "ShortCut+Z") {
                             enableWhen(undoBuffer.canUndoProperty())
                             action { onUndo() }
                         }
-                        item(messages["redo"],"ShortCut+Y") {
+                        item(messages["redo"], "ShortCut+Y") {
                             action { onRedo() }
                             enableWhen(undoBuffer.canRedoProperty())
                         }
                         separator()
-                        item(messages["move_up"],"ShortCut+U") {
-                            disableWhen(noSelection.or(selectionModel.selectedIndexProperty().eq(0)).or(voiceFile.systenVDFProperty))
+                        item(messages["move_up"], "ShortCut+U") {
+                            disableWhen(noSelection.or(selectionModel.selectedIndexProperty().eq(0)).or(voiceFile.systemVDFProperty))
                             action { onMoveUp() }
                         }
-                        item(messages["move_down"],"ShortCut+D") {
-                            disableWhen(noSelection.or(selectionModel.selectedIndexProperty().eq(listView.itemsProperty().integerBinding(op = { it?.size ?: 0 }).subtract(1)).or(voiceFile.systenVDFProperty)))
+                        item(messages["move_down"], "ShortCut+D") {
+                            disableWhen(noSelection.or(selectionModel.selectedIndexProperty().eq(listView.itemsProperty().integerBinding(op = { it?.size ?: 0 }).subtract(1)).or(voiceFile.systemVDFProperty)))
                             action { onMoveDown() }
                         }
-                        item(messages["rename"],"ShortCut+R") {
+                        item(messages["rename"], "ShortCut+R") {
                             disableWhen(noSelection)
                             action { onRename() }
                         }
                         separator()
-                        item(messages["play"],"ShortCut+P") {
+                        item(messages["play"], "ShortCut+P") {
                             disableWhen(noSelection)
                             action { onPlay() }
                         }
                         separator()
                         menu(messages["add_sound"]) {
-                            disableWhen(voiceFile.systenVDFProperty)
-                            item(messages["from_file"],"Insert") {
+                            disableWhen(voiceFile.systemVDFProperty)
+                            item(messages["from_file"], "Insert") {
                                 action { onAddSound() }
                             }
-                            item(messages["from_text"],"ShortCut+T") {
+                            item(messages["from_text"], "ShortCut+T") {
                                 action { onAddSoundFromText() }
                                 accelerator = KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN)
                             }
                         }
                         menu(messages["replace_sound"]) {
                             disableWhen(noSelection)
-                            item(messages["from_file"],"Shift+Insert") {
+                            item(messages["from_file"], "Shift+Insert") {
                                 action { onReplaceSound() }
                             }
                             item(messages["from_text"], "Shortcut+Shift+T") {
@@ -204,7 +209,7 @@ class MainView : View() {
                             }
                         }
                         item(messages["delete_sound"], "Delete") {
-                            disableWhen(noSelection)
+                            disableWhen(voiceFile.systemVDFProperty.or(noSelection))
                             action { onDeleteSound() }
                         }
                     }
@@ -216,7 +221,7 @@ class MainView : View() {
                             action { onLoadSystemVoiceFile() }
                         }
                         separator()
-                        item(messages["play_on_transmitter"],"ShortCut+Shift+P") {
+                        item(messages["play_on_transmitter"], "ShortCut+Shift+P") {
                             disableWhen(noSelection.or(serialPortProperty.isNull))
                             action { onPlayOnTransmitter() }
                         }
@@ -284,15 +289,15 @@ class MainView : View() {
     private fun addRestoreFiles() {
         TransmitterType.values().filter { it != TransmitterType.unknown }.forEach { transmitterType ->
             restoreMenu.items.add(Menu(transmitterType.toString()).apply {
-                for (variant in listOf(null, "Mikrocopter", "Team", "Team-schnell")) {
-                    // base portName
+                for (variant in listOf(null, "MikroKopter", "Team", "Team-schnell")) {
+                    // base name
                     val baseName = when (transmitterType) {
                         TransmitterType.mc26, TransmitterType.mc28 -> "Voice3_mc28"
                         else -> "Voice3"
                     }
 
                     for (language in Language.values()) {
-                        // menu portName
+                        // menu name
                         val menuName = when (variant) {
                             null -> "$language"
                             else -> "$language ($variant)"
@@ -330,8 +335,17 @@ class MainView : View() {
                         }
                     }
                 }
+
+                items.sortBy { it.text }
             })
         }
+    }
+
+    private fun addSound(stream: AudioInputStream, name: String, volume: Double = 1.0) {
+        // add to end of the list if no item was selected
+        val index = if (selectedIndex == -1) listView.items.size else selectedIndex
+
+        undoBuffer.push(InsertAction(index, VoiceData.forStream(stream, name, volume)))
     }
 
     private fun addSound(vararg files: File, volume: Double = 1.0) {
@@ -344,7 +358,7 @@ class MainView : View() {
         val index = if (selectedIndex == -1) listView.items.size else selectedIndex
 
         // insert all sound files at index
-        files.filter(::isSoundFormat).map({ readSoundFile(it, volume) }).forEach { undoBuffer.push(InsertAction(index, it)) }
+        files.filter(::isSoundFormat).map({ VoiceData.forFile(it, volume) }).forEach { undoBuffer.push(InsertAction(index, it)) }
     }
 
     /**
@@ -421,6 +435,7 @@ class MainView : View() {
     init {
         setStageIcon(iconImage)
 
+        // setup listview
         with(listView) {
             // set factory method
             setCellFactory { createListCell() }
@@ -441,6 +456,9 @@ class MainView : View() {
             setOnDragDropped { onDragDropped(it) }
         }
 
+        // add a change listener to the list to prevent invalid VDFs
+        voiceFile.voiceList.onChange { onVoiceListChanged(it) }
+
         // fill restore menu
         addRestoreFiles()
 
@@ -458,6 +476,66 @@ class MainView : View() {
             // always start with an empty vdf
             onNew()
         }
+    }
+
+    private fun onVoiceListChanged(change: ListChangeListener.Change<out VoiceData>) {
+        val list = voiceFile.voiceList
+
+        while (!mute && change.next())
+        // if an item was added, check if the size limit was reached
+            if (change.wasAdded()) {
+                val fistIndex = change.from
+                var lastIndex = change.to
+
+                // check for duplicate entries
+                for (i in fistIndex..minOf(lastIndex, list.size - 1)) {
+                    val voiceData1 = list[i]
+                    val name1 = voiceData1.name
+
+                    for (j in list.indices) {
+                        if (j == i) continue
+
+                        val voiceData2 = list[j]
+                        val name2 = voiceData2.name
+
+                        if (name1 == name2) {
+                            undoBuffer.pop()
+                            lastIndex--
+                            MessageDialog.show(AlertType.ERROR, messages["duplicate_entry"], messages["duplicate_name"], name1)
+                            break
+                        }
+                    }
+
+                    // enforce name for system VDFs
+                    if (isSystemVDF) {
+                        val matcher = namePattern.matcher(name1)
+                        val newName = if (matcher.matches())
+                            String.format("%02d%s%s", i + 1, matcher.group(1), matcher.group(2))
+                        else
+                            String.format("%02d.%s", i + 1, name1)
+                        voiceData1.name = newName
+                    }
+                }
+
+                // remove added entries until validation succeeds
+                while (true)
+                    try {
+                        // validate VDF
+                        HoTTDecoder.verityVDF(voiceFile)
+
+                        // validation succeeded - no exception was thrown
+                        break
+                    } catch (e: HoTTException) {
+                        ExceptionDialog.show(e)
+
+                        // validation failed, remove last added item and try again
+                        undoBuffer.pop()
+                        lastIndex--
+                    }
+
+            }
+
+        setStageTitle()
     }
 
     /**
@@ -478,12 +556,9 @@ class MainView : View() {
      * Show a dialog to create a announcement from text, using a online speech-to-text service (VoiceRSS)
      */
     private fun onAddSoundFromText() {
-        Text2SpeechTask().apply {
-            speechDialog.openDialog(this)
-
-            success { file ->
-                tempFiles.add(file)
-                addSound(file, volume = volume)
+        speechDialog.openDialog().apply {
+            setOnSucceeded {
+                addSound(stream = value, name = text, volume = volume)
             }
         }
     }
@@ -543,7 +618,7 @@ class MainView : View() {
      *
      *  * **Drop on desktop**: Create temporary .wav files for any selected item and add the path to the clipboard.
      *  * **Another VDFEditor instance**: Serialize any selected item into the clipboard.
-     *  * **other (e.g. text editor)**: Add the portName of any selected item as comma separated list to the clipboard.
+     *  * **other (e.g. text editor)**: Add the name of any selected item as comma separated list to the clipboard.
      */
     private fun onDragDetected(ev: MouseEvent) {
         deleteTempFiles()
@@ -567,9 +642,9 @@ class MainView : View() {
         content.putFiles(tempFiles)
 
         // VDFEditor: serialize selected items for DnD to other VDFEditor instance
-        content.put(dndDataFormat, selectedItems.toTypedArray())
+        content.put(dndDataFormat, selectedItems.toList())
 
-        // other: item portName for DnD to editor or text field
+        // other: item name for DnD to editor or text field
         content.putString(selectedItems.joinToString(",", transform = VoiceData::name))
 
         // add content to dragboard and start DnD
@@ -635,9 +710,9 @@ class MainView : View() {
                         if (isSystemVDF)
                         // replace items beginning at target index with files
                             for (i in files.indices)
-                                undoBuffer.push(ReplaceAction(targetIndex + i, readSoundFile(files[i])))
+                                undoBuffer.push(ReplaceAction(targetIndex + i, VoiceData.forFile(files[i])))
                         else
-                            files.stream().map({ readSoundFile(it) }).forEach { undoBuffer.push(InsertAction(targetIndex, it)) }
+                            files.stream().map({ VoiceData.forFile(it) }).forEach { undoBuffer.push(InsertAction(targetIndex, it)) }
                 }
             }
         } catch (e: RuntimeException) {
@@ -808,7 +883,7 @@ class MainView : View() {
                 if (dir.exists() && dir.isDirectory) chooser.initialDirectory = dir
             }
 
-            // setup file portName filter
+            // setup file name filter
             chooser.extensionFilters.add(ExtensionFilter(messages["vdf_files"], EXT_VDF))
 
             val vdf = chooser.showOpenDialog(primaryStage)
@@ -858,10 +933,10 @@ class MainView : View() {
             if (dir.exists() && dir.isDirectory) chooser.initialDirectory = dir
         }
 
-        // setup file portName filter
+        // setup file name filter
         chooser.extensionFilters.add(ExtensionFilter(messages["pdf_files"], EXT_PDF))
 
-        // preset report portName
+        // preset report name
         if (vdfFile != null) {
             val fileName = vdfFile.name.replace(VDF, PDF)
             chooser.initialFileName = fileName
@@ -905,12 +980,9 @@ class MainView : View() {
      * Replace the selected item with a generated sound file
      */
     private fun onReplaceSoundFromText() {
-        Text2SpeechTask().apply {
-            speechDialog.openDialog(this)
-
-            success { file ->
-                tempFiles.add(file)
-                replaceSound(file, volume = volume)
+        speechDialog.openDialog().apply {
+            setOnSucceeded {
+                replaceSound(stream = value, name = text, volume = volume)
             }
         }
     }
@@ -921,7 +993,7 @@ class MainView : View() {
     private fun onSaveVDF(): Boolean = isDirty and checkSizeBeforeSave() and save(vdfFile)
 
     /**
-     * Show dialog to save the currentAction VDF under a new portName.
+     * Show dialog to save the currentAction VDF under a new name.
      *
      * This method will remember the directory being used.
      */
@@ -937,7 +1009,7 @@ class MainView : View() {
             if (dir.exists() && dir.isDirectory) chooser.initialDirectory = dir
         }
 
-        // setup file portName filter
+        // setup file name filter
         chooser.extensionFilters.add(ExtensionFilter(messages["vdf_files"], EXT_VDF))
 
         val vdf = chooser.showSaveDialog(listView.scene.window)
@@ -1050,73 +1122,15 @@ class MainView : View() {
      * Load a new VDF from data model.
      */
     private fun open(other: VoiceFile) {
-        voiceFile.copy(other)
+        mute {
+            // don't complain about invalid VDFs - will be fixed later with verify()
+            voiceFile.copy(other)
+        }
 
         transmitterTypeCombo.value = voiceFile.transmitterType
         countryCodeCombo.value = voiceFile.country
         updateVdfVersion()
 
-        val items = voiceFile.voiceList
-        // add a change listener to the list to prevent invalid VDFs
-        items.onChange { change ->
-            while (!mute && change.next())
-            // if an item was added, check if the size limit was reached
-                if (change.wasAdded()) {
-                    val fistIndex = change.from
-                    var lastIndex = change.to
-
-                    // check for duplicate entries
-                    for (i in fistIndex..minOf(lastIndex, items.size - 1)) {
-                        val voiceData1 = items[i]
-                        val name1 = voiceData1.name
-
-                        for (j in items.indices) {
-                            if (j == i) continue
-
-                            val voiceData2 = items[j]
-                            val name2 = voiceData2.name
-
-                            if (name1 == name2) {
-                                undoBuffer.pop()
-                                lastIndex--
-                                MessageDialog.show(AlertType.ERROR, messages["duplicate_entry"], messages["duplicate_name"], name1)
-                                break
-                            }
-                        }
-
-                        // enforce portName for system VDFs
-                        if (isSystemVDF) {
-                            val matcher = namePattern.matcher(name1)
-                            val newName = if (matcher.matches())
-                                String.format("%02d%s%s", i + 1, matcher.group(1), matcher.group(2))
-                            else
-                                String.format("%02d.%s", i + 1, name1)
-                            voiceData1.name = newName
-                        }
-                    }
-
-                    // remove added entries until validation succeeds
-                    while (true)
-                        try {
-                            // validate VDF
-                            HoTTDecoder.verityVDF(voiceFile)
-
-                            // validation succeeded - no exception was thrown
-                            break
-                        } catch (e: HoTTException) {
-                            // validation failed, remove last added item and try again
-                            undoBuffer.pop()
-                            lastIndex--
-                            ExceptionDialog.show(e)
-                        }
-
-                }
-
-            setStageTitle()
-        }
-
-        listView.items = items
-        undoBuffer.items = items
         undoBuffer.clear()
         voiceFile.clean()
         verify(false)
@@ -1128,8 +1142,15 @@ class MainView : View() {
      */
     private fun replaceSound(file: File?, volume: Double = 1.0) {
         if (file != null && file.exists()) {
-            undoBuffer.push(ReplaceAction(selectedIndex, readSoundFile(file, volume)))
+            undoBuffer.push(ReplaceAction(selectedIndex, VoiceData.forFile(file, volume)))
         }
+    }
+
+    /**
+     * Replace selected sound from stream
+     */
+    private fun replaceSound(stream: AudioInputStream, name: String, volume: Double = 1.0) {
+        undoBuffer.push(ReplaceAction(selectedIndex, VoiceData.forStream(stream, name, volume)))
     }
 
     /**
@@ -1170,7 +1191,7 @@ class MainView : View() {
             if (dir.exists() && dir.isDirectory) chooser.initialDirectory = dir
         }
 
-        // setup file portName filter
+        // setup file name filter
         chooser.extensionFilters.add(ExtensionFilter(messages["sound_files"], EXT_WAV, EXT_MP3, EXT_OGG))
         chooser.extensionFilters.add(ExtensionFilter(messages["wav_files"], EXT_WAV))
         chooser.extensionFilters.add(ExtensionFilter(messages["mp3_files"], EXT_MP3))
@@ -1319,20 +1340,30 @@ class MainView : View() {
             throw HoTTException()
 
         // do not show messages while cleaning up
-        mute = true
+        mute {
+            // remove extra items
+            while (voiceCount-- > maxVoiceCount)
+                voiceData.removeAt(voiceCount)
 
-        // remove extra items
-        while (voiceCount-- > maxVoiceCount)
-            voiceData.removeAt(voiceCount)
-
-        // add empty entries for system VDFs
-        if (isSystemVDF)
-            while (++voiceCount < maxVoiceCount)
-                voiceData.add(VoiceData(String.format("%02d.%s", voiceCount + 1, messages["empty"]), ByteArray(0)))
-
-        // re-enable messages
-        mute = false
+            // add empty entries for system VDFs
+            if (isSystemVDF)
+                while (++voiceCount < maxVoiceCount)
+                    voiceData.add(VoiceData(String.format("%02d.%s", voiceCount + 1, messages["empty"]), ByteArray(0)))
+        }
 
         HoTTDecoder.verityVDF(voiceFile)
+    }
+
+    // run some code while muted (i.e. suppress consistency checks)
+    @Synchronized
+    private fun mute(op: () -> Unit) {
+        if (mute)
+        // already muted
+            op()
+        else {
+            mute = true
+            op()
+            mute = false
+        }
     }
 }

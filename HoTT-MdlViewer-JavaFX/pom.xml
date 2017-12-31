@@ -59,7 +59,7 @@
 							<errTitle>MdlViewer</errTitle>
 							<icon>icon.ico</icon>
 							<classPath>
-								<mainClass>Launcher</mainClass>
+								<mainClass>de.treichels.hott.mdlviewer.javafx.MainKt</mainClass>
 								<addDependencies>false</addDependencies>
 							</classPath>
 							<jre>

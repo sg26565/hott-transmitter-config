@@ -1,23 +1,16 @@
 package de.treichels.hott.mdlviewer.swt.dialogs;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.BusyIndicator;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.swt.widgets.Widget;
-
 import de.treichels.hott.decoder.HoTTDecoder;
 import de.treichels.hott.model.enums.ModelType;
 import de.treichels.hott.model.serial.FileInfo;
 import de.treichels.hott.model.serial.FileType;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.BusyIndicator;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.*;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
     // handle double click
@@ -27,7 +20,7 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
             final TreeItem treeItem = (TreeItem) event.item;
             final FileInfo fileInfo = (FileInfo) treeItem.getData();
 
-            if (fileInfo != null && fileInfo.getType() == FileType.File && fileInfo.getName().endsWith(".mdl") && fileInfo.getSize() <= 0x3000 //$NON-NLS-1$
+            if (fileInfo != null && fileInfo.getType() == FileType.File && fileInfo.getName().endsWith(".mdl") && fileInfo.getSize() <= 0x3000
                     && fileInfo.getSize() >= 0x2000) {
                 onOpen();
                 dialog.close();
@@ -79,7 +72,7 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
                     final TreeItem selectedItem = selection[0];
                     final FileInfo fileInfo = (FileInfo) selectedItem.getData();
 
-                    if (fileInfo != null && fileInfo.getType() == FileType.File && fileInfo.getName().endsWith(".mdl") && fileInfo.getSize() <= 0x3000 //$NON-NLS-1$
+                    if (fileInfo != null && fileInfo.getType() == FileType.File && fileInfo.getName().endsWith(".mdl") && fileInfo.getSize() <= 0x3000
                             && fileInfo.getSize() >= 0x2000) {
                         final String fileName = fileInfo.getName();
 
@@ -137,12 +130,8 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
         super(parent);
     }
 
-    public SelectFromSdCardDialog(final Shell partent, final int style) {
-        super(partent, style);
-    }
-
     @Override
-    protected Widget getSelectionComponent(final Composite dialog) {
+    protected void getSelectionComponent(final Composite dialog) {
         tree = new Tree(dialog, SWT.SINGLE | SWT.BORDER | SWT.VIRTUAL);
         tree.addListener(SWT.DefaultSelection, new DefaultListener());
         tree.addListener(SWT.Expand, new ExpandListener());
@@ -154,7 +143,6 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
         gridData.verticalAlignment = GridData.FILL;
         tree.setLayoutData(gridData);
 
-        return tree;
     }
 
     @Override

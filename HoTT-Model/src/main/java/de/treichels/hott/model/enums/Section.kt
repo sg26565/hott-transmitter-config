@@ -23,29 +23,29 @@ enum class Section {
     swashplateMixer, failSafe, trainerPupil, outputChannel, profiTrim, trimMemory, telemetry, channelSequencer, multiChannel, ringLimiter, mp3Player, switches;
 
     fun isValidFor(type: ModelType): Boolean {
-        when (this) {
-            baseSettings, channel1Curve0, channelSequencer, controlSwitches, controls0, curveMixer, drExpo0, dualMixer, failSafe, linearMixer, logicalSwitches, mixOnlyChannel, mixerActive, modelType, mp3Player, multiChannel, nonDelayedChannels, outputChannel, phaseAssignments, phaseSettings, phaseTimer, profiTrim, ringLimiter, servos, stickSettings, switches, telemetry, timersGeneral, trainerPupil, trimMemory -> return true
+        return when (this) {
+            baseSettings, channel1Curve0, channelSequencer, controlSwitches, controls0, curveMixer, drExpo0, dualMixer, failSafe, linearMixer, logicalSwitches, mixOnlyChannel, mixerActive, modelType, mp3Player, multiChannel, nonDelayedChannels, outputChannel, phaseAssignments, phaseSettings, phaseTimer, profiTrim, ringLimiter, servos, stickSettings, switches, telemetry, timersGeneral, trainerPupil, trimMemory -> true
 
-            helicopterMix0, swashplateMixer -> return type == ModelType.Helicopter
+            helicopterMix0, swashplateMixer -> type == ModelType.Helicopter
 
-            wingMix0, phaseTrim -> return type == ModelType.Winged
+            wingMix0, phaseTrim -> type == ModelType.Winged
         }
     }
 
     fun isValidFor(transmitterType: TransmitterType): Boolean {
-        when (this) {
+        return when (this) {
         // valid for all transmitters
-            baseSettings, controls0, drExpo0, failSafe, helicopterMix0, linearMixer, phaseTrim, servos, swashplateMixer, switches, telemetry, trainerPupil, wingMix0 -> return true
+            baseSettings, controls0, drExpo0, failSafe, helicopterMix0, linearMixer, phaseTrim, servos, swashplateMixer, switches, telemetry, trainerPupil, wingMix0 -> true
 
         // not available on mx-12 and mx-16
-            channel1Curve0, channelSequencer, controlSwitches, curveMixer, dualMixer, mixOnlyChannel, mixerActive, modelType, multiChannel, nonDelayedChannels, outputChannel, phaseAssignments, phaseSettings, phaseTimer, profiTrim, ringLimiter, stickSettings, timersGeneral, trimMemory -> return (transmitterType == TransmitterType.mx20 || transmitterType == TransmitterType.mc16 || transmitterType == TransmitterType.mc20
+            channel1Curve0, channelSequencer, controlSwitches, curveMixer, dualMixer, mixOnlyChannel, mixerActive, modelType, multiChannel, nonDelayedChannels, outputChannel, phaseAssignments, phaseSettings, phaseTimer, profiTrim, ringLimiter, stickSettings, timersGeneral, trimMemory -> (transmitterType == TransmitterType.mx20 || transmitterType == TransmitterType.mc16 || transmitterType == TransmitterType.mc20
                     || transmitterType == TransmitterType.mc32)
 
         // only on mc-20 and mc-32
-            logicalSwitches -> return transmitterType == TransmitterType.mc20 || transmitterType == TransmitterType.mc32
+            logicalSwitches -> transmitterType == TransmitterType.mc20 || transmitterType == TransmitterType.mc32
 
         // only on mc-16, mc-20 and mc-32
-            mp3Player -> return transmitterType == TransmitterType.mc16 || transmitterType == TransmitterType.mc20 || transmitterType == TransmitterType.mc32
+            mp3Player -> transmitterType == TransmitterType.mc16 || transmitterType == TransmitterType.mc20 || transmitterType == TransmitterType.mc32
         }
     }
 

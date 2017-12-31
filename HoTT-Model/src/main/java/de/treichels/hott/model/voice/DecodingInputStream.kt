@@ -1,6 +1,5 @@
 package de.treichels.hott.model.voice
 
-import java.io.IOException
 import java.io.InputStream
 
 internal class DecodingInputStream(private val inputStream: InputStream) : InputStream() {

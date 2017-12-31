@@ -37,7 +37,7 @@ class JavaFxCurveImageGenerator : CurveImageGenerator {
     private var image: Image? = null
 
     override fun getImageSource(curve: Curve, scale: Float, description: Boolean): String {
-        val pitchCurve = curve.point[0].position == 0
+        val pitchCurve = curve.point!![0].position == 0
         val canvas = Canvas((10 + 200 * scale).toDouble(), (10 + 250 * scale).toDouble())
 
         with(canvas.graphicsContext2D) {
@@ -69,15 +69,15 @@ class JavaFxCurveImageGenerator : CurveImageGenerator {
 
             lineWidth = 1.0
             setLineDashes(0.0)
-            font = Font.font("Arial", 12.0) //$NON-NLS-1$
+            font = Font.font("Arial", 12.0)
             stroke = Color.BLACK
 
-            val numPoints = curve.point.count { it.isEnabled }
+            val numPoints = curve.point!!.count { it.isEnabled }
             val xVals = DoubleArray(numPoints)
             val yVals = DoubleArray(numPoints)
 
             var i = 0
-            for (p in curve.point)
+            for (p in curve.point!!)
                 if (p.isEnabled) {
                     when (i) {
                         0 -> xVals[i] = (if (pitchCurve) 0 else -100).toDouble()
@@ -170,7 +170,7 @@ class JavaFxCurveImageGenerator : CurveImageGenerator {
 
         try {
             ByteArrayOutputStream().use { baos ->
-                ImageIO.write(renderedImage, "png", baos) //$NON-NLS-1$
+                ImageIO.write(renderedImage, "png", baos)
                 return CurveImageGenerator.PREFIX + Base64.getEncoder().encodeToString(baos.toByteArray())
             }
         } catch (e: IOException) {

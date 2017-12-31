@@ -37,7 +37,7 @@ object Util {
             var addr = 0
 
             while (addr < len) {
-                sb.append(String.format("0x%04x: ", baseAddress + addr)) //$NON-NLS-1$
+                sb.append(String.format("0x%04x: ", baseAddress + addr))
 
                 for (i in 0..15)
                     if (addr + i < len) {
@@ -49,11 +49,11 @@ object Util {
                             else -> sb.append(' ')
                         }
 
-                        sb.append(String.format("%02x", data[addr + i])) //$NON-NLS-1$
+                        sb.append(String.format("%02x", data[addr + i]))
                     } else
-                        sb.append("   ") //$NON-NLS-1$
+                        sb.append("   ")
 
-                sb.append("| ") //$NON-NLS-1$
+                sb.append("| ")
 
                 (0..15).asSequence()
                         .filter { addr + it < len }

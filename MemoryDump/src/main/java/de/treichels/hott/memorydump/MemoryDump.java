@@ -1,49 +1,37 @@
-/**
- * HoTT Transmitter Config Copyright (C) 2013 Oliver Treichel
- *
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+/*
+  HoTT Transmitter Config Copyright (C) 2013 Oliver Treichel
+
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software
+  Foundation, either version 3 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+  A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package de.treichels.hott.memorydump;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
+import de.treichels.hott.decoder.HoTTSerialPort;
+import de.treichels.hott.messages.Messages;
+import de.treichels.hott.model.serial.JSSCSerialPort;
+import de.treichels.hott.model.serial.ResponseCode;
+import de.treichels.hott.model.serial.SerialPort;
+import de.treichels.hott.util.Util;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import de.treichels.hott.decoder.HoTTSerialPort;
-import de.treichels.hott.decoder.HoTTSerialPortException;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
-import de.treichels.hott.messages.Messages;
-import de.treichels.hott.model.serial.JSSCSerialPort;
-import de.treichels.hott.model.serial.ResponseCode;
-import de.treichels.hott.model.serial.SerialPort;
-import de.treichels.hott.util.Util;
-
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-public class MemoryDump {
+class MemoryDump {
     private final class DumpThread extends Thread {
         @Override
         public void run() {
@@ -52,11 +40,11 @@ public class MemoryDump {
 
             final SerialPort portImpl = new JSSCSerialPort(portName);
 
-            dumpButton.setText(Messages.getString("Abort")); //$NON-NLS-1$
+            dumpButton.setText(Messages.getString("Abort"));
             saveButton.setEnabled(false);
 
-            textArea.setText(""); //$NON-NLS-1$
-            messageArea.setText(Messages.getString("MemoryDump.StartMessage")); //$NON-NLS-1$
+            textArea.setText("");
+            messageArea.setText(Messages.getString("MemoryDump.StartMessage"));
 
             try (HoTTSerialPort port = new HoTTSerialPort(portImpl)) {
                 byte[] data = null;
@@ -66,17 +54,14 @@ public class MemoryDump {
                     ResponseCode rc = ResponseCode.NACK;
 
                     final int address = 0x800 * i;
-                    if (i % 128 == 0) messageArea.append("\n"); //$NON-NLS-1$
+                    if (i % 128 == 0) messageArea.append("\n");
 
                     while (rc != ResponseCode.ACK && dumpThread != null) {
                         try {
                             data = port.readMemoryBlock(address, 0x800);
                             rc = ResponseCode.ACK;
                         } catch (final Exception e) {
-                            if (e instanceof HoTTSerialPortException)
-                                rc = ((HoTTSerialPortException) e).getResponseCode();
-                            else
-                                rc = ResponseCode.ERROR;
+                            rc = ResponseCode.ERROR;
                         }
 
                         switch (rc) {
@@ -84,23 +69,23 @@ public class MemoryDump {
                             final String text = Util.INSTANCE.dumpData(data, address);
                             textArea.append(text);
                             textArea.setCaretPosition(textArea.getText().length());
-                            messageArea.append("."); //$NON-NLS-1$
+                            messageArea.append(".");
                             continue;
 
                         case BUSY:
-                            messageArea.append("B"); //$NON-NLS-1$
+                            messageArea.append("B");
                             break;
 
                         case CRC_ERROR:
-                            messageArea.append("C"); //$NON-NLS-1$
+                            messageArea.append("C");
                             break;
 
                         case ERROR:
-                            messageArea.append("E"); //$NON-NLS-1$
+                            messageArea.append("E");
                             break;
 
                         case NACK:
-                            messageArea.append("N"); //$NON-NLS-1$
+                            messageArea.append("N");
                             break;
                         }
                     }
@@ -108,10 +93,10 @@ public class MemoryDump {
             } catch (final IOException e) {
                 messageArea.append(ExceptionUtils.getStackTrace(e));
             } finally {
-                dumpButton.setText(Messages.getString("Start")); //$NON-NLS-1$
+                dumpButton.setText(Messages.getString("Start"));
                 saveButton.setEnabled(true);
 
-                messageArea.append(Messages.getString("MemoryDump.done")); //$NON-NLS-1$
+                messageArea.append(Messages.getString("MemoryDump.done"));
             }
         }
     }
@@ -119,8 +104,8 @@ public class MemoryDump {
     private final class SaveButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent evt) {
-            final String extension = "txt"; //$NON-NLS-1$
-            final String description = Messages.getString("MemoryDump.FileDescription"); //$NON-NLS-1$
+            final String extension = "txt";
+            final String description = Messages.getString("MemoryDump.FileDescription");
             final JFileChooser fc = new JFileChooser();
             fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
             fc.setMultiSelectionEnabled(false);
@@ -131,7 +116,7 @@ public class MemoryDump {
 
             if (result == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                if (!file.getName().endsWith(".txt")) file = new File(file.getAbsoluteFile() + ".txt"); //$NON-NLS-1$
+                if (!file.getName().endsWith(".txt")) file = new File(file.getAbsoluteFile() + ".txt");
 
                 FileWriter writer;
                 try {
@@ -161,14 +146,14 @@ public class MemoryDump {
     }
 
     private final JComboBox<String> comboBox = new JComboBox<>();
-    private final JButton dumpButton = new JButton(Messages.getString("Start")); //$NON-NLS-1$
-    private final JButton saveButton = new JButton(Messages.getString("Save")); //$NON-NLS-1$
+    private final JButton dumpButton = new JButton(Messages.getString("Start"));
+    private final JButton saveButton = new JButton(Messages.getString("Save"));
     private final JPanel panel = new JPanel();
     private final JTextArea textArea = new JTextArea();
     private final JScrollPane textScrollPane = new JScrollPane(textArea);
     private final JTextArea messageArea = new JTextArea();
     private final JScrollPane messageScrollPane = new JScrollPane(messageArea);
-    private final JFrame frame = new JFrame(Messages.getString("MemoryDump.Title")); //$NON-NLS-1$
+    private final JFrame frame = new JFrame(Messages.getString("MemoryDump.Title"));
     private DumpThread dumpThread = null;
 
     private void showDialog() {
@@ -179,7 +164,7 @@ public class MemoryDump {
         saveButton.addActionListener(new SaveButtonActionListener());
         saveButton.setEnabled(false);
 
-        panel.add(new JLabel(Messages.getString("SerialPort"))); //$NON-NLS-1$
+        panel.add(new JLabel(Messages.getString("SerialPort")));
         panel.add(comboBox);
         panel.add(dumpButton);
         panel.add(saveButton);
@@ -196,7 +181,7 @@ public class MemoryDump {
         frame.add(messageScrollPane, BorderLayout.SOUTH);
         frame.add(textScrollPane, BorderLayout.CENTER);
         frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setSize(800, 600);
     }

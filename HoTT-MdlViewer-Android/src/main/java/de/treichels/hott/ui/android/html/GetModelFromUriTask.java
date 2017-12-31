@@ -39,7 +39,7 @@ import de.treichels.hott.ui.android.R;
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class GetModelFromUriTask extends FailSafeAsyncTask<Uri, Void, BaseModel> {
-  private static final String FILE_EXTENSION_MDL = ".mdl"; //$NON-NLS-1$
+  private static final String FILE_EXTENSION_MDL = ".mdl";
   private final Context       context;
 
   public GetModelFromUriTask(final Context context) {

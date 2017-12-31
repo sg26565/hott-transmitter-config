@@ -1,12 +1,15 @@
 package de.treichels.hott.vdfeditor.ui.tts
 
-import de.treichels.hott.vdfeditor.ui.MessageDialog
+import de.treichels.hott.model.voice.Player
 import de.treichels.hott.model.voice.VoiceRssLanguage
 import de.treichels.hott.util.ExceptionDialog
-import javafx.concurrent.Task
+import de.treichels.hott.vdfeditor.ui.MessageDialog
 import javafx.geometry.Pos
-import javafx.scene.control.*
 import javafx.scene.control.Alert.AlertType
+import javafx.scene.control.ComboBox
+import javafx.scene.control.ProgressBar
+import javafx.scene.control.Slider
+import javafx.scene.control.TextArea
 import javafx.scene.layout.Priority
 import javafx.stage.Modality
 import javafx.stage.StageStyle
@@ -14,17 +17,19 @@ import tornadofx.*
 import java.net.UnknownHostException
 
 private const val PREFERRED_LANGUAGE = "preferredLanguage"
+private const val LAST_TEXT = "lastText"
 
 internal class SpeechDialog : View() {
-    private var task: Text2SpeechTask? = null
-    private var bgTask: Task<Unit?>? = null
+    private val service = Text2SpeechService().apply {
+        setOnFailed {
+            onFail(exception)
+        }
+    }
 
     // Controls
     private var progressBar by singleAssign<ProgressBar>()
     private var textArea by singleAssign<TextArea>()
     private var languageComboBox by singleAssign<ComboBox<VoiceRssLanguage>>()
-    private var startButton by singleAssign<Button>()
-    private var abortButton by singleAssign<Button>()
     private var volumeSlider by singleAssign<Slider>()
     private var speedSlider by singleAssign<Slider>()
 
@@ -49,6 +54,9 @@ internal class SpeechDialog : View() {
         anchorpane {
             textArea = textarea {
                 isFocusTraversable = false
+                textProperty().onChange {
+                    preferences { put(LAST_TEXT, textArea.text) }
+                }
                 anchorpaneConstraints {
                     topAnchor = 0.0
                     leftAnchor = 0.0
@@ -124,7 +132,7 @@ internal class SpeechDialog : View() {
         anchorpane {
             prefHeight = 20.0
             progressBar = progressbar {
-                progress = 0.0
+                progressProperty().bind(service.runningProperty().integerBinding { if (it == true) -1 else 0 })
                 anchorpaneConstraints {
                     topAnchor = 0.0
                     leftAnchor = 0.0
@@ -138,12 +146,18 @@ internal class SpeechDialog : View() {
             alignment = Pos.BASELINE_RIGHT
             spacing = 10.0
 
-            startButton = button(messages["start_button"]) {
+            button(messages["play_button"]) {
+                disableWhen { textArea.lengthProperty().isEqualTo(0).or(service.runningProperty()) }
+                action { onPlay() }
+            }
+
+            button(messages["start_button"]) {
+                disableWhen { textArea.lengthProperty().isEqualTo(0).or(service.runningProperty()) }
                 isDefaultButton = true
                 action { onStart() }
             }
 
-            abortButton = button(messages["abort_button"]) {
+            button(messages["abort_button"]) {
                 isCancelButton = true
                 action { onAbort() }
             }
@@ -163,43 +177,46 @@ internal class SpeechDialog : View() {
         onAbort()
     }
 
+    private fun reStartService(op: () -> Unit = {}) {
+        service.reset()
+        service.text = text
+        service.language = language
+        service.volume = volume
+        service.speed = speed
+        service.start()
+        service.setOnSucceeded { op() }
+    }
+
+    private fun onPlay() {
+        reStartService {
+            val stream = service.value
+            runAsync {
+                Player.play(stream)
+            }
+        }
+    }
+
     private fun onAbort() {
-        progressBar.progress = 0.0
-        task?.cancel()
-        bgTask?.cancel()
+        service.cancel()
         close()
     }
 
     private fun onStart() {
-        task?.text = text
-        task?.language = language
-        task?.volume = volume
-        task?.speed = speed
-
-        progressBar.progress = -1.0
-
-        bgTask = runAsync {
-            task?.run()
-        } success {
-            close()
-        } fail (this::onFail)
+        reStartService()
+        close()
     }
 
-    fun openDialog(task: Text2SpeechTask) {
-        this.task = task
-        task.fail(this::onFail)
-
-        progressBar.progress = 0.0
-
-        textArea.text = ""
-
-        // disable start button if text area contains no text or the task is already running
-        startButton.disableProperty().bind(textArea.lengthProperty().isEqualTo(0).or(task.runningProperty()))
-
-        openModal(stageStyle = StageStyle.UTILITY, modality = Modality.APPLICATION_MODAL)?.setOnCloseRequest {
-            onAbort()
+    fun openDialog(): Text2SpeechService {
+        preferences {
+            textArea.text = get(LAST_TEXT, "")
         }
 
         textArea.requestFocus()
+
+        openModal(stageStyle = StageStyle.UTILITY, modality = Modality.APPLICATION_MODAL, block = true)?.setOnCloseRequest {
+            onAbort()
+        }
+
+        return service
     }
 }

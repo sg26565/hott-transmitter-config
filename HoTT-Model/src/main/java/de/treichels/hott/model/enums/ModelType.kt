@@ -11,13 +11,7 @@
  */
 package de.treichels.hott.model.enums
 
-import de.treichels.hott.model.BaseModel
-import de.treichels.hott.model.HoTTException
-import de.treichels.hott.model.boat.BoatModel
-import de.treichels.hott.model.car.CarModel
-import de.treichels.hott.model.copter.CopterModel
-import de.treichels.hott.model.helicopter.HelicopterModel
-import de.treichels.hott.model.winged.WingedModel
+import de.treichels.hott.model.*
 import tornadofx.*
 import java.util.*
 import java.util.stream.Stream
@@ -26,7 +20,7 @@ import java.util.stream.Stream
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class ModelType(val id: Int, val char: Char) {
-    Helicopter(0, 'h'), Unknown(-1, 'x'), Winged(1, 'a'), Copter(3, 'q'), Boat(4, 'b'), Car(2, 'c');
+    Helicopter(0, 'h'), Unknown(-1, 'x'), Winged(1, 'a'), Copter(3, 'q'), Boat(4, 'b'), Car(2, 'c'); // TODO add Glider(?, 'g')
 
     val model: BaseModel
         @Throws(HoTTException::class)

@@ -38,7 +38,7 @@ open class VoiceFileBase(vdfType: VDFType, transmitterType: TransmitterType, vdf
     val countryProperty = SimpleObjectProperty<CountryCode>(country)
     val voiceList = list as? ObservableList<VoiceData> ?: list.observable()
     val sizeProperty = voiceList.sizeProperty
-    val systenVDFProperty: BooleanBinding = vdfTypeProperty.isEqualTo(VDFType.System)
+    val systemVDFProperty: BooleanBinding = vdfTypeProperty.isEqualTo(VDFType.System)
 
     // simple values
     var vdfType: VDFType by vdfTypeProperty
@@ -48,7 +48,7 @@ open class VoiceFileBase(vdfType: VDFType, transmitterType: TransmitterType, vdf
     val rawDataSize: Int
         get() = voiceList.stream().mapToInt { it.rawData.size }.sum()
     val size by sizeProperty
-    val isSystemVDF by systenVDFProperty
+    val isSystemVDF by systemVDFProperty
 
     // copy constructor
     constructor(other: VoiceFileBase) : this(other.vdfType, other.transmitterType, other.vdfVersion, other.country, ArrayList(other.voiceList.map(VoiceData::clone)))

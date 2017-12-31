@@ -1,5 +1,3 @@
-import javafx.scene.paint.Color
-import javafx.stage.StageStyle
 import tornadofx.*
 
 fun main(args: Array<String>) = launch<MyApp>(args)

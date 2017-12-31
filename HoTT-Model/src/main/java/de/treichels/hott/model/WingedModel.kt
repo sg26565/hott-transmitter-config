@@ -1,0 +1,150 @@
+/**
+ * HoTT Transmitter Config Copyright (C) 2013 Oliver Treichel
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If not, see <http:></http:>//www.gnu.org/licenses/>.
+ */
+package de.treichels.hott.model
+
+import de.treichels.hott.model.enums.*
+import javax.xml.bind.annotation.*
+
+/**
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
+ */
+@XmlRootElement
+class WingedModel : BaseModel(ModelType.Winged) {
+    var aileronFlapType: AileronFlapType? = null
+    @get:XmlIDREF
+    var brakeInputChannel: Channel? = null
+    var brakeOffset: Int = 0
+    var isChannel8Delay: Boolean = false
+    var motorOnC1Type: MotorOnC1Type? = null
+    @get:XmlElementWrapper(name = "profitrims")
+    var profiTrim: List<WingedProfiTrim> = emptyList()
+    @get:XmlIDREF
+    var profiTrimSwitch: Switch? = null
+    var tailType: TailType? = null
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is WingedModel) return false
+        if (!super.equals(other)) return false
+
+        if (aileronFlapType != other.aileronFlapType) return false
+        if (brakeInputChannel != other.brakeInputChannel) return false
+        if (brakeOffset != other.brakeOffset) return false
+        if (isChannel8Delay != other.isChannel8Delay) return false
+        if (motorOnC1Type != other.motorOnC1Type) return false
+        if (profiTrim != other.profiTrim) return false
+        if (profiTrimSwitch != other.profiTrimSwitch) return false
+        if (tailType != other.tailType) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (aileronFlapType?.hashCode() ?: 0)
+        result = 31 * result + (brakeInputChannel?.hashCode() ?: 0)
+        result = 31 * result + brakeOffset
+        result = 31 * result + isChannel8Delay.hashCode()
+        result = 31 * result + (motorOnC1Type?.hashCode() ?: 0)
+        result = 31 * result + profiTrim.hashCode()
+        result = 31 * result + (profiTrimSwitch?.hashCode() ?: 0)
+        result = 31 * result + (tailType?.hashCode() ?: 0)
+        return result
+    }
+}
+
+data class WingedMixer(
+        var function: SwitchFunction = SwitchFunction.Unassigned,
+        var qualifier: List<Any> = emptyList(),
+        @get:XmlIDREF
+        var switch: Switch = Switch(),
+        var value: List<Int> = emptyList()
+) : AbstractBase() {
+    val id: String
+        @XmlID
+        @XmlAttribute
+        get() {
+            val b = StringBuilder()
+
+            b.append(function.name)
+
+            for (q in qualifier) {
+                b.append("_")
+
+                if (q.javaClass.isEnum)
+                    try {
+                        val m = q.javaClass.getMethod("name")
+                        b.append(m.invoke(q))
+                    } catch (e: Exception) {
+                        throw RuntimeException(e)
+                    }
+                else
+                    b.append(q.toString())
+            }
+
+            return b.toString()
+        }
+
+    fun setValue(value: Int) {
+        this.value = listOf(value)
+    }
+}
+
+class WingedPhase(
+        var brakeElevatorCurve: Curve = Curve(),
+        @get:XmlElementWrapper(name = "brakeMixers")
+        var brakeMixer: List<WingedMixer> = listOf(),
+        @get:XmlElementWrapper(name = "multiFlapMixers")
+        var multiFlapMixer: List<WingedMixer> = mutableListOf(),
+        @get:XmlElementWrapper(name = "wingMixers")
+        var wingMixer: List<WingedMixer> = mutableListOf(),
+        var wingTrim: WingedTrim = WingedTrim()
+) : Phase() {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is WingedPhase) return false
+        if (!super.equals(other)) return false
+
+        if (brakeElevatorCurve != other.brakeElevatorCurve) return false
+        if (brakeMixer != other.brakeMixer) return false
+        if (multiFlapMixer != other.multiFlapMixer) return false
+        if (wingMixer != other.wingMixer) return false
+        if (wingTrim != other.wingTrim) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + brakeElevatorCurve.hashCode()
+        result = 31 * result + brakeMixer.hashCode()
+        result = 31 * result + multiFlapMixer.hashCode()
+        result = 31 * result + wingMixer.hashCode()
+        result = 31 * result + wingTrim.hashCode()
+        return result
+    }
+}
+
+data class WingedProfiTrim(
+        var isEnabled: Boolean = false,
+        @get:XmlIDREF
+        var inputControl: Switch? = null
+) : AbstractBase()
+
+data class WingedTrim(
+        var aileronPhaseTrim: List<Int> = emptyList(),
+        var aileronStickTrim: Int = 0,
+        var elevatorPhaseTrim: Int = 0,
+        var elevatorStickTrim: Int = 0,
+        var flapPhaseTrim: List<Int> = emptyList(),
+        var rudderStickTrim: Int = 0
+) : AbstractBase()

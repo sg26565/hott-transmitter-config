@@ -1,8 +1,8 @@
 package de.treichels.hott.vdfeditor.ui
 
-import de.treichels.hott.vdfeditor.actions.RenameAction
 import de.treichels.hott.model.voice.VDFType
 import de.treichels.hott.model.voice.VoiceData
+import de.treichels.hott.vdfeditor.actions.RenameAction
 import javafx.geometry.Pos
 import javafx.scene.control.Button
 import javafx.scene.control.Label
@@ -59,7 +59,7 @@ class VoiceDataListCell internal constructor(private val controller: MainView) :
 
         textField = textfield {
             text = when (controller.voiceFile.vdfType) {
-            // strip index number from portName
+            // strip index number from name
                 VDFType.System -> cellText.substring(if (index > 98) 4 else 3)
                 else -> cellText
             }

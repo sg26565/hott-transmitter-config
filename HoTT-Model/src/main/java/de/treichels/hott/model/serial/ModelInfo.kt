@@ -32,7 +32,7 @@ data class ModelInfo(
 ) : Serializable {
     override fun toString(): String {
         return String.format(
-                "ModelInfo [modelNumber=%s, modelName=%s, modelInfo=%s, modelType=%s, transmitterType=%s, receiverType=%s, usedHours=%s, usedMinutes=%s]", //$NON-NLS-1$
+                "ModelInfo [modelNumber=%s, modelName=%s, modelInfo=%s, modelType=%s, transmitterType=%s, receiverType=%s, usedHours=%s, usedMinutes=%s]",
                 modelNumber, modelName, modelInfo, modelType, transmitterType, receiverType, usedHours, usedMinutes)
     }
 }

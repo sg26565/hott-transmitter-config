@@ -75,7 +75,6 @@ class JSSCSerialPort (override var portName: String) : SerialPort, SerialPortEve
 
         }
 
-
         override fun write(b: Int) {
             if (writeBuffer.remaining() == 0) {
                 flush()

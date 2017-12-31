@@ -33,7 +33,7 @@ public class HoTTReader {
   /** bytes read so far */
   private int                 offset;
 
-  public static final Charset ISO_8859_1 = Charset.forName("ISO-8859-1"); //$NON-NLS-1$
+  public static final Charset ISO_8859_1 = Charset.forName("ISO-8859-1");
 
   /**
    * Create a HoTT reader with the specified byte array as a source.

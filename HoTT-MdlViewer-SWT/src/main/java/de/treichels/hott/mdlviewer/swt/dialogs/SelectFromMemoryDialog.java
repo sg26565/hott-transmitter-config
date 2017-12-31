@@ -58,7 +58,7 @@ public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
                 for (final ModelInfo info : i)
                     if (info.getModelType() != ModelType.Unknown) {
                         infos.add(info);
-                        list.add(String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType().getChar(), //$NON-NLS-1$
+                        list.add(String.format("%02d: %c%s.mdl", info.getModelNumber(), info.getModelType().getChar(),
                                 info.getModelName()));
                     }
             } catch (final Throwable t) {
@@ -74,12 +74,8 @@ public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
         super(parent);
     }
 
-    public SelectFromMemoryDialog(final Shell partent, final int style) {
-        super(partent, style);
-    }
-
     @Override
-    protected Widget getSelectionComponent(final Composite dialog) {
+    protected void getSelectionComponent(final Composite dialog) {
         list = new List(dialog, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
         list.addListener(SWT.DefaultSelection, new DefaultListener());
 
@@ -90,7 +86,6 @@ public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
         gridData.verticalAlignment = GridData.FILL;
         list.setLayoutData(gridData);
 
-        return list;
     }
 
     @Override

@@ -41,20 +41,20 @@ object Announcements {
      * Type of announcements
      * @param transmitterType
      * Type of transmitter
-     * @return The portName of the key in the preferences node
+     * @return The name of the key in the preferences node
      */
     private fun getCountKey(vdfType: VDFType, transmitterType: TransmitterType): String {
         return String.format(VOICE_COUNT, transmitterType.name, vdfType.name)
     }
 
     /**
-     * Default file portName in case of missing preferences.
+     * Default file name in case of missing preferences.
      *
      * @param vdfType
      * Type of announcements
      * @param index
      * The index of the announcement
-     * @return The default file portName
+     * @return The default file name
      */
     private fun getDefaultFileName(vdfType: VDFType, index: Int): String {
         return Messages.getString(if (vdfType === VDFType.System) SYSTEM_VOICE_FILE else USER_VOICE_FILE, index + 1)

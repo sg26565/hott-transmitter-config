@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 class RenameActionTest {
     @Test
     fun testRenameAction() {
-        val list = mutableListOf<VoiceData>(VoiceData("before", byteArrayOf(1, 2, 3)))
+        val list = mutableListOf(VoiceData("before", byteArrayOf(1, 2, 3)))
         val action = RenameAction(0, "after")
 
         assertEquals(1, list.size.toLong())

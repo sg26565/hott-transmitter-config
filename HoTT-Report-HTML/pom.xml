@@ -19,12 +19,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTT-Model</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Decoder</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>

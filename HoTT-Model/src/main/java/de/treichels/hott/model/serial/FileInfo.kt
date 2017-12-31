@@ -69,7 +69,7 @@ class FileInfo : Serializable, Comparable<String> {
 
 
     override fun toString(): String {
-        return String.format("FileInfo [portName=%s, shortName=%s, size=%s, modifyDate=%s, type=%s]", name, shortName, size, modifyDate, type) //$NON-NLS-1$
+        return String.format("FileInfo [name=%s, shortName=%s, size=%s, modifyDate=%s, type=%s]", name, shortName, size, modifyDate, type)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -97,8 +97,8 @@ class FileInfo : Serializable, Comparable<String> {
     }
 
     companion object {
-        private val EMPTY_STRING = "" //$NON-NLS-1$
-        private val FORWARD_SLASH = "/" //$NON-NLS-1$
+        private val EMPTY_STRING = ""
+        private val FORWARD_SLASH = "/"
         private const val serialVersionUID = 1L
     }
 }

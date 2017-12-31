@@ -17,7 +17,6 @@
 		<module>HoTT-Report-HTML</module>
 		<module>HoTT-Report-PDF</module>
 		<module>HoTT-Report-XML</module>
-		<module>HoTT-MdlViewer-Swing</module>
 		<module>HoTT-MdlViewer-SWT</module>
 		<!-- module>HoTT-MdlViewer-Android</module -->
 		<module>MemoryDump</module>
@@ -196,7 +195,9 @@
 						<dependency>
 							<groupId>net.sf.proguard</groupId>
 							<artifactId>proguard-base</artifactId>
-							<version>5.3.3</version>
+							<version>6.0beta1</version>
+							<scope>system</scope>
+							<systemPath>C:/Users/olive/Downloads/proguard6.0beta1/lib/proguard.jar</systemPath>
 						</dependency>
 					</dependencies>
 				</plugin>

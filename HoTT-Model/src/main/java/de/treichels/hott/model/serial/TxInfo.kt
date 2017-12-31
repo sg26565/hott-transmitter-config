@@ -29,7 +29,7 @@ data class TxInfo(
         val customPhaseNames: List<String>) : Serializable {
     override fun toString(): String {
         return String.format(
-                "TxInfo [transmitterType=%s, appVersion=%s, memoryVersion=%s, year=%s, transmitterName=%s, vendorName=%s, ownerName=%s, customPhaseNames=%s]", //$NON-NLS-1$
+                "TxInfo [transmitterType=%s, appVersion=%s, memoryVersion=%s, year=%s, transmitterName=%s, vendorName=%s, ownerName=%s, customPhaseNames=%s]",
                 transmitterType, appVersion, memoryVersion, year, transmitterName, vendorName, ownerName, customPhaseNames)
     }
 

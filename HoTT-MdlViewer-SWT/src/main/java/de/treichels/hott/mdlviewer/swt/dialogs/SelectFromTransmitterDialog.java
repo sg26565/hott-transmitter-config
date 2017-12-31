@@ -1,31 +1,20 @@
 package de.treichels.hott.mdlviewer.swt.dialogs;
 
-import java.util.List;
-import java.util.prefs.Preferences;
-
+import de.treichels.hott.decoder.HoTTSerialPort;
+import de.treichels.hott.messages.Messages;
+import de.treichels.hott.model.BaseModel;
+import de.treichels.hott.model.serial.JSSCSerialPort;
+import de.treichels.hott.util.Util;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Widget;
+import org.eclipse.swt.widgets.*;
 
-import de.treichels.hott.decoder.HoTTSerialPort;
-import de.treichels.hott.messages.Messages;
-import de.treichels.hott.model.BaseModel;
-import de.treichels.hott.model.serial.JSSCSerialPort;
-import de.treichels.hott.util.Util;
+import java.util.List;
+import java.util.prefs.Preferences;
 
 public abstract class SelectFromTransmitterDialog extends Dialog {
     private final class CancelListener implements Listener {
@@ -51,26 +40,22 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
         }
     }
 
-    static final Preferences PREFS = Preferences.userNodeForPackage(SelectFromTransmitterDialog.class);
+    private static final Preferences PREFS = Preferences.userNodeForPackage(SelectFromTransmitterDialog.class);
     private final List<String> portNames = JSSCSerialPort.Companion.getAvailablePorts();
-    protected HoTTSerialPort port = null;
-    protected BaseModel model = null;
+    HoTTSerialPort port = null;
+    BaseModel model = null;
     private Combo combo;
-    protected Shell dialog;
+    Shell dialog;
 
-    public SelectFromTransmitterDialog(final Shell parent) {
-        this(parent, SWT.NONE);
-    }
-
-    public SelectFromTransmitterDialog(final Shell partent, final int style) {
-        super(partent, style);
+    SelectFromTransmitterDialog(final Shell parent) {
+        super(parent, SWT.NONE);
     }
 
     public BaseModel getModel() {
         return model;
     }
 
-    protected abstract Widget getSelectionComponent(final Composite dialog);
+    protected abstract void getSelectionComponent(final Composite dialog);
 
     protected abstract void onCancel();
 
@@ -99,7 +84,7 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
         portLayout.wrap = false;
         portSelection.setLayout(portLayout);
         final Label label = new Label(portSelection, SWT.CENTER);
-        label.setText(Messages.getString("SerialPort")); //$NON-NLS-1$
+        label.setText(Messages.getString("SerialPort"));
         combo = new Combo(portSelection, SWT.READ_ONLY);
 
         // main selection component
@@ -150,7 +135,7 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
         }
     }
 
-    protected void showError(final Throwable t) {
+    void showError(final Throwable t) {
         final MessageBox mb = new MessageBox(getParent().getShell(), SWT.NONE);
         mb.setText(t.getClass().getSimpleName());
         mb.setMessage(t.getMessage() == null ? t.getClass().getSimpleName() : t.getMessage());

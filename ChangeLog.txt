@@ -133,7 +133,7 @@
 	- turn RF output off before loading or sending files from / to transmitter
 	- re-add vdf version combo box
 	- don't try to load user voice files for vdf version 2.0
-	- interrupt background task on cancel
+	- interrupt background service on cancel
 	- fix loading / sending of voice2 files
 	
 2017-09-18

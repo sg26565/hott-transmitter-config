@@ -96,7 +96,8 @@ class ADPCMCodec {
         stepSize = stepSize shr 1
         if (diff >= stepSize) bits[0] = true
 
-        val adpcm = bits.toByteArray()[0]
+
+        val adpcm = if (bits.isEmpty) 0 else  bits.toByteArray()[0]
         last = decode(adpcm).toInt()
 
         return adpcm

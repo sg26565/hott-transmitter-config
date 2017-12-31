@@ -11,7 +11,6 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.hott.decoder.HoTTDecoder
 import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.model.BaseModel
 import de.treichels.hott.model.HoTTException
@@ -31,11 +30,11 @@ class Model(private val info: ModelInfo, private val data: ByteArray?) {
     companion object {
         fun loadModel(file: File?): Model {
             // check if file exits
-            if (file == null || !file.exists()) throw HoTTException(messages["file_not_found"], file) //$NON-NLS-1$
+            if (file == null || !file.exists()) throw HoTTException(messages["file_not_found"], file)
 
             // check that file has a .mdl extension
             val fileName = file.name
-            if (!fileName.endsWith(".mdl")) throw HoTTException(messages["invalid_file_name"], fileName) //$NON-NLS-1$
+            if (!fileName.endsWith(".mdl")) throw HoTTException(messages["invalid_file_name"], fileName)
 
             // check model type
             val modelType = ModelType.forChar(fileName[0])

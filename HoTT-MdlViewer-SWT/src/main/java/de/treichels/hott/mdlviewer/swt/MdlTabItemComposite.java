@@ -1,12 +1,15 @@
 package de.treichels.hott.mdlviewer.swt;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.util.prefs.Preferences;
-
+import de.treichels.hott.decoder.HoTTDecoder;
 import de.treichels.hott.mdlviewer.swt.dialogs.SelectFromMemoryDialog;
 import de.treichels.hott.mdlviewer.swt.dialogs.SelectFromSdCardDialog;
 import de.treichels.hott.mdlviewer.swt.dialogs.SelectFromTransmitterDialog;
+import de.treichels.hott.messages.Messages;
+import de.treichels.hott.model.BaseModel;
+import de.treichels.hott.report.html.HTMLReport;
+import de.treichels.hott.report.pdf.PDFReport;
+import de.treichels.hott.report.xml.XMLReport;
+import de.treichels.hott.util.Util;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.BusyIndicator;
@@ -18,30 +21,26 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.*;
+import org.jetbrains.annotations.NonNls;
 
-import de.treichels.hott.decoder.HoTTDecoder;
-import de.treichels.hott.messages.Messages;
-import de.treichels.hott.model.BaseModel;
-import de.treichels.hott.report.html.HTMLReport;
-import de.treichels.hott.report.pdf.PDFReport;
-import de.treichels.hott.report.xml.XMLReport;
-import de.treichels.hott.util.Util;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.prefs.Preferences;
 
-public class MdlTabItemComposite extends Composite {
-    private static final String MDL = ".mdl"; //$NON-NLS-1$
-    private static final String PDF = ".pdf"; //$NON-NLS-1$
-    private static final String HTML = ".html"; //$NON-NLS-1$
-    private static final String XML = ".xml"; //$NON-NLS-1$
-    private static final String LAST_SAVE_DIR = "lastSaveDir"; //$NON-NLS-1$
-    private static final String LAST_LOAD_DIR = "lastLoadDir"; //$NON-NLS-1$
+class MdlTabItemComposite extends Composite {
+    @NonNls
+    private static final String MDL = ".mdl";
+    @NonNls
+    private static final String PDF = ".pdf";
+    @NonNls
+    private static final String HTML = ".html";
+    @NonNls
+    private static final String XML = ".xml";
+    @NonNls
+    private static final String LAST_SAVE_DIR = "lastSaveDir";
+    @NonNls
+    private static final String LAST_LOAD_DIR = "lastLoadDir";
     private static final Preferences PREFS = Preferences.userNodeForPackage(MdlTabItemComposite.class);
 
     private BaseModel model = null;
@@ -58,9 +57,9 @@ public class MdlTabItemComposite extends Composite {
         setLayout(tabItemCompositeLayout);
         setBackground(new Color(Display.getDefault(), 250, 249, 211));
 
-        final Font font = SWTResourceManager.getFont(SwtMdlBrowser.WIDGET_FONT_NAME, SwtMdlBrowser.WIDGET_FONT_SIZE, SWT.NORMAL);
+        final Font font = SWTResourceManager.getFont(SwtMdlBrowser.WIDGET_FONT_SIZE);
 
-        HTMLReport.setSuppressExceptions(false);
+        HTMLReport.INSTANCE.setSuppressExceptions(false);
 
         // Load button
         final Button loadMdlButton = new Button(this, SWT.PUSH | SWT.CENTER);
@@ -72,11 +71,11 @@ public class MdlTabItemComposite extends Composite {
         loadMdlButtonLData.horizontalAlignment = GridData.CENTER;
         loadMdlButton.setLayoutData(loadMdlButtonLData);
         loadMdlButton.setFont(font);
-        loadMdlButton.setText(Messages.getString("Load")); //$NON-NLS-1$
+        loadMdlButton.setText(Messages.getString("Load"));
         loadMdlButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                if (Util.INSTANCE.getDEBUG()) System.out.printf("loadMdlButton.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
+                if (Util.INSTANCE.getDEBUG()) System.out.printf("loadMdlButton.widgetSelected, event=%s%n", evt);
                 MdlTabItemComposite.this.loadFromFile();
             }
         });
@@ -92,7 +91,7 @@ public class MdlTabItemComposite extends Composite {
         mdlVersionLabel.setLayoutData(mdlVersionLabelLData);
         mdlVersionLabel.setBackground(new Color(Display.getDefault(), 250, 249, 211));
         mdlVersionLabel.setFont(font);
-        mdlVersionLabel.setText("Version: " + System.getProperty(Launcher.PROGRAM_VERSION)); //$NON-NLS-1$
+        mdlVersionLabel.setText("Version: " + System.getProperty(Launcher.PROGRAM_VERSION));
 
         saveMdlButton = new Button(this, SWT.PUSH | SWT.CENTER);
         final GridData saveMdlButtonLData = new GridData();
@@ -103,12 +102,12 @@ public class MdlTabItemComposite extends Composite {
         saveMdlButtonLData.grabExcessHorizontalSpace = true;
         saveMdlButton.setLayoutData(saveMdlButtonLData);
         saveMdlButton.setFont(font);
-        saveMdlButton.setText(Messages.getString("Save")); //$NON-NLS-1$
+        saveMdlButton.setText(Messages.getString("Save"));
         saveMdlButton.setEnabled(false);
         saveMdlButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                if (Util.INSTANCE.getDEBUG()) System.out.printf("saveMdlButton.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
+                if (Util.INSTANCE.getDEBUG()) System.out.printf("saveMdlButton.widgetSelected, event=%s%n", evt);
                 MdlTabItemComposite.this.save();
             }
         });
@@ -129,7 +128,7 @@ public class MdlTabItemComposite extends Composite {
             public void keyPressed(final KeyEvent evt) {
                 switch (evt.keyCode) {
                 case SWT.F5:
-                    MdlTabItemComposite.this.updateView(false);
+                    MdlTabItemComposite.this.updateView();
                     break;
                 }
             }
@@ -140,44 +139,44 @@ public class MdlTabItemComposite extends Composite {
 
         // Load from file menu item
         final MenuItem loadMdlFromFileMenuItemMenuItem = new MenuItem(contextMenu, SWT.NONE);
-        loadMdlFromFileMenuItemMenuItem.setText(Messages.getString("LoadFromFile")); //$NON-NLS-1$
+        loadMdlFromFileMenuItemMenuItem.setText(Messages.getString("LoadFromFile"));
         loadMdlFromFileMenuItemMenuItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                if (Util.INSTANCE.getDEBUG()) System.out.printf("loadMdlMenuItem.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
+                if (Util.INSTANCE.getDEBUG()) System.out.printf("loadMdlMenuItem.widgetSelected, event=%s%n", evt);
                 MdlTabItemComposite.this.loadFromFile();
             }
         });
 
         // Load from memory menu item
         final MenuItem loadMdlFromMemoryMenuItemMenuItem = new MenuItem(contextMenu, SWT.NONE);
-        loadMdlFromMemoryMenuItemMenuItem.setText(Messages.getString("LoadFromMemory")); //$NON-NLS-1$
+        loadMdlFromMemoryMenuItemMenuItem.setText(Messages.getString("LoadFromMemory"));
         loadMdlFromMemoryMenuItemMenuItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                if (Util.INSTANCE.getDEBUG()) System.out.printf("loadMdlMenuItem.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
+                if (Util.INSTANCE.getDEBUG()) System.out.printf("loadMdlMenuItem.widgetSelected, event=%s%n", evt);
                 MdlTabItemComposite.this.loadFromMemory();
             }
         });
 
         // Load from sd card menu item
         final MenuItem loadMdlFromSdCardMenuItemMenuItem = new MenuItem(contextMenu, SWT.NONE);
-        loadMdlFromSdCardMenuItemMenuItem.setText(Messages.getString("LoadFromSdCard")); //$NON-NLS-1$
+        loadMdlFromSdCardMenuItemMenuItem.setText(Messages.getString("LoadFromSdCard"));
         loadMdlFromSdCardMenuItemMenuItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                if (Util.INSTANCE.getDEBUG()) System.out.printf("loadMdlMenuItem.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
+                if (Util.INSTANCE.getDEBUG()) System.out.printf("loadMdlMenuItem.widgetSelected, event=%s%n", evt);
                 MdlTabItemComposite.this.loadFromSdCard();
             }
         });
 
         saveMdlMenuItem = new MenuItem(contextMenu, SWT.NONE);
-        saveMdlMenuItem.setText(Messages.getString("Save")); //$NON-NLS-1$
+        saveMdlMenuItem.setText(Messages.getString("Save"));
         saveMdlMenuItem.setEnabled(false);
         saveMdlMenuItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                if (Util.INSTANCE.getDEBUG()) System.out.printf("saveMdlMenuItem.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
+                if (Util.INSTANCE.getDEBUG()) System.out.printf("saveMdlMenuItem.widgetSelected, event=%s%n", evt);
                 MdlTabItemComposite.this.save();
             }
         });
@@ -185,22 +184,22 @@ public class MdlTabItemComposite extends Composite {
         new MenuItem(contextMenu, SWT.SEPARATOR);
 
         reloadMenuItem = new MenuItem(contextMenu, SWT.NONE);
-        reloadMenuItem.setText(Messages.getString("Reload")); //$NON-NLS-1$
+        reloadMenuItem.setText(Messages.getString("Reload"));
         reloadMenuItem.setEnabled(false);
         reloadMenuItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent evt) {
-                if (Util.INSTANCE.getDEBUG()) System.out.printf("reloadMenuItem.widgetSelected, event=%s%n", evt); //$NON-NLS-1$
-                MdlTabItemComposite.this.updateView(false);
+                if (Util.INSTANCE.getDEBUG()) System.out.printf("reloadMenuItem.widgetSelected, event=%s%n", evt);
+                MdlTabItemComposite.this.updateView();
             }
         });
     }
 
     private void loadFromFile() {
         final FileDialog fd = new FileDialog(getParent().getShell(), SWT.APPLICATION_MODAL | SWT.OPEN | SWT.SINGLE);
-        fd.setText(Messages.getString("Load")); //$NON-NLS-1$
-        fd.setFilterExtensions(new String[] { "*.mdl" }); //$NON-NLS-1$
-        fd.setFilterNames(new String[] { Messages.getString("MdlFileDescription") }); //$NON-NLS-1$
+        fd.setText(Messages.getString("Load"));
+        fd.setFilterExtensions(new String[] { "*.mdl" });
+        fd.setFilterNames(new String[] { Messages.getString("MdlFileDescription") });
         fd.setFilterPath(PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR)));
 
         final String fileName = fd.open();
@@ -221,7 +220,7 @@ public class MdlTabItemComposite extends Composite {
                 saveMdlMenuItem.setEnabled(true);
                 reloadMenuItem.setEnabled(true);
 
-                updateView(false);
+                updateView();
             }
         }
     }
@@ -235,7 +234,7 @@ public class MdlTabItemComposite extends Composite {
             saveMdlMenuItem.setEnabled(true);
             reloadMenuItem.setEnabled(true);
 
-            updateView(false);
+            updateView();
         }
     }
 
@@ -248,16 +247,16 @@ public class MdlTabItemComposite extends Composite {
             saveMdlMenuItem.setEnabled(true);
             reloadMenuItem.setEnabled(true);
 
-            updateView(false);
+            updateView();
         }
     }
 
     private void save() {
         if (model != null) {
             final FileDialog fd = new FileDialog(getParent().getShell(), SWT.APPLICATION_MODAL | SWT.SAVE | SWT.SINGLE);
-            fd.setText(Messages.getString("Save")); //$NON-NLS-1$
-            fd.setFilterExtensions(new String[] { "*.pdf", "*.html", "*.xml" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            fd.setFilterNames(new String[] { "Portable Document Format (*.pdf)", "Hypertext Markup Language (*.html)", "Extensible Markup Language (*.xml)" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            fd.setText(Messages.getString("Save"));
+            fd.setFilterExtensions(new String[] { "*.pdf", "*.html", "*.xml" });
+            fd.setFilterNames(new String[] { "Portable Document Format (*.pdf)", "Hypertext Markup Language (*.html)", "Extensible Markup Language (*.xml)" });
             fd.setFilterPath(PREFS.get(LAST_SAVE_DIR, PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR))));
             fd.setFileName(model.getModelName() + PDF);
             fd.setOverwrite(true);
@@ -270,18 +269,18 @@ public class MdlTabItemComposite extends Composite {
                 BusyIndicator.showWhile(getDisplay(), () -> {
                     try {
                         if (fileName.endsWith(XML)) {
-                            final String data1 = XMLReport.generateXML(model);
+                            final String data1 = XMLReport.INSTANCE.generateXML(model);
                             final FileWriter fw1 = new FileWriter(file);
                             fw1.write(data1);
                             fw1.close();
                         } else if (fileName.endsWith(HTML)) {
-                            final String data2 = HTMLReport.generateHTML(model);
+                            final String data2 = HTMLReport.INSTANCE.generateHTML(model);
                             final FileWriter fw2 = new FileWriter(file);
                             fw2.write(data2);
                             fw2.close();
                         } else if (fileName.endsWith(PDF)) {
-                            final String data3 = HTMLReport.generateHTML(model);
-                            PDFReport.save(file, data3);
+                            final String data3 = HTMLReport.INSTANCE.generateHTML(model);
+                            PDFReport.INSTANCE.save(file, data3);
                         }
                     } catch (final Throwable t) {
                         showError(t);
@@ -299,14 +298,11 @@ public class MdlTabItemComposite extends Composite {
         if (Util.INSTANCE.getDEBUG()) t.printStackTrace();
     }
 
-    private void updateView(final boolean isXML) {
+    private void updateView() {
         if (model != null) BusyIndicator.showWhile(getDisplay(), () -> {
             String data;
             try {
-                if (isXML)
-                    data = XMLReport.generateXML(model);
-                else
-                    data = HTMLReport.generateHTML(model);
+                data = HTMLReport.INSTANCE.generateHTML(model);
             } catch (final Exception e) {
                 data = e.getMessage();
             }

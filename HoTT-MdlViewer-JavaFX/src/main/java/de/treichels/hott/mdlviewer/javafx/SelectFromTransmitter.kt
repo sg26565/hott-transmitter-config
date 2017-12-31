@@ -97,12 +97,12 @@ abstract class SelectFromTransmitter : View() {
      * The com port was changed, update bindings.
      */
     private fun portChanged() {
-        val portName = portCombo.value
-        if (portName != null) {
-            if (!serialPort?.portName.equals(portName)) {
-                preferences { put("comPort", portName) }
+        val name = portCombo.value
+        if (name != null) {
+            if (!serialPort?.portName.equals(name)) {
+                preferences { put("comPort", name) }
 
-                serialPort = HoTTSerialPort(JSSCSerialPort(portName))
+                serialPort = HoTTSerialPort(JSSCSerialPort(name))
                 refreshUITask().apply {
                     portCombo.disableWhen(runningProperty())
                     startButton.disableWhen(runningProperty().or(isReady().not()))

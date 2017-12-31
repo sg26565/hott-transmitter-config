@@ -1,16 +1,16 @@
 package de.treichels.hott.messages;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Messages {
-    private static final String BUNDLE_NAME = "de.treichels.hott.messages.messages"; //$NON-NLS-1$
+    @NonNls
+    private static final String BUNDLE_NAME = "de.treichels.hott.messages.messages";
+    @NonNls
     private static final String[] PACKAGE_NAMES = { "", "de.treichels.hott.model.", "de.treichels.hott.model.enums." };
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
-
-    public static ResourceBundle getResourceBundle() {
-        return RESOURCE_BUNDLE;
-    }
 
     public static String getString(final String key, final Object... args) {
         if (key == null) return null;
@@ -30,8 +30,7 @@ public class Messages {
                         final ResourceBundle bundle = ResourceBundle.getBundle(prefix + base);
                         result = bundle.getString(name);
                         break;
-                    } catch (final MissingResourceException e) {
-                        continue;
+                    } catch (final MissingResourceException ignored) {
                     }
             }
         }

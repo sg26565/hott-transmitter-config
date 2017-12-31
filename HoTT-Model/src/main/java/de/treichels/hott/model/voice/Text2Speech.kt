@@ -1,8 +1,7 @@
 package de.treichels.hott.model.voice
 
-import java.io.File
+import javax.sound.sampled.AudioInputStream
 
 interface Text2Speech {
-    @Throws(Exception::class)
-    fun convert(text: String, language: String): File
+    fun convert(text: String, options: Map<String, String>): AudioInputStream
 }

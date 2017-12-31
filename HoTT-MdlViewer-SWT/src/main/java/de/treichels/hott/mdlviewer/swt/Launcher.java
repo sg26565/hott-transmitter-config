@@ -1,5 +1,9 @@
 package de.treichels.hott.mdlviewer.swt;
 
+import de.treichels.hott.messages.Messages;
+import de.treichels.hott.util.Util;
+import org.jetbrains.annotations.NonNls;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -12,46 +16,39 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import de.treichels.hott.messages.Messages;
-import de.treichels.hott.util.Util;
-
-public class Launcher {
-    public static final String LOG_DIR = "log.dir"; //$NON-NLS-1$
-    public static final String MDL_DIR = "mdl.dir"; //$NON-NLS-1$
-    public static final String PROGRAM_DIR = "program.dir"; //$NON-NLS-1$
-    public static final String PROGRAM_VERSION = "program.version"; //$NON-NLS-1$
+class Launcher {
+    @NonNls
+    private static final String LOG_DIR = "log.dir";
+    @NonNls
+    public static final String MDL_DIR = "mdl.dir";
+    @NonNls
+    private static final String PROGRAM_DIR = "program.dir";
+    @NonNls
+    public static final String PROGRAM_VERSION = "program.version";
 
     /**
      * Initialize SWT. Make sure that the correct SWT library is in the classpath.
-     *
-     * @throws MalformedURLException
-     * @throws SecurityException
-     * @throws NoSuchMethodException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws ClassNotFoundException
      */
-    public static void initSwt() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+    private static void initSwt() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
             MalformedURLException, ClassNotFoundException {
         try {
             // check if swt is already in the classpath
-            Class.forName("org.eclipse.swt.widgets.Dialog"); //$NON-NLS-1$
+            Class.forName("org.eclipse.swt.widgets.Dialog");
         } catch (final ClassNotFoundException e) {
             // nope - we need to add it
 
             // determine correct swt jar
-            String osName = System.getProperty("os.portName").toLowerCase(); //$NON-NLS-1$
+            @NonNls String osName = System.getProperty("os.name").toLowerCase();
             if (osName.startsWith("linux"))
-                osName = "linux"; //$NON-NLS-1$
+                osName = "linux";
             else if (osName.startsWith("windows"))
-                osName = "windows"; //$NON-NLS-1$
-            else if (osName.startsWith("mac")) osName = "mac"; //$NON-NLS-1$
+                osName = "windows";
+            else if (osName.startsWith("mac")) osName = "mac";
 
-            final String osArch = System.getProperty("os.arch").toLowerCase(); //$NON-NLS-1$
-            final String swtJarName = String.format("swt-%s-%s.jar", osName, osArch); //$NON-NLS-1$
-            final File swtJar = new File(new File(System.getProperty(PROGRAM_DIR), "swt"), swtJarName); //$NON-NLS-1$
-            if (!swtJar.exists() || !swtJar.isFile()) throw new ClassNotFoundException(Messages.getString("Launcher.SWTNotFound", swtJar.getAbsolutePath())); //$NON-NLS-1$
+            final String osArch = System.getProperty("os.arch").toLowerCase();
+            final String swtJarName = String.format("swt-%s-%s.jar", osName, osArch);
+            final File swtJar = new File(new File(System.getProperty(PROGRAM_DIR), "swt"), swtJarName);
+            if (!swtJar.exists() || !swtJar.isFile()) throw new ClassNotFoundException(Messages.getString("Launcher.SWTNotFound", swtJar.getAbsolutePath()));
 
             // add swt to classpath
             // Note: this is a hack. Not all platforms may use URLClassLoader as
@@ -59,7 +56,7 @@ public class Launcher {
             // and
             // invoke it
             final URLClassLoader classLoader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
-            final Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class); //$NON-NLS-1$
+            final Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
             method.setAccessible(true);
             method.invoke(classLoader, swtJar.toURI().toURL());
         }
@@ -67,30 +64,27 @@ public class Launcher {
 
     /**
      * Initialize system properties.
-     *
-     * @throws URISyntaxException
-     * @throws IOException
      */
     public static void initSystemProperties() throws URISyntaxException, IOException {
         // get the location of this class
         final URL url = Launcher.class.getProtectionDomain().getCodeSource().getLocation();
         File source = new File(url.toURI());
 
-        if (source.getName().endsWith(".jar") || source.getName().endsWith(".exe")) { //$NON-NLS-1$
+        if (source.getName().endsWith(".jar") || source.getName().endsWith(".exe")) {
             // read program version from manifest
             JarFile jarFile = null;
             try {
                 jarFile = new JarFile(source);
                 final Manifest manifest = jarFile.getManifest();
-                final Attributes attributes = manifest.getMainAttributes();
-                final String version = Messages.getString("Launcher.Version", attributes.getValue("Implementation-Version"), //$NON-NLS-1$ //$NON-NLS-2$
+                @NonNls final Attributes attributes = manifest.getMainAttributes();
+                final String version = Messages.getString("Launcher.Version", attributes.getValue("Implementation-Version"),
                         attributes.getValue("Implementation-Build"));
                 System.setProperty(Launcher.PROGRAM_VERSION, version);
             } finally {
                 if (jarFile != null) jarFile.close();
             }
         } else {
-            if (!System.getProperties().containsKey(PROGRAM_VERSION)) System.setProperty(Launcher.PROGRAM_VERSION, Messages.getString("Launcher.Unknown")); //$NON-NLS-1$
+            if (!System.getProperties().containsKey(PROGRAM_VERSION)) System.setProperty(Launcher.PROGRAM_VERSION, Messages.getString("Launcher.Unknown"));
 
             // application was packaged as individual class files, find the
             // classes
@@ -114,9 +108,9 @@ public class Launcher {
         if (!System.getProperties().containsKey(LOG_DIR)) System.setProperty(LOG_DIR, System.getProperty(PROGRAM_DIR));
 
         if (Util.INSTANCE.getDEBUG()) {
-            System.out.printf("program.dir = %s%n", System.getProperty(PROGRAM_DIR)); //$NON-NLS-1$
-            System.out.printf("mdl.dir = %s%n", System.getProperty(MDL_DIR)); //$NON-NLS-1$
-            System.out.printf("log.dir = %s%n", System.getProperty(LOG_DIR)); //$NON-NLS-1$
+            System.out.printf("program.dir = %s%n", System.getProperty(PROGRAM_DIR));
+            System.out.printf("mdl.dir = %s%n", System.getProperty(MDL_DIR));
+            System.out.printf("log.dir = %s%n", System.getProperty(LOG_DIR));
         }
     }
 
@@ -128,22 +122,14 @@ public class Launcher {
 
     /**
      * Start the application.
-     *
-     * @throws IllegalArgumentException
-     *
-     * @throws ClassNotFoundException
-     * @throws NoSuchMethodException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws SecurityException
      */
-    public static void startSwtApplication() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException,
+    private static void startSwtApplication() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException,
             NoSuchMethodException, SecurityException {
         // Call main method of SwtMdlBrower via reflection to avoid load time
         // class
         // loading of SWT (which will fail as SWT is not yet on the class path).
-        final Class<?> mainDialog = Class.forName("de.treichels.hott.mdlviewer.swt.SwtMdlBrowser"); //$NON-NLS-1$
-        final Method main = mainDialog.getMethod("main", String[].class); //$NON-NLS-1$
+        final Class<?> mainDialog = Class.forName("de.treichels.hott.mdlviewer.swt.SwtMdlBrowser");
+        final Method main = mainDialog.getMethod("main", String[].class);
         main.invoke(null, new Object[] { new String[] {} });
     }
 }

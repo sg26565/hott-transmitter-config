@@ -1,19 +1,17 @@
 package de.treichels.hott.mdlviewer.swt;
 
-import java.lang.reflect.Constructor;
-
+import de.treichels.hott.messages.Messages;
+import de.treichels.hott.util.Util;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import de.treichels.hott.messages.Messages;
-import de.treichels.hott.util.Util;
+import java.lang.reflect.Constructor;
 
-public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
+class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
     // final static Logger log =
     // Logger.getLogger(ModelTabbedDialog.class.getName());
 
@@ -23,39 +21,34 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
     public static void main(final String[] args) {
         final Display display = Display.getDefault();
         final Shell shell = new Shell(display);
-        final ModelTabbedDialog inst = new ModelTabbedDialog(shell, SWT.NULL);
+        final ModelTabbedDialog inst = new ModelTabbedDialog(shell);
         inst.open();
     }
 
-    private Shell dialogShell;
     private CTabFolder mainTabFolder;
 
-    private Composite mainComposite;
-
-    public ModelTabbedDialog(final Shell parent, final int style) {
-        super(parent, style);
+    private ModelTabbedDialog(final Shell parent) {
+        super(parent, SWT.NULL);
     }
 
     /**
      * This function allows to register a device specific CTabItem to the main application tab folder to display device specific curve calculated from point
      * combinations or other specific dialog As default the function should return null which stands for no device custom tab item.
      */
-    public CTabItem getUtilityGraphicsTabItem() {
-        Object inst = null;
+    private void getUtilityGraphicsTabItem() {
         try {
-            final String className = "MdlTabItem";//$NON-NLS-1$
-            // log.log(Level.FINE, "loading Class " + className); //$NON-NLS-1$
+            final String className = "MdlTabItem";
+            // log.log(Level.FINE, "loading Class " + className);
             final ClassLoader loader = Thread.currentThread().getContextClassLoader();
             final Class<?> c = loader.loadClass(className);
             final Constructor<?> constructor = c.getDeclaredConstructor(CTabFolder.class, int.class);
             // log.log(java.util.logging.Level.FINE, "constructor != null -> " +
-            // (constructor != null ? "true" : "false")); //$NON-NLS-1$
-            // //$NON-NLS-2$ //$NON-NLS-3$
-            if (constructor != null) inst = constructor.newInstance(mainTabFolder, SWT.NONE);
+            // (constructor != null ? "true" : "false"));
+            //
+            if (constructor != null) constructor.newInstance(mainTabFolder, SWT.NONE);
         } catch (final Throwable t) {
             if (Util.INSTANCE.getDEBUG()) t.printStackTrace();
         }
-        return (CTabItem) inst;
     }
 
     /**
@@ -63,17 +56,17 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
      *
      * @return the value of the property, if property does not exist return false (default behavior of Boolean)
      */
-    public boolean isUtilityGraphicsTabRequested() {
+    private boolean isUtilityGraphicsTabRequested() {
         boolean rc = true;
         try {
-            final String className = "HoTTDecoder";//$NON-NLS-1$
-            // log.log(Level.FINE, "loading Class " + className); //$NON-NLS-1$
+            final String className = "HoTTDecoder";
+            // log.log(Level.FINE, "loading Class " + className);
             final ClassLoader loader = Thread.currentThread().getContextClassLoader();
             final Class<?> c = loader.loadClass(className);
             final Constructor<?> constructor = c.getDeclaredConstructor();
             // log.log(java.util.logging.Level.FINE, "constructor != null -> " +
-            // (constructor != null ? "true" : "false")); //$NON-NLS-1$
-            // //$NON-NLS-2$ //$NON-NLS-3$
+            // (constructor != null ? "true" : "false"));
+            //
             if (constructor != null)
                 constructor.newInstance();
             else
@@ -85,16 +78,16 @@ public class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
         return rc;
     }
 
-    public void open() {
+    private void open() {
         try {
             Launcher.initSystemProperties();
             final Shell parent = getParent();
-            dialogShell = new Shell(parent, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
+            Shell dialogShell = new Shell(parent, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
             final FillLayout dialogShellLayout = new FillLayout(org.eclipse.swt.SWT.HORIZONTAL);
             dialogShell.setLayout(dialogShellLayout);
-            dialogShell.setText(Messages.getString("ModelTabbedDialog.Title")); //$NON-NLS-1$
+            dialogShell.setText(Messages.getString("ModelTabbedDialog.Title"));
             {
-                mainComposite = new Composite(dialogShell, SWT.NONE);
+                Composite mainComposite = new Composite(dialogShell, SWT.NONE);
                 final FillLayout composite1Layout = new FillLayout(org.eclipse.swt.SWT.HORIZONTAL);
                 mainComposite.setLayout(composite1Layout);
                 mainComposite.setBounds(0, 0, 500, 300);
