@@ -270,7 +270,7 @@ data class Channel(
         var center: Int = 0,
         var failSafeMode: FailSafeMode = FailSafeMode.Undefined,
         var failSafePosition: Double = 0.0,
-        var function: Function = Function.Unknown,
+        var function: Function? = null,
         var limitHigh: Int = 150,
         var limitLow: Int = 150,
         var isMixOnly: Boolean = false,
