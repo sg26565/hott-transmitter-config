@@ -1,3 +1,20 @@
+2018-01-08
+==========
+    VDFEditor-0.9.3.197
+    - New Czech voice file
+    - Fixed drag&drop between two VDFEditor windows
+    - Fixed restore menu to display MikroKopter voice files again
+    - Fixed delete function to prevent deletion from system VDFs
+    - Added test button to TTS dialog
+    - Remember last text from TTS dialog
+    - Added support for the mz-18PRO transmitter
+
+    MdlViewer-0.9.3.165
+    - Complete re-write using Kotlin programming language
+    - fixed bug with empty model memories
+    - fixed channel numbers in dual mixer
+    - Removed Swing version
+
 2017-12-07
 ==========
     VDFEditor-0.9.3.147
