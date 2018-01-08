@@ -1,6 +1,6 @@
 package de.treichels.hott.vdfeditor.ui.tts
 
-import de.treichels.hott.model.voice.Player
+import de.treichels.hott.model.voice.VoiceData
 import de.treichels.hott.model.voice.VoiceRssLanguage
 import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.vdfeditor.ui.MessageDialog
@@ -191,7 +191,7 @@ internal class SpeechDialog : View() {
         reStartService {
             val stream = service.value
             runAsync {
-                Player.play(stream)
+                VoiceData.forStream(sourceAudioStream = stream, name = "test", volume = service.volume).play()
             }
         }
     }
