@@ -29,7 +29,7 @@
 			<th align="right">Position</th>
 			<#list model.channel as channel>
 				<#if !channel.virtual>
-					<td align="center"><#if channel.failSafeMode.name()=="Position">${channel.failSafePosition}%</#if></td>
+					<td align="center"><#if channel.failSafeMode.name()=="Position">${channel.failSafePosition?round}%</#if></td>
 				</#if>
 			</#list>
 		</tr>
