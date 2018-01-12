@@ -100,11 +100,11 @@
                             <versionInfo>
                                 <companyName>Oliver Treichel</companyName>
                                 <fileVersion>${project.version}.${buildNumber}</fileVersion>
-                                <txtFileVersion>v${project.version} build ${buildNumber} (offline version)</txtFileVersion>
+                                <txtFileVersion>${project.version}.${buildNumber}</txtFileVersion>
                                 <fileDescription>VDFEditor</fileDescription>
                                 <copyright>GPL V3</copyright>
                                 <productVersion>${project.version}.${buildNumber}</productVersion>
-                                <txtProductVersion>v${project.version} build ${buildNumber} (offline version)</txtProductVersion>
+                                <txtProductVersion>${project.version}.${buildNumber}</txtProductVersion>
                                 <productName>${project.name}</productName>
                                 <internalName>${project.groupId}.${project.artifactId}</internalName>
                                 <originalFilename>${project.name}.exe</originalFilename>
