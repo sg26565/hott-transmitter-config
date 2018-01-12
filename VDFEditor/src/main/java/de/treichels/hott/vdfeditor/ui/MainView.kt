@@ -807,7 +807,7 @@ class MainView : View() {
             LoadVoiceFileTask(messages["load_system_voicefiles"], false).apply {
                 transmitterDialogView.openDialog(this)
                 success { voiceFile ->
-                    serialPort = serialPort
+                    this@MainView.serialPort = serialPort
                     if (voiceFile != null) open(voiceFile)
                 }
             }
@@ -822,7 +822,7 @@ class MainView : View() {
             LoadVoiceFileTask(messages["load_user_voicefiles"], true).apply {
                 transmitterDialogView.openDialog(this)
                 success { voiceFile ->
-                    serialPort = serialPort
+                    this@MainView.serialPort = serialPort
                     if (voiceFile != null) open(voiceFile)
                 }
             }
@@ -1102,7 +1102,12 @@ class MainView : View() {
      * Upload VDF to transmitter
      */
     private fun onWriteToTransmitter() {
-        transmitterDialogView.openDialog(SendVoiceFileTask(messages["write_to_transmitter"], voiceFile))
+        SendVoiceFileTask(messages["write_to_transmitter"], voiceFile).apply {
+            transmitterDialogView.openDialog(this)
+            success {
+                this@MainView.serialPort = serialPort
+            }
+        }
     }
 
     /**
