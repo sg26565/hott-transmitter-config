@@ -13,164 +13,84 @@ package de.treichels.hott.model.serial
 
 import de.treichels.hott.model.HoTTException
 import de.treichels.hott.util.Util
+import jssc.SerialPort
 import jssc.SerialPort.*
 import jssc.SerialPortEvent
 import jssc.SerialPortEventListener
-import jssc.SerialPortException
 import jssc.SerialPortList
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
-import java.util.*
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-class JSSCSerialPort (override var portName: String) : SerialPort, SerialPortEventListener {
-    private val readBuffer = ByteBuffer(READ_BUFFER_SIZE)
-    private val writeBuffer = ByteBuffer(WRITE_BUFFER_SIZE)
-
-    /** The internal low-level serial port implementation.  */
-    private var port: jssc.SerialPort? = null
-
-    override val inputStream: InputStream
-        get() = SerialPortInputStream()
-
-    override val outputStream: OutputStream
-        get() = SerialPortOutPutStream()
-
+class JSSCSerialPort(portName: String) : SerialPortBase<SerialPort>(portName), SerialPortEventListener {
     override val isOpen: Boolean
-        get() = port != null && port!!.isOpened
+        get() = port?.isOpened ?: false
 
-    private inner class SerialPortInputStream : InputStream() {
-        override fun available(): Int {
-            return readBuffer.available()
-        }
-
-
-        override fun read(): Int {
-            // block until data is available
-            while (readBuffer.available() == 0) {
-                try {
-                    readFromPort()
-                } catch (e: SerialPortException) {
-                    throw IOException(e)
-                }
-
-                if (readBuffer.available() == 0) readBuffer.waitRead(1)
-            }
-
-            return readBuffer.read()
-        }
-    }
-
-    private inner class SerialPortOutPutStream : OutputStream() {
-
-        override fun flush() {
-            try {
-                writeToPort()
-            } catch (e: SerialPortException) {
-                throw IOException(e)
-            }
-
-        }
-
-        override fun write(b: Int) {
-            if (writeBuffer.remaining() == 0) {
-                flush()
-                writeBuffer.waitWrite(1)
-            }
-
-            writeBuffer.write(b and 0xff)
-        }
-    }
-
-    @Throws(HoTTException::class)
     override fun close() {
         try {
-            if (isOpen) port!!.closePort()
-        } catch (e: SerialPortException) {
-            throw HoTTException(e)
+            if (isOpen) port?.closePort()
         } finally {
             port = null
         }
     }
 
-    @Throws(HoTTException::class)
     override fun open() {
         if (isOpen) throw HoTTException("HoTTSerialPort.AlreadyOpen")
 
-        try {
-            port = jssc.SerialPort(portName)
-            port!!.openPort()
-            port!!.setParams(BAUDRATE_115200, DATABITS_8, STOPBITS_1, PARITY_NONE, false, false)
-            port!!.flowControlMode = FLOWCONTROL_NONE
-            port!!.addEventListener(this, MASK_RXCHAR + MASK_TXEMPTY)
-        } catch (e: SerialPortException) {
-            throw HoTTException(e)
-        }
+        val port = jssc.SerialPort(portName)
+        port.openPort()
+        port.setParams(BAUDRATE_115200, DATABITS_8, STOPBITS_1, PARITY_NONE, false, false)
+        port.flowControlMode = FLOWCONTROL_NONE
+        port.addEventListener(this, MASK_RXCHAR + MASK_TXEMPTY)
 
+        this.port = port
     }
 
     @Synchronized
-    @Throws(SerialPortException::class)
-    private fun readFromPort() {
-        if (DEBUG) System.out.printf("readFromPort: %d bytes available%n", port!!.inputBufferBytesCount)
-
-        val bytes = port!!.readBytes()
-        if (DEBUG) println(Util.dumpData(bytes))
-
-        if (bytes != null) readBuffer.write(bytes)
+    override fun readFromPort() {
+        while (true) {
+            val bytes = port?.readBytes()
+            if (bytes != null && bytes.isNotEmpty()) {
+                debug("readFromPort", "${bytes.size} bytes available\n${Util.dumpData(bytes)}")
+                bytes.forEach { readQueue.put(it) }
+            } else {
+                debug("readFromPort", "no more data available")
+                break;
+            }
+        }
     }
 
-    @Throws(HoTTException::class)
     override fun reset() {
-        try {
-            readBuffer.reset()
-            writeBuffer.reset()
-            port!!.purgePort(PURGE_RXABORT + PURGE_RXCLEAR + PURGE_TXABORT + PURGE_TXCLEAR)
-        } catch (e: SerialPortException) {
-            throw HoTTException(e)
-        }
-
+        readQueue.clear()
+        writeQueue.clear()
+        port?.purgePort(PURGE_RXABORT + PURGE_RXCLEAR + PURGE_TXABORT + PURGE_TXCLEAR)
     }
 
     override fun serialEvent(event: SerialPortEvent) {
-        if (DEBUG)
-            System.out.printf("serialEvent: port=%s, type=%s(%d), value=%d%n", event.portName, if (event.eventType == 1) "RXCHAR" else "TXEMPTY",
-                    event.eventType, event.eventValue)
+        val type = if (event.eventType == 1) "RXCHAR" else "TXEMPTY"
+        debug("serialEvent", with(event) { "port=$portName, type=$type, value=$eventValue" })
 
-        try {
-            if (event.isRXCHAR) readFromPort()
-
-            if (event.isTXEMPTY) writeToPort()
-        } catch (e: SerialPortException) {
-            throw RuntimeException(e)
-        }
-
+        if (event.isRXCHAR) readFromPort()
+        if (event.isTXEMPTY) writeToPort()
     }
 
     @Synchronized
-    @Throws(SerialPortException::class)
-    private fun writeToPort() {
-        val available = writeBuffer.available()
+    override fun writeToPort() {
+        val available = writeQueue.size
 
         if (available > 0) {
-            if (DEBUG) System.out.printf("writeToPort: %d bytes to write%n", available)
-            // write max 512 bytes to serial port
-            val bytes = ByteArray(Math.min(available, 512))
-            writeBuffer.read(bytes)
-            if (DEBUG) println(Util.dumpData(bytes))
-            port!!.writeBytes(bytes)
+            val bytes = ByteArray(available) {
+                writeQueue.take()
+            }
+            debug("writeToPort", "$available bytes to write\n${Util.dumpData(bytes)}")
+            port?.writeBytes(bytes)
+        } else {
+            debug("writeToPort", "write buffer is empty")
         }
     }
 
     companion object {
-        private val DEBUG = Util.DEBUG
-        private const val READ_BUFFER_SIZE = 4096
-        private const val WRITE_BUFFER_SIZE = 4096
-
         val availablePorts: List<String>
-            get() = Arrays.asList(*SerialPortList.getPortNames())
+            get() = SerialPortList.getPortNames().toList()
     }
 }

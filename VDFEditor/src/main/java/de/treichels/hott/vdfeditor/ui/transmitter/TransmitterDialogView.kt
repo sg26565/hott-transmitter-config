@@ -1,9 +1,9 @@
 package de.treichels.hott.vdfeditor.ui.transmitter
 
 import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.vdfeditor.ui.MessageDialog
 import de.treichels.hott.model.serial.JSSCSerialPort
 import de.treichels.hott.util.ExceptionDialog
+import de.treichels.hott.vdfeditor.ui.MessageDialog
 import javafx.concurrent.Task
 import javafx.geometry.Pos
 import javafx.scene.control.*
@@ -128,7 +128,7 @@ class TransmitterDialogView : View() {
         message.textProperty().bind(task.messageProperty())
 
         // update port combo
-        with (portCombo) {
+        with(portCombo) {
             value = null
             items.clear()
 

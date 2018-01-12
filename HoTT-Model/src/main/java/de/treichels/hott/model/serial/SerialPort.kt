@@ -12,7 +12,6 @@
 package de.treichels.hott.model.serial
 
 import de.treichels.hott.model.HoTTException
-
 import java.io.InputStream
 import java.io.OutputStream
 

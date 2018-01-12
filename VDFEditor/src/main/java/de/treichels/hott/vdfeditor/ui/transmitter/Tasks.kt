@@ -1,7 +1,6 @@
 package de.treichels.hott.vdfeditor.ui.transmitter
 
 import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.model.HoTTException
 import de.treichels.hott.model.serial.UpdateHandler
 import de.treichels.hott.model.voice.VoiceFile
 import javafx.concurrent.Task
@@ -25,10 +24,6 @@ class LoadVoiceFileTask(title: String, private val user: Boolean) : TransmitterT
     override fun call(): VoiceFile? = serialPort?.use { p ->
         p.open()
         p.turnRfOutOff()
-        p.delay()
-
-        if (user && p.getVoiceInfo(false).voiceVersion == 2000) throw HoTTException("NoUerVoiceFiles")
-
         return p.loadVoiceFile(user, this)
     }
 }
@@ -37,8 +32,6 @@ internal class SendVoiceFileTask(title: String, private val voiceFile: VoiceFile
     override fun call() = serialPort?.use { p ->
         p.open()
         p.turnRfOutOff()
-        p.delay()
-
         p.sendVoiceFile(voiceFile, this)
     }
 }
