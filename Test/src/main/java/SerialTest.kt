@@ -1,21 +1,27 @@
-import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.model.enums.ModelType
-import de.treichels.hott.model.serial.JSSCSerialPort
+
+import com.sun.jna.Memory
+import jtermios.JTermios.JTermiosLogging
+import jtermios.JTermios.JTermiosLogging.lineno
+import jtermios.windows.WinAPI.*
+import purejavacomm.CommPortIdentifier
 
 fun main(args: Array<String>) {
-    val availablePorts = JSSCSerialPort.availablePorts
+    JTermiosLogging.setLogLevel(10)
 
-    for (i in 1..10) {
-        val port = JSSCSerialPort(availablePorts.first())
-        val hott = HoTTSerialPort(port)
+    val portIdentifier = CommPortIdentifier.getPortIdentifier("COM5")
+    val port = portIdentifier.open("SerialTest", 1000)
 
-        hott.use { p ->
-            println("$i ${p.isOpen} ${hott.isOpen} ${port.isOpen}")
-            p.open()
-            p.allModelInfos.filter { it.modelType != ModelType.Unknown && it.modelName.isNotEmpty() }.map { println("${it.modelNumber}: ${it.modelType.char}${it.modelName}.mdl") }
-            println("$i ${p.isOpen} ${hott.isOpen} ${port.isOpen}")
-        }
-
-        println("$i ${hott.isOpen} ${port.isOpen}")
-    }
+    port.close()
 }
+
+fun fail(): Boolean {
+    val err = GetLastError()
+    val buffer = Memory(2048)
+    FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM or FORMAT_MESSAGE_IGNORE_INSERTS, null, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, buffer.size().toInt(), null)
+
+    JTermiosLogging.log(1, "fail() %s, Windows GetLastError()= %d, %s\n", lineno(1), err, buffer.getWideString(0))
+
+    return false
+}
+
+

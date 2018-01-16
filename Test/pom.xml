@@ -26,24 +26,21 @@
 		</dependency>
 		-->
 		<dependency>
-			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTT-Report-PDF</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.treichels.hott</groupId>
-			<artifactId>HoTT-Report-HTML</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.scream3r</groupId>
-			<artifactId>jssc</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>no.tornado</groupId>
 			<artifactId>tornadofx</artifactId>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>com.github.purejavacomm</groupId>
+			<artifactId>purejavacomm</artifactId>
+			<version>1.0.2.RELEASE</version>
+		</dependency>
+        <dependency>
+            <groupId>de.treichels.hott</groupId>
+            <artifactId>HoTT-Model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.treichels.hott</groupId>
+            <artifactId>HoTT-Decoder</artifactId>
+        </dependency>
+    </dependencies>
 </project>

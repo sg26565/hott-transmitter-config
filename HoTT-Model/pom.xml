@@ -41,5 +41,10 @@
 			<groupId>no.tornado</groupId>
 			<artifactId>tornadofx</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.github.purejavacomm</groupId>
+			<artifactId>purejavacomm</artifactId>
+			<version>1.0.2.RELEASE</version>
+		</dependency>
 	</dependencies>
 </project>
