@@ -3,6 +3,7 @@ package de.treichels.hott.model.voice
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.model.enums.TransmitterType
 import java.util.*
+import java.util.logging.Logger
 import java.util.prefs.BackingStoreException
 import java.util.prefs.Preferences
 
@@ -19,6 +20,7 @@ object Announcements {
 
     /** Preferences node to store names  */
     private val PREFS = Preferences.userNodeForPackage(Announcements::class.java)
+    private val logger: Logger = Logger.getLogger(javaClass.name)
 
     private const val USER_VOICE_FILE = "Announcements.USER_VOICE_FILE"
     private const val SYSTEM_VOICE_FILE = "Announcements.SYSTEM_VOICE_FILE"
@@ -114,14 +116,14 @@ object Announcements {
                     saveSystemPrefs(transmitterType, Arrays.asList(*MC32_DEFAULT_ANNOUNCEMENTS))
                     sysCount = MC32_DEFAULT_ANNOUNCEMENTS.size
                 } catch (e: BackingStoreException) {
-                    e.printStackTrace()
+                    logger.throwing(javaClass.name, "getSystemPrefSize", e)
                 }
 
                 TransmitterType.mc26, TransmitterType.mc28 -> try {
                     saveSystemPrefs(transmitterType, Arrays.asList(*MC28_DEFAULT_ANNOUNCEMENTS))
                     sysCount = MC28_DEFAULT_ANNOUNCEMENTS.size
                 } catch (e: BackingStoreException) {
-                    e.printStackTrace()
+                    logger.throwing(javaClass.name, "getSystemPrefSize", e)
                 }
 
                 TransmitterType.mz12, TransmitterType.mz18, TransmitterType.mz24 -> {

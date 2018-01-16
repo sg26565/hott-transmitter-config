@@ -6,10 +6,13 @@ import java.io.OutputStream
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.TimeUnit
+import java.util.logging.Logger
 
 abstract class SerialPortBase<T>(override val portName: String) : SerialPort {
     /** The internal low-level serial port implementation.  */
     protected var port: T? = null
+    protected val logger: Logger
+        get() = Logger.getLogger(javaClass.name)
 
     /** read buffer */
     protected val readQueue: BlockingQueue<Byte> = ArrayBlockingQueue(READ_BUFFER_SIZE, true)

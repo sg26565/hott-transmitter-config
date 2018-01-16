@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
 private val IGNORE = arrayOf(MpegAudioFileReader::class.java, MpegFormatConversionProvider::class.java, VorbisAudioFileReader::class.java, VorbisFormatConversionProvider::class.java)
 
 class VDFEditor : App() {
-    companion  object {
+    companion object {
         val title by lazy {
             if (java.lang.Boolean.getBoolean("offline"))
                 String.format("VDF Editor - %s (offline version)", version)

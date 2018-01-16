@@ -9,10 +9,11 @@ import javafx.stage.Stage
 import tornadofx.*
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.util.logging.Logger
 
 class ExceptionDialog(throwable: Throwable) : Alert(Alert.AlertType.ERROR) {
     init {
-        if (Util.DEBUG) throwable.printStackTrace()
+        Logger.getLogger(javaClass.name).throwing(javaClass.name,"<init>",throwable)
 
         title = Messages.getString("Error")
         (dialogPane.scene.window as Stage).icons += Image(ExceptionDialog::class.java.getResourceAsStream("icon.png"))

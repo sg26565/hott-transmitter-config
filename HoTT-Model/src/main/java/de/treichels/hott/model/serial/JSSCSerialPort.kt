@@ -51,12 +51,10 @@ class JSSCSerialPort(portName: String) : SerialPortBase<SerialPort>(portName), S
         while (true) {
             val bytes = port?.readBytes()
             if (bytes != null && bytes.isNotEmpty()) {
-                debug("readFromPort", "${bytes.size} bytes available\n${Util.dumpData(bytes)}")
+            logger.finer("readFromPort: ${bytes.size} bytes available\n${Util.dumpData(bytes)}")
                 bytes.forEach { readQueue.put(it) }
             } else {
-                debug("readFromPort", "no more data available")
-                break;
-            }
+            logger.finest("readFromPort: no more data available")
         }
     }
 
@@ -68,7 +66,7 @@ class JSSCSerialPort(portName: String) : SerialPortBase<SerialPort>(portName), S
 
     override fun serialEvent(event: SerialPortEvent) {
         val type = if (event.eventType == 1) "RXCHAR" else "TXEMPTY"
-        debug("serialEvent", with(event) { "port=$portName, type=$type, value=$eventValue" })
+        logger.finest("serialEvent: " + with(event) { "port=$portName, type=$type, value=$eventValue" })
 
         if (event.isRXCHAR) readFromPort()
         if (event.isTXEMPTY) writeToPort()
@@ -82,10 +80,10 @@ class JSSCSerialPort(portName: String) : SerialPortBase<SerialPort>(portName), S
             val bytes = ByteArray(available) {
                 writeQueue.take()
             }
-            debug("writeToPort", "$available bytes to write\n${Util.dumpData(bytes)}")
+            logger.finer("writeToPort: $available bytes to write\n${Util.dumpData(bytes)}")
             port?.writeBytes(bytes)
         } else {
-            debug("writeToPort", "write buffer is empty")
+            logger.finest("writeToPort: write buffer is empty")
         }
     }
 
