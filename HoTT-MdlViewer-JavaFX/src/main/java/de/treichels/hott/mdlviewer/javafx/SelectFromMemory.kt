@@ -41,11 +41,7 @@ class SelectFromMemory : SelectFromTransmitter() {
 
         return if (modelInfo != null) {
             Callable {
-                val modelData = serialPort?.use { p ->
-                    p.open()
-                    p.getModelData(modelInfo)
-                }
-
+                val modelData = serialPort?.getModelData(modelInfo)
                 Model(modelInfo, modelData)
             }
         } else null
@@ -75,10 +71,7 @@ class SelectFromMemory : SelectFromTransmitter() {
 
         // fill list in background
         return listView.runAsyncWithOverlay {
-            serialPort?.use { p ->
-                p.open()
-                p.allModelInfos
-            }?.filter { it.modelType != ModelType.Unknown } ?: listOf()
+            serialPort?.allModelInfos?.filter { it.modelType != ModelType.Unknown } ?: listOf()
         }.success { list ->
             // save result
             modelInfoList = list

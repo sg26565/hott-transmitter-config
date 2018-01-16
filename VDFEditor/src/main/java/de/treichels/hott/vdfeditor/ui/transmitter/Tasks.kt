@@ -21,17 +21,15 @@ abstract class TransmitterTask<T>(title: String) : Task<T>(), UpdateHandler {
 }
 
 class LoadVoiceFileTask(title: String, private val user: Boolean) : TransmitterTask<VoiceFile?>(title) {
-    override fun call(): VoiceFile? = serialPort?.use { p ->
-        p.open()
-        p.turnRfOutOff()
-        return p.loadVoiceFile(user, this)
+    override fun call(): VoiceFile? {
+        serialPort?.turnRfOutOff()
+        return serialPort?.loadVoiceFile(user, this)
     }
 }
 
 internal class SendVoiceFileTask(title: String, private val voiceFile: VoiceFile) : TransmitterTask<Unit>(title) {
-    override fun call() = serialPort?.use { p ->
-        p.open()
-        p.turnRfOutOff()
-        p.sendVoiceFile(voiceFile, this)
+    override fun call() {
+        serialPort?.turnRfOutOff()
+        serialPort?.sendVoiceFile(voiceFile, this)
     }
 }

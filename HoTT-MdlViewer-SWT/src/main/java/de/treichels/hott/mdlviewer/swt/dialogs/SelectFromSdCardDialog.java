@@ -38,22 +38,16 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
 
             BusyIndicator.showWhile(getParent().getDisplay(), () -> {
                 try {
-                    try {
-                        port.open();
+                    final String[] names = port.listDir(parentFileInfo.getPath());
+                    for (final String name : names) {
+                        final FileInfo fileInfo = port.getFileInfo(name);
+                        final TreeItem treeItem = new TreeItem(parentTreeItem, SWT.NONE);
+                        treeItem.setData(fileInfo);
+                        treeItem.setText(fileInfo.getName());
 
-                        final String[] names = port.listDir(parentFileInfo.getPath());
-                        for (final String name : names) {
-                            final FileInfo fileInfo = port.getFileInfo(name);
-                            final TreeItem treeItem = new TreeItem(parentTreeItem, SWT.NONE);
-                            treeItem.setData(fileInfo);
-                            treeItem.setText(fileInfo.getName());
+                        if (fileInfo.getType() == FileType.Dir) // add dummy child item
+                            new TreeItem(treeItem, SWT.NONE);
 
-                            if (fileInfo.getType() == FileType.Dir) // add dummy child item
-                                new TreeItem(treeItem, SWT.NONE);
-
-                        }
-                    } finally {
-                        port.close();
                     }
                 } catch (final Throwable t) {
                     showError(t);
@@ -81,12 +75,7 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
                         final String name = fileName.substring(1, fileName.length() - 4);
                         final ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-                        try {
-                            port.open();
-                            port.readFile(fileInfo.getPath(), os);
-                        } finally {
-                            port.close();
-                        }
+                        port.readFile(fileInfo.getPath(), os);
 
                         final ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
                         model = HoTTDecoder.INSTANCE.decodeStream(type, name, is);
@@ -103,7 +92,6 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
         @Override
         public void run() {
             try {
-                port.open();
                 final String[] names = port.listDir("/");
 
                 tree.removeAll();
@@ -117,7 +105,6 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
                     if (fileInfo.getType() == FileType.Dir) // add dummy child item
                         new TreeItem(treeItem, SWT.NONE);
                 }
-                port.close();
             } catch (final Throwable t) {
                 showError(t);
             }

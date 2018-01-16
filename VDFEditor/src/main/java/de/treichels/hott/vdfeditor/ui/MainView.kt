@@ -914,10 +914,7 @@ class MainView : View() {
             voiceFile.vdfType = VDFType.User
         }
 
-        serialPort?.use { port ->
-            port.open()
-            port.playSound(selectedIndex + offset)
-        }
+        serialPort?.playSound(selectedIndex + offset)
     }
 
     /**

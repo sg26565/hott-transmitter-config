@@ -48,7 +48,6 @@ class MemoryDump {
 
             try (HoTTSerialPort port = new HoTTSerialPort(portImpl)) {
                 byte[] data = null;
-                port.open();
 
                 for (int i = 0; dumpThread != null && i < 4096; i++) {
                     ResponseCode rc = ResponseCode.NACK;

@@ -51,12 +51,9 @@ class Model(private val info: ModelInfo, private val data: ByteArray?) {
             val type = ModelType.forChar(fileName[0])
             val name = fileName.substring(1, fileName.length - 4)
             val modelInfo = ModelInfo(modelNumber = 0, modelName = name, modelType = type, receiverType = null, transmitterType = null)
-            val data = serialPort?.use { p ->
-                p.open()
-                ByteArrayOutputStream().use { stream ->
-                    p.readFile(fileInfo.path, stream)
-                    stream.toByteArray()
-                }
+            val data = ByteArrayOutputStream().use { stream ->
+                serialPort?.readFile(fileInfo.path, stream)
+                stream.toByteArray()
             }
 
             return Model(modelInfo, data)

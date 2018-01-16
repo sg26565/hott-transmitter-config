@@ -94,14 +94,11 @@ class TreeFileInfo(name: String, private val treeView: TreeView<String>, private
 
     private fun loadFromSdCard(path: String) {
         treeView.runAsyncWithOverlay {
-            serialPort.use { p ->
-                p.open()
-                p.listDir(path).map { name ->
-                    p.getFileInfo(name)
-                }.map { info ->
-                    TreeFileInfo(info.name, treeView, serialPort, info).apply {
-                        if (isDir) loading()
-                    }
+            serialPort.listDir(path).map { name ->
+                serialPort.getFileInfo(name)
+            }.map { info ->
+                TreeFileInfo(info.name, treeView, serialPort, info).apply {
+                    if (isDir) loading()
                 }
             }
         }.success { list ->
