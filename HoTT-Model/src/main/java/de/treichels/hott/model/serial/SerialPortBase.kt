@@ -8,9 +8,7 @@ import java.util.concurrent.BlockingQueue
 import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
 
-abstract class SerialPortBase<T>(override val portName: String) : SerialPort {
-    /** The internal low-level serial port implementation.  */
-    protected var port: T? = null
+abstract class SerialPortBase(override val portName: String) : SerialPort {
     protected val logger: Logger
         get() = Logger.getLogger(javaClass.name)
 

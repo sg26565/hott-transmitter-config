@@ -22,7 +22,9 @@ import jssc.SerialPortList
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-class JSSCSerialPort(portName: String) : SerialPortBase<SerialPort>(portName), SerialPortEventListener {
+class JSSCSerialPort(portName: String) : SerialPortBase(portName), SerialPortEventListener {
+    private var port: SerialPort? = null
+
     override val isOpen: Boolean
         get() = port?.isOpened ?: false
 
