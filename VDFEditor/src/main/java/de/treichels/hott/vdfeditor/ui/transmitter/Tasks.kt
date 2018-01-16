@@ -5,8 +5,7 @@ import de.treichels.hott.model.serial.UpdateHandler
 import de.treichels.hott.model.voice.VoiceFile
 import javafx.concurrent.Task
 
-abstract class TransmitterTask<T>(title: String) : Task<T>(), UpdateHandler {
-    override val cancelled = isCancelled
+abstract class TransmitterTask<T>(title: String) : Task<T>(), UpdateHandler<T> {
     var serialPort: HoTTSerialPort? = null
 
     init {
