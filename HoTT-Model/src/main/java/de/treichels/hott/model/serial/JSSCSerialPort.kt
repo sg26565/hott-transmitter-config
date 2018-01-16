@@ -50,12 +50,11 @@ class JSSCSerialPort(portName: String) : SerialPortBase(portName), SerialPortEve
 
     @Synchronized
     override fun readFromPort() {
-        while (true) {
-            val bytes = port?.readBytes()
-            if (bytes != null && bytes.isNotEmpty()) {
+        val bytes = port?.readBytes()
+        if (bytes != null && bytes.isNotEmpty()) {
             logger.finer("readFromPort: ${bytes.size} bytes available\n${Util.dumpData(bytes)}")
-                bytes.forEach { readQueue.put(it) }
-            } else {
+            bytes.forEach { readQueue.put(it) }
+        } else {
             logger.finest("readFromPort: no more data available")
         }
     }
