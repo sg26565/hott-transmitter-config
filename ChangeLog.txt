@@ -1,6 +1,12 @@
+2018-01-16
+==========
+    VDFEditor-0.9.3.181
+    MdlViewer-0.9.3.205
+    - Bug in serial port download fixed
+
 2018-01-08
 ==========
-    VDFEditor-0.9.3.197
+    VDFEditor-0.9.3.165
     - New Czech voice file
     - Fixed drag&drop between two VDFEditor windows
     - Fixed restore menu to display MikroKopter voice files again
@@ -9,7 +15,7 @@
     - Remember last text from TTS dialog
     - Added support for the mz-18PRO transmitter
 
-    MdlViewer-0.9.3.165
+    MdlViewer-0.9.3.197
     - Complete re-write using Kotlin programming language
     - fixed bug with empty model memories
     - fixed channel numbers in dual mixer
