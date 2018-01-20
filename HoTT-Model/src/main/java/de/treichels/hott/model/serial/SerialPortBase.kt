@@ -31,7 +31,6 @@ abstract class SerialPortBase(override val portName: String) : SerialPort {
             if (readQueue.size == 0) readFromPort()
 
             // block until data is available
-            //val b = readQueue.take()
             val b: Byte? = readQueue.poll(250, TimeUnit.MILLISECONDS)
             return if (b == null) {
                 throw HoTTException("read timeout")
