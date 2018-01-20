@@ -1,5 +1,6 @@
-package de.treichels.hott.model.voice
+package de.treichels.hott.tts.voicerss
 
+import de.treichels.hott.tts.Text2Speech
 import java.net.URL
 import java.net.URLEncoder
 import javax.sound.sampled.AudioFormat

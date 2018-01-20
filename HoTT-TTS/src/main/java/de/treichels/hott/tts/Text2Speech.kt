@@ -1,4 +1,4 @@
-package de.treichels.hott.model.voice
+package de.treichels.hott.tts
 
 import javax.sound.sampled.AudioInputStream
 

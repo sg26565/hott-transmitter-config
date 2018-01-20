@@ -19,9 +19,10 @@
 		<module>HoTT-Report-XML</module>
 		<module>HoTT-MdlViewer-SWT</module>
 		<!-- module>HoTT-MdlViewer-Android</module -->
-		<module>MemoryDump</module>
 		<module>HoTT-MdlViewer-JavaFX</module>
+		<module>HoTT-TTS</module>
 		<module>VDFEditor</module>
+		<module>MemoryDump</module>
 		<module>test</module>
 	</modules>
 
@@ -270,6 +271,11 @@
 				<artifactId>HoTT-Report-XML</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>de.treichels.hott</groupId>
+                <artifactId>HoTT-TTS</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>

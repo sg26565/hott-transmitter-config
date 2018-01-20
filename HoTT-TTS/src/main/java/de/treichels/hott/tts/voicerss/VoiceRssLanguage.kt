@@ -1,4 +1,4 @@
-package de.treichels.hott.model.voice
+package de.treichels.hott.tts.voicerss
 
 import tornadofx.*
 import java.util.*

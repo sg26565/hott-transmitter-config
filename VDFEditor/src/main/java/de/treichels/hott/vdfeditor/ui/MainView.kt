@@ -11,6 +11,7 @@ import de.treichels.hott.model.voice.VoiceData
 import de.treichels.hott.model.voice.VoiceFile
 import de.treichels.hott.report.html.HTMLReport
 import de.treichels.hott.report.pdf.PDFReport
+import de.treichels.hott.tts.SpeechDialog
 import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.util.MessageDialog
 import de.treichels.hott.util.Util
@@ -18,7 +19,6 @@ import de.treichels.hott.vdfeditor.actions.*
 import de.treichels.hott.vdfeditor.ui.transmitter.LoadVoiceFileTask
 import de.treichels.hott.vdfeditor.ui.transmitter.SendVoiceFileTask
 import de.treichels.hott.vdfeditor.ui.transmitter.TransmitterDialogView
-import de.treichels.hott.vdfeditor.ui.tts.SpeechDialog
 import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.ListChangeListener
@@ -1339,7 +1339,7 @@ class MainView : View() {
 
         // show confirmation dialog and throw exception if used does not agree
         if (voiceCount > maxVoiceCount && showDialog && MessageDialog(AlertType.CONFIRMATION, messages["delete_entries_header"],
-                messages["delete_entries_message"], voiceCount - maxVoiceCount).showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
+                        messages["delete_entries_message"], voiceCount - maxVoiceCount).showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
             throw HoTTException()
 
         // do not show messages while cleaning up

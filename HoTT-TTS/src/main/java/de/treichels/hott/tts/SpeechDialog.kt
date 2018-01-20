@@ -1,9 +1,9 @@
-package de.treichels.hott.vdfeditor.ui.tts
+package de.treichels.hott.tts
 
 import de.treichels.hott.model.voice.VoiceData
-import de.treichels.hott.model.voice.VoiceRssLanguage
+import de.treichels.hott.tts.voicerss.VoiceRssLanguage
 import de.treichels.hott.util.ExceptionDialog
-import de.treichels.hott.vdfeditor.ui.MessageDialog
+import de.treichels.hott.util.MessageDialog
 import javafx.geometry.Pos
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.ComboBox
@@ -19,7 +19,7 @@ import java.net.UnknownHostException
 private const val PREFERRED_LANGUAGE = "preferredLanguage"
 private const val LAST_TEXT = "lastText"
 
-internal class SpeechDialog : View() {
+class SpeechDialog : View() {
     private val service = Text2SpeechService().apply {
         setOnFailed {
             onFail(exception)

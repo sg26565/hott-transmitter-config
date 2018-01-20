@@ -204,5 +204,9 @@
             <groupId>no.tornado</groupId>
             <artifactId>tornadofx</artifactId>
         </dependency>
+        <dependency>
+            <groupId>de.treichels.hott</groupId>
+            <artifactId>HoTT-TTS</artifactId>
+        </dependency>
     </dependencies>
 </project>

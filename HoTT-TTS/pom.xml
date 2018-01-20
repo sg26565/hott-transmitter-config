@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>HoTT-TTS</artifactId>
+
+    <parent>
+        <groupId>de.treichels.hott</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.9.3</version>
+    </parent>
+
+    <scm>
+        <connection>scm:git:https://github.com/sg26565/hott-transmitter-config</connection>
+        <url>https://github.com/sg26565/hott-transmitter-config</url>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>no.tornado</groupId>
+            <artifactId>tornadofx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.treichels.hott</groupId>
+            <artifactId>HoTT-Model</artifactId>
+        </dependency>
+    </dependencies>
+</project>

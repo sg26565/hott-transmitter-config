@@ -1,12 +1,12 @@
-package de.treichels.hott.vdfeditor.ui.tts
+package de.treichels.hott.tts
 
-import de.treichels.hott.model.voice.VoiceRSS
-import de.treichels.hott.model.voice.VoiceRssLanguage
+import de.treichels.hott.tts.voicerss.VoiceRSS
+import de.treichels.hott.tts.voicerss.VoiceRssLanguage
 import javafx.concurrent.Service
 import javafx.concurrent.Task
 import javax.sound.sampled.AudioInputStream
 
-internal class Text2SpeechService : Service<AudioInputStream>() {
+class Text2SpeechService : Service<AudioInputStream>() {
     private val voiceRSS = VoiceRSS()
 
     override fun createTask(): Task<AudioInputStream> = object : Task<AudioInputStream>() {
