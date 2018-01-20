@@ -1,4 +1,4 @@
-package de.treichels.hott.vdfeditor.ui
+package de.treichels.hott.util
 
 import javafx.application.Platform
 import javafx.concurrent.Worker
@@ -11,7 +11,7 @@ import tornadofx.*
 import java.awt.Desktop
 import java.net.URI
 
-internal class MessageDialog(alertType: Alert.AlertType, header: String, html: Boolean, message: String, vararg args: Any) : Alert(alertType) {
+class MessageDialog(alertType: Alert.AlertType, header: String, html: Boolean, message: String, vararg args: Any) : Alert(alertType) {
     init {
         (dialogPane.scene.window as Stage).icons += Image(MessageDialog::class.java.getResourceAsStream("icon.png"))
         headerText = header
