@@ -23,7 +23,7 @@
                     <transformers>
                         <transformer
                                 implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>de.treichels.hott.vdfeditor.ui.VDFEditor</mainClass>
+                            <mainClass>de.treichels.hott.vdfeditor.ui.VDFEditorKt</mainClass>
                         </transformer>
                         <transformer
                                 implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
@@ -55,7 +55,7 @@
                             <errTitle>${project.name}</errTitle>
                             <icon>icon.ico</icon>
                             <classPath>
-                                <mainClass>de.treichels.hott.vdfeditor.ui.VDFEditor</mainClass>
+                                <mainClass>de.treichels.hott.vdfeditor.ui.VDFEditorKt</mainClass>
                                 <addDependencies>false</addDependencies>
                             </classPath>
                             <jre>
@@ -88,7 +88,7 @@
                             <errTitle>${project.name}</errTitle>
                             <icon>icon.ico</icon>
                             <classPath>
-                                <mainClass>de.treichels.hott.vdfeditor.ui.VDFEditor</mainClass>
+                                <mainClass>de.treichels.hott.vdfeditor.ui.VDFEditorKt</mainClass>
                                 <addDependencies>false</addDependencies>
                             </classPath>
                             <jre>
