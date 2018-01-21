@@ -570,7 +570,7 @@ class MainView : View() {
     private fun onClose() {
         if (askSave()) {
             deleteTempFiles()
-            System.exit(0)
+            Platform.exit()
         }
     }
 
