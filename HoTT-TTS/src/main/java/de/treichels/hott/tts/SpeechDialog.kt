@@ -1,9 +1,14 @@
 package de.treichels.hott.tts
 
+import de.treichels.hott.model.voice.Player
 import de.treichels.hott.model.voice.VoiceData
+import de.treichels.hott.tts.voicerss.Bits
+import de.treichels.hott.tts.voicerss.Format
+import de.treichels.hott.tts.voicerss.VoiceRSSEncoding
 import de.treichels.hott.tts.voicerss.VoiceRssLanguage
 import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.util.MessageDialog
+import javafx.application.Platform
 import javafx.geometry.Pos
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.ComboBox
@@ -11,15 +16,46 @@ import javafx.scene.control.ProgressBar
 import javafx.scene.control.Slider
 import javafx.scene.control.TextArea
 import javafx.scene.layout.Priority
+import javafx.stage.FileChooser
 import javafx.stage.Modality
 import javafx.stage.StageStyle
+import javazoom.spi.mpeg.sampled.convert.MpegFormatConversionProvider
+import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader
+import javazoom.spi.vorbis.sampled.convert.VorbisFormatConversionProvider
+import javazoom.spi.vorbis.sampled.file.VorbisAudioFileReader
+import org.apache.commons.io.IOUtils
 import tornadofx.*
+import java.io.File
+import java.io.FileOutputStream
 import java.net.UnknownHostException
 
-private const val PREFERRED_LANGUAGE = "preferredLanguage"
-private const val LAST_TEXT = "lastText"
+fun main(args: Array<String>) {
+    Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
+    launch<SpeechApp>(args)
+}
+
+// static references to mp3 and ogg decoders to keep them in the final jar
+private val IGNORE = arrayOf(MpegAudioFileReader::class.java, MpegFormatConversionProvider::class.java, VorbisAudioFileReader::class.java, VorbisFormatConversionProvider::class.java)
+
+private var standalone = false
+
+class SpeechApp : App() {
+    override val primaryView = SpeechDialog::class
+
+    init {
+        standalone = true
+    }
+}
 
 class SpeechDialog : View() {
+    companion object {
+        private const val PREFERRED_LANGUAGE = "preferredLanguage"
+        private const val PREFERRED_FORMAT = "preferredFormat"
+        private const val LAST_FOLDER = "lastFolder"
+        private const val LAST_TEXT = "lastText"
+        private const val EXT_WAV = "*.wav"
+    }
+
     private val service = Text2SpeechService().apply {
         setOnFailed {
             onFail(exception)
@@ -30,6 +66,7 @@ class SpeechDialog : View() {
     private var progressBar by singleAssign<ProgressBar>()
     private var textArea by singleAssign<TextArea>()
     private var languageComboBox by singleAssign<ComboBox<VoiceRssLanguage>>()
+    private var formatComboBox by singleAssign<ComboBox<Format>>()
     private var volumeSlider by singleAssign<Slider>()
     private var speedSlider by singleAssign<Slider>()
 
@@ -42,11 +79,13 @@ class SpeechDialog : View() {
         get() = volumeSlider.value / 2.0
     private val speed: Int
         get() = speedSlider.value.toInt() * 2 - 10
+    private val format: Format
+        get() = formatComboBox.selectionModel.selectedItem
 
     override val root = vbox {
         spacing = 5.0
         padding = insets(all = 10)
-        prefWidth = 850.0
+        prefWidth = 800.0
         prefHeight = 200.0
 
         label(messages["descr_label"])
@@ -129,6 +168,27 @@ class SpeechDialog : View() {
             }
         }
 
+        if (standalone) {
+            hbox {
+                alignment = Pos.CENTER_LEFT
+                spacing = 10.0
+
+                label(messages["format"])
+                formatComboBox = combobox {
+                    items = Format.values().filter { it.bits == Bits._16BIT && it.voiceRSSEncoding == VoiceRSSEncoding.PCM }.observable()
+
+                    setOnAction {
+                        preferences { put(PREFERRED_FORMAT, format.name) }
+                    }
+
+                    // get preferred language from prefs
+                    preferences {
+                        selectionModel.select(Format.valueOf(get(PREFERRED_FORMAT, "pcm_11khz_16bit_mono")))
+                    }
+                }
+            }
+        }
+
         anchorpane {
             prefHeight = 20.0
             progressBar = progressbar {
@@ -151,13 +211,15 @@ class SpeechDialog : View() {
                 action { onPlay() }
             }
 
-            button(messages["start_button"]) {
+            button {
+                text = if (standalone) messages["save_button"] else messages["start_button"]
                 disableWhen { textArea.lengthProperty().isEqualTo(0).or(service.runningProperty()) }
                 isDefaultButton = true
                 action { onStart() }
             }
 
-            button(messages["abort_button"]) {
+            button {
+                text = if (standalone) messages["close_button"] else messages["abort_button"]
                 isCancelButton = true
                 action { onAbort() }
             }
@@ -166,6 +228,11 @@ class SpeechDialog : View() {
 
     init {
         title = messages["title"]
+        preferences {
+            textArea.text = get(LAST_TEXT, "")
+        }
+
+        textArea.requestFocus()
     }
 
     private fun onFail(t: Throwable) {
@@ -181,6 +248,11 @@ class SpeechDialog : View() {
         service.reset()
         service.text = text
         service.language = language
+
+        if (standalone) {
+            service.format = format
+        }
+
         service.volume = volume
         service.speed = speed
         service.start()
@@ -191,19 +263,51 @@ class SpeechDialog : View() {
         reStartService {
             val stream = service.value
             runAsync {
-                VoiceData.forStream(sourceAudioStream = stream, name = "test", volume = service.volume).play()
+                if (standalone)
+                // play as-is
+                    Player.play(stream)
+                else
+                // convert to ADPCM and play
+                    VoiceData.forStream(sourceAudioStream = stream, name = "test", volume = service.volume).play()
             }
         }
     }
 
     private fun onAbort() {
         service.cancel()
-        close()
+
+        if (standalone)
+            Platform.exit()
+        else
+            close()
     }
 
     private fun onStart() {
         reStartService()
-        close()
+
+        if (standalone)
+            save()
+        else
+            close()
+    }
+
+    private fun save() {
+        FileChooser().apply {
+            title = messages["save_title"]
+            extensionFilters.add(FileChooser.ExtensionFilter(messages["wav_files"], EXT_WAV))
+
+            preferences {
+                val folder = File(get(LAST_FOLDER, System.getProperty("user.home")))
+                if (folder.exists() && folder.isDirectory)
+                    initialDirectory = folder
+            }
+        }.showSaveDialog(primaryStage)?.apply {
+            preferences { put(LAST_FOLDER, parentFile.absolutePath) }
+
+            FileOutputStream(this).use {
+                IOUtils.copy(service.value, it)
+            }
+        }
     }
 
     fun openDialog(): Text2SpeechService {
