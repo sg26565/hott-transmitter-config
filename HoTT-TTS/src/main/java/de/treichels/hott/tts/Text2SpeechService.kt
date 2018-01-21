@@ -1,5 +1,6 @@
 package de.treichels.hott.tts
 
+import de.treichels.hott.model.voice.TrimInputStream
 import de.treichels.hott.model.voice.VolumeControlAudioInputStream
 import de.treichels.hott.tts.voicerss.Codec
 import de.treichels.hott.tts.voicerss.Format
@@ -13,7 +14,12 @@ class Text2SpeechService() : Service<AudioInputStream>() {
     private val voiceRSS = VoiceRSS()
 
     override fun createTask(): Task<AudioInputStream> = object : Task<AudioInputStream>() {
-        override fun call(): AudioInputStream = VolumeControlAudioInputStream(voiceRSS.stream, volume)
+        override fun call(): AudioInputStream {
+            val audioInputStream = voiceRSS.stream
+            val format = audioInputStream.format
+            val trimmedInputStream = TrimInputStream(audioInputStream, format.frameSize)
+            return VolumeControlAudioInputStream(trimmedInputStream, format, volume)
+        }
     }
 
     var codec: Codec

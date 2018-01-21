@@ -35,6 +35,7 @@ fun main(args: Array<String>) {
 }
 
 // static references to mp3 and ogg decoders to keep them in the final jar
+@Suppress("unused")
 private val IGNORE = arrayOf(MpegAudioFileReader::class.java, MpegFormatConversionProvider::class.java, VorbisAudioFileReader::class.java, VorbisFormatConversionProvider::class.java)
 
 private var standalone = false
@@ -76,7 +77,7 @@ class SpeechDialog : View() {
     private val text: String
         get() = textArea.textProperty().value
     private val volume: Double
-        get() = volumeSlider.value / 2.0
+        get() = volumeSlider.value / 3.0
     private val speed: Int
         get() = speedSlider.value.toInt() * 2 - 10
     private val format: Format

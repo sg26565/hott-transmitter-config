@@ -1,9 +1,13 @@
 package de.treichels.hott.model.voice
 
+import java.io.InputStream
+import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioInputStream
 import javax.sound.sampled.AudioSystem
 
-class VolumeControlAudioInputStream(private val source: AudioInputStream, private val volume: Double) : AudioInputStream(source, source.format, AudioSystem.NOT_SPECIFIED.toLong()) {
+class VolumeControlAudioInputStream(private val source: InputStream, private val streamFormat: AudioFormat, private val volume: Double) : AudioInputStream(source, streamFormat, AudioSystem.NOT_SPECIFIED.toLong()) {
+    constructor(source: AudioInputStream, volume: Double) : this(source, source.format, volume)
+
     override fun read(b: ByteArray?, off: Int, len: Int): Int {
         if (b == null) return 0
 

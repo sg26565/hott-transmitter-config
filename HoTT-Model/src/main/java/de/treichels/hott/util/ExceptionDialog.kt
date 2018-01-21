@@ -51,6 +51,8 @@ class ExceptionDialog(throwable: Throwable) : Alert(Alert.AlertType.ERROR) {
         private var SHOWING = false
 
         @Synchronized fun show(throwable: Throwable) {
+            throwable.printStackTrace()
+
             // show only one instance of the dialog at a time
             if (!SHOWING) {
                 SHOWING = true
