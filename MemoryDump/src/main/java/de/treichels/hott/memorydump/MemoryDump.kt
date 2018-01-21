@@ -61,11 +61,11 @@ class MemoryDumpView : View() {
                             val address = blockSize * i
                             if (i % 128 == 0) updateMessage("\n")
 
-                            val response = port.readMemoryBlock(address, blockSize)
+                            val (responseCode, data) = port.readMemoryBlock(address, blockSize)
 
-                            when (response.responseCode) {
+                            when (responseCode) {
                                 ACK -> {
-                                    text.append(Util.dumpData(response.data, address))
+                                    text.append(Util.dumpData(data, address))
                                     updateValue(text.toString())
                                     message.append(".")
                                     i++
