@@ -23,6 +23,7 @@
 		<module>HoTT-TTS</module>
 		<module>VDFEditor</module>
 		<module>MemoryDump</module>
+		<module>FirmwareUpgrader</module>
 		<module>test</module>
 	</modules>
 

@@ -1,3 +1,21 @@
+2018-02-22
+==========
+    FirmwareUpgrader-0.9.3.21
+    - New standalone tool to upgrade Slowflyer/Gyro receivers
+
+2018-02-20
+==========
+    HoTT-TTS-0.9.3.17
+    - New TTS providers (Amazon Polly and Windows 10)
+
+2018-01-21
+==========
+    VDFEditor-0.9.3.187
+    - Improved audio quality for TTS
+
+    HoTT-TTS-0.9.3.9
+    - New standalone TTS program with quality select and WAVE output
+
 2018-01-16
 ==========
     VDFEditor-0.9.3.181
