@@ -24,12 +24,13 @@ interface SerialPort : AutoCloseable {
 
     val portName: String
     val isOpen: Boolean
+    var timeout: Int
 
     @Throws(HoTTException::class)
     override fun close()
 
     @Throws(HoTTException::class)
-    fun open()
+    fun open(baudRate: Int = 115200)
 
     @Throws(HoTTException::class)
     fun reset()

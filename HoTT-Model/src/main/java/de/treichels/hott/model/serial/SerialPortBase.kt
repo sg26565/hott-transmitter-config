@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
 
 abstract class SerialPortBase(override val portName: String) : SerialPort {
+    override var timeout: Int = 250
+
     protected val logger: Logger
         get() = Logger.getLogger(javaClass.name)
 
@@ -31,7 +33,8 @@ abstract class SerialPortBase(override val portName: String) : SerialPort {
             if (readQueue.size == 0) readFromPort()
 
             // block until data is available
-            val b: Byte? = readQueue.poll(250, TimeUnit.MILLISECONDS)
+
+            val b: Byte? = if (timeout > 0) readQueue.poll(timeout.toLong(), TimeUnit.MILLISECONDS) else readQueue.take()
             return if (b == null) {
                 throw HoTTException("read timeout")
             } else {

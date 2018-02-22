@@ -36,12 +36,12 @@ class JSSCSerialPort(portName: String) : SerialPortBase(portName), SerialPortEve
         }
     }
 
-    override fun open() {
+    override fun open(baudRate: Int) {
         if (isOpen) throw HoTTException("HoTTSerialPort.AlreadyOpen")
 
         val port = jssc.SerialPort(portName)
         port.openPort()
-        port.setParams(BAUDRATE_115200, DATABITS_8, STOPBITS_1, PARITY_NONE, false, false)
+        port.setParams(baudRate, DATABITS_8, STOPBITS_1, PARITY_NONE, false, false)
         port.flowControlMode = FLOWCONTROL_NONE
         port.addEventListener(this, MASK_RXCHAR + MASK_TXEMPTY)
 
