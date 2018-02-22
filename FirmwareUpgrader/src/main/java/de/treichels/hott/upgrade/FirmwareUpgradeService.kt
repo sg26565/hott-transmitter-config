@@ -76,6 +76,12 @@ class FirmwareUpgradeService : Service<Unit>() {
                     if (!(response contentEquals block && byte == 0xaa)) throw HoTTException(messages["transmissionError"])
                     if (isCancelled) return
                 }
+
+                // end transfer
+                val block = ByteArray(blockSize)
+                block[2] = 0xee.toByte()
+                outputStream.write(block)
+                outputStream.flush()
             }
         }
     }
