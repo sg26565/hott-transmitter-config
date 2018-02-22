@@ -2,55 +2,27 @@ package de.treichels.hott.tts
 
 import de.treichels.hott.model.voice.TrimInputStream
 import de.treichels.hott.model.voice.VolumeControlAudioInputStream
-import de.treichels.hott.tts.voicerss.Codec
-import de.treichels.hott.tts.voicerss.Format
-import de.treichels.hott.tts.voicerss.VoiceRSS
-import de.treichels.hott.tts.voicerss.VoiceRssLanguage
 import javafx.concurrent.Service
 import javafx.concurrent.Task
 import javax.sound.sampled.AudioInputStream
 
 class Text2SpeechService() : Service<AudioInputStream>() {
-    private val voiceRSS = VoiceRSS()
-
     override fun createTask(): Task<AudioInputStream> = object : Task<AudioInputStream>() {
         override fun call(): AudioInputStream {
-            val audioInputStream = voiceRSS.stream
+            val audioInputStream = provider.speak(text, voice, speed, (volume * 100).toInt(), sampleSize, channels, frameRate, ssml)
             val format = audioInputStream.format
-            val trimmedInputStream = TrimInputStream(audioInputStream, format.frameSize)
+            val trimmedInputStream = TrimInputStream(audioInputStream, sampleSize * channels)
             return VolumeControlAudioInputStream(trimmedInputStream, format, volume)
         }
     }
 
-    var codec: Codec
-        get() = voiceRSS.codec
-        set(codec) {
-            voiceRSS.codec = codec
-        }
-
-    var format: Format
-        get() = voiceRSS.format
-        set(format) {
-            voiceRSS.format = format
-        }
-
-    var language: VoiceRssLanguage
-        get() = voiceRSS.language
-        set(language) {
-            voiceRSS.language = language
-        }
-
-    var text: String
-        get() = voiceRSS.text
-        set(text) {
-            voiceRSS.text = text
-        }
-
-    var volume = 1.0
-
-    var speed: Int
-        get() = voiceRSS.speed
-        set(speed) {
-            voiceRSS.speed = speed
-        }
+    lateinit var provider: Text2SpeechProvider
+    lateinit var text: String
+    lateinit var voice: Voice
+    var speed: Int = 0
+    var volume: Double = 1.0
+    var sampleSize: Int = 16
+    var channels: Int = 1
+    var frameRate: Int = 11025
+    var ssml: Boolean = false
 }

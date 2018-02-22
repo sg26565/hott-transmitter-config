@@ -2,10 +2,9 @@ package de.treichels.hott.tts
 
 import de.treichels.hott.model.voice.Player
 import de.treichels.hott.model.voice.VoiceData
-import de.treichels.hott.tts.voicerss.Bits
-import de.treichels.hott.tts.voicerss.Format
-import de.treichels.hott.tts.voicerss.VoiceRSSEncoding
-import de.treichels.hott.tts.voicerss.VoiceRssLanguage
+import de.treichels.hott.tts.polly.PollyTTSProvider
+import de.treichels.hott.tts.voicerss.VoiceRSSTTSProvider
+import de.treichels.hott.tts.win10.Win10TTSProvider
 import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.util.MessageDialog
 import javafx.application.Platform
@@ -23,11 +22,13 @@ import javazoom.spi.mpeg.sampled.convert.MpegFormatConversionProvider
 import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader
 import javazoom.spi.vorbis.sampled.convert.VorbisFormatConversionProvider
 import javazoom.spi.vorbis.sampled.file.VorbisAudioFileReader
-import org.apache.commons.io.IOUtils
+import org.apache.commons.logging.impl.LogFactoryImpl
+import org.apache.commons.logging.impl.SimpleLog
 import tornadofx.*
 import java.io.File
-import java.io.FileOutputStream
 import java.net.UnknownHostException
+import javax.sound.sampled.AudioFileFormat
+import javax.sound.sampled.AudioSystem
 
 fun main(args: Array<String>) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
@@ -36,7 +37,7 @@ fun main(args: Array<String>) {
 
 // static references to mp3 and ogg decoders to keep them in the final jar
 @Suppress("unused")
-private val IGNORE = arrayOf(MpegAudioFileReader::class.java, MpegFormatConversionProvider::class.java, VorbisAudioFileReader::class.java, VorbisFormatConversionProvider::class.java)
+private val IGNORE = arrayOf(MpegAudioFileReader::class.java, MpegFormatConversionProvider::class.java, VorbisAudioFileReader::class.java, VorbisFormatConversionProvider::class.java, LogFactoryImpl::class.java, SimpleLog::class.java)
 
 private var standalone = false
 
@@ -50,38 +51,45 @@ class SpeechApp : App() {
 
 class SpeechDialog : View() {
     companion object {
-        private const val PREFERRED_LANGUAGE = "preferredLanguage"
+        private const val PREFERRED_PROVIDER = "preferredProvider"
+        private const val PREFERRED_VOICE = "preferredLanguage"
         private const val PREFERRED_FORMAT = "preferredFormat"
         private const val LAST_FOLDER = "lastFolder"
         private const val LAST_TEXT = "lastText"
         private const val EXT_WAV = "*.wav"
     }
 
+    // background service
     private val service = Text2SpeechService().apply {
         setOnFailed {
             onFail(exception)
         }
     }
+    // State
+    private var providers = listOf(Win10TTSProvider(), VoiceRSSTTSProvider(), PollyTTSProvider("AKIAJCKMGXNW7R4L6MYA", "b5nHITY9aevt6fsZmTRl2RVCmV85+fA06/MUcR2d"))
 
     // Controls
-    private var progressBar by singleAssign<ProgressBar>()
-    private var textArea by singleAssign<TextArea>()
-    private var languageComboBox by singleAssign<ComboBox<VoiceRssLanguage>>()
-    private var formatComboBox by singleAssign<ComboBox<Format>>()
-    private var volumeSlider by singleAssign<Slider>()
-    private var speedSlider by singleAssign<Slider>()
+    private lateinit var progressBar: ProgressBar
+    private lateinit var textArea: TextArea
+    private lateinit var providerComboBox: ComboBox<Text2SpeechProvider>
+    private lateinit var voiceComboBox: ComboBox<Voice>
+    private lateinit var formatComboBox: ComboBox<Quality>
+    private lateinit var volumeSlider: Slider
+    private lateinit var speedSlider: Slider
 
     // Helpers
-    private val language: VoiceRssLanguage
-        get() = languageComboBox.selectionModel.selectedItem
+    private val provider: Text2SpeechProvider
+        get() = providerComboBox.selectionModel.selectedItem
+    private val voice: Voice
+        get() = voiceComboBox.selectedItem ?: provider.defaultVoice
     private val text: String
         get() = textArea.textProperty().value
     private val volume: Double
         get() = volumeSlider.value / 3.0
     private val speed: Int
         get() = speedSlider.value.toInt() * 2 - 10
-    private val format: Format
-        get() = formatComboBox.selectionModel.selectedItem
+    private val format: Quality
+        get() = formatComboBox.selectedItem ?: provider.defaultQuality
 
     override val root = vbox {
         spacing = 5.0
@@ -106,22 +114,15 @@ class SpeechDialog : View() {
             }
         }
 
+
         hbox {
-            alignment = Pos.CENTER
+            alignment = Pos.CENTER_LEFT
             spacing = 10.0
 
-            label(messages["language_label"])
-
-            languageComboBox = combobox {
-                items = listOf(*VoiceRssLanguage.values()).observable()
-
-                setOnAction {
-                    preferences { put(PREFERRED_LANGUAGE, language.name) }
-                }
-
-                // get preferred language from prefs
-                preferences {
-                    selectionModel.select(VoiceRssLanguage.forString(get(PREFERRED_LANGUAGE, "de_de")))
+            vbox {
+                label(messages["provider_label"])
+                providerComboBox = combobox {
+                    initProvider()
                 }
             }
 
@@ -129,8 +130,34 @@ class SpeechDialog : View() {
                 hgrow = Priority.SOMETIMES
             }
 
-            label(messages["volume"])
+            vbox {
+                label(messages["language_label"])
+                voiceComboBox = combobox {
+                    initVoices()
+                }
+            }
 
+                region {
+                    hgrow = Priority.SOMETIMES
+                }
+
+                vbox {
+                    label(messages["format"])
+                    formatComboBox = combobox {
+                        initFormats()
+                    }
+            }
+        }
+
+        hbox {
+            alignment = Pos.CENTER
+            spacing = 10.0
+
+            region {
+                hgrow = Priority.ALWAYS
+            }
+
+            label(messages["volume"])
             volumeSlider = slider {
                 valueProperty().onChange {
                     preferences { putDouble("prefVolume", it) }
@@ -147,6 +174,11 @@ class SpeechDialog : View() {
                 blockIncrement = 0.5
                 majorTickUnit = 1.0
                 minorTickCount = 1
+                isDisable = !provider.volumeSupported
+            }
+
+            region {
+                hgrow = Priority.SOMETIMES
             }
 
             label(messages["speed"])
@@ -166,27 +198,7 @@ class SpeechDialog : View() {
                 blockIncrement = 0.5
                 majorTickUnit = 1.0
                 minorTickCount = 1
-            }
-        }
-
-        if (standalone) {
-            hbox {
-                alignment = Pos.CENTER_LEFT
-                spacing = 10.0
-
-                label(messages["format"])
-                formatComboBox = combobox {
-                    items = Format.values().filter { it.bits == Bits._16BIT && it.voiceRSSEncoding == VoiceRSSEncoding.PCM }.observable()
-
-                    setOnAction {
-                        preferences { put(PREFERRED_FORMAT, format.name) }
-                    }
-
-                    // get preferred language from prefs
-                    preferences {
-                        selectionModel.select(Format.valueOf(get(PREFERRED_FORMAT, "pcm_11khz_16bit_mono")))
-                    }
-                }
+                isDisable = !provider.speedSupported
             }
         }
 
@@ -227,6 +239,55 @@ class SpeechDialog : View() {
         }
     }
 
+    private fun ComboBox<Text2SpeechProvider>.initProvider() {
+        items = providers.filter { it.enabled }.observable()
+
+        setOnAction {
+            preferences { put(PREFERRED_PROVIDER, provider.name) }
+            voiceComboBox.initVoices()
+            formatComboBox.initFormats()
+
+            volumeSlider.isDisable = !provider.volumeSupported
+            speedSlider.isDisable = !provider.speedSupported
+        }
+
+        // get preferred provider from prefs
+        preferences {
+            val name: String = get(PREFERRED_PROVIDER, "VoiceRSS")
+            selectionModel.select(items.find { it.name == name })
+        }
+    }
+
+    private fun ComboBox<Quality>.initFormats() {
+        items = provider.qualities.observable()
+
+        setOnAction {
+            preferences { put(PREFERRED_FORMAT, format.toString()) }
+        }
+
+        // get preferred format from prefs
+        preferences {
+            val preferredFormat: String? = get(PREFERRED_FORMAT, null)
+            val quality = provider.qualities.firstOrNull { it.toString() == preferredFormat } ?: provider.defaultQuality
+            selectionModel.select(quality)
+        }
+    }
+
+    private fun ComboBox<Voice>.initVoices() {
+        items = provider.installedVoices().observable()
+
+        setOnAction {
+            preferences { put(PREFERRED_VOICE, voice.id) }
+        }
+
+        // get preferred language from prefs
+        preferences {
+            val prefId: String? = get(PREFERRED_VOICE, null)
+            val voice = provider.installedVoices().find { it.id == prefId } ?: provider.defaultVoice
+            selectionModel.select(voice)
+        }
+    }
+
     init {
         title = messages["title"]
         preferences {
@@ -247,11 +308,13 @@ class SpeechDialog : View() {
 
     private fun reStartService(op: () -> Unit = {}) {
         service.reset()
+        service.provider = provider
         service.text = text
-        service.language = language
+        service.voice = voice
 
         if (standalone) {
-            service.format = format
+            service.frameRate = format.sampleRate
+            service.channels = format.channels
         }
 
         service.volume = volume
@@ -304,10 +367,7 @@ class SpeechDialog : View() {
             }
         }.showSaveDialog(primaryStage)?.apply {
             preferences { put(LAST_FOLDER, parentFile.absolutePath) }
-
-            FileOutputStream(this).use {
-                IOUtils.copy(service.value, it)
-            }
+            AudioSystem.write(service.value, AudioFileFormat.Type.WAVE, this)
         }
     }
 
