@@ -31,6 +31,10 @@
 		</dependency>
 		<dependency>
 			<groupId>de.treichels.hott</groupId>
+			<artifactId>HoTT-TTS</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.treichels.hott</groupId>
 			<artifactId>HoTT-Report-HTML</artifactId>
 		</dependency>
 		<dependency>
