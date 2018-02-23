@@ -10,9 +10,12 @@ import java.nio.file.Files
 import java.util.*
 
 class FirmwareUpgradeService : Service<Unit>() {
+    companion object {
+        private var messages = ResourceBundle.getBundle(javaClass.name)
+    }
+
     lateinit var serialPort: SerialPort
     lateinit var fileName: String
-    private var messages = ResourceBundle.getBundle(javaClass.name)
 
     override fun createTask(): Task<Unit> = object : Task<Unit>() {
         override fun call() {
@@ -38,19 +41,20 @@ class FirmwareUpgradeService : Service<Unit>() {
                 val type = fileStream.read()
                 fileStream.skip(7)
 
-                // wait for receiver
-                updateMessage(messages["waitForReceiver"])
+                // open serial port
                 port.timeout = 1000
                 port.open(if (type >= 0xf0) 115200 else 19200)
 
-                do {
+                // wait for receiver
+                updateMessage(messages["waitForReceiver"])
+                while (true) {
                     try {
                         val byte = inputStream.read()
                         if (byte == type) break
                     } catch (e: HoTTException) {
                         if (isCancelled) return
                     }
-                } while (true)
+                }
 
                 // read three more bytes from 2nd level bootloader for GR-24PRO receiver
                 if (type == 0x97) {

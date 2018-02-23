@@ -1,5 +1,12 @@
 2018-02-22
 ==========
+    FirmwareUpgrader-0.9.3.25
+    - Fixed end-of-transmission mark
+    - Special handling for GR-24PRO
+    - Support for high-speed transmission (115200 baud instead of 19200 baud for supported receivers)
+
+2018-02-22
+==========
     FirmwareUpgrader-0.9.3.21
     - New standalone tool to upgrade Slowflyer/Gyro receivers
 
