@@ -52,6 +52,13 @@ class FirmwareUpgradeService : Service<Unit>() {
                     }
                 } while (true)
 
+                // read three more bytes from 2nd level bootloader for GR-24PRO receiver
+                if (type == 0x97) {
+                    inputStream.read()
+                    inputStream.read()
+                    inputStream.read()
+                }
+
                 // write data
                 for (i in 1..blockCount) {
                     updateProgress(i.toLong(), blockCount.toLong())
