@@ -253,8 +253,8 @@ class SpeechDialog : View() {
 
         // get preferred provider from prefs
         preferences {
-            val name: String = get(PREFERRED_PROVIDER, "VoiceRSS")
-            selectionModel.select(items.find { it.name == name })
+            val prefProviderName: String? = get(PREFERRED_PROVIDER, null)
+            selectionModel.select(items.find { it.name == prefProviderName }?: items[0])
         }
     }
 
@@ -267,9 +267,8 @@ class SpeechDialog : View() {
 
         // get preferred format from prefs
         preferences {
-            val preferredFormat: String? = get(PREFERRED_FORMAT, null)
-            val quality = provider.qualities.firstOrNull { it.toString() == preferredFormat } ?: provider.defaultQuality
-            selectionModel.select(quality)
+            val prefFormatName: String? = get(PREFERRED_FORMAT, null)
+            selectionModel.select(provider.qualities.find { it.toString() == prefFormatName } ?: provider.defaultQuality)
         }
     }
 
@@ -282,9 +281,8 @@ class SpeechDialog : View() {
 
         // get preferred language from prefs
         preferences {
-            val prefId: String? = get(PREFERRED_VOICE, null)
-            val voice = provider.installedVoices().find { it.id == prefId } ?: provider.defaultVoice
-            selectionModel.select(voice)
+            val prefVoiceName: String? = get(PREFERRED_VOICE, null)
+            selectionModel.select(provider.installedVoices().find { it.id == prefVoiceName } ?: provider.defaultVoice)
         }
     }
 
