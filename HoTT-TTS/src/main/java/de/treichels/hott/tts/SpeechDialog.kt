@@ -66,7 +66,7 @@ class SpeechDialog : View() {
         }
     }
     // State
-    private var providers = listOf(Win10TTSProvider(), VoiceRSSTTSProvider(), PollyTTSProvider("AKIAJCKMGXNW7R4L6MYA", "b5nHITY9aevt6fsZmTRl2RVCmV85+fA06/MUcR2d"))
+    private var providers = listOf(Win10TTSProvider(), VoiceRSSTTSProvider(), PollyTTSProvider())
 
     // Controls
     private lateinit var progressBar: ProgressBar
