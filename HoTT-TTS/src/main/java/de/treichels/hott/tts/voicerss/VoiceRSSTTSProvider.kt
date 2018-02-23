@@ -5,9 +5,24 @@ import de.treichels.hott.tts.*
 import java.net.URL
 import java.net.URLEncoder
 import java.util.*
+import java.util.prefs.Preferences
 import javax.sound.sampled.AudioInputStream
 
-class VoiceRSSTTSProvider(private val apiKey: String = VOICE_RSS_DEFAULT_API_KEY) : Text2SpeechProvider() {
+class VoiceRSSTTSProvider : Text2SpeechProvider() {
+    companion object {
+        private val PREFS = Preferences.userNodeForPackage(VoiceRSSTTSProvider::class.java)
+        //private const val VOICE_RSS_DEFAULT_API_KEY = "1def8e9c6ebf4a2eb02fc7b510b04387"
+        private const val VOICE_RSS_DEFAULT_API_KEY = "bb123703dfc1486893ce391ab241ec54"
+        private const val API_KEY = "apiKey"
+
+        private val apiKey: String
+            get() = PREFS.get(API_KEY, VOICE_RSS_DEFAULT_API_KEY)
+
+        fun setApiKey(key: String) {
+            PREFS.put(API_KEY, key)
+        }
+    }
+
     override val enabled = true
     override val name = "VoiceRSS"
     override val qualities: List<Quality> = SampleRate.values().flatMap {
@@ -15,10 +30,6 @@ class VoiceRSSTTSProvider(private val apiKey: String = VOICE_RSS_DEFAULT_API_KEY
     }
     override val ssmlSupported: Boolean = false
 
-    companion object {
-        //private const val VOICE_RSS_DEFAULT_API_KEY = "1def8e9c6ebf4a2eb02fc7b510b04387"
-        private const val VOICE_RSS_DEFAULT_API_KEY = "bb123703dfc1486893ce391ab241ec54"
-    }
 
     override fun installedVoices(): List<Voice> {
         val languages = VoiceRssLanguage.values()
