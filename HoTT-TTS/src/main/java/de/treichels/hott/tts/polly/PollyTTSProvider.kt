@@ -1,7 +1,9 @@
 package de.treichels.hott.tts.polly
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider
+import com.amazonaws.auth.AWSCredentialsProvider
+import com.amazonaws.auth.AWSCredentialsProviderChain
 import com.amazonaws.auth.BasicAWSCredentials
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.polly.AmazonPolly
 import com.amazonaws.services.polly.AmazonPollyClientBuilder
@@ -11,15 +13,47 @@ import com.amazonaws.services.polly.model.SynthesizeSpeechRequest
 import com.amazonaws.services.polly.model.TextType
 import de.treichels.hott.tts.*
 import java.util.*
+import java.util.prefs.Preferences
 import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioInputStream
 import javax.sound.sampled.AudioSystem
 
-class PollyTTSProvider(private val accessKey: String, private val secretKey: String) : Text2SpeechProvider() {
-    private val credentialsProvider = AWSStaticCredentialsProvider(BasicAWSCredentials(accessKey, secretKey))
+class PollyTTSProvider : Text2SpeechProvider() {
+    companion object {
+        private val PREFS = Preferences.userNodeForPackage(PollyTTSProvider::class.java)
+        private const val ACCESS_KEY = "accessKey"
+        private const val SECRET_KEY = "secretKey"
+
+        private val accessKey: String?
+            get() = PREFS.get(ACCESS_KEY, null)
+
+        fun setAccessKey(key: String) {
+            PREFS.put(ACCESS_KEY, key)
+        }
+
+        private val secretKey: String?
+            get() = PREFS.get(SECRET_KEY, null)
+
+        fun setSecretKey(key: String) {
+            PREFS.put(SECRET_KEY, key)
+        }
+    }
+
+    class PreferencesCredentialProvider : AWSCredentialsProvider {
+        override fun refresh() {}
+        override fun getCredentials() = if (accessKey != null && secretKey != null) BasicAWSCredentials(accessKey, secretKey) else null
+    }
+
+    private val credentialsProvider = AWSCredentialsProviderChain(PreferencesCredentialProvider(), DefaultAWSCredentialsProviderChain())
     private val polly: AmazonPolly = AmazonPollyClientBuilder.standard().withCredentials(credentialsProvider).withRegion(Regions.EU_CENTRAL_1).build()
 
-    override val enabled: Boolean = true
+    override val enabled: Boolean
+        get() = try {
+            credentialsProvider.credentials != null
+        } catch (e: Throwable) {
+            false
+        }
+
     override val name = "Amazon Polly"
     override val defaultQuality = Quality(16000, 1)
     override val qualities: List<Quality> = listOf(Quality(8000, 1), Quality(16000, 1))
