@@ -28,11 +28,11 @@ class FirmwareUpgradeService : Service<Unit>() {
             val bytes = Files.readAllBytes(file.toPath())
 
             serialPort.use { port ->
-                port.timeout = 1000
-                port.open(19200)
                 val fileStream = bytes.inputStream()
                 val inputStream = port.inputStream
                 val outputStream = port.outputStream
+                val block = ByteArray(blockSize)
+                val response = ByteArray(blockSize)
 
                 //header
                 val type = fileStream.read()
@@ -40,6 +40,8 @@ class FirmwareUpgradeService : Service<Unit>() {
 
                 // wait for receiver
                 updateMessage(messages["waitForReceiver"])
+                port.timeout = 1000
+                port.open(19200)
 
                 do {
                     try {
@@ -56,7 +58,6 @@ class FirmwareUpgradeService : Service<Unit>() {
                     updateMessage("${(i.toDouble() / blockCount.toDouble() * 100.0).toInt()} %")
 
                     // read block from file
-                    val block = ByteArray(blockSize)
                     fileStream.read(block)
                     if (isCancelled) return
 
@@ -66,7 +67,6 @@ class FirmwareUpgradeService : Service<Unit>() {
                     if (isCancelled) return
 
                     // read response
-                    val response = ByteArray(blockSize)
                     inputStream.read(response)
                     if (isCancelled) return
 
@@ -78,10 +78,10 @@ class FirmwareUpgradeService : Service<Unit>() {
                 }
 
                 // end transfer
-                val block = ByteArray(blockSize)
                 block[2] = 0xee.toByte()
                 outputStream.write(block)
                 outputStream.flush()
+                Thread.sleep(1000)
             }
         }
     }
