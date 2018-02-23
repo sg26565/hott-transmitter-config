@@ -10,9 +10,7 @@ import java.nio.file.Files
 import java.util.*
 
 class FirmwareUpgradeService : Service<Unit>() {
-    companion object {
-        private var messages = ResourceBundle.getBundle(javaClass.name)
-    }
+    private var messages = ResourceBundle.getBundle(javaClass.name)
 
     lateinit var serialPort: SerialPort
     lateinit var fileName: String
@@ -43,6 +41,7 @@ class FirmwareUpgradeService : Service<Unit>() {
 
                 // open serial port
                 port.timeout = 1000
+                port.reset()
                 port.open(if (type >= 0xf0) 115200 else 19200)
 
                 // wait for receiver
@@ -56,14 +55,8 @@ class FirmwareUpgradeService : Service<Unit>() {
                     }
                 }
 
-                // read three more bytes from 2nd level bootloader for GR-24PRO receiver
-                if (type == 0x97) {
-                    inputStream.read()
-                    inputStream.read()
-                    inputStream.read()
-                }
-
                 // write data
+                port.reset()
                 for (i in 1..blockCount) {
                     updateProgress(i.toLong(), blockCount.toLong())
                     updateMessage("${(i.toDouble() / blockCount.toDouble() * 100.0).toInt()} %")

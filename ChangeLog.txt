@@ -1,9 +1,10 @@
-2018-02-22
+2018-02-23
 ==========
-    FirmwareUpgrader-0.9.3.25
+    FirmwareUpgrader-0.9.3.26
     - Fixed end-of-transmission mark
     - Special handling for GR-24PRO
     - Support for high-speed transmission (115200 baud instead of 19200 baud for supported receivers)
+    - fix service restart
 
 2018-02-22
 ==========

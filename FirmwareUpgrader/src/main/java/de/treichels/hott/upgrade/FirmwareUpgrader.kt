@@ -27,6 +27,9 @@ class FirmwareUpgrader : View() {
     companion object {
         const val PREFERRED_PORT = "preferredPort"
         const val LAST_DIR = "lastDir"
+
+        private fun isFirmware(file: File) = file.exists() && file.isFile && file.canRead() && file.name.endsWith(".bin")
+        private fun getFile(ev: DragEvent) = ev.dragboard.files.firstOrNull(::isFirmware)
     }
 
     // resources
@@ -129,10 +132,6 @@ class FirmwareUpgrader : View() {
 
     private fun doCancel() {
         service.cancel()
-        progressBar.progressProperty().unbind()
-        progressBar.progress = 0.0
-        progressLabel.textProperty().unbind()
-        progressLabel.text = null
     }
 
     private fun doUpgrade() {
@@ -143,22 +142,31 @@ class FirmwareUpgrader : View() {
 
         service.setOnFailed { ev ->
             ExceptionDialog.show(ev.source.exception)
-            startButton.text = messages["start"]
+            reset()
         }
 
         service.setOnCancelled {
             MessageDialog.show(Alert.AlertType.WARNING, messages["cancelled"], messages["upgradeCancelled"])
-            startButton.text = messages["start"]
+            reset()
         }
 
         service.setOnSucceeded {
             MessageDialog.show(Alert.AlertType.INFORMATION, messages["success"], messages["upgradeFinished"])
-            startButton.text = messages["start"]
+            reset()
         }
 
         service.fileName = textField.text
         service.serialPort = serialPort!!
-        service.restart()
+        service.start()
+    }
+
+    private fun reset() {
+        service.reset()
+        progressBar.progressProperty().unbind()
+        progressBar.progress = 0.0
+        progressLabel.textProperty().unbind()
+        progressLabel.text = null
+        startButton.text = messages["start"]
     }
 
     private fun selectFile() {
@@ -176,9 +184,6 @@ class FirmwareUpgrader : View() {
             textField.text = absolutePath
         }
     }
-
-    private fun isFirmware(file: File) = file.exists() && file.isFile && file.canRead() && file.name.endsWith(".bin")
-    private fun getFile(ev: DragEvent) = ev.dragboard.files.firstOrNull(::isFirmware)
 
     init {
         setStageIcon(iconImage)
