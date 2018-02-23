@@ -41,7 +41,7 @@ class FirmwareUpgradeService : Service<Unit>() {
                 // wait for receiver
                 updateMessage(messages["waitForReceiver"])
                 port.timeout = 1000
-                port.open(19200)
+                port.open(if (type >= 0xf0) 115200 else 19200)
 
                 do {
                     try {
