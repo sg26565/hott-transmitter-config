@@ -1,7 +1,6 @@
 package de.treichels.hott.util
 
 import de.treichels.hott.messages.Messages
-import javafx.application.Platform
 import javafx.scene.control.Alert
 import javafx.scene.image.Image
 import javafx.scene.layout.Priority
@@ -13,7 +12,7 @@ import java.util.logging.Logger
 
 class ExceptionDialog(throwable: Throwable) : Alert(Alert.AlertType.ERROR) {
     init {
-        Logger.getLogger(javaClass.name).throwing(javaClass.name,"<init>",throwable)
+        Logger.getLogger(javaClass.name).throwing(javaClass.name, "<init>", throwable)
 
         title = Messages.getString("Error")
         (dialogPane.scene.window as Stage).icons += Image(ExceptionDialog::class.java.getResourceAsStream("icon.png"))
@@ -32,7 +31,7 @@ class ExceptionDialog(throwable: Throwable) : Alert(Alert.AlertType.ERROR) {
         dialogPane.expandableContent = gridpane {
             maxWidth = Double.MAX_VALUE
             label("The exception stacktrace was:") {
-                gridpaneConstraints { columnRowIndex(0,0) }
+                gridpaneConstraints { columnRowIndex(0, 0) }
             }
             textarea(sw.toString()) {
                 isEditable = false
@@ -40,7 +39,7 @@ class ExceptionDialog(throwable: Throwable) : Alert(Alert.AlertType.ERROR) {
                 maxWidth = Double.MAX_VALUE
                 maxHeight = Double.MAX_VALUE
                 gridpaneConstraints {
-                    columnRowIndex(0,1)
+                    columnRowIndex(0, 1)
                     vhGrow = Priority.ALWAYS
                 }
             }
@@ -50,16 +49,15 @@ class ExceptionDialog(throwable: Throwable) : Alert(Alert.AlertType.ERROR) {
     companion object {
         private var SHOWING = false
 
-        @Synchronized fun show(throwable: Throwable) {
+        @Synchronized
+        fun show(throwable: Throwable) {
             throwable.printStackTrace()
 
             // show only one instance of the dialog at a time
             if (!SHOWING) {
                 SHOWING = true
-                Platform.runLater {
-                    ExceptionDialog(throwable).showAndWait()
-                    SHOWING = false
-                }
+                ExceptionDialog(throwable).showAndWait()
+                SHOWING = false
             }
         }
     }
