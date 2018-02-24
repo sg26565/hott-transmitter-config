@@ -4,7 +4,6 @@ import com.amazonaws.auth.AWSCredentialsProvider
 import com.amazonaws.auth.AWSCredentialsProviderChain
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
-import com.amazonaws.regions.Regions
 import com.amazonaws.services.polly.AmazonPolly
 import com.amazonaws.services.polly.AmazonPollyClientBuilder
 import com.amazonaws.services.polly.model.DescribeVoicesRequest
@@ -24,28 +23,26 @@ class PollyTTSProvider : Text2SpeechProvider() {
         private const val ACCESS_KEY = "accessKey"
         private const val SECRET_KEY = "secretKey"
 
-        private val accessKey: String?
+        internal var accessKey: String?
             get() = PREFS.get(ACCESS_KEY, null)
+            set(key) {
+                PREFS.put(ACCESS_KEY, key)
+            }
 
-        fun setAccessKey(key: String) {
-            PREFS.put(ACCESS_KEY, key)
-        }
-
-        private val secretKey: String?
+        internal var secretKey: String?
             get() = PREFS.get(SECRET_KEY, null)
-
-        fun setSecretKey(key: String) {
-            PREFS.put(SECRET_KEY, key)
-        }
+            set(key) {
+                PREFS.put(SECRET_KEY, key)
+            }
     }
 
     class PreferencesCredentialProvider : AWSCredentialsProvider {
         override fun refresh() {}
-        override fun getCredentials() = if (accessKey != null && secretKey != null) BasicAWSCredentials(accessKey, secretKey) else null
+        override fun getCredentials() = if (!accessKey.isNullOrBlank() && !secretKey.isNullOrBlank()) BasicAWSCredentials(accessKey, secretKey) else null
     }
 
     private val credentialsProvider = AWSCredentialsProviderChain(PreferencesCredentialProvider(), DefaultAWSCredentialsProviderChain())
-    private val polly: AmazonPolly = AmazonPollyClientBuilder.standard().withCredentials(credentialsProvider).withRegion(Regions.EU_CENTRAL_1).build()
+    private val polly: AmazonPolly = AmazonPollyClientBuilder.standard().withCredentials(credentialsProvider).build()
 
     override val enabled: Boolean
         get() = try {

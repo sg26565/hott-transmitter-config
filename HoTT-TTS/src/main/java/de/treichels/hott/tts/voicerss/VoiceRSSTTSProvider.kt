@@ -15,12 +15,11 @@ class VoiceRSSTTSProvider : Text2SpeechProvider() {
         private const val VOICE_RSS_DEFAULT_API_KEY = "bb123703dfc1486893ce391ab241ec54"
         private const val API_KEY = "apiKey"
 
-        private val apiKey: String
-            get() = PREFS.get(API_KEY, VOICE_RSS_DEFAULT_API_KEY)
-
-        fun setApiKey(key: String) {
-            PREFS.put(API_KEY, key)
-        }
+        internal var apiKey: String?
+            get() = PREFS.get(API_KEY, null)
+            set(key) {
+                PREFS.put(API_KEY, key)
+            }
     }
 
     override val enabled = true
@@ -53,8 +52,8 @@ class VoiceRSSTTSProvider : Text2SpeechProvider() {
 
         // test format - throws exception if not valid
         val format = Format.valueOf("pcm_${quality.sampleRate / 1000}khz_${quality.sampleSize}bit_${if (quality.channels == 1) "mono" else "stereo"}")
-
-        val url = URL("http://api.voicerss.org/?key=$apiKey&hl=${voice.id}&r=$speed&c=WAV&f=${format.key}&ssml=false&b64=false&src=${URLEncoder.encode(text, "UTF-8")}")
+        val key = if (apiKey.isNullOrBlank()) VOICE_RSS_DEFAULT_API_KEY else apiKey
+        val url = URL("http://api.voicerss.org/?key=$key&hl=${voice.id}&r=$speed&c=WAV&f=${format.key}&ssml=false&b64=false&src=${URLEncoder.encode(text, "UTF-8")}")
         return WaveFileReader().getAudioInputStream(url.openConnection().getInputStream())
     }
 }
