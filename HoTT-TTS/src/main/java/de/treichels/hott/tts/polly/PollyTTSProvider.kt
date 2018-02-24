@@ -59,8 +59,7 @@ class PollyTTSProvider : Text2SpeechProvider() {
     override val qualities: List<Quality> = listOf(Quality(8000, 1), Quality(16000, 1))
     override val speedSupported = false
 
-    override fun speak(text: String, voice: Voice, speed: Int, volume: Int, sampleSize: Int, channels: Int, sampleRate: Int, ssml: Boolean): AudioInputStream {
-        val quality = qualities.find { it.sampleRate == sampleRate } ?: defaultQuality
+    override fun speak(text: String, voice: Voice, speed: Int, volume: Int, quality: Quality, ssml: Boolean): AudioInputStream {
         val speechRequest = SynthesizeSpeechRequest()
                 .withOutputFormat(OutputFormat.Pcm)
                 .withVoiceId(voice.id)
@@ -69,7 +68,7 @@ class PollyTTSProvider : Text2SpeechProvider() {
                 .withText(text)
 
         val speechResult = polly.synthesizeSpeech(speechRequest)
-        val format = AudioFormat(AudioFormat.Encoding.PCM_SIGNED, sampleRate.toFloat(), 16, 1, 2, sampleRate.toFloat(), false)
+        val format = AudioFormat(AudioFormat.Encoding.PCM_SIGNED, quality.sampleRate.toFloat(), quality.sampleSize, quality.channels, quality.sampleSize / 8, quality.sampleRate.toFloat(), false)
         return AudioInputStream(speechResult.audioStream, format, AudioSystem.NOT_SPECIFIED.toLong())
     }
 

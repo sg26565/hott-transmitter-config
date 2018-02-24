@@ -23,7 +23,7 @@ open class Voice {
     override fun toString() = "$description"
 }
 
-open class Quality(val sampleRate: Int, val channels: Int) {
+open class Quality(val sampleRate: Int, val channels: Int, val sampleSize: Int = 16) {
     override fun toString(): String {
         return "${sampleRate / 1000}kHz ${if (channels == 1) "mono" else "stereo"}"
     }
@@ -38,10 +38,10 @@ abstract class Text2SpeechProvider {
     open val defaultQuality: Quality = Quality(24000, 2)
     open val speedSupported = true
     open val volumeSupported = true
-    open val ssmlSupported  = true
+    open val ssmlSupported = true
 
     abstract fun installedVoices(): List<Voice>
-    abstract fun speak(text: String, voice: Voice, speed: Int = 0, volume: Int = 100, sampleSize: Int = 16, channels: Int = 2, sampleRate: Int = 16_000, ssml: Boolean = false): AudioInputStream
+    abstract fun speak(text: String, voice: Voice = defaultVoice, speed: Int = 0, volume: Int = 100, quality: Quality = defaultQuality, ssml: Boolean = false): AudioInputStream
 
     override fun toString() = name
 }

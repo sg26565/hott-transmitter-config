@@ -79,7 +79,7 @@ class Win10TTSProvider : Text2SpeechProvider() {
         return mapper.readValue(process.inputStream.reader(), type)
     }
 
-    override fun speak(text: String, voice: Voice, speed: Int, volume: Int, sampleSize: Int, channels: Int, sampleRate: Int, ssml: Boolean): AudioInputStream {
+    override fun speak(text: String, voice: Voice, speed: Int, volume: Int, quality: Quality, ssml: Boolean): AudioInputStream {
         val tempFile = File.createTempFile("wave", ".wav")
         lateinit var process: Process
 
@@ -93,7 +93,7 @@ Add-Type -AssemblyName System.Speech
 ${'$'}SpeechSynthesizer = New-Object System.Speech.Synthesis.SpeechSynthesizer
 ${'$'}SpeechSynthesizer.Rate = $speed
 ${'$'}SpeechSynthesizer.Volume = ${Math.min(volume, 100)}
-${'$'}format = New-Object System.Speech.AudioFormat.SpeechAudioFormatInfo($sampleRate, $sampleSize, $channels)
+${'$'}format = New-Object System.Speech.AudioFormat.SpeechAudioFormatInfo(${quality.sampleRate}, ${quality.sampleSize}, ${quality.channels})
 ${'$'}SpeechSynthesizer.SetOutputToWaveFile('${tempFile.absolutePath}', ${'$'}format)
 ${'$'}SpeechSynthesizer.SelectVoice('${voice.name}')
 ${'$'}SpeechSynthesizer.${if (ssml) "SpeakSsml" else "Speak"}('$filtered')

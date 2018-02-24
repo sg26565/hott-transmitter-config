@@ -9,7 +9,7 @@ import javax.sound.sampled.AudioInputStream
 class Text2SpeechService() : Service<AudioInputStream>() {
     override fun createTask(): Task<AudioInputStream> = object : Task<AudioInputStream>() {
         override fun call(): AudioInputStream {
-            val audioInputStream = provider.speak(text, voice, speed, (volume * 100).toInt(), sampleSize, channels, frameRate, ssml)
+            val audioInputStream = provider.speak(text, voice, speed, (volume * 100).toInt(), Quality(frameRate, channels, sampleSize), ssml)
             val format = audioInputStream.format
             val trimmedInputStream = TrimInputStream(audioInputStream, sampleSize * channels)
             return VolumeControlAudioInputStream(trimmedInputStream, format, volume)
