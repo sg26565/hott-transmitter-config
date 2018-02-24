@@ -4,6 +4,7 @@ import com.amazonaws.auth.AWSCredentialsProvider
 import com.amazonaws.auth.AWSCredentialsProviderChain
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
+import com.amazonaws.regions.Regions
 import com.amazonaws.services.polly.AmazonPolly
 import com.amazonaws.services.polly.AmazonPollyClientBuilder
 import com.amazonaws.services.polly.model.DescribeVoicesRequest
@@ -42,7 +43,7 @@ class PollyTTSProvider : Text2SpeechProvider() {
     }
 
     private val credentialsProvider = AWSCredentialsProviderChain(PreferencesCredentialProvider(), DefaultAWSCredentialsProviderChain())
-    private val polly: AmazonPolly = AmazonPollyClientBuilder.standard().withCredentials(credentialsProvider).build()
+    private val polly: AmazonPolly = AmazonPollyClientBuilder.standard().withCredentials(credentialsProvider).withRegion(Regions.EU_CENTRAL_1).build()
 
     override val enabled: Boolean
         get() = try {

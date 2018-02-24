@@ -1,3 +1,13 @@
+2018-02-24
+==========
+    VDFEditor-0.9.3.194
+    - added Windows 10 and Amazon Polly TTS providers
+    - preference dialog to enter personal credentials for VoiceRSS and Amazon Polly
+    - Limit window size to visual bounds of the screen
+
+    HoTT-TTS-0.9.3.20
+    - preference dialog to enter personal credentials for VoiceRSS and Amazon Polly
+
 2018-02-23
 ==========
     FirmwareUpgrader-0.9.3.26
