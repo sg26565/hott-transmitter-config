@@ -59,12 +59,20 @@ class SpeechDialog : View() {
         private const val EXT_WAV = "*.wav"
     }
 
+    // resources
+    private val iconImage = resources.image("icon.png")
+    private val prefsImage = resources.imageview("prefs.png")
+
+    // dialog
+    private val prefs by inject<PreferencesView>()
+
     // background service
     private val service = Text2SpeechService().apply {
         setOnFailed {
             onFail(exception)
         }
     }
+
     // State
     private var providers = listOf(Win10TTSProvider(), VoiceRSSTTSProvider(), PollyTTSProvider())
 
@@ -73,7 +81,7 @@ class SpeechDialog : View() {
     private lateinit var textArea: TextArea
     private lateinit var providerComboBox: ComboBox<Text2SpeechProvider>
     private lateinit var voiceComboBox: ComboBox<Voice>
-    private lateinit var formatComboBox: ComboBox<Quality>
+    private lateinit var qualityComboBox: ComboBox<Quality>
     private lateinit var volumeSlider: Slider
     private lateinit var speedSlider: Slider
 
@@ -88,16 +96,29 @@ class SpeechDialog : View() {
         get() = volumeSlider.value / 3.0
     private val speed: Int
         get() = speedSlider.value.toInt() * 2 - 10
-    private val format: Quality
-        get() = formatComboBox.selectedItem ?: provider.defaultQuality
+    private val quality: Quality
+        get() = qualityComboBox.selectedItem ?: provider.defaultQuality
 
     override val root = vbox {
         spacing = 5.0
         padding = insets(all = 10)
-        prefWidth = 800.0
-        prefHeight = 200.0
+        prefWidth = 700.0
+        prefHeight = 250.0
 
-        label(messages["descr_label"])
+        hbox {
+            label(messages["descr_label"])
+
+            region {
+                hgrow = Priority.ALWAYS
+            }
+
+            button(graphic = prefsImage) {
+                isFocusTraversable = false
+                action {
+                    prefs.openModal(StageStyle.UTILITY)
+                }
+            }
+        }
 
         anchorpane {
             textArea = textarea {
@@ -116,7 +137,7 @@ class SpeechDialog : View() {
 
 
         hbox {
-            alignment = Pos.CENTER_LEFT
+            alignment = Pos.CENTER
             spacing = 10.0
 
             vbox {
@@ -126,32 +147,18 @@ class SpeechDialog : View() {
                 }
             }
 
-            region {
-                hgrow = Priority.SOMETIMES
-            }
-
-            vbox {
-                label(messages["language_label"])
-                voiceComboBox = combobox {
-                    initVoices()
-                }
-            }
-
+            if (standalone) {
                 region {
                     hgrow = Priority.SOMETIMES
                 }
 
                 vbox {
-                    label(messages["format"])
-                    formatComboBox = combobox {
-                        initFormats()
+                    label(messages["quality"])
+                    qualityComboBox = combobox {
+                        initQuality()
                     }
+                }
             }
-        }
-
-        hbox {
-            alignment = Pos.CENTER
-            spacing = 10.0
 
             region {
                 hgrow = Priority.ALWAYS
@@ -176,9 +183,22 @@ class SpeechDialog : View() {
                 minorTickCount = 1
                 isDisable = !provider.volumeSupported
             }
+        }
+
+        hbox {
+            alignment = Pos.CENTER
+            spacing = 10.0
+
+
+            vbox {
+                label(messages["language_label"])
+                voiceComboBox = combobox {
+                    initVoices()
+                }
+            }
 
             region {
-                hgrow = Priority.SOMETIMES
+                hgrow = Priority.ALWAYS
             }
 
             label(messages["speed"])
@@ -245,7 +265,7 @@ class SpeechDialog : View() {
         setOnAction {
             preferences { put(PREFERRED_PROVIDER, provider.name) }
             voiceComboBox.initVoices()
-            formatComboBox.initFormats()
+            if (standalone) qualityComboBox.initQuality()
 
             volumeSlider.isDisable = !provider.volumeSupported
             speedSlider.isDisable = !provider.speedSupported
@@ -254,45 +274,53 @@ class SpeechDialog : View() {
         // get preferred provider from prefs
         preferences {
             val prefProviderName: String? = get(PREFERRED_PROVIDER, null)
-            selectionModel.select(items.find { it.name == prefProviderName }?: items[0])
+            selectionModel.select(items.find { it.name == prefProviderName } ?: items[0])
         }
     }
 
-    private fun ComboBox<Quality>.initFormats() {
+    private fun ComboBox<Quality>.initQuality() {
         items = provider.qualities.observable()
 
         setOnAction {
-            preferences { put(PREFERRED_FORMAT, format.toString()) }
+            preferences { put(PREFERRED_FORMAT, quality.toString()) }
         }
 
-        // get preferred format from prefs
+        // get preferred quality from prefs
         preferences {
             val prefFormatName: String? = get(PREFERRED_FORMAT, null)
-            selectionModel.select(provider.qualities.find { it.toString() == prefFormatName } ?: provider.defaultQuality)
+            selectionModel.select(provider.qualities.find { it.toString() == prefFormatName }
+                    ?: provider.defaultQuality)
         }
     }
 
     private fun ComboBox<Voice>.initVoices() {
-        items = provider.installedVoices().observable()
+        try {
+            items = provider.installedVoices().observable()
 
-        setOnAction {
-            preferences { put(PREFERRED_VOICE, voice.id) }
-        }
+            setOnAction {
+                preferences { put(PREFERRED_VOICE, voice.id) }
+            }
 
-        // get preferred language from prefs
-        preferences {
-            val prefVoiceName: String? = get(PREFERRED_VOICE, null)
-            selectionModel.select(provider.installedVoices().find { it.id == prefVoiceName } ?: provider.defaultVoice)
+            // get preferred language from prefs
+            preferences {
+                val prefVoiceName: String? = get(PREFERRED_VOICE, null)
+                selectionModel.select(provider.installedVoices().find { it.id == prefVoiceName }
+                        ?: provider.defaultVoice)
+            }
+        } catch (e: Exception) {
+            ExceptionDialog.show(e)
         }
     }
 
     init {
+        if (standalone) setStageIcon(iconImage)
         title = messages["title"]
+
         preferences {
             textArea.text = get(LAST_TEXT, "")
         }
 
-        textArea.requestFocus()
+        Platform.runLater { textArea.requestFocus() }
     }
 
     private fun onFail(t: Throwable) {
@@ -300,8 +328,6 @@ class SpeechDialog : View() {
             MessageDialog.show(AlertType.ERROR, messages["error"], messages["unknown_Host"])
         else
             ExceptionDialog.show(t)
-
-        onAbort()
     }
 
     private fun reStartService(op: () -> Unit = {}) {
@@ -309,12 +335,13 @@ class SpeechDialog : View() {
         service.provider = provider
         service.text = text
         service.voice = voice
-
         if (standalone) {
-            service.frameRate = format.sampleRate
-            service.channels = format.channels
+            service.frameRate = quality.sampleRate
+            service.channels = quality.channels
+        } else {
+            service.frameRate = provider.defaultQuality.sampleRate
+            service.channels = provider.defaultQuality.channels
         }
-
         service.volume = volume
         service.speed = speed
         service.start()
