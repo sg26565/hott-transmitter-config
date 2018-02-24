@@ -30,6 +30,7 @@ import javafx.scene.input.*
 import javafx.scene.layout.Priority
 import javafx.stage.FileChooser
 import javafx.stage.FileChooser.ExtensionFilter
+import javafx.stage.Screen
 import javafx.stage.Stage
 import org.apache.commons.io.IOUtils
 import tornadofx.*
@@ -435,6 +436,9 @@ class MainView : View() {
      */
     init {
         setStageIcon(iconImage)
+        val bounds = Screen.getPrimary().visualBounds
+        primaryStage.maxHeight = bounds.height
+        primaryStage.maxWidth = bounds.width
 
         // setup listview
         with(listView) {
