@@ -1,3 +1,12 @@
+2018-02-28
+==========
+    FirmwareUpgrader-0.9.3-30
+    HoTT-TTS-0.9.3.22
+    MdlViewer-0.9.3.215
+    MemoryDump-0.9.3.187
+    VDFEditor-0.9.3.195
+    - Fixed serial port names for CP210x USB-to-UART bridge on MacOS
+
 2018-02-24
 ==========
     VDFEditor-0.9.3.194
