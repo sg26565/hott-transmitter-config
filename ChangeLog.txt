@@ -1,6 +1,6 @@
 2018-02-28
 ==========
-    FirmwareUpgrader-0.9.3-30
+    FirmwareUpgrader-0.9.3.30
     HoTT-TTS-0.9.3.22
     MdlViewer-0.9.3.215
     MemoryDump-0.9.3.187
