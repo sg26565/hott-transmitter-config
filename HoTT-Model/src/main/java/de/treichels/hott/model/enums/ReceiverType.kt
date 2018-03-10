@@ -11,13 +11,15 @@
  */
 package de.treichels.hott.model.enums
 
+import de.treichels.hott.model.firmware.Firmware
+import de.treichels.hott.model.firmware.Updatable
 import tornadofx.*
 import java.util.*
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class ReceiverType(val productCode: Int = 0, val orderNo: String = "", val id: Int = 0, val hasGyro: Boolean = false, val hasVario: Boolean = false) {
+enum class ReceiverType(override val productCode: Int = 0, val orderNo: String = "", val id: Int = 0, val hasGyro: Boolean = false, val hasVario: Boolean = false) : Updatable<ReceiverType> {
     gr4(16005600, "33502"),
     gr8(16005700, "33504"),
     gr10c(0, "S1029", 0x3d, true),
@@ -42,6 +44,21 @@ enum class ReceiverType(val productCode: Int = 0, val orderNo: String = "", val 
     gr32(16004000, "33516"),
     gr32l(16004020, "S1023"),
     falcon12(0, "S1035", 0x35, true);
+
+    override fun getFirmware(): List<Firmware<ReceiverType>> {
+        var result = emptyList<Firmware<ReceiverType>>()
+
+        if (productCode != 0) {
+            result += Firmware.listFiles(this, "HoTT_Receiver", productCode.toString())
+            result += Firmware.listFiles(this, "HoTT_Receiver", (productCode % 10000).toString())
+        }
+
+        if (id != 0) {
+            result += Firmware.listFiles(this, "Server Updates", Integer.toHexString(id).toUpperCase())
+        }
+
+        return result
+    }
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 
