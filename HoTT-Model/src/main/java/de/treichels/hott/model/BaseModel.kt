@@ -131,7 +131,7 @@ abstract class BaseModel(val modelType: ModelType) : AbstractBase() {
     var phaseAssignment: PhaseAssignment? = null
     @get:XmlElementWrapper(name = "receivers")
     var receiver: List<Receiver>? = null
-    var receiverType: ReceiverType? = null
+    var receiverClass: ReceiverClass? = null
     @get:XmlElementWrapper(name = "ringLimiters")
     var ringLimiter: List<RingLimiter>? = null
     var stickMode: StickMode? = null
@@ -190,7 +190,7 @@ abstract class BaseModel(val modelType: ModelType) : AbstractBase() {
         if (phase != other.phase) return false
         if (phaseAssignment != other.phaseAssignment) return false
         if (receiver != other.receiver) return false
-        if (receiverType != other.receiverType) return false
+        if (receiverClass != other.receiverClass) return false
         if (ringLimiter != other.ringLimiter) return false
         if (stickMode != other.stickMode) return false
         if (stickTrim != other.stickTrim) return false
@@ -242,7 +242,7 @@ abstract class BaseModel(val modelType: ModelType) : AbstractBase() {
         result = 31 * result + (phase?.hashCode() ?: 0)
         result = 31 * result + (phaseAssignment?.hashCode() ?: 0)
         result = 31 * result + (receiver?.hashCode() ?: 0)
-        result = 31 * result + (receiverType?.hashCode() ?: 0)
+        result = 31 * result + (receiverClass?.hashCode() ?: 0)
         result = 31 * result + (ringLimiter?.hashCode() ?: 0)
         result = 31 * result + (stickMode?.hashCode() ?: 0)
         result = 31 * result + (stickTrim?.hashCode() ?: 0)

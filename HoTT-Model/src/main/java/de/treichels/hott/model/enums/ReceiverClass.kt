@@ -13,19 +13,18 @@ package de.treichels.hott.model.enums
 
 import tornadofx.*
 import java.util.*
-import java.util.stream.Stream
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class ReceiverType(val id: Int) {
+enum class ReceiverClass(val id: Int) {
     E06(1), E08(0), E09(3), E12(5), E16(7);
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 
     companion object {
-        fun forId(id: Int): ReceiverType? {
-            return Stream.of(*values()).filter { s -> s.id == id }.findFirst().orElse(null)
+        fun forId(id: Int): ReceiverClass? {
+            return values().firstOrNull { s -> s.id == id }
         }
     }
 }

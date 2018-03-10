@@ -12,7 +12,7 @@
 package de.treichels.hott.model.serial
 
 import de.treichels.hott.model.enums.ModelType
-import de.treichels.hott.model.enums.ReceiverType
+import de.treichels.hott.model.enums.ReceiverClass
 import de.treichels.hott.model.enums.TransmitterType
 
 import java.io.Serializable
@@ -26,13 +26,13 @@ data class ModelInfo(
         val modelInfo: String? = null,
         val modelType: ModelType,
         val transmitterType: TransmitterType?,
-        val receiverType: ReceiverType?,
+        val receiverClass: ReceiverClass?,
         val usedHours: Int = 0,
         val usedMinutes: Int = 0
 ) : Serializable {
     override fun toString(): String {
         return String.format(
-                "ModelInfo [modelNumber=%s, modelName=%s, modelInfo=%s, modelType=%s, transmitterType=%s, receiverType=%s, usedHours=%s, usedMinutes=%s]",
-                modelNumber, modelName, modelInfo, modelType, transmitterType, receiverType, usedHours, usedMinutes)
+                "ModelInfo [modelNumber=%s, modelName=%s, modelInfo=%s, modelType=%s, transmitterType=%s, receiverClass=%s, usedHours=%s, usedMinutes=%s]",
+                modelNumber, modelName, modelInfo, modelType, transmitterType, receiverClass, usedHours, usedMinutes)
     }
 }
