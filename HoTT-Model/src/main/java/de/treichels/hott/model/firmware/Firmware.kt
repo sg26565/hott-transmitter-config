@@ -6,8 +6,9 @@ import java.io.File
 
 class Firmware<T>(val device: T, val path: String, val name: String, val size: Long) where T : Updatable<T>, T : Enum<T> {
     companion object {
-        //private const val FTP_SERVER_ADDRESS = "http://210.122.9.64"
-        private const val FTP_SERVER_ADDRESS = "211.62.35.33"
+        private const val FTP_SERVER_ADDRESS = "data.graupnersj.com"
+        //private const val FTP_SERVER_ADDRESS = "210.122.9.64"
+        //private const val FTP_SERVER_ADDRESS = "211.62.35.33"
         private const val FILE_LIST = "file_list.php"
         private const val FILE_DOWN = "file_down.php"
 
