@@ -16,7 +16,7 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-class Launcher {
+public class Launcher {
     @NonNls
     private static final String LOG_DIR = "log.dir";
     @NonNls

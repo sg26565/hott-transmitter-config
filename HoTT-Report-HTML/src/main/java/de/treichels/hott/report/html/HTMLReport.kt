@@ -40,9 +40,11 @@ object HTMLReport {
 
         // extract font file
         val fontFile = File(System.getProperty("java.io.tmpdir"), "Arial.ttf")
-        ClassLoader.getSystemResourceAsStream("Arial.ttf").use { inputStream ->
-            FileOutputStream(fontFile).use { outputStream -> IOUtils.copy(inputStream, outputStream) }
-        }
+        //can not be loaded within DataExplorer -> inputstream cause NullPointerException
+        if (ClassLoader.getSystemResourceAsStream("Arial.ttf") != null)
+	        	ClassLoader.getSystemResourceAsStream("Arial.ttf").use { inputStream ->
+	            	FileOutputStream(fontFile).use { outputStream -> IOUtils.copy(inputStream, outputStream) }
+	        	}
     }
 
     @Throws(IOException::class, ReportException::class)
