@@ -197,9 +197,7 @@
 						<dependency>
 							<groupId>net.sf.proguard</groupId>
 							<artifactId>proguard-base</artifactId>
-							<version>6.0beta1</version>
-							<scope>system</scope>
-							<systemPath>C:/Users/olive/Downloads/proguard6.0beta2/lib/proguard.jar</systemPath>
+							<version>6.0.1</version>
 						</dependency>
 					</dependencies>
 				</plugin>
