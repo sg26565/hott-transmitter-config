@@ -80,7 +80,7 @@ class ModelTabbedDialog extends org.eclipse.swt.widgets.Dialog {
 
     private void open() {
         try {
-            Launcher.initSystemProperties();
+            Launcher.Companion.getInstance();
             final Shell parent = getParent();
             Shell dialogShell = new Shell(parent, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
             final FillLayout dialogShellLayout = new FillLayout(org.eclipse.swt.SWT.HORIZONTAL);

@@ -91,7 +91,7 @@ class MdlTabItemComposite extends Composite {
         mdlVersionLabel.setLayoutData(mdlVersionLabelLData);
         mdlVersionLabel.setBackground(new Color(Display.getDefault(), 250, 249, 211));
         mdlVersionLabel.setFont(font);
-        mdlVersionLabel.setText("Version: " + System.getProperty(Launcher.PROGRAM_VERSION));
+        mdlVersionLabel.setText("Version: " + System.getProperty(Launcher.Companion.getInstance().getVersion()));
 
         saveMdlButton = new Button(this, SWT.PUSH | SWT.CENTER);
         final GridData saveMdlButtonLData = new GridData();
@@ -200,7 +200,7 @@ class MdlTabItemComposite extends Composite {
         fd.setText(Messages.getString("Load"));
         fd.setFilterExtensions(new String[] { "*.mdl" });
         fd.setFilterNames(new String[] { Messages.getString("MdlFileDescription") });
-        fd.setFilterPath(PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR)));
+        fd.setFilterPath(PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.Companion.getInstance().getMdlDir().getAbsolutePath())));
 
         final String fileName = fd.open();
         if (fileName != null && fileName.endsWith(MDL)) {
@@ -257,7 +257,7 @@ class MdlTabItemComposite extends Composite {
             fd.setText(Messages.getString("Save"));
             fd.setFilterExtensions(new String[] { "*.pdf", "*.html", "*.xml" });
             fd.setFilterNames(new String[] { "Portable Document Format (*.pdf)", "Hypertext Markup Language (*.html)", "Extensible Markup Language (*.xml)" });
-            fd.setFilterPath(PREFS.get(LAST_SAVE_DIR, PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.MDL_DIR))));
+            fd.setFilterPath(PREFS.get(LAST_SAVE_DIR, PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.Companion.getInstance().getMdlDir().getAbsolutePath()))));
             fd.setFileName(model.getModelName() + PDF);
             fd.setOverwrite(true);
 

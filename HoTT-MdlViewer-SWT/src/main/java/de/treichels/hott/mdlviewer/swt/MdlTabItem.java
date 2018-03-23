@@ -35,7 +35,7 @@ public class MdlTabItem extends CTabItem {
 
 		try {
 			if (System.getProperty("program.version") == null) {
-				Launcher.initSystemProperties();
+				Launcher.Companion.getInstance();
 			}
 		} catch (Exception arg4) {
 				arg4.printStackTrace();
