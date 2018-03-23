@@ -91,7 +91,7 @@ class MdlTabItemComposite extends Composite {
         mdlVersionLabel.setLayoutData(mdlVersionLabelLData);
         mdlVersionLabel.setBackground(new Color(Display.getDefault(), 250, 249, 211));
         mdlVersionLabel.setFont(font);
-        mdlVersionLabel.setText("Version: " + System.getProperty(Launcher.Companion.getInstance().getVersion()));
+        mdlVersionLabel.setText("Version: " + Launcher.Companion.getInstance().getVersion());
 
         saveMdlButton = new Button(this, SWT.PUSH | SWT.CENTER);
         final GridData saveMdlButtonLData = new GridData();

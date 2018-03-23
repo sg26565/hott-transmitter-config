@@ -32,7 +32,7 @@ class Launcher {
 
     fun launch() {
         // check if swt is already in the classpath
-        val classLoader = try {
+        try {
             Class.forName("org.eclipse.swt.widgets.Composite")
         } catch (e: ClassNotFoundException) {
             // nope - we need to add it
@@ -62,8 +62,6 @@ class Launcher {
                 val addMethod = URLClassLoader::class.java.getDeclaredMethod("addURL", URL::class.java)
                 addMethod.isAccessible = true
                 addMethod.invoke(systemClassLoader, swtJarFileURL)
-
-                systemClassLoader
             } else
                 throw UnsupportedOperationException("The system classloader is not a subtype of URLClassLoader. Therefore, we cannot add SWT jar dynamically to the classpath.")
         }
@@ -71,7 +69,6 @@ class Launcher {
         // Call main method via reflection to avoid load time class loading of SWT (which will fail as SWT is not yet on the class path).
         val mainClass = Class.forName(MAIN_CLASS_NAME)
         val mainMethod = mainClass.getMethod("main", Array<String>::class.java)
-        mainMethod.isAccessible = true
         mainMethod.invoke(null, arrayOf<String>())
     }
 
@@ -81,7 +78,9 @@ class Launcher {
             // read program version from manifest
             JarFile(sourceFile).use { jarfile ->
                 val attributes = jarfile.manifest.mainAttributes
-                Messages.getString("Launcher.Version", attributes.getValue("Implementation-Version"), attributes.getValue("Implementation-Build"))
+                val version = attributes.getValue("Implementation-Version")
+                val build = attributes.getValue("Implementation-Build")
+                Messages.getString("Launcher.Version", version, build)
             }
         } else {
             // application was packaged as individual class files, find the classes directory
