@@ -34,7 +34,6 @@ class Launcher {
         // check if swt is already in the classpath
         val classLoader = try {
             Class.forName("org.eclipse.swt.widgets.Composite")
-            ClassLoader.getSystemClassLoader()
         } catch (e: ClassNotFoundException) {
             // nope - we need to add it
 
@@ -55,12 +54,22 @@ class Launcher {
             if (!(swtJarFile.exists() && swtJarFile.isFile && swtJarFile.canRead()))
                 throw ClassNotFoundException(Messages.getString("Launcher.SWTNotFound", swtJarFile.absolutePath))
 
+            val swtJarFileURL = swtJarFile.toURI().toURL()
+            val systemClassLoader = ClassLoader.getSystemClassLoader()
+
             // add swt to classpath
-            URLClassLoader(arrayOf(codeLocation, swtJarFile.toURI().toURL()), null)
+            if (systemClassLoader is URLClassLoader) {
+                val addMethod = URLClassLoader::class.java.getDeclaredMethod("addURL", URL::class.java)
+                addMethod.isAccessible = true
+                addMethod.invoke(systemClassLoader, swtJarFileURL)
+
+                systemClassLoader
+            } else
+                throw UnsupportedOperationException("The system classloader is not a subtype of URLClassLoader. Therefore, we cannot add SWT jar dynamically to the classpath.")
         }
 
         // Call main method via reflection to avoid load time class loading of SWT (which will fail as SWT is not yet on the class path).
-        val mainClass = classLoader.loadClass(MAIN_CLASS_NAME)
+        val mainClass = Class.forName(MAIN_CLASS_NAME)
         val mainMethod = mainClass.getMethod("main", Array<String>::class.java)
         mainMethod.isAccessible = true
         mainMethod.invoke(null, arrayOf<String>())
