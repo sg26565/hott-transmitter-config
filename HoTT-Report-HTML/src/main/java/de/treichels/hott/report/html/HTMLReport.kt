@@ -13,15 +13,16 @@
 package de.treichels.hott.report.html
 
 import de.treichels.hott.model.BaseModel
-import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.model.HelicopterModel
-import de.treichels.hott.model.voice.VoiceFile
 import de.treichels.hott.model.WingedModel
+import de.treichels.hott.model.enums.TransmitterType
+import de.treichels.hott.model.voice.VoiceFile
 import freemarker.template.Configuration
 import freemarker.template.DefaultObjectWrapper
 import freemarker.template.TemplateException
 import freemarker.template.TemplateExceptionHandler
 import org.apache.commons.io.IOUtils
+import tornadofx.*
 import java.io.*
 import java.util.*
 
@@ -29,22 +30,23 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 object HTMLReport {
-    private val CONFIGURATION: Configuration = Configuration(Configuration.VERSION_2_3_26)
-    private var CURVE_IMAGE_GENERATOR = ServiceLoader.load(CurveImageGenerator::class.java).firstOrNull() ?: DummyCurveImageGenerator()
+    private val CONFIGURATION: Configuration = Configuration(Configuration.VERSION_2_3_27)
+    private var CURVE_IMAGE_GENERATOR = ServiceLoader.load(CurveImageGenerator::class.java).firstOrNull()
+            ?: DummyCurveImageGenerator()
 
     init {
         // setup freemarker
         CONFIGURATION.setEncoding(Locale.getDefault(), "UTF-8")
-        CONFIGURATION.objectWrapper = DefaultObjectWrapper(Configuration.VERSION_2_3_26)
-
+        CONFIGURATION.objectWrapper = DefaultObjectWrapper(Configuration.VERSION_2_3_27)
 
         // extract font file
         val fontFile = File(System.getProperty("java.io.tmpdir"), "Arial.ttf")
-        //can not be loaded within DataExplorer -> inputstream cause NullPointerException
-        if (ClassLoader.getSystemResourceAsStream("Arial.ttf") != null)
-	        	ClassLoader.getSystemResourceAsStream("Arial.ttf").use { inputStream ->
-	            	FileOutputStream(fontFile).use { outputStream -> IOUtils.copy(inputStream, outputStream) }
-	        	}
+
+        ResourceLookup(HTMLReport).stream("Arial.ttf").use { inputStream ->
+            FileOutputStream(fontFile).use { outputStream ->
+                IOUtils.copy(inputStream, outputStream)
+            }
+        }
     }
 
     @Throws(IOException::class, ReportException::class)
