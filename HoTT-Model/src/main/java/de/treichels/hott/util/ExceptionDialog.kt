@@ -2,7 +2,6 @@ package de.treichels.hott.util
 
 import de.treichels.hott.messages.Messages
 import javafx.scene.control.Alert
-import javafx.scene.image.Image
 import javafx.scene.layout.Priority
 import javafx.stage.Stage
 import tornadofx.*
@@ -15,7 +14,7 @@ class ExceptionDialog(throwable: Throwable) : Alert(Alert.AlertType.ERROR) {
         Logger.getLogger(javaClass.name).throwing(javaClass.name, "<init>", throwable)
 
         title = Messages.getString("Error")
-        (dialogPane.scene.window as Stage).icons += Image(ExceptionDialog::class.java.getResourceAsStream("icon.png"))
+        (dialogPane.scene.window as Stage).icons += ResourceLookup(ExceptionDialog).image("icon.png")
         headerText = null
 
         var message: String? = throwable.localizedMessage

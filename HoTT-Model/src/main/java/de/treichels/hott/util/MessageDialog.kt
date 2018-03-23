@@ -3,7 +3,6 @@ package de.treichels.hott.util
 import javafx.application.Platform
 import javafx.concurrent.Worker
 import javafx.scene.control.Alert
-import javafx.scene.image.Image
 import javafx.stage.Stage
 import org.w3c.dom.Element
 import org.w3c.dom.events.EventTarget
@@ -13,7 +12,7 @@ import java.net.URI
 
 class MessageDialog(alertType: Alert.AlertType, header: String, html: Boolean, message: String, vararg args: Any) : Alert(alertType) {
     init {
-        (dialogPane.scene.window as Stage).icons += Image(MessageDialog::class.java.getResourceAsStream("icon.png"))
+        (dialogPane.scene.window as Stage).icons += ResourceLookup(MessageDialog).image("icon.png")
         headerText = header
 
         val text = String.format(message, *args)

@@ -14,6 +14,7 @@ import javafx.scene.text.FontWeight
 import tornadofx.*
 
 class VoiceDataListCell internal constructor(private val controller: MainView) : ListCell<VoiceData?>() {
+    private val resources = ResourceLookup(this)
     private var indexLabel by singleAssign<Label>()
     private var playButton by singleAssign<Button>()
     private var textField: TextField? = null
@@ -31,7 +32,7 @@ class VoiceDataListCell internal constructor(private val controller: MainView) :
             action { item?.play() }
             style {
                 backgroundColor += Color.TRANSPARENT
-                graphic = VoiceDataListCell::class.java.getResource("play-button-icon_16.png").toURI()
+                graphic = resources.url("play-button-icon_16.png").toURI()
             }
         }
     }
