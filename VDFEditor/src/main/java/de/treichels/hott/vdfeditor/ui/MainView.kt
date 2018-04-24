@@ -647,7 +647,7 @@ class MainView : View() {
         content.putFiles(tempFiles)
 
         // VDFEditor: serialize selected items for DnD to other VDFEditor instance
-        content.put(dndDataFormat, selectedItems.toList())
+        content[dndDataFormat] = selectedItems.toList()
 
         // other: item name for DnD to editor or text field
         content.putString(selectedItems.joinToString(",", transform = VoiceData::name))
