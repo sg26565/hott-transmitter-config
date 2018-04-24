@@ -63,7 +63,7 @@ class Model(private val info: ModelInfo, private val data: ByteArray?) {
     val fileName: String = "${info.modelType.char}${info.modelName}"
     val model: BaseModel by lazy { de.treichels.hott.decoder.HoTTDecoder.decodeStream(info.modelType, info.modelName, ByteArrayInputStream(data)) }
     val html: String by lazy { HTMLReport.generateHTML(model) }
-    @Suppress("MemberVisibilityCanPrivate")
+    @Suppress( "MemberVisibilityCanBePrivate")
     val xml: String by lazy { XMLReport.generateXML(model) }
 
     fun saveHtml(file: File) = HTMLReport.save(file, html)

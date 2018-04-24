@@ -45,6 +45,7 @@ object XMLReport {
     @Throws(JAXBException::class)
     fun generateXML(model: BaseModel) = ByteArrayOutputStream().apply { MARSHALLER.marshal(model, this) }.toString()
 
+    @Suppress("unused")
     fun generateXsd(file: File) = CTX.generateSchema(object : SchemaOutputResolver() {
         override fun createOutput(namespaceUri: String?, suggestedFileName: String?): Result {
             return StreamResult(file)

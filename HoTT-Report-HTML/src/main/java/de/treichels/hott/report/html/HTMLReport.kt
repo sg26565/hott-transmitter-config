@@ -57,8 +57,8 @@ object HTMLReport {
 
         when (model) {
         // TODO: add other model types
-            is WingedModel -> rootMap.put("wingedModel", model)
-            is HelicopterModel -> rootMap.put("helicopterModel", model)
+            is WingedModel -> rootMap["wingedModel"] = model
+            is HelicopterModel -> rootMap["helicopterModel"] = model
         }
 
         val template = when (model.transmitterType) {
@@ -75,10 +75,10 @@ object HTMLReport {
         CONFIGURATION.setClassForTemplateLoading(HTMLReport::class.java, "templates/hott")
 
         val rootMap = HashMap<String, Any>()
-        rootMap.put("name", name)
-        rootMap.put("title", title)
-        rootMap.put("version", version)
-        rootMap.put("voicefile", voiceFile)
+        rootMap["name"] = name
+        rootMap["title"] = title
+        rootMap["version"] = version
+        rootMap["voicefile"] = voiceFile
 
         val baos = ByteArrayOutputStream()
         val template = CONFIGURATION.getTemplate("voicefile.ftl")
@@ -98,11 +98,11 @@ object HTMLReport {
             val baos = ByteArrayOutputStream()
             val template = HTMLReport.CONFIGURATION.getTemplate(templateName)
 
-            rootMap.put("hex", FreeMarkerHexConverter())
-            rootMap.put("htmlsafe", FreeMarkerHtmlSafeDirective())
-            rootMap.put("programDir", File(System.getProperty("program.dir", ".")).toURI().toURL().toString())
-            rootMap.put("fontFile", File(System.getProperty("java.io.tmpdir"), "Arial.ttf").toURI().toURL().toString())
-            rootMap.put("version", System.getProperty("program.version", "unknown"))
+            rootMap["hex"] = FreeMarkerHexConverter()
+            rootMap["htmlsafe"] = FreeMarkerHtmlSafeDirective()
+            rootMap["programDir"] = File(System.getProperty("program.dir", ".")).toURI().toURL().toString()
+            rootMap["fontFile"] = File(System.getProperty("java.io.tmpdir"), "Arial.ttf").toURI().toURL().toString()
+            rootMap["version"] = System.getProperty("program.version", "unknown")
 
             template.process(rootMap, OutputStreamWriter(baos, "UTF-8"))
             baos.toString()

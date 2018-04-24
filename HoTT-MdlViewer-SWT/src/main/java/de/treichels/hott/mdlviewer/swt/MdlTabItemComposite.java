@@ -226,20 +226,14 @@ class MdlTabItemComposite extends Composite {
     }
 
     private void loadFromMemory() {
-        final SelectFromTransmitterDialog dialog = new SelectFromMemoryDialog(getParent().getShell());
-        if (dialog.open() != null) {
-            model = dialog.getModel();
-
-            saveMdlButton.setEnabled(true);
-            saveMdlMenuItem.setEnabled(true);
-            reloadMenuItem.setEnabled(true);
-
-            updateView();
-        }
+        load(new SelectFromMemoryDialog(getParent().getShell()));
     }
 
     private void loadFromSdCard() {
-        final SelectFromTransmitterDialog dialog = new SelectFromSdCardDialog(getParent().getShell());
+        load(new SelectFromSdCardDialog(getParent().getShell()));
+    }
+
+    private void load(SelectFromTransmitterDialog dialog) {
         if (dialog.open() != null) {
             model = dialog.getModel();
 
@@ -255,7 +249,7 @@ class MdlTabItemComposite extends Composite {
         if (model != null) {
             final FileDialog fd = new FileDialog(getParent().getShell(), SWT.APPLICATION_MODAL | SWT.SAVE | SWT.SINGLE);
             fd.setText(Messages.getString("Save"));
-            fd.setFilterExtensions(new String[] { "*.pdf", "*.html", "*.xml" });
+            fd.setFilterExtensions(new String[] { "*.pdf","*.html","*.xml" });
             fd.setFilterNames(new String[] { "Portable Document Format (*.pdf)", "Hypertext Markup Language (*.html)", "Extensible Markup Language (*.xml)" });
             fd.setFilterPath(PREFS.get(LAST_SAVE_DIR, PREFS.get(LAST_LOAD_DIR, System.getProperty(Launcher.Companion.getInstance().getMdlDir().getAbsolutePath()))));
             fd.setFileName(model.getModelName() + PDF);

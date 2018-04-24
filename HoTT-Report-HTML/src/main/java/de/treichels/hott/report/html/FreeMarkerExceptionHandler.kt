@@ -27,7 +27,7 @@ internal class FreeMarkerExceptionHandler : TemplateExceptionHandler {
         try {
             out.write("[ERROR: " + e.message + "]")
         } catch (e1: IOException) {
-            throw TemplateException("Failed to print error message. Cause: " + e1, env)
+            throw TemplateException("Failed to print error message. Cause: $e1", env)
         }
     }
 }

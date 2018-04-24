@@ -81,17 +81,17 @@ abstract class SelectFromTransmitter : View() {
     /**
      * Subclass contract: A [Task] that refreshes the UI when the com port changes
      */
-    abstract protected fun refreshUITask(): Task<*>
+    protected abstract fun refreshUITask(): Task<*>
 
     /**
      * Subclass contract: A [Callable] that computes the [Model] result of the dialog in background
      */
-    abstract protected fun getResultCallable(): Callable<Model>?
+    protected abstract fun getResultCallable(): Callable<Model>?
 
     /**
      * Subclass contract: A [Boolean] that tells whether the user has selected something that cam be computed as [Model]
      */
-    abstract protected fun isReady(): BooleanBinding
+    protected abstract fun isReady(): BooleanBinding
 
     /**
      * The com port was changed, update bindings.
