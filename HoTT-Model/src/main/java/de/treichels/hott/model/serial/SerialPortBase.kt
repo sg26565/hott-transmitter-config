@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
 
 abstract class SerialPortBase(override val portName: String) : SerialPort {
-    override var timeout: Int = 250
+    override var timeout: Int = 500
 
     protected val logger: Logger
         get() = Logger.getLogger(javaClass.name)
