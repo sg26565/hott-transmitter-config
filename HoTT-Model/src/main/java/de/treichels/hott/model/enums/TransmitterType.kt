@@ -28,7 +28,7 @@ enum class TransmitterType(override val productCode: Int) : Updatable<Transmitte
     x8n(16006200), x8e(16006500), unknown(0);
 
     override fun getFirmware(): List<Firmware<TransmitterType>> {
-        return Firmware.listFiles(this, "Transmitter", productCode.toString())
+        return Firmware.listFiles(this, "Transmitter")
     }
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
