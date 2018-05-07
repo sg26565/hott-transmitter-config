@@ -28,10 +28,16 @@ class Mz32(val root: File) {
 
         TransmitterType.forProductCode(productCode).getFirmware().forEach { firmware ->
             if (firmware.name.endsWith(".bin") && updateFirmware) {
-                firmware.download()
+                if (!firmware.isCached) {
+                    task.updateMessage("Downloading firmware ${firmware.name}")
+                    firmware.download()
+                }
                 updateFirmware(task, firmware.file)
             } else if (firmware.name.endsWith(".zip") && updateResources) {
-                firmware.download()
+                if (!firmware.isCached) {
+                    task.updateMessage("Downloading firmware ${firmware.name}")
+                    firmware.download()
+                }
                 updateResources(task, firmware.file)
             }
         }
