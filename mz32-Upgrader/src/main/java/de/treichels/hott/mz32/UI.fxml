@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox spacing="5.0">
+         <children>
+            <VBox spacing="5.0">
+               <children>
+                  <CheckBox mnemonicParsing="false" text="Re-index files on radio" />
+                  <CheckBox mnemonicParsing="false" selected="true" text="CheckBox" />
+                  <CheckBox mnemonicParsing="false" selected="true" text="CheckBox" />
+               </children>
+            </VBox>
+            <Region HBox.hgrow="SOMETIMES" />
+            <VBox>
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="5.0">
+                     <children>
+                        <Label text="Drive" />
+                        <ComboBox prefWidth="150.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <Label text="Messages" />
+      <TextArea prefHeight="200.0">
+         <font>
+            <Font name="Monospaced Regular" size="12.0" />
+         </font></TextArea>
+      <ButtonBar>
+        <buttons>
+          <Button mnemonicParsing="false" text="Update" />
+        </buttons>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </ButtonBar>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>

@@ -1,3 +1,13 @@
+2018-05-07
+==========
+    mz32-Upgrader-0.9.3.25
+    - first version
+    
+2018-04-24
+==========
+    VDFEditor-0.9.3.200
+	- increased read timeout for mz-24PRO
+
 2018-02-28
 ==========
     FirmwareUpgrader-0.9.3.30
@@ -216,9 +226,9 @@
 ==========
 	VDFEditor-0.9.0.72
 	- added support to load/send voice files from/to transmitter
-	- enable multi-drop for system vdf's
+	- enable multi-drop for system vdf'GRAUPNER_DISK_CFG
 	- fix number of entries when changing transmitter type or country
-	- enforce naming convention for system vdf's
+	- enforce naming convention for system vdf'GRAUPNER_DISK_CFG
 	- latest voice3 files for German and French
 	- fix dirty flag (unset on save)
 	

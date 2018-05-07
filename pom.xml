@@ -24,6 +24,7 @@
 		<module>VDFEditor</module>
 		<module>MemoryDump</module>
 		<module>FirmwareUpgrader</module>
+		<module>mz32-Upgrader</module>
 		<module>test</module>
 	</modules>
 
