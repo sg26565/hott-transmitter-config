@@ -1,25 +1,22 @@
 package de.treichels.hott.model.firmware
 
+import de.treichels.hott.util.hash
 import org.apache.http.client.fluent.Request
 import org.apache.http.message.BasicNameValuePair
 import java.io.File
-import java.math.BigInteger
-import java.security.MessageDigest
 
 /**
  * Uility class to mange downloads from Graupner's official FTP server.
  */
 class Firmware<T>(val device: T, val path: String, val name: String, val size: Long) where T : Updatable<T>, T : Enum<T> {
     companion object {
-        private const val HASH_ALGORITHM = "SHA-256"
-        private const val BUFFER_SIZE = 65536
         private const val FTP_SERVER_ADDRESS = "data.graupnersj.com"
         private const val FILE_LIST = "file_list.php"
         private const val FILE_DOWN = "file_down.php"
 
         /** list available files for device */
         internal fun <T> listFiles(device: T, category: String): List<Firmware<T>> where T : Updatable<T>, T : Enum<T> {
-            return listFiles(device,category,device.productCode.toString())
+            return listFiles(device, category, device.productCode.toString())
         }
 
         /** list available files for device using a nonstandard product code*/
@@ -54,18 +51,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
     /** checksum of file */
     val hash: String by lazy {
         download()
-
-        val digest = MessageDigest.getInstance(HASH_ALGORITHM)
-        val buffer = ByteArray(BUFFER_SIZE)
-
-        file.inputStream().use { stream ->
-            while (true) {
-                val len = stream.read(buffer)
-                if (len >= 0) digest.update(buffer, 0, len) else break
-            }
-        }
-
-        BigInteger(1, digest.digest()).toString(16)
+        file.hash()
     }
 
     /** download file is not already cached */
@@ -77,3 +63,4 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
         }
     }
 }
+
