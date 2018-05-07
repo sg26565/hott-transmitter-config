@@ -27,10 +27,13 @@ class Mz32(val root: File) {
         task.updateMessage("Checking for latest online version")
 
         TransmitterType.forProductCode(productCode).getFirmware().forEach { firmware ->
-            if (firmware.name.endsWith(".bin") && updateFirmware)
+            if (firmware.name.endsWith(".bin") && updateFirmware) {
+                firmware.download()
                 updateFirmware(task, firmware.file)
-            else if (firmware.name.endsWith(".zip") && updateResources)
+            } else if (firmware.name.endsWith(".zip") && updateResources) {
+                firmware.download()
                 updateResources(task, firmware.file)
+            }
         }
 
         task.updateMessage("done")
