@@ -98,6 +98,7 @@ class Mz32Upgrader : View() {
             paddingAll = 5.0
 
             button("Online Update") {
+                disableWhen { comboBox.valueProperty().isNull }
                 action {
                     textArea.text = ""
 
