@@ -132,6 +132,8 @@ fun ZipFile.extract(zipEntry: ZipEntry, file: File): String {
     val md = MessageDigest.getInstance(HASH_ALGORITHM)
     val buffer = ByteArray(BUFFER_SIZE)
 
+    file.parentFile.mkdirs()
+
     getInputStream(zipEntry).use { inputStream ->
         file.outputStream().use { outputStream ->
             while (true) {
