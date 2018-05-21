@@ -283,6 +283,8 @@ class MainView : View() {
                     setOnAction { onTransmitterTypeChanged() }
                     items.addAll(*TransmitterType.values())
                     items.remove(TransmitterType.unknown)
+                    items.remove(TransmitterType.mz32)
+                    items.remove(TransmitterType.mz32beta)
                 }
             }
         }

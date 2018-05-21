@@ -1,3 +1,14 @@
+2018-05-21
+==========
+    VDFEditor-0.9.3.194
+    - remove mz-32 as it doesn't use VDF files
+    
+2018-05-08
+==========
+    mz32-Upgrader-0.9.3.30
+    - fix download from FTP server
+    - create missing directories on transmitter
+
 2018-05-07
 ==========
     mz32-Upgrader-0.9.3.27
@@ -6,7 +17,7 @@
 2018-04-24
 ==========
     VDFEditor-0.9.3.200
-	- increased read timeout for mz-24PRO
+	- increased bytesRead timeout for mz-24PRO
 
 2018-02-28
 ==========
