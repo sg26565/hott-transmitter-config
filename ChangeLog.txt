@@ -2,7 +2,7 @@
 ==========
     VDFEditor-0.9.3.194
     - remove mz-32 as it doesn't use VDF files
-    
+
 2018-05-08
 ==========
     mz32-Upgrader-0.9.3.30

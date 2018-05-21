@@ -26,7 +26,8 @@
 		<module>FirmwareUpgrader</module>
 		<module>mz32-Upgrader</module>
 		<module>test</module>
-	</modules>
+        <module>lzma-compress</module>
+    </modules>
 
 	<organization>
 		<name>Oliver Treichel</name>
@@ -276,6 +277,11 @@
                 <artifactId>HoTT-TTS</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
+			<dependency>
+				<groupId>de.treichels.hott</groupId>
+				<artifactId>mz32-Upgrader</artifactId>
+				<version>${project.parent.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
