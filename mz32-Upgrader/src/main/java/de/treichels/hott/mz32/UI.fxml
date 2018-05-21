@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
@@ -18,9 +19,24 @@
          <children>
             <VBox spacing="5.0">
                <children>
-                  <CheckBox mnemonicParsing="false" text="Re-index files on radio" />
-                  <CheckBox mnemonicParsing="false" selected="true" text="CheckBox" />
-                  <CheckBox mnemonicParsing="false" selected="true" text="CheckBox" />
+                  <CheckBox mnemonicParsing="false" text="Re-index files on radio">
+                     <tooltip>
+                        <Tooltip text="Re-calculate MD5 checksums of all files on the internal SD-card. This progress will take a long time." />
+                     </tooltip></CheckBox>
+                  <CheckBox mnemonicParsing="false" selected="true" text="Update resource files" />
+                  <VBox>
+                     <children>
+                        <CheckBox mnemonicParsing="false" selected="true" text="Replace custom help pages" />
+                        <CheckBox mnemonicParsing="false" selected="true" text="Replace custom voice files" />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </VBox>
+                  <CheckBox mnemonicParsing="false" selected="true" text="Update firmware" />
                </children>
             </VBox>
             <Region HBox.hgrow="SOMETIMES" />
@@ -29,7 +45,7 @@
                   <HBox alignment="CENTER_LEFT" spacing="5.0">
                      <children>
                         <Label text="Drive" />
-                        <ComboBox prefWidth="150.0" />
+                        <ComboBox prefWidth="275.0" promptText="E:\ (MZ-32 HoTT Radio [16008200] v1.017)" />
                      </children>
                   </HBox>
                </children>
@@ -46,7 +62,7 @@
          </font></TextArea>
       <ButtonBar>
         <buttons>
-          <Button mnemonicParsing="false" text="Update" />
+          <Button mnemonicParsing="false" text="Online Update" />
         </buttons>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
