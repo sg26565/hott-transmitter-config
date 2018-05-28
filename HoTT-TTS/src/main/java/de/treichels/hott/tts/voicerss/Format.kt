@@ -52,7 +52,7 @@ enum class Format(internal val voiceRSSEncoding: VoiceRSSEncoding, internal val 
             val sb = StringBuilder()
 
             if (voiceRSSEncoding == VoiceRSSEncoding.PCM)
-                sb.append(sampleRate.name.substring(1)).append(bits!!.name)
+                sb.append(sampleRate.name.substring(1)).append('_').append(bits!!.bits).append("bit")
             else
                 sb.append(voiceRSSEncoding.name).append(sampleRate.name)
 

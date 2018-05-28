@@ -2,6 +2,7 @@ package de.treichels.hott.tts.voicerss
 
 import com.sun.media.sound.WaveFileReader
 import de.treichels.hott.tts.*
+import java.io.BufferedInputStream
 import java.net.URL
 import java.net.URLEncoder
 import java.util.*
@@ -30,20 +31,15 @@ class VoiceRSSTTSProvider : Text2SpeechProvider() {
     override val ssmlSupported: Boolean = false
 
 
-    override fun installedVoices(): List<Voice> {
-        val languages = VoiceRssLanguage.values()
-        return List(languages.size) { i ->
-            val lang = languages[i]
-
-            Voice().apply {
-                enabled = true
-                age = Age.Adult // VoiceRSS has only adult voices
-                locale = Locale.forLanguageTag(lang.name.replace("_", "-"))
-                description = lang.toString()
-                gender = Gender.Female // VoiceRSS has only female voices
-                id = lang.key
-                name = locale.getDisplayLanguage(locale) // VoiceRSS does not provide a name for its voices - use the language instead
-            }
+    override fun installedVoices() = VoiceRssLanguage.values().map { lang ->
+        Voice().apply {
+            enabled = true
+            age = Age.Adult // VoiceRSS has only adult voices
+            locale = Locale.forLanguageTag(lang.name.replace("_", "-"))
+            description = lang.toString()
+            gender = Gender.Female // VoiceRSS has only female voices
+            id = lang.key
+            name = locale.getDisplayLanguage(locale) // VoiceRSS does not provide a name for its voices - use the language instead
         }
     }
 
@@ -52,9 +48,9 @@ class VoiceRSSTTSProvider : Text2SpeechProvider() {
 
         // test format - throws exception if not valid
         val format = Format.valueOf("pcm_${quality.sampleRate / 1000}khz_${quality.sampleSize}bit_${if (quality.channels == 1) "mono" else "stereo"}")
-        val key = if (apiKey.isNullOrBlank()) VOICE_RSS_DEFAULT_API_KEY else apiKey
+        val key = if (apiKey.isNullOrBlank()) VOICE_RSS_DEFAULT_API_KEY else apiKey!!
         val url = URL("http://api.voicerss.org/?key=$key&hl=${voice.id}&r=$speed&c=WAV&f=${format.key}&ssml=false&b64=false&src=${URLEncoder.encode(text, "UTF-8")}")
-        return WaveFileReader().getAudioInputStream(url.openConnection().getInputStream())
+        return WaveFileReader().getAudioInputStream(url)
     }
 }
 
