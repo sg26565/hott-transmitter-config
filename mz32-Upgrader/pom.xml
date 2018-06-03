@@ -147,5 +147,9 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jcl</artifactId>
         </dependency>
+        <dependency>
+            <groupId>SevenZip</groupId>
+            <artifactId>lzma-sdk</artifactId>
+        </dependency>
     </dependencies>
 </project>

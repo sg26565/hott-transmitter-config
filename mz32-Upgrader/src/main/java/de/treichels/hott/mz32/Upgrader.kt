@@ -3,16 +3,14 @@ package de.treichels.hott.mz32
 import de.treichels.hott.util.ExceptionDialog
 import javafx.concurrent.Task
 import javafx.geometry.Pos
-import javafx.scene.control.Button
-import javafx.scene.control.CheckBox
-import javafx.scene.control.ComboBox
-import javafx.scene.control.TextArea
+import javafx.scene.control.*
 import javafx.scene.layout.Priority
 import javafx.scene.text.Font
 import org.apache.logging.log4j.jcl.LogFactoryImpl
 import org.apache.logging.log4j.util.EnvironmentPropertySource
 import org.apache.logging.log4j.util.SystemPropertiesPropertySource
 import tornadofx.*
+import kotlin.math.sin
 
 private val ignored = listOf(LogFactoryImpl::class, EnvironmentPropertySource::class, SystemPropertiesPropertySource::class)
 
@@ -25,7 +23,7 @@ class Mz32UpgraderApp : App() {
     override val primaryView = Mz32Upgrader::class
 }
 
-class Mz32Upgrader : View() {
+class Mz32Upgrader : View("mz-32 Upgrader") {
     // Controls
     private var reindex by singleAssign<CheckBox>()
     private var updateResources by singleAssign<CheckBox>()
@@ -34,6 +32,7 @@ class Mz32Upgrader : View() {
     private var updateFirmware by singleAssign<CheckBox>()
     private var comboBox by singleAssign<ComboBox<Mz32>>()
     private var textArea by singleAssign<TextArea>()
+    private var progressBar by singleAssign<ProgressBar>()
     private var updateButton by singleAssign<Button>()
 
     // Background task
@@ -111,6 +110,7 @@ class Mz32Upgrader : View() {
                     label("Drive:")
                     comboBox = combobox {
                         prefWidth = 275.0
+                        setOnMousePressed { load() }
                     }
                 }
             }
@@ -125,14 +125,17 @@ class Mz32Upgrader : View() {
             vgrow = Priority.SOMETIMES
         }
 
+        progressBar = progressbar {
+            isVisible = false
+            prefWidthProperty().bind(textArea.widthProperty())
+        }
+
         buttonbar {
             paddingAll = 5.0
 
             updateButton = button("Online Update") {
                 disableWhen { comboBox.valueProperty().isNull }
                 action {
-                    textArea.text = ""
-
                     task = runAsync {
                         if (doReindex) {
                             mz32.scan(this)
@@ -140,9 +143,11 @@ class Mz32Upgrader : View() {
                         mz32.update(this, doUpdateResources, doReplaceHelpPages, doReplaceVoiceFiles, doUpdateFirware)
                     }.apply {
                         disableWhen { runningProperty() }
+                        progressBar.visibleWhen { runningProperty() }
+                        progressBar.progressProperty().bind(progressProperty())
                         messageProperty().addListener { _, _, newValue ->
-                            if (textArea.text != "") textArea.appendText("\n")
-                            textArea.appendText(newValue)
+                            textArea.text = newValue
+                            textArea.scrollTop = Double.MAX_VALUE
                         }
                     }
                 }
@@ -150,12 +155,18 @@ class Mz32Upgrader : View() {
         }
     }
 
+    private fun ComboBox<Mz32>.load() {
+        items.clear()
+        items.addAll(Mz32.find())
+        value = items.firstOrNull()
+    }
+
     init {
         setStageIcon(iconImage)
-        title = "mz-32 Upgrader"
 
-        comboBox.items.addAll(Mz32.find())
-        comboBox.value = comboBox.items.firstOrNull()
+        runLater {
+            comboBox.load()
+        }
 
         primaryStage.setOnCloseRequest {
             task?.cancel()
