@@ -49,12 +49,12 @@ enum class ReceiverType(override val productCode: Int = 0, val orderNo: String =
         var result = emptyList<Firmware<ReceiverType>>()
 
         if (productCode != 0) {
-            result += Firmware.listFiles(this, "HoTT_Receiver")
-            result += Firmware.listFiles(this, "HoTT_Receiver", (productCode % 10000).toString())
+            result += Firmware.list(this, "HoTT_Receiver")
+            result += Firmware.list(this, "HoTT_Receiver", (productCode % 10000).toString())
         }
 
         if (id != 0) {
-            result += Firmware.listFiles(this, "Server Updates", Integer.toHexString(id).toUpperCase())
+            result += Firmware.list(this, "Server Updates", Integer.toHexString(id).toUpperCase())
         }
 
         return result

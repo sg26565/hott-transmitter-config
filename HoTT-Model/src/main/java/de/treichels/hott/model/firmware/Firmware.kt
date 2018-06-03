@@ -6,6 +6,7 @@ import org.apache.http.message.BasicNameValuePair
 import tornadofx.*
 import java.io.File
 import java.io.IOException
+import java.io.InputStream
 
 /**
  * Uility class to mange downloads from Graupner's official FTP server.
@@ -17,23 +18,60 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
         private const val FILE_DOWN = "file_down.php"
 
         /** list available files for device */
-        internal fun <T> listFiles(device: T, category: String): List<Firmware<T>> where T : Updatable<T>, T : Enum<T> {
-            return listFiles(device, category, device.productCode.toString())
-        }
+        internal fun <T> list(device: T, category: String): List<Firmware<T>> where T : Updatable<T>, T : Enum<T> = list(device, category, device.productCode.toString())
 
         /** list available files for device using a nonstandard product code*/
-        internal fun <T> listFiles(device: T, category: String, productCode: String): List<Firmware<T>> where T : Updatable<T>, T : Enum<T> {
+        internal fun <T> list(device: T, category: String, productCode: String): List<Firmware<T>> where T : Updatable<T>, T : Enum<T> {
             val path = "/Firmware/$category/$productCode/"
-            val postParam = BasicNameValuePair("path", path)
 
-            return Request.Post("http://$FTP_SERVER_ADDRESS/$FILE_LIST").bodyForm(postParam).execute()
-                    .returnContent().asStream().reader().readLines().map { line ->
-                        val parts = line.split("|")
-                        val name = parts[0]
-                        val size = parts[1].toLong()
+            return list(path).map { (name, size) -> Firmware(device, path, name, size) }
+        }
 
-                        Firmware(device, path, name, size)
+        /** get a list of files from the FTP server with sizes. Server returns a list with <name>|<size> rows*/
+        fun list(path: String): List<Pair<String, Long>> = Request.Post("http://$FTP_SERVER_ADDRESS/$FILE_LIST").bodyForm(BasicNameValuePair("path", path)).execute().handleResponse { response ->
+            response.statusLine.apply { if (statusCode != 200) throw IOException(toString()) }
+
+            response.entity.content.reader().readLines().map { line ->
+                val parts = line.split("|")
+                val name = parts[0]
+                val size = parts[1].toLong()
+
+                Pair(name, size)
+            }
+        }
+
+        /** download a file from the FTP server */
+        fun <T> download(path: String, func: (InputStream) -> T): T = Request.Post("http://$FTP_SERVER_ADDRESS/$FILE_DOWN").bodyForm(BasicNameValuePair("file", path)).execute().handleResponse { response ->
+            response.statusLine.apply { if (statusCode != 200) throw IOException(toString()) }
+
+            response.entity.content.use(func)
+        }
+
+        fun download(task: FXTask<*>? = null, path: String, size: Long = -1L, file: File) {
+            val buffer = ByteArray(1024 * 1024)
+            var bytesRead = 0L
+
+            // download from FTP server
+            download(path) { inputStream ->
+                file.outputStream().use { outputStream ->
+                    while (task?.isCancelled != true) {
+                        val len = inputStream.read(buffer)
+
+                        if (len < 0) break
+
+                        bytesRead += len
+                        outputStream.write(buffer, 0, len)
+
+                        task?.updateProgress(bytesRead, size)
                     }
+                }
+            }
+
+            if (task?.isCancelled == true)
+                throw InterruptedException()
+
+            if (size != -1L && bytesRead != size)
+                throw IOException("Size mismatch: expected $size, but got $bytesRead.")
         }
     }
 
@@ -42,71 +80,30 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
     }
 
     /** root directory of local cache */
-    private val parentDir = File("${System.getProperty("user.home")}/.java/cache/HoTT/firmware/${device.name}")
+    private val cacheDir = File("${System.getProperty("user.home")}/.java/cache/HoTT/firmware/${device.name}")
 
     /** local cached file */
-    val file = File(parentDir, name)
+    val file = File(cacheDir, name)
 
     val isCached
         get() = file.exists() && file.length() == size
 
     /** checksum of file */
+    @Suppress("unused")
     val hash: String by lazy {
         download().get().hash()
     }
 
     /** download file if not already cached and report progress to FXTask object */
     fun download(task: FXTask<*>? = null): File {
-        if (!isCached) {
-            val start = System.currentTimeMillis()
-            val totalKb = size / 1024
-
-            parentDir.mkdirs()
-
-            // download from FTP server
-            val request = Request.Post("http://$FTP_SERVER_ADDRESS/$FILE_DOWN").bodyForm(BasicNameValuePair("file", "$path$name"))
-            request.execute().handleResponse { response ->
-                val status = response.statusLine
-
-                if (status.statusCode != 200)
-                    throw IOException(status.toString())
-
-                val buffer = ByteArray(1024 * 1024)
-                var bytesRead = 0L
-
-                // copy response data to file
-                response.entity.content.use { inputStream ->
-                    file.outputStream().use { outputStream ->
-                        while (true) {
-                            val len = inputStream.read(buffer)
-
-                            if (len < 0) break
-
-                            bytesRead += len
-                            outputStream.write(buffer, 0, len)
-
-                            if (task != null) {
-                                val elapsed = (System.currentTimeMillis() - start) / 1000
-                                val elapsedStr = if (elapsed < 60) "$elapsed s" else "${elapsed / 60} min"
-                                val doneKb = bytesRead / 1024
-                                val progress = doneKb * 100 / totalKb
-                                val rate = doneKb / elapsed
-                                val remaining = (totalKb - doneKb) / rate
-                                val remainStr = if (remaining < 60) "$remaining s" else "${remaining / 60} min"
-                                task.updateProgress(bytesRead, size)
-                                task.updateMessage("\tdownloading $progress% - $doneKb/$totalKb kb @ $rate kb/s - elapsed $elapsedStr - remaining $remainStr")
-                            }
-                        }
-                    }
-                }
-
-                if (bytesRead != size)
-                    throw IOException("Size mismatch: expected $size, but got $bytesRead.")
-            }
+        if (!isCached && task?.isCancelled != true) {
+            cacheDir.mkdirs()
+            download(task, "$path$name", size, file)
         }
 
         return file
     }
+
 
     /** download file asynchronously in background */
     fun download() = runAsync { download(this) }

@@ -11,6 +11,7 @@
  */
 package de.treichels.hott.util
 
+import tornadofx.*
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -128,19 +129,23 @@ fun InputStream.hash(): String {
 }
 
 // extract a zip entry to a file and return its hash
-fun ZipFile.extract(zipEntry: ZipEntry, file: File): String {
+fun ZipFile.extract(task: FXTask<*>? = null, zipEntry: ZipEntry, file: File): String {
     val md = MessageDigest.getInstance(HASH_ALGORITHM)
     val buffer = ByteArray(BUFFER_SIZE)
 
     file.parentFile.mkdirs()
+
+    var bytesRead = 0L
 
     getInputStream(zipEntry).use { inputStream ->
         file.outputStream().use { outputStream ->
             while (true) {
                 val len = inputStream.read(buffer)
                 if (len >= 0) {
+                    bytesRead += len
                     md.update(buffer, 0, len)
                     outputStream.write(buffer, 0, len)
+                    task?.updateProgress(bytesRead, zipEntry.size)
                 } else break
             }
         }
@@ -150,4 +155,6 @@ fun ZipFile.extract(zipEntry: ZipEntry, file: File): String {
 
     return md.getHash()
 }
+
+fun ZipFile.extract(zipEntry: ZipEntry, file: File) = extract(null, zipEntry, file)
 
