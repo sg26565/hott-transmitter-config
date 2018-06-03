@@ -2,6 +2,7 @@ package de.treichels.hott.mz32
 
 import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.model.firmware.Firmware
+import de.treichels.hott.util.copyTo
 import de.treichels.hott.util.extract
 import de.treichels.hott.util.hash
 import de.treichels.lzma.canCompress
@@ -192,7 +193,7 @@ class Mz32(private val root: File) {
 
         if (!targetFile.exists() || targetFile.length() != firmwareFile.length() || expectedHash != md5[path]) {
             task.print("\tinstalling $targetFile ... ")
-            firmwareFile.copyTo(targetFile, overwrite = true)
+            firmwareFile.copyTo(task, targetFile, overwrite = true)
             md5[path] = expectedHash
             task.print("ok\n")
         }
