@@ -138,7 +138,7 @@ class Mz32(private val root: File) {
         val resourceFile = firmware.file
         task.print("\tUpdating resources from file ${resourceFile.name}\n")
 
-        val zipFile = ZipFile(resourceFile)
+        val zipFile = ZipFile(resourceFile, Charsets.ISO_8859_1)
         zipFile.stream().filter { !it.isDirectory }.forEach { entry ->
             if (!task.isCancelled) {
                 val targetFile = File(root, entry.name)
@@ -286,7 +286,7 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
                 try {
                     val (hash, size, path) = line.split('|')
                     this[path] = Hash(size.toLong(), hash)
-                } catch (e:Exception) {
+                } catch (e: Exception) {
                     // ignore malformed lines
                 }
             }
