@@ -28,35 +28,34 @@ private class LzmaCompressTask(private val zipFile: ZipFile, private val target:
         val start = System.currentTimeMillis()
 
         try {
-        md5Sum.clear()
-        updateMessage("Deleting target directory ...")
-        target.deleteRecursively()
+            md5Sum.clear()
+            updateMessage("Deleting target directory ...")
+            target.deleteRecursively()
             target.mkdirs()
 
-        val entries = zipFile.stream().filter { !it.isDirectory }.toList()
-        val total = entries.size.toLong()
-        val totalUncompressedSize = AtomicLong(0L)
-        val totalCompressedSize = AtomicLong(0L)
-        val count = AtomicLong(0L)
+            val entries = zipFile.stream().filter { !it.isDirectory }.toList()
+            val total = entries.size.toLong()
+            val totalUncompressedSize = AtomicLong(0L)
+            val totalCompressedSize = AtomicLong(0L)
+            val count = AtomicLong(0L)
 
             entries.stream().parallel().forEach { zipEntry ->
                 if (!isCancelled) {
                     val size = zipEntry.size
                     val file: File = if (canCompress(zipEntry.name)) {
-                        // extract files that cannot be compressed further
-                        File(target, zipEntry.name).apply {
-                            parentFile.mkdirs()
-                            val hash = zipFile.extract(zipEntry, this)
-                            md5Sum["/${zipEntry.name}"] = Hash(size, hash)
-                        }
-
-                    } else {
-                    // compress all other files
+                        // compress all other files
                         File(target, "${zipEntry.name}.lzma").apply {
                             parentFile.mkdirs()
                             val hash = zipFile.hash(zipEntry)
                             md5Sum["/${zipEntry.name}"] = Hash(size, hash)
                             compress(zipFile.getInputStream(zipEntry), outputStream())
+                        }
+                    } else {
+                        // extract files that cannot be compressed further
+                        File(target, zipEntry.name).apply {
+                            parentFile.mkdirs()
+                            val hash = zipFile.extract(zipEntry, this)
+                            md5Sum["/${zipEntry.name}"] = Hash(size, hash)
                         }
                     }
 
