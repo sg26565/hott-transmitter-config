@@ -27,6 +27,7 @@ private class LzmaCompressTask(private val zipFile: ZipFile, private val target:
     override fun call() {
         val start = System.currentTimeMillis()
 
+        try {
         md5Sum.clear()
         updateMessage("Deleting target directory ...")
         target.deleteRecursively()
@@ -37,7 +38,6 @@ private class LzmaCompressTask(private val zipFile: ZipFile, private val target:
         val totalCompressedSize = AtomicLong(0L)
         val count = AtomicLong(0L)
 
-        try {
             entries.stream().parallel().forEach { zipEntry ->
                 if (!isCancelled) {
                     val size = zipEntry.size
