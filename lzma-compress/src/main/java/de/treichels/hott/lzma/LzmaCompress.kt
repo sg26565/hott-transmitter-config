@@ -31,6 +31,7 @@ private class LzmaCompressTask(private val zipFile: ZipFile, private val target:
         md5Sum.clear()
         updateMessage("Deleting target directory ...")
         target.deleteRecursively()
+            target.mkdirs()
 
         val entries = zipFile.stream().filter { !it.isDirectory }.toList()
         val total = entries.size.toLong()
