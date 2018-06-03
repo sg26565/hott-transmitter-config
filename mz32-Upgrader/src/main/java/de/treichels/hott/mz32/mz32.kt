@@ -9,12 +9,10 @@ import de.treichels.lzma.canCompress
 import de.treichels.lzma.uncompress
 import tornadofx.*
 import java.io.File
-import java.io.InputStream
-import java.io.OutputStream
-import java.util.*
+import java.util.logging.Logger
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
-
+import kotlin.streams.toList
 
 class Mz32(private val root: File) {
     private val cfgFile = CfgFile.load(File(root, GRAUPNER_DISK_CFG))
@@ -35,23 +33,51 @@ class Mz32(private val root: File) {
 
     private val remotePath = "/Firmware/${TransmitterType.category}/$productCode"
 
+    private inner class Path(p: String) {
+        val value = if (p.startsWith("/")) p else "/$p"
+        val type = PathType.valueOf(value.split("/")[1])
+        val language by lazy {
+            Language.valueOf(value.split("/")[2])
+        }
+        val targetFile = File(root, value).apply { parentFile.mkdirs() }
+        var hash: Hash?
+            get() = md5[value]
+            set(hash) {
+                if (hash != null) md5[value] = hash
+            }
+
+        fun isHelp() = type == PathType.Help
+        fun isVoice() = type == PathType.Voice
+        fun isUserVoice() = isVoice() && targetFile.parentFile.name == "10_User"
+    }
+
+
     fun scan(task: FXTask<*>) {
         md5.clear()
         md5.scan(task)
         md5.save()
     }
 
-    fun update(task: FXTask<*>, updateResources: Boolean = true, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true, updateFirmware: Boolean = true) {
+    fun update(task: FXTask<*>, languages: List<Language>, updateResources: Boolean = true, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true, updateFirmware: Boolean = true) {
         if (task.isCancelled) return
 
         task.print("Checking for latest online versions ...\n")
 
         md5.load()
         TransmitterType.forProductCode(productCode).getFirmware().forEach { firmware ->
+
             if (firmware.name.endsWith(".bin") && updateFirmware) {
+                //println("update: firmware file ${firmware.name}")
                 updateFirmware(task, firmware)
             } else if (firmware.name.endsWith(".zip") && updateResources) {
-                updateResources(task, firmware, replaceHelpPages, replaceVoiceFiles)
+                //println("update: resource file ${firmware.name}")
+                updateResources(task, languages, firmware, replaceHelpPages, replaceVoiceFiles)
+
+                // delete VoiceList.lst in each language folder
+                if (replaceVoiceFiles) languages.map { "/Voice/${it.name}/VoiceList.lst" }.forEach {
+                    //println("update: deleting $it")
+                    File(root, it).delete()
+                }
             }
         }
         md5.save()
@@ -59,12 +85,15 @@ class Mz32(private val root: File) {
         task.print("\nall done")
     }
 
-    private fun updateResources(task: FXTask<*>, firmware: Firmware<TransmitterType>, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true) {
+    private fun updateResources(task: FXTask<*>, languages: List<Language>, firmware: Firmware<TransmitterType>, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true) {
         if (task.isCancelled) return
 
         task.print("\nUpdating resources ...\n")
 
         val remoteRoot = "$remotePath/${firmware.name.substringBeforeLast(".zip")}.lzma"
+        //println("updateResources: remoteRoot = $remoteRoot")
+
+        task.updateProgress(0.0, 1.0)
 
         try {
             // process remote md5sum.txt
@@ -73,56 +102,73 @@ class Mz32(private val root: File) {
                 Firmware.download("$remoteRoot//md5sum.txt") { load(it) }
                 task.print("ok\n")
 
-                entries.stream().forEach { entry ->
+                entries.forEachIndexed { index, entry ->
                     if (!task.isCancelled) {
-                        val path = entry.key
+                        val path = Path(entry.key)
                         val hash = entry.value
-                        val targetFile = File(root, path).apply { parentFile.mkdirs() }
 
                         when {
-                            path.startsWith("/Help") -> {
-                                if (replaceHelpPages) updateFileOnline(targetFile, task, remoteRoot, path, hash)
-                            }
-                            path.startsWith("/Voice") -> {
-                                if (replaceVoiceFiles) updateFileOnline(targetFile, task, remoteRoot, path, hash)
-                            }
-                            else -> updateFileOnline(targetFile, task, remoteRoot, path, hash)
+                            path.isHelp() -> if (replaceHelpPages && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
+                            path.isVoice() -> if (replaceVoiceFiles && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
+                            else -> updateFileOnline(task, remoteRoot, path, hash)
                         }
                     }
+
+                    task.updateProgress(index.toLong(), size.toLong())
                 }
             }
 
+            md5.save()
             task.print("done\n")
         } catch (e: Exception) {
             // fall back to resource file download
             task.print("failed: $e\n")
-            updateResourcesDownload(task, firmware, replaceHelpPages, replaceVoiceFiles)
+            updateResourcesDownload(task, firmware, languages, replaceHelpPages, replaceVoiceFiles)
         }
     }
 
-    private fun updateFileOnline(targetFile: File, task: FXTask<*>, root: String, path: String, hash: Hash) {
+    private fun updateFileOnline(task: FXTask<*>, root: String, path: Path, hash: Hash) {
         if (task.isCancelled) return
 
-        if (!targetFile.exists() || targetFile.length() != hash.size || hash != md5[path]) {
-            task.print("\tDownloading $path from server ... ")
+        val targetFile = path.targetFile
 
+        //println("remote: $targetFile, size=${hash.size}, hash=${hash.hash}")
+        //println("local: ${if (targetFile.exists()) targetFile else "<missing>"}, size=${targetFile.length()}, hash=${path.hash}")
+
+        if (!targetFile.exists() || targetFile.length() != hash.size || hash != path.hash) {
+            task.print("\tDownloading ${path.value} from server ... ")
             try {
                 if (canCompress(targetFile.extension))
-                    Firmware.download("$root$path.lzma") { inputStream ->
+                    Firmware.download("$root${path.value}.lzma") { inputStream ->
                         uncompress(inputStream, targetFile.outputStream())
                     }
                 else
-                    Firmware.download(task, "$root$path", file = targetFile)
+                    Firmware.download(task, "$root${path.value}", file = targetFile)
 
-                md5[path] = hash
+                path.hash = hash
                 task.print("ok\n")
+
+                cleanup(task, targetFile, path)
             } catch (e: Exception) {
                 task.print("failed: $e\n")
             }
         }
     }
 
-    private fun updateResourcesDownload(task: FXTask<*>, firmware: Firmware<TransmitterType>, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true) {
+    private fun cleanup(task: FXTask<*>, targetFile: File, path: Path) {
+        // cleanup
+        val number = targetFile.number()
+        if (path.isHelp() || path.isVoice() && !path.isUserVoice()) {
+            targetFile.parentFile.listFiles().filter { it != targetFile && it.number() == number }.forEach {
+                task.print("\tremoving obsolete file ${it.absolutePath}")
+                it.delete()
+            }
+        }
+    }
+
+    private fun File.number() = name.substring(0, 3).toInt()
+
+    private fun updateResourcesDownload(task: FXTask<*>, firmware: Firmware<TransmitterType>, languages: List<Language>, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true) {
         if (task.isCancelled) return
 
         if (!firmware.isCached) {
@@ -139,34 +185,37 @@ class Mz32(private val root: File) {
         task.print("\tUpdating resources from file ${resourceFile.name}\n")
 
         val zipFile = ZipFile(resourceFile, Charsets.ISO_8859_1)
-        zipFile.stream().filter { !it.isDirectory }.forEach { entry ->
+        val entries = zipFile.stream().filter { !it.isDirectory }.toList()
+
+        entries.forEachIndexed { index, entry ->
             if (!task.isCancelled) {
-                val targetFile = File(root, entry.name)
-                val path = "/${entry.name}"
+                val path = Path(entry.name)
 
                 when {
-                    path.startsWith("/Help") -> {
-                        if (replaceHelpPages) updateFileFromZip(targetFile, entry, task, path, zipFile)
-                    }
-                    path.startsWith("/Voice") -> {
-                        if (replaceVoiceFiles) updateFileFromZip(targetFile, entry, task, path, zipFile)
-                    }
-                    else -> updateFileFromZip(targetFile, entry, task, path, zipFile)
+                    path.isHelp() -> if (replaceHelpPages && languages.contains(path.language)) updateFileFromZip(task, entry, zipFile, path)
+                    path.isVoice() -> if (replaceVoiceFiles && languages.contains(path.language)) updateFileFromZip(task, entry, zipFile, path)
+                    else -> updateFileFromZip(task, entry, zipFile, path)
                 }
             }
+
+            task.updateProgress(index.toLong(), entries.size.toLong())
         }
 
+        md5.save()
         task.print("done\n")
     }
 
-    private fun updateFileFromZip(targetFile: File, entry: ZipEntry, task: FXTask<*>, path: String, zipFile: ZipFile) {
+    private fun updateFileFromZip(task: FXTask<*>, entry: ZipEntry, zipFile: ZipFile, path: Path) {
         if (task.isCancelled) return
 
         val expectedSize = entry.size
-        if (!targetFile.exists() || targetFile.length() != expectedSize || Hash(expectedSize, zipFile.hash(entry)) != md5[path]) {
+        val targetFile = path.targetFile
+
+        if (!targetFile.exists() || targetFile.length() != expectedSize || Hash(expectedSize, zipFile.hash(entry)) != path.hash) {
             task.print("\tinstalling $targetFile ... ")
-            md5[path] = Hash(expectedSize, zipFile.extract(task, entry, targetFile))
+            path.hash = Hash(expectedSize, zipFile.extract(task, entry, targetFile))
             task.print("ok\n")
+            cleanup(task, targetFile, path)
         }
     }
 
@@ -188,16 +237,16 @@ class Mz32(private val root: File) {
         val firmwareFile = firmware.file
         val targetDir = File(root, updatePath)
         val targetFile = File(targetDir, firmwareFile.name)
-        val path = "$updatePath/${firmwareFile.name}"
-        val expectedHash = Hash(firmware.size, firmwareFile.hash())
+        val path = Path("$updatePath/${firmwareFile.name}")
 
-        if (!targetFile.exists() || targetFile.length() != firmwareFile.length() || expectedHash != md5[path]) {
+        if (!targetFile.exists() || targetFile.length() != firmwareFile.length() || firmware.hash != path.hash?.hash) {
             task.print("\tinstalling $targetFile ... ")
             firmwareFile.copyTo(task, targetFile, overwrite = true)
-            md5[path] = expectedHash
+            path.hash = Hash(firmwareFile.length(), firmwareFile.hash())
             task.print("ok\n")
         }
 
+        md5.save()
         task.print("done\n")
     }
 
@@ -210,7 +259,9 @@ class Mz32(private val root: File) {
 
         fun find(): List<Mz32> = File.listRoots().mapNotNull {
             try {
-                Mz32(it)
+                Mz32(it).apply {
+                    //println("found mz-32 transmitter on $it")
+                }
             } catch (e: Exception) {
                 null
             }
@@ -218,117 +269,7 @@ class Mz32(private val root: File) {
     }
 }
 
-class Hash(val size: Long, val hash: String) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Hash
-
-        if (size != other.size) return false
-        if (hash != other.hash) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = size.hashCode()
-        result = 31 * result + hash.hashCode()
-        return result
-    }
-
-    override fun toString(): String {
-        return "Hash(size=$size, hash='$hash')"
-    }
-}
-
-class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
-    constructor() : this(null)
-
-    private val md5Sum = if (root != null) File(root, MD5_FILE_NAME) else null
-
-    fun scan(task: FXTask<*>) {
-        if (task.isCancelled || root == null) return
-
-        task.print("Calculating checksums for all files on $root\n")
-
-        scan(task, root, root)
-    }
-
-    private fun scan(task: FXTask<*>, dir: File, root: File) {
-        dir.listFiles().forEach { file ->
-            if (task.isCancelled) return
-
-            if (file.isDirectory) {
-                scan(task, file, root)
-            } else {
-                val path = "/" + file.relativeTo(root).path.replace(File.separatorChar, '/')
-                val hash = file.hash()
-                this[path] = Hash(file.length(), hash)
-                task.print("hash=\t$hash\tsize=${file.length()}\tpath=$path\n")
-            }
-        }
-    }
-
-    fun load() {
-        if (md5Sum != null) load(md5Sum)
-    }
-
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun load(file: File) {
-        clear()
-        if (file.exists() && file.canRead()) load(file.inputStream())
-    }
-
-    fun load(inputStream: InputStream) {
-        inputStream.reader().use {
-            it.forEachLine { line ->
-                try {
-                    val (hash, size, path) = line.split('|')
-                    this[path] = Hash(size.toLong(), hash)
-                } catch (e: Exception) {
-                    // ignore malformed lines
-                }
-            }
-        }
-    }
-
-    fun save() {
-        if (md5Sum != null) save(md5Sum)
-    }
-
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun save(file: File) = save(file.outputStream())
-
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun save(outputStream: OutputStream) {
-        outputStream.writer().use {
-            forEach { path, hash -> it.write("${hash.hash}|${hash.size}|$path\n") }
-        }
-    }
-
-    companion object {
-        private const val MD5_FILE_NAME = "/md5sum.txt"
-    }
-}
-
-class CfgFile : HashMap<String, String>() {
-    companion object {
-        private const val delimiter = " : "
-
-        fun load(file: File) = CfgFile().apply {
-            file.forEachLine { line ->
-                if (line.contains(delimiter)) {
-                    val name = line.substringBefore(delimiter).trim()
-                    val value = line.substringAfter(delimiter).trim()
-                    this[name] = value
-                }
-            }
-        }
-    }
-}
-
-fun FXTask<*>.print(newMessage: String) {
+internal fun FXTask<*>.print(newMessage: String) {
     runLater {
         updateMessage(message + newMessage)
     }

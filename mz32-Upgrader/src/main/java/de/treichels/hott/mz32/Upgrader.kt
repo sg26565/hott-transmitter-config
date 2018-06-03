@@ -2,16 +2,17 @@ package de.treichels.hott.mz32
 
 import de.treichels.hott.util.ExceptionDialog
 import javafx.concurrent.Task
-import javafx.geometry.Pos
 import javafx.scene.control.*
 import javafx.scene.layout.Priority
+import javafx.scene.layout.VBox
 import javafx.scene.text.Font
 import org.apache.logging.log4j.jcl.LogFactoryImpl
 import org.apache.logging.log4j.util.EnvironmentPropertySource
 import org.apache.logging.log4j.util.SystemPropertiesPropertySource
+import org.controlsfx.control.CheckComboBox
 import tornadofx.*
-import kotlin.math.sin
 
+@Suppress("unused")
 private val ignored = listOf(LogFactoryImpl::class, EnvironmentPropertySource::class, SystemPropertiesPropertySource::class)
 
 fun main(vararg args: String) {
@@ -25,9 +26,11 @@ class Mz32UpgraderApp : App() {
 
 class Mz32Upgrader : View("mz-32 Upgrader") {
     // Controls
+    private var options by singleAssign<VBox>()
     private var reindex by singleAssign<CheckBox>()
     private var updateResources by singleAssign<CheckBox>()
     private var replaceHelpPages by singleAssign<CheckBox>()
+    private var language by singleAssign<CheckComboBox<Language>>()
     private var replaceVoiceFiles by singleAssign<CheckBox>()
     private var updateFirmware by singleAssign<CheckBox>()
     private var comboBox by singleAssign<ComboBox<Mz32>>()
@@ -54,6 +57,8 @@ class Mz32Upgrader : View("mz-32 Upgrader") {
         get() = updateFirmware.isSelected
     private val mz32
         get() = comboBox.value
+    private val selectedLanguages: List<Language>
+        get() = language.checkModel.checkedItems
 
     // UI
     override val root = vbox {
@@ -65,31 +70,37 @@ class Mz32Upgrader : View("mz-32 Upgrader") {
             spacing = 5.0
             paddingAll = 5.0
 
-            vbox {
-                spacing = 5.0
+            options = vbox {
+                spacing = 10.0
 
                 reindex = checkbox("Re-index files on radio") {
                     tooltip = tooltip("Re-calculate the MD5 checksums of all files on the internal SD-card of the radio. This process will take a long time.")
                 }
 
-                updateResources = checkbox("Update resource files") {
-                    isSelected = true
-                    tooltip = tooltip("Update auxilary resource files like help pages, voice files and utilities.")
-                }
-
                 vbox {
-                    padding = insets(left = 20.0)
-
-                    replaceHelpPages = checkbox("Replace custom help pages.") {
-                        enableWhen { updateResources.selectedProperty() }
+                    updateResources = checkbox("Update resource files") {
                         isSelected = true
-                        tooltip = tooltip("Updates help pages with the latest online version. WARNING! This will replace all custom help pages.")
+                        tooltip = tooltip("Update auxilary resource files like help pages, voice files and utilities.")
+
                     }
 
-                    replaceVoiceFiles = checkbox("Replace custom voice files.") {
+                    vbox {
                         enableWhen { updateResources.selectedProperty() }
-                        isSelected = true
-                        tooltip = tooltip("Updates voice files with the latest online version. WARNING! This will replace all custom voice files.")
+                        padding = insets(left = 20.0)
+
+                        replaceHelpPages = checkbox("Update help pages.") {
+                            preferences { isSelected = get("replaceHelpPages", "true")!!.toBoolean() }
+                            action { preferences { put("replaceHelpPages", isSelected.toString()) } }
+
+                            tooltip = tooltip("Updates help pages with the latest online version. WARNING! This will replace all custom help pages.")
+                        }
+
+                        replaceVoiceFiles = checkbox("Update voice files.") {
+                            preferences { isSelected = get("replaceVoiceFiles", "true")!!.toBoolean() }
+                            action { preferences { put("replaceVoiceFiles", isSelected.toString()) } }
+
+                            tooltip = tooltip("Updates voice files with the latest online version. WARNING! This will replace all custom voice files.")
+                        }
                     }
                 }
 
@@ -104,13 +115,33 @@ class Mz32Upgrader : View("mz-32 Upgrader") {
             }
 
             vbox {
-                hbox {
-                    alignment = Pos.CENTER_RIGHT
-                    spacing = 5.0
+                spacing = 10.0
+
+                vbox {
                     label("Drive:")
                     comboBox = combobox {
                         prefWidth = 275.0
                         setOnMousePressed { load() }
+                    }
+                }
+
+                vbox {
+                    enableWhen { updateResources.selectedProperty() }
+
+                    label("Select Languages:")
+                    language = opcr(this, CheckComboBox()) {
+                        items.addAll(Language.values())
+
+                        preferences {
+                            get("languages", "en").split(',').forEach { lang ->
+                                checkModel.check(Language.valueOf(lang))
+                            }
+                        }
+
+                        checkModel.checkedItems.onChange { selected ->
+                            preferences { put("languages", selected.list.joinToString(",") { it.name }) }
+                            layout()
+                        }
                     }
                 }
             }
@@ -140,10 +171,13 @@ class Mz32Upgrader : View("mz-32 Upgrader") {
                         if (doReindex) {
                             mz32.scan(this)
                         }
-                        mz32.update(this, doUpdateResources, doReplaceHelpPages, doReplaceVoiceFiles, doUpdateFirware)
+                        mz32.update(this, selectedLanguages, doUpdateResources, doReplaceHelpPages, doReplaceVoiceFiles, doUpdateFirware)
                     }.apply {
                         disableWhen { runningProperty() }
-                        progressBar.visibleWhen { runningProperty() }
+                        comboBox.disableWhen { runningProperty() }
+                        options.disableWhen { runningProperty() }
+                        language.disableWhen { runningProperty() }
+                        progressBar.visibleWhen {  runningProperty() }
                         progressBar.progressProperty().bind(progressProperty())
                         messageProperty().addListener { _, _, newValue ->
                             textArea.text = newValue

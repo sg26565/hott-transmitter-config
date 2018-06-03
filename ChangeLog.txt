@@ -1,3 +1,14 @@
+2018-06-03
+==========
+    mz32-Upgrader-0.9.3.38
+    - download only required (compressed) files from FTP server
+
+2018-05-28
+==========
+    HoTT-TTS-0.9.3.33
+    VDFEditor-0.9.3.207
+    - fixed error in VoiceRSS Text2Speech provider
+
 2018-05-21
 ==========
     VDFEditor-0.9.3.194
