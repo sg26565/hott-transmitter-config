@@ -47,14 +47,14 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
             response.entity.content.use(func)
         }
 
-        fun download(task: FXTask<*>? = null, path: String, size: Long = -1L, file: File) {
+        fun download(task: FXTask<*>, path: String, size: Long = -1L, file: File) {
             val buffer = ByteArray(1024 * 1024)
             var bytesRead = 0L
 
             // download from FTP server
             download(path) { inputStream ->
                 file.outputStream().use { outputStream ->
-                    while (task?.isCancelled != true) {
+                    while (!task.isCancelled) {
                         val len = inputStream.read(buffer)
 
                         if (len < 0) break
@@ -62,12 +62,12 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
                         bytesRead += len
                         outputStream.write(buffer, 0, len)
 
-                        task?.updateProgress(bytesRead, size)
+                        task.updateProgress(bytesRead, size)
                     }
                 }
             }
 
-            if (task?.isCancelled == true)
+            if (task.isCancelled)
                 throw InterruptedException()
 
             if (size != -1L && bytesRead != size)
@@ -95,8 +95,8 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
     }
 
     /** download file if not already cached and report progress to FXTask object */
-    fun download(task: FXTask<*>? = null): File {
-        if (!isCached && task?.isCancelled != true) {
+    fun download(task: FXTask<*>): File {
+        if (!isCached && !task.isCancelled) {
             cacheDir.mkdirs()
             download(task, "$path$name", size, file)
         }
