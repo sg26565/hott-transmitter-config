@@ -67,15 +67,12 @@ class Mz32(private val root: File) {
         TransmitterType.forProductCode(productCode).getFirmware().forEach { firmware ->
 
             if (firmware.name.endsWith(".bin") && updateFirmware) {
-                //println("update: firmware file ${firmware.name}")
                 updateFirmware(task, firmware)
             } else if (firmware.name.endsWith(".zip") && updateResources) {
-                //println("update: resource file ${firmware.name}")
                 updateResources(task, languages, firmware, replaceHelpPages, replaceVoiceFiles)
 
                 // delete VoiceList.lst in each language folder
                 if (replaceVoiceFiles) languages.map { "/Voice/${it.name}/VoiceList.lst" }.forEach {
-                    //println("update: deleting $it")
                     File(root, it).delete()
                 }
             }
@@ -131,9 +128,6 @@ class Mz32(private val root: File) {
         if (task.isCancelled) return
 
         val targetFile = path.targetFile
-
-        //println("remote: $targetFile, size=${hash.size}, hash=${hash.hash}")
-        //println("local: ${if (targetFile.exists()) targetFile else "<missing>"}, size=${targetFile.length()}, hash=${path.hash}")
 
         if (!targetFile.exists() || targetFile.length() != hash.size || hash != path.hash) {
             task.print("\tDownloading ${path.value} from server ... ")
@@ -260,7 +254,6 @@ class Mz32(private val root: File) {
         fun find(): List<Mz32> = File.listRoots().mapNotNull {
             try {
                 Mz32(it).apply {
-                    //println("found mz-32 transmitter on $it")
                 }
             } catch (e: Exception) {
                 null

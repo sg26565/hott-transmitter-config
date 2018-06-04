@@ -24,8 +24,6 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
         dir.listFiles().forEach { file ->
             if (task.isCancelled) return
 
-            //println("scanning ${dir.absolutePath}")
-
             if (file.isDirectory) {
                 scan(task, file, root)
             } else {
@@ -45,7 +43,6 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
     fun load(file: File) {
         clear()
         if (file.exists() && file.canRead()){
-            //println ("loading md5s from $file")
             load(file.inputStream())
         }
     }
@@ -53,7 +50,6 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
     fun load(inputStream: InputStream) {
         inputStream.reader().use {
             it.forEachLine { line ->
-                //println("\t$line")
                 try {
                     val (hash, size, path) = line.split('|')
                     this[path] = Hash(size.toLong(), hash)
