@@ -2,17 +2,10 @@ package de.treichels.hott.mz32
 
 import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.model.firmware.Firmware
-import de.treichels.hott.util.copyTo
-import de.treichels.hott.util.extract
-import de.treichels.hott.util.hash
 import de.treichels.lzma.canCompress
 import de.treichels.lzma.uncompress
 import tornadofx.*
 import java.io.File
-import java.util.logging.Logger
-import java.util.zip.ZipEntry
-import java.util.zip.ZipFile
-import kotlin.streams.toList
 
 class Mz32(private val root: File) {
     private val cfgFile = CfgFile.load(File(root, GRAUPNER_DISK_CFG))
@@ -120,7 +113,6 @@ class Mz32(private val root: File) {
         } catch (e: Exception) {
             // fall back to resource file download
             task.print("failed: $e\n")
-            updateResourcesDownload(task, firmware, languages, replaceHelpPages, replaceVoiceFiles)
         }
     }
 
@@ -161,57 +153,6 @@ class Mz32(private val root: File) {
     }
 
     private fun File.number() = name.substring(0, 3).toInt()
-
-    private fun updateResourcesDownload(task: FXTask<*>, firmware: Firmware<TransmitterType>, languages: List<Language>, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true) {
-        if (task.isCancelled) return
-
-        if (!firmware.isCached) {
-            task.print("\tDownloading resources ${firmware.name} ... ")
-            try {
-                firmware.download(task)
-                task.print("ok\n")
-            } catch (e: Exception) {
-                task.print("failed: $e\n")
-            }
-        }
-
-        val resourceFile = firmware.file
-        task.print("\tUpdating resources from file ${resourceFile.name}\n")
-
-        val zipFile = ZipFile(resourceFile, Charsets.ISO_8859_1)
-        val entries = zipFile.stream().filter { !it.isDirectory }.toList()
-
-        entries.forEachIndexed { index, entry ->
-            if (!task.isCancelled) {
-                val path = Path(entry.name)
-
-                when {
-                    path.isHelp() -> if (replaceHelpPages && languages.contains(path.language)) updateFileFromZip(task, entry, zipFile, path)
-                    path.isVoice() -> if (replaceVoiceFiles && languages.contains(path.language)) updateFileFromZip(task, entry, zipFile, path)
-                    else -> updateFileFromZip(task, entry, zipFile, path)
-                }
-            }
-
-            task.updateProgress(index.toLong(), entries.size.toLong())
-        }
-
-        md5.save()
-        task.print("done\n")
-    }
-
-    private fun updateFileFromZip(task: FXTask<*>, entry: ZipEntry, zipFile: ZipFile, path: Path) {
-        if (task.isCancelled) return
-
-        val expectedSize = entry.size
-        val targetFile = path.targetFile
-
-        if (!targetFile.exists() || targetFile.length() != expectedSize || Hash(expectedSize, zipFile.hash(entry)) != path.hash) {
-            task.print("\tinstalling $targetFile ... ")
-            path.hash = Hash(expectedSize, zipFile.extract(task, entry, targetFile))
-            task.print("ok\n")
-            cleanup(task, targetFile, path)
-        }
-    }
 
     private fun updateFirmware(task: FXTask<*>, firmware: Firmware<TransmitterType>) {
         if (task.isCancelled) return
