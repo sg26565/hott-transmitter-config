@@ -20,9 +20,9 @@ class Mz32(private val root: File) {
     //val rfidNumber = cfgFile["RFID number"]!!
     @Suppress("MemberVisibilityCanBePrivate")
     val updatePath = cfgFile["Update path"]!!
-    //val userPath = cfgFile["User path"]!!.split(';').filter { !it.isBlank() }
-    //val langPath = cfgFile["Lang path"]!!.split(';').filter { !it.isBlank() }
-    //val langUser = cfgFile["Lang User"]!!.split(';').filter { !it.isBlank() }
+    val userPath = cfgFile["User path"]!!.split(';').filter { !it.isBlank() }
+    val langPath = cfgFile["Lang path"]!!.split(';').filter { !it.isBlank() }
+    val langUser = cfgFile["Lang User"]!!.split(';').filter { !it.isBlank() }.map { "^" + it.replace("*", "[^/]*") + ".*$" }.map { Regex(it) }
 
     private val remotePath = "/Firmware/${TransmitterType.category}/$productCode"
 
@@ -39,9 +39,11 @@ class Mz32(private val root: File) {
                 if (hash != null) md5[value] = hash
             }
 
-        fun isHelp() = type == PathType.Help
-        fun isVoice() = type == PathType.Voice
-        fun isUserVoice() = isVoice() && targetFile.parentFile.name == "10_User"
+        fun isHelp() = value.startsWith("/Help")
+        fun isVoice() = value.startsWith("/Voice")
+        fun isLang() = langPath.any { value.startsWith(it) }
+        fun isUser() = userPath.any { value.startsWith(it) }
+        fun isLangUser() = langUser.any { value.matches(it) }
     }
 
 
@@ -78,7 +80,7 @@ class Mz32(private val root: File) {
     private fun updateResources(task: FXTask<*>, languages: List<Language>, firmware: Firmware<TransmitterType>, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true) {
         if (task.isCancelled) return
 
-        task.print("\nUpdating resources ...\n")
+        task.print("\nFound resources ${firmware.name} ...\n")
 
         val remoteRoot = "$remotePath/${firmware.name.substringBeforeLast(".zip")}.lzma"
         //println("updateResources: remoteRoot = $remoteRoot")
@@ -121,7 +123,7 @@ class Mz32(private val root: File) {
 
         val targetFile = path.targetFile
 
-        if (!targetFile.exists() || targetFile.length() != hash.size || hash != path.hash) {
+        if (!targetFile.exists() || (targetFile.length() != hash.size || hash != path.hash) && !path.isUser() && !path.isLangUser()) {
             task.print("\tDownloading ${path.value} from server ... ")
             try {
                 if (canCompress(targetFile.extension))
@@ -144,7 +146,7 @@ class Mz32(private val root: File) {
     private fun cleanup(task: FXTask<*>, targetFile: File, path: Path) {
         // cleanup
         val number = targetFile.number()
-        if (path.isHelp() || path.isVoice() && !path.isUserVoice()) {
+        if (path.isLang() && !path.isLangUser()) {
             targetFile.parentFile.listFiles().filter { it != targetFile && it.number() == number }.forEach {
                 task.print("\tremoving obsolete file ${it.absolutePath}")
                 it.delete()
