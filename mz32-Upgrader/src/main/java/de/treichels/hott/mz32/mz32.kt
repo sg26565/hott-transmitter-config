@@ -28,7 +28,6 @@ class Mz32(private val root: File) {
 
     private inner class Path(p: String) {
         val value = if (p.startsWith("/")) p else "/$p"
-        val type = PathType.valueOf(value.split("/")[1])
         val language by lazy {
             Language.valueOf(value.split("/")[2])
         }
