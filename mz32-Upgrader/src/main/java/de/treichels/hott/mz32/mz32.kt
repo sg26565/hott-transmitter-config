@@ -59,20 +59,12 @@ class Mz32(private val root: File) {
         task.print("Checking for latest online versions ...\n")
 
         md5.load()
-        TransmitterType.forProductCode(productCode).getFirmware().forEach { firmware ->
-
-            if (firmware.name.endsWith(".bin") && updateFirmware) {
+        TransmitterType.forProductCode(productCode).getFirmware().sortedBy { it.name }.forEach { firmware ->
+            if (firmware.name.endsWith(".bin") && updateFirmware)
                 updateFirmware(task, firmware)
-            } else if (firmware.name.endsWith(".zip") && updateResources) {
+            else if (firmware.name.endsWith(".zip") && updateResources)
                 updateResources(task, languages, firmware, replaceHelpPages, replaceVoiceFiles)
-
-                // delete VoiceList.lst in each language folder
-                if (replaceVoiceFiles) languages.map { "/Voice/${it.name}/VoiceList.lst" }.forEach {
-                    File(root, it).delete()
-                }
-            }
         }
-        md5.save()
 
         task.print("\nall done")
     }
@@ -118,6 +110,11 @@ class Mz32(private val root: File) {
             // fall back to resource file download
             task.print("failed: $e\n")
         }
+
+        // delete VoiceList.lst in each language folder
+        if (replaceVoiceFiles) languages.map { "/Voice/${it.name}/VoiceList.lst" }.forEach {
+            File(root, it).delete()
+        }
     }
 
     private fun updateFileOnline(task: FXTask<*>, root: String, path: Path, hash: Hash) {
@@ -129,29 +126,23 @@ class Mz32(private val root: File) {
             task.print("\tDownloading ${path.value} from server ... ")
             try {
                 if (canCompress(targetFile.extension))
-                    Firmware.download("$root${path.value}.lzma") { inputStream ->
-                        uncompress(inputStream, targetFile.outputStream())
-                    }
+                    Firmware.download("$root${path.value}.lzma") { inputStream -> uncompress(inputStream, targetFile.outputStream()) }
                 else
                     Firmware.download(task, "$root${path.value}", file = targetFile)
 
                 path.hash = hash
                 task.print("ok\n")
 
-                cleanup(task, targetFile, path)
+                // cleanup lang files (/Help and /Voice, except /Voice/*/10_*)
+                if (path.isLang() && !path.isLangUser()) {
+                    val number = targetFile.number()
+                    targetFile.parentFile.listFiles().filter { it != targetFile && it.number() == number }.forEach {
+                        task.print("\tRemoving obsolete file ${it.absolutePath}")
+                        it.delete()
+                    }
+                }
             } catch (e: Exception) {
                 task.print("failed: $e\n")
-            }
-        }
-    }
-
-    private fun cleanup(task: FXTask<*>, targetFile: File, path: Path) {
-        // cleanup
-        val number = targetFile.number()
-        if (path.isLang() && !path.isLangUser()) {
-            targetFile.parentFile.listFiles().filter { it != targetFile && it.number() == number }.forEach {
-                task.print("\tremoving obsolete file ${it.absolutePath}")
-                it.delete()
             }
         }
     }
