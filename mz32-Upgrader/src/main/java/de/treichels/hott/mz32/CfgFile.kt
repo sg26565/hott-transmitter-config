@@ -1,9 +1,7 @@
 package de.treichels.hott.mz32
 
-import org.apache.logging.log4j.LogManager
 import java.io.File
-import java.util.HashMap
-import java.util.logging.Logger
+import java.util.*
 
 class CfgFile : HashMap<String, String>() {
     companion object {

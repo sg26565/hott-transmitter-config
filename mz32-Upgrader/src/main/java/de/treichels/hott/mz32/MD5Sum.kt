@@ -6,7 +6,6 @@ import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
-import java.util.logging.Logger
 
 class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
     constructor() : this(null)
