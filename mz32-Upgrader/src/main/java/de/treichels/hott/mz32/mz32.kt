@@ -157,28 +157,19 @@ class Mz32(private val root: File) {
     private fun updateFirmware(task: FXTask<*>, firmware: Firmware<TransmitterType>) {
         if (task.isCancelled) return
 
-        task.print("\nUpdating firmware ...\n")
+        task.print("\nFound firmware ${firmware.name} ...\n")
 
-        if (!firmware.isCached) {
-            task.print("\tDownloading firmware ${firmware.name} ... ")
-            try {
-                firmware.download(task)
-                task.print("ok\n")
-            } catch (e: Exception) {
-                task.print("failed: $e\n")
-            }
-        }
-
-        val firmwareFile = firmware.file
         val targetDir = File(root, updatePath)
-        val targetFile = File(targetDir, firmwareFile.name)
-        val path = Path("$updatePath/${firmwareFile.name}")
+        val targetFile = File(targetDir, firmware.name)
+        val path = Path("$updatePath/${firmware.name}")
 
-        if (!targetFile.exists() || targetFile.length() != firmwareFile.length() || firmware.hash != path.hash?.hash) {
-            task.print("\tinstalling $targetFile ... ")
-            firmwareFile.copyTo(task, targetFile, overwrite = true)
-            path.hash = Hash(firmwareFile.length(), firmwareFile.hash())
+        if (!targetFile.exists() || targetFile.length() != firmware.size || firmware.hash != path.hash?.hash) {
+            task.print("\tDownloading $targetFile from server ... ")
+            val hash = Firmware.download(task, "$remotePath/${firmware.name}", firmware.size, targetFile)
+            path.hash = Hash(firmware.size, hash)
             task.print("ok\n")
+        } else {
+            task.print("\t$targetFile is uptodate\n")
         }
 
         md5.save()
