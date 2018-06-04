@@ -17,7 +17,8 @@ class Mz32(private val root: File) {
     val productCode = cfgFile["Product code"]!!.toInt()
     @Suppress("MemberVisibilityCanBePrivate")
     val productVersion = cfgFile["Product ver."]!!.toFloat() / 1000
-    //val rfidNumber = cfgFile["RFID number"]!!
+    @Suppress("unused")
+    val rfidNumber = cfgFile["RFID number"]!!
     @Suppress("MemberVisibilityCanBePrivate")
     val updatePath = cfgFile["Update path"]!!
     val userPath = cfgFile["User path"]!!.split(';').filter { !it.isBlank() }
