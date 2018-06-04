@@ -1,5 +1,7 @@
 package de.treichels.hott.model.firmware
 
+import de.treichels.hott.util.HASH_ALGORITHM
+import de.treichels.hott.util.getHash
 import de.treichels.hott.util.hash
 import org.apache.http.client.fluent.Request
 import org.apache.http.message.BasicNameValuePair
@@ -7,6 +9,7 @@ import tornadofx.*
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
+import java.security.MessageDigest
 
 /**
  * Uility class to mange downloads from Graupner's official FTP server.
@@ -47,7 +50,8 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
             response.entity.content.use(func)
         }
 
-        fun download(task: FXTask<*>, path: String, size: Long = -1L, file: File) {
+        fun download(task: FXTask<*>, path: String, size: Long = -1L, file: File): String {
+            val md = MessageDigest.getInstance(HASH_ALGORITHM)
             val buffer = ByteArray(1024 * 1024)
             var bytesRead = 0L
 
@@ -61,7 +65,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
 
                         bytesRead += len
                         outputStream.write(buffer, 0, len)
-
+                        md.update(buffer, 0, len)
                         task.updateProgress(bytesRead, size)
                     }
                 }
@@ -72,6 +76,8 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
 
             if (size != -1L && bytesRead != size)
                 throw IOException("Size mismatch: expected $size, but got $bytesRead.")
+
+            return md.getHash()
         }
     }
 
