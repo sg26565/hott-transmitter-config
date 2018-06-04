@@ -90,9 +90,11 @@ class Mz32(private val root: File) {
         try {
             // process remote md5sum.txt
             MD5Sum().apply {
-                task.print("\tDownloading md5sum.txt from server ... ")
+                task.print("\tDownloading remote md5sum.txt from server ... ")
                 Firmware.download("$remoteRoot//md5sum.txt") { load(it) }
                 task.print("ok\n")
+
+                task.print("\tChecking for new or updated resource files ...\n")
 
                 entries.forEachIndexed { index, entry ->
                     if (!task.isCancelled) {
