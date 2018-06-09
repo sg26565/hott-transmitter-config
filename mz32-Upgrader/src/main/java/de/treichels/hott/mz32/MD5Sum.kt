@@ -12,6 +12,9 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
 
     private val md5Sum = if (root != null) File(root, MD5_FILE_NAME) else null
 
+    /**
+     * Scan all files under root an re-calculate hashes.
+     */
     fun scan(task: FXTask<*>) {
         if (task.isCancelled || root == null) return
 
@@ -35,10 +38,16 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
         }
     }
 
+    /**
+     * Load hashes from default file under root.
+     */
     fun load() {
         if (md5Sum != null) load(md5Sum)
     }
 
+    /**
+     * Load hashes from specified file.
+     */
     @Suppress("MemberVisibilityCanBePrivate")
     fun load(file: File) {
         clear()
@@ -47,6 +56,9 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
         }
     }
 
+    /**
+     * Load hashes from input stream.
+     */
     fun load(inputStream: InputStream) {
         inputStream.reader().use {
             it.forEachLine { line ->
@@ -60,13 +72,22 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
         }
     }
 
+    /**
+     * Save hashes to default file under root.
+     */
     fun save() {
         if (md5Sum != null) save(md5Sum)
     }
 
+    /**
+     * Save hashes to specified file.
+     */
     @Suppress("MemberVisibilityCanBePrivate")
     fun save(file: File) = save(file.outputStream())
 
+    /**
+     * Save hashes to output stream.
+     */
     @Suppress("MemberVisibilityCanBePrivate")
     fun save(outputStream: OutputStream) {
         outputStream.writer().use {
@@ -75,6 +96,7 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
     }
 
     companion object {
+        /** Default file path */
         private const val MD5_FILE_NAME = "/md5sum.txt"
     }
 }

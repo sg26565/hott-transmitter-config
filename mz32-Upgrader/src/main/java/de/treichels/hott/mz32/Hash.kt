@@ -1,5 +1,8 @@
 package de.treichels.hott.mz32
 
+/**
+ * A pair that stores the hash and the size of a file
+ */
 class Hash(val size: Long, val hash: String) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
