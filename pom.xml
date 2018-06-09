@@ -280,7 +280,7 @@
             </dependency>
             <dependency>
                 <groupId>de.treichels.hott</groupId>
-                <artifactId>mz32-Upgrader</artifactId>
+                <artifactId>mz32-Downloader</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
             <dependency>

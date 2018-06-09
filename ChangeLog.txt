@@ -1,3 +1,15 @@
+2018-06-09
+==========
+    mz32-Downloader-0.9.3.42
+    - renamed from mz32-Upgrader
+    - added function to cancel downloads
+    - more robust file number detection
+
+2018-06-04
+==========
+    mz32-Upgrader-0.9.3.39
+    - download firmware files directly to transmitter (don't store in cache)
+
 2018-06-03
 ==========
     mz32-Upgrader-0.9.3.38

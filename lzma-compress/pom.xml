@@ -131,7 +131,7 @@
     <dependencies>
         <dependency>
             <groupId>de.treichels.hott</groupId>
-            <artifactId>mz32-Upgrader</artifactId>
+            <artifactId>mz32-Downloader</artifactId>
         </dependency>
     </dependencies>
 </project>
