@@ -10,7 +10,7 @@ import java.util.*
 class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
     constructor() : this(null)
 
-    private val md5Sum = if (root != null) File(root, MD5_FILE_NAME) else null
+    private val md5Sum by lazy { File(root, MD5_FILE_NAME) }
 
     /**
      * Scan all files under root an re-calculate hashes.
@@ -31,9 +31,13 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
                 scan(task, file, root)
             } else {
                 val path = "/" + file.relativeTo(root).path.replace(File.separatorChar, '/')
-                val hash = file.hash()
-                this[path] = Hash(file.length(), hash)
-                task.print("hash=\t$hash\tsize=${file.length()}\tpath=$path\n")
+                Path(path).apply {
+                    if (!isUser && !isLangUser) {
+                        val hash = file.hash()
+                        this@MD5Sum[path] = Hash(file.length(), hash)
+                        task.print("\thash=$hash\tsize=${file.length()}\tpath=$path\n")
+                    }
+                }
             }
         }
     }
@@ -42,7 +46,7 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
      * Load hashes from default file under root.
      */
     fun load() {
-        if (md5Sum != null) load(md5Sum)
+        if (root != null) load(md5Sum)
     }
 
     /**
@@ -51,7 +55,7 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
     @Suppress("MemberVisibilityCanBePrivate")
     fun load(file: File) {
         clear()
-        if (file.exists() && file.canRead()){
+        if (file.exists() && file.canRead()) {
             load(file.inputStream())
         }
     }
@@ -63,8 +67,10 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
         inputStream.reader().use {
             it.forEachLine { line ->
                 try {
-                    val (hash, size, path) = line.split('|')
-                    this[path] = Hash(size.toLong(), hash)
+                    if (!line.isBlank() && !line.startsWith("#") && line.count { it == '|' } == 2) {
+                        val (hash, size, path) = line.split('|')
+                        this[path] = Hash(size.toLong(), hash)
+                    }
                 } catch (e: Exception) {
                     // ignore malformed lines
                 }
@@ -76,7 +82,7 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
      * Save hashes to default file under root.
      */
     fun save() {
-        if (md5Sum != null) save(md5Sum)
+        if (root != null) save(md5Sum)
     }
 
     /**

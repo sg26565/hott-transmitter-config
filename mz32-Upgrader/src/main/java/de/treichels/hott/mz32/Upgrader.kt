@@ -1,6 +1,7 @@
 package de.treichels.hott.mz32
 
 import de.treichels.hott.util.ExceptionDialog
+import javafx.beans.property.SimpleBooleanProperty
 import javafx.concurrent.Task
 import javafx.scene.control.*
 import javafx.scene.layout.Priority
@@ -11,6 +12,8 @@ import org.apache.logging.log4j.util.EnvironmentPropertySource
 import org.apache.logging.log4j.util.SystemPropertiesPropertySource
 import org.controlsfx.control.CheckComboBox
 import tornadofx.*
+import java.io.File
+import java.util.jar.JarFile
 
 @Suppress("unused")
 private val ignored = listOf(LogFactoryImpl::class, EnvironmentPropertySource::class, SystemPropertiesPropertySource::class)
@@ -24,7 +27,7 @@ class Mz32UpgraderApp : App() {
     override val primaryView = Mz32Upgrader::class
 }
 
-class Mz32Upgrader : View("mz-32 Upgrader") {
+class Mz32Upgrader : View() {
     // Controls
     private var options by singleAssign<VBox>()
     private var reindex by singleAssign<CheckBox>()
@@ -37,6 +40,9 @@ class Mz32Upgrader : View("mz-32 Upgrader") {
     private var textArea by singleAssign<TextArea>()
     private var progressBar by singleAssign<ProgressBar>()
     private var updateButton by singleAssign<Button>()
+
+    // Properties
+    private val disableUI = SimpleBooleanProperty(false)
 
     // Background task
     private var task: Task<Unit>? = null
@@ -60,6 +66,19 @@ class Mz32Upgrader : View("mz-32 Upgrader") {
     private val selectedLanguages: List<Language>
         get() = language.checkModel.checkedItems
 
+    private val version: String by lazy {
+        val source = File(Mz32Upgrader::class.java.protectionDomain.codeSource.location.toURI())
+        if (source.name.endsWith(".jar") || source.name.endsWith(".exe"))
+            JarFile(source).use { jarFile ->
+                val attributes = jarFile.manifest.mainAttributes
+                val version = attributes.getValue("Implementation-Version")
+                val build = attributes.getValue("Implementation-Build")
+
+                "v$version.$build"
+            }
+        else "Unknown"
+    }
+
     // UI
     override val root = vbox {
         prefWidth = 600.0
@@ -72,6 +91,7 @@ class Mz32Upgrader : View("mz-32 Upgrader") {
 
             options = vbox {
                 spacing = 10.0
+                disableProperty().bind(disableUI)
 
                 reindex = checkbox("Re-index files on radio") {
                     tooltip = tooltip("Re-calculate the MD5 checksums of all files on the internal SD-card of the radio. This process will take a long time.")
@@ -116,6 +136,7 @@ class Mz32Upgrader : View("mz-32 Upgrader") {
 
             vbox {
                 spacing = 10.0
+                disableProperty().bind(disableUI)
 
                 vbox {
                     label("Drive:")
@@ -162,31 +183,43 @@ class Mz32Upgrader : View("mz-32 Upgrader") {
         }
 
         buttonbar {
-            paddingAll = 5.0
-
-            updateButton = button("Online Update") {
-                disableWhen { comboBox.valueProperty().isNull }
-                action {
-                    task = runAsync {
-                        if (doReindex) {
-                            mz32.scan(this)
-                        }
-                        mz32.update(this, selectedLanguages, doUpdateResources, doReplaceHelpPages, doReplaceVoiceFiles, doUpdateFirware)
-                    }.apply {
-                        disableWhen { runningProperty() }
-                        comboBox.disableWhen { runningProperty() }
-                        options.disableWhen { runningProperty() }
-                        language.disableWhen { runningProperty() }
-                        progressBar.visibleWhen {  runningProperty() }
-                        progressBar.progressProperty().bind(progressProperty())
-                        messageProperty().addListener { _, _, newValue ->
-                            textArea.text = newValue
-                            textArea.scrollTop = Double.MAX_VALUE
-                        }
-                    }
-                }
-            }
+            updateButton = button("Download")
         }
+    }
+
+    private fun armTask() {
+        updateButton.text = "Download"
+        updateButton.action { startTask() }
+        updateButton.disableWhen { comboBox.valueProperty().isNull }
+        disableUI.value = false
+    }
+
+    private fun startTask() {
+        task = runAsync {
+            if (doReindex) {
+                mz32.scan(this)
+            }
+            mz32.update(this, selectedLanguages, doUpdateResources, doReplaceHelpPages, doReplaceVoiceFiles, doUpdateFirware)
+            runLater { armTask() }
+        }.apply {
+            updateButton.text = "Cancel"
+            updateButton.action { stopTask() }
+            disableUI.value = true
+            progressBar.progressProperty().bind(progressProperty())
+            messageProperty().addListener { _, _, newValue ->
+                textArea.text = newValue
+                textArea.scrollTop = Double.MAX_VALUE
+            }
+            root.layout()
+        }
+    }
+
+    private fun stopTask() {
+        updateButton.disableProperty().unbind()
+        updateButton.isDisable = true
+        task?.fail { armTask() }
+        task?.success { armTask() }
+        task?.cancel()
     }
 
     private fun ComboBox<Mz32>.load() {
@@ -197,15 +230,14 @@ class Mz32Upgrader : View("mz-32 Upgrader") {
 
     init {
         setStageIcon(iconImage)
+        title = "mz-32 Downloader ($version)"
 
         runLater {
             comboBox.load()
+            armTask()
         }
 
-        primaryStage.setOnCloseRequest {
-            task?.cancel()
-        }
-
+        primaryStage.setOnCloseRequest { stopTask() }
         primaryStage.setOnShown { updateButton.requestFocus() }
     }
 }

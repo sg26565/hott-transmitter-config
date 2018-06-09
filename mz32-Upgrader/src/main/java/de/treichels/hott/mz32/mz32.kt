@@ -4,8 +4,10 @@ import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.model.firmware.Firmware
 import de.treichels.lzma.canCompress
 import de.treichels.lzma.uncompress
+import org.controlsfx.dialog.ExceptionDialog
 import tornadofx.*
 import java.io.File
+import java.util.concurrent.CountDownLatch
 
 class Mz32(private val root: File) {
     private val cfgFile = CfgFile.load(File(root, GRAUPNER_DISK_CFG))
@@ -21,31 +23,11 @@ class Mz32(private val root: File) {
     val rfidNumber = cfgFile["RFID number"]!!
     @Suppress("MemberVisibilityCanBePrivate")
     val updatePath = cfgFile["Update path"]!!
-    val userPath = cfgFile["User path"]!!.split(';').filter { !it.isBlank() }
-    val langPath = cfgFile["Lang path"]!!.split(';').filter { !it.isBlank() }
-    val langUser = cfgFile["Lang User"]!!.split(';').filter { !it.isBlank() }.map { "^" + it.replace("*", "[^/]*") + ".*$" }.map { Regex(it) }
+    //val userPath = cfgFile["User path"]!!.split(';').filter { !it.isBlank() }
+    //val langPath = cfgFile["Lang path"]!!.split(';').filter { !it.isBlank() }
+    //val langUser = cfgFile["Lang User"]!!.split(';').filter { !it.isBlank() }.map { "^" + it.replace("*", "[^/]*") + ".*$" }.map { Regex(it) }
 
     private val remotePath = "/Firmware/${TransmitterType.category}/$productCode"
-
-    private inner class Path(p: String) {
-        val value = if (p.startsWith("/")) p else "/$p"
-        val language by lazy {
-            Language.valueOf(value.split("/")[2])
-        }
-        val targetFile = File(root, value).apply { parentFile.mkdirs() }
-        var hash: Hash?
-            get() = md5[value]
-            set(hash) {
-                if (hash != null) md5[value] = hash
-            }
-
-        fun isHelp() = value.startsWith("/Help")
-        fun isVoice() = value.startsWith("/Voice")
-        fun isLang() = langPath.any { value.startsWith(it) }
-        fun isUser() = userPath.any { value.startsWith(it) }
-        fun isLangUser() = langUser.any { value.matches(it) }
-    }
-
 
     fun scan(task: FXTask<*>) {
         md5.clear()
@@ -65,8 +47,12 @@ class Mz32(private val root: File) {
             else if (firmware.name.endsWith(".zip") && updateResources)
                 updateResources(task, languages, firmware, replaceHelpPages, replaceVoiceFiles)
         }
+        md5.save()
 
-        task.print("\nall done")
+        if (task.isCancelled)
+            task.print("\ncancelled\n")
+        else
+            task.print("\nall done\n")
     }
 
     private fun updateResources(task: FXTask<*>, languages: List<Language>, firmware: Firmware<TransmitterType>, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true) {
@@ -86,29 +72,29 @@ class Mz32(private val root: File) {
                 Firmware.download("$remoteRoot//md5sum.txt") { load(it) }
                 task.print("ok\n")
 
+                if (task.isCancelled) return
                 task.print("\tChecking for new or updated resource files ...\n")
 
                 entries.forEachIndexed { index, entry ->
-                    if (!task.isCancelled) {
-                        val path = Path(entry.key)
-                        val hash = entry.value
+                    if (task.isCancelled) return
 
-                        when {
-                            path.isHelp() -> if (replaceHelpPages && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
-                            path.isVoice() -> if (replaceVoiceFiles && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
-                            else -> updateFileOnline(task, remoteRoot, path, hash)
-                        }
+                    val path = Path(entry.key)
+                    val hash = entry.value
+
+                    when {
+                        path.isHelp -> if (replaceHelpPages && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
+                        path.isVoice -> if (replaceVoiceFiles && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
+                        else -> updateFileOnline(task, remoteRoot, path, hash)
                     }
-
                     task.updateProgress(index.toLong(), size.toLong())
                 }
             }
 
-            md5.save()
+            if (task.isCancelled) return
             task.print("done\n")
         } catch (e: Exception) {
-            // fall back to resource file download
             task.print("failed: $e\n")
+            showError(e)
         }
 
         // delete VoiceList.lst in each language folder
@@ -122,7 +108,7 @@ class Mz32(private val root: File) {
 
         val targetFile = path.targetFile
 
-        if (!targetFile.exists() || (targetFile.length() != hash.size || hash != path.hash) && !path.isUser() && !path.isLangUser()) {
+        if (!targetFile.exists() || (targetFile.length() != hash.size || hash != path.hash) && !path.isUser && !path.isLangUser) {
             task.print("\tDownloading ${path.value} from server ... ")
             try {
                 if (canCompress(targetFile.extension))
@@ -133,21 +119,49 @@ class Mz32(private val root: File) {
                 path.hash = hash
                 task.print("ok\n")
 
+                if (task.isCancelled) return
+
                 // cleanup lang files (/Help and /Voice, except /Voice/*/10_*)
-                if (path.isLang() && !path.isLangUser()) {
+                if (path.isLang && !path.isLangUser) {
                     val number = targetFile.number()
-                    targetFile.parentFile.listFiles().filter { it != targetFile && it.number() == number }.forEach {
-                        task.print("\tRemoving obsolete file ${it.absolutePath}")
-                        it.delete()
+                    targetFile.parentFile.listFiles().forEach { file ->
+                        try {
+                            if (file != targetFile && file.number() == number) {
+                                task.print("\tRemoving obsolete file ${file.absolutePath}\n")
+                                file.delete()
+                            }
+                        } catch (e: Exception) {
+                            // ignore
+                        }
                     }
                 }
             } catch (e: Exception) {
                 task.print("failed: $e\n")
+                showError(e)
             }
         }
     }
 
-    private fun File.number() = name.substring(0, 3).toInt()
+    private fun File.number() = NUM_REGEX.matchEntire(name)!!.groupValues[1].toInt()
+
+    private val Path.targetFile
+        get() = File(root, value).apply { parentFile.mkdirs() }
+    private var Path.hash: Hash?
+        get() = md5[value]
+        set(hash) {
+            if (hash != null) md5[value] = hash
+        }
+
+    private fun showError(e: Exception) {
+        val latch = CountDownLatch(1)
+
+        runLater {
+            ExceptionDialog(e).showAndWait()
+            latch.countDown()
+        }
+
+        latch.await()
+    }
 
     private fun updateFirmware(task: FXTask<*>, firmware: Firmware<TransmitterType>) {
         if (task.isCancelled) return
@@ -176,6 +190,7 @@ class Mz32(private val root: File) {
     }
 
     companion object {
+        private val NUM_REGEX = Regex("^([0-9]+).*$")
         private const val GRAUPNER_DISK_CFG = "/GraupnerDisk.cfg"
 
         fun find(): List<Mz32> = File.listRoots().mapNotNull {
