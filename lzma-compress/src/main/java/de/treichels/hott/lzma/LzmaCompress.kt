@@ -213,7 +213,7 @@ class LzmaCompress : View("Compress Zip File to Directory") {
                 action {
                     progress.text = "Extracting ${zipFile.text} to ${targetDirectory.text}"
 
-                    service.zipFile = ZipFile(zipFile.text, Charsets.ISO_8859_1)
+                    service.zipFile = ZipFile(zipFile.text, Charsets.US_ASCII)
                     service.target = File(targetDirectory.text)
                     service.messageProperty().addListener { _, _, newValue ->
                         progress.appendText("\n$newValue")
