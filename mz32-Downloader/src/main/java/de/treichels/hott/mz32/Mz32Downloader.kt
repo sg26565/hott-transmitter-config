@@ -20,14 +20,14 @@ private val ignored = listOf(LogFactoryImpl::class, EnvironmentPropertySource::c
 
 fun main(vararg args: String) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
-    launch<Mz32UpgraderApp>(*args)
+    launch<Mz32DownloaderApp>(*args)
 }
 
-class Mz32UpgraderApp : App() {
-    override val primaryView = Mz32Upgrader::class
+class Mz32DownloaderApp : App() {
+    override val primaryView = Mz32Downloader::class
 }
 
-class Mz32Upgrader : View() {
+class Mz32Downloader : View() {
     // Controls
     private var options by singleAssign<VBox>()
     private var reindex by singleAssign<CheckBox>()
@@ -67,7 +67,7 @@ class Mz32Upgrader : View() {
         get() = language.checkModel.checkedItems
 
     private val version: String by lazy {
-        val source = File(Mz32Upgrader::class.java.protectionDomain.codeSource.location.toURI())
+        val source = File(Mz32Downloader::class.java.protectionDomain.codeSource.location.toURI())
         if (source.name.endsWith(".jar") || source.name.endsWith(".exe"))
             JarFile(source).use { jarFile ->
                 val attributes = jarFile.manifest.mainAttributes

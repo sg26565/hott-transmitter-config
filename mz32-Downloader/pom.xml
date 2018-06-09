@@ -2,7 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>mz32-Upgrader</artifactId>
+    <artifactId>mz32-Downloader</artifactId>
 
     <parent>
         <groupId>de.treichels.hott</groupId>
@@ -28,7 +28,7 @@
                     <transformers>
                         <transformer
                                 implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>de.treichels.hott.mz32.UpgraderKt</mainClass>
+                            <mainClass>de.treichels.hott.mz32.Mz32DownloaderKt</mainClass>
                         </transformer>
                         <transformer
                                 implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
@@ -60,7 +60,7 @@
                             <errTitle>FirmwareUpgrader</errTitle>
                             <icon>icon.ico</icon>
                             <classPath>
-                                <mainClass>de.treichels.hott.mz32.UpgraderKt</mainClass>
+                                <mainClass>de.treichels.hott.mz32.Mz32DownloaderKt</mainClass>
                                 <addDependencies>false</addDependencies>
                             </classPath>
                             <jre>
