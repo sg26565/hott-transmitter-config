@@ -1,21 +1,68 @@
-import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.model.enums.ModelType
+import de.treichels.hott.model.HoTTException
 import de.treichels.hott.model.serial.JSSCSerialPort
+import de.treichels.hott.model.serial.SerialPort
+import de.treichels.hott.util.Util
+import java.io.InputStream
+import java.io.OutputStream
+
+private lateinit var serialPort: SerialPort
+private lateinit var inputStream: InputStream
+private lateinit var outputStream: OutputStream
 
 fun main(args: Array<String>) {
-    val availablePorts = JSSCSerialPort.availablePorts
+    //val availablePorts = JSSCSerialPort.availablePorts
 
-    for (i in 1..10) {
-        val port = JSSCSerialPort(availablePorts.first())
-        val hott = HoTTSerialPort(port)
+    serialPort = JSSCSerialPort("COM3")
+    serialPort.use { port ->
+        port.open(19200)
+        port.timeout = 1000
+        inputStream = port.inputStream
+        outputStream = port.outputStream
 
-        hott.use { p ->
-            println("$i ${p.isOpen} ${hott.isOpen} ${port.isOpen}")
-            p.open()
-            p.allModelInfos.filter { it.modelType != ModelType.Unknown && it.modelName.isNotEmpty() }.map { println("${it.modelNumber}: ${it.modelType.char}${it.modelName}.mdl") }
-            println("$i ${p.isOpen} ${hott.isOpen} ${port.isOpen}")
+        // wait for boot
+        println("wait for boot")
+        waitFor(5)
+
+        println("boot detected")
+
+        // write boote response
+        write(9)
+        read()
+        println("response sent")
+
+        Thread.sleep(100)
+
+        write(9)
+        read()
+        Thread.sleep(100)
+
+        val buffer = ByteArray(8)
+        inputStream.read(buffer)
+
+        println(Util.dumpData(buffer))
+
+        val deviceId = ((buffer[1].toInt() shl 8) and 0xFF00) + (buffer[0].toInt() and 0xFF)
+        println("deviceId = $deviceId")
+
+        waitFor()
+    }
+}
+
+fun read() : Int = inputStream.read()
+
+fun write(byte: Int) {
+    outputStream.write(byte)
+    outputStream.flush()
+}
+
+fun waitFor(byte: Int=-1) {
+    while (true) {
+        try {
+            val b = read()
+            println(Integer.toHexString(b))
+            if (byte == b) break
+        } catch (e: HoTTException) {
+            print(".")
         }
-
-        println("$i ${hott.isOpen} ${port.isOpen}")
     }
 }

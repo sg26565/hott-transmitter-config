@@ -1,0 +1,573 @@
+02_Func;Motor_Hauptsch;Motor Hauptschalter
+02_Func;Motor;Motor
+02_Func;Quadrate;Quad Rate
+02_Func;Quadrate_1;Quad Rate 1
+02_Func;Quadrate_2;Quad Rate 2
+02_Func;Quadrate_3;Quad Rate 3
+02_Func;Quadrate_4;Quad Rate 4
+02_Func;Expo;Expo
+02_Func;Expo_1;Expo 1
+02_Func;Expo_2;Expo 2
+02_Func;Expo_3;Expo 3
+02_Func;Expo_4;Expo 4
+02_Func;Modus;Modus
+02_Func;Phase;Phase
+02_Func;Lehrer;Lehrer
+02_Func;Schueler;Schüler
+02_Func;Gas;Gas
+02_Func;Erster;Erster
+02_Func;Zweiter;Zweiter
+02_Func;Dritter;Dritter
+02_Func;Vierter;Vierter
+02_Func;Fuenfter;Fünfter
+02_Func;Sechster;Sechster
+02_Func;Siebter;Siebter
+02_Func;Achter;Achter
+02_Func;Neunter;Neunter
+02_Func;Zehnter;Zehnter
+02_Func;Elfter;Elfter
+02_Func;Zwoelfter;Zwölfter
+02_Func;Dreizehnter;Dreizehnter
+02_Func;Vierzehnter;Vierzehnter
+02_Func;Fuenfzehnter;Fünfzehnter
+02_Func;Sechszehnter;Sechszehnter
+02_Func;Gang;Gang
+02_Func;Querruder;Querruder
+02_Func;Hoehenruder;Höhenruder
+02_Func;Seitenruder;Seitenruder
+02_Func;Roll;Roll
+02_Func;Rollrichtung;Rollrichtung
+02_Func;Nick;Nick
+02_Func;Nickrichtung;Nickrichtung
+02_Func;Gier;Gier
+02_Func;Gierrichtung;Gierrichtung
+02_Func;Heck;Heck
+02_Func;Pitch;Pitch
+02_Func;Flugphase;Flugphase
+02_Func;Normal_Modus;Normal Modus
+02_Func;Einziehfahrwerk;Einziehfahrwerk
+02_Func;Einziehfahrwerk_aus;Einziehfahrwerk ausfahren
+02_Func;Einziehfahrwerk_ein;Einziehfahrwerk einfahren
+02_Func;Landegestell;Landegestell
+02_Func;Landegestell_einf;Landegestell einfahren
+02_Func;Fahrwerk;Fahrwerk
+02_Func;Roger;Roger
+02_Func;Klappen;Klappen
+02_Func;Klappen_Anflug;Klappen Anflug
+02_Func;Klappen_Landung;Klappen Landung
+02_Func;Klappen_Start;Klappen Start
+02_Func;Butterfly;Butterfly
+02_Func;Snapflap;Snapflap
+02_Func;Multikanal_1;Multikanal 1
+02_Func;Multikanal_2;Multikanal 2
+02_Func;Multikanal_3;Multikanal 3
+02_Func;Multikanal_4;Multikanal 4
+02_Func;Multikanal_5;Multikanal 5
+02_Func;Multikanal_6;Multikanal 6
+02_Func;Multikanal_7;Multikanal 7
+02_Func;Multikanal_8;Multikanal 8
+02_Func;Multikanal_9;Multikanal 9
+02_Func;Multikanal_10;Multikanal 10
+02_Func;Multikanal_11;Multikanal 11
+02_Func;Multikanal_12;Multikanal 12
+02_Func;Multikanal_13;Multikanal 13
+02_Func;Multikanal_14;Multikanal 14
+02_Func;Multikanal_15;Multikanal 15
+02_Func;Multikanal_16;Multikanal 16
+02_Func;Flugkontrolle;Flugkontrolle
+02_Func;Gyro;Gyro
+02_Func;Beschleunigungssensor;Beschleunigungssensor
+02_Func;Magnetometer;Ma gneto'meter
+02_Func;kalibrieren;kalibrieren
+02_Func;Rettung;Rettung
+02_Func;Wechsel;Wechsel
+02_Func;steuern;steuern
+02_Func;runter;runter
+02_Func;Leistung;Leistung
+02_Func;Programm;Programm
+02_Func;Starten;Starten
+02_Func;Kamerasteuerung;Kamerasteuerung
+02_Func;Schiese_Foto;Schieße Foto
+02_Func;Panorama;Panoramafoto
+02_Func;Aufn_starten;Aufnahme starten
+02_Func;Aufn_stoppen;Aufnahme stoppen
+02_Func;ABS_Bremse;A B S Bremse
+02_Func;Lenkmodus;Lenkmodus
+02_Func;4_RadLenkung;VierradLenkung
+02_Func;Lenkung_normal;Lenkung normal
+02_Func;Lenkung_vorne;Lenkung vorne
+02_Func;Lenkung_hinten;Lenkung hinten
+02_Func;Lenkung_umgekehrt;Lenkung umgekehrt
+02_Func;Flugrichtung;Flugrichtung
+02_Func;Mindestgas;Mindestgas
+02_Func;Schwebegaspos;Schwebegasposition
+02_Func;Lagemodus;Lagemodus
+02_Func;Drehratenmodus;Drehratenmodus
+02_Func;Abblendlicht;Abblendlicht
+02_Func;Fernlicht;Fernlicht
+02_Func;Warnblinker;Warnblinker
+02_Func;Blinker_rechts;Blinker rechts
+02_Func;Blinker_links;Blinker links
+02_Func;Nebelscheinwerfer;Nebelscheinwerfer
+02_Func;Rundumlicht;Rundumlicht
+02_Func;Arbeitsscheinwerfer;Arbeitsscheinwerfer
+02_Func;Aufliegerstuetzen;Aufliegerstützen
+02_Func;Hydraulikpumpe;Hydraulikpumpe
+02_Func;Kupplung;Kupplung
+02_Func;Bremse;Bremse
+02_Func;Lueftung;Lüftung
+02_Func;Scheibenwischer;Scheibenwischer
+02_Func;Cockpit_bel;Cockpitbeleuchtung
+02_Func;Signalhorn;Signalhorn
+02_Func;Sattelplatte_entr;Sattelplatte entriegelt
+02_Func;Sattelplatte_verr;Sattelplatte verriegelt
+02_Func;Verteilergetr_offen;Verteilergetriebe offen
+02_Func;Verteilergetr_gek;Verteilergetriebe gekuppelt
+02_Func;Pumpe;Pumpe
+02_Func;Querstrahlruder;Querstrahlruder
+02_Func;Winde;Winde
+02_Func;Halbe_Fahrt_vorraus;Halbe Fahrt vorraus
+02_Func;Volle_Fahrt_vorraus;Volle Fahrt vorraus
+02_Func;Mastbeleuchtung;Mastbeleuchtung
+02_Func;Brueckenbeleuchtung;Brüäckenbeleuchtung
+02_Func;Positionslicht;Positionslicht
+02_Func;Anker_auswerfen;Anker auswerfen
+02_Func;Anker_einholen;Anker einholen
+02_Func;Schnellw_offen;Schnellwechsler offen
+02_Func;Schnellw_geschl;Schnellwechsler geschlossen
+02_Func;Winde_entsperrt;Winde entsperrt
+02_Func;Winde_verriegelt;Winde verriegelt
+02_Func;Fraese;Fräse
+02_Func;Wasserpumpe;Wasserpumpe
+02_Func;Feuerloeschp;Feuerlöschpumpe
+02_Func;Rauch;Rauch
+02_Func;Modell;Modell
+02_Func;Trainer;Trainer
+02_Func;FPV_Kanal;FPV Kanal
+02_Func;Licht;Licht
+02_Func;Summer;Summer
+02_Func;Logfunktion;Logfunktion
+02_Func;Blackbox;Blackbox
+02_Func;FPV_Kamera_W;FPV Kamera Winkelmischer
+02_Func;Position;Position
+02_Func;Klapptr_ausfahren;Klapptriebwerk ausfahren
+02_Func;Klapptr_einfahren;Klapptriebwerk einfahren
+02_Func;Gas_an;Gas an
+02_Func;Gas_aus.waf;Gas aus
+02_Func;HF_an;HF an
+02_Func;HF_aus;HF aus
+02_Func;Bildschirm_gesperrt;Bildschirm gesperrt
+02_Func;Bildschirm_entsperrt;Bildschirm entsperrt
+03_item;Flugzeug;Flugzeug
+03_item;Helikopter;Helikopter
+03_item;Multikopter;Multikopter
+03_item;Kopter;Kopter
+03_item;Alpha;Alpha
+03_item;Fahrzeug;Fahrzeug
+03_item;Boot;Boot
+03_item;Schiff;Schiff
+03_item;Sender;Sender
+03_item;Empfaenger;Empfänger
+03_item;Vario;Vario
+03_item;GPS;GPS
+03_item;Elektrik;Elektrik
+03_item;General;General
+03_item;Regler;Regler
+03_item;Servo;Servo
+03_item;Batterie;Batterie
+03_item;Uhr;Uhr
+03_item;Gyro;Gyro
+03_item;Motor;Motor
+04_Numb;0;0
+04_Numb;1;1
+04_Numb;2;2
+04_Numb;3;3
+04_Numb;4;4
+04_Numb;5;5
+04_Numb;6;6
+04_Numb;7;7
+04_Numb;8;8
+04_Numb;9;9
+04_Numb;10;10
+04_Numb;11;11
+04_Numb;12;12
+04_Numb;13;13
+04_Numb;14;14
+04_Numb;15;15
+04_Numb;16;16
+04_Numb;17;17
+04_Numb;18;18
+04_Numb;19;19
+04_Numb;20;20
+04_Numb;21;21
+04_Numb;22;22
+04_Numb;23;23
+04_Numb;24;24
+04_Numb;25;25
+04_Numb;26;26
+04_Numb;27;27
+04_Numb;28;28
+04_Numb;29;29
+04_Numb;30;30
+04_Numb;31;31
+04_Numb;32;32
+04_Numb;33;33
+04_Numb;34;34
+04_Numb;35;35
+04_Numb;36;36
+04_Numb;37;37
+04_Numb;38;38
+04_Numb;39;39
+04_Numb;40;40
+04_Numb;41;41
+04_Numb;42;42
+04_Numb;43;43
+04_Numb;44;44
+04_Numb;45;45
+04_Numb;46;46
+04_Numb;47;47
+04_Numb;48;48
+04_Numb;49;49
+04_Numb;50;50
+04_Numb;51;51
+04_Numb;52;52
+04_Numb;53;53
+04_Numb;54;54
+04_Numb;55;55
+04_Numb;56;56
+04_Numb;57;57
+04_Numb;58;58
+04_Numb;59;59
+04_Numb;60;60
+04_Numb;61;61
+04_Numb;62;62
+04_Numb;63;63
+04_Numb;64;64
+04_Numb;65;65
+04_Numb;66;66
+04_Numb;67;67
+04_Numb;68;68
+04_Numb;69;69
+04_Numb;70;70
+04_Numb;71;71
+04_Numb;72;72
+04_Numb;73;73
+04_Numb;74;74
+04_Numb;75;75
+04_Numb;76;76
+04_Numb;77;77
+04_Numb;78;78
+04_Numb;79;79
+04_Numb;80;80
+04_Numb;81;81
+04_Numb;82;82
+04_Numb;83;83
+04_Numb;84;84
+04_Numb;85;85
+04_Numb;86;86
+04_Numb;87;87
+04_Numb;88;88
+04_Numb;89;89
+04_Numb;90;90
+04_Numb;91;91
+04_Numb;92;92
+04_Numb;93;93
+04_Numb;94;94
+04_Numb;95;95
+04_Numb;96;96
+04_Numb;97;97
+04_Numb;98;98
+04_Numb;99;99
+04_Numb;100;100
+04_Numb;1000;1000
+04_Numb;10000;10000
+04_Numb;Komma;Komma
+05_Phase;Akro_3D;Akro 3D
+05_Phase;Akro;Akro
+05_Phase;Akro_2;Akro 2
+05_Phase;Schleppflug;Schleppflug
+05_Phase;Autorotation;Autorotation
+05_Phase;Strecke;Strecke
+05_Phase;Strecke_2;Strecke 2
+05_Phase;Halten;Halten
+05_Phase;Schweben;Schweben
+05_Phase;Schweben_2;Schweben 2
+05_Phase;idle_up_1;idle up 1
+05_Phase;idle_up_2;idle up 2
+05_Phase;Idle_up_3;Idle up 3
+05_Phase;Landung;Landung
+05_Phase;Landung_2;Landung 2
+05_Phase;Start;Start
+05_Phase;Start_2;Start 2
+05_Phase;Normal;Normal
+05_Phase;Phase_1;Phase 1
+05_Phase;Phase_2;Phase 2
+05_Phase;Phase_3;Phase 3
+05_Phase;Phase_4;Phase 4
+05_Phase;Phase_5;Phase 5
+05_Phase;Phase_6;Phase 6
+05_Phase;Phase_7;Phase 7
+05_Phase;Phase_8;Phase 8
+05_Phase;Phase_9;Phase 9
+05_Phase;Phase_10;Phase 10
+05_Phase;Phase_11;Phase 11
+05_Phase;Phase_12;Phase 12
+05_Phase;Schnellflug;Schnellflug
+05_Phase;Schnellflug_2;Schnellflug 2
+05_Phase;Test;Test
+05_Phase;Test_2;Test 2
+05_Phase;Thermik;Thermik
+05_Phase;Thermik_2;Thermik 2
+05_Phase;Sehr_hohe_Raten;Sehr hohe Raten
+05_Phase;Hohe_Raten;Hohe Raten
+05_Phase;Mittlere_Raten;Mittlere Raten
+05_Phase;Niedrige_Raten;Niedrige Raten
+05_Phase;Butterfly;Butterfly
+05_Phase;Snapflap;Snapflap
+05_Phase;cruisen;cruisen
+05_Phase;Bremse;Bremse
+05_Phase;Motor_an;Motor an
+05_Phase;Motor_aus;Motor aus
+05_Phase;Drehratenmodus;Drehratenmodus
+05_Phase;Lagemodus;Lagemodus
+05_Phase;Lagem_Hoehenhalt;Lagemodus mit Höhenhaltung
+05_Phase;Autopilot;Autopilot
+05_Phase;Naechster_Wegp;Nächster Wegpunkt
+05_Phase;Folgen;Folgen
+05_Phase;Komm_nach_Hause;Komm nach Hause
+05_Phase;Auto_Landung;Automatische Landung
+05_Phase;Flippfunktion;Flippfunktion
+05_Phase;Normal_Modus;Normal Modus
+05_Phase;GPS_Modus;GPS Modus
+05_Phase;GPS_Position_halten;GPS Position halten
+05_Phase;Kursrichtungsmodus;Kursrichtungsmodus
+05_Phase;Heimrichtungsmodus;Heimrichtungsmodus
+05_Phase;Carefree;Carefree
+05_Phase;Punkt_von_Interesse;Punkt von Interesse
+05_Phase;360Grad_Drehung;360Grad Drehung
+05_Phase;Aufnahme_starten;Aufnahme starten
+05_Phase;Aufnahme_stoppen;Aufnahme stoppen
+05_Phase;Kamerasteuerung;Kamerasteuerung
+05_Phase;Flugsteuerung;Flugsteuerung
+05_Phase;Wepunkte_abfliegen;Wegpunkte abfliegen
+06_Tele;Senderspannung;Senderspannung
+06_Tele;Variosensor;Variosensor
+06_Tele;Elektrik_Sensor;Elektrik Sensor
+06_Tele;General_Sensor;General Sensor
+06_Tele;Sensor_Regler;Sensor Regler
+06_Tele;Hoehe;Höhe
+06_Tele;Hoehe_erreicht;Höhe erreicht
+06_Tele;Spannung;Spannung
+06_Tele;Eingangsspannung;Eingangsspannung
+06_Tele;Durchschn_Zellenspg;Durchschnittliche Zellenspannung
+06_Tele;Strom;Strom
+06_Tele;Kapazitaet;Kapazität
+06_Tele;Regler_temperatur;Regler temperatur
+06_Tele;Motorueberlastung;Motorüberlastung
+06_Tele;Motor_temperatur;Motortemperatur
+06_Tele;Drehzahl;Drehzahl
+06_Tele;Treibstoff;Treibstoff
+06_Tele;Sensor_Temperatur_1;Sensor Temperatur 1
+06_Tele;Sensor_Spannung_1;Sensor Spannung 1
+06_Tele;Sensor_Temperatur_2;Sensor Temperatur 2
+06_Tele;Sensor_Spannung_2;Sensor Spannung 2
+06_Tele;Servo_Temp;Servo Temperatur
+06_Tele;Fische;Fische
+06_Tele;WLAN;WLAN
+06_Tele;BLUET;Bluetooth
+06_Tele;LTE;L T E
+06_Tele;868_MHz_Modul;868 MHz Modul
+06_Tele;915_MHz_Modul;915 MHz Modul
+06_Tele;Staerke;Stärke
+06_Tele;Temperatur;Temperatur
+06_Tele;Empfangsstaerke;Empfangsstärke
+06_Tele;Empfaengertemp;Empfängertemperatur
+06_Tele;Empfaengerspg;Empfängerspannung
+06_Tele;Empfangspegel;Empfangspegel
+06_Tele;verlorene_Datenpakete;verlorene Datenpakete
+06_Tele;Entfernung;Entfernung
+06_Tele;Geschwindigkeit;Geschwindigkeit
+06_Tele;Landegeschwindigkeit;Landegeschwindigkeit
+06_Tele;Stroemungsabriss;Strömungsabriss
+06_Tele;GPS_sensor;GPS sensor
+06_Tele;Lagem_Hoehenhalt;Lagemodus mit Höhenhaltung
+06_Tele;Auto_Landung;Automatische Landung
+06_Tele;Autopilot;Autopilot
+06_Tele;Carefree;Carefree
+06_Tele;Kompass_Richtung;Kompass Richtung
+06_Tele;Kurs_Richtung;Kurs Richtung
+06_Tele;Folgen;Folgen
+06_Tele;Komm_nach_Hause;Komm nach Hause
+06_Tele;GPS_Fix;GPS Fix
+06_Tele;Anzahl_der_Satelliten;Anzahl der Satelliten
+06_Tele;Heimrichtung;Heimrichtung
+06_Tele;Heimrichtungsmodus;Heimrichtungsmodus
+06_Tele;Naechster_Wegpunkt;Nächster Wegpunkt
+06_Tele;GPS_Modus;GPS Modus
+06_Tele;Wegpunkt_erreicht;Wegpunkt erreicht
+06_Tele;verlorene_Datenpakete;verlorene Datenpakete
+07_Time;Akkuzeit;Akkuzeit
+07_Time;Uhr_1;Uhr 1
+07_Time;Uhr_2;Uhr 2
+07_Time;Uhr_3;Uhr 3
+07_Time;Countdown;Countdown
+07_Time;Uhrzeit;Uhrzeit
+07_Time;Flugzeit;Flugzeit
+07_Time;Rahmenzeit;Rahmenzeit
+07_Time;Stunde;Stunde
+07_Time;Rundenzeit;Rundenzeit
+07_Time;Logzeit;Logzeit
+07_Time;Minuten;Minuten
+07_Time;Modellzeit;Modellzeit
+07_Time;Motorlaufzeit;Motorlaufzeit
+07_Time;Laufzeit;Laufzeit
+07_Time;Sekunden;Sekunden
+07_Time;Stoppuhr;Stoppuhr
+07_Time;Timer_1;Timer 1
+07_Time;Timer_2;Timer 2
+07_Time;Timer_3;Timer 3
+07_Time;Timer_4;Timer 4
+07_Time;Timer_5;Timer 5
+07_Time;Timer_6;Timer 6
+07_Time;Timer_7;Timer 7
+07_Time;Timer_8;Timer 8
+07_Time;Up_timer;Up timer
+08_unit;Volt;Volt
+08_unit;Ampere;Ampere
+08_unit;mAh;Milliamperestunden
+08_unit;Watt;Watt
+08_unit;Meter;Meter
+08_unit;Fuss;Fuß
+08_unit;km_pro_Stunde;Kilometer pro Stunde
+08_unit;Meilen_pro_Stunde;Meilen pro Stunde
+08_unit;leer;leer
+08_unit;halb;halb
+08_unit;voll;voll
+08_unit;Mitte;Mitte
+08_unit;links;links
+08_unit;rechts;rechts
+08_unit;kein;kein
+08_unit;Uhr;Uhr
+08_unit;unten;unten
+08_unit;oben;oben
+08_unit;AUS;AUS
+08_unit;EIN;EIN
+08_unit;offen;offen
+08_unit;geschlossen;geschlossen
+08_unit;Start;Start
+08_unit;Stopp;Stopp
+08_unit;Richtung;Richtung
+08_unit;Grad;Grad
+08_unit;Prozent;Prozent
+08_unit;ja;ja
+08_unit;nein;nein
+08_unit;Minus;Minus
+08_unit;dbm;Dezibel
+08_unit;ms;Millisekunden
+08_unit;Umin;Umdrehungen pro Minute
+08_unit;Kilometer;Kilometer
+08_unit;Meilen;Meilen
+08_unit;m_pro_s;Meter pro Sekunde
+08_unit;m_pro_3s;Meter pro 3 Sekunden
+08_unit;m_pro_10s;Meter pro 10 Sekunden
+08_unit;ml;Milliliter
+08_unit;Hoch;Hoch
+08_unit;Niedrig;Niedrig
+08_unit;Mittel;Mittel
+09_Warn;min_Geschwindigkeit;minimale Geschwindigkeit
+09_Warn;halten;halten
+09_Warn;negative_Differenz;negative Differenz
+09_Warn;maximale_Entfernung;maximale Entfernung
+09_Warn;niedriges_Signal;niedriges Signal
+09_Warn;min_Temp_Sensor_1;minimale Temperatur Sensor 1
+09_Warn;min_Temp_Sensor_2;minimale Temperatur Sensor 2
+09_Warn;max_Temp_Sensor_1;maximale Temperatur Sensor 1
+09_Warn;max_Temp_Sensor_2;maximale Temperatur Sensor 2
+09_Warn;max_Spg_Sensor_1;maximale Spannung Sensor 1
+09_Warn;max_Spg_Sensor_2;maximale Spannung Sensor 2
+09_Warn;max_Geschwindigkeit;maximale Geschwindigkeit
+09_Warn;positive_Differenz;positive Differenz
+09_Warn;Hoehendifferenz;Höhendifferenz
+09_Warn;minimale_Hoehe;minimale Höhe
+09_Warn;min_Spannung;minimale Spannung
+09_Warn;niedrigste_Zellenspg;niedrigste Zellenspannung
+09_Warn;min_Spg_Sensor_1;minimale Spannung Sensor 1
+09_Warn;min_Spg_Sensor_2;minimale Spannung Sensor 2
+09_Warn;minimale_Drehzahl;minimale Drehzahl
+09_Warn;Treibstoffreserve;Treibstoffreserve
+09_Warn;Kapazitaet;Kapazität
+09_Warn;maximaler_Strom;maximaler Strom
+09_Warn;maximale_Spannung;maximale Spannung
+09_Warn;maximale_Drehzahl;maximale Drehzahl
+09_Warn;maximale Hoehe;maximale Höhe
+09_Warn;Abruptes_sinken;Abruptes sinken
+09_Warn;Schnelles_sinken;Schnelles sinken
+09_Warn;Normales_sinken;Normales sinken
+09_Warn;Langsames_sinken;Langsames sinken
+09_Warn;Sehr_langs_sinken;Sehr langsames sinken
+09_Warn;Sehr_langs_steigen;Sehr langsames steigen
+09_Warn;Langsames_steigen;Langsames steigen
+09_Warn;Normales_steigen;Normales steigen
+09_Warn;Schnelles_steigen;Schnelles steigen
+09_Warn;Abruptes_steigen;Abruptes steigen
+09_Warn;20m;20 Meter
+09_Warn;40m;40 Meter
+09_Warn;60m;60 Meter
+09_Warn;80m;80 Meter
+09_Warn;100m;100 Meter
+09_Warn;200m;200 Meter
+09_Warn;400m;400 Meter
+09_Warn;600m;600 Meter
+09_Warn;800m;800 Meter
+09_Warn;1000m;1000 Meter
+09_Warn;30m;30 Meter
+09_Warn;niedrigste_Hoehe;niedrigste Höhe
+09_Warn;hoechste_Hoehe;höchste Höhe
+09_Warn;niedrigste_Zelle;niedrigste Zelle
+09_Warn;Fehler;Fehler
+09_Warn;max_Temperatur;maximale Temperatur
+09_Warn;Manoevrierunfaehig;Manövrierunfähig
+09_Warn;Fehler_Kalibrierung;Fehler ,Kalibrierung
+09_Warn;F_Daten_nicht_empf;Fehler ,Daten nicht empfangen
+09_Warn;F_Navigation;Fehler ,Navigation
+09_Warn;Fehler_Kompass;Fehler ,Kompass
+09_Warn;Mindestgas;Mindestgas
+09_Warn;Schwebegasposition;Schwebegasposition
+09_Warn;beendet;beendet
+09_Warn;Fehler_Sensor;Fehler ,Sensor
+09_Warn;Motor_nicht_angeschl;Motor nicht angeschlossen
+09_Warn;unbenutzt;unbenutzt
+09_Warn;Temp_niedrig;Temperatur niedrig
+09_Warn;Temp_hoch;Temperatur hoch
+09_Warn;Wegpunkt_erreicht;Wegpunkt erreicht
+09_Warn;Naechster_Wegpunkt;Nöchster Wegpunkt
+09_Warn;Auto_Landung;Automatische Landung
+09_Warn;GPS_aus;GPS aus
+09_Warn;GPS_fix;GPS fix
+09_Warn;max_Servostrom;maximaler Servo strom
+09_Warn;maximale_Servo_temp;maximale Servo temperatur
+09_Warn;Servo_Positionsdiff;Servo Positionsdifferenz
+09_Warn;Empfaenger;Empfänger
+09_Warn;Hoehe_erreicht;Höhe erreicht
+09_Warn;Fehler_Redundanz;Fehler ,Redundanz
+09_Warn;Wassereinbruch;Wassereinbruch
+09_Warn;Signalfehler;Signalfehler
+09_Warn;Fehler_Spannung;Fehler ,Spannung
+09_Warn;F_Motorsensor;Fehler ,Motorsensor
+09_Warn;F_Reglertemp;Fehler ,Reglertemperatur
+09_Warn;Fehler_Motor_laeuft_nicht;Fehler ,Motor läuft nicht
+09_Warn;Fehler_max_Motortemp;Fehler ,maximale Motortemperatur
+09_Warn;Fehler_Strom_zu_hoch;Fehler ,Strom zu hoch
+09_Warn;Empfspg_niedrig;Empfängerspannung niedrig
+09_Warn;Niedrigste_spg;Niedrigste Spannung
+09_Warn;min_Kapazitaet;minimale Kapazität
+09_Warn;max_Kapazitaet;maximale Kapazität
+09_Warn;Failsafe;Failsafe
+09_Warn;Warnung;Warnung
+09_Warn;Motor_Stopp;Motor Stopp
+09_Warn;Phase_halten;Phase halten
+09_Warn;Phase_normal;Phase normal
+09_Warn;Voreing_Pos;Vor eingestellte Position
+09_Warn;Reglertemperatur;Reglertemperatur
+09_Warn;Motortemperatur;Motortemperatur
+09_Warn;Keine_Telemetriedat_empf;Keine Telemetriedaten empfangen
