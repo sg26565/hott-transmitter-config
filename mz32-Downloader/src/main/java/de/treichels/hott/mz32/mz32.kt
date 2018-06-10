@@ -3,8 +3,7 @@ package de.treichels.hott.mz32
 import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.model.firmware.Firmware
 import de.treichels.hott.util.hash
-import de.treichels.lzma.canCompress
-import de.treichels.lzma.uncompress
+import de.treichels.lzma.LZMA
 import org.controlsfx.dialog.ExceptionDialog
 import tornadofx.*
 import java.io.File
@@ -118,8 +117,8 @@ class Mz32(private val root: File) {
         if (!targetFile.exists() || (targetFile.length() != hash.size || hash != path.hash) && !path.isUser && !path.isLangUser) {
             task.print("\tDownloading ${path.value} from server ... ")
             try {
-                if (canCompress(targetFile.extension))
-                    Firmware.download("$root${path.value}.lzma") { inputStream -> uncompress(inputStream, targetFile.outputStream()) }
+                if (LZMA.canCompress(targetFile.extension))
+                    Firmware.download("$root${path.value}.lzma") { inputStream -> LZMA.uncompress(inputStream, targetFile.outputStream()) }
                 else
                     Firmware.download(task, "$root${path.value}", file = targetFile)
 

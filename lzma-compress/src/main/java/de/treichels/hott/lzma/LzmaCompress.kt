@@ -5,8 +5,7 @@ import de.treichels.hott.mz32.MD5Sum
 import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.util.extract
 import de.treichels.hott.util.hash
-import de.treichels.lzma.canCompress
-import de.treichels.lzma.compress
+import de.treichels.lzma.LZMA
 import javafx.concurrent.Service
 import javafx.concurrent.Task
 import javafx.concurrent.Worker
@@ -42,13 +41,13 @@ private class LzmaCompressTask(private val zipFile: ZipFile, private val target:
             entries.stream().parallel().forEach { zipEntry ->
                 if (!isCancelled) {
                     val size = zipEntry.size
-                    val file: File = if (canCompress(zipEntry.name)) {
+                    val file: File = if (LZMA.canCompress(zipEntry.name)) {
                         // compress all other files
                         File(target, "${zipEntry.name}.lzma").apply {
                             parentFile.mkdirs()
                             val hash = zipFile.hash(zipEntry)
                             md5Sum["/${zipEntry.name}"] = Hash(size, hash)
-                            compress(zipFile.getInputStream(zipEntry), outputStream())
+                            LZMA.compress(zipFile.getInputStream(zipEntry), outputStream())
                         }
                     } else {
                         // extract files that cannot be compressed further
