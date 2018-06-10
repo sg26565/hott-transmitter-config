@@ -1,5 +1,13 @@
 2018-06-09
 ==========
+    mz32-Downloader-0.9.3.43
+    - re-scan only selected languages
+    - calculate missing checksums on the fly
+    - use mono-typed font for text area
+    - exclude more paths from scanning to improve speed
+
+ 2018-06-09
+==========
     mz32-Downloader-0.9.3.42
     - renamed from mz32-Upgrader
     - added function to cancel downloads

@@ -297,12 +297,12 @@
             <dependency>
                 <groupId>org.xhtmlrenderer</groupId>
                 <artifactId>flying-saucer-core</artifactId>
-                <version>9.1.7</version>
+                <version>9.1.13</version>
             </dependency>
             <dependency>
                 <groupId>org.xhtmlrenderer</groupId>
                 <artifactId>flying-saucer-pdf-itext5</artifactId>
-                <version>9.1.7</version>
+                <version>9.1.13</version>
             </dependency>
             <dependency>
                 <groupId>commons-codec</groupId>
