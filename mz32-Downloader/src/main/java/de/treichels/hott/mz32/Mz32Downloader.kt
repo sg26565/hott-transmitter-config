@@ -197,7 +197,7 @@ class Mz32Downloader : View() {
     private fun startTask() {
         task = runAsync {
             if (doReindex) {
-                mz32.scan(this)
+                mz32.scan(this, selectedLanguages)
             }
             mz32.update(this, selectedLanguages, doUpdateResources, doReplaceHelpPages, doReplaceVoiceFiles, doUpdateFirware)
             runLater { armTask() }

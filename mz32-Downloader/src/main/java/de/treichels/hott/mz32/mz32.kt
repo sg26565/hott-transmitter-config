@@ -29,9 +29,9 @@ class Mz32(private val root: File) {
 
     private val remotePath = "/Firmware/${TransmitterType.category}/$productCode"
 
-    fun scan(task: FXTask<*>) {
+    fun scan(task: FXTask<*>, languages: List<Language>) {
         md5.clear()
-        md5.scan(task)
+        md5.scan(task, languages)
         md5.save()
     }
 

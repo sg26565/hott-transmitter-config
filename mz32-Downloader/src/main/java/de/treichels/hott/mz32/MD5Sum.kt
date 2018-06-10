@@ -15,27 +15,30 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
     /**
      * Scan all files under root an re-calculate hashes.
      */
-    fun scan(task: FXTask<*>) {
+    fun scan(task: FXTask<*>, languages: List<Language>) {
         if (task.isCancelled || root == null) return
 
         task.print("Calculating checksums for all files on $root\n")
 
-        scan(task, root, root)
+        scan(task, root, root, languages)
     }
 
-    private fun scan(task: FXTask<*>, dir: File, root: File) {
+    private fun scan(task: FXTask<*>, dir: File, root: File, languages: List<Language>) {
         dir.listFiles().forEach { file ->
             if (task.isCancelled) return
 
             if (file.isDirectory) {
-                scan(task, file, root)
+                scan(task, file, root, languages)
             } else {
                 val path = "/" + file.relativeTo(root).path.replace(File.separatorChar, '/')
                 Path(path).apply {
-                    if (!isUser && !isLangUser) {
+                    if (!isUser && !isLangUser && (!isLang || languages.contains(language))) {
+                        task.print(file.name)
                         val hash = file.hash()
                         this@MD5Sum[path] = Hash(file.length(), hash)
                         task.print("\thash=$hash\tsize=${file.length()}\tpath=$path\n")
+                    } else {
+                        task.print("\tskipping $path\n")
                     }
                 }
             }
