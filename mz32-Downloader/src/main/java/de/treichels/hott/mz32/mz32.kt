@@ -2,6 +2,7 @@ package de.treichels.hott.mz32
 
 import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.model.firmware.Firmware
+import de.treichels.hott.util.hash
 import de.treichels.lzma.canCompress
 import de.treichels.lzma.uncompress
 import org.controlsfx.dialog.ExceptionDialog
@@ -107,6 +108,12 @@ class Mz32(private val root: File) {
         if (task.isCancelled) return
 
         val targetFile = path.targetFile
+
+        if (targetFile.exists() && path.hash == null) {
+            task.print("\tCalculating checksum for $targetFile ... ")
+            path.hash = Hash(targetFile.length(), targetFile.hash())
+            task.print("ok\n")
+        }
 
         if (!targetFile.exists() || (targetFile.length() != hash.size || hash != path.hash) && !path.isUser && !path.isLangUser) {
             task.print("\tDownloading ${path.value} from server ... ")
