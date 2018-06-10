@@ -173,7 +173,7 @@ class Mz32Downloader : View() {
         textArea = textarea {
             isEditable = false
             prefHeight = 200.0
-            font = Font.font("Monospaced Regular", 12.0)
+            style = "-fx-font-family: monospace"
             vgrow = Priority.SOMETIMES
         }
 
