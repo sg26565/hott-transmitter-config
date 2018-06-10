@@ -17,7 +17,6 @@ import jssc.SerialPort
 import jssc.SerialPort.*
 import jssc.SerialPortEvent
 import jssc.SerialPortEventListener
-import jssc.SerialPortList
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
@@ -90,6 +89,6 @@ class JSSCSerialPort(portName: String) : SerialPortBase(portName), SerialPortEve
 
     companion object {
         val availablePorts: List<String>
-            get() = SerialPortList.getPortNames().toList()
+            get() = JSSCSerialPortList.getPortNames().toList()
     }
 }
