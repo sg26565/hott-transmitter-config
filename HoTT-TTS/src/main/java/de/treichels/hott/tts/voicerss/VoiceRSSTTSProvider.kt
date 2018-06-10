@@ -1,8 +1,7 @@
 package de.treichels.hott.tts.voicerss
 
-import com.sun.media.sound.WaveFileReader
+import de.treichels.hott.model.voice.WaveFileReader
 import de.treichels.hott.tts.*
-import java.io.BufferedInputStream
 import java.net.URL
 import java.net.URLEncoder
 import java.util.*

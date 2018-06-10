@@ -1,7 +1,7 @@
 package de.treichels.hott.tts.win10
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.sun.media.sound.WaveFileReader
+import de.treichels.hott.model.voice.WaveFileReader
 import de.treichels.hott.tts.Quality
 import de.treichels.hott.tts.Text2SpeechProvider
 import de.treichels.hott.tts.Voice
