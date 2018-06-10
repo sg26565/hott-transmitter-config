@@ -32,6 +32,6 @@ internal class Path(path: String) {
     companion object {
         private const val helpPath = "/Help"
         private const val voicePath = "/Voice"
-        private val userPaths = listOf("/Image", "/Log", "/Model", "/MP3", "/Screenshot")
+        private val userPaths = listOf("/GraupnerDisk.cfg", "/Image", "/Log", "/Model", "/MP3", "/Screenshot", "/System Volume Information", "/Update/ftplist")
     }
 }
