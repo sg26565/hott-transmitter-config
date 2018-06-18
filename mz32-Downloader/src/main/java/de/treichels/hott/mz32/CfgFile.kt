@@ -1,6 +1,7 @@
 package de.treichels.hott.mz32
 
 import java.io.File
+import java.io.InputStream
 import java.util.*
 
 /**
@@ -11,10 +12,11 @@ class CfgFile : HashMap<String, String>() {
     companion object {
         private const val delimiter = " : "
 
-        fun load(file: File) = CfgFile().apply {
-            if (file.exists() && file.isFile && file.canRead()) {
-                println(file)
-                file.forEachLine { it ->
+        fun load(file: File) = load(file.inputStream())
+
+        fun load(inputStream: InputStream) = CfgFile().apply {
+            inputStream.use {
+                it.reader().forEachLine {
                     val line = it.trim()
 
                     if (!line.isBlank() && !line.startsWith("#") && line.contains(delimiter)) {
