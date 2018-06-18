@@ -10,9 +10,9 @@ import tornadofx.*
 import java.io.File
 import java.util.concurrent.CountDownLatch
 
-class Mz32(private val root: File) {
-    private val cfgFile = CfgFile.load(File(root, GRAUPNER_DISK_CFG))
-    private val md5 = MD5Sum(root)
+class Mz32(private val rootDir: File) {
+    private val cfgFile = CfgFile.load(File(rootDir, GRAUPNER_DISK_CFG))
+    private val md5 = MD5Sum(rootDir)
 
     @Suppress("MemberVisibilityCanBePrivate")
     val productName = cfgFile["Product name"]!!
@@ -39,15 +39,14 @@ class Mz32(private val root: File) {
     fun update(task: FXTask<*>, languages: List<Language>, updateResources: Boolean = true, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true, updateFirmware: Boolean = true) {
         if (task.isCancelled) return
 
-        task.print("Checking for latest online versions ...\n")
+        val (latestFirmware, latestResources) = findLatest(task)
 
         md5.load()
-        TransmitterType.forProductCode(productCode).getFirmware().sortedBy { it.name }.forEach { firmware ->
-            if (firmware.name.endsWith(".bin") && updateFirmware)
-                updateFirmware(task, firmware)
-            else if (firmware.name.endsWith(".zip") && updateResources)
-                updateResources(task, languages, firmware, replaceHelpPages, replaceVoiceFiles)
+        if (updateResources) updateResources(task, languages, latestResources, replaceHelpPages, replaceVoiceFiles)
+        if (updateFirmware) TransmitterType.forProductCode(productCode).getFirmware().firstOrNull { it.name == latestFirmware }?.apply {
+            updateFirmware(task, this)
         }
+
         md5.save()
 
         if (task.isCancelled)
@@ -56,13 +55,20 @@ class Mz32(private val root: File) {
             task.print("\nall done\n")
     }
 
-    private fun updateResources(task: FXTask<*>, languages: List<Language>, firmware: Firmware<TransmitterType>, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true) {
+    private fun findLatest(task: FXTask<*>) = Firmware.download("$remotePath/latest.txt") {
+        task.print("Checking for latest online versions ... ")
+        val cfg = CfgFile.load(it)
+        task.print("ok\n")
+
+        Pair(cfg["firmware"]!!, cfg["resources"]!!)
+    }
+
+    private fun updateResources(task: FXTask<*>, languages: List<Language>, firmware: String, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true) {
         if (task.isCancelled) return
 
-        task.print("\nFound resources ${firmware.name} ...\n")
+        task.print("\nFound resources $firmware ...\n")
 
-        val remoteRoot = "$remotePath/${firmware.name.substringBeforeLast(".zip")}.lzma"
-        //println("updateResources: remoteRoot = $remoteRoot")
+        val remoteRoot = "$remotePath/$firmware"
 
         task.updateProgress(0.0, 1.0)
 
@@ -100,42 +106,60 @@ class Mz32(private val root: File) {
 
         // delete VoiceList.lst in each language folder
         if (replaceVoiceFiles) languages.map { "/Voice/${it.name}/VoiceList.lst" }.forEach {
-            File(root, it).delete()
+            File(rootDir, it).delete()
         }
     }
 
-    private fun updateFileOnline(task: FXTask<*>, root: String, path: Path, hash: Hash) {
+    private fun updateFileOnline(task: FXTask<*>, root: String, path: Path, remoteHash: Hash) {
         if (task.isCancelled) return
 
-        val targetFile = path.targetFile
+        val filePath = path.value
 
-        if (targetFile.exists() && path.hash == null) {
-            task.print("\tCalculating checksum for $targetFile ... ")
-            path.hash = Hash(targetFile.length(), targetFile.hash())
+        // local file on transmitter
+        val file = File(rootDir, filePath).apply { parentFile.mkdirs() }
+
+        // local file size
+        val fileSize = file.length()
+
+        // local hash according to local md5sum.txt
+        val localHash = md5[filePath]
+
+        // local size according to local md5sum.txt
+        val localSize = localHash?.size ?: 0L
+
+        // remote size according to remote md5sum.txt
+        val remoteSize = remoteHash.size
+
+        // re-calculate missing or invalid hash if file exists and has same size as remote
+        if (file.exists() && fileSize == remoteSize && (localHash == null || localSize != fileSize)) {
+            task.print("\tCalculating checksum for $file ... ")
+            val hash = Hash(fileSize, file.hash())
+            md5[filePath] = hash
             task.print("ok\n")
         }
 
-        if (!targetFile.exists() || (targetFile.length() != hash.size || hash != path.hash) && !path.isUser && !path.isLangUser) {
-            task.print("\tDownloading ${path.value} from server ... ")
+        // if target file does not exist or has different size as remote or has different remoteHash
+        if (!file.exists() || (fileSize != remoteSize || remoteHash !=  md5[filePath]) && !path.isUser && !path.isLangUser) {
+            task.print("\tDownloading $file from server ... ")
             try {
-                if (canCompress(targetFile.extension))
-                    Firmware.download("$root${path.value}.lzma") { inputStream -> uncompress(inputStream, targetFile.outputStream()) }
+                if (canCompress(file.extension))
+                    Firmware.download("$root$filePath.lzma") { inputStream -> uncompress(inputStream, file.outputStream()) }
                 else
-                    Firmware.download(task, "$root${path.value}", file = targetFile)
+                    Firmware.download(task, "$root$filePath", file = file)
 
-                path.hash = hash
+                md5[filePath] = remoteHash
                 task.print("ok\n")
 
                 if (task.isCancelled) return
 
                 // cleanup lang files (/Help and /Voice, except /Voice/*/10_*)
                 if (path.isLang && !path.isLangUser) {
-                    val number = targetFile.number()
-                    targetFile.parentFile.listFiles().forEach { file ->
+                    val number = file.number()
+                    file.parentFile.listFiles().forEach {
                         try {
-                            if (file != targetFile && file.number() == number) {
-                                task.print("\tRemoving obsolete file ${file.absolutePath}\n")
-                                file.delete()
+                            if (it != it && it.number() == number) {
+                                task.print("\tRemoving obsolete file $it\n")
+                                it.delete()
                             }
                         } catch (e: Exception) {
                             // ignore
@@ -151,14 +175,6 @@ class Mz32(private val root: File) {
 
     private fun File.number() = NUM_REGEX.matchEntire(name)!!.groupValues[1].toInt()
 
-    private val Path.targetFile
-        get() = File(root, value).apply { parentFile.mkdirs() }
-    private var Path.hash: Hash?
-        get() = md5[value]
-        set(hash) {
-            if (hash != null) md5[value] = hash
-        }
-
     private fun showError(e: Exception) {
         val latch = CountDownLatch(1)
 
@@ -173,19 +189,21 @@ class Mz32(private val root: File) {
     private fun updateFirmware(task: FXTask<*>, firmware: Firmware<TransmitterType>) {
         if (task.isCancelled) return
 
-        task.print("\nFound firmware ${firmware.name} ...\n")
+        val fileName = firmware.name
+        val filePath = "$updatePath/$fileName"
+        val file = File(rootDir, filePath)
+        val fileSize = file.length()
+        val firmwareSize = firmware.size
 
-        val targetDir = File(root, updatePath)
-        val targetFile = File(targetDir, firmware.name)
-        val path = Path("$updatePath/${firmware.name}")
+        task.print("\nFound firmware $fileName ...\n")
 
-        if (!targetFile.exists() || targetFile.length() != firmware.size || firmware.hash != path.hash?.hash) {
-            task.print("\tDownloading $targetFile from server ... ")
-            val hash = Firmware.download(task, "$remotePath/${firmware.name}", firmware.size, targetFile)
-            path.hash = Hash(firmware.size, hash)
+        if (!file.exists() || fileSize != firmwareSize) {
+            task.print("\tDownloading $file from server ... ")
+            val hash = Firmware.download(task, "$remotePath/$fileName", firmwareSize, file)
+            md5[filePath] = Hash(firmwareSize, hash)
             task.print("ok\n")
         } else {
-            task.print("\t$targetFile is uptodate\n")
+            task.print("\t$file is uptodate\n")
         }
 
         md5.save()
@@ -193,7 +211,7 @@ class Mz32(private val root: File) {
     }
 
     override fun toString(): String {
-        return "$root ($productName [$productCode] v$productVersion)"
+        return "$rootDir ($productName [$productCode] v$productVersion)"
     }
 
     companion object {
