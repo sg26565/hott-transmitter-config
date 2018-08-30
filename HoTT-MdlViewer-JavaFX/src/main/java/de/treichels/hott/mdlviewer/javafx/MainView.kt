@@ -18,6 +18,7 @@ import javafx.beans.binding.Bindings
 import javafx.beans.property.ReadOnlyBooleanProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.concurrent.Task
+import javafx.concurrent.Worker
 import javafx.scene.Cursor
 import javafx.scene.control.ContextMenu
 import javafx.scene.input.MouseButton
@@ -55,6 +56,9 @@ class MainView : View() {
             modelProperty.set(model)
             refresh()
         }
+
+    // Misc.
+    private lateinit var tempFile: File
 
     // UI
     override val root = borderpane {
@@ -97,9 +101,18 @@ class MainView : View() {
                         action { exit() }
                     }
                 }
+            }
+        }
 
-                contextmenu {
-                    this@MainView.contextMenu = this
+        center {
+            webView = webview {
+                // delete temp file after loding
+                engine.loadWorker.stateProperty().addListener { _, _, value ->
+                    if (value == Worker.State.SUCCEEDED)
+                        tempFile.delete()
+                }
+                setOnMouseClicked { mouseClicked(it) }
+                contextMenu = contextmenu {
                     item(messages["load_from_file"]) { action { loadFromFile() } }
                     item(messages["load_from_memory"]) { action { loadFromMemory() } }
                     item(messages["load_from_sdcard"]) { action { loadFromSdCard() } }
@@ -125,12 +138,6 @@ class MainView : View() {
                     separator()
                     item(messages["exit"]) { action { exit() } }
                 }
-            }
-        }
-
-        center {
-            webView = webview {
-                setOnMouseClicked { mouseClicked(it) }
                 isContextMenuEnabled = false
             }
         }
@@ -265,7 +272,9 @@ class MainView : View() {
      * Refresh [WebView] with specified [Model]
      */
     private fun refresh(model: Model) {
-        val tempFile = File.createTempFile("Model", ".html")
+        if (this::tempFile.isInitialized && tempFile.exists()) tempFile.delete()
+
+        tempFile = File.createTempFile("Model", ".html")
         tempFile.deleteOnExit()
 
         webView.runAsyncWithOverlay {
@@ -274,7 +283,6 @@ class MainView : View() {
             disableUI(runningProperty())
         }.ui {
             webView.engine.load("file:/${tempFile.absolutePath}")
-            runLater { tempFile.delete() }
         }
     }
 
