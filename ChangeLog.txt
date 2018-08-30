@@ -1,3 +1,17 @@
+2018-08-30
+==========
+    mz32-Downloader-0.9.3.49
+    FirmwareUpgrader-0.9.3.43
+    VDFEditor-0.9.3.210
+    HoTT-TTS-0.9.3.37
+    MdlViewer-0.9.3.229
+    - Java 10 compatibility
+    
+2018-06-09
+==========
+    mz32-Downloader-0.9.3.46
+    - read latest versions from latest.txt from FTP server
+
 2018-06-09
 ==========
     mz32-Downloader-0.9.3.43
