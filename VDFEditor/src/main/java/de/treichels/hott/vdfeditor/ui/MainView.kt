@@ -291,7 +291,7 @@ class MainView : View() {
     }
 
     private fun addRestoreFiles() {
-        TransmitterType.values().filter { it != TransmitterType.unknown }.forEach { transmitterType ->
+        TransmitterType.values().filter { !listOf(TransmitterType.unknown, TransmitterType.mz32, TransmitterType.mz32beta).contains(it) }.forEach { transmitterType ->
             restoreMenu.items.add(Menu(transmitterType.toString()).apply {
                 for (variant in listOf(null, "MikroKopter", "Team", "Team-schnell")) {
                     // base name
@@ -1275,7 +1275,7 @@ class MainView : View() {
         val version: Int
 
         when (transmitterType) {
-        // V3 only transmitters
+            // V3 only transmitters
             TransmitterType.mc26, TransmitterType.mc28 -> {
                 version = 3000
 
@@ -1287,7 +1287,7 @@ class MainView : View() {
                 items.remove(2.5f)
             }
 
-        // V2 only transmitters
+            // V2 only transmitters
             TransmitterType.mz12, TransmitterType.mz18, TransmitterType.mz24, TransmitterType.x8e, TransmitterType.x8n -> {
                 version = 2000
 
@@ -1299,8 +1299,8 @@ class MainView : View() {
                 items.remove(3.0f)
             }
 
-        // V2 or V2.5 transmitters
-        // mc16, mc20, mc32, mx12, mx16, mx20, mz12Pro, mz24Pro
+            // V2 or V2.5 transmitters
+            // mc16, mc20, mc32, mx12, mx16, mx20, mz12Pro, mz24Pro
             else ->
                 when (voiceFile.vdfType) {
                     VDFType.System -> {
@@ -1315,7 +1315,7 @@ class MainView : View() {
                         items.remove(3.0f)
                     }
 
-                // User VDF
+                    // User VDF
                     else -> {
                         version = 2500
 
