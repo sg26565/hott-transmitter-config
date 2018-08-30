@@ -9,6 +9,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.2.61</kotlin.version>
+        <proguard.version>6.0.3</proguard.version>
     </properties>
 
     <modules>
@@ -200,7 +201,7 @@
                         <dependency>
                             <groupId>net.sf.proguard</groupId>
                             <artifactId>proguard-base</artifactId>
-                            <version>6.0.1</version>
+                            <version>${proguard.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
