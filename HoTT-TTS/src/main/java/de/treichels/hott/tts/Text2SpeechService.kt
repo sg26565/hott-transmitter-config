@@ -6,7 +6,7 @@ import javafx.concurrent.Service
 import javafx.concurrent.Task
 import javax.sound.sampled.AudioInputStream
 
-class Text2SpeechService() : Service<AudioInputStream>() {
+class Text2SpeechService : Service<AudioInputStream>() {
     override fun createTask(): Task<AudioInputStream> = object : Task<AudioInputStream>() {
         override fun call(): AudioInputStream {
             val audioInputStream = provider.speak(text, voice, speed, (volume * 100).toInt(), Quality(frameRate, channels, sampleSize), ssml)

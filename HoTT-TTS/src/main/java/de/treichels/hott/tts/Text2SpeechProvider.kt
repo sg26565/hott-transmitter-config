@@ -20,7 +20,7 @@ open class Voice {
     lateinit var id: String
     lateinit var name: String
 
-    override fun toString() = "$description"
+    override fun toString() = description
 }
 
 open class Quality(val sampleRate: Int, val channels: Int, val sampleSize: Int = 16) {
