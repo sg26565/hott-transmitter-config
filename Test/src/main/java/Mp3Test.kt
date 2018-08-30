@@ -1,31 +1,18 @@
-import com.sun.media.sound.WaveFileReader
+
 import de.treichels.hott.model.voice.Player
 import de.treichels.hott.model.voice.VolumeControlAudioInputStream
-import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader
-import javazoom.spi.vorbis.sampled.file.VorbisAudioFileReader
-import org.apache.commons.io.FilenameUtils
 import java.io.File
 import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioSystem
 
 fun main(vararg args: String) {
-    play(File("G:\\Meine Ablage\\Weatronic\\Sounds\\Sprache_BAT60_Anna\\Vollgas.wav"))
-    play(File("G:\\Meine Ablage\\Weatronic\\Sounds\\Sprache_BAT60_Anna\\Vollgas.mp3"))
-    play(File("G:\\Meine Ablage\\Weatronic\\Sounds\\Sprache_BAT60_Anna\\Vollgas.ogg"))
+    play("G:\\Meine Ablage\\Weatronic\\Sounds\\Sprache_BAT60_Anna\\Vollgas.wav")
+    play("G:\\Meine Ablage\\Weatronic\\Sounds\\Sprache_BAT60_Anna\\Vollgas.mp3")
+    play("G:\\Meine Ablage\\Weatronic\\Sounds\\Sprache_BAT60_Anna\\Vollgas.ogg")
 }
 
-private fun play(file: File) {
-    val inputStream = file.inputStream()
-    val extension = FilenameUtils.getExtension(file.name)
-
-    val fileReader = when (extension) {
-        "wav" -> WaveFileReader()
-        "mp3" -> MpegAudioFileReader()
-        "ogg" -> VorbisAudioFileReader()
-        else -> TODO()
-    }
-
-    var audioInputStream = fileReader.getAudioInputStream(inputStream)
+private fun play(path: String) {
+    var audioInputStream = AudioSystem.getAudioInputStream(File(path))
     var format = audioInputStream.format
 
     // convert to PCM

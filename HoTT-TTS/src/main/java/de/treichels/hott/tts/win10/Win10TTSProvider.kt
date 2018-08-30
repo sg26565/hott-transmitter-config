@@ -1,7 +1,6 @@
 package de.treichels.hott.tts.win10
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.sun.media.sound.WaveFileReader
 import de.treichels.hott.tts.Quality
 import de.treichels.hott.tts.Text2SpeechProvider
 import de.treichels.hott.tts.Voice
@@ -9,6 +8,7 @@ import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.sound.sampled.AudioInputStream
+import javax.sound.sampled.AudioSystem
 
 class Win10Voice : Voice() {
     // culture is an alias for locale
@@ -113,7 +113,7 @@ exit
             val bytes = tempFile.readBytes()
 
             // convert to AudioInputStream
-            return WaveFileReader().getAudioInputStream(bytes.inputStream())
+            return AudioSystem.getAudioInputStream(bytes.inputStream())
         } finally {
             if (process.isAlive) process.destroy()
             tempFile.delete()

@@ -1,13 +1,12 @@
 package de.treichels.hott.tts.voicerss
 
-import com.sun.media.sound.WaveFileReader
 import de.treichels.hott.tts.*
-import java.io.BufferedInputStream
 import java.net.URL
 import java.net.URLEncoder
 import java.util.*
 import java.util.prefs.Preferences
 import javax.sound.sampled.AudioInputStream
+import javax.sound.sampled.AudioSystem
 
 class VoiceRSSTTSProvider : Text2SpeechProvider() {
     companion object {
@@ -50,7 +49,7 @@ class VoiceRSSTTSProvider : Text2SpeechProvider() {
         val format = Format.valueOf("pcm_${quality.sampleRate / 1000}khz_${quality.sampleSize}bit_${if (quality.channels == 1) "mono" else "stereo"}")
         val key = if (apiKey.isNullOrBlank()) VOICE_RSS_DEFAULT_API_KEY else apiKey!!
         val url = URL("http://api.voicerss.org/?key=$key&hl=${voice.id}&r=$speed&c=WAV&f=${format.key}&ssml=false&b64=false&src=${URLEncoder.encode(text, "UTF-8")}")
-        return WaveFileReader().getAudioInputStream(url)
+        return AudioSystem.getAudioInputStream(url)
     }
 }
 
