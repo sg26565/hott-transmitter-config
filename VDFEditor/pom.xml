@@ -182,10 +182,6 @@
     <dependencies>
         <dependency>
             <groupId>de.treichels.hott</groupId>
-            <artifactId>HoTT-Model</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.treichels.hott</groupId>
             <artifactId>HoTT-Decoder</artifactId>
         </dependency>
         <dependency>
@@ -199,10 +195,6 @@
         <dependency>
             <groupId>de.treichels.hott</groupId>
             <artifactId>HoTT-Report-PDF</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.tornado</groupId>
-            <artifactId>tornadofx</artifactId>
         </dependency>
         <dependency>
             <groupId>de.treichels.hott</groupId>

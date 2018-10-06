@@ -136,24 +136,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>no.tornado</groupId>
-            <artifactId>tornadofx</artifactId>
-        </dependency>
-        <dependency>
             <groupId>de.treichels.hott</groupId>
             <artifactId>HoTT-Model</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-jcl</artifactId>
         </dependency>
         <dependency>
             <groupId>SevenZip</groupId>
             <artifactId>lzma-sdk</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.controlsfx</groupId>
-            <artifactId>controlsfx</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -46,12 +46,8 @@
 			<artifactId>jssc</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>no.tornado</groupId>
-			<artifactId>tornadofx</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
-	</dependencies>
+    </dependencies>
 </project>

@@ -136,10 +136,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>no.tornado</groupId>
-            <artifactId>tornadofx</artifactId>
-        </dependency>
-        <dependency>
             <groupId>de.treichels.hott</groupId>
             <artifactId>HoTT-Model</artifactId>
         </dependency>
