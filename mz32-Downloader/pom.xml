@@ -144,6 +144,8 @@
             <artifactId>lzma-sdk</artifactId>
         </dependency>
         <dependency>
+            <artifactId>Java8ComboBoxListViewSkin</artifactId>
+            <groupId>de.treichels.hott</groupId>
         </dependency>
     </dependencies>
 </project>
