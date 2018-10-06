@@ -7,9 +7,13 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
 
+/**
+ * A map that stores a hash value for each file path.
+ */
 class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
     constructor() : this(null)
 
+    /** the default file were data will be loaded from or saved to */
     private val md5Sum by lazy { File(root, MD5_FILE_NAME) }
 
     /**
@@ -20,28 +24,26 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
 
         task.print("Calculating checksums for all files on $root\n")
 
-        scan(task, root, root, languages)
-    }
+        val files = root.walk().iterator().asSequence().filter { it.isFile }.toList().sorted()
+        val total = files.size.toLong()
 
-    private fun scan(task: FXTask<*>, dir: File, root: File, languages: List<Language>) {
-        dir.listFiles().forEach { file ->
+        files.forEachIndexed { index, file ->
             if (task.isCancelled) return
 
-            if (file.isDirectory) {
-                scan(task, file, root, languages)
-            } else {
-                val path = "/" + file.relativeTo(root).path.replace(File.separatorChar, '/')
-                Path(path).apply {
-                    if (!isUser && !isLangUser && (!isLang || languages.contains(language))) {
-                        task.print(file.name)
-                        val hash = file.hash()
-                        this@MD5Sum[path] = Hash(file.length(), hash)
-                        task.print("\thash=$hash\tsize=${file.length()}\tpath=$path\n")
-                    } else {
-                        task.print("\tskipping $path\n")
-                    }
+            val path = "/${file.relativeTo(root).path.replace(File.separatorChar, '/')}"
+
+            Path(path).apply {
+                if (!isProtected && (!isLang || languages.contains(language))) {
+                    val hash = file.hash()
+                    val size = file.length()
+                    this@MD5Sum[path] = Hash(size, hash)
+                    task.print("\thash=$hash\tsize=$size\tpath=$path\n")
+                } else {
+                    task.print("\tskipping $path\n")
                 }
             }
+
+            task.updateProgress(index.toLong(), total)
         }
     }
 
@@ -67,12 +69,12 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
      * Load hashes from input stream.
      */
     fun load(inputStream: InputStream) {
-        inputStream.reader().use {
-            it.forEachLine { line ->
+        inputStream.reader().use { reader ->
+            reader.forEachLine { line ->
                 try {
                     if (!line.isBlank() && !line.startsWith("#") && line.count { it == '|' } == 2) {
                         val (hash, size, path) = line.split('|')
-                        this[path] = Hash(size.toLong(), hash)
+                        this[path.trim()] = Hash(size.toLong(), hash.trim())
                     }
                 } catch (e: Exception) {
                     // ignore malformed lines
@@ -92,7 +94,7 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
      * Save hashes to specified file.
      */
     @Suppress("MemberVisibilityCanBePrivate")
-    fun save(file: File) = save(file.outputStream())
+    fun save(file: File): Unit = save(file.outputStream())
 
     /**
      * Save hashes to output stream.

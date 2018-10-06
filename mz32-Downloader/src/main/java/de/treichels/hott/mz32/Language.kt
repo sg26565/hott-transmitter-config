@@ -4,7 +4,7 @@ import tornadofx.*
 import java.util.*
 
 enum class Language {
-    cz, en, es, fr, ge, it, kr, nl;
+    ch, cz, en, es, fr, ge, it, kr, nl;
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

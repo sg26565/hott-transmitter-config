@@ -12,29 +12,37 @@ fun canCompress(fileName: String) = when (fileName.substringAfterLast('.')) {
     else -> true
 }
 
-fun canCompress(file: File) = canCompress(file.name)
+fun canCompress(file: File) = file.isFile && canCompress(file.name)
 
 fun compress(inputStream: InputStream, outputStream: OutputStream) {
-    inputStream.use {
-        outputStream.use {
+    inputStream.use { instream ->
+        outputStream.use { outstream ->
             Encoder().apply {
                 SetEndMarkerMode(true)
-                WriteCoderProperties(outputStream)
-                Code(inputStream, outputStream, -1, -1, null)
+                WriteCoderProperties(outstream)
+                Code(instream, outstream, -1, -1, null)
             }
         }
     }
 }
 
+fun compress(inputFile: File, outputFile: File) {
+    compress(inputFile.inputStream(), outputFile.outputStream())
+}
+
 fun uncompress(inputStream: InputStream, outputStream: OutputStream) {
-    inputStream.use {
-        outputStream.use {
+    inputStream.use { instream ->
+        outputStream.use { outstream ->
             Decoder().apply {
                 val properties = ByteArray(5)
-                if (inputStream.read(properties) != properties.size) throw IOException("input .lzma file is too short")
+                if (instream.read(properties) != properties.size) throw IOException("input .lzma file is too short")
                 if (!SetDecoderProperties(properties)) throw IOException("Incorrect stream properties")
-                if (!Code(inputStream, outputStream, -1)) throw  IOException("Error in data stream")
+                if (!Code(instream, outstream, -1)) throw  IOException("Error in data stream")
             }
         }
     }
+}
+
+fun uncompress(inputFile: File, outputFile: File) {
+    uncompress(inputFile.inputStream(), outputFile.outputStream())
 }

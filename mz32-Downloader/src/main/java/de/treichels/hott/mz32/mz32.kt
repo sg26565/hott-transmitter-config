@@ -2,10 +2,10 @@ package de.treichels.hott.mz32
 
 import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.model.firmware.Firmware
+import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.util.hash
 import de.treichels.lzma.canCompress
 import de.treichels.lzma.uncompress
-import org.controlsfx.dialog.ExceptionDialog
 import tornadofx.*
 import java.io.File
 import java.util.concurrent.CountDownLatch
@@ -15,15 +15,15 @@ class Mz32(private val rootDir: File) {
     private val md5 = MD5Sum(rootDir)
 
     @Suppress("MemberVisibilityCanBePrivate")
-    val productName = cfgFile["Product name"]!!
+    val productName: String = cfgFile["Product name"]!!
     @Suppress("MemberVisibilityCanBePrivate")
-    val productCode = cfgFile["Product code"]!!.toInt()
+    val productCode: Int = cfgFile["Product code"]!!.toInt()
     @Suppress("MemberVisibilityCanBePrivate")
-    val productVersion = cfgFile["Product ver."]!!.toFloat() / 1000
+    val productVersion: Float = cfgFile["Product ver."]!!.toFloat() / 1000
     @Suppress("unused")
-    val rfidNumber = cfgFile["RFID number"]!!
+    val rfidNumber: String = cfgFile["RFID number"]!!
     @Suppress("MemberVisibilityCanBePrivate")
-    val updatePath = cfgFile["Update path"]!!
+    val updatePath: String = cfgFile["Update path"]!!
     //val userPath = cfgFile["User path"]!!.split(';').filter { !it.isBlank() }
     //val langPath = cfgFile["Lang path"]!!.split(';').filter { !it.isBlank() }
     //val langUser = cfgFile["Lang User"]!!.split(';').filter { !it.isBlank() }.map { "^" + it.replace("*", "[^/]*") + ".*$" }.map { Regex(it) }
@@ -39,10 +39,15 @@ class Mz32(private val rootDir: File) {
     fun update(task: FXTask<*>, languages: List<Language>, updateResources: Boolean = true, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true, updateFirmware: Boolean = true) {
         if (task.isCancelled) return
 
+        task.updateProgress(0.0, 1.0)
+
         val (latestFirmware, latestResources) = findLatest(task)
 
         md5.load()
+        task.updateProgress(0.0, 1.0)
         if (updateResources) updateResources(task, languages, latestResources, replaceHelpPages, replaceVoiceFiles)
+
+        task.updateProgress(0.0, 1.0)
         if (updateFirmware) TransmitterType.forProductCode(productCode).getFirmware().firstOrNull { it.name == latestFirmware }?.apply {
             updateFirmware(task, this)
         }
@@ -55,9 +60,9 @@ class Mz32(private val rootDir: File) {
             task.print("\nall done\n")
     }
 
-    private fun findLatest(task: FXTask<*>) = Firmware.download("$remotePath/latest.txt") {
+    private fun findLatest(task: FXTask<*>) = Firmware.download("$remotePath/latest.txt") { inputStream, _ ->
         task.print("Checking for latest online versions ... ")
-        val cfg = CfgFile.load(it)
+        val cfg = CfgFile.load(inputStream)
         task.print("ok\n")
 
         Pair(cfg["firmware"]!!, cfg["resources"]!!)
@@ -70,13 +75,11 @@ class Mz32(private val rootDir: File) {
 
         val remoteRoot = "$remotePath/$firmware"
 
-        task.updateProgress(0.0, 1.0)
-
         try {
             // process remote md5sum.txt
-            MD5Sum().apply {
+            val remoteMd5 = MD5Sum().apply {
                 task.print("\tDownloading remote md5sum.txt from server ... ")
-                Firmware.download("$remoteRoot//md5sum.txt") { load(it) }
+                Firmware.download("$remoteRoot//md5sum.txt") { inputStream, _ -> load(inputStream) }
                 task.print("ok\n")
 
                 if (task.isCancelled) return
@@ -98,6 +101,47 @@ class Mz32(private val rootDir: File) {
             }
 
             if (task.isCancelled) return
+
+            // check for obsolete local md5 entries and files
+            val files = rootDir.walk().iterator().asSequence()
+                    // ignore directories
+                    .filter { it.isFile }
+                    // get the relative path
+                    .map { "/${it.relativeTo(rootDir).path}" }
+                    // convert path separators on Windows
+                    .map { it.replace(File.separatorChar, '/') }
+                    // collect to a mutable set
+                    .toMutableSet()
+
+            // add keys from md5sum.txt
+            files.addAll(md5.keys)
+
+            // keep entries in remote md5sum.txt
+            files.removeAll(remoteMd5.keys)
+
+            val toBeDeleted = files.asSequence()
+                    // convert to path
+                    .map { Path(it) }
+                    // keep protected entries
+                    .filterNot { it.isProtected }
+                    // keep help pages unless replaceHelpPages was selected
+                    .filterNot { it.isHelp && !replaceHelpPages }
+                    // keep voice files unless replaceVoiceFiles was selected
+                    .filterNot { it.isVoice && !replaceVoiceFiles }
+                    // convert to string
+                    .map { it.value }.toList().sorted()
+
+            toBeDeleted.forEach {
+                // delete remaining entries
+                task.print("\tRemoving obsolete file $it\n")
+
+                File(rootDir, it).apply {
+                    if (exists()) delete()
+                }
+
+                md5.remove(it)
+            }
+
             task.print("done\n")
         } catch (e: Exception) {
             task.print("failed: $e\n")
@@ -114,15 +158,17 @@ class Mz32(private val rootDir: File) {
         if (task.isCancelled) return
 
         val filePath = path.value
+        //println("Remote file: $root/$filePath, $remoteHash")
 
         // local file on transmitter
         val file = File(rootDir, filePath).apply { parentFile.mkdirs() }
+        val fileExists = file.exists()
 
         // local file size
         val fileSize = file.length()
 
         // local hash according to local md5sum.txt
-        val localHash = md5[filePath]
+        var localHash = md5[filePath]
 
         // local size according to local md5sum.txt
         val localSize = localHash?.size ?: 0L
@@ -130,50 +176,36 @@ class Mz32(private val rootDir: File) {
         // remote size according to remote md5sum.txt
         val remoteSize = remoteHash.size
 
+
         // re-calculate missing or invalid hash if file exists and has same size as remote
-        if (file.exists() && fileSize == remoteSize && (localHash == null || localSize != fileSize)) {
+        if (fileExists && fileSize == remoteSize && (localHash == null || localSize != fileSize)) {
             task.print("\tCalculating checksum for $file ... ")
-            val hash = Hash(fileSize, file.hash())
-            md5[filePath] = hash
+            localHash = Hash(fileSize, file.hash())
+            md5[filePath] = localHash
             task.print("ok\n")
         }
 
+        //println("Local file: ${file.absolutePath} (${if (file.exists()) "$fileSize Bytes" else "missing"}), $localHash")
+
         // if target file does not exist or has different size as remote or has different remoteHash
-        if (!file.exists() || (fileSize != remoteSize || remoteHash !=  md5[filePath]) && !path.isUser && !path.isLangUser) {
+        if (!fileExists || (fileSize != remoteSize || remoteHash != localHash) && !path.isUser && !path.isLangUser) {
             task.print("\tDownloading $file from server ... ")
             try {
                 if (canCompress(file.extension))
-                    Firmware.download("$root$filePath.lzma") { inputStream -> uncompress(inputStream, file.outputStream()) }
+                    Firmware.download("$root$filePath.lzma") { inputStream, _ -> uncompress(inputStream, file.outputStream()) }
                 else
-                    Firmware.download(task, "$root$filePath", file = file)
+                    Firmware.download(task, "$root$filePath", file)
 
                 md5[filePath] = remoteHash
                 task.print("ok\n")
-
-                if (task.isCancelled) return
-
-                // cleanup lang files (/Help and /Voice, except /Voice/*/10_*)
-                if (path.isLang && !path.isLangUser) {
-                    val number = file.number()
-                    file.parentFile.listFiles().forEach {
-                        try {
-                            if (it != it && it.number() == number) {
-                                task.print("\tRemoving obsolete file $it\n")
-                                it.delete()
-                            }
-                        } catch (e: Exception) {
-                            // ignore
-                        }
-                    }
-                }
             } catch (e: Exception) {
                 task.print("failed: $e\n")
                 showError(e)
             }
         }
-    }
 
-    private fun File.number() = NUM_REGEX.matchEntire(name)!!.groupValues[1].toInt()
+        if (task.isCancelled) return
+    }
 
     private fun showError(e: Exception) {
         val latch = CountDownLatch(1)
@@ -199,7 +231,7 @@ class Mz32(private val rootDir: File) {
 
         if (!file.exists() || fileSize != firmwareSize) {
             task.print("\tDownloading $file from server ... ")
-            val hash = Firmware.download(task, "$remotePath/$fileName", firmwareSize, file)
+            val hash = Firmware.download(task, "$remotePath/$fileName", file)
             md5[filePath] = Hash(firmwareSize, hash)
             task.print("ok\n")
         } else {
@@ -210,12 +242,9 @@ class Mz32(private val rootDir: File) {
         task.print("done\n")
     }
 
-    override fun toString(): String {
-        return "$rootDir ($productName [$productCode] v$productVersion)"
-    }
+    override fun toString(): String = "$rootDir ($productName [$productCode] v$productVersion)"
 
     companion object {
-        private val NUM_REGEX = Regex("^([0-9]+).*$")
         private const val GRAUPNER_DISK_CFG = "/GraupnerDisk.cfg"
 
         fun find(): List<Mz32> = File.listRoots().mapNotNull {
@@ -231,6 +260,6 @@ class Mz32(private val rootDir: File) {
 
 internal fun FXTask<*>.print(newMessage: String) {
     runLater {
-        updateMessage(message + newMessage)
+        updateMessage(newMessage)
     }
 }

@@ -12,12 +12,12 @@ class CfgFile : HashMap<String, String>() {
     companion object {
         private const val delimiter = " : "
 
-        fun load(file: File) = load(file.inputStream())
+        fun load(file: File): CfgFile = load(file.inputStream())
 
-        fun load(inputStream: InputStream) = CfgFile().apply {
+        fun load(inputStream: InputStream): CfgFile = CfgFile().apply {
             inputStream.use {
-                it.reader().forEachLine {
-                    val line = it.trim()
+                it.reader().forEachLine { s ->
+                    val line = s.trim()
 
                     if (!line.isBlank() && !line.startsWith("#") && line.contains(delimiter)) {
                         val name = line.substringBefore(delimiter).trim()

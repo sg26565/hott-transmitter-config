@@ -6,17 +6,10 @@ import javafx.concurrent.Task
 import javafx.scene.control.*
 import javafx.scene.layout.Priority
 import javafx.scene.layout.VBox
-import javafx.scene.text.Font
-import org.apache.logging.log4j.jcl.LogFactoryImpl
-import org.apache.logging.log4j.util.EnvironmentPropertySource
-import org.apache.logging.log4j.util.SystemPropertiesPropertySource
-import org.controlsfx.control.CheckComboBox
 import tornadofx.*
 import java.io.File
 import java.util.jar.JarFile
-
-@Suppress("unused")
-private val ignored = listOf(LogFactoryImpl::class, EnvironmentPropertySource::class, SystemPropertiesPropertySource::class)
+import kotlin.reflect.KClass
 
 fun main(vararg args: String) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
@@ -24,7 +17,7 @@ fun main(vararg args: String) {
 }
 
 class Mz32DownloaderApp : App() {
-    override val primaryView = Mz32Downloader::class
+    override val primaryView: KClass<Mz32Downloader> = Mz32Downloader::class
 }
 
 class Mz32Downloader : View() {
@@ -63,8 +56,8 @@ class Mz32Downloader : View() {
         get() = updateFirmware.isSelected
     private val mz32
         get() = comboBox.value
-    private val selectedLanguages: List<Language>
-        get() = language.checkModel.checkedItems
+    private val selectedLanguages
+        get() = language.selectedItems
 
     private val version: String by lazy {
         val source = File(Mz32Downloader::class.java.protectionDomain.codeSource.location.toURI())
@@ -80,7 +73,7 @@ class Mz32Downloader : View() {
     }
 
     // UI
-    override val root = vbox {
+    override val root: VBox = vbox {
         prefWidth = 600.0
         spacing = 5.0
         paddingAll = 5.0
@@ -93,7 +86,7 @@ class Mz32Downloader : View() {
                 spacing = 10.0
                 disableProperty().bind(disableUI)
 
-                reindex = checkbox("Re-index files on radio") {
+                reindex = checkbox(messages["reindex"]) {
                     tooltip = tooltip("Re-calculate the MD5 checksums of all files on the internal SD-card of the radio. This process will take a long time.")
                 }
 
@@ -155,12 +148,12 @@ class Mz32Downloader : View() {
 
                         preferences {
                             get("languages", "en").split(',').forEach { lang ->
-                                checkModel.check(Language.valueOf(lang))
+                                selectItem(Language.valueOf(lang))
                             }
                         }
 
-                        checkModel.checkedItems.onChange { selected ->
-                            preferences { put("languages", selected.list.joinToString(",") { it.name }) }
+                        selectedItems.onChange { change ->
+                            preferences { put("languages", change.list.joinToString(",") { it.name }) }
                             layout()
                         }
                     }
@@ -178,8 +171,8 @@ class Mz32Downloader : View() {
         }
 
         progressBar = progressbar {
-            isVisible = false
             prefWidthProperty().bind(textArea.widthProperty())
+            visibleWhen(disableUI)
         }
 
         buttonbar {
@@ -206,10 +199,7 @@ class Mz32Downloader : View() {
             updateButton.action { stopTask() }
             disableUI.value = true
             progressBar.progressProperty().bind(progressProperty())
-            messageProperty().addListener { _, _, newValue ->
-                textArea.text = newValue
-                textArea.scrollTop = Double.MAX_VALUE
-            }
+            messageProperty().addListener { _, _, newValue -> textArea.appendText(newValue) }
             root.layout()
         }
     }
@@ -219,6 +209,7 @@ class Mz32Downloader : View() {
         updateButton.isDisable = true
         task?.fail { armTask() }
         task?.success { armTask() }
+        task?.cancel { armTask() }
         task?.cancel()
     }
 

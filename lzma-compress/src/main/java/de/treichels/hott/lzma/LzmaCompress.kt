@@ -17,64 +17,96 @@ import javafx.scene.layout.Priority
 import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.attribute.DosFileAttributeView
 import java.util.concurrent.atomic.AtomicLong
+import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
+import kotlin.reflect.KProperty
 import kotlin.streams.toList
 
-private class LzmaCompressTask(private val zipFile: ZipFile, private val target: File) : Task<Unit>() {
+private class LzmaCompressTask(private val source: File, private val target: File) : Task<Unit>() {
     private val md5Sum = MD5Sum(target)
+    private val totalUncompressedSize = AtomicLong(0L)
+    private val totalCompressedSize = AtomicLong(0L)
+    private val fileCount = AtomicLong(0L)
+    private var totalFileCount = 0L
+    private var startTime = 0L
+
+    private val isWindows = Files.getFileStore(target.toPath()).supportsFileAttributeView(DosFileAttributeView::class.java)
+    private val File.isSystem: Boolean
+        get() {
+            if (isWindows) {
+                // ignore system and hidden files on Windows
+                Files.getFileAttributeView(toPath(), DosFileAttributeView::class.java).readAttributes().apply {
+                    if (isSystem || isHidden) return true
+                }
+            }
+
+            return false
+        }
+
+    private fun processFile(sourceFile: File) {
+        if (isCancelled) return
+
+        val name = sourceFile.relativeTo(source).path.replace('\\', '/')
+        md5Sum["/$name"] = Hash(sourceFile)
+
+        val targetFile = if (canCompress(sourceFile)) {
+            File(target, "$name.lzma").apply {
+                parentFile.mkdirs()
+                compress(sourceFile, this)
+            }
+        } else {
+            File(target, name).apply {
+                parentFile.mkdirs()
+                sourceFile.copyTo(this, true)
+            }
+        }
+
+        updateStatistics(name, sourceFile.length(), targetFile.length())
+    }
+
+    private fun getFiles(dir: File): List<File> {
+        if (isCancelled) return emptyList()
+
+        val files = mutableListOf<File>()
+
+        dir.listFiles { file -> !file.isSystem }.forEach { file ->
+            if (!isCancelled) {
+                if (file.isDirectory)
+                    files.addAll(getFiles(file))
+                else {
+                    files.add(file)
+                }
+            }
+        }
+
+        return files
+    }
 
     override fun call() {
-        val start = System.currentTimeMillis()
-
         try {
             md5Sum.clear()
             updateMessage("Deleting target directory ...")
             target.deleteRecursively()
             target.mkdirs()
 
-            val entries = zipFile.stream().filter { !it.isDirectory }.toList()
-            val total = entries.size.toLong()
-            val totalUncompressedSize = AtomicLong(0L)
-            val totalCompressedSize = AtomicLong(0L)
-            val count = AtomicLong(0L)
+            startTime = System.currentTimeMillis()
 
-            entries.stream().parallel().forEach { zipEntry ->
-                if (!isCancelled) {
-                    val size = zipEntry.size
-                    val file: File = if (canCompress(zipEntry.name)) {
-                        // compress all other files
-                        File(target, "${zipEntry.name}.lzma").apply {
-                            parentFile.mkdirs()
-                            val hash = zipFile.hash(zipEntry)
-                            md5Sum["/${zipEntry.name}"] = Hash(size, hash)
-                            compress(zipFile.getInputStream(zipEntry), outputStream())
-                        }
-                    } else {
-                        // extract files that cannot be compressed further
-                        File(target, zipEntry.name).apply {
-                            parentFile.mkdirs()
-                            val hash = zipFile.extract(zipEntry, this)
-                            md5Sum["/${zipEntry.name}"] = Hash(size, hash)
-                        }
-                    }
+            if (source.isDirectory) {
+                val files = getFiles(source)
+                totalFileCount = files.size.toLong()
+                files.parallelStream().forEach { file ->
+                    processFile(file)
+                }
+            } else if (source.isFile && source.name.endsWith(".zip")) {
+                val zipFile = ZipFile(source, Charsets.US_ASCII)
+                val entries = zipFile.stream().filter { !it.isDirectory }.toList()
+                totalFileCount = entries.size.toLong()
 
-                    // Statistics
-                    val now = System.currentTimeMillis()
-                    val done = count.incrementAndGet()
-                    val uncompressedSize = zipEntry.size
-                    val compressedSize = file.length()
-                    val rate = compressedSize * 100.0 / uncompressedSize
-
-                    val totalUncompressed = totalUncompressedSize.addAndGet(uncompressedSize)
-                    val totalCompressed = totalCompressedSize.addAndGet(compressedSize)
-                    val totalRate = totalCompressed * 100.0 / totalUncompressed
-                    val elapsed = now - start
-                    val throughput = totalCompressed * 1000 / elapsed
-
-                    updateMessage("${zipEntry.name} - ${uncompressedSize.kb()} KB -> ${compressedSize.kb()} KB (${rate.format()}%)")
-                    updateTitle("$done of $total Files - total ${totalUncompressed.mb()} MB -> ${totalCompressed.mb()} MB (${totalRate.format()}%) @ ${throughput.mb()} MB/s - elapsed time ${elapsed.toTime()}")
-                    updateProgress(done, total)
+                entries.parallelStream().forEach { zipEntry ->
+                    processZipEntry(zipEntry, zipFile)
                 }
             }
         } catch (e: Exception) {
@@ -86,13 +118,56 @@ private class LzmaCompressTask(private val zipFile: ZipFile, private val target:
 
         updateMessage("done")
     }
+
+    fun processZipEntry(zipEntry: ZipEntry, zipFile: ZipFile) {
+        if (!isCancelled) {
+            val size = zipEntry.size
+            val file: File = if (canCompress(zipEntry.name)) {
+                // compress all other files
+                File(target, "${zipEntry.name}.lzma").apply {
+                    parentFile.mkdirs()
+                    val hash = zipFile.hash(zipEntry)
+                    md5Sum["/${zipEntry.name}"] = Hash(size, hash)
+                    compress(zipFile.getInputStream(zipEntry), outputStream())
+                }
+            } else {
+                // extract files that cannot be compressed further
+                File(target, zipEntry.name).apply {
+                    parentFile.mkdirs()
+                    val hash = zipFile.extract(zipEntry, this)
+                    md5Sum["/${zipEntry.name}"] = Hash(size, hash)
+                }
+            }
+
+            updateStatistics(zipEntry.name, zipEntry.size, file.length())
+        }
+    }
+
+    fun updateStatistics(name: String, uncompressedSize: Long, compressedSize: Long) {
+        // Statistics
+        val now = System.currentTimeMillis()
+        val filesDone = fileCount.incrementAndGet()
+        val compressionRate = compressedSize * 100.0 / uncompressedSize
+
+        val totalUncompressed = totalUncompressedSize.addAndGet(uncompressedSize)
+        val totalCompressed = totalCompressedSize.addAndGet(compressedSize)
+        val totalCompressionRate = totalCompressed * 100.0 / totalUncompressed
+        val elapsedTime = now - startTime
+        val throughput = totalCompressed * 1000 / elapsedTime
+        val totalTime = totalFileCount * elapsedTime / filesDone
+        val remainingTime = totalTime - elapsedTime
+
+        updateMessage("$name - ${uncompressedSize.kb()} KB -> ${compressedSize.kb()} KB (${compressionRate.format()}%)")
+        updateTitle("$filesDone of $totalFileCount Files - ${totalUncompressed.mb()} MB -> ${totalCompressed.mb()} MB (${totalCompressionRate.format()}%) @ ${throughput.kb()} KB/s - elapsed ${elapsedTime.toTime()} - remaining ${remainingTime.toTime()}")
+        updateProgress(filesDone, totalFileCount)
+    }
 }
 
 private class LzmaCompressService : Service<Unit>() {
-    lateinit var zipFile: ZipFile
+    lateinit var source: File
     lateinit var target: File
 
-    override fun createTask(): Task<Unit> = LzmaCompressTask(zipFile, target)
+    override fun createTask(): Task<Unit> = LzmaCompressTask(source, target)
 }
 
 fun main(vararg args: String) {
@@ -104,61 +179,73 @@ class LzmaCompressApp : App() {
     override val primaryView = LzmaCompress::class
 }
 
+class Preference(private val defaultValue: String = "") {
+    operator fun getValue(thisRef: Component, property: KProperty<*>): String {
+        lateinit var result: String
+        thisRef.preferences { result = get(property.name, defaultValue) }
+        return result
+    }
+
+    operator fun setValue(thisRef: Component, property: KProperty<*>, value: String) {
+        thisRef.preferences { put(property.name, value) }
+    }
+}
+
 class LzmaCompress : View("Compress Zip File to Directory") {
     // Controls
-    private var zipFile by singleAssign<TextField>()
-    private var targetDirectory by singleAssign<TextField>()
+    private var source by singleAssign<TextField>()
+    private var target by singleAssign<TextField>()
     private var progress by singleAssign<TextArea>()
 
     // Background service
     private var service = LzmaCompressService()
 
-    // helper
-    private var lastZipFile: String
-        get() {
-            lateinit var result: String
-            preferences {
-                result = get("lastZipFile", System.getProperty("user.home"))
-            }
-
-            return result
-        }
-        set(value) {
-            preferences { put("lastZipFile", value) }
-        }
-    private var lastTargetDir: String
-        get() {
-            lateinit var result: String
-            preferences {
-                result = get("lastTargetDir", System.getProperty("user.home"))
-            }
-
-            return result
-        }
-        set(value) {
-            preferences { put("lastTargetDir", value) }
-        }
+    // Preferences
+    private val homeDir = System.getProperty("user.home")
+    private var lastZipFile by Preference()
+    private var lastSourceDir by Preference(homeDir)
+    private var lastSource by Preference(homeDir)
+    private var lastTargetDir by Preference(homeDir)
 
     // UI
     override val root = form {
         fieldset(labelPosition = Orientation.VERTICAL) {
-            field("mz-32 Resource Zip File") {
-                zipFile = textfield {
+            field("mz-32 Resource Zip File or Directory") {
+                source = textfield {
                     isEditable = false
-                    File(lastZipFile).apply {
-                        if (exists() && isFile && canRead()) text = absolutePath
+                    File(lastSource).apply {
+                        if (exists() && canRead()) text = absolutePath
                     }
                 }
 
-                button("Select") {
+                button("Select Zip") {
                     action {
                         chooseFile("Choose mz-32 Resource File", arrayOf(FileChooser.ExtensionFilter("Zip File", "*.zip"))) {
-                            val lastDir = File(lastZipFile).parentFile
-                            if (lastDir.isDirectory) initialDirectory = lastDir
+                            File(lastZipFile).apply {
+                                if (exists() && isFile && canRead()) {
+                                    initialFileName = this.name
+                                    initialDirectory = this.parentFile
+                                }
+                            }
                         }.firstOrNull()?.apply {
                             if (exists() && isFile && canRead()) {
-                                zipFile.text = absolutePath
+                                source.text = absolutePath
                                 lastZipFile = absolutePath
+                                lastSource = absolutePath
+                            }
+                        }
+                    }
+                }
+
+                button("Select Dir") {
+                    action {
+                        chooseDirectory {
+                            File(lastSourceDir).apply { if (exists() && isDirectory && canRead()) initialDirectory = this }
+                        }?.apply {
+                            if (exists() && isDirectory && canRead()) {
+                                source.text = absolutePath
+                                lastSourceDir = absolutePath
+                                lastSource = absolutePath
                             }
                         }
                     }
@@ -166,21 +253,22 @@ class LzmaCompress : View("Compress Zip File to Directory") {
             }
 
             field("Target Directory (WARNING: Existing content will be deleted!)") {
-                targetDirectory = textfield {
+                target = textfield {
                     isEditable = false
                     File(lastTargetDir).apply {
                         if (exists() && isDirectory && canWrite()) text = absolutePath
                     }
                 }
 
-                button("Select") {
+                button("Select Dir") {
                     action {
                         chooseDirectory("Choose Target Directory") {
-                            val lastDir = File(lastTargetDir)
-                            if (lastDir.isDirectory) initialDirectory = lastDir
+                            File(lastTargetDir).apply {
+                                if (exists() && isDirectory && canWrite()) initialDirectory = this
+                            }
                         }?.apply {
                             if (exists() && isDirectory && canWrite()) {
-                                targetDirectory.text = absolutePath
+                                target.text = absolutePath
                                 lastTargetDir = absolutePath
                             }
                         }
@@ -207,18 +295,20 @@ class LzmaCompress : View("Compress Zip File to Directory") {
 
             button("Start") {
                 disableWhen {
-                    zipFile.textProperty().isEmpty.or(targetDirectory.textProperty().isEmpty).or(service.runningProperty())
+                    source.textProperty().isEmpty.or(target.textProperty().isEmpty)
                 }
 
                 action {
-                    progress.text = "Extracting ${zipFile.text} to ${targetDirectory.text}"
-
-                    service.zipFile = ZipFile(zipFile.text, Charsets.US_ASCII)
-                    service.target = File(targetDirectory.text)
-                    service.messageProperty().addListener { _, _, newValue ->
-                        progress.appendText("\n$newValue")
+                    if (service.isRunning) {
+                        service.cancel()
+                        text = "Start"
+                    } else {
+                        progress.text = "Compressing ${source.text} to ${target.text}"
+                        service.source = File(source.text)
+                        service.target = File(target.text)
+                        service.restart()
+                        text = "Cancel"
                     }
-                    service.restart()
                 }
             }
         }
@@ -226,6 +316,9 @@ class LzmaCompress : View("Compress Zip File to Directory") {
 
     init {
         setStageIcon(resources.image("icon.png"))
+        service.messageProperty().addListener { _, _, newValue ->
+            progress.appendText("\n$newValue")
+        }
     }
 }
 
@@ -239,4 +332,5 @@ private fun Long.toTime(): String {
 
     return String.format("%2d:%02d:%02d", hours, minutes % 60, seconds % 60)
 }
+
 

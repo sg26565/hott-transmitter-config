@@ -44,19 +44,20 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
         }
 
         /** download a file from the FTP server */
-        fun <T> download(path: String, func: (InputStream) -> T): T = Request.Post("http://$FTP_SERVER_ADDRESS/$FILE_DOWN").bodyForm(BasicNameValuePair("file", path)).execute().handleResponse { response ->
+        fun <T> download(path: String, func: (InputStream, size: Long) -> T): T = Request.Post("http://$FTP_SERVER_ADDRESS/$FILE_DOWN").bodyForm(BasicNameValuePair("file", path)).execute().handleResponse { response ->
             response.statusLine.apply { if (statusCode != 200) throw IOException(toString()) }
-
-            response.entity.content.use(func)
+            response.entity.content.use {
+                func(it, response.entity.contentLength)
+            }
         }
 
-        fun download(task: FXTask<*>, path: String, size: Long = -1L, file: File): String {
+        fun download(task: FXTask<*>, path: String, file: File): String {
             val md = MessageDigest.getInstance(HASH_ALGORITHM)
             val buffer = ByteArray(1024 * 1024)
             var bytesRead = 0L
 
             // download from FTP server
-            download(path) { inputStream ->
+            download(path) { inputStream, size ->
                 file.outputStream().use { outputStream ->
                     while (!task.isCancelled) {
                         val len = inputStream.read(buffer)
@@ -69,13 +70,13 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
                         task.updateProgress(bytesRead, size)
                     }
                 }
+
+                if (size > 0L && bytesRead != size)
+                    throw IOException("Size mismatch: expected $size, but got $bytesRead.")
             }
 
             if (task.isCancelled)
                 throw InterruptedException()
-
-            if (size != -1L && bytesRead != size)
-                throw IOException("Size mismatch: expected $size, but got $bytesRead.")
 
             return md.getHash()
         }
@@ -104,7 +105,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
     fun download(task: FXTask<*>): File {
         if (!isCached && !task.isCancelled) {
             cacheDir.mkdirs()
-            download(task, "$path$name", size, file)
+            download(task, "$path$name", file)
         }
 
         return file

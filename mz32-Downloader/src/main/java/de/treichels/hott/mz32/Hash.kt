@@ -1,9 +1,14 @@
 package de.treichels.hott.mz32
 
+import de.treichels.hott.util.hash
+import java.io.File
+
 /**
  * A pair that stores the hash and the size of a file
  */
 class Hash(val size: Long, val hash: String) {
+    constructor(file: File) : this(file.length(), file.hash())
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
