@@ -9,6 +9,7 @@ import javazoom.spi.vorbis.sampled.file.VorbisAudioFileReader
 import tornadofx.*
 import java.io.File
 import java.util.jar.JarFile
+import java.util.logging.LogManager
 
 fun main(args: Array<String>) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
@@ -39,6 +40,11 @@ class VDFEditor : App() {
 
             result
         }
+    }
+
+    init {
+        // setup logging
+        LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
     }
 
     override val primaryView = MainView::class
