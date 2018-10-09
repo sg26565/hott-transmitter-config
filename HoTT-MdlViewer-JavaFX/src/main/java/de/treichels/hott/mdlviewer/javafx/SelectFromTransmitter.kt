@@ -12,7 +12,7 @@
 package de.treichels.hott.mdlviewer.javafx
 
 import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.model.serial.JSSCSerialPort
+import de.treichels.hott.model.serial.SerialPortBase
 import de.treichels.hott.util.ExceptionDialog
 import javafx.beans.binding.BooleanBinding
 import javafx.concurrent.Task
@@ -102,7 +102,7 @@ abstract class SelectFromTransmitter : View() {
             if (!serialPort?.portName.equals(name)) {
                 preferences { put("comPort", name) }
 
-                serialPort = HoTTSerialPort(JSSCSerialPort(name))
+                serialPort = HoTTSerialPort(SerialPortBase.getPort(name))
                 refreshUITask().apply {
                     portCombo.disableWhen(runningProperty())
                     startButton.disableWhen(runningProperty().or(isReady().not()))
@@ -150,7 +150,7 @@ abstract class SelectFromTransmitter : View() {
 
             // (re-) load available com ports
             runAsync {
-                JSSCSerialPort.availablePorts
+                SerialPortBase.getAvailablePorts()
             }.success { portNames ->
                 items.addAll(portNames)
                 preferences {

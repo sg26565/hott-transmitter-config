@@ -1,7 +1,7 @@
 package de.treichels.hott.vdfeditor.ui.transmitter
 
 import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.model.serial.JSSCSerialPort
+import de.treichels.hott.model.serial.SerialPortBase
 import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.util.MessageDialog
 import javafx.concurrent.Task
@@ -92,7 +92,7 @@ class TransmitterDialogView : View() {
         dialog.showAndWait().ifPresent {
             if (it == ButtonType.OK) {
                 if (serialPort?.isOpen == true) serialPort?.close()
-                serialPort = HoTTSerialPort(JSSCSerialPort(portCombo.value))
+                serialPort = HoTTSerialPort(SerialPortBase.getPort(portCombo.value))
                 task?.serialPort = serialPort
                 bgTask = runAsync {
                     task?.run()
@@ -134,7 +134,7 @@ class TransmitterDialogView : View() {
 
             // (re-) load available com ports
             runAsync {
-                JSSCSerialPort.availablePorts
+                SerialPortBase.getAvailablePorts()
             } success { ports ->
                 items.clear()
                 items.addAll(ports)

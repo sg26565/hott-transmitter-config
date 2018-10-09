@@ -47,10 +47,6 @@
 			<artifactId>tritonus-share</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.scream3r</groupId>
-			<artifactId>jssc</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>no.tornado</groupId>
 			<artifactId>tornadofx</artifactId>
 		</dependency>

@@ -3,7 +3,7 @@ package de.treichels.hott.mdlviewer.swt.dialogs;
 import de.treichels.hott.decoder.HoTTSerialPort;
 import de.treichels.hott.messages.Messages;
 import de.treichels.hott.model.BaseModel;
-import de.treichels.hott.model.serial.JSSCSerialPort;
+import de.treichels.hott.model.serial.SerialPortBase;
 import de.treichels.hott.util.Util;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -41,7 +41,7 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
     }
 
     private static final Preferences PREFS = Preferences.userNodeForPackage(SelectFromTransmitterDialog.class);
-    private final List<String> portNames = JSSCSerialPort.Companion.getAvailablePorts();
+    private final List<String> portNames = SerialPortBase.Companion.getAvailablePorts();
     HoTTSerialPort port = null;
     BaseModel model = null;
     private Combo combo;
@@ -130,7 +130,7 @@ public abstract class SelectFromTransmitterDialog extends Dialog {
     private void portSelected(final String portName) {
         if (portName != null && portName.length() > 0 && portNames.contains(portName)) {
             PREFS.put("portName", portName);
-            port = new HoTTSerialPort(new JSSCSerialPort(portName));
+            port = new HoTTSerialPort(SerialPortBase.Companion.getPort(portName));
             onReload();
         }
     }

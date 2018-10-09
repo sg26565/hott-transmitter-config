@@ -12,19 +12,21 @@
 package de.treichels.hott.model.serial
 
 import de.treichels.hott.model.HoTTException
+import java.io.Closeable
 import java.io.InputStream
 import java.io.OutputStream
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-interface SerialPort : AutoCloseable {
+interface SerialPort : Closeable {
     val inputStream: InputStream
     val outputStream: OutputStream
 
     val portName: String
     val isOpen: Boolean
     var timeout: Int
+    var maxRetries: Int
 
     @Throws(HoTTException::class)
     override fun close()

@@ -33,6 +33,8 @@
         <module>test</module>
         <module>lzma-compress</module>
         <module>lzma-sdk</module>
+        <module>JSSCSerialPort</module>
+        <module>jSerialCommPort</module>
     </modules>
 
     <organization>
@@ -286,6 +288,16 @@
             <dependency>
                 <groupId>de.treichels.hott</groupId>
                 <artifactId>mz32-Downloader</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.treichels.hott</groupId>
+                <artifactId>JSSCSerialPort</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.treichels.hott</groupId>
+                <artifactId>jSerialCommPort</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
             <dependency>

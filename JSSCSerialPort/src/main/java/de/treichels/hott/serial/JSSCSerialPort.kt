@@ -9,21 +9,20 @@
  *
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package de.treichels.hott.model.serial
+package de.treichels.hott.serial
 
 import de.treichels.hott.model.HoTTException
+import de.treichels.hott.model.serial.SerialPortBase
 import de.treichels.hott.util.Util
-import jssc.SerialPort
 import jssc.SerialPort.*
 import jssc.SerialPortEvent
 import jssc.SerialPortEventListener
-import jssc.SerialPortList
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 class JSSCSerialPort(portName: String) : SerialPortBase(portName), SerialPortEventListener {
-    private var port: SerialPort? = null
+    private var port: jssc.SerialPort? = null
 
     override val isOpen: Boolean
         get() = port?.isOpened ?: false
@@ -86,10 +85,5 @@ class JSSCSerialPort(portName: String) : SerialPortBase(portName), SerialPortEve
         } else {
             logger.finest("writeToPort: write buffer is empty")
         }
-    }
-
-    companion object {
-        val availablePorts: List<String>
-            get() = SerialPortList.getPortNames().toList()
     }
 }

@@ -200,5 +200,9 @@
             <groupId>de.treichels.hott</groupId>
             <artifactId>HoTT-TTS</artifactId>
         </dependency>
+        <dependency>
+            <groupId>de.treichels.hott</groupId>
+            <artifactId>jSerialCommPort</artifactId>
+        </dependency>
     </dependencies>
 </project>

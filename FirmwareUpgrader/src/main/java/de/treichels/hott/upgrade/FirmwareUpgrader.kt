@@ -1,7 +1,7 @@
 package de.treichels.hott.upgrade
 
-import de.treichels.hott.model.serial.JSSCSerialPort
 import de.treichels.hott.model.serial.SerialPort
+import de.treichels.hott.model.serial.SerialPortBase
 import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.util.MessageDialog
 import javafx.beans.property.SimpleObjectProperty
@@ -80,7 +80,7 @@ class FirmwareUpgrader : View() {
 
                     if (portName != null) {
                         preferences { put(PREFERRED_PORT, portName) }
-                        serialPort = JSSCSerialPort(portName)
+                        serialPort = SerialPortBase.getPort(portName)
                     }
                 }
             }
@@ -218,7 +218,7 @@ class FirmwareUpgrader : View() {
 
         // load preferred port from preferences
         runAsync {
-            portCombo.items.addAll(JSSCSerialPort.availablePorts)
+            portCombo.items.addAll(SerialPortBase.getAvailablePorts())
         } success {
             preferences {
                 val prefPort: String? = get(PREFERRED_PORT, null)

@@ -12,8 +12,8 @@
 package de.treichels.hott.memorydump
 
 import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.model.serial.JSSCSerialPort
 import de.treichels.hott.model.serial.ResponseCode.*
+import de.treichels.hott.model.serial.SerialPortBase
 import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.util.Util
 import javafx.concurrent.Service
@@ -53,7 +53,7 @@ class MemoryDumpView : View() {
                 if (portName?.isEmpty() == false) {
                     message.append(messages["startMessage"]).append('\n')
 
-                    HoTTSerialPort(JSSCSerialPort(portName)).use { port ->
+                    HoTTSerialPort(SerialPortBase.getPort(portName)).use { port ->
                         port.turnRfOutOff()
 
                         var i = 0
@@ -169,7 +169,7 @@ class MemoryDumpView : View() {
         title = messages["title"]
 
         runAsync {
-            comboBox.items.addAll(JSSCSerialPort.availablePorts)
+            comboBox.items.addAll(SerialPortBase.getAvailablePorts())
         }.success {
             preferences {
                 val portName: String? = get(prefPort, null)
