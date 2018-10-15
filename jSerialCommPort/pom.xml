@@ -18,8 +18,6 @@
             <groupId>com.fazecast</groupId>
             <artifactId>jSerialComm</artifactId>
             <version>2.3.0</version>
-            <scope>system</scope>
-            <systemPath>C:/Users/olive/Downloads/jSerialComm-2.3.0.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
