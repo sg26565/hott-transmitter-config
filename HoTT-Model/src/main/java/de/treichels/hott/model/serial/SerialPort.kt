@@ -26,7 +26,6 @@ interface SerialPort : Closeable {
     val portName: String
     val isOpen: Boolean
     var timeout: Int
-    var maxRetries: Int
 
     @Throws(HoTTException::class)
     override fun close()
