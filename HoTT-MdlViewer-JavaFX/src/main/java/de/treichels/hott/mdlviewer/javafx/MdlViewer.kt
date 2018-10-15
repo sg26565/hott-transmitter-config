@@ -11,6 +11,7 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
+import de.treichels.hott.util.Util
 import tornadofx.*
 import tornadofx.FX.Companion.messages
 import java.io.File
@@ -40,11 +41,12 @@ class MdlViewer : App() {
             // if we are running inside Eclipse in the target directory, step up to the project level
             if (programDir.name == "target") programDir.parentFile.absolutePath else programDir.absolutePath
         }
+
     }
 
     init {
         // setup logging
-        LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
+        if (Util.DEBUG) LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
     }
 
     override val primaryView = MainView::class

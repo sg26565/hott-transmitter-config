@@ -9,6 +9,7 @@ import de.treichels.lzma.uncompress
 import tornadofx.*
 import java.io.File
 import java.util.concurrent.CountDownLatch
+import java.util.logging.Logger
 
 class Mz32(private val rootDir: File) {
     private val cfgFile = CfgFile.load(File(rootDir, GRAUPNER_DISK_CFG))
@@ -158,7 +159,7 @@ class Mz32(private val rootDir: File) {
         if (task.isCancelled) return
 
         val filePath = path.value
-        //println("Remote file: $root/$filePath, $remoteHash")
+        log.fine("Remote file: $root/$filePath, $remoteHash")
 
         // local file on transmitter
         val file = File(rootDir, filePath).apply { parentFile.mkdirs() }
@@ -185,7 +186,7 @@ class Mz32(private val rootDir: File) {
             task.print("ok\n")
         }
 
-        //println("Local file: ${file.absolutePath} (${if (file.exists()) "$fileSize Bytes" else "missing"}), $localHash")
+        log.fine("Local file: ${file.absolutePath} (${if (file.exists()) "$fileSize Bytes" else "missing"}), $localHash")
 
         // if target file does not exist or has different size as remote or has different remoteHash
         if (!fileExists || (fileSize != remoteSize || remoteHash != localHash) && !path.isUser && !path.isLangUser) {
@@ -246,6 +247,7 @@ class Mz32(private val rootDir: File) {
 
     companion object {
         private const val GRAUPNER_DISK_CFG = "/GraupnerDisk.cfg"
+        private val log = Logger.getLogger(this::class.qualifiedName)
 
         fun find(): List<Mz32> = File.listRoots().mapNotNull {
             try {

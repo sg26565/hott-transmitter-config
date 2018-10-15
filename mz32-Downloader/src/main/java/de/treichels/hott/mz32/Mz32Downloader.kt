@@ -1,6 +1,7 @@
 package de.treichels.hott.mz32
 
 import de.treichels.hott.util.ExceptionDialog
+import de.treichels.hott.util.Util
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.concurrent.Task
 import javafx.scene.control.*
@@ -9,6 +10,7 @@ import javafx.scene.layout.VBox
 import tornadofx.*
 import java.io.File
 import java.util.jar.JarFile
+import java.util.logging.LogManager
 import kotlin.reflect.KClass
 
 fun main(vararg args: String) {
@@ -220,6 +222,9 @@ class Mz32Downloader : View() {
     }
 
     init {
+        // setup logging
+        if (Util.DEBUG) LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
+
         setStageIcon(iconImage)
         title = "mz-32 Downloader ($version)"
 

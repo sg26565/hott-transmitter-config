@@ -6,6 +6,7 @@ import javazoom.spi.mpeg.sampled.convert.MpegFormatConversionProvider
 import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader
 import javazoom.spi.vorbis.sampled.convert.VorbisFormatConversionProvider
 import javazoom.spi.vorbis.sampled.file.VorbisAudioFileReader
+import de.treichels.hott.util.Util
 import tornadofx.*
 import java.io.File
 import java.util.jar.JarFile
@@ -44,7 +45,7 @@ class VDFEditor : App() {
 
     init {
         // setup logging
-        LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
+        if (Util.DEBUG) LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
     }
 
     override val primaryView = MainView::class
