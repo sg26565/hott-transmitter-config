@@ -2,10 +2,6 @@ package de.treichels.hott.vdfeditor.ui
 
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.util.ExceptionDialog
-import javazoom.spi.mpeg.sampled.convert.MpegFormatConversionProvider
-import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader
-import javazoom.spi.vorbis.sampled.convert.VorbisFormatConversionProvider
-import javazoom.spi.vorbis.sampled.file.VorbisAudioFileReader
 import de.treichels.hott.util.Util
 import tornadofx.*
 import java.io.File
@@ -16,9 +12,6 @@ fun main(args: Array<String>) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
     launch<VDFEditor>(args)
 }
-
-// static references to mp3 and ogg decoders to keep them in the final jar
-private val IGNORE = arrayOf(MpegAudioFileReader::class.java, MpegFormatConversionProvider::class.java, VorbisAudioFileReader::class.java, VorbisFormatConversionProvider::class.java)
 
 class VDFEditor : App() {
     companion object {
