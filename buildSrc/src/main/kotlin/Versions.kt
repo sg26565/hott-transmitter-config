@@ -9,6 +9,8 @@ import kotlin.String
 object Versions {
     const val aws_java_sdk_polly: String = "1.11.455" 
 
+    const val com_diffplug_gradle_eclipse_mavencentral_gradle_plugin: String = "3.17.0" 
+
     const val jackson_databind: String = "2.9.7" 
 
     const val jserialcomm: String = "2.3.0" 
@@ -34,6 +36,8 @@ object Versions {
     const val commons_math3: String = "3.6.1" 
 
     const val fluent_hc: String = "4.5.6" 
+
+    const val org_eclipse_swt: String = "3.108.0" 
 
     const val freemarker: String = "2.3.28" 
 

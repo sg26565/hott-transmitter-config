@@ -12,6 +12,9 @@ object Libs {
     const val aws_java_sdk_polly: String =
             "com.amazonaws:aws-java-sdk-polly:" + Versions.aws_java_sdk_polly
 
+    const val com_diffplug_gradle_eclipse_mavencentral_gradle_plugin: String =
+            "com.diffplug.gradle.eclipse.mavencentral:com.diffplug.gradle.eclipse.mavencentral.gradle.plugin:" + Versions.com_diffplug_gradle_eclipse_mavencentral_gradle_plugin
+
     /**
      * [jackson-databind website](http://github.com/FasterXML/jackson) */
     const val jackson_databind: String =
@@ -62,6 +65,11 @@ object Libs {
     /**
      * [fluent-hc website](http://hc.apache.org/httpcomponents-client) */
     const val fluent_hc: String = "org.apache.httpcomponents:fluent-hc:" + Versions.fluent_hc
+
+    /**
+     * [org.eclipse.swt website](http://www.eclipse.org/platform) */
+    const val org_eclipse_swt: String =
+            "org.eclipse.platform:org.eclipse.swt:" + Versions.org_eclipse_swt
 
     /**
      * [freemarker website](https://freemarker.apache.org/) */
