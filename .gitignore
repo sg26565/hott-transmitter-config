@@ -6,3 +6,5 @@ target/
 MdlViewer.log*
 *.iml
 .idea/
+.gradle/
+build/
