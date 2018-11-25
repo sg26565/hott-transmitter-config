@@ -18,12 +18,6 @@ import javafx.scene.layout.Priority
 import javafx.stage.FileChooser
 import javafx.stage.Modality
 import javafx.stage.StageStyle
-import javazoom.spi.mpeg.sampled.convert.MpegFormatConversionProvider
-import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader
-import javazoom.spi.vorbis.sampled.convert.VorbisFormatConversionProvider
-import javazoom.spi.vorbis.sampled.file.VorbisAudioFileReader
-import org.apache.commons.logging.impl.LogFactoryImpl
-import org.apache.commons.logging.impl.SimpleLog
 import tornadofx.*
 import java.io.File
 import java.net.UnknownHostException
@@ -34,10 +28,6 @@ fun main(args: Array<String>) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
     launch<SpeechApp>(args)
 }
-
-// static references to mp3 and ogg decoders to keep them in the final jar
-@Suppress("unused")
-private val IGNORE = arrayOf(MpegAudioFileReader::class.java, MpegFormatConversionProvider::class.java, VorbisAudioFileReader::class.java, VorbisFormatConversionProvider::class.java, LogFactoryImpl::class.java, SimpleLog::class.java)
 
 private var standalone = false
 

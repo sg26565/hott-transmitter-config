@@ -1,15 +1,13 @@
 dependencies {
-    implementation(group = "org.openjfx", name = "javafx-base", classifier = "win")
-    implementation(group = "org.openjfx", name = "javafx-graphics", classifier = "win")
-    implementation(group = "org.openjfx", name = "javafx-controls", classifier = "win")
-    implementation(group = "org.openjfx", name = "javafx-media", classifier = "win")
-    implementation(group = "org.openjfx", name = "javafx-web", classifier = "win")
-    implementation(group = "no.tornado", name = "tornadofx")
+    compile(Libs.javafx_base)
+    compile(Libs.javafx_graphics)
+    compile(Libs.javafx_controls)
+    compile(Libs.javafx_media)
+    compile(Libs.javafx_web)
 
-    implementation("javax.xml.bind:jaxb-api")
-    implementation("org.apache.httpcomponents:fluent-hc")
-    implementation("commons-io:commons-io")
+    compile(Libs.tornadofx)
 
-    testImplementation("junit:junit")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    compile(Libs.jaxb_api)
+    compile(Libs.fluent_hc)
+    compile(Libs.commons_io)
 }
