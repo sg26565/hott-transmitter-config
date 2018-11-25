@@ -9,6 +9,8 @@ import kotlin.String
 object Versions {
     const val aws_java_sdk_polly: String = "1.11.455" 
 
+    const val jackson_databind: String = "2.9.7" 
+
     const val jserialcomm: String = "2.3.0" 
 
     const val osdetector_gradle_plugin: String = "1.6.0" 

@@ -13,6 +13,11 @@ object Libs {
             "com.amazonaws:aws-java-sdk-polly:" + Versions.aws_java_sdk_polly
 
     /**
+     * [jackson-databind website](http://github.com/FasterXML/jackson) */
+    const val jackson_databind: String =
+            "com.fasterxml.jackson.core:jackson-databind:" + Versions.jackson_databind
+
+    /**
      * [jSerialComm website](http://fazecast.github.io/jSerialComm/) */
     const val jserialcomm: String = "com.fazecast:jSerialComm:" + Versions.jserialcomm
 
