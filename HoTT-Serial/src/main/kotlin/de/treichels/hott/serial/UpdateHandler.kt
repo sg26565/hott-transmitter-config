@@ -1,4 +1,4 @@
-package de.treichels.hott.model.serial
+package de.treichels.hott.serial
 
 import java.util.concurrent.Future
 

@@ -9,11 +9,30 @@
  *
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package de.treichels.hott.model.serial
+package de.treichels.hott.serial
+
+import de.treichels.hott.model.HoTTException
+import java.io.Closeable
+import java.io.InputStream
+import java.io.OutputStream
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class FileType {
-    Dir, File
+interface SerialPort : Closeable {
+    val inputStream: InputStream
+    val outputStream: OutputStream
+
+    val portName: String
+    val isOpen: Boolean
+    var timeout: Int
+
+    @Throws(HoTTException::class)
+    override fun close()
+
+    @Throws(HoTTException::class)
+    fun open(baudRate: Int = 115200)
+
+    @Throws(HoTTException::class)
+    fun reset()
 }

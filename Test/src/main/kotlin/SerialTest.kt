@@ -1,6 +1,6 @@
 import de.treichels.hott.model.HoTTException
-import de.treichels.hott.model.serial.SerialPort
-import de.treichels.hott.model.serial.SerialPortBase
+import de.treichels.hott.serial.SerialPort
+import de.treichels.hott.serial.SerialPortBase
 import de.treichels.hott.util.Util
 import java.io.InputStream
 import java.io.OutputStream

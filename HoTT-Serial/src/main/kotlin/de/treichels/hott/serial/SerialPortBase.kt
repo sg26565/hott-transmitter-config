@@ -1,7 +1,7 @@
-package de.treichels.hott.model.serial
+package de.treichels.hott.serial
 
 import de.treichels.hott.model.HoTTException
-import de.treichels.hott.model.serial.spi.SerialPortProvider
+import de.treichels.hott.serial.spi.SerialPortProvider
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.*

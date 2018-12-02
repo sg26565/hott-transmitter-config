@@ -21,7 +21,7 @@ import de.treichels.hott.model.BaseModel;
 import de.treichels.hott.model.enums.ModelType;
 import de.treichels.hott.model.enums.Section;
 import de.treichels.hott.model.enums.TransmitterType;
-import de.treichels.hott.model.serial.ModelInfo;
+import de.treichels.hott.serial.ModelInfo;
 
 import java.net.MalformedURLException;
 

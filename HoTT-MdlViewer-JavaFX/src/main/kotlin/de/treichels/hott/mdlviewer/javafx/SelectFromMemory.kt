@@ -13,7 +13,7 @@ package de.treichels.hott.mdlviewer.javafx
 
 import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.model.enums.ModelType
-import de.treichels.hott.model.serial.ModelInfo
+import de.treichels.hott.serial.ModelInfo
 import javafx.beans.binding.BooleanBinding
 import javafx.concurrent.Task
 import javafx.scene.control.ListView

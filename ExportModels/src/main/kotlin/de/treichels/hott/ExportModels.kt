@@ -3,8 +3,8 @@ package de.treichels.hott
 import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.model.enums.ModelType
-import de.treichels.hott.model.serial.ModelInfo
-import de.treichels.hott.model.serial.SerialPortBase
+import de.treichels.hott.serial.ModelInfo
+import de.treichels.hott.serial.SerialPortBase
 import java.awt.BorderLayout
 import java.awt.Component
 import java.awt.Cursor

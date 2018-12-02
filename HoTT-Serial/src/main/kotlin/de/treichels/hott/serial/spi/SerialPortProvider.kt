@@ -1,6 +1,6 @@
-package de.treichels.hott.model.serial.spi
+package de.treichels.hott.serial.spi
 
-import de.treichels.hott.model.serial.SerialPort
+import de.treichels.hott.serial.SerialPort
 
 interface SerialPortProvider {
     fun getAvailablePorts(): List<String>

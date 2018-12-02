@@ -1,7 +1,7 @@
-package de.treichels.hott.serial
+package de.treichels.hott.serial.jssc
 
-import de.treichels.hott.model.serial.SerialPort
-import de.treichels.hott.model.serial.spi.SerialPortProvider
+import de.treichels.hott.serial.SerialPort
+import de.treichels.hott.serial.spi.SerialPortProvider
 
 class JSSCSerialPortProvider: SerialPortProvider {
     override fun getAvailablePorts(): List<String> = jssc.SerialPortList.getPortNames().toList()

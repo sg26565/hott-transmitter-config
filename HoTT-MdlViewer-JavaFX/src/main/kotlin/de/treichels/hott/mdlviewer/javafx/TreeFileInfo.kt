@@ -12,8 +12,8 @@
 package de.treichels.hott.mdlviewer.javafx
 
 import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.model.serial.FileInfo
-import de.treichels.hott.model.serial.FileType
+import de.treichels.hott.serial.FileInfo
+import de.treichels.hott.serial.FileType
 import javafx.scene.control.TreeItem
 import javafx.scene.control.TreeView
 import javafx.scene.image.ImageView

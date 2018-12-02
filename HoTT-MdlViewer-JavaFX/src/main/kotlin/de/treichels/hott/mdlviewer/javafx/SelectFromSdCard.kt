@@ -12,7 +12,7 @@
 package de.treichels.hott.mdlviewer.javafx
 
 import de.treichels.hott.mdlviewer.javafx.Model.Companion.loadModel
-import de.treichels.hott.model.serial.FileInfo
+import de.treichels.hott.serial.FileInfo
 import javafx.beans.binding.BooleanBinding
 import javafx.scene.control.SelectionMode
 import javafx.scene.control.TreeView

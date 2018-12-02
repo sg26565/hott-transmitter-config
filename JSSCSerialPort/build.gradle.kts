@@ -1,4 +1,4 @@
 dependencies {
-    compile(project(":HoTT-Model"))
+    compile(project(":HoTT-Serial"))
     compile(Libs.jssc)
 }

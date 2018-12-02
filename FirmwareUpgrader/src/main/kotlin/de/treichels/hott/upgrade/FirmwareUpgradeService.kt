@@ -1,7 +1,7 @@
 package de.treichels.hott.upgrade
 
 import de.treichels.hott.model.HoTTException
-import de.treichels.hott.model.serial.SerialPort
+import de.treichels.hott.serial.SerialPort
 import javafx.concurrent.Service
 import javafx.concurrent.Task
 import tornadofx.*

@@ -16,8 +16,8 @@ import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.model.BaseModel
 import de.treichels.hott.model.HoTTException
 import de.treichels.hott.model.enums.ModelType
-import de.treichels.hott.model.serial.FileInfo
-import de.treichels.hott.model.serial.ModelInfo
+import de.treichels.hott.serial.FileInfo
+import de.treichels.hott.serial.ModelInfo
 import de.treichels.hott.report.html.HTMLReport
 import de.treichels.hott.report.pdf.PDFReport
 import de.treichels.hott.report.xml.XMLReport

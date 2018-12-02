@@ -9,7 +9,7 @@
  *
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package de.treichels.hott.model.serial
+package de.treichels.hott.serial
 
 import java.io.Serializable
 import java.util.*

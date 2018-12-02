@@ -9,23 +9,26 @@
  *
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package de.treichels.hott.serial
+package de.treichels.hott.serial.jserialcommport
 
+import com.fazecast.jSerialComm.SerialPort
+import com.fazecast.jSerialComm.SerialPort.*
+import com.fazecast.jSerialComm.SerialPortDataListener
+import com.fazecast.jSerialComm.SerialPortEvent
 import de.treichels.hott.model.HoTTException
-import de.treichels.hott.model.serial.SerialPortBase
+import de.treichels.hott.serial.SerialPortBase
 import de.treichels.hott.util.Util
-import jssc.SerialPort.*
-import jssc.SerialPortEvent
-import jssc.SerialPortEventListener
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-class JSSCSerialPort(portName: String) : SerialPortBase(portName), SerialPortEventListener {
-    private var port: jssc.SerialPort? = null
+class JSerialCommPort(portName: String) : SerialPortBase(portName), SerialPortDataListener {
+    override fun getListeningEvents(): Int = LISTENING_EVENT_DATA_AVAILABLE or LISTENING_EVENT_DATA_WRITTEN
+
+    private var port: SerialPort? = null
 
     override val isOpen: Boolean
-        get() = port?.isOpened ?: false
+        get() = port?.isOpen ?: false
 
     override fun close() {
         try {
@@ -38,19 +41,22 @@ class JSSCSerialPort(portName: String) : SerialPortBase(portName), SerialPortEve
     override fun open(baudRate: Int) {
         if (isOpen) throw HoTTException("HoTTSerialPort.AlreadyOpen")
 
-        val port = jssc.SerialPort(portName)
-        port.openPort()
-        port.setParams(baudRate, DATABITS_8, STOPBITS_1, PARITY_NONE, false, false)
-        port.flowControlMode = FLOWCONTROL_NONE
-        port.addEventListener(this, MASK_RXCHAR + MASK_TXEMPTY)
+        val port = SerialPort.getCommPort(portName)
+        port.disablePortConfiguration()
+        port.openPort(0)
+        port.setComPortParameters(baudRate, 8, ONE_STOP_BIT, NO_PARITY)
+        port.setFlowControl(FLOW_CONTROL_DISABLED)
+        port.addDataListener(this)
 
         this.port = port
     }
 
     @Synchronized
     override fun readFromPort() {
-        val bytes = port?.readBytes()
-        if (bytes != null && bytes.isNotEmpty()) {
+        val available = port?.bytesAvailable() ?: 0
+        if (available > 0) {
+            val bytes = ByteArray(available)
+            port?.readBytes(bytes, available.toLong())
             logger.finer("readFromPort: ${bytes.size} bytes available\n${Util.dumpData(bytes)}")
             bytes.forEach { readQueue.put(it) }
         } else {
@@ -61,15 +67,23 @@ class JSSCSerialPort(portName: String) : SerialPortBase(portName), SerialPortEve
     override fun reset() {
         readQueue.clear()
         writeQueue.clear()
-        port?.purgePort(PURGE_RXABORT + PURGE_RXCLEAR + PURGE_TXABORT + PURGE_TXCLEAR)
+    }
+
+    private val SerialPortEvent.eventName: String
+    get() = when(eventType) {
+        LISTENING_EVENT_DATA_AVAILABLE -> "Data available"
+        LISTENING_EVENT_DATA_WRITTEN -> "Data written"
+        LISTENING_EVENT_DATA_RECEIVED -> "Data received"
+        else -> "unknown event"
     }
 
     override fun serialEvent(event: SerialPortEvent) {
-        val type = if (event.eventType == 1) "RXCHAR" else "TXEMPTY"
-        logger.finest("serialEvent: " + with(event) { "port=$portName, type=$type, value=$eventValue" })
+        logger.finest("serialEvent: port=$portName, event=${event.eventName}")
 
-        if (event.isRXCHAR) readFromPort()
-        if (event.isTXEMPTY) writeToPort()
+        when (event.eventType) {
+            LISTENING_EVENT_DATA_WRITTEN -> writeToPort()
+            LISTENING_EVENT_DATA_AVAILABLE -> readFromPort()
+        }
     }
 
     @Synchronized
@@ -81,7 +95,7 @@ class JSSCSerialPort(portName: String) : SerialPortBase(portName), SerialPortEve
                 writeQueue.take()
             }
             logger.finer("writeToPort: $available bytes to write\n${Util.dumpData(bytes)}")
-            port?.writeBytes(bytes)
+            port?.writeBytes(bytes, available.toLong())
         } else {
             logger.finest("writeToPort: write buffer is empty")
         }

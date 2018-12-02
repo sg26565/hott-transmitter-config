@@ -9,30 +9,16 @@
  *
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package de.treichels.hott.model.serial
+package de.treichels.hott.serial
 
-import de.treichels.hott.model.HoTTException
-import java.io.Closeable
-import java.io.InputStream
-import java.io.OutputStream
+import java.util.stream.Stream
 
-/**
- * @author Oliver Treichel &lt;oli@treichels.de&gt;
- */
-interface SerialPort : Closeable {
-    val inputStream: InputStream
-    val outputStream: OutputStream
+enum class ResponseCode(val id: Int) {
+    ACK(1), NACK(2), ERROR(3), CRC_ERROR(4), BUSY(5), Unknown(-1);
 
-    val portName: String
-    val isOpen: Boolean
-    var timeout: Int
-
-    @Throws(HoTTException::class)
-    override fun close()
-
-    @Throws(HoTTException::class)
-    fun open(baudRate: Int = 115200)
-
-    @Throws(HoTTException::class)
-    fun reset()
+    companion object {
+        fun forId(id: Int): ResponseCode {
+            return Stream.of(*values()).filter { r -> r.id == id }.findFirst().orElse(Unknown)
+        }
+    }
 }

@@ -12,8 +12,8 @@
 package de.treichels.hott.mdlviewer.javafx
 
 import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.model.serial.SerialPortBase
 import de.treichels.hott.util.ExceptionDialog
+import de.treichels.hott.serial.SerialPortBase
 import javafx.beans.binding.BooleanBinding
 import javafx.concurrent.Task
 import javafx.geometry.Pos

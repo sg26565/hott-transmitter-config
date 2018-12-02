@@ -1,5 +1,6 @@
 dependencies {
     compile(project(":HoTT-Model"))
+    compile(project(":HoTT-Serial"))
 }
 
 plugins {

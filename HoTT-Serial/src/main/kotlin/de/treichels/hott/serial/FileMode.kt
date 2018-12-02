@@ -9,16 +9,11 @@
  *
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package de.treichels.hott.model.serial
+package de.treichels.hott.serial
 
-import java.util.stream.Stream
-
-enum class ResponseCode(val id: Int) {
-    ACK(1), NACK(2), ERROR(3), CRC_ERROR(4), BUSY(5), Unknown(-1);
-
-    companion object {
-        fun forId(id: Int): ResponseCode {
-            return Stream.of(*values()).filter { r -> r.id == id }.findFirst().orElse(Unknown)
-        }
-    }
+/**
+ * @author Oliver Treichel &lt;oli@treichels.de&gt;
+ */
+enum class FileMode(val mode: Int) {
+    Read(1), Write(2), Create(11)
 }

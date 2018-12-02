@@ -1,9 +1,9 @@
 package de.treichels.hott.upgrade
 
-import de.treichels.hott.model.serial.SerialPort
-import de.treichels.hott.model.serial.SerialPortBase
 import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.util.MessageDialog
+import de.treichels.hott.serial.SerialPort
+import de.treichels.hott.serial.SerialPortBase
 import javafx.beans.property.SimpleObjectProperty
 import javafx.geometry.Pos
 import javafx.scene.control.*

@@ -3,7 +3,7 @@ package de.treichels.hott.mdlviewer.swt.dialogs;
 import de.treichels.hott.decoder.HoTTSerialPort;
 import de.treichels.hott.messages.Messages;
 import de.treichels.hott.model.BaseModel;
-import de.treichels.hott.model.serial.SerialPortBase;
+import de.treichels.hott.serial.SerialPortBase;
 import de.treichels.hott.util.Util;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
