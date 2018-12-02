@@ -1,4 +1,4 @@
-package de.treichels.hott.model.voice
+package de.treichels.hott.voice
 
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertFalse

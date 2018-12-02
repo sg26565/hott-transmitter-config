@@ -1,7 +1,7 @@
 package de.treichels.hott.tts
 
-import de.treichels.hott.model.voice.TrimInputStream
-import de.treichels.hott.model.voice.VolumeControlAudioInputStream
+import de.treichels.hott.voice.TrimInputStream
+import de.treichels.hott.voice.VolumeControlAudioInputStream
 import javafx.concurrent.Service
 import javafx.concurrent.Task
 import javax.sound.sampled.AudioInputStream

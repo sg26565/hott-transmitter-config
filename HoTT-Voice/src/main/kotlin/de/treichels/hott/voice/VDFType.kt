@@ -1,6 +1,6 @@
-package de.treichels.hott.model.voice
+package de.treichels.hott.voice
 
-import tornadofx.*
+import de.treichels.hott.util.get
 import java.util.*
 
 enum class VDFType {

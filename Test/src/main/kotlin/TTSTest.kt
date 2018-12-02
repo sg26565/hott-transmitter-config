@@ -1,4 +1,4 @@
-import de.treichels.hott.model.voice.Player
+import de.treichels.hott.voice.Player
 import de.treichels.hott.tts.Gender
 import de.treichels.hott.tts.polly.PollyTTSProvider
 import de.treichels.hott.tts.voicerss.VoiceRSSTTSProvider

@@ -1,4 +1,4 @@
-package de.treichels.hott.model.voice
+package de.treichels.hott.voice
 
 /**
  * A rolling buffer with a fixed capacity.

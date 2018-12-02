@@ -1,4 +1,4 @@
-package de.treichels.hott.model.voice
+package de.treichels.hott.voice
 
 import org.apache.commons.io.IOUtils
 import java.io.ByteArrayInputStream

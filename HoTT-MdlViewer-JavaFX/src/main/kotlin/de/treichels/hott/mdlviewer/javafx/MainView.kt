@@ -12,7 +12,7 @@
 package de.treichels.hott.mdlviewer.javafx
 
 import de.treichels.hott.mdlviewer.javafx.Model.Companion.loadModel
-import de.treichels.hott.model.voice.Announcements
+import de.treichels.hott.voice.Announcements
 import javafx.application.Platform
 import javafx.beans.binding.Bindings
 import javafx.beans.property.ReadOnlyBooleanProperty

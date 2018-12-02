@@ -5,10 +5,10 @@ import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.model.HoTTException
 import de.treichels.hott.model.enums.TransmitterType
-import de.treichels.hott.model.voice.CountryCode
-import de.treichels.hott.model.voice.VDFType
-import de.treichels.hott.model.voice.VoiceData
-import de.treichels.hott.model.voice.VoiceFile
+import de.treichels.hott.voice.CountryCode
+import de.treichels.hott.voice.VDFType
+import de.treichels.hott.voice.VoiceData
+import de.treichels.hott.voice.VoiceFile
 import de.treichels.hott.report.html.HTMLReport
 import de.treichels.hott.report.pdf.PDFReport
 import de.treichels.hott.tts.SpeechDialog

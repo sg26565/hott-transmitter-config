@@ -1,6 +1,6 @@
 package de.treichels.hott.vdfeditor.actions
 
-import de.treichels.hott.model.voice.VoiceData
+import de.treichels.hott.voice.VoiceData
 import org.junit.Assert.assertArrayEquals
 import org.junit.Test
 import kotlin.test.assertEquals

@@ -1,4 +1,4 @@
-package de.treichels.hott.model.voice
+package de.treichels.hott.voice
 
 import de.treichels.hott.model.enums.TransmitterType
 import javafx.beans.InvalidationListener

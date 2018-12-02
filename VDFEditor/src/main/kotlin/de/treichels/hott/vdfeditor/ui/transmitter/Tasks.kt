@@ -1,8 +1,8 @@
 package de.treichels.hott.vdfeditor.ui.transmitter
 
 import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.model.voice.VoiceFile
 import de.treichels.hott.serial.UpdateHandler
+import de.treichels.hott.voice.VoiceFile
 import javafx.concurrent.Task
 
 abstract class TransmitterTask<T>(title: String) : Task<T>(), UpdateHandler<T> {

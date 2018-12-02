@@ -1,7 +1,7 @@
 package de.treichels.hott.tts
 
-import de.treichels.hott.model.voice.Player
-import de.treichels.hott.model.voice.VoiceData
+import de.treichels.hott.voice.Player
+import de.treichels.hott.voice.VoiceData
 import de.treichels.hott.tts.polly.PollyTTSProvider
 import de.treichels.hott.tts.voicerss.VoiceRSSTTSProvider
 import de.treichels.hott.tts.win10.Win10TTSProvider

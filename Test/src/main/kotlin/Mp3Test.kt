@@ -1,6 +1,6 @@
 
-import de.treichels.hott.model.voice.Player
-import de.treichels.hott.model.voice.VolumeControlAudioInputStream
+import de.treichels.hott.voice.Player
+import de.treichels.hott.voice.VolumeControlAudioInputStream
 import java.io.File
 import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioSystem

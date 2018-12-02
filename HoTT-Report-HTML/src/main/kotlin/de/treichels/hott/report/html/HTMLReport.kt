@@ -16,7 +16,7 @@ import de.treichels.hott.model.BaseModel
 import de.treichels.hott.model.HelicopterModel
 import de.treichels.hott.model.WingedModel
 import de.treichels.hott.model.enums.TransmitterType
-import de.treichels.hott.model.voice.VoiceFile
+import de.treichels.hott.voice.VoiceFile
 import freemarker.template.Configuration
 import freemarker.template.DefaultObjectWrapper
 import freemarker.template.TemplateException
