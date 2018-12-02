@@ -11,8 +11,6 @@
  */
 package de.treichels.hott.model.enums
 
-import de.treichels.hott.model.firmware.Firmware
-import de.treichels.hott.model.firmware.Updatable
 import tornadofx.*
 import java.util.*
 
@@ -44,21 +42,6 @@ enum class ReceiverType(override val productCode: Int = 0, val orderNo: String =
     gr32(16004000, "33516"),
     gr32l(16004020, "S1023"),
     falcon12(0, "S1035", 0x35, true);
-
-    override fun getFirmware(): List<Firmware<ReceiverType>> {
-        var result = emptyList<Firmware<ReceiverType>>()
-
-        if (productCode != 0) {
-            result += Firmware.list(this, "HoTT_Receiver")
-            result += Firmware.list(this, "HoTT_Receiver", (productCode % 10000).toString())
-        }
-
-        if (id != 0) {
-            result += Firmware.list(this, "Server Updates", Integer.toHexString(id).toUpperCase())
-        }
-
-        return result
-    }
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 

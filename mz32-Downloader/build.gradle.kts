@@ -1,5 +1,6 @@
 dependencies {
     compile(project(":HoTT-Model"))
+    compile(project(":HoTT-Firmware"))
     compile(project(":lzma-sdk"))
 }
 

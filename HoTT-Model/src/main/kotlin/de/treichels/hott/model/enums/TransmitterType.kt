@@ -11,8 +11,6 @@
  */
 package de.treichels.hott.model.enums
 
-import de.treichels.hott.model.firmware.Firmware
-import de.treichels.hott.model.firmware.Updatable
 import tornadofx.*
 import java.util.*
 
@@ -26,10 +24,6 @@ enum class TransmitterType(override val productCode: Int) : Updatable<Transmitte
     mz12Pro(16007800), mz18(16005300), mz18Pro(16008300), mz24(16005200),
     mz24Pro(16007200), mz32(16008200), mz32beta(16008201), x4s(16005900),
     x8n(16006200), x8e(16006500), unknown(0);
-
-    override fun getFirmware(): List<Firmware<TransmitterType>> {
-        return Firmware.list(this, category)
-    }
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 

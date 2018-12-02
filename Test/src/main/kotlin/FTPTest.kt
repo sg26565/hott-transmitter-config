@@ -1,7 +1,8 @@
 
+import de.treichels.hott.firmware.Firmware
+import de.treichels.hott.firmware.getFirmware
 import de.treichels.hott.model.enums.ReceiverType
 import de.treichels.hott.model.enums.TransmitterType
-import de.treichels.hott.model.firmware.Firmware
 import tornadofx.*
 
 fun main(vararg args: String) {
