@@ -2,7 +2,7 @@ package de.treichels.hott.lzma
 
 import de.treichels.hott.mz32.Hash
 import de.treichels.hott.mz32.MD5Sum
-import de.treichels.hott.util.ExceptionDialog
+import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.util.extract
 import de.treichels.hott.util.hash
 import de.treichels.lzma.canCompress

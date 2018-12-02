@@ -1,9 +1,9 @@
 package de.treichels.hott.mz32
 
 import de.treichels.hott.model.enums.TransmitterType
-import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.firmware.Firmware
 import de.treichels.hott.firmware.getFirmware
+import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.util.hash
 import de.treichels.lzma.canCompress
 import de.treichels.lzma.uncompress

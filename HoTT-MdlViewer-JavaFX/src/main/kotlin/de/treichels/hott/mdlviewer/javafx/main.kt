@@ -1,6 +1,6 @@
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.hott.util.ExceptionDialog
+import de.treichels.hott.ui.ExceptionDialog
 import tornadofx.*
 
 fun main(args: Array<String>) {

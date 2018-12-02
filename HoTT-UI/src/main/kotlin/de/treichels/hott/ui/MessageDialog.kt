@@ -1,4 +1,4 @@
-package de.treichels.hott.util
+package de.treichels.hott.ui
 
 import javafx.application.Platform
 import javafx.concurrent.Worker

@@ -1,6 +1,6 @@
 package de.treichels.hott.mz32
 
-import de.treichels.hott.util.ExceptionDialog
+import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.util.Util
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.concurrent.Task

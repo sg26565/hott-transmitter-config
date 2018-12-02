@@ -1,7 +1,7 @@
 package de.treichels.hott.vdfeditor.ui
 
 import de.treichels.hott.messages.Messages
-import de.treichels.hott.util.ExceptionDialog
+import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.util.Util
 import tornadofx.*
 import java.io.File

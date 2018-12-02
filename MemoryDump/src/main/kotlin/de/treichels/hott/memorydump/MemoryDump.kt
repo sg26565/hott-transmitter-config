@@ -12,9 +12,9 @@
 package de.treichels.hott.memorydump
 
 import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.util.ExceptionDialog
 import de.treichels.hott.serial.ResponseCode.*
 import de.treichels.hott.serial.SerialPortBase
+import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.util.Util
 import javafx.concurrent.Service
 import javafx.concurrent.Task

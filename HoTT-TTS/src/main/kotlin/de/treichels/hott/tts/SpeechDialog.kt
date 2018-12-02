@@ -5,8 +5,8 @@ import de.treichels.hott.voice.VoiceData
 import de.treichels.hott.tts.polly.PollyTTSProvider
 import de.treichels.hott.tts.voicerss.VoiceRSSTTSProvider
 import de.treichels.hott.tts.win10.Win10TTSProvider
-import de.treichels.hott.util.ExceptionDialog
-import de.treichels.hott.util.MessageDialog
+import de.treichels.hott.ui.ExceptionDialog
+import de.treichels.hott.ui.MessageDialog
 import javafx.application.Platform
 import javafx.geometry.Pos
 import javafx.scene.control.Alert.AlertType

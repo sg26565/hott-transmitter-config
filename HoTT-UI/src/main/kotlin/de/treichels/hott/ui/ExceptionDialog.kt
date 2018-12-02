@@ -1,6 +1,5 @@
-package de.treichels.hott.util
+package de.treichels.hott.ui
 
-import de.treichels.hott.messages.Messages
 import javafx.scene.control.Alert
 import javafx.scene.layout.Priority
 import javafx.stage.Stage
@@ -13,7 +12,7 @@ class ExceptionDialog(throwable: Throwable) : Alert(Alert.AlertType.ERROR) {
     init {
         Logger.getLogger(javaClass.name).throwing(javaClass.name, "<init>", throwable)
 
-        title = Messages.getString("Error")
+        title ="Error"
         (dialogPane.scene.window as Stage).icons += ResourceLookup(ExceptionDialog).image("icon.png")
         headerText = null
 

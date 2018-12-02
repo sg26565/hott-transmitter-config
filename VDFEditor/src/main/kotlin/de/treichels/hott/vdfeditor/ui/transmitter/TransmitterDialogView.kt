@@ -1,9 +1,9 @@
 package de.treichels.hott.vdfeditor.ui.transmitter
 
 import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.util.ExceptionDialog
-import de.treichels.hott.util.MessageDialog
 import de.treichels.hott.serial.SerialPortBase
+import de.treichels.hott.ui.ExceptionDialog
+import de.treichels.hott.ui.MessageDialog
 import javafx.concurrent.Task
 import javafx.geometry.Pos
 import javafx.scene.control.*

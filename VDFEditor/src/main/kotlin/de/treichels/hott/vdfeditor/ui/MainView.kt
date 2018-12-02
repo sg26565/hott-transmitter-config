@@ -12,8 +12,8 @@ import de.treichels.hott.voice.VoiceFile
 import de.treichels.hott.report.html.HTMLReport
 import de.treichels.hott.report.pdf.PDFReport
 import de.treichels.hott.tts.SpeechDialog
-import de.treichels.hott.util.ExceptionDialog
-import de.treichels.hott.util.MessageDialog
+import de.treichels.hott.ui.ExceptionDialog
+import de.treichels.hott.ui.MessageDialog
 import de.treichels.hott.util.Util
 import de.treichels.hott.vdfeditor.actions.*
 import de.treichels.hott.vdfeditor.ui.transmitter.LoadVoiceFileTask
