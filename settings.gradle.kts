@@ -4,6 +4,7 @@ val javaVersion: String = System.getProperty("java.version")
 val pos = javaVersion.indexOf('.', javaVersion.indexOf('.') + 1)
 val ver = javaVersion.substring(0, pos).toDouble()
 
+include(":ExportModels")
 include(":FirmwareUpgrader")
 include(":HoTT-Decoder:HoTT-Decoder")
 include(":HoTT-MdlViewer-JavaFX")
