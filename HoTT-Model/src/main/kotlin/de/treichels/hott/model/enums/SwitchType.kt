@@ -11,7 +11,7 @@
  */
 package de.treichels.hott.model.enums
 
-import tornadofx.*
+import de.treichels.hott.util.get
 import java.util.*
 
 /**
@@ -20,5 +20,5 @@ import java.util.*
 enum class SwitchType {
     ControlSwitch, Fixed, InputControl, LogicalSwitch, ToggleSwitch, Unknown;
 
-override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

@@ -12,7 +12,7 @@
 package de.treichels.hott.model.enums
 
 import de.treichels.hott.model.*
-import tornadofx.*
+import de.treichels.hott.util.get
 import java.util.*
 import java.util.stream.Stream
 

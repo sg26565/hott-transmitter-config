@@ -6,7 +6,7 @@ import java.io.File
 
 class EnumTest {
     companion object {
-        val packageNames = listOf("de.treichels.hott.model.enums", "de.treichels.hott.model.serial", "de.treichels.hott.model.voice")
+        val packageNames = listOf("de.treichels.hott.model.enums", "de.treichels.hott.serial", "de.treichels.hott.model.voice")
     }
 
     @Test

@@ -11,13 +11,13 @@
  */
 package de.treichels.hott.model.enums
 
-import tornadofx.*
+import de.treichels.hott.util.get
 import java.util.*
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class ReceiverType(override val productCode: Int = 0, val orderNo: String = "", val id: Int = 0, val hasGyro: Boolean = false, val hasVario: Boolean = false) : Updatable<ReceiverType> {
+enum class ReceiverType(override val productCode: Int = 0, val orderNo: String = "", val id: Int = 0, val hasGyro: Boolean = false, val hasVario: Boolean = false) : Registered<ReceiverType> {
     gr4(16005600, "33502"),
     gr8(16005700, "33504"),
     gr10c(0, "S1029", 0x3d, true),

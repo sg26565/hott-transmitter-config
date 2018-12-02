@@ -11,13 +11,13 @@
  */
 package de.treichels.hott.model.enums
 
-import tornadofx.*
+import de.treichels.hott.util.get
 import java.util.*
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class TransmitterType(override val productCode: Int) : Updatable<TransmitterType> {
+enum class TransmitterType(override val productCode: Int) : Registered<TransmitterType> {
     mc16(16004600), mc20(16004300), mc26(16007700), mc28(16007100),
     mc32(16004100), mxs8(16004900), mx10(16004200), mx12(16003600),
     mx16(16003300), mx20(16003700), mz10(16005000), mz12(16005100),

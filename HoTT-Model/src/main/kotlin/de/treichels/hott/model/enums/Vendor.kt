@@ -11,8 +11,9 @@
  */
 package de.treichels.hott.model.enums
 
-import tornadofx.*
 import java.util.*
+import de.treichels.hott.util.Util
+import de.treichels.hott.util.get
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;

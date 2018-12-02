@@ -1,4 +1,4 @@
-package de.treichels.hott.logging
+package de.treichels.hott.util
 
 import java.io.PrintWriter
 import java.io.StringWriter
