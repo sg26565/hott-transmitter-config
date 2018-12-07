@@ -1,5 +1,6 @@
 dependencies {
     compile(project(":HoTT-Decoder:HoTT-Decoder"))
+    compile(project(":HoTT-UI"))
     compile(project(":HoTT-TTS"))
     compile(project(":HoTT-Report-HTML"))
     compile(project(":HoTT-Report-PDF"))
