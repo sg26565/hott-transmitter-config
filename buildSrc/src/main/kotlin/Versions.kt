@@ -7,7 +7,7 @@ import kotlin.String
  *
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
-    const val aws_java_sdk_polly: String = "1.11.455" 
+    const val aws_java_sdk_polly: String = "1.11.465" 
 
     const val com_diffplug_gradle_eclipse_mavencentral_gradle_plugin: String = "3.17.0" 
 
@@ -43,11 +43,11 @@ object Versions {
 
     const val jaxb_runtime: String = "2.4.0-b180830.0438" 
 
-    const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.10" 
+    const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.11" 
 
-    const val org_jetbrains_kotlin: String = "1.3.10" 
+    const val org_jetbrains_kotlin: String = "1.3.11" 
 
-    const val org_openjfx: String = "11.0.1" //available: "12-ea+2" 
+    const val org_openjfx: String = "11.0.1" //available: "12-ea+4" 
 
     const val jssc: String = "2.8.0" 
 
@@ -59,12 +59,12 @@ object Versions {
      *      ./gradle/wrapper/gradle-wrapper.properties
      */
     object Gradle {
-        const val runningVersion: String = "4.10.2"
+        const val runningVersion: String = "5.0"
 
-        const val currentVersion: String = "4.10.2"
+        const val currentVersion: String = "5.0"
 
-        const val nightlyVersion: String = "5.1-20181125000030+0000"
+        const val nightlyVersion: String = "5.2-20181207073447+0000"
 
-        const val releaseCandidate: String = "5.0-rc-5"
+        const val releaseCandidate: String = ""
     }
 }
