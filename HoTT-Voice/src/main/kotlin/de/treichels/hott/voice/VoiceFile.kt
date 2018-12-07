@@ -7,7 +7,6 @@ import javafx.beans.binding.BooleanBinding
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
-import javafx.collections.ObservableList
 import tornadofx.*
 
 data class VoiceInfo(val vdfType: VDFType, val flashSize: Int, val sectorCount: Int, val sectorSize: Int, val voiceVersion: Int, val infoSize: Int, val maxDataSize: Int)
@@ -26,7 +25,7 @@ open class ObservableBase : Observable {
     }
 
     fun invalidate() {
-        listeners.forEach({ it.invalidated(this) })
+        listeners.forEach { it.invalidated(this) }
     }
 }
 
@@ -36,7 +35,7 @@ open class VoiceFileBase(vdfType: VDFType, transmitterType: TransmitterType, vdf
     val transmitterTypeProperty = SimpleObjectProperty<TransmitterType>(transmitterType)
     val vdfVersionProperty = SimpleIntegerProperty(vdfVersion)
     val countryProperty = SimpleObjectProperty<CountryCode>(country)
-    val voiceList = list as? ObservableList<VoiceData> ?: list.observable()
+    val voiceList = list.observable()
     val sizeProperty = voiceList.sizeProperty
     val systemVDFProperty: BooleanBinding = vdfTypeProperty.isEqualTo(VDFType.System)
 
