@@ -24,8 +24,11 @@ object Libs {
      * [jSerialComm website](http://fazecast.github.io/jSerialComm/) */
     const val jserialcomm: String = "com.fazecast:jSerialComm:" + Versions.jserialcomm
 
-    const val osdetector_gradle_plugin: String =
-            "com.google.gradle:osdetector-gradle-plugin:" + Versions.osdetector_gradle_plugin
+    const val com_github_johnrengelman_shadow_gradle_plugin: String =
+            "com.github.johnrengelman.shadow:com.github.johnrengelman.shadow.gradle.plugin:" + Versions.com_github_johnrengelman_shadow_gradle_plugin
+
+    const val com_google_osdetector_gradle_plugin: String =
+            "com.google.osdetector:com.google.osdetector.gradle.plugin:" + Versions.com_google_osdetector_gradle_plugin
 
     /**
      * [mp3spi website](https://code.google.com/p/soundlibs/) */
@@ -108,10 +111,6 @@ object Libs {
     /**
      * [javafx-graphics website](https://openjdk.java.net/projects/openjfx/) */
     const val javafx_graphics: String = "org.openjfx:javafx-graphics:" + Versions.org_openjfx
-
-    /**
-     * [javafx-media website](https://openjdk.java.net/projects/openjfx/) */
-    const val javafx_media: String = "org.openjfx:javafx-media:" + Versions.org_openjfx
 
     /**
      * [javafx-swing website](https://openjdk.java.net/projects/openjfx/) */

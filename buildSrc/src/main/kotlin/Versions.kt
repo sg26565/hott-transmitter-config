@@ -7,7 +7,7 @@ import kotlin.String
  *
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
-    const val aws_java_sdk_polly: String = "1.11.465" 
+    const val aws_java_sdk_polly: String = "1.11.466" 
 
     const val com_diffplug_gradle_eclipse_mavencentral_gradle_plugin: String = "3.17.0" 
 
@@ -15,7 +15,9 @@ object Versions {
 
     const val jserialcomm: String = "2.3.0" 
 
-    const val osdetector_gradle_plugin: String = "1.6.0" 
+    const val com_github_johnrengelman_shadow_gradle_plugin: String = "4.0.3" 
+
+    const val com_google_osdetector_gradle_plugin: String = "1.4.0" //available: "1.6.0" 
 
     const val mp3spi: String = "1.9.5.4" 
 
@@ -63,7 +65,7 @@ object Versions {
 
         const val currentVersion: String = "5.0"
 
-        const val nightlyVersion: String = "5.2-20181207073447+0000"
+        const val nightlyVersion: String = "5.2-20181210000034+0000"
 
         const val releaseCandidate: String = ""
     }
