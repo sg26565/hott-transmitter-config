@@ -20,6 +20,7 @@ subprojects {
     version = "0.9.4"
 
     apply(plugin = "kotlin")
+    apply(plugin = "maven-publish")
 
     repositories {
         mavenCentral()
@@ -54,6 +55,26 @@ subprojects {
         dependencies.all {
             if (group == "org.openjfx") {
                 dependencies.add(project.dependencies.create(group = group!!, name = name, version = version, classifier = platform))
+            }
+        }
+    }
+
+    // publish to Bintray
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                from(components["java"])
+            }
+        }
+
+        repositories {
+            maven {
+                name = "Bintray"
+                url = uri("https://api.bintray.com/maven/sg26565/maven/mdlviewer/;publish=1")
+                credentials {
+                    username = properties["bintray.user.name"] as String
+                    password = properties["bintray.user.key"] as String
+                }
             }
         }
     }
