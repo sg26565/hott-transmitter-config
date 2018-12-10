@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 dependencies {
     compile(project(":HoTT-Decoder:HoTT-Decoder"))
     compile(project(":HoTT-UI"))
@@ -14,4 +16,8 @@ plugins {
 
 application {
     mainClassName = "de.treichels.hott.vdfeditor.ui.VDFEditorKt"
+}
+
+tasks.withType(ShadowJar::class) {
+    minimize()
 }

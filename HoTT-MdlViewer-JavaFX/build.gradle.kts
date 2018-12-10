@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 dependencies {
     compile(project(":HoTT-Report-HTML"))
     compile(project(":HoTT-Report-XML"))
@@ -13,4 +15,8 @@ plugins {
 
 application {
     mainClassName = "de.treichels.hott.mdlviewer.javafx.MainKt"
+}
+
+tasks.withType(ShadowJar::class) {
+    minimize()
 }

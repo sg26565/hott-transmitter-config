@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 dependencies {
     compile(project(":HoTT-Model"))
     compile(project(":HoTT-UI"))
@@ -12,4 +14,8 @@ plugins {
 
 application {
     mainClassName = "de.treichels.hott.mz32.Mz32DownloaderKt"
+}
+
+tasks.withType(ShadowJar::class) {
+    minimize()
 }

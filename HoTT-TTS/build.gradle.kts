@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 dependencies {
     compile(project(":HoTT-Model"))
     compile(project(":HoTT-Voice"))
@@ -14,4 +16,8 @@ plugins {
 
 application {
     mainClassName = "de.treichels.hott.tts.SpeechDialogKt"
+}
+
+tasks.withType(ShadowJar::class) {
+    minimize()
 }

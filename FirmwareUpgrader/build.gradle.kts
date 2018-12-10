@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 dependencies {
     compile(project(":HoTT-Model"))
     compile(project(":HoTT-UI"))
@@ -11,4 +13,8 @@ plugins {
 
 application {
     mainClassName = "de.treichels.hott.upgrade.FirmwareUpgraderKt"
+}
+
+tasks.withType(ShadowJar::class) {
+    minimize()
 }

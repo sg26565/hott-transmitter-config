@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 dependencies {
     compile(project(":HoTT-Decoder:HoTT-Decoder"))
     runtimeOnly(project(":jSerialCommPort"))
@@ -10,4 +12,8 @@ plugins {
 
 application {
     mainClassName = "de.treichels.hott.ExportModelsKt"
+}
+
+tasks.withType(ShadowJar::class) {
+    minimize()
 }
