@@ -25,11 +25,11 @@ subprojects {
         mavenCentral()
     }
 
-    val compileKotlin: KotlinCompile by tasks
-    compileKotlin.kotlinOptions.jvmTarget = "1.8"
+    // set jvmTarget for Kotlin
+    tasks.withType(KotlinCompile::class) {
+        kotlinOptions.jvmTarget = "1.8"
+    }
 
-    val compileTestKotlin: KotlinCompile by tasks
-    compileTestKotlin.kotlinOptions.jvmTarget = "1.8"
 
     dependencies {
         // common dependencies
