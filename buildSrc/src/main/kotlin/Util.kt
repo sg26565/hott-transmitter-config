@@ -10,5 +10,5 @@ val PluginDependenciesSpec.osDetector
 val PluginDependenciesSpec.syncLibs
     get() = id("jmfayard.github.io.gradle-kotlin-dsl-libs") version Versions.jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin
 
-val PluginDependenciesSpec.shaddow
+val PluginDependenciesSpec.shadow
     get() = id("com.github.johnrengelman.shadow") version Versions.com_github_johnrengelman_shadow_gradle_plugin

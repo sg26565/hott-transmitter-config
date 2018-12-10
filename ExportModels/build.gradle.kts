@@ -5,7 +5,7 @@ dependencies {
 
 plugins {
     application
-    shaddow
+    shadow
 }
 
 application {
