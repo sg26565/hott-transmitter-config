@@ -30,6 +30,11 @@ subprojects {
         kotlinOptions.jvmTarget = "1.8"
     }
 
+    // enable reproducible builds
+    tasks.withType(AbstractArchiveTask::class) {
+        isPreserveFileTimestamps = false
+        isReproducibleFileOrder = true
+    }
 
     dependencies {
         // common dependencies
