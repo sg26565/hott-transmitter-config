@@ -1,26 +1,14 @@
 import com.google.gradle.osdetector.OsDetector
-import org.jetbrains.kotlin.backend.common.bridges.findInterfaceImplementation
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        "classpath"(Libs.osdetector_gradle_plugin)
-        "classpath"(Libs.jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin)
-    }
-}
-
 plugins {
-    kotlin("jvm") version Versions.org_jetbrains_kotlin_jvm_gradle_plugin apply false
+    kotlin("jvm") version Versions.org_jetbrains_kotlin apply false
+    mavenPublish
+    osDetector
+    syncLibs
 }
 
-apply(plugin = "com.google.osdetector")
-apply(plugin = "jmfayard.github.io.gradle-kotlin-dsl-libs")
-
-val os: String = (extensions["osdetector"] as OsDetector).os
+val os = OsDetector().os as String
 val platform = when (os) {
     "osx" -> "mac"
     "windows" -> "win"

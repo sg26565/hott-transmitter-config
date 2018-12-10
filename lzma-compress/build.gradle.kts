@@ -4,6 +4,7 @@ dependencies {
 
 plugins {
     application
+    shaddow
 }
 
 application {
