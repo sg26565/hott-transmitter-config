@@ -8,7 +8,7 @@ plugins {
     syncLibs
 }
 
-val os = OsDetector().os as String
+val os = OsDetector().os
 val platform = when (os) {
     "osx" -> "mac"
     "windows" -> "win"
