@@ -12,3 +12,6 @@ val PluginDependenciesSpec.syncLibs
 
 val PluginDependenciesSpec.shadow
     get() = id("com.github.johnrengelman.shadow") version Versions.com_github_johnrengelman_shadow_gradle_plugin
+
+val PluginDependenciesSpec.eclipse
+    get() = id("com.diffplug.gradle.eclipse.mavencentral") version "3.17.0"
