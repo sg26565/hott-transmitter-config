@@ -23,21 +23,26 @@ import java.io.OutputStream
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 object PDFReport {
-    @Throws(IOException::class, DocumentException::class)
+    @Throws(IOException::class)
     fun save(file: File, html: String) {
         FileOutputStream(file).use { fos -> save(fos, html) }
     }
 
-    @Throws(IOException::class, DocumentException::class)
+    @Throws(IOException::class)
     private fun save(os: OutputStream, html: String) {
-        // setup flyingsaucer
-        val renderer = ITextRenderer()
-        val ctx = renderer.sharedContext
+        try {
+            // setup flyingsaucer
+            val renderer = ITextRenderer()
+            val ctx = renderer.sharedContext
 
-        ctx.replacedElementFactory = ITextInlineImageReplacedElementFactory(ctx.replacedElementFactory)
+            ctx.replacedElementFactory = ITextInlineImageReplacedElementFactory(ctx.replacedElementFactory)
 
-        renderer.setDocumentFromString(html)
-        renderer.layout()
-        renderer.createPDF(os)
+            renderer.setDocumentFromString(html)
+            renderer.layout()
+            renderer.createPDF(os)
+        } catch (e: DocumentException) {
+            // wrap into standard IOException
+            throw IOException(e)
+        }
     }
 }
