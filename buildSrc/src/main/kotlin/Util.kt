@@ -15,3 +15,11 @@ val PluginDependenciesSpec.shadow
 
 val PluginDependenciesSpec.eclipse
     get() = id("com.diffplug.gradle.eclipse.mavencentral") version "3.17.0"
+
+val javaVersion by lazy {
+    val version = System.getProperty("java.version")
+    val pos = version.indexOf('.', version.indexOf('.') + 1)
+    version.substring(0, pos).toDouble()
+}
+
+val isJava8 = javaVersion == 1.8

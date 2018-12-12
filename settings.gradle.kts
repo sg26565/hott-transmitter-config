@@ -1,9 +1,5 @@
 rootProject.name = "hott-transmitter-config"
 
-val javaVersion: String = System.getProperty("java.version")
-val pos = javaVersion.indexOf('.', javaVersion.indexOf('.') + 1)
-val ver = javaVersion.substring(0, pos).toDouble()
-
 include(":ExportModels")
 include(":FirmwareUpgrader")
 include(":HoTT-Decoder:HoTT-Decoder")
@@ -19,7 +15,7 @@ include(":HoTT-TTS")
 include(":HoTT-UI")
 include(":HoTT-Util")
 include(":HoTT-Voice")
-if (ver == 1.8) include(":Java8ComboBoxListViewSkin")
+if (isJava8) include(":Java8ComboBoxListViewSkin")
 include("jSerialCommPort")
 include("JSSCSerialPort")
 include(":lzma-compress")
