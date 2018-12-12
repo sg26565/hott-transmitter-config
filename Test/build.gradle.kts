@@ -1,8 +1,8 @@
 dependencies {
-    compile(project(":HoTT-Model"))
-    compile(project(":HoTT-Serial"))
-    compile(project(":HoTT-TTS"))
-    compile(project(":HoTT-Voice"))
-    compile(project(":HoTT-Firmware"))
-    compile(project(":HoTT-UI"))
+    implementation(project(":HoTT-Model"))
+    implementation(project(":HoTT-Serial"))
+    implementation(project(":HoTT-TTS"))
+    implementation(project(":HoTT-Voice"))
+    implementation(project(":HoTT-Firmware"))
+    implementation(project(":HoTT-UI"))
 }

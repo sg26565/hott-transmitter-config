@@ -3,10 +3,10 @@ import com.diffplug.gradle.pde.EclipseRelease
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 dependencies {
-    compile(project(":HoTT-Report-HTML"))
-    compile(project(":HoTT-Report-XML"))
-    compile(project(":HoTT-Report-PDF"))
-    compile(Libs.commons_math3)
+    implementation(project(":HoTT-Report-HTML"))
+    implementation(project(":HoTT-Report-XML"))
+    implementation(project(":HoTT-Report-PDF"))
+    implementation(Libs.commons_math3)
 }
 
 plugins {

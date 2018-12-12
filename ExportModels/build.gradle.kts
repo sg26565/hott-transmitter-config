@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 dependencies {
-    compile(project(":HoTT-Decoder:HoTT-Decoder"))
+    implementation(project(":HoTT-Decoder:HoTT-Decoder"))
     runtimeOnly(project(":jSerialCommPort"))
 }
 

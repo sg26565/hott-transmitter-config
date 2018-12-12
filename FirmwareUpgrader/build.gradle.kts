@@ -1,9 +1,9 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 dependencies {
-    compile(project(":HoTT-Model"))
-    compile(project(":HoTT-UI"))
-    compile(project(":HoTT-Serial"))
+    implementation(project(":HoTT-Model"))
+    implementation(project(":HoTT-UI"))
+    implementation(project(":HoTT-Serial"))
 }
 
 plugins {

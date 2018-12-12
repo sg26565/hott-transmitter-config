@@ -39,7 +39,7 @@ subprojects {
 
     dependencies {
         // common dependencies
-        "compile"(Libs.kotlin_stdlib_jdk8)
+        "implementation"(Libs.kotlin_stdlib_jdk8)
         "testCompile"(Libs.junit)
         "testCompile"(Libs.kotlin_test_junit)
 

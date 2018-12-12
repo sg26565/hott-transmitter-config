@@ -1,8 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 dependencies {
-    compile(project(":HoTT-Decoder:HoTT-Decoder"))
-    compile(Libs.commons_lang3)
+    implementation(project(":HoTT-Decoder:HoTT-Decoder"))
+    implementation(Libs.commons_lang3)
 }
 
 plugins {

@@ -1,4 +1,4 @@
 dependencies {
     compile(project(":HoTT-Model"))
-    compile(Libs.jaxb_runtime)
+    implementation(Libs.jaxb_runtime)
 }

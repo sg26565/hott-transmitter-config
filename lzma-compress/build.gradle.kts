@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 dependencies {
-    compile(project(":mz32-Downloader"))
+    implementation(project(":mz32-Downloader"))
 }
 
 plugins {
