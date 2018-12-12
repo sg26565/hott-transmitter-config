@@ -72,8 +72,8 @@ subprojects {
                 name = "Bintray"
                 url = uri("https://api.bintray.com/maven/sg26565/maven/mdlviewer/;publish=1")
                 credentials {
-                    username = properties["bintray.user.name"] as String
-                    password = properties["bintray.user.key"] as String
+                    username = properties["bintray.user.name"] as String?
+                    password = properties["bintray.user.key"] as String?
                 }
             }
         }
