@@ -31,7 +31,7 @@ import java.util.Base64;
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class SwtCurveImageGenerator implements CurveImageGenerator {
-    private Image getImage(final Curve curve, final float scale, final boolean description) {
+    private Image getImage(final Curve curve, final double scale, final boolean description) {
         // pitch curves start with 0% instead of -100%
         final boolean pitchCurve = curve.getPoint().get(0).getPosition() == 0;
 
