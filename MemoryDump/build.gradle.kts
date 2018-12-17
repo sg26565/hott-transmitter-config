@@ -3,6 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 dependencies {
     implementation(project(":HoTT-Decoder:HoTT-Decoder"))
     implementation(Libs.commons_lang3)
+    runtimeOnly(project(":jSerialCommPort"))
 }
 
 plugins {
