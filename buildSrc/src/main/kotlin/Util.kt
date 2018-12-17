@@ -14,7 +14,10 @@ val PluginDependenciesSpec.shadow
     get() = id("com.github.johnrengelman.shadow") version Versions.com_github_johnrengelman_shadow_gradle_plugin
 
 val PluginDependenciesSpec.eclipse
-    get() = id("com.diffplug.gradle.eclipse.mavencentral") version "3.17.0"
+    get() = id("com.diffplug.gradle.eclipse.mavencentral") version Versions.com_diffplug_gradle_eclipse_mavencentral_gradle_plugin
+
+val PluginDependenciesSpec.launch4j
+    get() = id("edu.sc.seis.launch4j") version Versions.edu_sc_seis_launch4j_gradle_plugin
 
 val javaVersion by lazy {
     val version = System.getProperty("java.version")

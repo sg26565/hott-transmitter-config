@@ -38,12 +38,17 @@ object Libs {
      * [vorbisspi website](https://code.google.com/p/soundlibs/) */
     const val vorbisspi: String = "com.googlecode.soundlibs:vorbisspi:" + Versions.vorbisspi
 
+    /**
+     * [gitversioner website](https://github.com/passsy/gradle-gitVersioner-plugin) */
     const val gitversioner: String =
             "com.pascalwelsch.gitversioner:gitversioner:" + Versions.gitversioner
 
     /**
      * [commons-io website](http://commons.apache.org/proper/commons-io/) */
     const val commons_io: String = "commons-io:commons-io:" + Versions.commons_io
+
+    const val edu_sc_seis_launch4j_gradle_plugin: String =
+            "edu.sc.seis.launch4j:edu.sc.seis.launch4j.gradle.plugin:" + Versions.edu_sc_seis_launch4j_gradle_plugin
 
     /**
      * [jaxb-api website](https://github.com/javaee/jaxb-spec) */
@@ -55,6 +60,10 @@ object Libs {
     /**
      * [junit website](http://junit.org) */
     const val junit: String = "junit:junit:" + Versions.junit
+
+    /**
+     * [launch4j website](http://sourceforge.net/projects/launch4j/) */
+    const val launch4j: String = "net.sf.launch4j:launch4j:" + Versions.launch4j
 
     /**
      * [tornadofx website](https://github.com/edvin/tornadofx) */
