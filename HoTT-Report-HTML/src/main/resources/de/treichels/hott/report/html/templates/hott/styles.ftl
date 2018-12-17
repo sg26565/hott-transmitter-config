@@ -1,3 +1,6 @@
+<#-- @ftlvariable name="fontFile" type="java.lang.String" -->
+<#-- @ftlvariable name="version" type="java.lang.String" -->
+<#--noinspection CssUnusedSymbol-->
 <style type="text/css" media="print">
 	@page {
 		size: a4;
@@ -72,7 +75,7 @@
 	}
 
 	div.data {
-		margin-left: 0em;
+		margin-left: 0;
 	}
 </style>
 
@@ -94,12 +97,11 @@
 		border-color: black;
 		border-width: 2px;
 		empty-cells: show;
-		margin: 0;
-		padding: 0;
+        padding: 0;
 		white-space: nowrap;
 		page-break-inside: avoid;
-		margin-bottom: 1em;
-	}
+        margin: 0 0 1em;
+    }
 	
 	table caption {
 		text-align: left;

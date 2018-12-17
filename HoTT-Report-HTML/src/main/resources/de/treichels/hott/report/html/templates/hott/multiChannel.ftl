@@ -7,7 +7,7 @@
 		</#if>
 	</#list>
 	<table class="<@u show/>">
-		<caption><a name="multiChannel"/>Multikanal</caption>
+		<caption><a name="multiChannel"></a>Multikanal</caption>
 	
 		<thead>
 			<tr>
@@ -41,7 +41,7 @@
 							<td align="center">K${multi.inputChannel.number?number+1}</td>
 							<td align="center">${multi.mode}</td>
 						<#else>
-							<td colspan="4"/>
+							<td colspan="4"></td>
 						</#if>
 	
 						<td>Eingang ${control_index+1}</td>

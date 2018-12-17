@@ -1,0 +1,3 @@
+build:
+  image: gradle:5.0-jdk8
+  script: gradle --stacktrace build

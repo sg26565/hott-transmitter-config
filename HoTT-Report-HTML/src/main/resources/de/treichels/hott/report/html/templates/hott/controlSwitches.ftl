@@ -6,7 +6,7 @@
 	</#if>
 </#list>
 <table class="<@u show/>">
-	<caption><a name="controlSwitches"/>Geberschalter</caption>
+	<caption><a name="controlSwitches"></a>Geberschalter</caption>
 	
 	<thead>
 		<tr>

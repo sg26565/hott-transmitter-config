@@ -2,7 +2,7 @@ package de.treichels.hott.mdlviewer.swt.dialogs;
 
 import de.treichels.hott.decoder.HoTTDecoder;
 import de.treichels.hott.model.enums.ModelType;
-import de.treichels.hott.model.serial.ModelInfo;
+import de.treichels.hott.serial.ModelInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.layout.GridData;

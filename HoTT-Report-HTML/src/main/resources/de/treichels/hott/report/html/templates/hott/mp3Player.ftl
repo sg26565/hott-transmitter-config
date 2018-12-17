@@ -1,6 +1,6 @@
 <#if model.transmitterType.name() != "mx20">
 	<table>
-		<caption><a name="mp3Player"/>MP3-Player</caption>
+		<caption><a name="mp3Player"></a>MP3-Player</caption>
 		
 		<@reset/>
 	

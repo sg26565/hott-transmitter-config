@@ -1,9 +1,10 @@
+<#if wingedModel?? || helicopterModel??>
 <table>
-	<caption><a name="trimMemory"/>Trimmspeicher</caption>
+	<caption><a name="trimMemory"></a>Trimmspeicher</caption>
 	
 	<thead>
 		<tr>
-			<th/>
+			<th></th>
 			<#if wingedModel??>
 				<th align="center" colspan="2">Kanal 1</th>
 				<th align="center" colspan="2">Querruder</th>
@@ -17,7 +18,7 @@
 			</#if>
 		</tr>
 		<tr style="font-size: 75%;">
-			<th/>
+			<th></th>
 			<th align="center">Knüppel</th>				
 			<th align="center">Speicher</th>
 			<th align="center">Knüppel</th>				
@@ -35,7 +36,7 @@
 		<#list model.phase as phase>
 			<#if phase.phaseType.name() != "Unused">
 				<tr class="<@d/>">
-					<td align="center">${phase?string}</td>					
+					<td align="center">${phase.toString()}</td>
 					<#if wingedModel??>
 						<td align="center">${model.throttleSettings.throttleTrim}%</td>
 						<td align="center">${phase.control[0].trim}%</td>
@@ -60,3 +61,4 @@
 		</#list>
 	</tbody>
 </table>
+</#if>

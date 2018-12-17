@@ -1,3 +1,4 @@
+<#--noinspection HtmlUnknownAnchorTarget-->
 <h1>Inhaltsverzeichnis</h1>
 <a href="#baseSettings">Grundeinstellungen Modell</a>
 <a href="#servos">Servoeinstellungen</a>		
@@ -5,7 +6,7 @@
 <div>DualRate Expo</div>
 <#list model.phase as phase>
 	<#if phase.number != -1 && phase.phaseType.name() != "Unused">
-		<a class="i1" href="#drExpo${phase.number}">${phase?string}</a>
+		<a class="i1" href="#drExpo${phase.number}">${phase.toString()}</a>
 	</#if>
 </#list>
 <#if wingedModel??>
@@ -16,7 +17,7 @@
 	<div>Helikoptermix</div>
 	<#list model.phase as phase>
 		<#if phase.number != -1 && phase.phaseType.name() != "Unused">
-			<a class="i1" href="#helicopterMix${phase.number}">${phase?string}</a>
+			<a class="i1" href="#helicopterMix${phase.number}">${phase.toString()}</a>
 		</#if>
 	</#list>
 </#if>

@@ -6,7 +6,7 @@
 	</#if>
 </#list>
 <table class="<@u show/>">
-	<caption><a name="linearMixer"/>Linearmischer</caption>
+	<caption><a name="linearMixer"></a>Linearmischer</caption>
 	
 	<thead>
 		<tr>
@@ -17,7 +17,7 @@
 			<th align="center">Weg -</th>
 			<th align="center">Weg +</th>
 			<th align="center">Offset</th>
-			<th/>
+			<th></th>
 		</tr>
 	</thead>
 	
@@ -34,7 +34,7 @@
 					<td align="center">${mixer.travelLow}%</td>
 					<td align="center">${mixer.travelHigh}%</td>
 					<td align="center">${mixer.offset}%</td>
-					<td align="center"><img src="${png.getImageSource(mixer.curve,0.25,false)}"/></td>
+					<td align="center"><img src="${png.getImageSource(mixer.curve,0.25,false)}" alt="curve"/></td>
 				</tr>
 			</#if>
 		</#list>

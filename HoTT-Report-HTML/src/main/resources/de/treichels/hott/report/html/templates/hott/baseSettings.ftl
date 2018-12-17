@@ -1,5 +1,5 @@
-<table>
-	<caption><a name="baseSettings"/>Grundeinstellungen Modell</caption>
+	<table>
+	<caption><a name="baseSettings"></a>Grundeinstellungen Modell</caption>
 	
 	<@reset/>
 	
@@ -68,12 +68,14 @@
 				<td align="left" colspan="2"><i>Schalter:</i> <@switch model.getSwitch("AutorotationC1")/></td>
 			</tr>
 		</#if>
-		<tr class="<@d/>">
-			<th align="right" valign="top">Motor-Stopp</th>
-			<td align="left"><i>Position:</i> ${model.throttleSettings.throttleCutOf.position}%</td>
-			<td align="left"><i>Limit:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
-			<td align="left"><i>Schalter:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>							
-		</tr>
+		<#if model.motorOnC1Type.name() == "Idle_Front" || model.motorOnC1Type.name() == "Idle_Rear" >
+			<tr class="<@d/>">
+				<th align="right" valign="top">Motor-Stopp</th>
+				<td align="left"><i>Position:</i> ${model.throttleSettings.throttleCutOf.position}%</td>
+				<td align="left"><i>Limit:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
+				<td align="left"><i>Schalter:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>
+			</tr>
+		</#if>
 		<#if model.transmitterType.name() != "mx20">
 			<#if helicopterModel??>
 				<tr class="<@d/>">
@@ -135,12 +137,12 @@
 					<tr class="<@d/>">
 						<th align="right">Empfängerausgang</th>
 						<th align="center">Eingang</th>
-						<th/>
+						<th></th>
 						<th align="center">Ausgang</th>
 					</tr>
 					<#list receiver.channelMapping as mapping>
 					<tr class="<@d/>">
-						<th/>
+						<th></th>
 						<td align="center">S${mapping.inputChannel+1}<#if model.channel[mapping.inputChannel]?? && model.channel[mapping.inputChannel].function??> (${model.channel[mapping.inputChannel].function})</#if></td>
 						<td align="center">&rarr;</td>
 						<td align="center">Ausgang ${mapping.outputChannel+1}</td>

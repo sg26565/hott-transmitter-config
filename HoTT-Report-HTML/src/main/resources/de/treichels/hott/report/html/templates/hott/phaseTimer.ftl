@@ -1,9 +1,9 @@
 <table>
-	<caption><a name="phaseTimer"/>Flugphasenuhren</caption>
+	<caption><a name="phaseTimer"></a>Flugphasenuhren</caption>
 	
 	<thead>
 		<tr>
-			<th/>
+			<th></th>
 			<th align="center">Timer</th>
 			<th align="center">Alarm</th>
 			<th align="center">Schalter</th>
@@ -23,12 +23,12 @@
 		</#list>
 		<tr class="<@d/>">
 			<th align="right">Rundenzähler/Zeittabelle</th>
-			<td colspan="2" class="d0"/>
+			<td colspan="2" class="d0"></td>
 			<td align="center"><@switch model.getSwitch("Clock_LapTimer")/></td>
 		</tr>
 		<tr class="<@d/>">
 			<th align="right">Rundenanzeige</th>
-			<td colspan="2" class="d0"/>
+			<td colspan="2" class="d0"></td>
 			<td align="center"><@switch model.getSwitch("Clock_LapDisplay")/></td>
 		</tr>
 	</tbody>

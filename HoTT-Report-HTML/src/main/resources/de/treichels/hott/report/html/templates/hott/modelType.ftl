@@ -1,7 +1,7 @@
 <table>
 	<#if helicopterModel??>
-		<caption><a name="modelType"/>Helikoptertyp</caption>
-	
+		<caption><a name="modelType"></a>Helikoptertyp</caption>
+
 		<@reset/>
 		
 		<tbody>
@@ -33,15 +33,16 @@
 			</#if>
 		</tbody>
 	<#else>
-		<caption><a name="modelType"/>Modelltyp</caption>
+		<caption><a name="modelType"></a>Modelltyp</caption>
 
 		<@reset/>
-		
+
 		<tbody>
 			<tr class="<@d/>">
 				<th align="right">Motor an K1</th>
-				<td align="left" colspan="2">${wingedModel.motorOnC1Type}</td>
+				<td align="left" colspan="2">${model.motorOnC1Type}</td>
 			</tr>
+		<#if wingedModel??>
 			<tr class="<@d/>">
 				<th align="right">Leitwerk</th>
 				<td align="left" colspan="2">${wingedModel.tailType}</td>
@@ -55,6 +56,7 @@
 				<td align="left"><i>Offset:</i> ${wingedModel.brakeOffset}</td>
 				<td align="left"><i>Eingang:</i> ${wingedModel.brakeInputChannel.number?number+1}</td>
 			</tr>
+		</#if>
 		</tbody>
 	</#if>
 </table>

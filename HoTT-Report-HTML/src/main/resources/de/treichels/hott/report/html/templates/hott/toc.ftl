@@ -1,3 +1,4 @@
+<#--noinspection HtmlUnknownAnchorTarget-->
 <h1>Inhaltsverzeichnis</h1>
 <a href="#baseSettings">Grundeinstellungen Modell</a>
 <a href="#modelType"><#if helicopterModel??>Helicoptertyp<#else>Modelltyp</#if></a>
@@ -6,19 +7,19 @@
 <div>Gebereinstellungen</div>
 <#list model.phase as phase>
 	<#if phase.phaseType.name() != "Unused">
-		<a class="i1" href="#controls${phase.number}">${phase?string}</a>
+		<a class="i1" href="#controls${phase.number}">${phase.toString()}</a>
 	</#if>
 </#list>
 <div>DualRate Expo</div>
 <#list model.phase as phase>
 	<#if phase.phaseType.name() != "Unused">
-		<a class="i1" href="#drExpo${phase.number}">${phase?string}</a>
+		<a class="i1" href="#drExpo${phase.number}">${phase.toString()}</a>
 	</#if>
 </#list>
 <div>Kanal 1 Kurve</div>
 <#list model.phase as phase>
 	<#if phase.phaseType.name() != "Unused">
-		<a class="i1" href="#channel1Curve${phase.number}">${phase?string}</a>
+		<a class="i1" href="#channel1Curve${phase.number}">${phase.toString()}</a>
 	</#if>
 </#list>
 <a href="#controlSwitches">Geberschalter</a>
@@ -43,7 +44,7 @@
 	<div>Flächenmischer</div>
 	<#list model.phase as phase>
 		<#if phase.phaseType.name() != "Unused">
-			<a class="i1" href="#wingMix${phase.number}">${phase?string}</a>
+			<a class="i1" href="#wingMix${phase.number}">${phase.toString()}</a>
 		</#if>
 	</#list>
 </#if>
@@ -51,7 +52,7 @@
 	<div>Helikoptermix</div>
 	<#list model.phase as phase>
 		<#if phase.phaseType.name() != "Unused">
-			<a class="i1" href="#helicopterMix${phase.number}">${phase?string}</a>
+			<a class="i1" href="#helicopterMix${phase.number}">${phase.toString()}</a>
 		</#if>
 	</#list>
 </#if>

@@ -1,5 +1,5 @@
 <table>
-	<caption><a name="baseSettings"/>Grundeinstellungen</caption>
+	<caption><a name="baseSettings"></a>Grundeinstellungen</caption>
 
 	<@reset/>
 	
@@ -102,7 +102,7 @@
 			<th colspan="4" class="d2">Uhren</th>
 		</tr>
 		<tr>
-			<th/>
+			<th></th>
 			<th align="center">Typ</th>
 			<th align="center">Wert</th>
 			<th align="center">Schalter</th>
@@ -111,7 +111,7 @@
 		<@reset/>
 		<#list model.clock as clock>
 			<tr class="<@d/>">
-				<th/>
+				<th></th>
 				<td align="center">${clock.mode!""}${clock.type!""}</td>
 				<td align="center">${clock.minutes}:${clock.seconds?string("00")}</td>
 				<td align="center"><@switch clock.switch/></td>
@@ -122,7 +122,7 @@
 			<th colspan="4" class="d2">Flugphasen</th>
 		</tr>
 		<tr>
-			<th/>
+			<th></th>
 			<th align="center">Name</th>
 			<th align="center" colspan="2">Schalter</th>
 		</tr>
@@ -136,7 +136,7 @@
 					<#if phase.phaseSwitch??>
 							<td align="center" colspan="2"><@switch phase.phaseSwitch/></td>
 					<#else>
-						<td colspan="2"/>
+						<td colspan="2"></td>
 					</#if>
 				</tr>
 			</#if>
@@ -148,14 +148,14 @@
 		<tr>
 			<th align="right" valign="top">Empfängerausgang</th>
 			<th align="left">Eingang</th>
-			<th/>
+			<th></th>
 			<th align="center">Ausgang</th>
 		</tr>
 
 		<@reset/>
 		<#list model.channelMapping as mapping>
 			<tr class="<@d/>">
-				<th/>
+				<th></th>
 				<td align="center">S${mapping.inputChannel+1}<#if model.channel[mapping.inputChannel].function??> (${model.channel[mapping.inputChannel].function})</#if></td>
 				<td align="center">&rarr;</td>
 				<td align="center">Ausgang ${mapping.outputChannel+1}</td>

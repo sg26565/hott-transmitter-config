@@ -1,6 +1,6 @@
 <#if wingedModel??>
 	<table>
-		<caption><a name="wingMix0"/>Flächenmix</caption>
+		<caption><a name="wingMix0"></a>Flächenmix</caption>
 
 		<thead>
 			<tr class="<@d/>">
@@ -20,7 +20,7 @@
 						<#if mixer.switch??>
 							<td align="center"><@switch mixer.switch/></td>
 						<#else>
-							<td/>
+							<td></td>
 						</#if>
 				</tr>
 			</#list>

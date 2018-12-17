@@ -1,10 +1,10 @@
 <table>
-	<caption><a name="outputChannel"/>Senderausgang</caption>
+	<caption><a name="outputChannel"></a>Senderausgang</caption>
 	
 	<thead>
 		<tr>
 			<th align="center">Eingang</th>
-			<th/>
+			<th></th>
 			<th align="center">Ausgang</th>
 		</tr>
 	</thead>

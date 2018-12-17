@@ -1,9 +1,9 @@
 <table>
-	<caption><a name="stickTrim"/>Knüppeltrimmung</caption>
+	<caption><a name="stickTrim"></a>Knüppeltrimmung</caption>
 
 	<thead>
 		<tr>
-			<th/>
+			<th></th>
 			<#if wingedModel??>
 				<th align="center">Kanal 1</th>
 				<th align="center">Querruder</th>
@@ -24,7 +24,7 @@
 		<#list model.phase as phase>
 			<#if phase.number != -1 && phase.phaseType.name() != "Unused">
 				<tr class="<@d/>">
-					<td align="center">${phase?string}</td>
+					<td align="center">${phase.toString()}</td>
 					<td align="center">${model.throttleSettings.throttleTrim}%</td>
 					<#if wingedModel??>
 						<td align="center">${phase.wingTrim.aileronStickTrim}%</td>

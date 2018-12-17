@@ -7,7 +7,7 @@
 </#list>
 <table class="<@u show/>">
 
-	<caption><a name="channelSequencer"/>Kanal Sequenzer</caption>
+	<caption><a name="channelSequencer"></a>Kanal Sequenzer</caption>
 	
 	<thead>
 		<tr>
@@ -37,7 +37,7 @@
 						</#if>
 					</#list>
 				<#else>
-					<td align="center" colspan="${model.channelSequencer.maxStep+1}" class="d0"/>
+					<td align="center" colspan="${model.channelSequencer.maxStep+1}" class="d0"></td>
 				</#if>
 			</tr>
 		</#list>

@@ -1,6 +1,6 @@
 <#if model.lapStore??>
 	<table>
-		<caption><a name="lapTimer"/>Rundenzähler</caption>
+		<caption><a name="lapTimer"></a>Rundenzähler</caption>
 		
 		<@reset/>
 		

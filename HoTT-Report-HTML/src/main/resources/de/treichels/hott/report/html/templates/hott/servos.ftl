@@ -1,5 +1,5 @@
 <table>
-	<caption><a name="servos"/>Servoeinstellungen</caption>
+	<caption><a name="servos"></a>Servoeinstellungen</caption>
 	
 	<thead>
 		<tr>

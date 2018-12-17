@@ -1,7 +1,7 @@
 <#list model.phase as phase>
 	<#if phase.phaseType.name() != "Unused">
 		<table>
-			<caption><a name="controls${phase.number}"/>Gebereinstellungen - ${phase?string}</caption>
+			<caption><a name="controls${phase.number}"></a>Gebereinstellungen - ${phase.toString()}</caption>
 			
 			<thead>
 				<tr>

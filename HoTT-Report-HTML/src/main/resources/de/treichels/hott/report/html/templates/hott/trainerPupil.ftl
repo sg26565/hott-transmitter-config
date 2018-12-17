@@ -1,5 +1,5 @@
 <table>
-	<caption><a name="trainerPupil"/>Lehrer/Schüler</caption>
+	<caption><a name="trainerPupil"></a>Lehrer/Schüler</caption>
 			
 	<@reset/>
 	
@@ -7,25 +7,25 @@
 		<tr class="<@d/>">
 			<th align="right">Kabellos</th>
 			<td align="left" colspan="6">${model.trainerConfig.wireless?string("ja", "nein")}</td>
-			<td colspan="${model.channel?size-8}" class="d0"/>
+			<td colspan="${model.channel?size-8}" class="d0"></td>
 		</tr>
 		<tr class="<@d/>">
 			<th align="right">Lehrer ID</th>
 			<td align="left" colspan="6">${hex(model.trainerConfig.trainerId?c)}</td>
-			<td colspan="${model.channel?size-8}" class="d0"/>
+			<td colspan="${model.channel?size-8}" class="d0"></td>
 		</tr>
 		<tr class="<@d/>">
 			<th align="right">Schüler ID</th>
 			<td align="left" colspan="6">${hex(model.trainerConfig.pupilId?c)}</td>
-			<td colspan="${model.channel?size-8}" class="d0"/>
+			<td colspan="${model.channel?size-8}" class="d0"></td>
 		</tr>
 		<tr class="<@d/>">
 			<th align="right">Schalter</th>
 			<td align="left" colspan="6"><@switch model.trainerConfig.trainerSwitch/></td>
-			<td colspan="${model.channel?size-8}" class="d0"/>				
+			<td colspan="${model.channel?size-8}" class="d0"></td>
 		</tr>
 		<tr>
-			<th/>
+			<th></th>
 			<#list model.channel as channel>
 				<#if !channel.virtual>
 					<th align="center">S${channel.number?number+1}</th>
