@@ -2,6 +2,7 @@ import com.google.gradle.osdetector.OsDetector
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    java
     kotlin("jvm") version Versions.org_jetbrains_kotlin apply false
     mavenPublish
     osDetector
@@ -26,15 +27,24 @@ subprojects {
         mavenCentral()
     }
 
-    // set jvmTarget for Kotlin
-    tasks.withType(KotlinCompile::class) {
-        kotlinOptions.jvmTarget = "1.8"
+    tasks {
+        jar {
+            // store version numbers in jar
+            manifest {
+                attributes(
+                        "Implementation-Version" to version,
+                )
     }
 
     // enable reproducible builds
-    tasks.withType(AbstractArchiveTask::class) {
         isPreserveFileTimestamps = false
         isReproducibleFileOrder = true
+    }
+
+        // set jvmTarget for Kotlin
+        withType(KotlinCompile::class) {
+            kotlinOptions.jvmTarget = "1.8"
+        }
     }
 
     dependencies {
