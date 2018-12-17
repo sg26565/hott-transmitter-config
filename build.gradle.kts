@@ -26,7 +26,6 @@ val platform = when (os) {
 }
 
 configure<GitVersioner> {
-    baseBranch = "develop"
     yearFactor = 0
     addLocalChangesDetails = false
 }

@@ -27,11 +27,15 @@ object Versions {
 
     const val commons_io: String = "2.6" 
 
+    const val edu_sc_seis_launch4j_gradle_plugin: String = "2.4.4" 
+
     const val jaxb_api: String = "2.4.0-b180830.0359" 
 
     const val jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin: String = "0.2.6" 
 
     const val junit: String = "4.12" 
+
+    const val launch4j: String = "3.12" 
 
     const val tornadofx: String = "1.7.17" 
 
