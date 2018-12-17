@@ -13,7 +13,3 @@ plugins {
 application {
     mainClassName = "de.treichels.hott.memorydump.MemoryDumpKt"
 }
-
-tasks.withType(ShadowJar::class) {
-    minimize()
-}

@@ -17,7 +17,3 @@ plugins {
 application {
     mainClassName = "de.treichels.hott.mz32.Mz32DownloaderKt"
 }
-
-tasks.withType(ShadowJar::class) {
-    minimize()
-}

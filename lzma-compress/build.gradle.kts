@@ -12,7 +12,3 @@ plugins {
 application {
     mainClassName = "de.treichels.hott.lzma.LzmaCompressKt"
 }
-
-tasks.withType(ShadowJar::class) {
-    minimize()
-}

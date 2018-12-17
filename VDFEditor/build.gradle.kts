@@ -17,7 +17,3 @@ plugins {
 application {
     mainClassName = "de.treichels.hott.vdfeditor.ui.VDFEditorKt"
 }
-
-tasks.withType(ShadowJar::class) {
-    minimize()
-}

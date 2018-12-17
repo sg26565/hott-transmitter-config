@@ -17,7 +17,3 @@ plugins {
 application {
     mainClassName = "de.treichels.hott.mdlviewer.javafx.MainKt"
 }
-
-tasks.withType(ShadowJar::class) {
-    minimize()
-}

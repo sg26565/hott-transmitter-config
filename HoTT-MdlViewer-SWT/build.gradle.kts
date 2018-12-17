@@ -25,7 +25,3 @@ eclipseMavenCentral {
         useNativesForRunningPlatform()
     }
 }
-
-tasks.withType(ShadowJar::class) {
-    minimize()
-}

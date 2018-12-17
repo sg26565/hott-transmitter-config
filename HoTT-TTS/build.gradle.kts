@@ -17,7 +17,3 @@ plugins {
 application {
     mainClassName = "de.treichels.hott.tts.SpeechDialogKt"
 }
-
-tasks.withType(ShadowJar::class) {
-    minimize()
-}

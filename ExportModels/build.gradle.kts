@@ -13,7 +13,3 @@ plugins {
 application {
     mainClassName = "de.treichels.hott.ExportModelsKt"
 }
-
-tasks.withType(ShadowJar::class) {
-    minimize()
-}

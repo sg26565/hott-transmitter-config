@@ -14,7 +14,3 @@ plugins {
 application {
     mainClassName = "de.treichels.hott.upgrade.FirmwareUpgraderKt"
 }
-
-tasks.withType(ShadowJar::class) {
-    minimize()
-}
