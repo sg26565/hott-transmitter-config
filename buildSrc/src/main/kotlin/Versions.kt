@@ -7,21 +7,23 @@ import kotlin.String
  *
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
-    const val aws_java_sdk_polly: String = "1.11.466" 
+    const val aws_java_sdk_polly: String = "1.11.470" 
 
     const val com_diffplug_gradle_eclipse_mavencentral_gradle_plugin: String = "3.17.0" 
 
-    const val jackson_databind: String = "2.9.7" 
+    const val jackson_databind: String = "2.9.8" 
 
     const val jserialcomm: String = "2.3.0" 
 
     const val com_github_johnrengelman_shadow_gradle_plugin: String = "4.0.3" 
 
-    const val com_google_osdetector_gradle_plugin: String = "1.4.0" //available: "1.6.0" 
+    const val com_google_osdetector_gradle_plugin: String = "1.6.1" 
 
     const val mp3spi: String = "1.9.5.4" 
 
     const val vorbisspi: String = "1.0.3.3" 
+
+    const val gitversioner: String = "0.4.1" 
 
     const val commons_io: String = "2.6" 
 
@@ -49,7 +51,7 @@ object Versions {
 
     const val org_jetbrains_kotlin: String = "1.3.11" 
 
-    const val org_openjfx: String = "11.0.1" //available: "12-ea+4" 
+    const val org_openjfx: String = "11.0.1" //available: "12-ea+6" 
 
     const val jssc: String = "2.8.0" 
 
@@ -65,8 +67,8 @@ object Versions {
 
         const val currentVersion: String = "5.0"
 
-        const val nightlyVersion: String = "5.2-20181211000030+0000"
+        const val nightlyVersion: String = "5.2-20181216000032+0000"
 
-        const val releaseCandidate: String = ""
+        const val releaseCandidate: String = "5.1-rc-1"
     }
 }

@@ -38,6 +38,9 @@ object Libs {
      * [vorbisspi website](https://code.google.com/p/soundlibs/) */
     const val vorbisspi: String = "com.googlecode.soundlibs:vorbisspi:" + Versions.vorbisspi
 
+    const val gitversioner: String =
+            "com.pascalwelsch.gitversioner:gitversioner:" + Versions.gitversioner
+
     /**
      * [commons-io website](http://commons.apache.org/proper/commons-io/) */
     const val commons_io: String = "commons-io:commons-io:" + Versions.commons_io
@@ -111,6 +114,10 @@ object Libs {
     /**
      * [javafx-graphics website](https://openjdk.java.net/projects/openjfx/) */
     const val javafx_graphics: String = "org.openjfx:javafx-graphics:" + Versions.org_openjfx
+
+    /**
+     * [javafx-media website](https://openjdk.java.net/projects/openjfx/) */
+    const val javafx_media: String = "org.openjfx:javafx-media:" + Versions.org_openjfx
 
     /**
      * [javafx-swing website](https://openjdk.java.net/projects/openjfx/) */
