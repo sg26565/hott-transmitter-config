@@ -11,6 +11,11 @@
  */
 package de.treichels.hott.model.enums
 
+import de.treichels.hott.util.get
+import java.util.*
+
 enum class SpektrumMode {
-    DSM2, DSMX, NONE
+    DSM2, DSMX, NONE;
+
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

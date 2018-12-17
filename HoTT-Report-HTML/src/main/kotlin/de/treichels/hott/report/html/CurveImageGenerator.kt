@@ -25,5 +25,5 @@ interface CurveImageGenerator {
         const val PREFIX = "data:image/png;base64,"
     }
 
-    fun getImageSource(curve: Curve, scale: Float, description: Boolean): String
+    fun getImageSource(curve: Curve, scale: Double, description: Boolean): String
 }

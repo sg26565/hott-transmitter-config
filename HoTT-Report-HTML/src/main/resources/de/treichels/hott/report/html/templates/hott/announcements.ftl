@@ -1,7 +1,7 @@
 <#list model.phase as phase>
 	<#if phase.phaseType.name() != "Unused" && phase.switchAnnouncements??>
 		<table>
-			<caption><a name="announcements"/>Ankünden - ${phase?string}</caption>
+			<caption><a name="announcements"></a>Ankünden - ${phase.toString()}</caption>
 			
 			<thead>
 				<tr>

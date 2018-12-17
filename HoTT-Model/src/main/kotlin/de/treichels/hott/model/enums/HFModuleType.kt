@@ -11,9 +11,14 @@
  */
 package de.treichels.hott.model.enums
 
+import de.treichels.hott.util.get
+import java.util.*
+
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class HFModuleType {
-    EXT_PPM, HoTT, SP
+    HoTT, EXT_PPM, SP, Unknown;
+
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

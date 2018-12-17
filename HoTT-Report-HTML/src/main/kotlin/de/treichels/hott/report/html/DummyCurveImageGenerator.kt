@@ -17,5 +17,5 @@ import de.treichels.hott.model.Curve
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 class DummyCurveImageGenerator : CurveImageGenerator {
-    override fun getImageSource(curve: Curve, scale: Float, description: Boolean): String = ""
+    override fun getImageSource(curve: Curve, scale: Double, description: Boolean): String = ""
 }

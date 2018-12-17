@@ -18,13 +18,11 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class ReceiverClass(val id: Int) {
-    E06(1), E08(0), E09(3), E12(5), E16(7);
+    E06(1), E08(0), E09(3), E12(5), E16(7), Unknown(-1);
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 
     companion object {
-        fun forId(id: Int): ReceiverClass? {
-            return values().firstOrNull { s -> s.id == id }
-        }
+        fun forId(id: Int): ReceiverClass = values().firstOrNull { s -> s.id == id } ?: Unknown
     }
 }

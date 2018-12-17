@@ -6,7 +6,7 @@
 	</#if>
 </#list>
 <table class="<@u show/>">
-	<caption><a name="curveMixer"/>Kurvenmischer</caption>
+	<caption><a name="curveMixer"></a>Kurvenmischer</caption>
 	
 	<thead>
 		<tr class="d0">
@@ -19,7 +19,7 @@
 			<th align="center">aktiv</th>
 			<th align="center">Eingang</th>
 			<th align="center">Ausgang</th>
-			<th/>
+			<th></th>
 		</tr>
 	</thead>
 	
@@ -46,7 +46,7 @@
 							<td align="center" colspan="2">---</td>
 						</#if>
 						<#if point_index==0>
-							<td rowspan="${mixer.curve.point?size}" align="center"><img src="${png.getImageSource(mixer.curve,0.5,true)}"/></td>									
+							<td rowspan="${mixer.curve.point?size}" align="center"><img src="${png.getImageSource(mixer.curve,0.5,true)}" alt="curve"/></td>
 						</#if>						
 					</tr>
 				</#list>

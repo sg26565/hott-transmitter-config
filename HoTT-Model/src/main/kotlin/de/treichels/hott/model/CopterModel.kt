@@ -2,4 +2,4 @@ package de.treichels.hott.model
 
 import de.treichels.hott.model.enums.ModelType
 
-class CopterModel : HelicopterModel(ModelType.Copter)
+class CopterModel : BaseModel(ModelType.Copter)

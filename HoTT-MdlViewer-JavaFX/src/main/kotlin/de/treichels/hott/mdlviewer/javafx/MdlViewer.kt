@@ -23,7 +23,7 @@ class MdlViewer : App() {
         private val sourceLocation = File(MdlViewer::class.java.protectionDomain.codeSource.location.toURI())
 
         val version: String by lazy {
-            var result = messages["unknown"]
+            var result = messages["Unknown"]
 
             if (sourceLocation.name.endsWith(".jar") || sourceLocation.name.endsWith(".exe"))
                 JarFile(sourceLocation).use { jarFile ->

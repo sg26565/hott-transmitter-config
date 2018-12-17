@@ -18,7 +18,7 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class TrimMode {
-    Global, Phase, Pitch, ThrottelAR, ThrottleLimit;
+    Global, Phase, ThrottleLimit, Pitch, ThrottelAR;
 
-override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

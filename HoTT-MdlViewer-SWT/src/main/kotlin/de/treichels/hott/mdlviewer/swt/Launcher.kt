@@ -87,7 +87,7 @@ class Launcher {
             while (sourceFile.name != "classes")
                 sourceFile = sourceFile.parentFile
 
-            // version is unknown
+            // version is Unknown
             System.getProperty(PROGRAM_VERSION, Messages.getString("Launcher.Unknown"))
         }
 

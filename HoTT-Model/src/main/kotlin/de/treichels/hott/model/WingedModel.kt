@@ -18,31 +18,28 @@ import javax.xml.bind.annotation.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.PROPERTY)
 class WingedModel : BaseModel(ModelType.Winged) {
-    var aileronFlapType: AileronFlapType? = null
+    var aileronFlapType: AileronFlapType = AileronFlapType.Unknown
     @get:XmlIDREF
-    var brakeInputChannel: Channel? = null
+    var brakeInputChannel: Channel = Channel()
     var brakeOffset: Int = 0
     var isChannel8Delay: Boolean = false
-    var motorOnC1Type: MotorOnC1Type? = null
     @get:XmlElementWrapper(name = "profitrims")
     var profiTrim: List<WingedProfiTrim> = emptyList()
     @get:XmlIDREF
-    var profiTrimSwitch: Switch? = null
-    var tailType: TailType? = null
-
+    var profiTrimSwitch: Switch = Switch()
+    var tailType: TailType = TailType.Unknown
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is WingedModel) return false
+        if (javaClass != other?.javaClass) return false
         if (!super.equals(other)) return false
 
+        other as WingedModel
+
         if (aileronFlapType != other.aileronFlapType) return false
-        if (brakeInputChannel != other.brakeInputChannel) return false
         if (brakeOffset != other.brakeOffset) return false
         if (isChannel8Delay != other.isChannel8Delay) return false
-        if (motorOnC1Type != other.motorOnC1Type) return false
-        if (profiTrim != other.profiTrim) return false
-        if (profiTrimSwitch != other.profiTrimSwitch) return false
         if (tailType != other.tailType) return false
 
         return true
@@ -50,16 +47,13 @@ class WingedModel : BaseModel(ModelType.Winged) {
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + (aileronFlapType?.hashCode() ?: 0)
-        result = 31 * result + (brakeInputChannel?.hashCode() ?: 0)
+        result = 31 * result + aileronFlapType.hashCode()
         result = 31 * result + brakeOffset
         result = 31 * result + isChannel8Delay.hashCode()
-        result = 31 * result + (motorOnC1Type?.hashCode() ?: 0)
-        result = 31 * result + profiTrim.hashCode()
-        result = 31 * result + (profiTrimSwitch?.hashCode() ?: 0)
-        result = 31 * result + (tailType?.hashCode() ?: 0)
+        result = 31 * result + tailType.hashCode()
         return result
     }
+
 }
 
 data class WingedMixer(
@@ -137,7 +131,7 @@ class WingedPhase(
 data class WingedProfiTrim(
         var isEnabled: Boolean = false,
         @get:XmlIDREF
-        var inputControl: Switch? = null
+        var inputControl: Switch = Switch()
 ) : AbstractBase()
 
 data class WingedTrim(

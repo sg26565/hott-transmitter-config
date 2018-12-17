@@ -23,10 +23,10 @@ import java.io.Serializable
 data class ModelInfo(
         val modelNumber: Int,
         val modelName: String,
-        val modelInfo: String? = null,
+        val modelInfo: String,
         val modelType: ModelType,
-        val transmitterType: TransmitterType?,
-        val receiverClass: ReceiverClass?,
+        val transmitterType: TransmitterType=TransmitterType.Unknown,
+        val receiverClass: ReceiverClass = ReceiverClass.Unknown,
         val usedHours: Int = 0,
         val usedMinutes: Int = 0
 ) : Serializable {

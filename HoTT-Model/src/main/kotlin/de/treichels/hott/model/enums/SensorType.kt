@@ -11,19 +11,26 @@
  */
 package de.treichels.hott.model.enums
 
+import de.treichels.hott.util.get
+import java.util.*
+
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class SensorType(val code: Int) {
-    ElectricAirModule(1 shl 2), ESC(1 shl 5), GeneralModule(1 shl 1), GPS(1 shl 4), None(0), Receiver(1 shl 0), Vario(1 shl 3);
+enum class SensorType {
+    Receiver, GeneralModule, ElectricAirModule, Vario, GPS, ESC, None;
+
+    val map = 1 shl ordinal and 0b111111
+
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 
     companion object {
-        fun forCode(code: Int): List<SensorType> {
-            return SensorType.values().filter { s -> s.code and code != 0 }.toList()
+        fun forMap(code: Int): List<SensorType> {
+            return SensorType.values().filter { s -> s.map and code != 0 }.toList()
         }
 
-        fun getCode(sensors: List<SensorType>): Int {
-            return sensors.stream().mapToInt{ it.code }.sum()
+        fun getMap(sensors: List<SensorType>): Int {
+            return sensors.stream().mapToInt { it.map }.sum()
         }
     }
 }

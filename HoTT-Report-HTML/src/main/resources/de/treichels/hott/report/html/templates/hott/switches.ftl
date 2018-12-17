@@ -8,7 +8,7 @@
 			</#if>
 			
 			<table>
-				<caption><#if n == 0><a name="switches"/></#if> Schalter-/Geberzuordnungen<#if n &gt; 0> (Fortsetzung)</#if></caption>
+				<caption><#if n == 0><a name="switches"></a></#if> Schalter-/Geberzuordnungen<#if n &gt; 0> (Fortsetzung)</#if></caption>
 				
 				<thead>
 					<tr>

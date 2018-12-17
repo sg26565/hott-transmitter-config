@@ -1,6 +1,6 @@
 <#if wingedModel??>
 	<table>
-		<caption><a name="phaseTrim"/>Phasentrimm</caption>
+		<caption><a name="phaseTrim"></a>Phasentrimm</caption>
 		
 		<thead>
 			<tr>
@@ -17,7 +17,7 @@
 			<#list wingedModel.phase as phase>
 				<#if phase.number != -1 && phase.phaseType.name() != "Unused">
 					<tr class="<@d/>">
-						<td align="center">${phase?string}</td>
+						<td align="center">${phase.toString()}</td>
 						<td align="center">${phase.wingTrim.elevatorPhaseTrim}%</td>
 						<td align="center">${phase.wingTrim.aileronPhaseTrim[0]}%</td>
 						<td align="center">${phase.wingTrim.flapPhaseTrim[0]}%</td>

@@ -12,5 +12,5 @@
 package de.treichels.hott.model.enums
 
 enum class VarioToneSensor {
-    VARIO, GAM, EAM, GPS, AUTO
+    VARIO, GAM, EAM, GPS, AUTO, Unknown
 }

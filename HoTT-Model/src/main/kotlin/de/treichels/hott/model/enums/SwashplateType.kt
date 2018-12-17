@@ -18,7 +18,7 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class SwashplateType {
-    FourServo, OneServo, ThreeServo140, ThreeServoNick, ThreeServoRoll, TwoServo;
+    OneServo, TwoServo, ThreeServoRoll, ThreeServo140, ThreeServoNick, FourServo, Unknown;
 
-override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

@@ -18,7 +18,7 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class ClockType {
-    CENTER, LapDisplay, LapTimer, PHASE1, PHASE2, PHASE3, ROUND, TOP;
+    PHASE1, PHASE2, PHASE3, ROUND, TOP, CENTER, LapDisplay, LapTimer, Unknown;
 
-override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

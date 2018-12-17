@@ -1,9 +1,9 @@
 <table>
-	<caption><a name="timersGeneral"/>Uhren (allgemein)</caption>
+	<caption><a name="timersGeneral"></a>Uhren (allgemein)</caption>
 	
 	<thead>
 		<tr>
-			<th/>
+			<th></th>
 			<th align="center">Uhr</th>
 			<th align="center">Timer</th>
 			<th align="center">Alarm</th>
@@ -16,7 +16,7 @@
 	<tbody>
 		<tr class="<@d/>">
 			<th align="right">Modellzeit</th>
-			<td colspan="3" class="d0"/>
+			<td colspan="3" class="d0"></td>
 			<td align="center"><@switch model.getSwitch("Clock_ModelTime")/></td>
 		</tr>
 		<#list 4..5 as index>

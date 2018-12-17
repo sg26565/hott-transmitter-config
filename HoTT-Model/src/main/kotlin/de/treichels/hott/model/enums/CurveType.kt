@@ -18,7 +18,7 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class CurveType {
-    Brake, Channel1, FreeMixer, Pitch, Tail, Throttle, Unused;
+    Unused, Pitch, Throttle, Tail, Channel1, Brake, FreeMixer, Unknown;
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

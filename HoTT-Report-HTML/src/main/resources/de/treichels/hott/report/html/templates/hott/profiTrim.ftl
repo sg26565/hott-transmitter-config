@@ -7,7 +7,8 @@
 				<#break>
 			</#if>
 		</#list>
-	<#else>
+	</#if>
+	<#if helicopterModel??>
 		<#list helicopterModel.profiTrim as trim>
 			<#if trim.inputControl.assignment.name() != "Unassigned">
 				<#assign show=true/>
@@ -16,12 +17,12 @@
 		</#list>
 	</#if>
 	<table class="<@u show/>">
-		<caption><a name="profiTrim"/>Profitrimm</caption>
+		<caption><a name="profiTrim"></a>Profitrimm</caption>
 	
 		<#if wingedModel??>
 			<thead>	
 				<tr>
-					<th/>
+					<th></th>
 					<th align="center">&uarr;QR&darr;</th>
 					<th align="center">&uarr;QR&uarr;</th>
 					<th align="center">&uarr;WK&darr;</th>
@@ -49,7 +50,8 @@
 					<td align="left" colspan="4"><@switch wingedModel.profiTrimSwitch/></td>
 				</tr>
 			</tbody>
-		<#else>
+		</#if>
+		<#if helicopterModel??>
 			<thead>
 				<tr>
 					<th align="center">Timmgeber</th>

@@ -223,7 +223,7 @@ class MainView : View() {
             preferences { put(LAST_VDF_DIR, parentFile.absolutePath) }
             val vdfFile = de.treichels.hott.decoder.HoTTDecoder.decodeVDF(this)
             val names = vdfFile.voiceList.map { it.name }.toList()
-            Announcements.saveSystemPrefs(model!!.model.transmitterType!!, names)
+            Announcements.saveSystemPrefs(model!!.model.transmitterType, names)
             refresh()
         }
     }
@@ -243,7 +243,7 @@ class MainView : View() {
             preferences { put(LAST_VDF_DIR, parentFile.absolutePath) }
             val vdfFile = de.treichels.hott.decoder.HoTTDecoder.decodeVDF(this)
             val names = vdfFile.voiceList.map { it.name }.toList()
-            Announcements.saveUserPrefs(model!!.model.transmitterType!!, names)
+            Announcements.saveUserPrefs(model!!.model.transmitterType, names)
             refresh()
         }
     }

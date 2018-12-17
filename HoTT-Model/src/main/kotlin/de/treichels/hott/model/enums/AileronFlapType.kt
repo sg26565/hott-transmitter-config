@@ -18,8 +18,9 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class AileronFlapType(val ailerons: Int, val flaps: Int) {
-    FourAilFourFlap(4, 4), FourAilTwoFlap(4, 2), OneAil(1, 0), OneAilOneFlap(1, 1), TwoAil(2, 0), TwoAilFourFlap(2, 4), TwoAilOneFlap(2, 1),
-    TwoAilTwoFlap(2, 2);
+    OneAil(1, 0), OneAilOneFlap(1, 1),
+    TwoAil(2, 0), TwoAilOneFlap(2, 1), TwoAilTwoFlap(2, 2), TwoAilFourFlap(2, 4),
+    FourAilTwoFlap(4, 2), FourAilFourFlap(4, 4), Unknown(0, 0);
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

@@ -1,11 +1,11 @@
 <#list model.phase as phase>
 	<#if phase.phaseType.name() != "Unused">
 		<table>
-			<caption><a name="drExpo${phase.number}"/>DualRate Expo - ${phase?string}</caption>
+			<caption><a name="drExpo${phase.number}"></a>DualRate Expo - ${phase.toString()}</caption>
 			
 			<thead>
 				<tr>
-					<th/>
+					<th></th>
 					<th align="center" colspan="2">Dual Rate</th>
 					<th align="center" colspan="2">Expo</th>
 					<th align="center" style="font-size: 75%;">DR aus</th>						
@@ -14,7 +14,7 @@
 					<th align="center" style="font-size: 75%;">DR an</th>						
 				</tr>
 				<tr style="font-size: 75%;">
-					<th/>
+					<th></th>
 					<th align="center">Schalter</th>
 					<th align="center">Wert</th>
 					<th align="center">Schalter</th>
@@ -53,7 +53,7 @@
 							<#list 0..1 as expo>
 								<td align="center">
 									<#if dr&lt;max_dr && expo&lt;max_expo>
-										<img src="${png.getImageSource(phase.dualRateExpo[i].getCurve()[dr*2+expo],0.5,false)}"/>
+										<img src="${png.getImageSource(phase.dualRateExpo[i].getCurve()[dr*2+expo],0.5,false)}" alt="curve"/>
 									</#if>
 								</td>
 							</#list>

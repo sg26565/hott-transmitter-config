@@ -282,7 +282,7 @@ class MainView : View() {
                 transmitterTypeCombo = combobox {
                     setOnAction { onTransmitterTypeChanged() }
                     items.addAll(*TransmitterType.values())
-                    items.remove(TransmitterType.unknown)
+                    items.remove(TransmitterType.Unknown)
                     items.remove(TransmitterType.mz32)
                     items.remove(TransmitterType.mz32beta)
                 }
@@ -291,7 +291,7 @@ class MainView : View() {
     }
 
     private fun addRestoreFiles() {
-        TransmitterType.values().filter { !listOf(TransmitterType.unknown, TransmitterType.mz32, TransmitterType.mz32beta).contains(it) }.forEach { transmitterType ->
+        TransmitterType.values().filter { !listOf(TransmitterType.Unknown, TransmitterType.mz32, TransmitterType.mz32beta).contains(it) }.forEach { transmitterType ->
             restoreMenu.items.add(Menu(transmitterType.toString()).apply {
                 for (variant in listOf(null, "MikroKopter", "Team", "Team-schnell")) {
                     // base name

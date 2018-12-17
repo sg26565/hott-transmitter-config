@@ -2,7 +2,7 @@
 	<#list model.phase as phase>
 		<#if phase.phaseType.name() != "Unused">
 			<table>
-				<caption><a name="wingMix${phase.number}"/>Flächenmischer - ${phase?string}</caption>
+				<caption><a name="wingMix${phase.number}"></a>Flächenmischer - ${phase.toString()}</caption>
 				
 				<tbody>
 					<tr>
@@ -48,7 +48,7 @@
 						<tr class="<@d/>">
 							<th align="right">Querruderdifferenzierung</th>
 							<td colspan="2" align="center">${phase.multiFlapMixer[2].value[0]}%</td>
-							<td colspan="6"/>
+							<td colspan="6"></td>
 						</tr>
 					</#if>
 
@@ -57,22 +57,22 @@
 							<th colspan="9" class="d2">Multi-Klappen-Menü</th>
 						</tr>									
 						<tr>
-							<th/>
+							<th></th>
 							<th colspan="2" align="center">QR</th>
 							<#if wingedModel.aileronFlapType.ailerons==4>
 								<th colspan="2" align="center">QR2</th>
 							<#else>
-								<th colspan="2"/>
+								<th colspan="2"></th>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps&gt;1>
 								<th colspan="2" align="center">WK</th>
 							<#else>
-								<th colspan="2"/>
+								<th colspan="2"></th>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps==4>
 								<th colspan="2" align="center">WK2</th>				
 							<#else>
-								<th colspan="2"/>
+								<th colspan="2"></th>
 							</#if>
 						</tr>
 	
@@ -84,17 +84,17 @@
 							<#if wingedModel.aileronFlapType.ailerons==4>
 								<td colspan="2" align="center">${phase.multiFlapMixer[0].value[1]}%</td>
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps&gt;1>
 								<td colspan="2" align="center">${phase.multiFlapMixer[0].value[2]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps==4>
 								<td colspan="2" align="center">${phase.multiFlapMixer[0].value[3]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 						</tr>
 						<tr class="<@d/>">
@@ -103,17 +103,17 @@
 							<#if wingedModel.aileronFlapType.ailerons==4>
 								<td colspan="2" align="center">${phase.multiFlapMixer[1].value[1]}%</td>
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps&gt;1>
 								<td colspan="2" align="center">${phase.multiFlapMixer[1].value[2]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps==4>
 								<td colspan="2" align="center">${phase.multiFlapMixer[1].value[3]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 						</tr>
 						<tr class="<@d/>">
@@ -122,17 +122,17 @@
 							<#if wingedModel.aileronFlapType.ailerons==4>
 								<td colspan="2" align="center">${phase.multiFlapMixer[2].value[1]}%</td>
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps&gt;1>
 								<td colspan="2" align="center">${phase.multiFlapMixer[2].value[2]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps==4>
 								<td colspan="2" align="center">${phase.multiFlapMixer[2].value[3]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 						</tr>
 						<tr class="<@d/>">
@@ -141,17 +141,17 @@
 							<#if wingedModel.aileronFlapType.ailerons==4>
 								<td colspan="2" align="center">${phase.wingTrim.aileronPhaseTrim[1]}%</td>
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps&gt;1>
 								<td colspan="2" align="center">${phase.wingTrim.flapPhaseTrim[0]}%</td>
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps==4>
 								<td colspan="2" align="center">${phase.wingTrim.flapPhaseTrim[1]}%</td>
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 						</tr>
 						<tr class="<@d/>">
@@ -162,19 +162,19 @@
 								<td align="center">${phase.multiFlapMixer[3].value[2]}%</td>
 								<td align="center">${phase.multiFlapMixer[3].value[3]}%</td>
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps&gt;1>
 								<td align="center">${phase.multiFlapMixer[3].value[4]}%</td>								
 								<td align="center">${phase.multiFlapMixer[3].value[5]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps==4>
 								<td align="center">${phase.multiFlapMixer[3].value[6]}%</td>								
 								<td align="center">${phase.multiFlapMixer[3].value[7]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 						</tr>
 						<tr class="<@d/>">
@@ -185,19 +185,19 @@
 								<td align="center">${phase.multiFlapMixer[4].value[2]}%</td>
 								<td align="center">${phase.multiFlapMixer[4].value[3]}%</td>
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps&gt;1>
 								<td align="center">${phase.multiFlapMixer[4].value[4]}%</td>								
 								<td align="center">${phase.multiFlapMixer[4].value[5]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps==4>
 								<td align="center">${phase.multiFlapMixer[4].value[6]}%</td>								
 								<td align="center">${phase.multiFlapMixer[4].value[7]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 						</tr>
 						<tr class="<@d/>">
@@ -220,17 +220,17 @@
 							<#if wingedModel.aileronFlapType.ailerons==4>
 								<td colspan="2" align="center">${phase.brakeMixer[0].value[1]}%</td>
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps&gt;1>
 								<td colspan="2" align="center">${phase.brakeMixer[0].value[2]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps==4>
 								<td colspan="2" align="center">${phase.brakeMixer[0].value[3]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 						</tr>
 						<tr class="<@d/>">
@@ -239,17 +239,17 @@
 							<#if wingedModel.aileronFlapType.ailerons==4>
 								<td colspan="2" align="center">${phase.brakeMixer[1].value[1]}%</td>
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps&gt;1>
 								<td colspan="2" align="center">${phase.brakeMixer[1].value[2]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 							<#if wingedModel.aileronFlapType.flaps==4>
 								<td colspan="2" align="center">${phase.brakeMixer[1].value[3]}%</td>								
 							<#else>
-								<td colspan="2"/>
+								<td colspan="2"></td>
 							</#if>
 						</tr>
 					</#if>

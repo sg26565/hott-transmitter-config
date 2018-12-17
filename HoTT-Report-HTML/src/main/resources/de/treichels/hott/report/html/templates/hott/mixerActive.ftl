@@ -6,7 +6,7 @@
 	</#if>
 </#list>
 <table class="<@u show/>">
-	<caption><a name="mixerActive"/>MIX aktiv / Phase</caption>
+	<caption><a name="mixerActive"></a>MIX aktiv / Phase</caption>
 	
 	<thead>
 		<tr>

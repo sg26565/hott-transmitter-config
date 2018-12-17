@@ -1,6 +1,6 @@
 <#if model.switchAnnouncements??>
 	<table>
-		<caption><a name="announcements"/>Ankünden</caption>
+		<caption><a name="announcements"></a>Ankünden</caption>
 		
 		<thead>
 			<tr>

@@ -1,5 +1,5 @@
 <table>
-	<caption><a name="telemetry"/>Telemetrie</caption>
+	<caption><a name="telemetry"></a>Telemetrie</caption>
 	
 	<@reset/>
 	

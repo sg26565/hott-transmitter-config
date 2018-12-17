@@ -11,6 +11,11 @@
  */
 package de.treichels.hott.model.enums
 
+import de.treichels.hott.util.get
+import java.util.*
+
 enum class ReceiverBindType {
-    Global, Model, Unknown
+    Global, Model, Unknown;
+
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

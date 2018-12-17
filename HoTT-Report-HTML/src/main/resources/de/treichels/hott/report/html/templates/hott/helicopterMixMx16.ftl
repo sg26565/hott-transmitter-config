@@ -2,7 +2,7 @@
 	<#list helicopterModel.phase as phase>
 		<#if phase.number != -1 && phase.phaseType.name() != "Unused">
 			<table>
-				<caption><a name="helicopterMix${phase.number}"/>Helimix - ${phase?string}</caption>
+				<caption><a name="helicopterMix${phase.number}"></a>Helimix - ${phase.toString()}</caption>
 	
 				<@reset/>
 					

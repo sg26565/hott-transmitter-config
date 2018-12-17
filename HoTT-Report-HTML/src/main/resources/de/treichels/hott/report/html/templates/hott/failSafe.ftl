@@ -1,5 +1,5 @@
 <table>
-	<caption><a name="failSafe"/>Fail Safe</caption>
+	<caption><a name="failSafe"></a>Fail Safe</caption>
 
 	<@reset/>
 	
@@ -7,15 +7,15 @@
 		<tr class="<@d/>">
 			<th align="right">Verzögerung</th>
 			<td align="left" colspan="2">${model.failSafeDelay}s</td>
-			<td colspan="${model.channel?size-4}" class="d0"/>				
+			<td colspan="${model.channel?size-4}" class="d0"></td>
 		</tr>
 		<tr class="<@d/>">
 			<th align="right">FlailSafe Prüfung</th>
 			<td align="left" colspan="2">${model.failSafeSettingCheck?string("ja", "nein")}</td>
-			<td colspan="${model.channel?size-4}" class="d0"/>
+			<td colspan="${model.channel?size-4}" class="d0"></td>
 		</tr>
 		<tr class="<@d/>">
-			<th/>
+			<th></th>
 			<#list model.channel as channel>
 				<#if !channel.virtual>
 					<th align="center">S${channel.number?number+1}</th>

@@ -1,3 +1,7 @@
+<#-- @ftlvariable name="voicefile" type="de.treichels.hott.voice.VoiceFile" -->
+<#-- @ftlvariable name="title" type="String" -->
+<#-- @ftlvariable name="version" type="String" -->
+<#-- @ftlvariable name="name" type="String" -->
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -47,11 +51,10 @@
 				border-color: black;
 				border-width: 2px;
 				empty-cells: show;
-				margin: 0;
 				padding: 0;
 				white-space: nowrap;
 				page-break-inside: avoid;
-				margin-bottom: 1em;
+				margin: 0 0 1em;
 			}
 			
 			table caption {
@@ -135,7 +138,7 @@
 			</tr>
 		</table>
 
-		<table style="border-width: 0px;">
+		<table style="border-width: 0;">
 			<caption>Announcements</caption>
 			
 			<colgroup>

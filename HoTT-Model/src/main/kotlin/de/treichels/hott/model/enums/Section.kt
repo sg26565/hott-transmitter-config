@@ -34,20 +34,20 @@ enum class Section {
 
     fun isValidFor(transmitterType: TransmitterType): Boolean {
         return when (this) {
-        // valid for all transmitters
+            // valid for all transmitters
             baseSettings, controls0, drExpo0, failSafe, helicopterMix0, linearMixer, phaseTrim, servos, swashplateMixer, switches, telemetry, trainerPupil, wingMix0 -> true
 
-        // not available on mx-12 and mx-16
+            // not available on mx-12 and mx-16
             channel1Curve0, channelSequencer, controlSwitches, curveMixer, dualMixer, mixOnlyChannel, mixerActive, modelType, multiChannel, nonDelayedChannels, outputChannel, phaseAssignments, phaseSettings, phaseTimer, profiTrim, ringLimiter, stickSettings, timersGeneral, trimMemory -> (transmitterType == TransmitterType.mx20 || transmitterType == TransmitterType.mc16 || transmitterType == TransmitterType.mc20
                     || transmitterType == TransmitterType.mc32)
 
-        // only on mc-20 and mc-32
+            // only on mc-20 and mc-32
             logicalSwitches -> transmitterType == TransmitterType.mc20 || transmitterType == TransmitterType.mc32
 
-        // only on mc-16, mc-20 and mc-32
+            // only on mc-16, mc-20 and mc-32
             mp3Player -> transmitterType == TransmitterType.mc16 || transmitterType == TransmitterType.mc20 || transmitterType == TransmitterType.mc32
         }
     }
 
-override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

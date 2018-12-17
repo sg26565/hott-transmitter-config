@@ -16,6 +16,8 @@ import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.model.BaseModel
 import de.treichels.hott.model.HoTTException
 import de.treichels.hott.model.enums.ModelType
+import de.treichels.hott.model.enums.ReceiverClass
+import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.serial.FileInfo
 import de.treichels.hott.serial.ModelInfo
 import de.treichels.hott.report.html.HTMLReport
@@ -40,7 +42,7 @@ class Model(private val info: ModelInfo, private val data: ByteArray?) {
             // check model type
             val modelType = ModelType.forChar(fileName[0])
             val modelName = fileName.substring(1, fileName.length - 4)
-            val info = ModelInfo(modelNumber = 0, modelName = modelName, modelType = modelType, receiverClass = null, transmitterType = null)
+            val info = ModelInfo(modelNumber = 0, modelName = modelName, modelInfo = "", modelType = modelType, receiverClass = ReceiverClass.Unknown, transmitterType = TransmitterType.Unknown)
             val data = ByteArray(file.length().toInt())
             FileInputStream(file).use { it.read(data) }
 
@@ -51,7 +53,7 @@ class Model(private val info: ModelInfo, private val data: ByteArray?) {
             val fileName = fileInfo.name
             val type = ModelType.forChar(fileName[0])
             val name = fileName.substring(1, fileName.length - 4)
-            val modelInfo = ModelInfo(modelNumber = 0, modelName = name, modelType = type, receiverClass = null, transmitterType = null)
+            val modelInfo = ModelInfo(modelNumber = 0, modelName = name, modelInfo = "", modelType = type, receiverClass = ReceiverClass.Unknown, transmitterType = TransmitterType.Unknown)
             val data = ByteArrayOutputStream().use { stream ->
                 serialPort?.readFile(fileInfo.path, stream)
                 stream.toByteArray()
@@ -64,7 +66,7 @@ class Model(private val info: ModelInfo, private val data: ByteArray?) {
     val fileName: String = "${info.modelType.char}${info.modelName}"
     val model: BaseModel by lazy { HoTTDecoder.decodeStream(info.modelType, info.modelName, ByteArrayInputStream(data)) }
     val html: String by lazy { HTMLReport.generateHTML(model) }
-    @Suppress( "MemberVisibilityCanBePrivate")
+    @Suppress("MemberVisibilityCanBePrivate")
     val xml: String by lazy { XMLReport.generateXML(model) }
 
     fun saveHtml(file: File) = HTMLReport.save(file, html)

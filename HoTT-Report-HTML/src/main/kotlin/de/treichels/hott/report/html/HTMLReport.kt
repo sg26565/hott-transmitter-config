@@ -102,7 +102,7 @@ object HTMLReport {
             rootMap["htmlsafe"] = FreeMarkerHtmlSafeDirective()
             rootMap["programDir"] = File(System.getProperty("program.dir", ".")).toURI().toURL().toString()
             rootMap["fontFile"] = File(System.getProperty("java.io.tmpdir"), "Arial.ttf").toURI().toURL().toString()
-            rootMap["version"] = System.getProperty("program.version", "unknown")
+            rootMap["version"] = System.getProperty("program.version", "Unknown")
 
             template.process(rootMap, OutputStreamWriter(baos, "UTF-8"))
             baos.toString()

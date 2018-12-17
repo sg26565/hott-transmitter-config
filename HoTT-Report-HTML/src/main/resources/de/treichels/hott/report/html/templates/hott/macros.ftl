@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="curve" type="de.treichels.hott.model.Curve" -->
+<#-- @ftlvariable name="row" type="String" -->
 <#macro switch sw>
 	<#if sw.assignment?? && sw.assignment.name() != "Unassigned">
 		<#switch sw.type.name()>
@@ -45,7 +47,7 @@
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
 		<th align="center">Ausgang</th>
-		<td rowspan="${curve.point?size+1}" align="center"><img src="${png.getImageSource(curve,0.5,true)}"/></td>
+		<td rowspan="${curve.point?size+1}" align="center"><img src="${png.getImageSource(curve,0.5,true)}" alt="curve"/></td>
 	</tr>
 
 	<@reset/>
@@ -58,7 +60,7 @@
 				<td align="center">${point.position}%</td>
 				<td align="center">${point.value}%</td>
 			<#else>
-				<td colspan="2"/>
+				<td colspan="2"></td>
 			</#if>
 		</tr>
 	</#list>
@@ -72,11 +74,11 @@
 	<tr class="d0">
 		<th align="right">Kurve</th>
 		<td colspan="4" align="left">${curve.smoothing?string("an","aus")}</td>
-		<td rowspan="${curve.point?size+2}" align="center"><img src="${png.getImageSource(curve,1.0,true)}"/></td>
+		<td rowspan="${curve.point?size+2}" align="center"><img src="${png.getImageSource(curve,1.0,true)}" alt="curve"/></td>
 	</tr>
 
 	<tr>
-		<th/>
+		<th></th>
 		<th align="center">Punkt</th>				
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
@@ -87,7 +89,7 @@
 
 	<#list curve.point as point>
 		<tr class="<@d/> <@u point.enabled/>">
-			<th/>
+			<th></th>
 			<td align="center">${point.number?number+1}</td>
 			<td align="center">${point.enabled?string("ja","nein")}</td>
 			<#if point.enabled>
@@ -110,11 +112,11 @@
 	<tr class="<@d/>">
 		<th align="right">Kurve</th>
 		<td colspan="4" align="left">${curve.smoothing?string("an","aus")}</td>
-		<td colspan="4" rowspan="${curve.point?size+2}" align="center"><img src="${png.getImageSource(curve,1.0,true)}"/></td>
+		<td colspan="4" rowspan="${curve.point?size+2}" align="center"><img src="${png.getImageSource(curve,1.0,true)}" alt="curve"/></td>
 	</tr>
 
 	<tr>
-		<th/>
+		<th></th>
 		<th align="center">Punkt</th>				
 		<th align="center">aktiv</th>
 		<th align="center">Eingang</th>
@@ -125,7 +127,7 @@
 
 	<#list curve.point as point>
 		<tr class="<@d/> <@u point.enabled/>">
-			<th/>
+			<th></th>
 			<td align="center">${point.number?number+1}</td>
 			<td align="center">${point.enabled?string("ja","nein")}</td>
 			<#if point.enabled>

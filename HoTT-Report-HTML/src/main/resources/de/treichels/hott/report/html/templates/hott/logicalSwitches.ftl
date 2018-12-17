@@ -7,7 +7,7 @@
 		</#if>
 	</#list>
 	<table class="<@u show/>">
-		<caption><a name="logicalSwitches"/>logische Schalter</caption>
+		<caption><a name="logicalSwitches"></a>logische Schalter</caption>
 		
 		<thead>
 			<tr>

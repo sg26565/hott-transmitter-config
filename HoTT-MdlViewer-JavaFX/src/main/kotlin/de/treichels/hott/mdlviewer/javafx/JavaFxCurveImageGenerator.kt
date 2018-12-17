@@ -34,20 +34,20 @@ import javax.imageio.ImageIO
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 class JavaFxCurveImageGenerator : CurveImageGenerator {
-    private var image: Image? = null
+    private lateinit var image: Image
 
-    override fun getImageSource(curve: Curve, scale: Float, description: Boolean): String {
-        val pitchCurve = curve.point!![0].position == 0
-        val canvas = Canvas((10 + 200 * scale).toDouble(), (10 + 250 * scale).toDouble())
+    override fun getImageSource(curve: Curve, scale: Double, description: Boolean): String {
+        val pitchCurve = curve.point[0].position == 0
+        val canvas = Canvas((10 + 200 * scale), (10 + 250 * scale))
 
         with(canvas.graphicsContext2D) {
             // clear background
             fill = Color.WHITE
-            fillRect(0.0, 0.0, (10 + 200 * scale).toDouble(), (10 + 250 * scale).toDouble())
+            fillRect(0.0, 0.0, (10 + 200 * scale), (10 + 250 * scale))
 
             // draw out limit rect
             stroke = Color.BLACK
-            strokeRect(5.0, 5.0, (200 * scale).toDouble(), (250 * scale).toDouble())
+            strokeRect(5.0, 5.0, (200 * scale), (250 * scale))
 
             // dashed gray lines
             lineWidth = 1.0
@@ -58,13 +58,13 @@ class JavaFxCurveImageGenerator : CurveImageGenerator {
             stroke = Color.GRAY
 
             // +100% and -100% horizontal lines
-            strokeLine(5.0, (5 + 25 * scale).toDouble(), (5 + 200 * scale).toDouble(), (5 + 25 * scale).toDouble())
-            strokeLine(5.0, (5 + 225 * scale).toDouble(), (5 + 200 * scale).toDouble(), (5 + 225 * scale).toDouble())
+            strokeLine(5.0, (5 + 25 * scale), (5 + 200 * scale), (5 + 25 * scale))
+            strokeLine(5.0, (5 + 225 * scale), (5 + 200 * scale), (5 + 225 * scale))
 
             if (!pitchCurve) {
                 // horizontal and vertical 0% lines
-                strokeLine(5.0, (5 + 125 * scale).toDouble(), (5 + 200 * scale).toDouble(), (5 + 125 * scale).toDouble())
-                strokeLine((5 + 100 * scale).toDouble(), 5.0, (5 + 100 * scale).toDouble(), (5 + 250 * scale).toDouble())
+                strokeLine(5.0, (5 + 125 * scale), (5 + 200 * scale), (5 + 125 * scale))
+                strokeLine((5 + 100 * scale), 5.0, (5 + 100 * scale), (5 + 250 * scale))
             }
 
             lineWidth = 1.0
@@ -72,39 +72,35 @@ class JavaFxCurveImageGenerator : CurveImageGenerator {
             font = Font.font("Arial", 12.0)
             stroke = Color.BLACK
 
-            val numPoints = curve.point!!.count { it.isEnabled }
+            val numPoints = curve.point.count { it.isEnabled }
             val xVals = DoubleArray(numPoints)
             val yVals = DoubleArray(numPoints)
 
-            var i = 0
-            for (p in curve.point!!)
-                if (p.isEnabled) {
-                    when (i) {
-                        0 -> xVals[i] = (if (pitchCurve) 0 else -100).toDouble()
-                        numPoints - 1 -> xVals[i] = 100.0
-                        else -> xVals[i] = p.position.toDouble()
-                    }
-                    yVals[i] = p.value.toDouble()
-
-                    // draw dot and point number
-                    if (description) {
-                        val x0: Double
-                        val y0: Double
-                        if (pitchCurve) {
-                            x0 = 5 + xVals[i] * 2.0 * scale.toDouble()
-                            y0 = 5 + (225 - yVals[i] * 2) * scale
-                        } else {
-                            x0 = 5 + (100 + xVals[i]) * scale
-                            y0 = 5 + (125 - yVals[i]) * scale
-                        }
-
-                        strokeOval(x0 - 2, y0 - 2, 4.0, 4.0)
-                        clearRect(x0 - 6, y0 - 16, 8.0, 12.0)
-                        strokeText(Integer.toString(p.number + 1), x0 - 3, y0 - 5)
-                    }
-
-                    i++
+            curve.point.filter { it.isEnabled }.forEachIndexed { i, p ->
+                when (i) {
+                    0 -> xVals[i] = if (pitchCurve) 0.0 else -100.0
+                    numPoints - 1 -> xVals[i] = 100.0
+                    else -> xVals[i] = p.position.toDouble()
                 }
+                yVals[i] = p.value.toDouble()
+
+                // draw dot and point number
+                if (description) {
+                    val x0: Double
+                    val y0: Double
+                    if (pitchCurve) {
+                        x0 = 5 + xVals[i] * 2.0 * scale
+                        y0 = 5 + (225 - yVals[i] * 2) * scale
+                    } else {
+                        x0 = 5 + (100 + xVals[i]) * scale
+                        y0 = 5 + (125 - yVals[i]) * scale
+                    }
+
+                    strokeOval(x0 - 2, y0 - 2, 4.0, 4.0)
+                    clearRect(x0 - 6, y0 - 16, 8.0, 12.0)
+                    strokeText(Integer.toString(p.number + 1), x0 - 3, y0 - 5)
+                }
+            }
 
             lineWidth = 2.0
 
@@ -119,7 +115,7 @@ class JavaFxCurveImageGenerator : CurveImageGenerator {
                     moveTo(5.0, 5 + (225 - yVals[0] * 2) * scale)
                     var x = 6.0
                     while (x < 4 + 200 * scale) {
-                        lineTo(x, 5 + (225 - function.value((x - 5) / scale.toDouble() / 2.0) * 2) * scale)
+                        lineTo(x, 5 + (225 - function.value((x - 5) / scale / 2.0) * 2) * scale)
                         x++
                     }
                 } else {
@@ -136,18 +132,14 @@ class JavaFxCurveImageGenerator : CurveImageGenerator {
                 beginPath()
 
                 if (pitchCurve) {
-                    moveTo(5 + xVals[0] * 2.0 * scale.toDouble(), 5 + (225 - yVals[0] * 2) * scale)
-                    i = 1
-                    while (i < numPoints) {
-                        lineTo(5 + xVals[i] * 2.0 * scale.toDouble(), 5 + (225 - yVals[i] * 2) * scale)
-                        i++
+                    moveTo(5 + xVals[0] * 2.0 * scale, 5 + (225 - yVals[0] * 2) * scale)
+                    for (i in 1 until numPoints) {
+                        lineTo(5 + xVals[i] * 2.0 * scale, 5 + (225 - yVals[i] * 2) * scale)
                     }
                 } else {
                     moveTo(5 + (100 + xVals[0]) * scale, 5 + (125 - yVals[0]) * scale)
-                    i = 1
-                    while (i < numPoints) {
+                    for (i in 1 until numPoints) {
                         lineTo(5 + (100 + xVals[i]) * scale, 5 + (125 - yVals[i]) * scale)
-                        i++
                     }
                 }
 
@@ -166,7 +158,7 @@ class JavaFxCurveImageGenerator : CurveImageGenerator {
         // wait until snapshot completes
         latch.await()
 
-        val renderedImage = SwingFXUtils.fromFXImage(image!!, null)
+        val renderedImage = SwingFXUtils.fromFXImage(image, null)
 
         try {
             ByteArrayOutputStream().use { baos ->

@@ -74,7 +74,7 @@ class JSerialCommPort(portName: String) : SerialPortBase(portName), SerialPortDa
         LISTENING_EVENT_DATA_AVAILABLE -> "Data available"
         LISTENING_EVENT_DATA_WRITTEN -> "Data written"
         LISTENING_EVENT_DATA_RECEIVED -> "Data received"
-        else -> "unknown event"
+        else -> "Unknown event"
     }
 
     override fun serialEvent(event: SerialPortEvent) {

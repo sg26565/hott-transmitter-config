@@ -5,7 +5,7 @@
 		<#assign show=true/>			
 	</#if>
 	<table class="<@u show/>">
-		<caption><a name="swashplateMixer"/>Taumelscheibenmischer</caption>
+		<caption><a name="swashplateMixer"></a>Taumelscheibenmischer</caption>
 		
 		<@reset/>
 		

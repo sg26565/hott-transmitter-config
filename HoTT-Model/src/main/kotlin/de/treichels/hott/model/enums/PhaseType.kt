@@ -18,8 +18,10 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class PhaseType {
-    Acro, Acro_3D, Acro2, AirTow, Autorotation, Custom1, Custom10, Custom2, Custom3, Custom4, Custom5, Custom6, Custom7, Custom8, Custom9, Distance, Distance2,
-    Global, Hover, Landing, Landing2, Normal, Speed, Speed2, Takeoff, Takeoff2, Test, Test2, Thermal, Thermal2, Unnamed, Unused;
+    Custom10, Custom9, Custom8, Custom7, Custom6, Custom5, Custom4, Custom3, Custom2, Custom1, Unused,
+    Normal, Takeoff, Takeoff2, Thermal, Thermal2, Distance, Distance2, Speed, Speed2,
+    Acro, Acro2, Landing, Landing2, AirTow, Test, Test2,
+    Acro_3D, Autorotation, Global, Hover, Hover2, Unnamed;
 
-override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

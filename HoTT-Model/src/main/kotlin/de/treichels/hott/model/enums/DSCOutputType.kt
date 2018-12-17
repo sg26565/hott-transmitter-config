@@ -11,9 +11,14 @@
  */
 package de.treichels.hott.model.enums
 
+import de.treichels.hott.util.get
+import java.util.*
+
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class DSCOutputType {
-    PPM10, PPM16, PPM18, PPM24, PPM32
+    PPM10, PPM16, PPM18, PPM24, PPM32, Unknown;
+
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

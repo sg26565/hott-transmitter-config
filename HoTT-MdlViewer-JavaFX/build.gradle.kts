@@ -6,6 +6,7 @@ dependencies {
     implementation(project(":HoTT-Report-PDF"))
     implementation(Libs.commons_math3)
     implementation(Libs.javafx_swing)
+    runtimeOnly(project(":jSerialCommPort"))
 }
 
 plugins {

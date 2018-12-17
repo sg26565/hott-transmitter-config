@@ -18,7 +18,7 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class MultichannelMode {
-    EightCh, FourCh;
+    FourCh, EightCh;
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

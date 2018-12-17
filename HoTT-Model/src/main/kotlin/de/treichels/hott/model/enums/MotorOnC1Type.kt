@@ -18,7 +18,7 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class MotorOnC1Type {
-    Idle_Front, Idle_Rear, None, None_Inv;
+    Idle_Front, Idle_Rear, None, None_Inv, Unknown;
 
-override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

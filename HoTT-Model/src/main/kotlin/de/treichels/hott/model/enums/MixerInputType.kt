@@ -18,7 +18,7 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class MixerInputType {
-    Normal, Phase, Sequence, Trim, Trim_Sequence, unknown;
+    Normal, Sequence, Trim, Trim_Sequence, Phase, Unknown;
 
-override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

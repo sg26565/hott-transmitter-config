@@ -19,8 +19,8 @@ import java.util.stream.Stream
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class ModelType(val id: Int, val char: Char) {
-    Helicopter(0, 'h'), Unknown(-1, 'x'), Winged(1, 'a'), Copter(3, 'q'), Boat(4, 'b'), Car(2, 'c'); // TODO add Glider(?, 'g')
+enum class ModelType(val char: Char) {
+    Helicopter('h'), Winged('a'), Car('c'), Copter('q'), Boat('b'), Unknown('x'); // TODO add Glider(?, 'g')
 
     val model: BaseModel
         @Throws(HoTTException::class)
@@ -36,21 +36,16 @@ enum class ModelType(val id: Int, val char: Char) {
 
                 Winged -> WingedModel()
 
-                else -> throw HoTTException(format = "InvalidModelType", args = arrayOf("unknown"))
+                else -> throw HoTTException(format = "InvalidModelType", args = arrayOf("Unknown"))
             }
         }
 
-override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 
     companion object {
         @JvmStatic
         fun forChar(c: Char): ModelType {
             return Stream.of(*values()).filter { t -> t.char == c }.findFirst().orElse(Unknown)
-        }
-
-        @JvmStatic
-        fun forId(id: Int): ModelType {
-            return Stream.of(*values()).filter { t -> t.id == id }.findFirst().orElse(Unknown)
         }
     }
 }

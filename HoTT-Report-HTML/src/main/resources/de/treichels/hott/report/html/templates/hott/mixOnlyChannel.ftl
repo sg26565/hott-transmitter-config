@@ -1,9 +1,9 @@
 <table>
-	<caption><a name="mixOnlyChannel"/>Nur MIX Kanal</caption>
+	<caption><a name="mixOnlyChannel"></a>Nur MIX Kanal</caption>
 	
 	<thead>
 		<tr>
-			<th/>
+			<th></th>
 			<#list model.channel as channel>
 				<#if !channel.virtual>		
 					<th align="center">S${channel.number?number+1}</th>

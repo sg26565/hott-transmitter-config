@@ -5,4 +5,5 @@ dependencies {
     implementation(project(":HoTT-Voice"))
     implementation(project(":HoTT-Firmware"))
     implementation(project(":HoTT-UI"))
+    implementation(Libs.commons_math3)
 }

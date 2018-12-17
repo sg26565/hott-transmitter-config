@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlRootElement
 
 @XmlRootElement
 open class HelicopterModel(
-        modelType: ModelType = ModelType.Helicopter,
         var autorotationC1TriggerPosition: Int = 0,
         @get:XmlIDREF
         var autorotationSwitch: Switch = Switch(),
@@ -16,17 +15,17 @@ open class HelicopterModel(
         var expoThrottleLimit: Int = 0,
         @get:XmlIDREF
         var markerSwitch: Switch = Switch(),
-        var pitchMin: PitchMin? = null,
+        var pitchMin: PitchMin = PitchMin.Unknown,
         @get:XmlElementWrapper(name = "profitrims")
         var profiTrim: List<HelicopterProfiTrim> = emptyList(),
-        var rotorDirection: RotorDirection? = null,
+        var rotorDirection: RotorDirection = RotorDirection.Unknown,
         var isSwashplateLinearization: Boolean = false,
-        var swashplateMix: SwashplateMix? = null,
-        var swashplateType: SwashplateType? = null,
+        var swashplateMix: SwashplateMix = SwashplateMix(),
+        var swashplateType: SwashplateType = SwashplateType.Unknown,
         var throttleLimitWarning: Int = 0,
         var isThrottleMarkerActive: Boolean = false,
         var throttleMarkerPosition: Int = 0
-) : BaseModel(modelType) {
+) : BaseModel(ModelType.Helicopter) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is HelicopterModel) return false
@@ -59,12 +58,12 @@ open class HelicopterModel(
         result = 31 * result + autorotationThrottlePosition
         result = 31 * result + expoThrottleLimit
         result = 31 * result + markerSwitch.hashCode()
-        result = 31 * result + (pitchMin?.hashCode() ?: 0)
+        result = 31 * result + pitchMin.hashCode()
         result = 31 * result + profiTrim.hashCode()
-        result = 31 * result + (rotorDirection?.hashCode() ?: 0)
+        result = 31 * result + rotorDirection.hashCode()
         result = 31 * result + isSwashplateLinearization.hashCode()
-        result = 31 * result + (swashplateMix?.hashCode() ?: 0)
-        result = 31 * result + (swashplateType?.hashCode() ?: 0)
+        result = 31 * result + swashplateMix.hashCode()
+        result = 31 * result + swashplateType.hashCode()
         result = 31 * result + throttleLimitWarning
         result = 31 * result + isThrottleMarkerActive.hashCode()
         result = 31 * result + throttleMarkerPosition
@@ -118,11 +117,11 @@ class HelicopterPhase(
 }
 
 data class HelicopterProfiTrim(
-        var curveType: CurveType? = null,
+        var curveType: CurveType = CurveType.Unknown,
         @get:XmlIDREF
-        var inputControl: Switch? = null,
+        var inputControl: Switch = Switch(),
         @get:XmlIDREF
-        var phase: HelicopterPhase? = null,
+        var phase: HelicopterPhase = HelicopterPhase(),
         var point: Int = 0
 ) : AbstractBase()
 

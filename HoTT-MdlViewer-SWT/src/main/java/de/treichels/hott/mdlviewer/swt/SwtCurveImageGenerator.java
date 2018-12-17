@@ -181,7 +181,7 @@ public class SwtCurveImageGenerator implements CurveImageGenerator {
 
     @NotNull
     @Override
-    public String getImageSource(@NotNull final Curve curve, final float scale, final boolean description) {
+    public String getImageSource(@NotNull final Curve curve, final double scale, final boolean description) {
         final Image image = getImage(curve, scale, description);
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final ImageLoader imageLoader = new ImageLoader();

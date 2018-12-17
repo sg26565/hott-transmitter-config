@@ -1,5 +1,5 @@
 <table>
-	<caption><a name="nonDelayedChannels"/>unverzögerte Kanäle</caption>
+	<caption><a name="nonDelayedChannels"></a>unverzögerte Kanäle</caption>
 	
 	<thead>
 		<tr>
@@ -18,7 +18,7 @@
 		<#list model.phase as phase>
 			<#if phase.phaseType.name() != "Unused">
 				<tr class="<@d/>">
-					<td align="center">${phase?string}</td>
+					<td align="center">${phase.toString()}</td>
 					<#list model.channel as channel>
 						<#if !channel.virtual>		
 							<td align="center">${channel.phaseSetting[phase_index].nonDelayed?string("&times;","")}</td>

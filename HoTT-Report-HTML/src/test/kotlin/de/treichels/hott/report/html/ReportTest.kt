@@ -11,31 +11,56 @@
  */
 package de.treichels.hott.report.html
 
+import com.sun.org.apache.xml.internal.serializer.utils.Utils
 import de.treichels.hott.decoder.HoTTDecoder
 import de.treichels.hott.model.enums.TransmitterType
+import de.treichels.hott.util.Util.dumpData
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
 import java.io.File
 import java.net.URL
+import kotlin.test.assertTrue
 
 class ReportTest {
     private val path = javaClass.`package`.name.replace(".", "/") + "/models/"
-    private val filter = { file: File -> file.name.endsWith(".mdl") }
 
     @Test
     fun testAllModels() {
         TransmitterType.values().forEach { transmitterType ->
             val url: URL? = ClassLoader.getSystemResource(path + transmitterType.name)
 
-            if (url != null)
-                File(url.toURI()).listFiles(filter)?.forEach { file ->
-                    val model = HoTTDecoder.decodeFile(file)
+            if (url != null) {
+                val dir =File(url.toURI())
+
+                dir.listFiles { file -> file.name.endsWith(".mdl") }?.forEach { mdlFile ->
+                    val baseName = mdlFile.name.substringBefore(".mdl")
+
+                    println(baseName)
+
+                    val dump = dumpData(mdlFile.readBytes())
+                    val txtFile = File(dir, "$baseName.txt")
+
+                    txtFile.writeText(dump)
+                    println (txtFile.absolutePath)
+//                    assertTrue( txtFile.exists() )
+//                    assertTrue( txtFile.canRead() )
+//                    assertEquals(txtFile.readText(), dump)
+
+                    val model = HoTTDecoder.decodeFile(mdlFile)
                     assertEquals(transmitterType, model.transmitterType)
 
                     val html = HTMLReport.generateHTML(model)
                     assertFalse(html.isEmpty())
+
+                    val htmlFile = File(dir, "$baseName.2.html")
+                    htmlFile.writeText(html)
+                    println(htmlFile.absolutePath)
+//                    assertTrue( htmlFile.exists() )
+//                    assertTrue( htmlFile.canRead() )
+//                    assertEquals(htmlFile.readText(), html)
                 }
+            }
         }
     }
 }
