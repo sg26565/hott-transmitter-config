@@ -17,7 +17,7 @@
  */
 package de.treichels.hott.android.background.serial.tasks;
 
-import gde.model.serial.FileInfo;
+import de.treichels.hott.serial.FileInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;

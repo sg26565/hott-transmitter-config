@@ -17,7 +17,7 @@
  */
 package de.treichels.hott.android.background.serial.tasks;
 
-import gde.model.BaseModel;
+import de.treichels.hott.model.BaseModel;
 
 import java.io.IOException;
 

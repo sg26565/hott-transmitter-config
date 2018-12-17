@@ -17,8 +17,8 @@
  */
 package de.treichels.hott.android.background.serial.tasks;
 
-import gde.model.BaseModel;
-import gde.model.enums.ModelType;
+import de.treichels.hott.model.BaseModel;
+import de.treichels.hott.model.enums.ModelType;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -35,7 +35,7 @@ import de.treichels.hott.android.decoder.R;
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class GetModelFromSdTask extends TxTask<String, Void, BaseModel> {
-  private static final String FILE_EXTENSION_MDL = ".mdl"; //$NON-NLS-1$
+  private static final String FILE_EXTENSION_MDL = ".mdl";
 
   public GetModelFromSdTask(final DeviceHandler<?> handler) {
     super(handler);

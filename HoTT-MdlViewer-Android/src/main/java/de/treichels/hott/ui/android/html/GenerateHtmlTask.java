@@ -17,8 +17,8 @@
  */
 package de.treichels.hott.ui.android.html;
 
-import gde.model.BaseModel;
-import gde.report.html.HTMLReport;
+import de.treichels.hott.model.BaseModel;
+import de.treichels.hott.report.html.HTMLReport;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;

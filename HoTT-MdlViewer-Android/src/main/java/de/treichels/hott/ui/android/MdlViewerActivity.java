@@ -17,11 +17,11 @@
  */
 package de.treichels.hott.ui.android;
 
-import gde.model.BaseModel;
-import gde.model.enums.ModelType;
-import gde.model.enums.Section;
-import gde.model.enums.TransmitterType;
-import gde.model.serial.ModelInfo;
+import de.treichels.hott.model.BaseModel;
+import de.treichels.hott.model.enums.ModelType;
+import de.treichels.hott.model.enums.Section;
+import de.treichels.hott.model.enums.TransmitterType;
+import de.treichels.hott.serial.ModelInfo;
 
 import java.net.MalformedURLException;
 
@@ -67,8 +67,8 @@ import de.treichels.hott.ui.android.html.SectionAdapter;
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 public class MdlViewerActivity extends Activity implements ListView.OnItemClickListener {
-  public static final String  CACHE_FILE_NAME   = "MdlViewer.html";                                      //$NON-NLS-1$
-  private static final String MDL_MIME_TYPE     = "application/octet-stream";                            //$NON-NLS-1$
+  public static final String  CACHE_FILE_NAME   = "MdlViewer.html";
+  private static final String MDL_MIME_TYPE     = "application/octet-stream";
   private static final String MODEL_NAME        = MdlViewerActivity.class.getName() + ".modelName";
   private static final String MODEL_TYPE        = MdlViewerActivity.class.getName() + ".modelType";
   private static final int    READ_REQUEST_CODE = 42;
@@ -213,7 +213,7 @@ public class MdlViewerActivity extends Activity implements ListView.OnItemClickL
     drawerLayout.closeDrawer(drawer);
 
     final Section section = Section.values()[(int) id];
-    webView.loadUrl(loadUrl + "#" + section.name()); //$NON-NLS-1$
+    webView.loadUrl(loadUrl + "#" + section.name());
   }
 
   /**

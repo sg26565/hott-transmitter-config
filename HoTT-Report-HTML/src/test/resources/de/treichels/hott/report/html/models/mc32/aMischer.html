@@ -1,0 +1,2881 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--
+	HoTT Transmitter Config
+	Copyright (C) 2013  Oliver Treichel
+	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+	<head>
+		<title>Graupner/SJ mc-32 - Mischer</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style type="text/css" media="print">
+	@page {
+		size: a4;
+		
+		@top-left {
+			content: "mc-32 - Mischer";
+		}
+	
+		@top-right {
+			content: "04.05.2017 20:11:48";
+		}
+	
+		@bottom-left {
+			content: "HoTTMdlViewer unknown";
+		}
+	
+		@bottom-right {
+			content: "Seite " counter(page);
+		}
+	}
+	
+	body {
+		font-size: 9pt;
+	}
+	
+	div.navigation {
+		display: none;
+	}
+</style>
+
+<style type="text/css" media="screen">
+	body {
+		font-size: 14pt;
+		padding: 0;
+		margin-top: 0;
+	}
+	
+	div.navigation {
+		position: fixed;
+		font-size: 10pt;
+		padding: 0;
+		margin: 0;
+	}
+
+	.navigation a[href] {
+		display: block;
+	}
+	
+	.navigation h1 {
+		font-size: 14pt;
+		margin-top: 0;
+	}
+	
+	div.data {
+		margin-left: 10em;
+	}
+	
+	.navigation a.i1 {
+		margin-left: 1em;
+	}
+</style>
+
+<style type="text/css" media="(max-width: 80em)">
+	body {
+		font-size: 9pt;
+		padding: 0;
+		margin-top: 0;
+	}
+
+	div.navigation {
+		display: none;
+	}
+
+	div.data {
+		margin-left: 0em;
+	}
+</style>
+
+<style type="text/css" media="all">
+	@font-face {
+		src: url('file:/C:/Users/olive/AppData/Local/Temp/Arial.ttf');
+		-fs-pdf-font-embed: embed;
+		-fs-pdf-font-encoding: Identity-H;
+	}
+	
+	body {
+		font-family: Arial;
+	}
+	
+	table {
+		border-collapse: collapse;
+		color: black;
+		border-style: solid;
+		border-color: black;
+		border-width: 2px;
+		empty-cells: show;
+		margin: 0;
+		padding: 0;
+		white-space: nowrap;
+		page-break-inside: avoid;
+		margin-bottom: 1em;
+	}
+	
+	table caption {
+		text-align: left;
+		font-size: x-large;
+		font-style: italic;
+		font-weight: bold;
+		margin-top: 0;
+	}
+	
+	td {
+		border-left-style: solid;
+		border-right-style: solid;
+		border-width: 1px;
+		border-color: white;
+		padding: 2px;
+		margin: 0;
+	}
+	
+	th {
+		background-color: #ccc;
+		border-left-style: solid;
+		border-right-style: solid;
+		border-width: 1px;
+		border-color: white;
+		padding: 2px;
+		margin: 0;
+	}
+	
+	tr.d0 td {
+		background-color: #eee;
+	}
+	
+	tr.d1 td {
+		background-color: #ddd;
+	}
+	
+	th.d2 {
+		background-color: #bbb;
+		font-size: large;
+		text-align: center;
+		page-break-before: auto;
+	}
+	
+	tr.d1 td.d0 {
+		background-color: #eee;
+	}
+	
+	.unused {
+		color: #aaa;
+		font-style: italic;
+	}
+</style><bookmarks>
+	<bookmark href="#baseSettings" name="Grundeinstellungen Modell"></bookmark>
+	<bookmark href="#modelType" name="Modelltyp"></bookmark>
+	<bookmark href="#servos" name="Servoeinstellungen"></bookmark>
+	<bookmark href="#stickSettings" name="Kn&uuml;ppeleinstellungen"></bookmark>
+	<bookmark href="#controls0" name="Gebereinstellungen">
+				<bookmark href="#controls0" name="Phase 1: "></bookmark>
+	</bookmark>
+	<bookmark href="#drExpo0" name="DualRate Expo">
+				<bookmark href="#drExpo0" name="Phase 1: "></bookmark>
+	</bookmark>
+	<bookmark href="#channel1Curve0" name="Kanal 1 Kurve">
+				<bookmark href="#channel1Curve0" name="Phase 1: "></bookmark>
+	</bookmark>
+	<bookmark href="#controlSwitches" name="Geberschalter"></bookmark>
+		<bookmark href="#logicalSwitches" name="logische Schalter"></bookmark>
+	<bookmark href="#phaseSettings" name="Phaseneinstellungen"></bookmark>
+	<bookmark href="#phaseAssignments" name="Phasenzuweisung"></bookmark>
+		<bookmark href="#phaseTrim" name="Phasentrimm"></bookmark>
+	<bookmark href="#nonDelayedChannels" name="unverz&ouml;gerte Kan&auml;le"></bookmark>
+	<bookmark href="#timersGeneral" name="Uhren (allgemein)"></bookmark>
+	<bookmark href="#phaseTimer" name="Flugphasenuhren"></bookmark>
+		<bookmark href="#wingMix0" name="Fl&auml;chenmischer">
+					<bookmark href="#wingMix0" name="Phase 1: "></bookmark>
+		</bookmark>
+	<bookmark href="#linearMixer" name="Linearmischer"></bookmark>
+	<bookmark href="#curveMixer" name="Kurvenmischer"></bookmark>
+	<bookmark href="#mixerActive" name="MIX aktiv / Phase"></bookmark>
+	<bookmark href="#mixOnlyChannel" name="Nur MIX Kanal"></bookmark>
+	<bookmark href="#dualMixer" name="Kreuzmischer"></bookmark>
+	<bookmark href="#failSafe" name="Fail Safe"></bookmark>
+	<bookmark href="#trainerPupil" name="Lehrer/Sch&uuml;ler"></bookmark>
+	<bookmark href="#outputChannel" name="Senderausgang"></bookmark>
+		<bookmark href="#profiTrim" name="Profitrimm"></bookmark>
+	<bookmark href="#trimMemory" name="Trimmspeicher"></bookmark>
+	<bookmark href="#telemetry" name="Telemetrie"></bookmark>
+	<bookmark href="#channelSequencer" name="Kanal Sequenzer"></bookmark>
+		<bookmark href="#multiChannel" name="Multikanal"></bookmark>
+	<bookmark href="#ringLimiter" name="Ringbegrenzer"></bookmark>
+		<bookmark href="#mp3Player" name="MP3-Player"></bookmark>
+	<bookmark href="#switches" name="Schalter-/Geberzuordnungen"></bookmark>
+</bookmarks>	</head>
+	<body>
+		&nbsp;
+		<div class="navigation">
+<h1>Inhaltsverzeichnis</h1>
+<a href="#baseSettings">Grundeinstellungen Modell</a>
+<a href="#modelType">Modelltyp</a>
+<a href="#servos">Servoeinstellungen</a>		
+<a href="#stickSettings">Kn&uuml;ppeleinstellungen</a>
+<div>Gebereinstellungen</div>
+		<a class="i1" href="#controls0">Phase 1: </a>
+<div>DualRate Expo</div>
+		<a class="i1" href="#drExpo0">Phase 1: </a>
+<div>Kanal 1 Kurve</div>
+		<a class="i1" href="#channel1Curve0">Phase 1: </a>
+<a href="#controlSwitches">Geberschalter</a>
+	<a href="#logicalSwitches">logische Schalter</a>
+<a href="#phaseSettings">Phaseneinstellungen</a>
+<a href="#phaseAssignments">Phasenzuweisung</a>
+	<a href="#phaseTrim">Phasentrimm</a>
+<a href="#nonDelayedChannels">unverz&ouml;gerte Kan&auml;le</a>
+<a href="#timersGeneral">Uhren (allgemein)</a>
+<a href="#phaseTimer">Flugphasenuhren</a>
+	<div>Fl&auml;chenmischer</div>
+			<a class="i1" href="#wingMix0">Phase 1: </a>
+<a href="#linearMixer">Linearmischer</a>
+<a href="#curveMixer">Kurvenmischer</a>
+<a href="#mixerActive">MIX aktiv / Phase</a>
+<a href="#mixOnlyChannel">Nur MIX Kanal</a>
+<a href="#dualMixer">Kreuzmischer</a>
+<a href="#failSafe">Fail Safe</a>
+<a href="#trainerPupil">Lehrer/Sch&uuml;ler</a>
+<a href="#outputChannel">Senderausgang</a>
+	<a href="#profiTrim">Profitrimm</a>
+<a href="#trimMemory">Trimmspeicher</a>
+<a href="#telemetry">Telemetrie</a>		
+<a href="#channelSequencer">Kanal Sequenzer</a>
+	<a href="#multiChannel">Multikanal</a>
+<a href="#ringLimiter">Ringbegrenzer</a>
+	<a href="#mp3Player">MP3-Player</a>
+<a href="#switches">Schalter-/Geberzuordnungen</a>		</div>
+		<div class="data">
+<table>
+	<caption><a name="baseSettings"></a>Grundeinstellungen Modell</caption>
+	
+		
+	<tbody>
+		<tr class="d0">
+			<th align="right">Hersteller</th>
+			<td align="left" colspan="3">Graupner/SJ</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Sendertyp</th>
+			<td align="left" colspan="3">mc-32</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">Sender ID</th>
+			<td align="left" colspan="3">300000591E</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Firmware Version</th>
+			<td align="left" colspan="3">1.046</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">Datei Version</th>
+			<td align="left" colspan="3">1.000</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Modelltyp</th>
+			<td align="left" colspan="3">Flugzeug</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">Modellname</th>
+			<td align="left" colspan="3">Mischer</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Steueranordnung</th>
+			<td align="left" colspan="3">Mode 3</td>
+		</tr>
+			<tr class="d0">
+				<th align="right">Modul</th>
+				<td align="left" colspan="3">HoTT</td>
+			</tr>
+		<tr class="d1">
+			<th align="right">DSC-Ausgang</th>
+			<td align="left" colspan="3">PPM16</td>
+		</tr>
+		<tr class="d0">
+			<th align="right" valign="top">Motor-Stopp</th>
+			<td align="left"><i>Position:</i> -100%</td>
+			<td align="left"><i>Limit:</i> 150%</td>
+			<td align="left"><i>Schalter:</i> 		---
+</td>							
+		</tr>
+			<tr class="d1">
+				<th align="right">Einschaltwarnung</th>
+				<td align="left" colspan="3">		---
+</td>
+			</tr>
+			<tr class="d0">
+				<th align="right">Auto Trimm</th>
+				<td align="left" colspan="3">		---
+</td>
+			</tr>
+			<tr class="d1">
+				<th align="right">Auto r&uuml;cksetzen Uhr</th>
+				<td align="left" colspan="3">ja</td>
+			</tr>
+	</tbody>
+</table>
+			
+		<table  class="unused">
+			<caption>Empf&auml;nger 1</caption>
+		
+			
+			<tbody>
+				<tr class="d0">
+					<th align="right">gebunden</th>
+					<td align="left" colspan="3">nein</td>
+				</tr>
+			</tbody>
+		</table>
+		<table  class="unused">
+			<caption>Empf&auml;nger 2</caption>
+		
+			
+			<tbody>
+				<tr class="d0">
+					<th align="right">gebunden</th>
+					<td align="left" colspan="3">nein</td>
+				</tr>
+			</tbody>
+		</table>
+		<table  class="unused">
+			<caption>Empf&auml;nger 3</caption>
+		
+			
+			<tbody>
+				<tr class="d0">
+					<th align="right">gebunden</th>
+					<td align="left" colspan="3">nein</td>
+				</tr>
+			</tbody>
+		</table>
+		<table  class="unused">
+			<caption>Empf&auml;nger 4</caption>
+		
+			
+			<tbody>
+				<tr class="d0">
+					<th align="right">gebunden</th>
+					<td align="left" colspan="3">nein</td>
+				</tr>
+			</tbody>
+		</table>
+<table>
+			<caption><a name="modelType"></a>Modelltyp</caption>
+
+		
+		<tbody>
+			<tr class="d0">
+				<th align="right">Motor an K1</th>
+				<td align="left" colspan="2">kein</td>
+			</tr>
+			<tr class="d1">
+				<th align="right">Leitwerk</th>
+				<td align="left" colspan="2">Normal</td>
+			</tr>
+			<tr class="d0">
+				<th align="right">Querruder/W&ouml;lbklappen</th>
+				<td align="left" colspan="2">1QR</td>
+			</tr>
+			<tr class="d1">
+				<th align="right">Bremse</th>
+				<td align="left"><i>Offset:</i> 100</td>
+				<td align="left"><i>Eingang:</i> 1</td>
+			</tr>
+		</tbody>
+</table><table>
+	<caption><a name="servos"></a>Servoeinstellungen</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Servo</th>
+			<th align="center">Umkehr</th>
+			<th align="center">Mitte</th>
+			<th align="center">Weg -</th>
+			<th align="center">Weg +</th>
+							<th align="center">Begrenzung -</th>
+				<th align="center">Begrenzung +</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+				<tr class="d0">
+					<td align="center">S1</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S2 (Querruder)</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S3 (H&ouml;henruder)</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S4 (Seitenruder)</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S5</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S6</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S7</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S8</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S9</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S10</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S11</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S12</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S13</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S14</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S15</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S16</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+	</tbody>
+</table><table>
+	<caption><a name="stickSettings"></a>Kn&uuml;ppeleinstellungen</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Kanal</th>
+			<th align="center">Trimm</th>
+			<th align="center">Trimmschritte</th>
+			<th align="center">Zeit -</th>
+			<th align="center">Zeit +</th>
+		</tr>
+	</thead>
+	
+		
+	<tbody>
+			<tr class="d0">
+							<td align="center">Kanal 1</td>
+				<td align="center">global</td>
+				<td align="center">4</td>
+				<td align="center">0,0s</td>
+				<td align="center">0,0s</td>
+			</tr>
+			<tr class="d1">
+							<td align="center">Querruder</td>
+				<td align="center">global</td>
+				<td align="center">4</td>
+				<td align="center">0,0s</td>
+				<td align="center">0,0s</td>
+			</tr>
+			<tr class="d0">
+							<td align="center">H&ouml;henruder</td>
+				<td align="center">global</td>
+				<td align="center">4</td>
+				<td align="center">0,0s</td>
+				<td align="center">0,0s</td>
+			</tr>
+			<tr class="d1">
+							<td align="center">Seitenruder</td>
+				<td align="center">global</td>
+				<td align="center">4</td>
+				<td align="center">0,0s</td>
+				<td align="center">0,0s</td>
+			</tr>
+	</tbody>			
+</table>		<table>
+			<caption><a name="controls0"></a>Gebereinstellungen - Phase 1: </caption>
+			
+			<thead>
+				<tr>
+					<th align="center">Eingang</th>
+					<th align="center">Typ</th>
+					<th align="center" colspan="2">Geber</th>
+					<th align="center">Offset</th>
+					<th align="center">Weg -</th>
+					<th align="center">Weg +</th>
+					<th align="center">Zeit -</th>
+					<th align="center">Zeit +</th>
+				</tr>
+			</thead>
+		
+			<tbody>
+
+					<tr class="d0 used">
+							<td align="center">E5</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">				Schieberegler 1
+&rarr;</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 used">
+							<td align="center">E6</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">				Schieberegler 2
+&rarr;</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 used">
+							<td align="center">E7</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">				Schieberegler 3
+&rarr;</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 used">
+							<td align="center">E8</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">				Schieberegler 1
+&rarr;</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 used">
+							<td align="center">E9</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">				Schieberegler 2
+&rarr;</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 used">
+							<td align="center">E10</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">				Schieberegler 3
+&rarr;</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 used">
+							<td align="center">E11</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">				Schieberegler 1
+&rarr;</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 used">
+							<td align="center">E12</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">				Schieberegler 2
+&rarr;</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 used">
+							<td align="center">E13</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">				Schieberegler 3
+&rarr;</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 used">
+							<td align="center">E14</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">				Schieberegler 1
+&rarr;</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 used">
+							<td align="center">E15</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">				Schieberegler 2
+&rarr;</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 used">
+							<td align="center">E16</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="drExpo0"></a>DualRate Expo - Phase 1: </caption>
+			
+			<thead>
+				<tr>
+					<th></th>
+					<th align="center" colspan="2">Dual Rate</th>
+					<th align="center" colspan="2">Expo</th>
+					<th align="center" style="font-size: 75%;">DR aus</th>						
+					<th align="center" style="font-size: 75%;">DR aus</th>						
+					<th align="center" style="font-size: 75%;">DR an</th>						
+					<th align="center" style="font-size: 75%;">DR an</th>						
+				</tr>
+				<tr style="font-size: 75%;">
+					<th></th>
+					<th align="center">Schalter</th>
+					<th align="center">Wert</th>
+					<th align="center">Schalter</th>
+					<th align="center">Wert</th>
+					<th align="center">Expo aus</th>
+					<th align="center">Expo an</th>
+					<th align="center">Expo aus</th>
+					<th align="center">Expo an</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+
+					<tr class="d0">			  	
+						<th align="right">Querruder</th>
+						<td align="center">		---
+</td>
+							<td align="center">100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">0%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+					<tr class="d1">			  	
+						<th align="right">H&ouml;henruder</th>
+						<td align="center">		---
+</td>
+							<td align="center">100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">0%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+					<tr class="d0">			  	
+						<th align="right">Seitenruder</th>
+						<td align="center">		---
+</td>
+							<td align="center">100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">0%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="channel1Curve0"></a>Kanal 1 Kurve - Phase 1: </caption>
+			
+			<tbody>
+	<tr>
+		<th class="d2" colspan="6">Phase 1: </th>
+	</tr>
+	
+	<tr class="d0">
+		<th align="right">Kurve</th>
+		<td colspan="4" align="left">aus</td>
+		<td rowspan="10" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANIAAAEECAIAAADS6/2TAAAGHklEQVR42u3dsS5uSxiA4T92RCQKEhE3oKJWiKg0IqIQiUrchF6ndAkKhcIFKDTCJZDQE4JEpz5nwjlibw5yYs231szzVr9MI5Nnz8wnZPf+krLXswXCTthJ2KlYdj19u62tLZvw/b5g59/iN0vsbMJ3jzfssMMOO+ywww47YSdhJ+wk7NR6hdiZZLHDrqiur68XFxcHnlteXr65ucEOu8abnZ1Noo6Pj09OTtKH9CV22DVef3//q6j0IX2JHXaNt76+/va029jYwE6N9/T0NDEx8fKLTyMjI4+Pj9ip8dbW1pKok+fSh9XVVezkbacSm5mZSaKOjo5eTru5uTns1Hg3Nzfpnh0cHBwYGFhaWvJzO5NsZNhh12wPDw8HBwfJ1d7e3u3tLXbYNd7p6eno6OjrH48NDQ2ldx522DV7zo2Pj//xZ4tJXjrzsMOuqV7u1vel27b3fivfZtXq/17d2dn5kN329rbTTi047bDTT3VxcfHr16/3b7urqyvs1Eh3d3eTk5OJ01t5ydzh4aFJVs2am5qaury83N/fT593d3fTOfcPM+xMss2Zu7+//9AVdtg1bg477ALMYYddgDnssAswh50CzGGnAHPYKcAcdgowh50CzGFnkg0whx12Aeawwy7AHHbYBZjDDrsAc9gpwBx2CjCHnQLMYacAc9gpwBx2JtkAc9hhF2AOO+wCzGGHXYA57LALMIedAsxhpwBz2CnAHHYKMIedAsxhZ5INMIcddgHmsMMuwBx2tbMLMYdd1eyizGFnbg0whx1zAeawY+4+5HvAjjnsVIE57CqaZNtjDrta2LXKHHZVsGubOezKZ9dCc9gVzq6d5rAzt2KnOsxhxxx2qsMcdsxhZ5Ktwxx25bDrkDnsCmHXLXPYlcCuc+aw6zy7LprDztyKneowhx1z2KkOc9gxh51Jtg5z2HWJXTHmsOsMu5LMYdcNdoWZw64D7Mozh525FTvVYQ475rBTHeawYw47k2wd5rBrF7tKzGHXInb1mMOuLeyqModdK9jVZg47cyt2zFUTdsxhxxx22DGHXSGTLHPY5WbHHHa52TGHXW52zGGXmx1z2JlbsWMOO+yYw4457MQcdm2eZJnDLjc75rDLzY457HK3ubnJHHa5Z4ixsTHmfobd1u9Z/XD19W5N8tKZZ6++XHXa+VmJS5Y57LBjDjvmsGPunbnw/z0buxrPOeywC7hbscMu4D2HHXYBMwR22JlbsWNO2DGHHXPYYcccdt0yZ5LFLuCcww67gLsVO+wC3nPYYRcwQ2CHnbkVO+aEHXPYMYddZeyYw67z5kyy2AWcc9hhF3C3YoddwHsOO+wCZgjssDO3YsecKmTHHHbMqXR2zGFXuDmTLHYB5xx2tbMLuVuxq5pd1HsOu3rZBc4Q2FXKztyKHXMqnR1z2DGn0tkxh13V5kyyVbBr2zmHXfnsWni3Ylc4u3a+57ArmV1rZwjsimVnbsWOOZXOjjnsmFPp7JjDjjmTbOnsunXOYVcCu87drdh1nl0X33PYdZtdR2cI7DrMztyKXW52zGGXmx1z2OVmxxx2udkxh11udsWYM8l2hl1J5xx23WBX2N2KXQfYlfeew67t7IqcIbBrNTtzq3KzY0652TGn3OyYU252zCk3u0rMmWRbxK6ecw67trCr6m7FrhXsanvPYRfPrsIZArtgduZW5WbHnHKzY0652TGnn2HHnNrLjjmT7E+yW1hY+PKeZQ67H2N3cXExPz/fe4457DKxSwvT09Ofs2MOux9mt7Ky8vj4+Ak75rBr6m33X+yYU252zCk3O+aUmx1zys2OOWVi55wzyWZl9/DwcHBwkJb39vbOzs6Yw65xdqenp6Ojo71/6+vrYw67Ztmlc258fLz3e0ne+fm5/cKuKXYvd+v70m1rv7Brit3Ozs6H7Obn599v9NusWv3mqtNOrXnbvZ0nXhoaGrq6urJfanaSHR4efmvu8PDQZqlZdi9n3v7+flre3d11zikTuw+XZZLFDjvssMMOO+yww07YCTthh52wE3YSdiZZ7IQddthhh52www47YYedsBN2EnYqnZ3URJ+xk3IcfrZA2Ak7qZn+BhJNzX0Z/M5BAAAAAElFTkSuQmCC"/></td>
+	</tr>
+
+	<tr>
+		<th></th>
+		<th align="center">Punkt</th>				
+		<th align="center">aktiv</th>
+		<th align="center">Eingang</th>
+		<th align="center">Ausgang</th>
+	</tr>
+
+
+		<tr class="d0 used">
+			<th></th>
+			<td align="center">1</td>
+			<td align="center">ja</td>
+				<td align="center">-100%</td>
+				<td align="center">-100%</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">2</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">3</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">4</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">5</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">6</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">7</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 used">
+			<th></th>
+			<td align="center">8</td>
+			<td align="center">ja</td>
+				<td align="center">100%</td>
+				<td align="center">100%</td>
+		</tr>
+			</tbody>
+		</table>
+<table class="used">
+	<caption><a name="controlSwitches"></a>Geberschalter</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Nummer</th>
+			<th align="center">Geber</th>
+			<th align="center">Position</th>
+			<th align="center">Richtung</th>
+			<th align="center">Schalter</th>
+		</tr>
+	</thead>
+
+	
+	<tbody>
+			<tr class="d0 used">
+				<td align="center">G1</td>
+				<td align="center">seitlicher Drehgeber 2</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d1 used">
+				<td align="center">G2</td>
+				<td align="center">seitlicher Drehgeber 1</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d0 unused">
+				<td align="center">G3</td>
+				<td align="center">---</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">G4</td>
+				<td align="center">---</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d0 unused">
+				<td align="center">G5</td>
+				<td align="center">---</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">G6</td>
+				<td align="center">---</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d0 unused">
+				<td align="center">G7</td>
+				<td align="center">---</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">G8</td>
+				<td align="center">---</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+	</tbody>
+</table>	<table class="unused">
+		<caption><a name="logicalSwitches"></a>logische Schalter</caption>
+		
+		<thead>
+			<tr>
+				<th align="center">Nummer</th>
+				<th align="center">Schalter 1</th>
+				<th align="center">Funktion</th>
+				<th align="center">Schalter 2</th>
+			</tr>
+		</thead>
+
+		
+		<tbody>
+				<tr class="d0 unused">
+					<td align="center">L1</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+				<tr class="d1 unused">
+					<td align="center">L2</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+				<tr class="d0 unused">
+					<td align="center">L3</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+				<tr class="d1 unused">
+					<td align="center">L4</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+				<tr class="d0 unused">
+					<td align="center">L5</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+				<tr class="d1 unused">
+					<td align="center">L6</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+				<tr class="d0 unused">
+					<td align="center">L7</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+				<tr class="d1 unused">
+					<td align="center">L8</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+		</tbody>
+	</table>
+<table>
+	<caption><a name="phaseSettings"></a>Phaseneinstellungen</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Phase</th>
+			<th align="center">Name</th>
+			<th align="center">Uhr</th>
+							<th align="center">Motor</th>
+			<th align="center">Umschaltzeit</th>
+			<th align="center">Ansage</th>
+		</tr>
+	</thead>
+
+	
+	<tbody>
+				<tr class="d0">
+					<td align="center">Phase 1</td>
+					<td align="center"></td>
+						<td align="center">---</td>
+						<td align="center">ja</td>
+					<td align="center">0,1s</td>
+					<td align="center">0</td>
+				</tr>
+	</tbody>
+</table><table>
+	<caption><a name="phaseAssignments"></a>Phasenzuweisung</caption>
+	
+	<thead>
+		<tr>
+			<th></th>
+			<th align="center">Schalter</th>
+			<th align="center">Zuweisung</th>
+		</tr>
+	</thead>
+
+		
+	<tbody>
+		<tr class="d0 unused">
+			<th align="right">Priorit&auml;tsschalter A</th>
+			<td align="center">		---
+</td>
+			<td align="center">Phase 1: </td>
+		</tr>
+		<tr class="d1 unused">
+			<th align="right">Priorit&auml;tsschalter B</th>
+			<td align="center">		---
+</td>
+			<td align="center">Phase 1: </td>
+		</tr>
+		<tr class="d0 unused">
+			<th align="right">Kombinationsschalter C</th>
+			<td align="center">		---
+</td>
+			<td class="d0"></td>
+		</tr>
+		<tr class="d1 unused">
+			<th align="right">Kombinationsschalter D</th>
+			<td align="center">		---
+</td>
+			<td class="d0"></td>
+		</tr>
+		<tr class="d0 unused">
+			<th align="right">Kombinationsschalter E</th>
+			<td align="center">		---
+</td>
+			<td class="d0"></td>
+		</tr>
+		<tr class="d1 unused">
+			<th align="right">Kombinationsschalter F</th>
+			<td align="center">		---
+</td>
+			<td class="d0"></td>
+		</tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Kombinationsphasenzuweisungen</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">C</th>
+			<th align="center">D</th>
+			<th align="center">E</th>
+			<th align="center">F</th>
+			<th align="center">Phase</th>
+		</tr>
+	</thead>
+
+	
+	<tbody>
+				<tr class="d0">
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d1">
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d0">
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d1">
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d0">
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d1">
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d0">
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d1">
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d0">
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d1">
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d0">
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d1">
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d0">
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d1">
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d0">
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+				<tr class="d1">
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: </td>
+				</tr>
+	</tbody>
+</table>	<table>
+		<caption><a name="phaseTrim"></a>Phasentrimm</caption>
+		
+		<thead>
+			<tr>
+				<th align="center">Phase</th>
+				<th align="center">HR</th>
+				<th align="center">QR</th>
+				<th align="center">QR2</th>
+				<th align="center">WK</th>
+				<th align="center">WK2</th>
+			</tr>
+		</thead>
+		
+		
+		<tbody>
+					<tr class="d0">
+						<td align="center">Phase 1: </td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+					</tr>
+		</tbody>
+	</table>
+<table>
+	<caption><a name="nonDelayedChannels"></a>unverz&ouml;gerte Kan&auml;le</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Phase</th>
+								<th align="center">S1</th>
+					<th align="center">S2</th>
+					<th align="center">S3</th>
+					<th align="center">S4</th>
+					<th align="center">S5</th>
+					<th align="center">S6</th>
+					<th align="center">S7</th>
+					<th align="center">S8</th>
+					<th align="center">S9</th>
+					<th align="center">S10</th>
+					<th align="center">S11</th>
+					<th align="center">S12</th>
+					<th align="center">S13</th>
+					<th align="center">S14</th>
+					<th align="center">S15</th>
+					<th align="center">S16</th>
+		</tr>
+	</thead>
+
+	
+	<tbody>
+				<tr class="d0">
+					<td align="center">Phase 1: </td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+				</tr>
+	</tbody>
+</table><table>
+	<caption><a name="timersGeneral"></a>Uhren (allgemein)</caption>
+	
+	<thead>
+		<tr>
+			<th></th>
+			<th align="center">Uhr</th>
+			<th align="center">Timer</th>
+			<th align="center">Alarm</th>
+			<th align="center">Schalter</th>
+		</tr>
+	</thead>
+	
+		
+	<tbody>
+		<tr class="d0">
+			<th align="right">Modellzeit</th>
+			<td colspan="3" class="d0"></td>
+			<td align="center">		---
+</td>
+		</tr>
+			<tr class="d1">
+				<th align="right">Oben</th>
+				<td align="center">Stoppuhr</td>
+				<td align="center">0:00</td>
+				<td align="center">0s</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d0">
+				<th align="right">Mitte</th>
+				<td align="center">Flugzeit</td>
+				<td align="center">0:00</td>
+				<td align="center">0s</td>
+				<td align="center">		---
+</td>
+			</tr>
+	</tbody>
+</table><table>
+	<caption><a name="phaseTimer"></a>Flugphasenuhren</caption>
+	
+	<thead>
+		<tr>
+			<th></th>
+			<th align="center">Timer</th>
+			<th align="center">Alarm</th>
+			<th align="center">Schalter</th>
+		</tr>
+	</thead>
+	
+		
+	<tbody>
+			<tr class="d0">
+				<th align="right">Uhr 1</th>
+				<td align="center">0:00</td>
+				<td align="center">0s</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d1">
+				<th align="right">Uhr 2</th>
+				<td align="center">0:00</td>
+				<td align="center">0s</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d0">
+				<th align="right">Uhr 3</th>
+				<td align="center">0:00</td>
+				<td align="center">0s</td>
+				<td align="center">		---
+</td>
+			</tr>
+		<tr class="d1">
+			<th align="right">Rundenz&auml;hler/Zeittabelle</th>
+			<td colspan="2" class="d0"></td>
+			<td align="center">		---
+</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">Rundenanzeige</th>
+			<td colspan="2" class="d0"></td>
+			<td align="center">		---
+</td>
+		</tr>
+	</tbody>
+</table>			<table>
+				<caption><a name="wingMix0"></a>Fl&auml;chenmischer - Phase 1: </caption>
+				
+				<tbody>
+					<tr>
+						<th colspan="9" class="d2">Fl&auml;chenmischer</th>
+					</tr>
+
+
+					<tr class="d0">
+						<th align="right">Querruder 2&rarr;4 Seitenruder</th>
+						<td colspan="2" align="center">0%</td>
+						<td colspan="6" align="left">		---
+</td>
+					</tr>
+
+
+
+
+
+
+
+	<tr>
+		<th class="d2" colspan="9">Bremskurve</th>
+	</tr>
+	
+	
+	<tr class="d0">
+		<th align="right">Kurve</th>
+		<td colspan="4" align="left">aus</td>
+		<td colspan="4" rowspan="10" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANIAAAEECAIAAADS6/2TAAAEFklEQVR42u3bMU5iQRzA4dcQQkKhCQUX8AoWhBgLGkMIEQOxMt5k6Sw5ggWFBQegoCFwCA4AgYKEjnp3BFdBgSXLg92Y71eBYzX5nHl/DNFP6eRFtkDYCTsJO31bdpH2rl6v24T9+wM7f4t7FtjZhH2PN+ywww477LDDDjthJ2En7CTshJ1JVthhhx122GGHHXbYYSdhJ+wk7ISdhJ1JFjvssMMOO+yww07YHZldfT2rVmNZddrJJSvssBN2wk4mWeywww47YYcddtgJO2En7LATdsJOws4kix12wg477LATdthhJ+ywE3bCTsJO2JlkhR122GEn7LDDDjvssBN2wk7CTthJ2JlkscNO2GGHHXbYYYcddsJOwk7YSdgJO5OssMMOO+ywww477LDDTsJO2EnYCTsJO5Msdthhhx122GGHnbDDTthJ2Ak7CTthZ5LFDjvssMMOO2GHHXbYSdgJOwk7YSfssDPJYocddthhhx122Ak77ISdhJ2wE3a72UmnUGgLTLL/nt3NzY17Fru4Go1GxWIxuahcLo/H48/sBoNBoVCIFtkv7GIpn88HTt1ut9frhRfh7Wd24aeXl5fYYRdjiUTinVN4Ed5+Znd3dzebzbDDLsYeHh5WT7vHx8fNz3bYKcbm8/nFxcUS1fn5eTjXsNPRu7+/D5x6i8KLarWKnf6DZzvsFHu5XC5w6nQ6y9Pu6uoKOx298Xgc7tlUKpVMJkul0obP7WSSPVkf7KbTaavVCkdds9mcTCa2BrtY2ujqjV2/389kMtHv0ul0uI9tGXYHts1VtPSYzWaj9cJvOPOwO/Cc2+bqld3yDPza7e3tD23v+vraJuyoWq1udBVu21d2jUYjkk7V09PTrtOuUqnUpb+tVqvtOu3CHbz63Pd+Bw+HQw8oOuTZbpurj0n27Oxsda3dbts4HT7JbnS19rndy8tLWHt+fnbOKcYz76sr3xzzAcpJ/i3hC4vYYYcddthhhx122EnYCTsJO2EnYWeSxQ477LDDDjvssBN22Ak7CTthJ2En7Eyy2GGHHXbYYSfssMMOOwk7YSdhJ+yEHXYmWeyww07YYYcddtjZBOyEnYSdsBN22Ak7kyx2wg477LATdthhh52EnbATdtgJO2Enkyx22GEn7LDDDjvshJ2wE3bYCTthJ2FnksVO2GGHHXbYCTvssBN22Ak7YSdhJ+xkksUOO+ywE3bYYYcddtgJO2GHnbATdhJ2JlnssBN22GGHHXbYYYedsMNO2Ak7CTthZ5IVdthhh52www477LB728rVrFqNZdVpJ5essMNO2Ak7mWSxww477IQddthhJ+yEnbDDTtgJOwk7kyx22Ak77LDDTthhh52ww07YCTsJO31PdtIx2sVOOsXhZwuEnbCTjtMvrG5FUYkTEBYAAAAASUVORK5CYII="/></td>
+	</tr>
+
+	<tr>
+		<th></th>
+		<th align="center">Punkt</th>				
+		<th align="center">aktiv</th>
+		<th align="center">Eingang</th>
+		<th align="center">Ausgang</th>
+	</tr>
+
+
+		<tr class="d0 used">
+			<th></th>
+			<td align="center">1</td>
+			<td align="center">ja</td>
+				<td align="center">-100%</td>
+				<td align="center">0%</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">2</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">3</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">4</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">5</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">6</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">7</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 used">
+			<th></th>
+			<td align="center">8</td>
+			<td align="center">ja</td>
+				<td align="center">100%</td>
+				<td align="center">0%</td>
+		</tr>
+				</tbody>				
+			</table>
+<table class="used">
+	<caption><a name="linearMixer"></a>Linearmischer</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Mixer</th>
+			<th align="center">Input</th>
+			<th align="center">von &rarr; zu</th>
+			<th align="center">Schalter</th>
+			<th align="center">Weg -</th>
+			<th align="center">Weg +</th>
+			<th align="center">Offset</th>
+			<th></th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>	
+				<tr class="d0 used">
+					<td align="center">LinearMix 1</td>
+					<td align="center">Normal</td>
+					<td align="center">1 &rarr; 16</td>
+					<td align="center">					Schalter 1
+</td>
+					<td align="center">1%</td>
+					<td align="center">2%</td>
+					<td align="center">3%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
+				</tr>
+				<tr class="d1 used">
+					<td align="center">LinearMix 2</td>
+					<td align="center">Normal</td>
+					<td align="center">2 &rarr; 16</td>
+					<td align="center">					Schalter 2
+</td>
+					<td align="center">4%</td>
+					<td align="center">5%</td>
+					<td align="center">6%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAABx0lEQVR42u3aIayBURQHcIKAwIZkRmIzgc0EAoEiSJ9NMSaaSP8qhQ3RSGwSG4VAkASJTWMiIiL+9RW8927A/id+7N7fuefs3H1GcfvAUBBN9JejFeJClmWBqz1BizoPoIUdLdFEvwNa5Lh4jJZ/xpt8+o0nTfSN04NooonmyCOaaN6IRBNNNEce0UT/Jq7X6+l02u/3m81muVzO5/PJZDIYDLrdbrPZrNVqpVJJDBo7nc/nw+Gw2+3W6/VisZjNZqPRqNfrtdvtRqNRrVYjkUi5XM7n89lsNpVKSZIUjUaDwaDX63U6nVar1Wg0ajQapVL5319Nk8lkIBDw+Xwej8flcsVisXA47Pf73W633W7X6XTYRqVSvbhTKBR6+h0shTW1Wq1erzeZTGaz2WazIb14PJ5Op5FwoVB4ftKvBHZSq9UGg8FisTgcDmSIVJEekkwkEplMJpfL4UmlUkFx6/V6q9VCuYfD4XQ6RQOsVqvtdouWQLlQNAE9XSwWUVyUuNPp9Pv98XiM0qMB0AZohuPxeLlcXtmJNyJHHtFE8x2RaKKJ5vQgmmjeiEQTTfT3Tg/+s4aXC9EceX9Gv2c8Qn9EEE30g7gDS3k90dAqiEYAAAAASUVORK5CYII="/></td>
+				</tr>
+				<tr class="d0 used">
+					<td align="center">LinearMix 3</td>
+					<td align="center">Normal</td>
+					<td align="center">3 &rarr; 16</td>
+					<td align="center">					Schalter 3
+</td>
+					<td align="center">7%</td>
+					<td align="center">8%</td>
+					<td align="center">9%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAB00lEQVR42u3aP6hBcRQHcJHRn4kyWdy6SpERZRAbustNMmBAmZBN3ZVBKJvBYlJ3xMqIUbEwWGxiw8A763vK83Q9l75nEn4/n8499xx+UVzeMBRAA/3haIV0IQiChLv9gpYqH4SWLLVAAy0HtJTt4jZa+B4yefUTMw30Bd0DaKCBRssDGmhMRKCBBhotD2gZoc/n83a7nc/nw+Gw2+02m83Xow+Hw3q9nk6nvV6v3W6Xy+V8Ph+LxQKBgN1uN5lMarX6Xw8gd7vdcrkcj8f9fp/juHq9Xq1W0+k0PXa5XBaLRafT3XNGqtfrGYZxu920MJPJPHJYczweN5vNbDaLx+M8zweDQZ/PR4hEIhEKhWhrlmUNBoNSqbz+eK/X++MZlUql1WodDgellhJcKBQqlUo4HI5Go6lUKpfLlUqlP9d0NpuNRCJ+v9/pdJrNZo1Gc/8pMr2ZltBCWm6z2WirWq1GRUmlORqNFosFFetTbsTroCIzGo1Wq9Xj8VBKkslksVikWmy1WqIo0u1CF4Euxel0etlwaTQanU5nMBhMJpPVarXf7zERgQYaaHyfBhpo/EYEGmig0T2ABhoT8Ylo/LMGwwVotLyH0fKMW+i3CKCBvhFfnNwwz+P1NCwAAAAASUVORK5CYII="/></td>
+				</tr>
+				<tr class="d1 used">
+					<td align="center">LinearMix 4</td>
+					<td align="center">Normal</td>
+					<td align="center">4 &rarr; 16</td>
+					<td align="center">					Schalter 4
+</td>
+					<td align="center">10%</td>
+					<td align="center">11%</td>
+					<td align="center">12%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAABtUlEQVR42u3aLajCUBQH8DEUxKRF0CLOKIuCFrEZLJoGxi0oKGsWw1xbEjUoaNSoRqvJsWz0I2nUpksG34l7hgnvXd6b8j91u9vvHs7OYWPc4w2DAxroD0dz7ELXdYZXe4FmlQ9CM0st0EB7Ac2yXbij9e/hkaOfmGmgH+geQAMNNFoe0EBjIgINNNBoeUB7C329Xvf7/Xq9XiwWg8HAE+gnk6Zp1Wq1VCplMplEIhEMBv/nA+T5fK7VasvlcjQadbvdl6anoHMEQchms7SK1jL7WEPpOR6PlmXNZrNer9dsNkVRjMfj4XDY5/M5Bfl8/snk9/udpna7XSwWJUlSFEVV1Var9auavt1u2+12tVpNJhPDMOr1Ot0mnU5Ho1Ge511SRfRIJFIoFMjR6XSGwyFVgmmah8OBaoP9gyjLMt0slUqFQiEXFqFjsRhtoFwuNxoN2tJ0OqXt7XY727b/erg4IxAIJJPJXC5XqVSoAPr9/nw+p5I4nU73+91DE3E8HtMDtNlsLpcL+jTQQOMdEWiggUbLAxpoTESggQb6vboH/qzBcAEaLe/HaG+GG/otAmigXeILB/osl0f8Y6UAAAAASUVORK5CYII="/></td>
+				</tr>
+				<tr class="d0 used">
+					<td align="center">LinearMix 5</td>
+					<td align="center">Normal</td>
+					<td align="center">5 &rarr; 16</td>
+					<td align="center">					Schalter 5
+</td>
+					<td align="center">13%</td>
+					<td align="center">14%</td>
+					<td align="center">15%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAB4UlEQVR42u3aPahBYRgHcPkomSgUC2VRMopJymATq7NRUiyUVWfzMVEMTHLGYxWTxWAjIzbKwkIsFJ7p5pbOrdt73UP/Zzql+D1vz0fnjeL2hqEAGugPRyvYBc/zDL/tBzSr8yA0s6MFGmg5oFmOC2k0/z1k8uknnjTQN0wPoIEGGiMPaKCxEYEGGmiMvM9GX6/XzWYzGo3a7bYc0efzebFY9Pv9er2ezWbD4bDL5dLpdP9wl/c09vv9ZDIRRbFUKiWTyWAwaLfbVSrV00tHk8nk8/k4jnsRervdplKpXq/XbDYrlUosFvN6vUaj8SmO0ESnBCiNcrnc7Xan0+nhcGB/WVMoFFar1Xg8pmOrVqv5fN7tdttsNoPBoFarH02BQODrWaPRmM1mp9OZy+UajcZgMFgul1QeLC9rjsfjfD4fDoedTqdYLKbT6Ugk4vF4LBaLUqmUuE4mOuFCoVAikaCUqJmopaix/mp6xONx+jFqBb1eL8EitNVqpQSi0Wgmk6GUBEGg9KilTqfTq5fLY2i1WofD4ff7qSipAGq1GhUclcR6vb5cLjLaiK1WixpoNpvtdjssF6CBxjsi0EADjZEHNNDYiEADDfR7TQ/8swbLBWiMvF+j5RlS6LcIoIGWiDvFrSmLUZI52QAAAABJRU5ErkJggg=="/></td>
+				</tr>
+				<tr class="d1 used">
+					<td align="center">LinearMix 6</td>
+					<td align="center">Normal</td>
+					<td align="center">6 &rarr; 16</td>
+					<td align="center">					Schalter 6
+</td>
+					<td align="center">16%</td>
+					<td align="center">17%</td>
+					<td align="center">18%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAABqUlEQVR42u3aIYjCYBgGYA0bwsIGC4JYDSuWiQOLRoPFpguGGbUKlsGSaW7VqDaNVqNi0rhFq7AVm0XwvjS4U3aHTJ3e+6Xhhjx7ne+PPyYubzgJoIH+cHQiujEMI8J3+wUdVR6EjixaoIGOAzrKughHG98nJmc/MWmgL2gPoIEGGpUHNNBYEYEGGmhU3sejPc/bbDaTySSm6MCn63qj0ZBlmef5F+zl3e0LRhCEQqHQbDaf2h6Hw2G1Wo3HY9M0/+ijO5lOp3RXvu8/drPmfD7v9/tWq1Wr1UqlkiRJ6XSaZdnAVKlUguNUKpXJZH74HrtZczqdHMdZLBaWZXU6nWq1msvlGIa5mZ8oioqiqKo6HA6v83tIexyPx+12O5vNBoOBpmnlcjmbzSaTyWscvUinKM52u00Xz+fz3W7X7/efV3n0wRWLRQrpZngUKkVLAXe7Xdu2KXLXdSn+F6+IwXAcl8/n6/V6r9cbjUbL5ZIeXHp847i4UBmt12v64mNFBBpo/AgAGmi0B9BAA43KAxro/90e+GcNFhegUXl3o+M5Yei3GKCBDpkv1dsm8ZuYDt8AAAAASUVORK5CYII="/></td>
+				</tr>
+				<tr class="d0 used">
+					<td align="center">LinearMix 7</td>
+					<td align="center">Normal</td>
+					<td align="center">7 &rarr; 16</td>
+					<td align="center">					Schalter 7
+</td>
+					<td align="center">19%</td>
+					<td align="center">20%</td>
+					<td align="center">21%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAABLklEQVR42u3aP65EUByGYYlSS68QYhNaWn82YQsodDrLoGIv7MAudHNPIpncO4U7ZszB5P0qGUye/IrvcEK5XTAKaNBfjlb2S1mWO/7bP+i95iHQu40WNOgzoPesi3V0+TcnOfuNkwZ9oz1AgwZN5YEGzYoIGjRoKm9jpmnquu7s6EWZZZnv+7quy94We1O5xDCMIAiORz+jzPO873tx5THtMc/zMAxN01RV9bxS6mZNURRpmsZx7Hme67q2bauquuBM01wONE2zLOtBKW+z5j5FYQ3D8DfxHvGL4zhRFNV1vTLLT1XeJqK4JkmScRzFXfJ6eiuxbdsHotQV8TXiwSvi4cRX0IcTeWDiHRE0aNC0B2jQrIigQYPmyxpJZ+lp0LTHJdDnzBr6EgENeiU/Ss8iFEhbyJ0AAAAASUVORK5CYII="/></td>
+				</tr>
+				<tr class="d1 used">
+					<td align="center">LinearMix 8</td>
+					<td align="center">Normal</td>
+					<td align="center">8 &rarr; 16</td>
+					<td align="center">					Schalter 8
+</td>
+					<td align="center">22%</td>
+					<td align="center">23%</td>
+					<td align="center">0%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAABoklEQVR42u3aIYyCYBQHcEcwOBvQDAaHVSuMwqbYNLlJxUyzaGFYJZu1Om2YzWatOBpRk8FN720U7gJ3OnYfsP8LbM5v7rf/9D14s/TKYZWABrrg6FJ6Zdt2ip/2CzqtPAidWrRAA50FdJrtIhltf6+MvFvEpIF+oXsADTTQaHlAA42JCDTQhUFfr1fP83LQPcIw3Gw2lmW1Wi2O4/51WfNW+b6/Wq1M05QkKb5YKpfLiqJkBf18Pk+n03K5HI1GtVotDq1Wq51OZz6fHw6H+/3OeLg8Ho/j8bhYLPr9Ps/zcSi9HAwGruvSATrGeCJSVBSY4zgUHkUYh1LAhmFQ2OfzmYJn3D2CINhut5qmybJMX8o4tNlsjsfj9Xp9uVwYL2sipaqqjUajUqlEvnq9Tlf6+bfbbWoFw+FwMpmwXNZEyul0quu6IAg/dsmiKPZ6vW63u9/vb7cbs+HyF+VsNtvtdnSS2UT8QMlyjH+sZHk/nQXl2+gsKPG4hWdEoIEGGt0DaKAxEYEGGuiidQ/8swbDBWi0vI/R2awkdC4KaKAT6gsL7B33R18xIgAAAABJRU5ErkJggg=="/></td>
+				</tr>
+	</tbody>
+</table><table class="used">
+	<caption><a name="curveMixer"></a>Kurvenmischer</caption>
+	
+	<thead>
+		<tr class="d0">
+			<th align="center">Mixer</th>
+			<th align="center">Input</th>
+			<th align="center">von &rarr; zu</th>
+			<th align="center">Schalter</th>
+			<th align="center">Kurve</th>
+			<th align="center">Punkt</th>				
+			<th align="center">aktiv</th>
+			<th align="center">Eingang</th>
+			<th align="center">Ausgang</th>
+			<th></th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+					<tr class="d0 used">
+							<td rowspan="8" align="center" valign="top">KurvenMix 9</td>
+							<td rowspan="8" align="center" valign="top">Normal</td>
+							<td rowspan="8" align="center" valign="top">9 &rarr; 16</td>
+							<td rowspan="8" align="center" valign="top">					Schalter 9
+</td>
+							<td rowspan="8" align="center" valign="top">aus</td>
+						<td align="center">1</td>
+						<td align="center">ja</td>
+							<td align="center">-100%</td>
+							<td align="center">1%</td>
+							<td rowspan="8" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAFfElEQVR42u2cXSg1WxjHtwte3x8lKWSnJHaSlCRJUpIkRK6knVsXFAp19oWSJFculLhQKEmSJCVRkpSEJClfIaQkSeKc/zGnac5uZs3a+x373a/3/1xoa55Zs/6/9XysMfbY/qZZZDYiIEqiJEqaxyhtfmkul8s/J2aC0g8XHCj9MQyJkiiJkihpREmUREmURMkOTpR/IkrX/41HBUcZlUxwomQHpxElURIlUbKDEyVREiVREiVRsoMTJVESJVESJTs4URIlURIlUbKDEyVR0oiSKImSHZwoidK/yBLln4XSr+zy8rK8vPzHp1VWVl5dXX1PlCMjI3a7HSKzsrI2NjZMi53g659GVlBQAM/V1dW1tTV8wK/6KH1vDw8PMTExYhnwkdE8MzODQ/h5dHQUEhJSWFgoOYfl5WWcWFZWJuMcGBioTgAf8Ks3KLe3t4uLizFLLHtNTc3t7a2u28HBgepWVFS0t7cnGLOzs9M0ImZnZ+FQX18vnl5paSmu6Olavr6+pqSkgMjx8bGMf0NDgzYqGxsb9VFiZQSqHA4H5gpSu7u7cEPJ0HWrqqoCx62trZOTE7glJiYaDXh+fp6WlmaKUsE9PDwsFomLRkREYPHABUKMVtrNBgYGlK+cS6J/fn5OTU1V5ox8Qsa4ozw8PCwpKZEsGe/v73AzDYGFhQW45eXlGTk4nc6JiQnTi2LN4BAWFgZGmKQRI2Wcubk5JYpra2tlhGClY2NjX15eJFEiOTD42qdpr2LTziM3N1cS5dDQENyQFwIfHIUPFvDm5saoDmRnZ6sIBENVVFTEx8efnp4q3FFbBCjfP01mpWHz8/PwbG5uli8I5rUS81Oru3islZUVZbipqSnxgiMlBTUOsYaKI4NSMhuQ3VqUiGLTAVHplECWR5mfn49T0KmUqFSbm/67MwQDbW5uKjNGYP6kci/2IsqAUVFRukc7OjpwdHR0dGlpCR+amppMB0xPT4enUd7oGjaSCA6lqSJdRPtKgaT7+3skGmot1kQ+iFCJZPZ3AoecnBxMHfsHpQgCmZFnd3c3VhoiEW5PT08eZav1dzuCoVFT4uLi0KDEg2J7DOU7OzuoABgN/fcnUeKK2F0BEDC1tLS8vb392r3w3d3d9PQ05jw+Pn59fe0NSnCUSUlVOapVW1ub70X29/drRVroD1tfX0eeqQTCw8OVHPW4Vv4q5TKeRiI9hSKeBkqcWzzhREzJ9kXirVUu4ykQ6SkUt3L/+PiIW4n9/X3c1Hd1dem+uwkybeL89068tcpNPXH7cXZ21tfXpysSt15/6Rm21rr+mZmZuKfIyMhISEhAaQ4ICJB5DVZvb6/NcvGWKzfSnJycjBuV4ODgL31VGFBGRkbiQoALxOiooqi0VrzvlWO3kJSUZLfbdY9WV1e79Kyurk7Xv729HYmMO7GLiwuk9sfHh1ugaGNOZQXnf1Eqee0z8Z4qN9Lc09ODBcYym4o0qpUe+WvLV3R0tPaUxcXF/zr44OCgJeKLPs3hcOi6YXuELSHKtuKsqyQoKKi1tdXtjzTwDA0NFWhWoTudTu3CKyIFbxoAFK0/rq5A0T4I0T0XU5qcnMQpY2Nj6jREUendssuvttHy6v4BSdJTEYkmoBUp3pB45C944mD7CvHyjCSVKFHsteavei6m+/DWcvF+qNxHKI3yn+YNyu/xxJEoiZIofzuU/PcroiRKoiRKomQHJ0qiJEqipLGDEyVREiVREiVRsoPTiJIoiZIo2cGJkiiJkiiJkijZwYmSKImSKImSHZwoiZIoiZIo2cGJkihpREmURMkOTpTWohR8p59HGZVMcKJkBydKoiRKoqSxgxMlURIlURKln6KkyZsIJc37ICUCoiTK72v/AJZsRgOqE9ssAAAAAElFTkSuQmCC"/></td>									
+					</tr>
+					<tr class="d1 used">
+						<td align="center">2</td>
+						<td align="center">ja</td>
+							<td align="center">-74%</td>
+							<td align="center">2%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">3</td>
+						<td align="center">ja</td>
+							<td align="center">-47%</td>
+							<td align="center">3%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">4</td>
+						<td align="center">ja</td>
+							<td align="center">-21%</td>
+							<td align="center">4%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">5</td>
+						<td align="center">ja</td>
+							<td align="center">6%</td>
+							<td align="center">5%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">6</td>
+						<td align="center">ja</td>
+							<td align="center">33%</td>
+							<td align="center">6%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">7</td>
+						<td align="center">ja</td>
+							<td align="center">64%</td>
+							<td align="center">7%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">8</td>
+						<td align="center">ja</td>
+							<td align="center">100%</td>
+							<td align="center">9%</td>
+					</tr>
+					<tr class="d0 used">
+							<td rowspan="8" align="center" valign="top">KurvenMix 10</td>
+							<td rowspan="8" align="center" valign="top">Normal</td>
+							<td rowspan="8" align="center" valign="top">10 &rarr; 16</td>
+							<td rowspan="8" align="center" valign="top">					Schalter 10
+</td>
+							<td rowspan="8" align="center" valign="top">aus</td>
+						<td align="center">1</td>
+						<td align="center">ja</td>
+							<td align="center">-100%</td>
+							<td align="center">10%</td>
+							<td rowspan="8" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAFGklEQVR42u2cTShtURTHT0rPZyhJIjclyUBSkiRJSZIQGUkyNTBASb07UEgYGSgxUChJkiQlXSVJSZIk5SvfmUgSeu//nDrvvvvO2Wefc30c7/3XQJe97tpr/fb62Cdc5QfljUQhAqIkSqKkWEapOFLcbrczHTNB6cADB0onpiFREiVREiWFKImSKImSKDnBifJ/ROn+U7gqWGVWssCJkhOcQpRESZREyQlOlERJlERJlETJCU6UREmUREmUnOBESZRESZREyQlOlERJIcqPJEuURGmzJAX/eCMpp6enJSUl316lrKzs7OxMH6UD5fb2VjL+oaEhl8uFCNPT01dXVwU2FxcXYae4uNiGP7m5uXjv8vKyx+PBC3z7jih3dnYKCgqCg4MRVX5+/vb2tphUVFSUAND09DRWa2pqxJtOTU1BDV/39vawdV5enpHm4+NjUlJSYGDg/v6+jejwRs1bvMC3+ihxUIKoNjY2NEaVlZVXV1e6auXl5dBZX18/ODiAtfj4eIFnbW1t4lxTFQYHB8URFhUVwSsZFr29veo/+9lLlNraWu+srKur80W5u7tbWFgojiotLQ3uIum2traghpYh3nVubg5q2dnZRgrHx8cpKSniTbELVkNDQ3H+8NDo/HB44eHhKAKoISGM1F5eXnC00dHRDw8P9lDe398nJyerPqOeUFW+KLGQlZUl2YzhENTEWYAigg52vbi4MNKpr68fGxsTb1paWhobG3t4eKhqohoEI2VmZkZtCFVVVbpqs7OzWG1sbLTdvtBqYMHzKt4b/Q4ALmoN3tTcwMAA1ABLjBtVKWhzyO6MjAyNgp/npxp5eRWBGupRJW4bpWyvlIlqaWlJNTcxMeFP8KhcdByrKCMiInRXUd3eKNEQdNVSU1OxKigUU8nJyYEF3AHUrNTmm2WUa2trqtNITMng0Zj8ueVlZmaiD2LiqZXb2tqqq4afY3V4eHhhYQEvGhoaTHPKnuAiiTpTZy+aj+G9Uozy5uYGbQu9Fmci2AzXOuy0ubmJtIU1jGCZm7PRKuYhrg3wG0fY1NT09PRkpNne3g4daKKK7+7uPv9pRxAVunVMTAxiExvVgkeVNTc3Sz6EfEzA19fXk5OTPT09o6Oj5+fn/hiBz95GrKEER/8fvGxIS0uLTPymmFZWVtBtNOfDwsLE5aUrRkaUzz18GTW4HhISYhq/KSbshe7kkwpQs5SbAiOKOGltBy9z+DJqkvGL1Z6fny8vL/v6+nQ/SgTPZt+lBbdIXSOgoTgzePWh4ujoqLu7WyZ+owjj4uLgcEBAwHt/tEtnZ6fitOATExPxYBcUFPSGcQIlgMKs7mpFRYVbWqqrq0VZqda1o4KH4DqVkJDgcrlk4jeKsKurCw/juN6qqeBdUloqnJycWOqVRkZ+oezv73dO8B0dHUhtJLip65IR+jSoyMhIb4X5+XkbE1zXiCgrnRC8fPySath3fHwcrW1kZMRSPv5tBLt4G1GcH7x8/G+CydKvN3Sedhwe/Bf76wzdpP30k/+SKDWn+TkEkqv886uPykqi/MdROlOIkiiJkigpnOBESZRESZRESZSc4BSiJEqiJEpOcKIkSqIkSqIkSk5woiRKoiRKouQEJ0qiJEqiJEpOcKIkSgpREiVRcoITJVESJVESJSc4URIlURIlURIlJzhRSqDk5xDIrzIrWeBEyQlOIUqiJEqi5AQnSqIkSqIkSqegpMiLCCXFfpISAVES5b8rPwH6dSAUur+lFwAAAABJRU5ErkJggg=="/></td>									
+					</tr>
+					<tr class="d1 used">
+						<td align="center">2</td>
+						<td align="center">ja</td>
+							<td align="center">-73%</td>
+							<td align="center">11%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">3</td>
+						<td align="center">ja</td>
+							<td align="center">-48%</td>
+							<td align="center">12%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">4</td>
+						<td align="center">ja</td>
+							<td align="center">-22%</td>
+							<td align="center">13%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">5</td>
+						<td align="center">ja</td>
+							<td align="center">5%</td>
+							<td align="center">14%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">6</td>
+						<td align="center">ja</td>
+							<td align="center">30%</td>
+							<td align="center">15%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">7</td>
+						<td align="center">ja</td>
+							<td align="center">55%</td>
+							<td align="center">16%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">8</td>
+						<td align="center">ja</td>
+							<td align="center">100%</td>
+							<td align="center">17%</td>
+					</tr>
+					<tr class="d0 used">
+							<td rowspan="8" align="center" valign="top">KurvenMix 11</td>
+							<td rowspan="8" align="center" valign="top">Normal</td>
+							<td rowspan="8" align="center" valign="top">11 &rarr; 16</td>
+							<td rowspan="8" align="center" valign="top">				Geberschalter 1						
+</td>
+							<td rowspan="8" align="center" valign="top">aus</td>
+						<td align="center">1</td>
+						<td align="center">ja</td>
+							<td align="center">-100%</td>
+							<td align="center">20%</td>
+							<td rowspan="8" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAFM0lEQVR42u2cXShsXRjHh9JLyEeSCzLxSnIhKUmSpCRJiFxJcuvCBUrqzIVIkisXSlwolCRJkpIoSUqSxKR8hXzdSJL0nv+xa585885e+5k5g535Pxca7Wetvf6/9XyszczY/qP5yWxEQJRESZQ0r1HaLGkOh8OaCzNBacENB0orhiFREiVREiWNKImSKImSKNnBiTIQUTr+NF5VXGVUMsGJkh2cRpRESZREyQ5OlERJlERJlETJDk6UREmUREmU7OBESZREGYAo3dGx7RClfzJU8YZoI7u4uCgvL//n3SorKy8vLz2jtKw9PDzIZY+MjNjtdkjNysra2NgwnXx5eRkTlpWVSVZSUFAA59XV1bW1NbzArx+Icn9/v7i4OCwsDGKKior29vZMMcXExKjpzM7OwqG+vt707jMzM/DEz8PDQ6yhsLBQ7f/y8pKSkhISEuJ0OiXq4KkvFS/wq2eU2BmFpO3tbZ1RTU3Nzc2NR7eqqir4bG1tHR8fY7bExET14jo7O00DTfMZHh42lVpaWorlyTd+YGBA+xCG0L+hocE1KhsbG91RHhwclJSUqCVlZmZilQi63d1duKFkqO+6sLAAt7y8PIXP2dlZenq6KUrcCw7h4eGIAqzTaBdh2MXIyEhkAzwRGQpP2NvbG3Y6Li7u+flZiPLp6SktLU1bMJIJKeWOEhdyc3OF1RcrgJt685E18MFdr6+vFW5NTU0TExOm962oqEhISDg5OdGckRPqZjI3N6fVhNraWsW08/Pz8GlpaZFHMYoMhqy9m+v8v1ePxeml3XS6oaEhuAGWGjfyUV3gEODZ2dm6fokS013Upnp7N9P9Rnpq3OUopbVSImllZUWbbmpq6i9lI21RdHxAGRUVZeSA7HZFiZqgmC0jIwM+6rxxs/z8fAxB09eiUm9rXqPc3NzU1orAFMpGJfr7k11OTg6KIPqelrYdHR1GnrgEh9HR0aWlJbxobm4WhpjQcJBEnmm9F2XH8Fyp1nN3d4eChVqLPVHcDKc53GlnZwdhi9nQfIWnZYUDuiIOD1g9NrK1tfX19VXh3NXVBTc4I38fHx+/7GlHIQnlOT4+HqrUk+qykVxtbW3yB4/PP/nf3t5OT0/39/ePj49fXV15NQoLdh3lHUpw9OFJ6/NlCz3X19dRfHQtERER6mxTj7J9P9lCT9wXxcotMuBsulqjUTZ10Pqm/Atlm3qiE6LiHx0d9fT0ePyINx7VfhgbTpEeR4GGzStJErevlW0kFUfg1NRUNMygoKCP+Ix9b2+vTS7e1A1PVKenp319fVaWHRwcjJn/fTePDtXV1Q5jq6urU0Wlltem4o2UJycn4zE2NDT042THxsYKZRtJxSWn03l/f49I1yPDNcP0yDg/P1fXSqNRv1AODg76RTnOkklJSXa73e+y29vbhbK9AoR6FR0d7eq2uLgo6eAeR6mi0k28kfLu7m7kNbLbWzFyT9xdLtsrQFjD5OQkKt3Y2Jg6Hv8/CpO7jrLJJcmV+1229sdEuWzfAPnw/wwPTztCSXJGVpP9eSiNgvY7Kf88lAH4H0eiJEqitILxPUOBjZLfQyC/yqhkghMlOziNKImSKImSHZwoiZIoiZIoiZIdnCiJkiiJkijZwYmSKImSKImSHZwoiZJGlERJlOzgREmUREmURMkOTpRESZRESZREyQ5OlERJlERJlOzgREmUREkjSqJkBw9slPweAvlVRiUTnCjZwWlESZRESZTs4ERJlERJlERpFZQ0ualQ0nwPUiIgSqL8vvYTywAeeaV+IkoAAAAASUVORK5CYII="/></td>									
+					</tr>
+					<tr class="d1 used">
+						<td align="center">2</td>
+						<td align="center">ja</td>
+							<td align="center">-74%</td>
+							<td align="center">21%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">3</td>
+						<td align="center">ja</td>
+							<td align="center">-48%</td>
+							<td align="center">22%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">4</td>
+						<td align="center">ja</td>
+							<td align="center">-19%</td>
+							<td align="center">23%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">5</td>
+						<td align="center">ja</td>
+							<td align="center">8%</td>
+							<td align="center">24%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">6</td>
+						<td align="center">ja</td>
+							<td align="center">37%</td>
+							<td align="center">25%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">7</td>
+						<td align="center">ja</td>
+							<td align="center">65%</td>
+							<td align="center">26%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">8</td>
+						<td align="center">ja</td>
+							<td align="center">100%</td>
+							<td align="center">27%</td>
+					</tr>
+					<tr class="d0 used">
+							<td rowspan="8" align="center" valign="top">KurvenMix 12</td>
+							<td rowspan="8" align="center" valign="top">Normal</td>
+							<td rowspan="8" align="center" valign="top">12 &rarr; 16</td>
+							<td rowspan="8" align="center" valign="top">				Geberschalter 2						
+</td>
+							<td rowspan="8" align="center" valign="top">aus</td>
+						<td align="center">1</td>
+						<td align="center">ja</td>
+							<td align="center">-100%</td>
+							<td align="center">30%</td>
+							<td rowspan="8" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAFCElEQVR42u2cTShsYRjHD6WbEEqysBBXkoWkJElCSZIQWUmytbBASd1ZsZCsLJRYKJQkSZKSRklSkiQmJYR8bSRJ073/69S5cznnfd8zY8zB/1loeJ/34/k9X+/JzGi/Ke8kGhEQJVESJcU2Ss2R4nK5nHkwCUoHOhwonRiGREmUREmUFKIkSqIkSqJkByfK74jS9b9wVDDKqGSCEyU7OIUoiZIoiZIdnCiJkiiJkiiJkh2cKImSKJ1KliiJMtDcFLwnTSxnZ2eVlZU/XqS6uvr8/NwcpWPl7u5OxfiRkZGUlBQYmZ2dvb6+Ll12eXkZS1VUVKifpLCwEFNWV1fdbjde4Nfgotzb2yspKYmMjIRVxcXFu7u7Ykzx8fHi0JidnYVCY2OjQGdmZgY6+HlwcICti4qKxId8enpKTU2NiIjweDzqpkHfOCpe4FdzlPCPwKStrS0DUF1d3dXVlZVmTU0N1DY3N4+OjrBgcnKy4HDd3d3SLNN1hoeHBTrl5eU4mDqUgYEB/X2wtqKkqanJNyqbm5tfo9zf3y8rKxOblJWVhbMi4nZ2dqCGkiHdeGFhAZr5+flWCicnJxkZGVKU2AsKUVFRiAKc09SLcF5MTAySADqICYGnIV6vFw5OSEh4fHy0hfLh4SE9PV0/MJIJKfUaJQby8vIUazDOATVpCCB9oIaNLy8vrXRaWlomJiak+1ZVVSUlJR0fH+vKyAmrZjI3N6dXg/r6esGC8/Pz0Glra7Nbu1BkMNH9Ir67/Ds9DmeUdulyQ0NDUAMpKXGkpKDGIcBzcnIMCiqWCLyoL+J9EamnkZg6d7soVWulikkrKyv6clNTUwHGL9IWRccPlLGxsW+HkN2+KFENBOtkZmZCR5AuVlJQUICJaP16VBrNzTbKjY0N/cQITHXLUZICvN/l5uaiFKLv6cnb1dX1Vgd/xNDo6OjS0hJetLa2KgaXLcFFEkmm916UHct7pdiem5sbFCzUWvhEvB+uddhse3sbkYsF0X9V7swCBXRFXB5wejiyvb39+fnZVK2npwcKUEP+3t/fh/hpR2ASinRiYiKskq5rWI4s6+joUHz8+EjLr6+vp6en+/v7x8fHLy4u/JiLA/vOtYcSHP1+3gpE9KufivGKgNbW1lBzDCuio6OleSadq4Xc7SpqQKlivCIg7Igy9SomoKwSm4K5mjhog+12RbXOzk6p8VJAaICo9YeHh729vaafssMT2i+Z4BZpOhc0tGBYruh2deNLS0ulxlsZictvWloaWmVYWFjwPuzY19enBcNyRbd/sPHh4eFY8+eLmCrU1ta6ZNLQ0CCKSj2vnWa5XeOtjMSQx+O5vb2Fp42Y8M0tIyZOT09VaqXV3L8oBwcHQ+L29zXeFiBUqri4OF+1xcVF9Q5uOlcUlUG1PBjG2wKE3ScnJ1HjxsbGVOLx7Vxs4TtXC6HlwTA+EEB+/FfD5GknVJYrqn2yd2eYBm1o3f5ZUTr5P45ESZRE+YVROlOIkiiJkigp7OBE+QVR8nsI1EcZlUxwomQHpxAlURIlUbKDEyVREiVREiVRsoMTJVESJVESJTs4URIlURIlUbKDEyVRUoiSKImSHZwoiZIoiZIo2cGJkiiJkiiJkijZwYmSKImSKImSHZwoiZIoKURJlOzg3xslv4dAfZRRyQQnSnZwClESJVESJTs4URIlURIlUToFJUVdRCgp/gcpERAlUX5d+QNSGhxpabMD3QAAAABJRU5ErkJggg=="/></td>									
+					</tr>
+					<tr class="d1 used">
+						<td align="center">2</td>
+						<td align="center">ja</td>
+							<td align="center">-73%</td>
+							<td align="center">31%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">3</td>
+						<td align="center">ja</td>
+							<td align="center">-45%</td>
+							<td align="center">32%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">4</td>
+						<td align="center">ja</td>
+							<td align="center">-19%</td>
+							<td align="center">33%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">5</td>
+						<td align="center">ja</td>
+							<td align="center">8%</td>
+							<td align="center">34%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">6</td>
+						<td align="center">ja</td>
+							<td align="center">33%</td>
+							<td align="center">35%</td>
+					</tr>
+					<tr class="d0 used">
+						<td align="center">7</td>
+						<td align="center">ja</td>
+							<td align="center">60%</td>
+							<td align="center">36%</td>
+					</tr>
+					<tr class="d1 used">
+						<td align="center">8</td>
+						<td align="center">ja</td>
+							<td align="center">100%</td>
+							<td align="center">37%</td>
+					</tr>
+	</tbody>		
+</table><table class="used">
+	<caption><a name="mixerActive"></a>MIX aktiv / Phase</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Mixer</th>
+			<th align="center">von &rarr; zu</th>
+					<th align="center">Ph.1</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+			<tr class="d0 used">
+					<td align="right">LinearMix 1</td>
+				<td align="center">1 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 used">
+					<td align="right">LinearMix 2</td>
+				<td align="center">2 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d0 used">
+					<td align="right">LinearMix 3</td>
+				<td align="center">3 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 used">
+					<td align="right">LinearMix 4</td>
+				<td align="center">4 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d0 used">
+					<td align="right">LinearMix 5</td>
+				<td align="center">5 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 used">
+					<td align="right">LinearMix 6</td>
+				<td align="center">6 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d0 used">
+					<td align="right">LinearMix 7</td>
+				<td align="center">7 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 used">
+					<td align="right">LinearMix 8</td>
+				<td align="center">8 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d0 used">
+					<td align="right">KurvenMix 9</td>
+				<td align="center">9 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 used">
+					<td align="right">KurvenMix 10</td>
+				<td align="center">10 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d0 used">
+					<td align="right">KurvenMix 11</td>
+				<td align="center">11 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 used">
+					<td align="right">KurvenMix 12</td>
+				<td align="center">12 &rarr; 16</td>
+						<td align="center">&times;</td>
+			</tr>
+	</tbody>
+</table><table>
+	<caption><a name="mixOnlyChannel"></a>Nur MIX Kanal</caption>
+	
+	<thead>
+		<tr>
+			<th></th>
+								<th align="center">S1</th>
+					<th align="center">S2</th>
+					<th align="center">S3</th>
+					<th align="center">S4</th>
+					<th align="center">S5</th>
+					<th align="center">S6</th>
+					<th align="center">S7</th>
+					<th align="center">S8</th>
+					<th align="center">S9</th>
+					<th align="center">S10</th>
+					<th align="center">S11</th>
+					<th align="center">S12</th>
+					<th align="center">S13</th>
+					<th align="center">S14</th>
+					<th align="center">S15</th>
+					<th align="center">S16</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+		<tr class="d0">
+			<th align="right">Nur Mix</th>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">normal</th>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+		</tr>
+	</tbody>
+</table><table class="unused">
+	<caption><a name="dualMixer"></a>Kreuzmischer</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Mischer</th>
+			<th align="center">Kanal 1</th>
+			<th align="center">Kanal 2</th>
+			<th align="center">Differenzierung</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+			<tr class="d0 unused">
+				<td align="center">Mischer 1</td>
+				<td align="center">&uarr;??&uarr;</td>
+				<td align="center">&uarr;??&darr;</td>
+				<td align="center">0%</td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">Mischer 2</td>
+				<td align="center">&uarr;??&uarr;</td>
+				<td align="center">&uarr;??&darr;</td>
+				<td align="center">0%</td>
+			</tr>
+			<tr class="d0 unused">
+				<td align="center">Mischer 3</td>
+				<td align="center">&uarr;??&uarr;</td>
+				<td align="center">&uarr;??&darr;</td>
+				<td align="center">0%</td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">Mischer 4</td>
+				<td align="center">&uarr;??&uarr;</td>
+				<td align="center">&uarr;??&darr;</td>
+				<td align="center">0%</td>
+			</tr>
+	</tbody>
+</table><table>
+	<caption><a name="failSafe"></a>Fail Safe</caption>
+
+		
+	<tbody>
+		<tr class="d0">
+			<th align="right">Verz&ouml;gerung</th>
+			<td align="left" colspan="2">0,25s</td>
+			<td colspan="14" class="d0"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">FlailSafe Pr&uuml;fung</th>
+			<td align="left" colspan="2">nein</td>
+			<td colspan="14" class="d0"></td>
+		</tr>
+		<tr class="d0">
+			<th></th>
+					<th align="center">S1</th>
+					<th align="center">S2</th>
+					<th align="center">S3</th>
+					<th align="center">S4</th>
+					<th align="center">S5</th>
+					<th align="center">S6</th>
+					<th align="center">S7</th>
+					<th align="center">S8</th>
+					<th align="center">S9</th>
+					<th align="center">S10</th>
+					<th align="center">S11</th>
+					<th align="center">S12</th>
+					<th align="center">S13</th>
+					<th align="center">S14</th>
+					<th align="center">S15</th>
+					<th align="center">S16</th>
+		</tr>
+		
+		
+		<tr class="d0">
+			<th align="right">Position</th>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Hold</th>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+		</tr>
+	</tbody>
+</table><table>
+	<caption><a name="trainerPupil"></a>Lehrer/Sch&uuml;ler</caption>
+			
+		
+	<tbody>
+		<tr class="d0">
+			<th align="right">Kabellos</th>
+			<td align="left" colspan="6">nein</td>
+			<td colspan="10" class="d0"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Lehrer ID</th>
+			<td align="left" colspan="6">0</td>
+			<td colspan="10" class="d0"></td>
+		</tr>
+		<tr class="d0">
+			<th align="right">Sch&uuml;ler ID</th>
+			<td align="left" colspan="6">0</td>
+			<td colspan="10" class="d0"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Schalter</th>
+			<td align="left" colspan="6">		---
+</td>
+			<td colspan="10" class="d0"></td>
+		</tr>
+		<tr>
+			<th></th>
+					<th align="center">S1</th>
+					<th align="center">S2</th>
+					<th align="center">S3</th>
+					<th align="center">S4</th>
+					<th align="center">S5</th>
+					<th align="center">S6</th>
+					<th align="center">S7</th>
+					<th align="center">S8</th>
+					<th align="center">S9</th>
+					<th align="center">S10</th>
+					<th align="center">S11</th>
+					<th align="center">S12</th>
+					<th align="center">S13</th>
+					<th align="center">S14</th>
+					<th align="center">S15</th>
+					<th align="center">S16</th>
+		</tr>
+
+
+		<tr class="d0">
+			<th align="right">Sch&uuml;ler</th>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Lehrer</th>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+		</tr>
+	</tbody>
+</table><table>
+	<caption><a name="outputChannel"></a>Senderausgang</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Eingang</th>
+			<th></th>
+			<th align="center">Ausgang</th>
+		</tr>
+	</thead>
+	
+		
+	<tbody>
+			<tr class="d0">
+				<td align="center">S1 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 1</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S2 (Querruder)</td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 2</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S3 (H&ouml;henruder)</td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 3</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S4 (Seitenruder)</td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 4</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S5 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 5</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S6 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 6</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S7 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 7</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S8 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 8</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S9 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 9</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S10 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 10</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S11 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 11</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S12 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 12</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S13 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 13</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S14 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 14</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S15 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 15</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S16 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 16</td>
+			</tr>
+	</tbody>		
+</table>	<table class="unused">
+		<caption><a name="profiTrim"></a>Profitrimm</caption>
+	
+			<thead>	
+				<tr>
+					<th></th>
+					<th align="center">&uarr;QR&darr;</th>
+					<th align="center">&uarr;QR&uarr;</th>
+					<th align="center">&uarr;WK&darr;</th>
+					<th align="center">&uarr;WK&uarr;</th>
+				</tr>
+			</thead>
+					
+	
+			<tbody>
+				<tr class="d0">
+					<th align="right">aktiv</th>
+						<td align="center">aus</td>
+						<td align="center">aus</td>
+						<td align="center">aus</td>
+						<td align="center">aus</td>
+				</tr>
+				<tr class="d1">
+					<th align="right">Geber</th>
+						<td align="center">frei</td>
+						<td align="center">frei</td>
+						<td align="center">frei</td>
+						<td align="center">frei</td>
+				</tr>
+				<tr class="d0">
+					<th align="right">EIN/AUS</th>
+					<td align="left" colspan="4">		---
+</td>
+				</tr>
+			</tbody>
+	</table>
+<table>
+	<caption><a name="trimMemory"></a>Trimmspeicher</caption>
+	
+	<thead>
+		<tr>
+			<th></th>
+							<th align="center" colspan="2">Kanal 1</th>
+				<th align="center" colspan="2">Querruder</th>
+				<th align="center" colspan="2">H&ouml;henruder</th>
+				<th align="center" colspan="2">Seitenruder</th>
+		</tr>
+		<tr style="font-size: 75%;">
+			<th></th>
+			<th align="center">Kn&uuml;ppel</th>				
+			<th align="center">Speicher</th>
+			<th align="center">Kn&uuml;ppel</th>				
+			<th align="center">Speicher</th>
+			<th align="center">Kn&uuml;ppel</th>				
+			<th align="center">Speicher</th>
+			<th align="center">Kn&uuml;ppel</th>				
+			<th align="center">Speicher</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+				<tr class="d0">
+					<td align="center">Phase 1: </td>					
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+				</tr>
+	</tbody>
+</table><table>
+	<caption><a name="telemetry"></a>Telemetrie</caption>
+	
+		
+	<tbody>
+		<tr class="d0">
+			<th align="right" rowspan="2" valign="top">Ansage wiederholen</th>
+			<td align="left">10s</td>
+		</tr>
+		<tr class="d1">
+			<td align="left">		---
+</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">n&auml;chste Ansage</th>
+			<td align="left">		---
+</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Varioton</th>
+			<td align="left">		---
+</td>
+		</tr>
+			<tr class="d0">
+					<th align="right" rowspan="1" valign="top">erkannte Sensoren</th>
+					<td align="left">Receiver</td>
+			</tr>
+		<tr class="d1">
+			<th align="right">aktueller Sensor</th>
+			<td align="left">Receiver</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">aktuelle Sensorseite</th>
+			<td align="left">0</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">RX-Data</th>
+			<td align="left">Ein</td>
+		</tr>
+	</tbody>
+</table>
+<table class="unused">
+
+	<caption><a name="channelSequencer"></a>Kanal Sequenzer</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Kanal</th>
+			<th align="center">aktiv?</th>
+			<th align="center">Start</th>
+		</tr>
+	</thead>
+	
+
+	<tbody>
+			<tr class="d0 unused">
+				<td align="center">Kanal 14</td>
+				<td align="center">inaktiv</td>
+
+					<td align="center" colspan="1" class="d0"></td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">Kanal 15</td>
+				<td align="center">inaktiv</td>
+
+					<td align="center" colspan="1" class="d0"></td>
+			</tr>
+			<tr class="d0 unused">
+				<td align="center">Kanal 16</td>
+				<td align="center">inaktiv</td>
+
+					<td align="center" colspan="1" class="d0"></td>
+			</tr>
+		
+		<tr class="d1">
+			<th colspan="2" align="right">Schalter</th>
+			<td align="left" colspan="1">		---
+</td>
+		</tr>
+	</tbody>
+</table>	<table class="unused">
+		<caption><a name="multiChannel"></a>Multikanal</caption>
+	
+		<thead>
+			<tr>
+				<th align="center">Kanal</th>
+				<th align="center">aktiv?</th>
+				<th align="center">Steuerkanal</th>
+				<th align="center">Kanalzahl</th>
+				<th align="center">Eingang</th>
+				<th colspan="2" align="center">Geber</th>
+				<th align="center">Offset</th>
+				<th align="center">Weg -</th>
+				<th align="center">Weg +</th>
+			</tr>
+		</thead>
+	
+	
+		<tbody>
+				
+					
+					<tr class="d0 unused">
+							<td align="center">Multikanal 1</td>
+							<td align="center">inaktiv</td>
+							<td align="center">K5</td>
+							<td align="center">4 Kan&auml;le</td>
+	
+						<td>Eingang 1</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d1 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 2</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d0 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 3</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d1 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 4</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+				
+					
+					<tr class="d0 unused">
+							<td align="center">Multikanal 2</td>
+							<td align="center">inaktiv</td>
+							<td align="center">K6</td>
+							<td align="center">4 Kan&auml;le</td>
+	
+						<td>Eingang 1</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d1 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 2</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d0 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 3</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d1 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 4</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+		</tbody>
+	</table>
+<table class="unused">
+	<caption><a name="ringLimiter"></a>Ringbegrenzer</caption>
+	
+	<thead>
+		<tr>
+			<th align="center" colspan="2">Eingang</th>
+			<th align="center" colspan="2">Ausgang</th>
+			<th align="center" rowspan="2" valign="top">aktiv?</th>
+			<th align="center" colspan="2">Limit</th>
+			<th align="center" colspan="2">Offset</th>
+		</tr>
+		<tr style="font-size: 75%;">
+			<th align="center">X</th>
+			<th align="center">Y</th>
+			<th align="center">X</th>
+			<th align="center">Y</th>				
+			<th align="center">max-X</th>
+			<th align="center">max-Y</th>
+			<th align="center">&#x25cb;&harr;&#x25a1;-X</th>
+			<th align="center">&#x25cb;&harr;&#x25a1;-Y</th>				
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+			<tr class="d0 unused">
+				<td align="center">8</td>
+				<td align="center">7</td>
+				<td align="center">8</td>
+				<td align="center">7</td>
+				<td align="center">inaktiv</td>
+				<td align="center">100%</td>
+				<td align="center">100%</td>
+				<td align="center">0%</td>
+				<td align="center">0%</td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">8</td>
+				<td align="center">7</td>
+				<td align="center">14</td>
+				<td align="center">13</td>
+				<td align="center">inaktiv</td>
+				<td align="center">100%</td>
+				<td align="center">100%</td>
+				<td align="center">0%</td>
+				<td align="center">0%</td>
+			</tr>
+			<tr class="d0 unused">
+				<td align="center">8</td>
+				<td align="center">7</td>
+				<td align="center">16</td>
+				<td align="center">15</td>
+				<td align="center">inaktiv</td>
+				<td align="center">100%</td>
+				<td align="center">100%</td>
+				<td align="center">0%</td>
+				<td align="center">0%</td>
+			</tr>
+	</tbody>
+</table>	<table>
+		<caption><a name="mp3Player"></a>MP3-Player</caption>
+		
+	
+		<tbody>
+			<tr class="d0">
+				<th align="center">Lautst&auml;rke</th>
+				<td align="left">15</td>
+			</tr>
+			<tr class="d1">
+				<th align="center">Album</th>
+				<td align="left">0</td>
+			</tr>
+			<tr class="d0">
+				<th align="center">Titel</th>
+				<td align="left">0</td>
+			</tr>
+			<tr class="d1">
+				<th align="center">Modus</th>
+				<td align="left">Alle wiederholen</td>
+			</tr>
+		</tbody>
+	</table>
+			
+			<table>
+				<caption><a name="switches"></a> Schalter-/Geberzuordnungen</caption>
+				
+				<thead>
+					<tr>
+						<th align="center" rowspan="2" valign="top">Funktion</th>
+						<th align="center" colspan="3">Schalter/Geber</th>
+					</tr>
+					<tr style="font-size: 75%;">
+						<th align="center">ID</th>
+						<th align="center">Name</th>
+						<th align="center">Typ</th>
+					</tr>
+				</thead>
+		
+		
+				<tbody>
+		<tr class="d0">
+			<td align="center">Geber Eingang 5 Phase 1</td>
+			<td align="center">SR1</td>
+			<td align="center">				Schieberegler 1
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Geber Eingang 6 Phase 1</td>
+			<td align="center">SR2</td>
+			<td align="center">				Schieberegler 2
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Geber Eingang 7 Phase 1</td>
+			<td align="center">SR3</td>
+			<td align="center">				Schieberegler 3
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Geber Eingang 8 Phase 1</td>
+			<td align="center">SR1</td>
+			<td align="center">				Schieberegler 1
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Geber Eingang 9 Phase 1</td>
+			<td align="center">SR2</td>
+			<td align="center">				Schieberegler 2
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Geber Eingang 10 Phase 1</td>
+			<td align="center">SR3</td>
+			<td align="center">				Schieberegler 3
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Geber Eingang 11 Phase 1</td>
+			<td align="center">SR1</td>
+			<td align="center">				Schieberegler 1
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Geber Eingang 12 Phase 1</td>
+			<td align="center">SR2</td>
+			<td align="center">				Schieberegler 2
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Geber Eingang 13 Phase 1</td>
+			<td align="center">SR3</td>
+			<td align="center">				Schieberegler 3
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Geber Eingang 14 Phase 1</td>
+			<td align="center">SR1</td>
+			<td align="center">				Schieberegler 1
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Geber Eingang 15 Phase 1</td>
+			<td align="center">SR2</td>
+			<td align="center">				Schieberegler 2
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Geberschalter 1</td>
+			<td align="center">SD2</td>
+			<td align="center">				seitlicher Drehgeber 2
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Geberschalter 2</td>
+			<td align="center">SD1</td>
+			<td align="center">				seitlicher Drehgeber 1
+&rarr;</td>
+			<td align="center">Geber</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Mischer 1</td>
+			<td align="center">SW1</td>
+			<td align="center">					Schalter 1
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Mischer 2</td>
+			<td align="center">SW2</td>
+			<td align="center">					Schalter 2
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Mischer 3</td>
+			<td align="center">SW3</td>
+			<td align="center">					Schalter 3
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Mischer 4</td>
+			<td align="center">SW4</td>
+			<td align="center">					Schalter 4
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Mischer 5</td>
+			<td align="center">SW5</td>
+			<td align="center">					Schalter 5
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Mischer 6</td>
+			<td align="center">SW6</td>
+			<td align="center">					Schalter 6
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Mischer 7</td>
+			<td align="center">SW7</td>
+			<td align="center">					Schalter 7
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Mischer 8</td>
+			<td align="center">SW8</td>
+			<td align="center">					Schalter 8
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Mischer 9</td>
+			<td align="center">SW9</td>
+			<td align="center">					Schalter 9
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Mischer 10</td>
+			<td align="center">SW10</td>
+			<td align="center">					Schalter 10
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Mischer 11</td>
+			<td align="center">G1</td>
+			<td align="center">				Geberschalter 1						
+</td>
+			<td align="center">Geberschalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Mischer 12</td>
+			<td align="center">G2</td>
+			<td align="center">				Geberschalter 2						
+</td>
+			<td align="center">Geberschalter</td>
+		</tr>
+	</tbody>
+</table>
+		</div>
+	</body>
+</html>

@@ -1,6 +1,6 @@
 package de.treichels.hott.android.background.serial.bluetooth;
 
-import gde.model.serial.SerialPort;
+import de.treichels.hott.serial.SerialPort;
 
 import java.io.IOException;
 import java.util.Set;

@@ -17,8 +17,8 @@
  */
 package de.treichels.hott.android.background.serial.tasks;
 
-import gde.model.enums.ModelType;
-import gde.model.serial.ModelInfo;
+import de.treichels.hott.model.enums.ModelType;
+import de.treichels.hott.serial.ModelInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;

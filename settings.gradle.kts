@@ -1,0 +1,28 @@
+rootProject.name = "hott-transmitter-config"
+
+include(":ExportModels")
+include(":FirmwareUpgrader")
+include(":HoTT-Decoder:HoTT-Decoder")
+include(":HoTT-Firmware")
+include(":HoTT-MdlViewer-JavaFX")
+include(":HoTT-MdlViewer-SWT")
+include(":HoTT-Model")
+include(":HoTT-Report-HTML")
+include(":HoTT-Report-PDF")
+include(":HoTT-Report-XML")
+include(":HoTT-Serial")
+include(":HoTT-TTS")
+include(":HoTT-UI")
+include(":HoTT-Util")
+include(":HoTT-Voice")
+if (isJava8) include(":Java8ComboBoxListViewSkin")
+include("jSerialCommPort")
+include("JSSCSerialPort")
+include(":lzma-compress")
+include(":lzma-sdk")
+include(":MemoryDump")
+include(":mz32-Downloader")
+include(":Test")
+include(":VDFEditor")
+
+

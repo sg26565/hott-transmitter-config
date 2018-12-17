@@ -1,0 +1,3668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--
+	HoTT Transmitter Config
+	Copyright (C) 2013  Oliver Treichel
+	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+	<head>
+		<title>Graupner/SJ mc-20 - Carisma</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style type="text/css" media="print">
+	@page {
+		size: a4;
+		
+		@top-left {
+			content: "mc-20 - Carisma";
+		}
+	
+		@top-right {
+			content: "04.05.2017 20:11:31";
+		}
+	
+		@bottom-left {
+			content: "HoTTMdlViewer unknown";
+		}
+	
+		@bottom-right {
+			content: "Seite " counter(page);
+		}
+	}
+	
+	body {
+		font-size: 9pt;
+	}
+	
+	div.navigation {
+		display: none;
+	}
+</style>
+
+<style type="text/css" media="screen">
+	body {
+		font-size: 14pt;
+		padding: 0;
+		margin-top: 0;
+	}
+	
+	div.navigation {
+		position: fixed;
+		font-size: 10pt;
+		padding: 0;
+		margin: 0;
+	}
+
+	.navigation a[href] {
+		display: block;
+	}
+	
+	.navigation h1 {
+		font-size: 14pt;
+		margin-top: 0;
+	}
+	
+	div.data {
+		margin-left: 10em;
+	}
+	
+	.navigation a.i1 {
+		margin-left: 1em;
+	}
+</style>
+
+<style type="text/css" media="(max-width: 80em)">
+	body {
+		font-size: 9pt;
+		padding: 0;
+		margin-top: 0;
+	}
+
+	div.navigation {
+		display: none;
+	}
+
+	div.data {
+		margin-left: 0em;
+	}
+</style>
+
+<style type="text/css" media="all">
+	@font-face {
+		src: url('file:/C:/Users/olive/AppData/Local/Temp/Arial.ttf');
+		-fs-pdf-font-embed: embed;
+		-fs-pdf-font-encoding: Identity-H;
+	}
+	
+	body {
+		font-family: Arial;
+	}
+	
+	table {
+		border-collapse: collapse;
+		color: black;
+		border-style: solid;
+		border-color: black;
+		border-width: 2px;
+		empty-cells: show;
+		margin: 0;
+		padding: 0;
+		white-space: nowrap;
+		page-break-inside: avoid;
+		margin-bottom: 1em;
+	}
+	
+	table caption {
+		text-align: left;
+		font-size: x-large;
+		font-style: italic;
+		font-weight: bold;
+		margin-top: 0;
+	}
+	
+	td {
+		border-left-style: solid;
+		border-right-style: solid;
+		border-width: 1px;
+		border-color: white;
+		padding: 2px;
+		margin: 0;
+	}
+	
+	th {
+		background-color: #ccc;
+		border-left-style: solid;
+		border-right-style: solid;
+		border-width: 1px;
+		border-color: white;
+		padding: 2px;
+		margin: 0;
+	}
+	
+	tr.d0 td {
+		background-color: #eee;
+	}
+	
+	tr.d1 td {
+		background-color: #ddd;
+	}
+	
+	th.d2 {
+		background-color: #bbb;
+		font-size: large;
+		text-align: center;
+		page-break-before: auto;
+	}
+	
+	tr.d1 td.d0 {
+		background-color: #eee;
+	}
+	
+	.unused {
+		color: #aaa;
+		font-style: italic;
+	}
+</style><bookmarks>
+	<bookmark href="#baseSettings" name="Grundeinstellungen Modell"></bookmark>
+	<bookmark href="#modelType" name="Modelltyp"></bookmark>
+	<bookmark href="#servos" name="Servoeinstellungen"></bookmark>
+	<bookmark href="#stickSettings" name="Kn&uuml;ppeleinstellungen"></bookmark>
+	<bookmark href="#controls0" name="Gebereinstellungen">
+				<bookmark href="#controls0" name="Phase 1: Normal"></bookmark>
+				<bookmark href="#controls1" name="Phase 2: Start"></bookmark>
+				<bookmark href="#controls2" name="Phase 3: Thermik"></bookmark>
+	</bookmark>
+	<bookmark href="#drExpo0" name="DualRate Expo">
+				<bookmark href="#drExpo0" name="Phase 1: Normal"></bookmark>
+				<bookmark href="#drExpo1" name="Phase 2: Start"></bookmark>
+				<bookmark href="#drExpo2" name="Phase 3: Thermik"></bookmark>
+	</bookmark>
+	<bookmark href="#channel1Curve0" name="Kanal 1 Kurve">
+				<bookmark href="#channel1Curve0" name="Phase 1: Normal"></bookmark>
+				<bookmark href="#channel1Curve1" name="Phase 2: Start"></bookmark>
+				<bookmark href="#channel1Curve2" name="Phase 3: Thermik"></bookmark>
+	</bookmark>
+	<bookmark href="#controlSwitches" name="Geberschalter"></bookmark>
+		<bookmark href="#logicalSwitches" name="logische Schalter"></bookmark>
+	<bookmark href="#phaseSettings" name="Phaseneinstellungen"></bookmark>
+	<bookmark href="#phaseAssignments" name="Phasenzuweisung"></bookmark>
+		<bookmark href="#phaseTrim" name="Phasentrimm"></bookmark>
+	<bookmark href="#nonDelayedChannels" name="unverz&ouml;gerte Kan&auml;le"></bookmark>
+	<bookmark href="#timersGeneral" name="Uhren (allgemein)"></bookmark>
+	<bookmark href="#phaseTimer" name="Flugphasenuhren"></bookmark>
+		<bookmark href="#wingMix0" name="Fl&auml;chenmischer">
+					<bookmark href="#wingMix0" name="Phase 1: Normal"></bookmark>
+					<bookmark href="#wingMix1" name="Phase 2: Start"></bookmark>
+					<bookmark href="#wingMix2" name="Phase 3: Thermik"></bookmark>
+		</bookmark>
+	<bookmark href="#linearMixer" name="Linearmischer"></bookmark>
+	<bookmark href="#curveMixer" name="Kurvenmischer"></bookmark>
+	<bookmark href="#mixerActive" name="MIX aktiv / Phase"></bookmark>
+	<bookmark href="#mixOnlyChannel" name="Nur MIX Kanal"></bookmark>
+	<bookmark href="#dualMixer" name="Kreuzmischer"></bookmark>
+	<bookmark href="#failSafe" name="Fail Safe"></bookmark>
+	<bookmark href="#trainerPupil" name="Lehrer/Sch&uuml;ler"></bookmark>
+	<bookmark href="#outputChannel" name="Senderausgang"></bookmark>
+		<bookmark href="#profiTrim" name="Profitrimm"></bookmark>
+	<bookmark href="#trimMemory" name="Trimmspeicher"></bookmark>
+	<bookmark href="#telemetry" name="Telemetrie"></bookmark>
+	<bookmark href="#channelSequencer" name="Kanal Sequenzer"></bookmark>
+		<bookmark href="#multiChannel" name="Multikanal"></bookmark>
+	<bookmark href="#ringLimiter" name="Ringbegrenzer"></bookmark>
+		<bookmark href="#mp3Player" name="MP3-Player"></bookmark>
+	<bookmark href="#switches" name="Schalter-/Geberzuordnungen"></bookmark>
+</bookmarks>	</head>
+	<body>
+		&nbsp;
+		<div class="navigation">
+<h1>Inhaltsverzeichnis</h1>
+<a href="#baseSettings">Grundeinstellungen Modell</a>
+<a href="#modelType">Modelltyp</a>
+<a href="#servos">Servoeinstellungen</a>		
+<a href="#stickSettings">Kn&uuml;ppeleinstellungen</a>
+<div>Gebereinstellungen</div>
+		<a class="i1" href="#controls0">Phase 1: Normal</a>
+		<a class="i1" href="#controls1">Phase 2: Start</a>
+		<a class="i1" href="#controls2">Phase 3: Thermik</a>
+<div>DualRate Expo</div>
+		<a class="i1" href="#drExpo0">Phase 1: Normal</a>
+		<a class="i1" href="#drExpo1">Phase 2: Start</a>
+		<a class="i1" href="#drExpo2">Phase 3: Thermik</a>
+<div>Kanal 1 Kurve</div>
+		<a class="i1" href="#channel1Curve0">Phase 1: Normal</a>
+		<a class="i1" href="#channel1Curve1">Phase 2: Start</a>
+		<a class="i1" href="#channel1Curve2">Phase 3: Thermik</a>
+<a href="#controlSwitches">Geberschalter</a>
+	<a href="#logicalSwitches">logische Schalter</a>
+<a href="#phaseSettings">Phaseneinstellungen</a>
+<a href="#phaseAssignments">Phasenzuweisung</a>
+	<a href="#phaseTrim">Phasentrimm</a>
+<a href="#nonDelayedChannels">unverz&ouml;gerte Kan&auml;le</a>
+<a href="#timersGeneral">Uhren (allgemein)</a>
+<a href="#phaseTimer">Flugphasenuhren</a>
+	<div>Fl&auml;chenmischer</div>
+			<a class="i1" href="#wingMix0">Phase 1: Normal</a>
+			<a class="i1" href="#wingMix1">Phase 2: Start</a>
+			<a class="i1" href="#wingMix2">Phase 3: Thermik</a>
+<a href="#linearMixer">Linearmischer</a>
+<a href="#curveMixer">Kurvenmischer</a>
+<a href="#mixerActive">MIX aktiv / Phase</a>
+<a href="#mixOnlyChannel">Nur MIX Kanal</a>
+<a href="#dualMixer">Kreuzmischer</a>
+<a href="#failSafe">Fail Safe</a>
+<a href="#trainerPupil">Lehrer/Sch&uuml;ler</a>
+<a href="#outputChannel">Senderausgang</a>
+	<a href="#profiTrim">Profitrimm</a>
+<a href="#trimMemory">Trimmspeicher</a>
+<a href="#telemetry">Telemetrie</a>		
+<a href="#channelSequencer">Kanal Sequenzer</a>
+	<a href="#multiChannel">Multikanal</a>
+<a href="#ringLimiter">Ringbegrenzer</a>
+	<a href="#mp3Player">MP3-Player</a>
+<a href="#switches">Schalter-/Geberzuordnungen</a>		</div>
+		<div class="data">
+<table>
+	<caption><a name="baseSettings"></a>Grundeinstellungen Modell</caption>
+	
+		
+	<tbody>
+		<tr class="d0">
+			<th align="right">Hersteller</th>
+			<td align="left" colspan="3">Graupner/SJ</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Sendertyp</th>
+			<td align="left" colspan="3">mc-20</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">Sender ID</th>
+			<td align="left" colspan="3">3000008588</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Firmware Version</th>
+			<td align="left" colspan="3">1.018</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">Datei Version</th>
+			<td align="left" colspan="3">1.002</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Modelltyp</th>
+			<td align="left" colspan="3">Flugzeug</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">Modellname</th>
+			<td align="left" colspan="3">Carisma</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Steueranordnung</th>
+			<td align="left" colspan="3">Mode 1</td>
+		</tr>
+			<tr class="d0">
+				<th align="right">Modul</th>
+				<td align="left" colspan="3">HoTT</td>
+			</tr>
+		<tr class="d1">
+			<th align="right">DSC-Ausgang</th>
+			<td align="left" colspan="3">PPM10</td>
+		</tr>
+		<tr class="d0">
+			<th align="right" valign="top">Motor-Stopp</th>
+			<td align="left"><i>Position:</i> -100%</td>
+			<td align="left"><i>Limit:</i> 150%</td>
+			<td align="left"><i>Schalter:</i> 		---
+</td>							
+		</tr>
+			<tr class="d1">
+				<th align="right">Einschaltwarnung</th>
+				<td align="left" colspan="3">		---
+</td>
+			</tr>
+			<tr class="d0">
+				<th align="right">Auto Trimm</th>
+				<td align="left" colspan="3">		---
+</td>
+			</tr>
+			<tr class="d1">
+				<th align="right">Auto r&uuml;cksetzen Uhr</th>
+				<td align="left" colspan="3">ja</td>
+			</tr>
+	</tbody>
+</table>
+			
+		<table  class="used">
+			<caption>Empf&auml;nger 1</caption>
+		
+			
+			<tbody>
+				<tr class="d0">
+					<th align="right">gebunden</th>
+					<td align="left" colspan="3">ja</td>
+				</tr>
+					<tr class="d1">
+						<th align="right">Telemetrie</th>
+						<td align="left" colspan="3">ja</td>
+					</tr>
+					<tr class="d0">
+						<th align="right">Empf&auml;nger ID</th>
+						<td align="left" colspan="3">8000001326</td>
+					</tr>
+					<tr class="d1">
+						<th align="right">Empf&auml;ngerausgang</th>
+						<th align="center">Eingang</th>
+						<th></th>
+						<th align="center">Ausgang</th>
+					</tr>
+					<tr class="d0">
+						<th></th>
+						<td align="center">S1</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 1</td>
+					</tr>
+					<tr class="d1">
+						<th></th>
+						<td align="center">S2 (Querruder)</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 2</td>
+					</tr>
+					<tr class="d0">
+						<th></th>
+						<td align="center">S3 (H&ouml;henruder)</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 3</td>
+					</tr>
+					<tr class="d1">
+						<th></th>
+						<td align="center">S4 (Seitenruder)</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 4</td>
+					</tr>
+					<tr class="d0">
+						<th></th>
+						<td align="center">S5 (Querruder)</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 5</td>
+					</tr>
+					<tr class="d1">
+						<th></th>
+						<td align="center">S6 (Landeklappen)</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 6</td>
+					</tr>
+					<tr class="d0">
+						<th></th>
+						<td align="center">S7 (Landeklappen)</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 7</td>
+					</tr>
+					<tr class="d1">
+						<th></th>
+						<td align="center">S8</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 8</td>
+					</tr>
+					<tr class="d0">
+						<th></th>
+						<td align="center">S1</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 9</td>
+					</tr>
+					<tr class="d1">
+						<th></th>
+						<td align="center">S1</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 10</td>
+					</tr>
+					<tr class="d0">
+						<th></th>
+						<td align="center">S1</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 11</td>
+					</tr>
+					<tr class="d1">
+						<th></th>
+						<td align="center">S1</td>
+						<td align="center">&rarr;</td>
+						<td align="center">Ausgang 12</td>
+					</tr>
+			</tbody>
+		</table>
+		<table  class="unused">
+			<caption>Empf&auml;nger 2</caption>
+		
+			
+			<tbody>
+				<tr class="d0">
+					<th align="right">gebunden</th>
+					<td align="left" colspan="3">nein</td>
+				</tr>
+			</tbody>
+		</table>
+<table>
+			<caption><a name="modelType"></a>Modelltyp</caption>
+
+		
+		<tbody>
+			<tr class="d0">
+				<th align="right">Motor an K1</th>
+				<td align="left" colspan="2">kein</td>
+			</tr>
+			<tr class="d1">
+				<th align="right">Leitwerk</th>
+				<td align="left" colspan="2">Normal</td>
+			</tr>
+			<tr class="d0">
+				<th align="right">Querruder/W&ouml;lbklappen</th>
+				<td align="left" colspan="2">2QR 2WK</td>
+			</tr>
+			<tr class="d1">
+				<th align="right">Bremse</th>
+				<td align="left"><i>Offset:</i> 100</td>
+				<td align="left"><i>Eingang:</i> 1</td>
+			</tr>
+		</tbody>
+</table><table>
+	<caption><a name="servos"></a>Servoeinstellungen</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Servo</th>
+			<th align="center">Umkehr</th>
+			<th align="center">Mitte</th>
+			<th align="center">Weg -</th>
+			<th align="center">Weg +</th>
+							<th align="center">Begrenzung -</th>
+				<th align="center">Begrenzung +</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+				<tr class="d0">
+					<td align="center">S1</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S2 (Querruder)</td>
+					<td align="center">&larr;</td>
+					<td align="center">11%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S3 (H&ouml;henruder)</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">70%</td>
+					<td align="center">70%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S4 (Seitenruder)</td>
+					<td align="center">&larr;</td>
+					<td align="center">-13%</td>
+					<td align="center">80%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S5 (Querruder)</td>
+					<td align="center">&larr;</td>
+					<td align="center">15%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S6 (Landeklappen)</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">50%</td>
+					<td align="center">26%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S7 (Landeklappen)</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">25%</td>
+					<td align="center">50%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S8</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S9</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S10</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">S11</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">S12</td>
+					<td align="center">&rarr;</td>
+					<td align="center">0%</td>
+					<td align="center">100%</td>
+					<td align="center">100%</td>
+						<td align="center">150%</td>
+						<td align="center">150%</td>
+				</tr>
+	</tbody>
+</table><table>
+	<caption><a name="stickSettings"></a>Kn&uuml;ppeleinstellungen</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Kanal</th>
+			<th align="center">Trimm</th>
+			<th align="center">Trimmschritte</th>
+			<th align="center">Zeit -</th>
+			<th align="center">Zeit +</th>
+		</tr>
+	</thead>
+	
+		
+	<tbody>
+			<tr class="d0">
+							<td align="center">Kanal 1</td>
+				<td align="center">global</td>
+				<td align="center">4</td>
+				<td align="center">0,0s</td>
+				<td align="center">0,0s</td>
+			</tr>
+			<tr class="d1">
+							<td align="center">Querruder</td>
+				<td align="center">global</td>
+				<td align="center">4</td>
+				<td align="center">0,0s</td>
+				<td align="center">0,0s</td>
+			</tr>
+			<tr class="d0">
+							<td align="center">H&ouml;henruder</td>
+				<td align="center">global</td>
+				<td align="center">4</td>
+				<td align="center">0,0s</td>
+				<td align="center">0,0s</td>
+			</tr>
+			<tr class="d1">
+							<td align="center">Seitenruder</td>
+				<td align="center">global</td>
+				<td align="center">4</td>
+				<td align="center">0,0s</td>
+				<td align="center">0,0s</td>
+			</tr>
+	</tbody>			
+</table>		<table>
+			<caption><a name="controls0"></a>Gebereinstellungen - Phase 1: Normal</caption>
+			
+			<thead>
+				<tr>
+					<th align="center">Eingang</th>
+					<th align="center">Typ</th>
+					<th align="center" colspan="2">Geber</th>
+					<th align="center">Offset</th>
+					<th align="center">Weg -</th>
+					<th align="center">Weg +</th>
+					<th align="center">Zeit -</th>
+					<th align="center">Zeit +</th>
+				</tr>
+			</thead>
+		
+			<tbody>
+
+					<tr class="d0 used">
+							<td align="center">E5</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 used">
+							<td align="center">E6</td>
+						<td align="center">Global</td>
+							<td align="center">		---
+</td>
+							<td align="center">					Schalter 16
+</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 used">
+							<td align="center">E7</td>
+						<td align="center">Global</td>
+							<td align="center">		---
+</td>
+							<td align="center">					Schalter 16
+</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 used">
+							<td align="center">E8</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 used">
+							<td align="center">E9</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 used">
+							<td align="center">E10</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 used">
+							<td align="center">E11</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 used">
+							<td align="center">E12</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="controls1"></a>Gebereinstellungen - Phase 2: Start</caption>
+			
+			<thead>
+				<tr>
+					<th align="center">Eingang</th>
+					<th align="center">Typ</th>
+					<th align="center" colspan="2">Geber</th>
+					<th align="center">Offset</th>
+					<th align="center">Weg -</th>
+					<th align="center">Weg +</th>
+					<th align="center">Zeit -</th>
+					<th align="center">Zeit +</th>
+				</tr>
+			</thead>
+		
+			<tbody>
+
+					<tr class="d0 unused">
+							<td align="center">E5</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 unused">
+							<td align="center">E6</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 unused">
+							<td align="center">E7</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 unused">
+							<td align="center">E8</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 unused">
+							<td align="center">E9</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 unused">
+							<td align="center">E10</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 unused">
+							<td align="center">E11</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 unused">
+							<td align="center">E12</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="controls2"></a>Gebereinstellungen - Phase 3: Thermik</caption>
+			
+			<thead>
+				<tr>
+					<th align="center">Eingang</th>
+					<th align="center">Typ</th>
+					<th align="center" colspan="2">Geber</th>
+					<th align="center">Offset</th>
+					<th align="center">Weg -</th>
+					<th align="center">Weg +</th>
+					<th align="center">Zeit -</th>
+					<th align="center">Zeit +</th>
+				</tr>
+			</thead>
+		
+			<tbody>
+
+					<tr class="d0 unused">
+							<td align="center">E5</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 unused">
+							<td align="center">E6</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 unused">
+							<td align="center">E7</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 unused">
+							<td align="center">E8</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 unused">
+							<td align="center">E9</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 unused">
+							<td align="center">E10</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d0 unused">
+							<td align="center">E11</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+					<tr class="d1 unused">
+							<td align="center">E12</td>
+						<td align="center">Global</td>
+							<td align="center" colspan="2">---</td>
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+						<td align="center">0,0s</td>
+						<td align="center">0,0s</td>
+					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="drExpo0"></a>DualRate Expo - Phase 1: Normal</caption>
+			
+			<thead>
+				<tr>
+					<th></th>
+					<th align="center" colspan="2">Dual Rate</th>
+					<th align="center" colspan="2">Expo</th>
+					<th align="center" style="font-size: 75%;">DR aus</th>						
+					<th align="center" style="font-size: 75%;">DR aus</th>						
+					<th align="center" style="font-size: 75%;">DR an</th>						
+					<th align="center" style="font-size: 75%;">DR an</th>						
+				</tr>
+				<tr style="font-size: 75%;">
+					<th></th>
+					<th align="center">Schalter</th>
+					<th align="center">Wert</th>
+					<th align="center">Schalter</th>
+					<th align="center">Wert</th>
+					<th align="center">Expo aus</th>
+					<th align="center">Expo an</th>
+					<th align="center">Expo aus</th>
+					<th align="center">Expo an</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+
+					<tr class="d0">			  	
+						<th align="right">Querruder</th>
+						<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+							<td align="center">70% / 100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">52%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACZ0lEQVR42u3cQY6CQBSEYa/gDXCth3Aj5/AorPVAusPrELfteoaMyYyicRSKpvu9/21JzOSzuguBYfbFiGYGAZRQQsl8TDlLcqqqSvMP+4cywS+8pUwxhlBCCSWUDJRQQgkllDQ4lB4pq/vh6IujpJIFDiUNzkAJJZRQ0uBQQgkllFBCSYNDCWXvCSFAKZimaZbL5fUxJiiHOq7X69VqRYNrHM/nM5QaR84rZY5QyhyhlDlyMiRzhFLmCKXMEUqZI5QyRxpc5gilzBFKmSOUMkcoZY40uMwRyr8JIRwOh6Io+jlC2Q1jb0co7xwXi8XxeLxcLv0+xzvlkM2RBpdtjlDeIaocPVLeNszAzdEv5W0YtYiOKEda0b4avIM4RhjtU8ZEtEnZCtZ1vdvtYiJao+zEMCaiEcqnMdzv96fTKRpi3g3+KBg/hnlTXgU3m01HcJIYfkaZyPsAOhksfmY+n5dlud1uO4K8peCtffCawVZw8gxms8Cf1vHvKub/dnKq44wpJz8rtED5+AsvlxgmRBn/Z7JBSmOIk1EOv45Ng8uuY3unlNy2904pv6nilFIYRteUqmdIXDe4/NkHp5RjLGqPlK4W9YiUwgfDXFNGczTe4DHzaJky8ro2Sxl/f7RJOUnPGKT03NdKShw1lDhqKHHUUOKooUzEMfsGTyePeVMmta4zpkxtf8yVMsGeyZWSvhZQhhDawzjKUomjjNLPzZnJLmcwFih5kg1KKKGEEkoaHEoooYSSocGhtEeZyFsKsjhKKlngUNLgDJRQQgklDQ4llFBCCWUqlMz784qS6R9SCKCE0u58A0NkbKSdid04AAAAAElFTkSuQmCC"/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAC/0lEQVR42u3cTY4BQRTAcYm5gBuwI1xAYmHDLdyBtY3TuAI77sDWAcTGgvVMh2TSegRT/ar61av/23YymfzmfVVNumvfhFDUIIASSiiJf1PWVMZisdD5i72hVPgHzyg1piGUUEIJJQEllFBCCSUTHMoUKRePwdMXT8lKgbhcLlDKOHa73ftlFRO8VEyn0+Fw2Ol0oCwVu93u6xb7/R7KUqXdbrezlJzNZqzoMqV9vV6hlCltliH3OB6P+dKGstT2kzn2er17aUNZtkWeTidOO5ItEkqB7ccCpZLtB0r50oZSrLShFCttKMVKmwnufrCBUuxgA6XYwQZKLy0SSrEWyQQXa5FQirVIKMVaJJRiLRLK544OLZIJ/srxXy0SSmFHKMUcoXxYIcs4Qum4QjLBi/m4XC7r9brDCgllsT8OBgO3FRLK4pxptVrr9VrqxyZHKTWvU6f055jWBPfqmAplNqxXq1Wz2fTnmATlbzJ6dTROmU/G+7B2uO+BMlwyWp7ggZPRJmUeMVgyWqMsIIZMRlOU+bZYCaIFyqraoqkJXm1btECZCW42m9FoVG1bdKHU8z2AfBo2b9FoNCaTyXw+V/I7R5CVf6fzeDzebrcaMjEmyqfTmS+6RDydY6VUOJ3jo9RwaLFAqeTQEjdldG1RKaXDxSITXCwZoSybjFC+cnTrjFAWHZ0XRihlHJngxh2DUtp2DEdp3jEQZQqOISh9OKY4wT3lY3KU/uo6LUqv/TEhSt9zJhVKwfezUp/ggu9nJU3p/Io/lMUW6fyKP5TPW2SM/5lRRBmyRVqe4IFbpFnK8C3SJmUlLdImZSVbpEHKlLdIScpPviQM5UeUn3xJGMr3lJS2DCWlLUZZeWkbmeAaStsCpZK7n+gp9dz9RE+p53o8bkq2HxlKth8xSg42MpSUthglpS1GqbC045vgh8Mhe6ywtOOjPJ/PWUr2+30NXynQ/5SPeVd6MwSlHcqIV3QCSiihhJIJDiWUUEIJpR5K4vN4RUm4JykEUEJpN34Ak874ebcAbFsAAAAASUVORK5CYII="/>
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+					<tr class="d1">			  	
+						<th align="right">H&ouml;henruder</th>
+						<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+							<td align="center">70% / 100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">30%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXklEQVR42u3cvXHCQBCGYVqgAxFDESSoCyohUVeQQTsapVJsa+wZj8BjgY+90/68myrRPOzdtwdCqw9KqFYQQAkllNS/KVcqq2kanTf2hFLhBz5SamxDKKGEEkoKSiihhBJKEhzKiJTNfXF15ipdyQKHkgSnoIQSSihJcCihhBJKKKEkwaGEMrn6vodSoNq23W63348xQfmu436/3+12JLiMY9d1UCZujufzuaqqH0fmyreaceoIZbrjZrO5XC7DMHDaEdgcmSuzOEIp5gilmCOUKUMPlGJDjyvKAgk+M/RAKb85QpnFEcr0kIFSLGRIcLGQgVJ4UUMptqihvGvGdxZ1dErZZgya4DmaMSJlpmaMRZm1GaNQThEzNaN/ygfEfM3oOcHLI/qknGZLMURvlGWyxTllyWxxS7nUtugqwVUhmqQcBa/X6+FwUIX4EqWe9wFM27D6qvV6fTweT6eTkns20JW/13Jd17fbTUMnmqH8a0PkfztWo9kw5YInFj+Ui59YPFAqObHYprS4LaqjTEYkwcWyBUqxbIHysRmTsyU6peCgE5oy92/QIShNT92KKCM0YwlKkec/o1MKPv8ZmrLAog6R4GUWtX/K5H+8QLmMo2fK8iHjkzLU5JiRMtrkmIuy5ObomRJHGUocZSg1OJpPcD0na9uUqoYew5Tahh6rlApDxiolYS1AOebMeBlHsa7EUYwy+Mm60NcZlHlKnhmCEkoooYSSBIcSSiihpEhwKP1R6nlLgf6rdCULHEoSnIISSiihJMGhhBJKKKHUQkm9XnOUVHqTQgAllH7rEzKScTY4OETnAAAAAElFTkSuQmCC"/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAC2UlEQVR42u3dvY0iQRDFcYxLAAcbPBAEQSLkAC4YkBXkAUkg3MG+HS0SOtCJj5nXPdVV/3LHWf22u98btPT2/jKi6UEAJZRQMl9T9kzObrez+YO9oTT4C68pLS5DKKGEEkoGSiihhBJKEhzKiJS7x+Hpi6esSsEsl8vtdgtl2zkej39+hwRvNefzeTwez+fz1WoFZSvH6XRaO85ms+v1CmXDqarq7ni5XKjoraKmdpxMJjdHKNtGzel0ogxpooZeqTki66iBUnlEQik7IqGUHZFlU3bexqGUtXEo9VEDpSxqoJRFDQkuixoov3N8fURCKXaEsnn1gVJWfUhwWfWBUlZ9oJRVHyiVkQ1lEkcSXOYYnVLoGJpS6xiXUu4YlDKFY8QET+QYjjKdYyDKqqr2+/1wOEzkGIXyvhjTOYagvDuORqPD4dDs/ZoET3s4BqLM6eiWMkPIhKDMEzL+KbOFjOcE72RTO6TsalO7ovx3Mebf1H4oLSxGD5QdJowfyvV63W3COKGsF+NgMDCyqb+gNHUfwD1h6un3+4vFYrPZcEtBq4SpV6WdxVgY5VPC1IvR4AlunbLzdxgnlKZqY6mUdt5hyqYsazHapbT2DlMk5ecJw51ssk0NpWxTQ/nG8fOEgVLjCGXBrzGmKQttjuYoy22Otigz//GJW0rHjlkphY6hE1y7HuNSyvd1UMoU52NEykQ5E47Sd17no4zmmIqy8aUoUD5P40tRoHyYNpeiQPlwRLa5FIUE/0/UJP28xzllzsj2TJm5+rilzF993FLGrD56yrDVR0yZp/r4p8xWfZxTxnzLTkLZbdT4SfDOo8YJpYWo8UD54n8gQfkdpZE2XjwlbVxDSRvXUNLGNZS0cRklH/zIKA1GTXkJXm/t+rHBqCmyDN2+x367DMDOfQA2n77f4AYjmy+bQMlACSWUUEJJgkMJJZRQQumSkvl8XlEyzRcpBFBC6Xd+ABom+dhbC5x7AAAAAElFTkSuQmCC"/>
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+					<tr class="d0">			  	
+						<th align="right">Seitenruder</th>
+						<td align="center">		---
+</td>
+							<td align="center">100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">60%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAADG0lEQVR42u3dMXLiQBCFYYK9ADeADEpcgIwEbsEBIIKYhBgOBBncAVIOQJEQQLw7ZbtYra0FMdMj9cz8napc5frcr3uQS6LxmxKqBgRQQgkl9TZlQ2Utl0udv9gLSoV/cEOpsQ2hhBJKKCkooYQSSijZ4FCmSLn8t7j65CpdKVC32w1KGccsyz5vVrHBnWo2mw0Gg263C6VTHQ6HXx91PB6hdIp2p9MxLTmfzzmiy0T7fr9DaV+n0+kRbQ5DTjWZTExLTqdTzpUy28b0JpRi2wZKsW0DpcBBMobP4NqiDaVYtKEUizaUYtGGUizabHCxaEMpFm0oxaINpVi0oXxR5/O5ZLTZ4C9GZJZlxrHX672MNpSlRuTlcin5I1C6jkgoxUYklP91fHdEssFfrJryIxJKmVUDpdiqgVJs1UAptmrY4MWOdiMSSmHHpCllHdOlFHdMlNKHY3Ib3Hye2Ww2rVZL3DEtykcz+nBMiPLh2G63t9uty/kxXUqvoU6I0neok9jg+Wb0F+rIKfOIFTRjnJTfEKtpxtgo60WMgdII7na71WpVL2LYG/xbG9aLGCTlZxsOh8N8G67X6/1+XyNiKUo97wPIt2Hro5rN5ng8XiwWSn5n7V1ZOA1Ho5GGNgyG8sk05I0u9icbJdMwJEoNx8PgKYNGVESZv38TIqIKyurv38RJaX0zkQ1e7GjRjFAWhNruZiKUTqGGUizUUBY4VvYfgjgpo3esiDIFxyooE3H0TpmOo19Kx8dg2OB/y/ExGCi/yv0xGCi/RqT7YzBQij0Gkzqlv1WT3Ab3t2rSovS6ahKi9L1qUqG0eP8JlCpGZLQbvPoRGSdl+be/QdkoGe0qR2SElHWdfmKjrCXacW7wWqIdIWXiH2zEKIm2GCXRlqHUEO0YNriSaMdAqSTawVP+/DYuKC0pf34bF5Q2lIXfxkW9TclBUoySg6QMJZ8RxSiJthilwmiHt8HNsjaXFUY7PMrr9Wpast/va3hLgf6rvDa5vjtDUEZFGfARnYISSiihZINDCSWUUEKph5IqX88oKfsmhQBKKOOtP3C388zgOWpsAAAAAElFTkSuQmCC"/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="drExpo1"></a>DualRate Expo - Phase 2: Start</caption>
+			
+			<thead>
+				<tr>
+					<th></th>
+					<th align="center" colspan="2">Dual Rate</th>
+					<th align="center" colspan="2">Expo</th>
+					<th align="center" style="font-size: 75%;">DR aus</th>						
+					<th align="center" style="font-size: 75%;">DR aus</th>						
+					<th align="center" style="font-size: 75%;">DR an</th>						
+					<th align="center" style="font-size: 75%;">DR an</th>						
+				</tr>
+				<tr style="font-size: 75%;">
+					<th></th>
+					<th align="center">Schalter</th>
+					<th align="center">Wert</th>
+					<th align="center">Schalter</th>
+					<th align="center">Wert</th>
+					<th align="center">Expo aus</th>
+					<th align="center">Expo an</th>
+					<th align="center">Expo aus</th>
+					<th align="center">Expo an</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+
+					<tr class="d0">			  	
+						<th align="right">Querruder</th>
+						<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+							<td align="center">70% / 100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">52%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACZ0lEQVR42u3cQY6CQBSEYa/gDXCth3Aj5/AorPVAusPrELfteoaMyYyicRSKpvu9/21JzOSzuguBYfbFiGYGAZRQQsl8TDlLcqqqSvMP+4cywS+8pUwxhlBCCSWUDJRQQgkllDQ4lB4pq/vh6IujpJIFDiUNzkAJJZRQ0uBQQgkllFBCSYNDCWXvCSFAKZimaZbL5fUxJiiHOq7X69VqRYNrHM/nM5QaR84rZY5QyhyhlDlyMiRzhFLmCKXMEUqZI5QyRxpc5gilzBFKmSOUMkcoZY40uMwRyr8JIRwOh6Io+jlC2Q1jb0co7xwXi8XxeLxcLv0+xzvlkM2RBpdtjlDeIaocPVLeNszAzdEv5W0YtYiOKEda0b4avIM4RhjtU8ZEtEnZCtZ1vdvtYiJao+zEMCaiEcqnMdzv96fTKRpi3g3+KBg/hnlTXgU3m01HcJIYfkaZyPsAOhksfmY+n5dlud1uO4K8peCtffCawVZw8gxms8Cf1vHvKub/dnKq44wpJz8rtED5+AsvlxgmRBn/Z7JBSmOIk1EOv45Ng8uuY3unlNy2904pv6nilFIYRteUqmdIXDe4/NkHp5RjLGqPlK4W9YiUwgfDXFNGczTe4DHzaJky8ro2Sxl/f7RJOUnPGKT03NdKShw1lDhqKHHUUOKooUzEMfsGTyePeVMmta4zpkxtf8yVMsGeyZWSvhZQhhDawzjKUomjjNLPzZnJLmcwFih5kg1KKKGEEkoaHEoooYSSocGhtEeZyFsKsjhKKlngUNLgDJRQQgklDQ4llFBCCWUqlMz784qS6R9SCKCE0u58A0NkbKSdid04AAAAAElFTkSuQmCC"/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAC/0lEQVR42u3cTY4BQRTAcYm5gBuwI1xAYmHDLdyBtY3TuAI77sDWAcTGgvVMh2TSegRT/ar61av/23YymfzmfVVNumvfhFDUIIASSiiJf1PWVMZisdD5i72hVPgHzyg1piGUUEIJJQEllFBCCSUTHMoUKRePwdMXT8lKgbhcLlDKOHa73ftlFRO8VEyn0+Fw2Ol0oCwVu93u6xb7/R7KUqXdbrezlJzNZqzoMqV9vV6hlCltliH3OB6P+dKGstT2kzn2er17aUNZtkWeTidOO5ItEkqB7ccCpZLtB0r50oZSrLShFCttKMVKmwnufrCBUuxgA6XYwQZKLy0SSrEWyQQXa5FQirVIKMVaJJRiLRLK544OLZIJ/srxXy0SSmFHKMUcoXxYIcs4Qum4QjLBi/m4XC7r9brDCgllsT8OBgO3FRLK4pxptVrr9VrqxyZHKTWvU6f055jWBPfqmAplNqxXq1Wz2fTnmATlbzJ6dTROmU/G+7B2uO+BMlwyWp7ggZPRJmUeMVgyWqMsIIZMRlOU+bZYCaIFyqraoqkJXm1btECZCW42m9FoVG1bdKHU8z2AfBo2b9FoNCaTyXw+V/I7R5CVf6fzeDzebrcaMjEmyqfTmS+6RDydY6VUOJ3jo9RwaLFAqeTQEjdldG1RKaXDxSITXCwZoSybjFC+cnTrjFAWHZ0XRihlHJngxh2DUtp2DEdp3jEQZQqOISh9OKY4wT3lY3KU/uo6LUqv/TEhSt9zJhVKwfezUp/ggu9nJU3p/Io/lMUW6fyKP5TPW2SM/5lRRBmyRVqe4IFbpFnK8C3SJmUlLdImZSVbpEHKlLdIScpPviQM5UeUn3xJGMr3lJS2DCWlLUZZeWkbmeAaStsCpZK7n+gp9dz9RE+p53o8bkq2HxlKth8xSg42MpSUthglpS1GqbC045vgh8Mhe6ywtOOjPJ/PWUr2+30NXynQ/5SPeVd6MwSlHcqIV3QCSiihhJIJDiWUUEIJpR5K4vN4RUm4JykEUEJpN34Ak874ebcAbFsAAAAASUVORK5CYII="/>
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+					<tr class="d1">			  	
+						<th align="right">H&ouml;henruder</th>
+						<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+							<td align="center">70% / 100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">30%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXklEQVR42u3cvXHCQBCGYVqgAxFDESSoCyohUVeQQTsapVJsa+wZj8BjgY+90/68myrRPOzdtwdCqw9KqFYQQAkllNS/KVcqq2kanTf2hFLhBz5SamxDKKGEEkoKSiihhBJKEhzKiJTNfXF15ipdyQKHkgSnoIQSSihJcCihhBJKKKEkwaGEMrn6vodSoNq23W63348xQfmu436/3+12JLiMY9d1UCZujufzuaqqH0fmyreaceoIZbrjZrO5XC7DMHDaEdgcmSuzOEIp5gilmCOUKUMPlGJDjyvKAgk+M/RAKb85QpnFEcr0kIFSLGRIcLGQgVJ4UUMptqihvGvGdxZ1dErZZgya4DmaMSJlpmaMRZm1GaNQThEzNaN/ygfEfM3oOcHLI/qknGZLMURvlGWyxTllyWxxS7nUtugqwVUhmqQcBa/X6+FwUIX4EqWe9wFM27D6qvV6fTweT6eTkns20JW/13Jd17fbTUMnmqH8a0PkfztWo9kw5YInFj+Ui59YPFAqObHYprS4LaqjTEYkwcWyBUqxbIHysRmTsyU6peCgE5oy92/QIShNT92KKCM0YwlKkec/o1MKPv8ZmrLAog6R4GUWtX/K5H+8QLmMo2fK8iHjkzLU5JiRMtrkmIuy5ObomRJHGUocZSg1OJpPcD0na9uUqoYew5Tahh6rlApDxiolYS1AOebMeBlHsa7EUYwy+Mm60NcZlHlKnhmCEkoooYSSBIcSSiihpEhwKP1R6nlLgf6rdCULHEoSnIISSiihJMGhhBJKKKHUQkm9XnOUVHqTQgAllH7rEzKScTY4OETnAAAAAElFTkSuQmCC"/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAC2UlEQVR42u3dvY0iQRDFcYxLAAcbPBAEQSLkAC4YkBXkAUkg3MG+HS0SOtCJj5nXPdVV/3LHWf22u98btPT2/jKi6UEAJZRQMl9T9kzObrez+YO9oTT4C68pLS5DKKGEEkoGSiihhBJKEhzKiJS7x+Hpi6esSsEsl8vtdgtl2zkej39+hwRvNefzeTwez+fz1WoFZSvH6XRaO85ms+v1CmXDqarq7ni5XKjoraKmdpxMJjdHKNtGzel0ogxpooZeqTki66iBUnlEQik7IqGUHZFlU3bexqGUtXEo9VEDpSxqoJRFDQkuixoov3N8fURCKXaEsnn1gVJWfUhwWfWBUlZ9oJRVHyiVkQ1lEkcSXOYYnVLoGJpS6xiXUu4YlDKFY8QET+QYjjKdYyDKqqr2+/1wOEzkGIXyvhjTOYagvDuORqPD4dDs/ZoET3s4BqLM6eiWMkPIhKDMEzL+KbOFjOcE72RTO6TsalO7ovx3Mebf1H4oLSxGD5QdJowfyvV63W3COKGsF+NgMDCyqb+gNHUfwD1h6un3+4vFYrPZcEtBq4SpV6WdxVgY5VPC1IvR4AlunbLzdxgnlKZqY6mUdt5hyqYsazHapbT2DlMk5ecJw51ssk0NpWxTQ/nG8fOEgVLjCGXBrzGmKQttjuYoy22Otigz//GJW0rHjlkphY6hE1y7HuNSyvd1UMoU52NEykQ5E47Sd17no4zmmIqy8aUoUD5P40tRoHyYNpeiQPlwRLa5FIUE/0/UJP28xzllzsj2TJm5+rilzF993FLGrD56yrDVR0yZp/r4p8xWfZxTxnzLTkLZbdT4SfDOo8YJpYWo8UD54n8gQfkdpZE2XjwlbVxDSRvXUNLGNZS0cRklH/zIKA1GTXkJXm/t+rHBqCmyDN2+x367DMDOfQA2n77f4AYjmy+bQMlACSWUUEJJgkMJJZRQQumSkvl8XlEyzRcpBFBC6Xd+ABom+dhbC5x7AAAAAElFTkSuQmCC"/>
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+					<tr class="d0">			  	
+						<th align="right">Seitenruder</th>
+						<td align="center">		---
+</td>
+							<td align="center">100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">60%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAADG0lEQVR42u3dMXLiQBCFYYK9ADeADEpcgIwEbsEBIIKYhBgOBBncAVIOQJEQQLw7ZbtYra0FMdMj9cz8napc5frcr3uQS6LxmxKqBgRQQgkl9TZlQ2Utl0udv9gLSoV/cEOpsQ2hhBJKKCkooYQSSijZ4FCmSLn8t7j65CpdKVC32w1KGccsyz5vVrHBnWo2mw0Gg263C6VTHQ6HXx91PB6hdIp2p9MxLTmfzzmiy0T7fr9DaV+n0+kRbQ5DTjWZTExLTqdTzpUy28b0JpRi2wZKsW0DpcBBMobP4NqiDaVYtKEUizaUYtGGUizabHCxaEMpFm0oxaINpVi0oXxR5/O5ZLTZ4C9GZJZlxrHX672MNpSlRuTlcin5I1C6jkgoxUYklP91fHdEssFfrJryIxJKmVUDpdiqgVJs1UAptmrY4MWOdiMSSmHHpCllHdOlFHdMlNKHY3Ib3Hye2Ww2rVZL3DEtykcz+nBMiPLh2G63t9uty/kxXUqvoU6I0neok9jg+Wb0F+rIKfOIFTRjnJTfEKtpxtgo60WMgdII7na71WpVL2LYG/xbG9aLGCTlZxsOh8N8G67X6/1+XyNiKUo97wPIt2Hro5rN5ng8XiwWSn5n7V1ZOA1Ho5GGNgyG8sk05I0u9icbJdMwJEoNx8PgKYNGVESZv38TIqIKyurv38RJaX0zkQ1e7GjRjFAWhNruZiKUTqGGUizUUBY4VvYfgjgpo3esiDIFxyooE3H0TpmOo19Kx8dg2OB/y/ExGCi/yv0xGCi/RqT7YzBQij0Gkzqlv1WT3Ab3t2rSovS6ahKi9L1qUqG0eP8JlCpGZLQbvPoRGSdl+be/QdkoGe0qR2SElHWdfmKjrCXacW7wWqIdIWXiH2zEKIm2GCXRlqHUEO0YNriSaMdAqSTawVP+/DYuKC0pf34bF5Q2lIXfxkW9TclBUoySg6QMJZ8RxSiJthilwmiHt8HNsjaXFUY7PMrr9Wpast/va3hLgf6rvDa5vjtDUEZFGfARnYISSiihZINDCSWUUEKph5IqX88oKfsmhQBKKOOtP3C388zgOWpsAAAAAElFTkSuQmCC"/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="drExpo2"></a>DualRate Expo - Phase 3: Thermik</caption>
+			
+			<thead>
+				<tr>
+					<th></th>
+					<th align="center" colspan="2">Dual Rate</th>
+					<th align="center" colspan="2">Expo</th>
+					<th align="center" style="font-size: 75%;">DR aus</th>						
+					<th align="center" style="font-size: 75%;">DR aus</th>						
+					<th align="center" style="font-size: 75%;">DR an</th>						
+					<th align="center" style="font-size: 75%;">DR an</th>						
+				</tr>
+				<tr style="font-size: 75%;">
+					<th></th>
+					<th align="center">Schalter</th>
+					<th align="center">Wert</th>
+					<th align="center">Schalter</th>
+					<th align="center">Wert</th>
+					<th align="center">Expo aus</th>
+					<th align="center">Expo an</th>
+					<th align="center">Expo aus</th>
+					<th align="center">Expo an</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+
+					<tr class="d0">			  	
+						<th align="right">Querruder</th>
+						<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+							<td align="center">70% / 100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">52%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACZ0lEQVR42u3cQY6CQBSEYa/gDXCth3Aj5/AorPVAusPrELfteoaMyYyicRSKpvu9/21JzOSzuguBYfbFiGYGAZRQQsl8TDlLcqqqSvMP+4cywS+8pUwxhlBCCSWUDJRQQgkllDQ4lB4pq/vh6IujpJIFDiUNzkAJJZRQ0uBQQgkllFBCSYNDCWXvCSFAKZimaZbL5fUxJiiHOq7X69VqRYNrHM/nM5QaR84rZY5QyhyhlDlyMiRzhFLmCKXMEUqZI5QyRxpc5gilzBFKmSOUMkcoZY40uMwRyr8JIRwOh6Io+jlC2Q1jb0co7xwXi8XxeLxcLv0+xzvlkM2RBpdtjlDeIaocPVLeNszAzdEv5W0YtYiOKEda0b4avIM4RhjtU8ZEtEnZCtZ1vdvtYiJao+zEMCaiEcqnMdzv96fTKRpi3g3+KBg/hnlTXgU3m01HcJIYfkaZyPsAOhksfmY+n5dlud1uO4K8peCtffCawVZw8gxms8Cf1vHvKub/dnKq44wpJz8rtED5+AsvlxgmRBn/Z7JBSmOIk1EOv45Ng8uuY3unlNy2904pv6nilFIYRteUqmdIXDe4/NkHp5RjLGqPlK4W9YiUwgfDXFNGczTe4DHzaJky8ro2Sxl/f7RJOUnPGKT03NdKShw1lDhqKHHUUOKooUzEMfsGTyePeVMmta4zpkxtf8yVMsGeyZWSvhZQhhDawzjKUomjjNLPzZnJLmcwFih5kg1KKKGEEkoaHEoooYSSocGhtEeZyFsKsjhKKlngUNLgDJRQQgklDQ4llFBCCWUqlMz784qS6R9SCKCE0u58A0NkbKSdid04AAAAAElFTkSuQmCC"/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAC/0lEQVR42u3cTY4BQRTAcYm5gBuwI1xAYmHDLdyBtY3TuAI77sDWAcTGgvVMh2TSegRT/ar61av/23YymfzmfVVNumvfhFDUIIASSiiJf1PWVMZisdD5i72hVPgHzyg1piGUUEIJJQEllFBCCSUTHMoUKRePwdMXT8lKgbhcLlDKOHa73ftlFRO8VEyn0+Fw2Ol0oCwVu93u6xb7/R7KUqXdbrezlJzNZqzoMqV9vV6hlCltliH3OB6P+dKGstT2kzn2er17aUNZtkWeTidOO5ItEkqB7ccCpZLtB0r50oZSrLShFCttKMVKmwnufrCBUuxgA6XYwQZKLy0SSrEWyQQXa5FQirVIKMVaJJRiLRLK544OLZIJ/srxXy0SSmFHKMUcoXxYIcs4Qum4QjLBi/m4XC7r9brDCgllsT8OBgO3FRLK4pxptVrr9VrqxyZHKTWvU6f055jWBPfqmAplNqxXq1Wz2fTnmATlbzJ6dTROmU/G+7B2uO+BMlwyWp7ggZPRJmUeMVgyWqMsIIZMRlOU+bZYCaIFyqraoqkJXm1btECZCW42m9FoVG1bdKHU8z2AfBo2b9FoNCaTyXw+V/I7R5CVf6fzeDzebrcaMjEmyqfTmS+6RDydY6VUOJ3jo9RwaLFAqeTQEjdldG1RKaXDxSITXCwZoSybjFC+cnTrjFAWHZ0XRihlHJngxh2DUtp2DEdp3jEQZQqOISh9OKY4wT3lY3KU/uo6LUqv/TEhSt9zJhVKwfezUp/ggu9nJU3p/Io/lMUW6fyKP5TPW2SM/5lRRBmyRVqe4IFbpFnK8C3SJmUlLdImZSVbpEHKlLdIScpPviQM5UeUn3xJGMr3lJS2DCWlLUZZeWkbmeAaStsCpZK7n+gp9dz9RE+p53o8bkq2HxlKth8xSg42MpSUthglpS1GqbC045vgh8Mhe6ywtOOjPJ/PWUr2+30NXynQ/5SPeVd6MwSlHcqIV3QCSiihhJIJDiWUUEIJpR5K4vN4RUm4JykEUEJpN34Ak874ebcAbFsAAAAASUVORK5CYII="/>
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+					<tr class="d1">			  	
+						<th align="right">H&ouml;henruder</th>
+						<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+							<td align="center">70% / 100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">30%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXklEQVR42u3cvXHCQBCGYVqgAxFDESSoCyohUVeQQTsapVJsa+wZj8BjgY+90/68myrRPOzdtwdCqw9KqFYQQAkllNS/KVcqq2kanTf2hFLhBz5SamxDKKGEEkoKSiihhBJKEhzKiJTNfXF15ipdyQKHkgSnoIQSSihJcCihhBJKKKEkwaGEMrn6vodSoNq23W63348xQfmu436/3+12JLiMY9d1UCZujufzuaqqH0fmyreaceoIZbrjZrO5XC7DMHDaEdgcmSuzOEIp5gilmCOUKUMPlGJDjyvKAgk+M/RAKb85QpnFEcr0kIFSLGRIcLGQgVJ4UUMptqihvGvGdxZ1dErZZgya4DmaMSJlpmaMRZm1GaNQThEzNaN/ygfEfM3oOcHLI/qknGZLMURvlGWyxTllyWxxS7nUtugqwVUhmqQcBa/X6+FwUIX4EqWe9wFM27D6qvV6fTweT6eTkns20JW/13Jd17fbTUMnmqH8a0PkfztWo9kw5YInFj+Ui59YPFAqObHYprS4LaqjTEYkwcWyBUqxbIHysRmTsyU6peCgE5oy92/QIShNT92KKCM0YwlKkec/o1MKPv8ZmrLAog6R4GUWtX/K5H+8QLmMo2fK8iHjkzLU5JiRMtrkmIuy5ObomRJHGUocZSg1OJpPcD0na9uUqoYew5Tahh6rlApDxiolYS1AOebMeBlHsa7EUYwy+Mm60NcZlHlKnhmCEkoooYSSBIcSSiihpEhwKP1R6nlLgf6rdCULHEoSnIISSiihJMGhhBJKKKHUQkm9XnOUVHqTQgAllH7rEzKScTY4OETnAAAAAElFTkSuQmCC"/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAAC2UlEQVR42u3dvY0iQRDFcYxLAAcbPBAEQSLkAC4YkBXkAUkg3MG+HS0SOtCJj5nXPdVV/3LHWf22u98btPT2/jKi6UEAJZRQMl9T9kzObrez+YO9oTT4C68pLS5DKKGEEkoGSiihhBJKEhzKiJS7x+Hpi6esSsEsl8vtdgtl2zkej39+hwRvNefzeTwez+fz1WoFZSvH6XRaO85ms+v1CmXDqarq7ni5XKjoraKmdpxMJjdHKNtGzel0ogxpooZeqTki66iBUnlEQik7IqGUHZFlU3bexqGUtXEo9VEDpSxqoJRFDQkuixoov3N8fURCKXaEsnn1gVJWfUhwWfWBUlZ9oJRVHyiVkQ1lEkcSXOYYnVLoGJpS6xiXUu4YlDKFY8QET+QYjjKdYyDKqqr2+/1wOEzkGIXyvhjTOYagvDuORqPD4dDs/ZoET3s4BqLM6eiWMkPIhKDMEzL+KbOFjOcE72RTO6TsalO7ovx3Mebf1H4oLSxGD5QdJowfyvV63W3COKGsF+NgMDCyqb+gNHUfwD1h6un3+4vFYrPZcEtBq4SpV6WdxVgY5VPC1IvR4AlunbLzdxgnlKZqY6mUdt5hyqYsazHapbT2DlMk5ecJw51ssk0NpWxTQ/nG8fOEgVLjCGXBrzGmKQttjuYoy22Otigz//GJW0rHjlkphY6hE1y7HuNSyvd1UMoU52NEykQ5E47Sd17no4zmmIqy8aUoUD5P40tRoHyYNpeiQPlwRLa5FIUE/0/UJP28xzllzsj2TJm5+rilzF993FLGrD56yrDVR0yZp/r4p8xWfZxTxnzLTkLZbdT4SfDOo8YJpYWo8UD54n8gQfkdpZE2XjwlbVxDSRvXUNLGNZS0cRklH/zIKA1GTXkJXm/t+rHBqCmyDN2+x367DMDOfQA2n77f4AYjmy+bQMlACSWUUEJJgkMJJZRQQumSkvl8XlEyzRcpBFBC6Xd+ABom+dhbC5x7AAAAAElFTkSuQmCC"/>
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+					<tr class="d0">			  	
+						<th align="right">Seitenruder</th>
+						<td align="center">		---
+</td>
+							<td align="center">100%</td>
+						<td align="center">		---
+</td>
+							<td align="center">0%</td>
+						
+								<td align="center">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACXElEQVR42u3cMW4CQQyFYU6xNT0cgktBvddd0S41WQkpSqQIkvBm5tn+3U6DvrX9Vghmd6dEtYMASiihpP5MubOseZ49P9gLSsMHvlE6tiGUUEIJJQUllFBCCSUJDmVFyvl7cfrj6bqudKWglmU5HA6Pb1igfNfxdDodj0cSXON4vV6h1DjyXilzhFLmCKXMkZchmSOUMkcoZY5QyhyhlDmS4DJHKGWOUMocoZQ5QilzJMFljlDKHKGUOUIpc4RS5kiCyxyrUwodS1NqHetSyh2LUrZwrJjgjRzLUbZzrEXZ1LEQZWvHKpQdHEskeB/H/JTdHJNT9nTMTNnZMS1lf8ecCT7EMSHlKMdslAMdU1GOdcxDOdwxSYI7OGagNHEMT+njGJvSyjEwpZtjVMrz+ezmGJJy68dpmtwc7+FuKXjM9X6/3zQvl4vVHQaRuvJzP26OVv0YjPJrzmz9aLjBY1Aa5nVIyhCOASijOLpTBnK0pozl6Ev53JE72WT9CKVsrqGU7UcoZTkDZaq8NqVM4GhBmcNxPGUax8GUmRxHUr7jSILL+hFK2VxDKduPUMpypjplsrweRpnesRNlBccelEUcm1PWcWxL2c6xVoI37cdClK3nugplh/1YgrJPzuSnLJXXDSmLO8oocdRQ4qihxFFDOcoxW4IP7MdUlGPnOg/l8P2YhNIhZzJQktcaShw1lDhqKHHUUOIoozR0jJfg67pux4b9GPJl6PE/drf7ADxPXw/47XZze/78kg1KCkoooYQSShIcSiihhBLKlJTU7+sZJfX/JoUASijz1gflbAGgyHNPKgAAAABJRU5ErkJggg=="/>
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+								<td align="center">
+								</td>
+					</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="channel1Curve0"></a>Kanal 1 Kurve - Phase 1: Normal</caption>
+			
+			<tbody>
+	<tr>
+		<th class="d2" colspan="6">Phase 1: Normal</th>
+	</tr>
+	
+	<tr class="d0">
+		<th align="right">Kurve</th>
+		<td colspan="4" align="left">aus</td>
+		<td rowspan="8" align="center"><img src="data:image/png;base64,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"/></td>
+	</tr>
+
+	<tr>
+		<th></th>
+		<th align="center">Punkt</th>				
+		<th align="center">aktiv</th>
+		<th align="center">Eingang</th>
+		<th align="center">Ausgang</th>
+	</tr>
+
+
+		<tr class="d0 used">
+			<th></th>
+			<td align="center">1</td>
+			<td align="center">ja</td>
+				<td align="center">-100%</td>
+				<td align="center">-100%</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">2</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">3</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">4</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">5</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 used">
+			<th></th>
+			<td align="center">6</td>
+			<td align="center">ja</td>
+				<td align="center">100%</td>
+				<td align="center">100%</td>
+		</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="channel1Curve1"></a>Kanal 1 Kurve - Phase 2: Start</caption>
+			
+			<tbody>
+	<tr>
+		<th class="d2" colspan="6">Phase 2: Start</th>
+	</tr>
+	
+	<tr class="d0">
+		<th align="right">Kurve</th>
+		<td colspan="4" align="left">aus</td>
+		<td rowspan="8" align="center"><img src="data:image/png;base64,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"/></td>
+	</tr>
+
+	<tr>
+		<th></th>
+		<th align="center">Punkt</th>				
+		<th align="center">aktiv</th>
+		<th align="center">Eingang</th>
+		<th align="center">Ausgang</th>
+	</tr>
+
+
+		<tr class="d0 used">
+			<th></th>
+			<td align="center">1</td>
+			<td align="center">ja</td>
+				<td align="center">-100%</td>
+				<td align="center">-100%</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">2</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">3</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">4</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">5</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 used">
+			<th></th>
+			<td align="center">6</td>
+			<td align="center">ja</td>
+				<td align="center">100%</td>
+				<td align="center">100%</td>
+		</tr>
+			</tbody>
+		</table>
+		<table>
+			<caption><a name="channel1Curve2"></a>Kanal 1 Kurve - Phase 3: Thermik</caption>
+			
+			<tbody>
+	<tr>
+		<th class="d2" colspan="6">Phase 3: Thermik</th>
+	</tr>
+	
+	<tr class="d0">
+		<th align="right">Kurve</th>
+		<td colspan="4" align="left">aus</td>
+		<td rowspan="8" align="center"><img src="data:image/png;base64,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"/></td>
+	</tr>
+
+	<tr>
+		<th></th>
+		<th align="center">Punkt</th>				
+		<th align="center">aktiv</th>
+		<th align="center">Eingang</th>
+		<th align="center">Ausgang</th>
+	</tr>
+
+
+		<tr class="d0 used">
+			<th></th>
+			<td align="center">1</td>
+			<td align="center">ja</td>
+				<td align="center">-100%</td>
+				<td align="center">-100%</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">2</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">3</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">4</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">5</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 used">
+			<th></th>
+			<td align="center">6</td>
+			<td align="center">ja</td>
+				<td align="center">100%</td>
+				<td align="center">100%</td>
+		</tr>
+			</tbody>
+		</table>
+<table class="unused">
+	<caption><a name="controlSwitches"></a>Geberschalter</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Nummer</th>
+			<th align="center">Geber</th>
+			<th align="center">Position</th>
+			<th align="center">Richtung</th>
+			<th align="center">Schalter</th>
+		</tr>
+	</thead>
+
+	
+	<tbody>
+			<tr class="d0 unused">
+				<td align="center">G1</td>
+				<td align="center">---</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">G2</td>
+				<td align="center">---</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d0 unused">
+				<td align="center">G3</td>
+				<td align="center">---</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">G4</td>
+				<td align="center">---</td>
+				<td align="center">0%</td>
+				<td align="center">&rarr;</td>
+				<td align="center">		---
+</td>
+			</tr>
+	</tbody>
+</table>	<table class="unused">
+		<caption><a name="logicalSwitches"></a>logische Schalter</caption>
+		
+		<thead>
+			<tr>
+				<th align="center">Nummer</th>
+				<th align="center">Schalter 1</th>
+				<th align="center">Funktion</th>
+				<th align="center">Schalter 2</th>
+			</tr>
+		</thead>
+
+		
+		<tbody>
+				<tr class="d0 unused">
+					<td align="center">L1</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+				<tr class="d1 unused">
+					<td align="center">L2</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+				<tr class="d0 unused">
+					<td align="center">L3</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+				<tr class="d1 unused">
+					<td align="center">L4</td>
+					<td align="center">		---
+</td>
+					<td align="center">und</td>
+					<td align="center">		---
+</td>
+				</tr>
+		</tbody>
+	</table>
+<table>
+	<caption><a name="phaseSettings"></a>Phaseneinstellungen</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Phase</th>
+			<th align="center">Name</th>
+			<th align="center">Uhr</th>
+							<th align="center">Motor</th>
+			<th align="center">Umschaltzeit</th>
+			<th align="center">Ansage</th>
+		</tr>
+	</thead>
+
+	
+	<tbody>
+				<tr class="d0">
+					<td align="center">Phase 1</td>
+					<td align="center">Normal</td>
+						<td align="center">---</td>
+						<td align="center">ja</td>
+					<td align="center">0,1s</td>
+					<td align="center">0</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">Phase 2</td>
+					<td align="center">Start</td>
+						<td align="center">---</td>
+						<td align="center">ja</td>
+					<td align="center">0,1s</td>
+					<td align="center">0</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">Phase 3</td>
+					<td align="center">Thermik</td>
+						<td align="center">---</td>
+						<td align="center">ja</td>
+					<td align="center">0,1s</td>
+					<td align="center">0</td>
+				</tr>
+	</tbody>
+</table><table>
+	<caption><a name="phaseAssignments"></a>Phasenzuweisung</caption>
+	
+	<thead>
+		<tr>
+			<th></th>
+			<th align="center">Schalter</th>
+			<th align="center">Zuweisung</th>
+		</tr>
+	</thead>
+
+		
+	<tbody>
+		<tr class="d0 unused">
+			<th align="right">Priorit&auml;tsschalter A</th>
+			<td align="center">		---
+</td>
+			<td align="center">Phase 1: Normal</td>
+		</tr>
+		<tr class="d1 unused">
+			<th align="right">Priorit&auml;tsschalter B</th>
+			<td align="center">		---
+</td>
+			<td align="center">Phase 1: Normal</td>
+		</tr>
+		<tr class="d0 used">
+			<th align="right">Kombinationsschalter C</th>
+			<td align="center">					<span style="text-decoration: overline;">Schalter 5</span>
+</td>
+			<td class="d0"></td>
+		</tr>
+		<tr class="d1 used">
+			<th align="right">Kombinationsschalter D</th>
+			<td align="center">					Schalter 6
+</td>
+			<td class="d0"></td>
+		</tr>
+		<tr class="d0 unused">
+			<th align="right">Kombinationsschalter E</th>
+			<td align="center">		---
+</td>
+			<td class="d0"></td>
+		</tr>
+		<tr class="d1 unused">
+			<th align="right">Kombinationsschalter F</th>
+			<td align="center">		---
+</td>
+			<td class="d0"></td>
+		</tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Kombinationsphasenzuweisungen</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">C</th>
+			<th align="center">D</th>
+			<th align="center">E</th>
+			<th align="center">F</th>
+			<th align="center">Phase</th>
+		</tr>
+	</thead>
+
+	
+	<tbody>
+				<tr class="d0">
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 2: Start</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 3: Thermik</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">aus</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+					<td align="center">an</td>
+						<td align="center">Phase 1: Normal</td>
+				</tr>
+	</tbody>
+</table>	<table>
+		<caption><a name="phaseTrim"></a>Phasentrimm</caption>
+		
+		<thead>
+			<tr>
+				<th align="center">Phase</th>
+				<th align="center">HR</th>
+				<th align="center">QR</th>
+				<th align="center">QR2</th>
+				<th align="center">WK</th>
+				<th align="center">WK2</th>
+			</tr>
+		</thead>
+		
+		
+		<tbody>
+					<tr class="d0">
+						<td align="center">Phase 1: Normal</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+					</tr>
+					<tr class="d1">
+						<td align="center">Phase 2: Start</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+					</tr>
+					<tr class="d0">
+						<td align="center">Phase 3: Thermik</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+					</tr>
+		</tbody>
+	</table>
+<table>
+	<caption><a name="nonDelayedChannels"></a>unverz&ouml;gerte Kan&auml;le</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Phase</th>
+								<th align="center">S1</th>
+					<th align="center">S2</th>
+					<th align="center">S3</th>
+					<th align="center">S4</th>
+					<th align="center">S5</th>
+					<th align="center">S6</th>
+					<th align="center">S7</th>
+					<th align="center">S8</th>
+					<th align="center">S9</th>
+					<th align="center">S10</th>
+					<th align="center">S11</th>
+					<th align="center">S12</th>
+		</tr>
+	</thead>
+
+	
+	<tbody>
+				<tr class="d0">
+					<td align="center">Phase 1: Normal</td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+				</tr>
+				<tr class="d1">
+					<td align="center">Phase 2: Start</td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+				</tr>
+				<tr class="d0">
+					<td align="center">Phase 3: Thermik</td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+							<td align="center"></td>
+				</tr>
+	</tbody>
+</table><table>
+	<caption><a name="timersGeneral"></a>Uhren (allgemein)</caption>
+	
+	<thead>
+		<tr>
+			<th></th>
+			<th align="center">Uhr</th>
+			<th align="center">Timer</th>
+			<th align="center">Alarm</th>
+			<th align="center">Schalter</th>
+		</tr>
+	</thead>
+	
+		
+	<tbody>
+		<tr class="d0">
+			<th align="right">Modellzeit</th>
+			<td colspan="3" class="d0"></td>
+			<td align="center">		---
+</td>
+		</tr>
+			<tr class="d1">
+				<th align="right">Oben</th>
+				<td align="center">Stoppuhr</td>
+				<td align="center">3:20</td>
+				<td align="center">80s</td>
+				<td align="center">					Schalter 7
+</td>
+			</tr>
+			<tr class="d0">
+				<th align="right">Mitte</th>
+				<td align="center">Flugzeit</td>
+				<td align="center">0:00</td>
+				<td align="center">0s</td>
+				<td align="center">					Schalter 7
+</td>
+			</tr>
+	</tbody>
+</table><table>
+	<caption><a name="phaseTimer"></a>Flugphasenuhren</caption>
+	
+	<thead>
+		<tr>
+			<th></th>
+			<th align="center">Timer</th>
+			<th align="center">Alarm</th>
+			<th align="center">Schalter</th>
+		</tr>
+	</thead>
+	
+		
+	<tbody>
+			<tr class="d0">
+				<th align="right">Uhr 1</th>
+				<td align="center">0:00</td>
+				<td align="center">0s</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d1">
+				<th align="right">Uhr 2</th>
+				<td align="center">0:00</td>
+				<td align="center">0s</td>
+				<td align="center">		---
+</td>
+			</tr>
+			<tr class="d0">
+				<th align="right">Uhr 3</th>
+				<td align="center">0:00</td>
+				<td align="center">0s</td>
+				<td align="center">		---
+</td>
+			</tr>
+		<tr class="d1">
+			<th align="right">Rundenz&auml;hler/Zeittabelle</th>
+			<td colspan="2" class="d0"></td>
+			<td align="center">		---
+</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">Rundenanzeige</th>
+			<td colspan="2" class="d0"></td>
+			<td align="center">		---
+</td>
+		</tr>
+	</tbody>
+</table>			<table>
+				<caption><a name="wingMix0"></a>Fl&auml;chenmischer - Phase 1: Normal</caption>
+				
+				<tbody>
+					<tr>
+						<th colspan="9" class="d2">Fl&auml;chenmischer</th>
+					</tr>
+
+
+					<tr class="d0">
+						<th align="right">Querruder 2&rarr;4 Seitenruder</th>
+						<td colspan="2" align="center">70%</td>
+						<td colspan="6" align="left">					Schalter 2
+</td>
+					</tr>
+
+
+						<tr class="d1">
+							<th align="right">W&ouml;lbklappen 6&rarr;3 H&ouml;henruder</th>
+							<td colspan="1" align="center">0%</td>
+							<td colspan="1" align="center">0%</td>
+							<td colspan="6" align="left">		---
+</td>
+						</tr>
+
+
+
+						<tr>
+							<th colspan="9" class="d2">Multi-Klappen-Men&uuml;</th>
+						</tr>									
+						<tr>
+							<th></th>
+							<th colspan="2" align="center">QR</th>
+								<th colspan="2"></th>
+								<th colspan="2" align="center">WK</th>
+								<th colspan="2"></th>
+						</tr>
+	
+	
+						<tr class="d0">
+							<th align="right">&uarr;QR&darr;</th>
+							<td colspan="2" align="center">100%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">30%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">Querrudertrimmung</th>
+							<td colspan="2" align="center">100%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">0%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d0">
+							<th align="right">Querruderdifferenzierung</th>
+							<td colspan="2" align="center">60%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">15%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">W&ouml;lbklappenposition</th>
+							<td colspan="2" align="center">0%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">0%</td>
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d0">
+							<th align="right">&uarr;WK&uarr;</th>
+							<td align="center">0%</td>
+							<td align="center">0%</td>
+								<td colspan="2"></td>
+								<td align="center">100%</td>								
+								<td align="center">100%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">HR&rarr;WK</th>
+							<td align="center">0%</td>
+							<td align="center">0%</td>
+								<td colspan="2"></td>
+								<td align="center">0%</td>								
+								<td align="center">0%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d0">
+							<th align="right">HR&rarr;WK-Offset</th>
+							<td align="center">0%</td>								
+							<td colspan="7" align="left">		---
+</td>								
+						</tr>
+
+						<tr>
+							<th colspan="9" class="d2">Bremseinstellungen</th>
+						</tr>
+	
+
+						<tr class="d0">
+							<th align="right">Butterfly</th>
+							<td colspan="2" align="center">28%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">140%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">Diff.-Reduction</th>
+							<td colspan="2" align="center">26%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">114%</td>								
+								<td colspan="2"></td>
+						</tr>
+
+	<tr>
+		<th class="d2" colspan="9">Bremskurve</th>
+	</tr>
+	
+	
+	<tr class="d0">
+		<th align="right">Kurve</th>
+		<td colspan="4" align="left">aus</td>
+		<td colspan="4" rowspan="8" align="center"><img src="data:image/png;base64,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"/></td>
+	</tr>
+
+	<tr>
+		<th></th>
+		<th align="center">Punkt</th>				
+		<th align="center">aktiv</th>
+		<th align="center">Eingang</th>
+		<th align="center">Ausgang</th>
+	</tr>
+
+
+		<tr class="d0 used">
+			<th></th>
+			<td align="center">1</td>
+			<td align="center">ja</td>
+				<td align="center">-100%</td>
+				<td align="center">0%</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">2</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">3</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">4</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">5</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 used">
+			<th></th>
+			<td align="center">6</td>
+			<td align="center">ja</td>
+				<td align="center">100%</td>
+				<td align="center">-34%</td>
+		</tr>
+				</tbody>				
+			</table>
+			<table>
+				<caption><a name="wingMix1"></a>Fl&auml;chenmischer - Phase 2: Start</caption>
+				
+				<tbody>
+					<tr>
+						<th colspan="9" class="d2">Fl&auml;chenmischer</th>
+					</tr>
+
+
+					<tr class="d0">
+						<th align="right">Querruder 2&rarr;4 Seitenruder</th>
+						<td colspan="2" align="center">70%</td>
+						<td colspan="6" align="left">					Schalter 2
+</td>
+					</tr>
+
+
+						<tr class="d1">
+							<th align="right">W&ouml;lbklappen 6&rarr;3 H&ouml;henruder</th>
+							<td colspan="1" align="center">0%</td>
+							<td colspan="1" align="center">0%</td>
+							<td colspan="6" align="left">		---
+</td>
+						</tr>
+
+
+
+						<tr>
+							<th colspan="9" class="d2">Multi-Klappen-Men&uuml;</th>
+						</tr>									
+						<tr>
+							<th></th>
+							<th colspan="2" align="center">QR</th>
+								<th colspan="2"></th>
+								<th colspan="2" align="center">WK</th>
+								<th colspan="2"></th>
+						</tr>
+	
+	
+						<tr class="d0">
+							<th align="right">&uarr;QR&darr;</th>
+							<td colspan="2" align="center">100%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">30%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">Querrudertrimmung</th>
+							<td colspan="2" align="center">100%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">0%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d0">
+							<th align="right">Querruderdifferenzierung</th>
+							<td colspan="2" align="center">60%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">15%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">W&ouml;lbklappenposition</th>
+							<td colspan="2" align="center">0%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">0%</td>
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d0">
+							<th align="right">&uarr;WK&uarr;</th>
+							<td align="center">0%</td>
+							<td align="center">0%</td>
+								<td colspan="2"></td>
+								<td align="center">100%</td>								
+								<td align="center">100%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">HR&rarr;WK</th>
+							<td align="center">0%</td>
+							<td align="center">0%</td>
+								<td colspan="2"></td>
+								<td align="center">0%</td>								
+								<td align="center">0%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d0">
+							<th align="right">HR&rarr;WK-Offset</th>
+							<td align="center">0%</td>								
+							<td colspan="7" align="left">		---
+</td>								
+						</tr>
+
+						<tr>
+							<th colspan="9" class="d2">Bremseinstellungen</th>
+						</tr>
+	
+
+						<tr class="d0">
+							<th align="right">Butterfly</th>
+							<td colspan="2" align="center">28%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">140%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">Diff.-Reduction</th>
+							<td colspan="2" align="center">26%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">114%</td>								
+								<td colspan="2"></td>
+						</tr>
+
+	<tr>
+		<th class="d2" colspan="9">Bremskurve</th>
+	</tr>
+	
+	
+	<tr class="d0">
+		<th align="right">Kurve</th>
+		<td colspan="4" align="left">aus</td>
+		<td colspan="4" rowspan="8" align="center"><img src="data:image/png;base64,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"/></td>
+	</tr>
+
+	<tr>
+		<th></th>
+		<th align="center">Punkt</th>				
+		<th align="center">aktiv</th>
+		<th align="center">Eingang</th>
+		<th align="center">Ausgang</th>
+	</tr>
+
+
+		<tr class="d0 used">
+			<th></th>
+			<td align="center">1</td>
+			<td align="center">ja</td>
+				<td align="center">-100%</td>
+				<td align="center">0%</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">2</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">3</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">4</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">5</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 used">
+			<th></th>
+			<td align="center">6</td>
+			<td align="center">ja</td>
+				<td align="center">100%</td>
+				<td align="center">-34%</td>
+		</tr>
+				</tbody>				
+			</table>
+			<table>
+				<caption><a name="wingMix2"></a>Fl&auml;chenmischer - Phase 3: Thermik</caption>
+				
+				<tbody>
+					<tr>
+						<th colspan="9" class="d2">Fl&auml;chenmischer</th>
+					</tr>
+
+
+					<tr class="d0">
+						<th align="right">Querruder 2&rarr;4 Seitenruder</th>
+						<td colspan="2" align="center">70%</td>
+						<td colspan="6" align="left">					Schalter 2
+</td>
+					</tr>
+
+
+						<tr class="d1">
+							<th align="right">W&ouml;lbklappen 6&rarr;3 H&ouml;henruder</th>
+							<td colspan="1" align="center">0%</td>
+							<td colspan="1" align="center">0%</td>
+							<td colspan="6" align="left">		---
+</td>
+						</tr>
+
+
+
+						<tr>
+							<th colspan="9" class="d2">Multi-Klappen-Men&uuml;</th>
+						</tr>									
+						<tr>
+							<th></th>
+							<th colspan="2" align="center">QR</th>
+								<th colspan="2"></th>
+								<th colspan="2" align="center">WK</th>
+								<th colspan="2"></th>
+						</tr>
+	
+	
+						<tr class="d0">
+							<th align="right">&uarr;QR&darr;</th>
+							<td colspan="2" align="center">100%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">0%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">Querrudertrimmung</th>
+							<td colspan="2" align="center">100%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">0%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d0">
+							<th align="right">Querruderdifferenzierung</th>
+							<td colspan="2" align="center">60%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">15%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">W&ouml;lbklappenposition</th>
+							<td colspan="2" align="center">0%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">0%</td>
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d0">
+							<th align="right">&uarr;WK&uarr;</th>
+							<td align="center">0%</td>
+							<td align="center">0%</td>
+								<td colspan="2"></td>
+								<td align="center">100%</td>								
+								<td align="center">100%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">HR&rarr;WK</th>
+							<td align="center">0%</td>
+							<td align="center">0%</td>
+								<td colspan="2"></td>
+								<td align="center">0%</td>								
+								<td align="center">0%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d0">
+							<th align="right">HR&rarr;WK-Offset</th>
+							<td align="center">0%</td>								
+							<td colspan="7" align="left">		---
+</td>								
+						</tr>
+
+						<tr>
+							<th colspan="9" class="d2">Bremseinstellungen</th>
+						</tr>
+	
+
+						<tr class="d0">
+							<th align="right">Butterfly</th>
+							<td colspan="2" align="center">28%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">140%</td>								
+								<td colspan="2"></td>
+						</tr>
+						<tr class="d1">
+							<th align="right">Diff.-Reduction</th>
+							<td colspan="2" align="center">26%</td>
+								<td colspan="2"></td>
+								<td colspan="2" align="center">114%</td>								
+								<td colspan="2"></td>
+						</tr>
+
+	<tr>
+		<th class="d2" colspan="9">Bremskurve</th>
+	</tr>
+	
+	
+	<tr class="d0">
+		<th align="right">Kurve</th>
+		<td colspan="4" align="left">aus</td>
+		<td colspan="4" rowspan="8" align="center"><img src="data:image/png;base64,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"/></td>
+	</tr>
+
+	<tr>
+		<th></th>
+		<th align="center">Punkt</th>				
+		<th align="center">aktiv</th>
+		<th align="center">Eingang</th>
+		<th align="center">Ausgang</th>
+	</tr>
+
+
+		<tr class="d0 used">
+			<th></th>
+			<td align="center">1</td>
+			<td align="center">ja</td>
+				<td align="center">-100%</td>
+				<td align="center">0%</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">2</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">3</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 unused">
+			<th></th>
+			<td align="center">4</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d0 unused">
+			<th></th>
+			<td align="center">5</td>
+			<td align="center">nein</td>
+				<td colspan="2" align="center">---</td>
+		</tr>
+		<tr class="d1 used">
+			<th></th>
+			<td align="center">6</td>
+			<td align="center">ja</td>
+				<td align="center">100%</td>
+				<td align="center">-34%</td>
+		</tr>
+				</tbody>				
+			</table>
+<table class="unused">
+	<caption><a name="linearMixer"></a>Linearmischer</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Mixer</th>
+			<th align="center">Input</th>
+			<th align="center">von &rarr; zu</th>
+			<th align="center">Schalter</th>
+			<th align="center">Weg -</th>
+			<th align="center">Weg +</th>
+			<th align="center">Offset</th>
+			<th></th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>	
+				<tr class="d0 unused">
+					<td align="center">LinearMix 1</td>
+					<td align="center">Normal</td>
+					<td align="center">0 &rarr; 0</td>
+					<td align="center">		---
+</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
+				</tr>
+				<tr class="d1 unused">
+					<td align="center">LinearMix 2</td>
+					<td align="center">Normal</td>
+					<td align="center">0 &rarr; 0</td>
+					<td align="center">		---
+</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
+				</tr>
+				<tr class="d0 unused">
+					<td align="center">LinearMix 3</td>
+					<td align="center">Normal</td>
+					<td align="center">0 &rarr; 0</td>
+					<td align="center">		---
+</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
+				</tr>
+				<tr class="d1 unused">
+					<td align="center">LinearMix 4</td>
+					<td align="center">Normal</td>
+					<td align="center">0 &rarr; 0</td>
+					<td align="center">		---
+</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
+				</tr>
+				<tr class="d0 unused">
+					<td align="center">LinearMix 5</td>
+					<td align="center">Normal</td>
+					<td align="center">0 &rarr; 0</td>
+					<td align="center">		---
+</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
+				</tr>
+				<tr class="d1 unused">
+					<td align="center">LinearMix 6</td>
+					<td align="center">Normal</td>
+					<td align="center">0 &rarr; 0</td>
+					<td align="center">		---
+</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
+				</tr>
+				<tr class="d0 unused">
+					<td align="center">LinearMix 7</td>
+					<td align="center">Normal</td>
+					<td align="center">0 &rarr; 0</td>
+					<td align="center">		---
+</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
+				</tr>
+				<tr class="d1 unused">
+					<td align="center">LinearMix 8</td>
+					<td align="center">Normal</td>
+					<td align="center">0 &rarr; 0</td>
+					<td align="center">		---
+</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center">0%</td>
+					<td align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABICAIAAAAlLQHyAAAAoElEQVR42u3aMQqFMBAE0BwlR0mZW/3cXG1/E0EHifKmFZbHFrMQLNsLU6ChP44uuYwxgtNO0Kl9HOjYaqGhV0An62KOHv9Z5OsXNw29aQ9oaGiVBw3tIkJDQ6s8aOjn0b9Qeu+pUSfo1lrqcbbW+txT7wjl2HRqlOPiIkJDQ2sPaGgXERoaWntAQ7uI99H+rHFcoFXeZfSamaFfEWjoSXbFdUEQYrx6sAAAAABJRU5ErkJggg=="/></td>
+				</tr>
+	</tbody>
+</table><table class="unused">
+	<caption><a name="curveMixer"></a>Kurvenmischer</caption>
+	
+	<thead>
+		<tr class="d0">
+			<th align="center">Mixer</th>
+			<th align="center">Input</th>
+			<th align="center">von &rarr; zu</th>
+			<th align="center">Schalter</th>
+			<th align="center">Kurve</th>
+			<th align="center">Punkt</th>				
+			<th align="center">aktiv</th>
+			<th align="center">Eingang</th>
+			<th align="center">Ausgang</th>
+			<th></th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+					<tr class="d0 unused">
+							<td rowspan="6" align="center" valign="top">KurvenMix 9</td>
+							<td rowspan="6" align="center" valign="top">Normal</td>
+							<td rowspan="6" align="center" valign="top">0 &rarr; 0</td>
+							<td rowspan="6" align="center" valign="top">		---
+</td>
+							<td rowspan="6" align="center" valign="top">aus</td>
+						<td align="center">1</td>
+						<td align="center">ja</td>
+							<td align="center">-100%</td>
+							<td align="center">0%</td>
+							<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACgklEQVR42u3cvY4BURjG8WlEBIlCoXQHOqUoJKJEqBXuQSPZ6ZRuQCgUChFRiSglbkHUCgmJRr3Zfe1uLPNxZrGyh/0/hUxyFJPfvmeeGRuMN/JLMSCAEkooycWUhpYxTVPPE/Og1PAPLpQ6jiGUUEIJJYESSiihhJIGh/I/UprnYVWxylSywaGkwQmUUEIJJQ0OJZRQQgkllDQ4lFBCCSWUNDiUUEIJJZQ0OJRQEiihhJIGhxJKKKGEkgb/G0pyvSwE96LM5XLscc+0Wq14PO73+xOJxHw+t1IuFotMJmP/xjixZDAYCJG8LpfLQCCQSqWslLKcTCb1pNSqwbPZrMyjaoMXi8XdbgelZ2QSw+FwOp32+XxyPdxsNq43Q1B63gNJRqPRcDiUg1KpBOVNlK8fkYPjZofy4sjuPqUMBoOPRKlVarWaELXb7clkIgfVahXK61Ov12U2ZWtXKpX9fs/Tzt2edrbbbb/fl5Hsdrvr9RoaRRytvihns1k0Gj3+PlYoFJpOp5A5xs3K+DSOxWKWXxuTd+gzm/o0uMLqQPk5q/bk8/kXPSKPFpqcidyQO1rJTj9QNptNg9yWRqOhmspCoWDqEZlKTc6kXC6rplL2/+l19Lj/V6sV10r7tdLN6rvBI5HI6dp4PKas3Rrc0ersvrLX68lap9PRZx61va+0W/Efx5s+InJ+2oESSigf9vNKKKGEEkooaXAooSRQQgklDQ4llFBCCSUNDiWUUBIooaTBoYQSSiihJFBCCSWUUNLgUEIJJZRQQkmDQwkllFASGhzKJ6C0fJOcVcUqU8kGh5IGJ1BCCSWUNDiUUEIJJZS6UJKfR0VJrh9SCKCE8nnzDpXIu1weeBCpAAAAAElFTkSuQmCC"/></td>									
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">2</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d0 unused">
+						<td align="center">3</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">4</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d0 unused">
+						<td align="center">5</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">6</td>
+						<td align="center">ja</td>
+							<td align="center">100%</td>
+							<td align="center">0%</td>
+					</tr>
+					<tr class="d0 unused">
+							<td rowspan="6" align="center" valign="top">KurvenMix 10</td>
+							<td rowspan="6" align="center" valign="top">Normal</td>
+							<td rowspan="6" align="center" valign="top">0 &rarr; 0</td>
+							<td rowspan="6" align="center" valign="top">		---
+</td>
+							<td rowspan="6" align="center" valign="top">aus</td>
+						<td align="center">1</td>
+						<td align="center">ja</td>
+							<td align="center">-100%</td>
+							<td align="center">0%</td>
+							<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACgklEQVR42u3cvY4BURjG8WlEBIlCoXQHOqUoJKJEqBXuQSPZ6ZRuQCgUChFRiSglbkHUCgmJRr3Zfe1uLPNxZrGyh/0/hUxyFJPfvmeeGRuMN/JLMSCAEkooycWUhpYxTVPPE/Og1PAPLpQ6jiGUUEIJJYESSiihhJIGh/I/UprnYVWxylSywaGkwQmUUEIJJQ0OJZRQQgkllDQ4lFBCCSWUNDiUUEIJJZQ0OJRQEiihhJIGhxJKKKGEkgb/G0pyvSwE96LM5XLscc+0Wq14PO73+xOJxHw+t1IuFotMJmP/xjixZDAYCJG8LpfLQCCQSqWslLKcTCb1pNSqwbPZrMyjaoMXi8XdbgelZ2QSw+FwOp32+XxyPdxsNq43Q1B63gNJRqPRcDiUg1KpBOVNlK8fkYPjZofy4sjuPqUMBoOPRKlVarWaELXb7clkIgfVahXK61Ov12U2ZWtXKpX9fs/Tzt2edrbbbb/fl5Hsdrvr9RoaRRytvihns1k0Gj3+PlYoFJpOp5A5xs3K+DSOxWKWXxuTd+gzm/o0uMLqQPk5q/bk8/kXPSKPFpqcidyQO1rJTj9QNptNg9yWRqOhmspCoWDqEZlKTc6kXC6rplL2/+l19Lj/V6sV10r7tdLN6rvBI5HI6dp4PKas3Rrc0ersvrLX68lap9PRZx61va+0W/Efx5s+InJ+2oESSigf9vNKKKGEEkooaXAooSRQQgklDQ4llFBCCSUNDiWUUBIooaTBoYQSSiihJFBCCSWUUNLgUEIJJZRQQkmDQwkllFASGhzKJ6C0fJOcVcUqU8kGh5IGJ1BCCSWUNDiUUEIJJZS6UJKfR0VJrh9SCKCE8nnzDpXIu1weeBCpAAAAAElFTkSuQmCC"/></td>									
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">2</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d0 unused">
+						<td align="center">3</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">4</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d0 unused">
+						<td align="center">5</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">6</td>
+						<td align="center">ja</td>
+							<td align="center">100%</td>
+							<td align="center">0%</td>
+					</tr>
+					<tr class="d0 unused">
+							<td rowspan="6" align="center" valign="top">KurvenMix 11</td>
+							<td rowspan="6" align="center" valign="top">Normal</td>
+							<td rowspan="6" align="center" valign="top">0 &rarr; 0</td>
+							<td rowspan="6" align="center" valign="top">		---
+</td>
+							<td rowspan="6" align="center" valign="top">aus</td>
+						<td align="center">1</td>
+						<td align="center">ja</td>
+							<td align="center">-100%</td>
+							<td align="center">0%</td>
+							<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACgklEQVR42u3cvY4BURjG8WlEBIlCoXQHOqUoJKJEqBXuQSPZ6ZRuQCgUChFRiSglbkHUCgmJRr3Zfe1uLPNxZrGyh/0/hUxyFJPfvmeeGRuMN/JLMSCAEkooycWUhpYxTVPPE/Og1PAPLpQ6jiGUUEIJJYESSiihhJIGh/I/UprnYVWxylSywaGkwQmUUEIJJQ0OJZRQQgkllDQ4lFBCCSWUNDiUUEIJJZQ0OJRQEiihhJIGhxJKKKGEkgb/G0pyvSwE96LM5XLscc+0Wq14PO73+xOJxHw+t1IuFotMJmP/xjixZDAYCJG8LpfLQCCQSqWslLKcTCb1pNSqwbPZrMyjaoMXi8XdbgelZ2QSw+FwOp32+XxyPdxsNq43Q1B63gNJRqPRcDiUg1KpBOVNlK8fkYPjZofy4sjuPqUMBoOPRKlVarWaELXb7clkIgfVahXK61Ov12U2ZWtXKpX9fs/Tzt2edrbbbb/fl5Hsdrvr9RoaRRytvihns1k0Gj3+PlYoFJpOp5A5xs3K+DSOxWKWXxuTd+gzm/o0uMLqQPk5q/bk8/kXPSKPFpqcidyQO1rJTj9QNptNg9yWRqOhmspCoWDqEZlKTc6kXC6rplL2/+l19Lj/V6sV10r7tdLN6rvBI5HI6dp4PKas3Rrc0ersvrLX68lap9PRZx61va+0W/Efx5s+InJ+2oESSigf9vNKKKGEEkooaXAooSRQQgklDQ4llFBCCSUNDiWUUBIooaTBoYQSSiihJFBCCSWUUNLgUEIJJZRQQkmDQwkllFASGhzKJ6C0fJOcVcUqU8kGh5IGJ1BCCSWUNDiUUEIJJZS6UJKfR0VJrh9SCKCE8nnzDpXIu1weeBCpAAAAAElFTkSuQmCC"/></td>									
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">2</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d0 unused">
+						<td align="center">3</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">4</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d0 unused">
+						<td align="center">5</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">6</td>
+						<td align="center">ja</td>
+							<td align="center">100%</td>
+							<td align="center">0%</td>
+					</tr>
+					<tr class="d0 unused">
+							<td rowspan="6" align="center" valign="top">KurvenMix 12</td>
+							<td rowspan="6" align="center" valign="top">Normal</td>
+							<td rowspan="6" align="center" valign="top">0 &rarr; 0</td>
+							<td rowspan="6" align="center" valign="top">		---
+</td>
+							<td rowspan="6" align="center" valign="top">aus</td>
+						<td align="center">1</td>
+						<td align="center">ja</td>
+							<td align="center">-100%</td>
+							<td align="center">0%</td>
+							<td rowspan="6" align="center"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAACHCAIAAAB4cvvmAAACgklEQVR42u3cvY4BURjG8WlEBIlCoXQHOqUoJKJEqBXuQSPZ6ZRuQCgUChFRiSglbkHUCgmJRr3Zfe1uLPNxZrGyh/0/hUxyFJPfvmeeGRuMN/JLMSCAEkooycWUhpYxTVPPE/Og1PAPLpQ6jiGUUEIJJYESSiihhJIGh/I/UprnYVWxylSywaGkwQmUUEIJJQ0OJZRQQgkllDQ4lFBCCSWUNDiUUEIJJZQ0OJRQEiihhJIGhxJKKKGEkgb/G0pyvSwE96LM5XLscc+0Wq14PO73+xOJxHw+t1IuFotMJmP/xjixZDAYCJG8LpfLQCCQSqWslLKcTCb1pNSqwbPZrMyjaoMXi8XdbgelZ2QSw+FwOp32+XxyPdxsNq43Q1B63gNJRqPRcDiUg1KpBOVNlK8fkYPjZofy4sjuPqUMBoOPRKlVarWaELXb7clkIgfVahXK61Ov12U2ZWtXKpX9fs/Tzt2edrbbbb/fl5Hsdrvr9RoaRRytvihns1k0Gj3+PlYoFJpOp5A5xs3K+DSOxWKWXxuTd+gzm/o0uMLqQPk5q/bk8/kXPSKPFpqcidyQO1rJTj9QNptNg9yWRqOhmspCoWDqEZlKTc6kXC6rplL2/+l19Lj/V6sV10r7tdLN6rvBI5HI6dp4PKas3Rrc0ersvrLX68lap9PRZx61va+0W/Efx5s+InJ+2oESSigf9vNKKKGEEkooaXAooSRQQgklDQ4llFBCCSUNDiWUUBIooaTBoYQSSiihJFBCCSWUUNLgUEIJJZRQQkmDQwkllFASGhzKJ6C0fJOcVcUqU8kGh5IGJ1BCCSWUNDiUUEIJJZS6UJKfR0VJrh9SCKCE8nnzDpXIu1weeBCpAAAAAElFTkSuQmCC"/></td>									
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">2</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d0 unused">
+						<td align="center">3</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">4</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d0 unused">
+						<td align="center">5</td>
+						<td align="center">nein</td>
+							<td align="center" colspan="2">---</td>
+					</tr>
+					<tr class="d1 unused">
+						<td align="center">6</td>
+						<td align="center">ja</td>
+							<td align="center">100%</td>
+							<td align="center">0%</td>
+					</tr>
+	</tbody>		
+</table><table class="unused">
+	<caption><a name="mixerActive"></a>MIX aktiv / Phase</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Mixer</th>
+			<th align="center">von &rarr; zu</th>
+					<th align="center">Ph.1</th>
+					<th align="center">Ph.2</th>
+					<th align="center">Ph.3</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+			<tr class="d0 unused">
+					<td align="right">LinearMix 1</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 unused">
+					<td align="right">LinearMix 2</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d0 unused">
+					<td align="right">LinearMix 3</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 unused">
+					<td align="right">LinearMix 4</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d0 unused">
+					<td align="right">LinearMix 5</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 unused">
+					<td align="right">LinearMix 6</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d0 unused">
+					<td align="right">LinearMix 7</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 unused">
+					<td align="right">LinearMix 8</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d0 unused">
+					<td align="right">KurvenMix 9</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 unused">
+					<td align="right">KurvenMix 10</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d0 unused">
+					<td align="right">KurvenMix 11</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+			<tr class="d1 unused">
+					<td align="right">KurvenMix 12</td>
+				<td align="center">0 &rarr; 0</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+						<td align="center">&times;</td>
+			</tr>
+	</tbody>
+</table><table>
+	<caption><a name="mixOnlyChannel"></a>Nur MIX Kanal</caption>
+	
+	<thead>
+		<tr>
+			<th></th>
+								<th align="center">S1</th>
+					<th align="center">S2</th>
+					<th align="center">S3</th>
+					<th align="center">S4</th>
+					<th align="center">S5</th>
+					<th align="center">S6</th>
+					<th align="center">S7</th>
+					<th align="center">S8</th>
+					<th align="center">S9</th>
+					<th align="center">S10</th>
+					<th align="center">S11</th>
+					<th align="center">S12</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+		<tr class="d0">
+			<th align="right">Nur Mix</th>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">normal</th>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+		</tr>
+	</tbody>
+</table><table class="unused">
+	<caption><a name="dualMixer"></a>Kreuzmischer</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Mischer</th>
+			<th align="center">Kanal 1</th>
+			<th align="center">Kanal 2</th>
+			<th align="center">Differenzierung</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+			<tr class="d0 unused">
+				<td align="center">Mischer 1</td>
+				<td align="center">&uarr;??&uarr;</td>
+				<td align="center">&uarr;??&darr;</td>
+				<td align="center">0%</td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">Mischer 2</td>
+				<td align="center">&uarr;??&uarr;</td>
+				<td align="center">&uarr;??&darr;</td>
+				<td align="center">0%</td>
+			</tr>
+			<tr class="d0 unused">
+				<td align="center">Mischer 3</td>
+				<td align="center">&uarr;??&uarr;</td>
+				<td align="center">&uarr;??&darr;</td>
+				<td align="center">0%</td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">Mischer 4</td>
+				<td align="center">&uarr;??&uarr;</td>
+				<td align="center">&uarr;??&darr;</td>
+				<td align="center">0%</td>
+			</tr>
+	</tbody>
+</table><table>
+	<caption><a name="failSafe"></a>Fail Safe</caption>
+
+		
+	<tbody>
+		<tr class="d0">
+			<th align="right">Verz&ouml;gerung</th>
+			<td align="left" colspan="2">0,5s</td>
+			<td colspan="10" class="d0"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">FlailSafe Pr&uuml;fung</th>
+			<td align="left" colspan="2">ja</td>
+			<td colspan="10" class="d0"></td>
+		</tr>
+		<tr class="d0">
+			<th></th>
+					<th align="center">S1</th>
+					<th align="center">S2</th>
+					<th align="center">S3</th>
+					<th align="center">S4</th>
+					<th align="center">S5</th>
+					<th align="center">S6</th>
+					<th align="center">S7</th>
+					<th align="center">S8</th>
+					<th align="center">S9</th>
+					<th align="center">S10</th>
+					<th align="center">S11</th>
+					<th align="center">S12</th>
+		</tr>
+		
+		
+		<tr class="d0">
+			<th align="right">Position</th>
+					<td align="center">-97%</td>
+					<td align="center">-66%</td>
+					<td align="center">23%</td>
+					<td align="center">13%</td>
+					<td align="center">40%</td>
+					<td align="center">-138%</td>
+					<td align="center">138%</td>
+					<td align="center">0%</td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Hold</th>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+		</tr>
+	</tbody>
+</table><table>
+	<caption><a name="trainerPupil"></a>Lehrer/Sch&uuml;ler</caption>
+			
+		
+	<tbody>
+		<tr class="d0">
+			<th align="right">Kabellos</th>
+			<td align="left" colspan="6">nein</td>
+			<td colspan="6" class="d0"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Lehrer ID</th>
+			<td align="left" colspan="6">0</td>
+			<td colspan="6" class="d0"></td>
+		</tr>
+		<tr class="d0">
+			<th align="right">Sch&uuml;ler ID</th>
+			<td align="left" colspan="6">0</td>
+			<td colspan="6" class="d0"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Schalter</th>
+			<td align="left" colspan="6">		---
+</td>
+			<td colspan="6" class="d0"></td>
+		</tr>
+		<tr>
+			<th></th>
+					<th align="center">S1</th>
+					<th align="center">S2</th>
+					<th align="center">S3</th>
+					<th align="center">S4</th>
+					<th align="center">S5</th>
+					<th align="center">S6</th>
+					<th align="center">S7</th>
+					<th align="center">S8</th>
+					<th align="center">S9</th>
+					<th align="center">S10</th>
+					<th align="center">S11</th>
+					<th align="center">S12</th>
+		</tr>
+
+
+		<tr class="d0">
+			<th align="right">Sch&uuml;ler</th>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center"></td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Lehrer</th>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+					<td align="center">&times;</td>
+		</tr>
+	</tbody>
+</table><table>
+	<caption><a name="outputChannel"></a>Senderausgang</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Eingang</th>
+			<th></th>
+			<th align="center">Ausgang</th>
+		</tr>
+	</thead>
+	
+		
+	<tbody>
+			<tr class="d0">
+				<td align="center">S1 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 1</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S2 (Querruder)</td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 2</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S3 (H&ouml;henruder)</td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 3</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S4 (Seitenruder)</td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 4</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S5 (Querruder)</td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 5</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S6 (Landeklappen)</td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 6</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S7 (Landeklappen)</td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 7</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S8 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 8</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S9 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 9</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S10 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 10</td>
+			</tr>
+			<tr class="d0">
+				<td align="center">S11 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 11</td>
+			</tr>
+			<tr class="d1">
+				<td align="center">S12 </td>
+				<td align="center">&rarr;</td>
+				<td align="center">Ausgang 12</td>
+			</tr>
+	</tbody>		
+</table>	<table class="unused">
+		<caption><a name="profiTrim"></a>Profitrimm</caption>
+	
+			<thead>	
+				<tr>
+					<th></th>
+					<th align="center">&uarr;QR&darr;</th>
+					<th align="center">&uarr;QR&uarr;</th>
+					<th align="center">&uarr;WK&darr;</th>
+					<th align="center">&uarr;WK&uarr;</th>
+				</tr>
+			</thead>
+					
+	
+			<tbody>
+				<tr class="d0">
+					<th align="right">aktiv</th>
+						<td align="center">aus</td>
+						<td align="center">aus</td>
+						<td align="center">aus</td>
+						<td align="center">aus</td>
+				</tr>
+				<tr class="d1">
+					<th align="right">Geber</th>
+						<td align="center">frei</td>
+						<td align="center">frei</td>
+						<td align="center">frei</td>
+						<td align="center">frei</td>
+				</tr>
+				<tr class="d0">
+					<th align="right">EIN/AUS</th>
+					<td align="left" colspan="4">		---
+</td>
+				</tr>
+			</tbody>
+	</table>
+<table>
+	<caption><a name="trimMemory"></a>Trimmspeicher</caption>
+	
+	<thead>
+		<tr>
+			<th></th>
+							<th align="center" colspan="2">Kanal 1</th>
+				<th align="center" colspan="2">Querruder</th>
+				<th align="center" colspan="2">H&ouml;henruder</th>
+				<th align="center" colspan="2">Seitenruder</th>
+		</tr>
+		<tr style="font-size: 75%;">
+			<th></th>
+			<th align="center">Kn&uuml;ppel</th>				
+			<th align="center">Speicher</th>
+			<th align="center">Kn&uuml;ppel</th>				
+			<th align="center">Speicher</th>
+			<th align="center">Kn&uuml;ppel</th>				
+			<th align="center">Speicher</th>
+			<th align="center">Kn&uuml;ppel</th>				
+			<th align="center">Speicher</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+				<tr class="d0">
+					<td align="center">Phase 1: Normal</td>					
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+				</tr>
+				<tr class="d1">
+					<td align="center">Phase 2: Start</td>					
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+				</tr>
+				<tr class="d0">
+					<td align="center">Phase 3: Thermik</td>					
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+						<td align="center">0%</td>
+				</tr>
+	</tbody>
+</table><table>
+	<caption><a name="telemetry"></a>Telemetrie</caption>
+	
+		
+	<tbody>
+		<tr class="d0">
+			<th align="right" rowspan="2" valign="top">Ansage wiederholen</th>
+			<td align="left">10s</td>
+		</tr>
+		<tr class="d1">
+			<td align="left">					Schalter 2
+</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">n&auml;chste Ansage</th>
+			<td align="left">					Schalter 8
+</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">Varioton</th>
+			<td align="left">					Schalter 15
+</td>
+		</tr>
+			<tr class="d0">
+					<th align="right" rowspan="2" valign="top">erkannte Sensoren</th>
+					<td align="left">Receiver</td>
+			</tr>
+			<tr class="d1">
+					<td align="left">GPS</td>
+			</tr>
+		<tr class="d0">
+			<th align="right">aktueller Sensor</th>
+			<td align="left">GeneralAirModule</td>
+		</tr>
+		<tr class="d1">
+			<th align="right">aktuelle Sensorseite</th>
+			<td align="left">0</td>
+		</tr>
+		<tr class="d0">
+			<th align="right">RX-Data</th>
+			<td align="left">Ein</td>
+		</tr>
+	</tbody>
+</table>
+<table class="unused">
+
+	<caption><a name="channelSequencer"></a>Kanal Sequenzer</caption>
+	
+	<thead>
+		<tr>
+			<th align="center">Kanal</th>
+			<th align="center">aktiv?</th>
+			<th align="center">Start</th>
+		</tr>
+	</thead>
+	
+
+	<tbody>
+			<tr class="d0 unused">
+				<td align="center">Kanal 9</td>
+				<td align="center">inaktiv</td>
+
+					<td align="center" colspan="1" class="d0"></td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">Kanal 10</td>
+				<td align="center">inaktiv</td>
+
+					<td align="center" colspan="1" class="d0"></td>
+			</tr>
+			<tr class="d0 unused">
+				<td align="center">Kanal 11</td>
+				<td align="center">inaktiv</td>
+
+					<td align="center" colspan="1" class="d0"></td>
+			</tr>
+		
+		<tr class="d1">
+			<th colspan="2" align="right">Schalter</th>
+			<td align="left" colspan="1">		---
+</td>
+		</tr>
+	</tbody>
+</table>	<table class="unused">
+		<caption><a name="multiChannel"></a>Multikanal</caption>
+	
+		<thead>
+			<tr>
+				<th align="center">Kanal</th>
+				<th align="center">aktiv?</th>
+				<th align="center">Steuerkanal</th>
+				<th align="center">Kanalzahl</th>
+				<th align="center">Eingang</th>
+				<th colspan="2" align="center">Geber</th>
+				<th align="center">Offset</th>
+				<th align="center">Weg -</th>
+				<th align="center">Weg +</th>
+			</tr>
+		</thead>
+	
+	
+		<tbody>
+				
+					
+					<tr class="d0 unused">
+							<td align="center">Multikanal 1</td>
+							<td align="center">inaktiv</td>
+							<td align="center">K6</td>
+							<td align="center">4 Kan&auml;le</td>
+	
+						<td>Eingang 1</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d1 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 2</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d0 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 3</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d1 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 4</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+				
+					
+					<tr class="d0 unused">
+							<td align="center">Multikanal 2</td>
+							<td align="center">inaktiv</td>
+							<td align="center">K6</td>
+							<td align="center">4 Kan&auml;le</td>
+	
+						<td>Eingang 1</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d1 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 2</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d0 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 3</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+					
+					<tr class="d1 unused">
+							<td colspan="4"></td>
+	
+						<td>Eingang 4</td>
+	
+							<td align="center" colspan="2">---</td>
+						
+						<td align="center">0%</td>
+						<td align="center">100%</td>
+						<td align="center">100%</td>
+					</tr>
+				
+		</tbody>
+	</table>
+<table class="unused">
+	<caption><a name="ringLimiter"></a>Ringbegrenzer</caption>
+	
+	<thead>
+		<tr>
+			<th align="center" colspan="2">Eingang</th>
+			<th align="center" colspan="2">Ausgang</th>
+			<th align="center" rowspan="2" valign="top">aktiv?</th>
+			<th align="center" colspan="2">Limit</th>
+			<th align="center" colspan="2">Offset</th>
+		</tr>
+		<tr style="font-size: 75%;">
+			<th align="center">X</th>
+			<th align="center">Y</th>
+			<th align="center">X</th>
+			<th align="center">Y</th>				
+			<th align="center">max-X</th>
+			<th align="center">max-Y</th>
+			<th align="center">&#x25cb;&harr;&#x25a1;-X</th>
+			<th align="center">&#x25cb;&harr;&#x25a1;-Y</th>				
+		</tr>
+	</thead>
+	
+	
+	<tbody>
+			<tr class="d0 unused">
+				<td align="center">8</td>
+				<td align="center">7</td>
+				<td align="center">8</td>
+				<td align="center">7</td>
+				<td align="center">inaktiv</td>
+				<td align="center">100%</td>
+				<td align="center">100%</td>
+				<td align="center">0%</td>
+				<td align="center">0%</td>
+			</tr>
+			<tr class="d1 unused">
+				<td align="center">8</td>
+				<td align="center">7</td>
+				<td align="center">14</td>
+				<td align="center">13</td>
+				<td align="center">inaktiv</td>
+				<td align="center">100%</td>
+				<td align="center">100%</td>
+				<td align="center">0%</td>
+				<td align="center">0%</td>
+			</tr>
+			<tr class="d0 unused">
+				<td align="center">8</td>
+				<td align="center">7</td>
+				<td align="center">16</td>
+				<td align="center">15</td>
+				<td align="center">inaktiv</td>
+				<td align="center">100%</td>
+				<td align="center">100%</td>
+				<td align="center">0%</td>
+				<td align="center">0%</td>
+			</tr>
+	</tbody>
+</table>	<table>
+		<caption><a name="mp3Player"></a>MP3-Player</caption>
+		
+	
+		<tbody>
+			<tr class="d0">
+				<th align="center">Lautst&auml;rke</th>
+				<td align="left">30</td>
+			</tr>
+			<tr class="d1">
+				<th align="center">Album</th>
+				<td align="left">0</td>
+			</tr>
+			<tr class="d0">
+				<th align="center">Titel</th>
+				<td align="left">3</td>
+			</tr>
+			<tr class="d1">
+				<th align="center">Modus</th>
+				<td align="left">Titel wiederholen</td>
+			</tr>
+		</tbody>
+	</table>
+			
+			<table>
+				<caption><a name="switches"></a> Schalter-/Geberzuordnungen</caption>
+				
+				<thead>
+					<tr>
+						<th align="center" rowspan="2" valign="top">Funktion</th>
+						<th align="center" colspan="3">Schalter/Geber</th>
+					</tr>
+					<tr style="font-size: 75%;">
+						<th align="center">ID</th>
+						<th align="center">Name</th>
+						<th align="center">Typ</th>
+					</tr>
+				</thead>
+		
+		
+				<tbody>
+		<tr class="d0">
+			<td align="center">Ansage wiederholen</td>
+			<td align="center">SW2</td>
+			<td align="center">					Schalter 2
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">n&auml;chste Ansage</td>
+			<td align="center">SW8</td>
+			<td align="center">					Schalter 8
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Varioton</td>
+			<td align="center">SW15</td>
+			<td align="center">					Schalter 15
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Schalter 1 Eingang 6 Phase 1</td>
+			<td align="center">SW16</td>
+			<td align="center">					Schalter 16
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Schalter 1 Eingang 7 Phase 1</td>
+			<td align="center">SW16</td>
+			<td align="center">					Schalter 16
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Dual Rate Querruder Phase1</td>
+			<td align="center">SW2</td>
+			<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Dual Rate Querruder Phase2</td>
+			<td align="center">SW2</td>
+			<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Dual Rate Querruder Phase3</td>
+			<td align="center">SW2</td>
+			<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Dual Rate H&ouml;henruder Phase1</td>
+			<td align="center">SW2</td>
+			<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Dual Rate H&ouml;henruder Phase2</td>
+			<td align="center">SW2</td>
+			<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Dual Rate H&ouml;henruder Phase3</td>
+			<td align="center">SW2</td>
+			<td align="center">					<span style="text-decoration: overline;">Schalter 2</span>
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Phase Kombi C</td>
+			<td align="center">SW5</td>
+			<td align="center">					<span style="text-decoration: overline;">Schalter 5</span>
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Phase Kombi D</td>
+			<td align="center">SW6</td>
+			<td align="center">					Schalter 6
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Uhr Oben</td>
+			<td align="center">SW7</td>
+			<td align="center">					Schalter 7
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Uhr Mitte</td>
+			<td align="center">SW7</td>
+			<td align="center">					Schalter 7
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Mischer Querruder Seitenruder Phase1</td>
+			<td align="center">SW2</td>
+			<td align="center">					Schalter 2
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d0">
+			<td align="center">Mischer Querruder Seitenruder Phase2</td>
+			<td align="center">SW2</td>
+			<td align="center">					Schalter 2
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+		<tr class="d1">
+			<td align="center">Mischer Querruder Seitenruder Phase3</td>
+			<td align="center">SW2</td>
+			<td align="center">					Schalter 2
+</td>
+			<td align="center">Schalter</td>
+		</tr>
+	</tbody>
+</table>
+		</div>
+	</body>
+</html>

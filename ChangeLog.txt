@@ -1,3 +1,155 @@
+2018-08-30
+==========
+    mz32-Downloader-0.9.3.49
+    FirmwareUpgrader-0.9.3.43
+    VDFEditor-0.9.3.210
+    HoTT-TTS-0.9.3.37
+    MdlViewer-0.9.3.229
+    - Java 10 compatibility
+    
+2018-06-09
+==========
+    mz32-Downloader-0.9.3.46
+    - read latest versions from latest.txt from FTP server
+
+2018-06-09
+==========
+    mz32-Downloader-0.9.3.43
+    - re-scan only selected languages
+    - calculate missing checksums on the fly
+    - use mono-typed font for text area
+    - exclude more paths from scanning to improve speed
+
+ 2018-06-09
+==========
+    mz32-Downloader-0.9.3.42
+    - renamed from mz32-Upgrader
+    - added function to cancel downloads
+    - more robust file number detection
+
+2018-06-04
+==========
+    mz32-Upgrader-0.9.3.39
+    - download firmware files directly to transmitter (don't store in cache)
+
+2018-06-03
+==========
+    mz32-Upgrader-0.9.3.38
+    - download only required (compressed) files from FTP server
+
+2018-05-28
+==========
+    HoTT-TTS-0.9.3.33
+    VDFEditor-0.9.3.207
+    - fixed error in VoiceRSS Text2Speech provider
+
+2018-05-21
+==========
+    VDFEditor-0.9.3.194
+    - remove mz-32 as it doesn't use VDF files
+
+2018-05-08
+==========
+    mz32-Upgrader-0.9.3.30
+    - fix download from FTP server
+    - create missing directories on transmitter
+
+2018-05-07
+==========
+    mz32-Upgrader-0.9.3.27
+    - first version
+    
+2018-04-24
+==========
+    VDFEditor-0.9.3.200
+	- increased bytesRead timeout for mz-24PRO
+
+2018-02-28
+==========
+    FirmwareUpgrader-0.9.3.30
+    HoTT-TTS-0.9.3.22
+    MdlViewer-0.9.3.215
+    MemoryDump-0.9.3.187
+    VDFEditor-0.9.3.195
+    - Fixed serial port names for CP210x USB-to-UART bridge on MacOS
+
+2018-02-24
+==========
+    VDFEditor-0.9.3.194
+    - added Windows 10 and Amazon Polly TTS providers
+    - preference dialog to enter personal credentials for VoiceRSS and Amazon Polly
+    - Limit window size to visual bounds of the screen
+
+    HoTT-TTS-0.9.3.20
+    - preference dialog to enter personal credentials for VoiceRSS and Amazon Polly
+
+2018-02-23
+==========
+    FirmwareUpgrader-0.9.3.26
+    - Fixed end-of-transmission mark
+    - Special handling for GR-24PRO
+    - Support for high-speed transmission (115200 baud instead of 19200 baud for supported receivers)
+    - fix service restart
+
+2018-02-22
+==========
+    FirmwareUpgrader-0.9.3.21
+    - New standalone tool to upgrade Slowflyer/Gyro receivers
+
+2018-02-20
+==========
+    HoTT-TTS-0.9.3.17
+    - New TTS providers (Amazon Polly and Windows 10)
+
+2018-01-21
+==========
+    VDFEditor-0.9.3.187
+    - Improved audio quality for TTS
+
+    HoTT-TTS-0.9.3.9
+    - New standalone TTS program with quality select and WAVE output
+
+2018-01-16
+==========
+    VDFEditor-0.9.3.181
+    MdlViewer-0.9.3.205
+    - Bug in serial port download fixed
+
+2018-01-08
+==========
+    VDFEditor-0.9.3.165
+    - New Czech voice file
+    - Fixed drag&drop between two VDFEditor windows
+    - Fixed restore menu to display MikroKopter voice files again
+    - Fixed delete function to prevent deletion from system VDFs
+    - Added test button to TTS dialog
+    - Remember last text from TTS dialog
+    - Added support for the mz-18PRO transmitter
+
+    MdlViewer-0.9.3.197
+    - Complete re-write using Kotlin programming language
+    - fixed bug with empty model memories
+    - fixed channel numbers in dual mixer
+    - Removed Swing version
+
+2017-12-07
+==========
+    VDFEditor-0.9.3.147
+    - updated Italian voice files
+    - added speed and volume controls to Text2Speech dialog
+
+2017-12-03
+==========
+	VDFEditor-0.9.3.146
+	- complete re-write using Kotlin programming language
+	- automatically launch VDFEditor by double click on .vdf File
+	- new icons
+
+	MdlViewer-0.9.3.186
+	- sort switches by name
+	- automatically launch MdlViewer by double click on .mdl File
+	- new icons
+
 2017-11-21
 ==========
 	VDFEditor-0.9.3.135
@@ -100,8 +252,8 @@
 2017-09-21
 ==========
 	VDFEditor-0.9.0.76
-	- turn rf off after selection of com port
-	- ask for com port every time to allow switching between ports without restart
+	- turn rf off after selection of com serialPort
+	- ask for com serialPort every time to allow switching between ports without restart
 	- use 253 entries in v2 vdfs regardless of country version 
 	
 2017-09-20
@@ -115,7 +267,7 @@
 	- turn RF output off before loading or sending files from / to transmitter
 	- re-add vdf version combo box
 	- don't try to load user voice files for vdf version 2.0
-	- interrupt background task on cancel
+	- interrupt background service on cancel
 	- fix loading / sending of voice2 files
 	
 2017-09-18
@@ -130,9 +282,9 @@
 ==========
 	VDFEditor-0.9.0.72
 	- added support to load/send voice files from/to transmitter
-	- enable multi-drop for system vdf's
+	- enable multi-drop for system vdf'GRAUPNER_DISK_CFG
 	- fix number of entries when changing transmitter type or country
-	- enforce naming convention for system vdf's
+	- enforce naming convention for system vdf'GRAUPNER_DISK_CFG
 	- latest voice3 files for German and French
 	- fix dirty flag (unset on save)
 	

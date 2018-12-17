@@ -17,9 +17,9 @@
  */
 package de.treichels.hott.ui.android.html;
 
-import gde.model.enums.ModelType;
-import gde.model.enums.Section;
-import gde.model.enums.TransmitterType;
+import de.treichels.hott.model.enums.ModelType;
+import de.treichels.hott.model.enums.Section;
+import de.treichels.hott.model.enums.TransmitterType;
 
 import java.util.ArrayList;
 import java.util.List;

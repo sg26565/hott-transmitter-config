@@ -1,8 +1,4 @@
-import javafx.scene.control.Label
-import javafx.scene.layout.VBox
-import tornadofx.App
-import tornadofx.View
-import tornadofx.launch
+import tornadofx.*
 
 fun main(args: Array<String>) = launch<MyApp>(args)
 
@@ -11,9 +7,15 @@ class MyApp : App() {
 }
 
 class MyView : View() {
-	override val root = VBox()
-	
-	init {
-		root.children += Label("Hello, Wolrd!")
+	override val root = vbox {
+		button("Press Me") {
+			action {
+				openInternalWindow(MyFragment::class)
+			}
+		}
 	}
+}
+
+class MyFragment: Fragment() {
+	override val root = label("This is a popup")
 }

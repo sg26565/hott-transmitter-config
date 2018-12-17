@@ -17,8 +17,8 @@
  */
 package de.treichels.hott.ui.android.dialogs;
 
-import gde.model.serial.FileInfo;
-import gde.model.serial.FileType;
+import de.treichels.hott.serial.FileInfo;
+import de.treichels.hott.serial.FileType;
 import android.content.Context;
 import android.os.AsyncTask.Status;
 import android.view.LayoutInflater;

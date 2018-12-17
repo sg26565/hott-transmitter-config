@@ -17,7 +17,7 @@
  */
 package de.treichels.hott.ui.android.dialogs;
 
-import gde.model.serial.ModelInfo;
+import de.treichels.hott.serial.ModelInfo;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;

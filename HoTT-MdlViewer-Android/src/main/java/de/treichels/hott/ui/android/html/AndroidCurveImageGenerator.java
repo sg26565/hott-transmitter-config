@@ -17,9 +17,9 @@
  */
 package de.treichels.hott.ui.android.html;
 
-import gde.model.Curve;
-import gde.model.CurvePoint;
-import gde.report.CurveImageGenerator;
+import de.treichels.hott.model.Curve;
+import de.treichels.hott.model.CurvePoint;
+import de.treichels.hott.report.CurveImageGenerator;
 
 import java.io.ByteArrayOutputStream;
 

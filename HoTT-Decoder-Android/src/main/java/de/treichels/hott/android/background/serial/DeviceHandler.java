@@ -17,7 +17,7 @@
  */
 package de.treichels.hott.android.background.serial;
 
-import gde.model.serial.SerialPort;
+import de.treichels.hott.serial.SerialPort;
 
 import java.io.IOException;
 
