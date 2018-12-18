@@ -1,9 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.google.gradle.osdetector.OsDetector
 import com.pascalwelsch.gitversioner.GitVersioner
-import org.jetbrains.kotlin.daemon.common.toHexString
+import edu.sc.seis.launch4j.Launch4jPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import kotlin.text.Typography.copyright
-import java.security.MessageDigest
 
 buildscript {
     dependencies {
@@ -17,6 +16,8 @@ plugins {
     mavenPublish
     osDetector
     syncLibs
+    shadow apply false
+    launch4j apply false
 }
 
 apply(plugin = "com.pascalwelsch.gitversioner")
@@ -104,6 +105,29 @@ subprojects {
                     username = properties["bintray.user.name"] as String?
                     password = properties["bintray.user.key"] as String?
                 }
+            }
+        }
+    }
+
+    afterEvaluate {
+        if (this.plugins.hasPlugin("application")) {
+            // apply the shadow and launch4j plugins
+            apply(plugin = "com.github.johnrengelman.shadow")
+            apply(plugin = "edu.sc.seis.launch4j")
+
+            val gitVersioner = rootProject.the<GitVersioner>()
+            val shadowJar = tasks.named<ShadowJar>("shadowJar").get()
+
+            shadowJar.version = "${project.version}.${gitVersioner.versionCode}"
+
+            configure<Launch4jPluginExtension> {
+                copyConfigurable = shadowJar.outputs.files
+                jar = "lib/${shadowJar.archiveName}"
+                icon = "$projectDir/icon.ico"
+                version = "${project.version}.${gitVersioner.versionCode}"
+                textVersion = "${project.version}.${gitVersioner.versionName}"
+                outfile = "${project.name}-$version.exe"
+                copyright = "GPLv3"
             }
         }
     }
