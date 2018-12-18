@@ -1,6 +1,9 @@
 import com.google.gradle.osdetector.OsDetector
 import com.pascalwelsch.gitversioner.GitVersioner
+import org.jetbrains.kotlin.daemon.common.toHexString
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import kotlin.text.Typography.copyright
+import java.security.MessageDigest
 
 buildscript {
     dependencies {
@@ -18,16 +21,16 @@ plugins {
 
 apply(plugin = "com.pascalwelsch.gitversioner")
 
+val gitVersioner = the<GitVersioner>().apply {
+    yearFactor = 0
+    addLocalChangesDetails = false
+}
+
 val os = OsDetector().os
 val platform = when (os) {
     "osx" -> "mac"
     "windows" -> "win"
     else -> os
-}
-
-configure<GitVersioner> {
-    yearFactor = 0
-    addLocalChangesDetails = false
 }
 
 subprojects {
@@ -47,13 +50,14 @@ subprojects {
             manifest {
                 attributes(
                         "Implementation-Version" to version,
-                        "Implementation-Build" to rootProject.the<GitVersioner>().versionName
+                        "Implementation-Build" to gitVersioner.versionName
                 )
             }
 
             // enable reproducible builds
             isPreserveFileTimestamps = false
             isReproducibleFileOrder = true
+            version = "${project.version}.${gitVersioner.versionCode}"
         }
 
         // set jvmTarget for Kotlin
