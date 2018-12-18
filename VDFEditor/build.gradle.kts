@@ -1,5 +1,5 @@
 dependencies {
-    implementation(project(":HoTT-Decoder:HoTT-Decoder"))
+    implementation(project(":HoTT-Decoder"))
     implementation(project(":HoTT-UI"))
     implementation(project(":HoTT-TTS"))
     implementation(project(":HoTT-Report-HTML"))

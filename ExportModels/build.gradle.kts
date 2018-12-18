@@ -1,5 +1,5 @@
 dependencies {
-    implementation(project(":HoTT-Decoder:HoTT-Decoder"))
+    implementation(project(":HoTT-Decoder"))
     runtimeOnly(project(":jSerialCommPort"))
 }
 

@@ -1,5 +1,5 @@
 dependencies {
     compile(project(":HoTT-Model"))
-    compile(project(":HoTT-Decoder:HoTT-Decoder"))
+    compile(project(":HoTT-Decoder"))
     implementation(Libs.freemarker)
 }
