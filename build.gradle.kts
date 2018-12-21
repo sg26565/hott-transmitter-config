@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     dependencies {
-        classpath("com.pascalwelsch.gitversioner:gitversioner:0.4.1")
+        classpath(Libs.gitversioner)
     }
 }
 
@@ -34,9 +34,15 @@ val platform = when (os) {
     else -> os
 }
 
+val versionCode by extra(gitVersioner.versionCode)
+val versionName by extra(gitVersioner.versionName)
+val baseVersion = "0.9.4"
+val shortVersion = "$baseVersion.$versionCode"
+val longVersion = "$baseVersion.$versionName"
+
 subprojects {
     group = "de.treichels.hott"
-    version = "0.9.4"
+    version = baseVersion
 
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
@@ -51,17 +57,17 @@ subprojects {
             manifest {
                 attributes(
                         "Implementation-Version" to version,
-                        "Implementation-Build" to gitVersioner.versionName
+                        "Implementation-Build" to versionName
                 )
             }
 
             // enable reproducible builds
             isPreserveFileTimestamps = false
             isReproducibleFileOrder = true
-            version = "${project.version}.${gitVersioner.versionCode}"
+            version = shortVersion
         }
 
-        // set jvmTarget for Kotlin
+        // set jvmTarget for Kotlin (covers compileKotlin and compileTestKotlin tasks)
         withType(KotlinCompile::class) {
             kotlinOptions.jvmTarget = "1.8"
         }
@@ -109,24 +115,26 @@ subprojects {
         }
     }
 
+    // add shadow and launch4j to any application project
     afterEvaluate {
         if (this.plugins.hasPlugin("application")) {
             // apply the shadow and launch4j plugins
             apply(plugin = "com.github.johnrengelman.shadow")
             apply(plugin = "edu.sc.seis.launch4j")
 
-            val gitVersioner = rootProject.the<GitVersioner>()
-            val shadowJar = tasks.named<ShadowJar>("shadowJar").get()
+            // configure shadowJar Task
+            val shadowJar by tasks.existing(ShadowJar::class) {
+                version = shortVersion
+            }
 
-            shadowJar.version = "${project.version}.${gitVersioner.versionCode}"
-
+            // configure createExe task
             configure<Launch4jPluginExtension> {
-                copyConfigurable = shadowJar.outputs.files
-                jar = "lib/${shadowJar.archiveName}"
+                copyConfigurable = shadowJar.get().outputs.files
+                jar = "lib/${shadowJar.get().archiveName}"
                 icon = "$projectDir/icon.ico"
-                version = "${project.version}.${gitVersioner.versionCode}"
-                textVersion = "${project.version}.${gitVersioner.versionName}"
-                outfile = "${project.name}-$version.exe"
+                version = shortVersion
+                textVersion = longVersion
+                outfile = "${project.name}-$shortVersion.exe"
                 copyright = "GPLv3"
 
                 val splashFile = File(projectDir, "splash.bmp")
