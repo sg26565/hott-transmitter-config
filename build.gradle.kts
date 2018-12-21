@@ -128,6 +128,11 @@ subprojects {
                 textVersion = "${project.version}.${gitVersioner.versionName}"
                 outfile = "${project.name}-$version.exe"
                 copyright = "GPLv3"
+
+                val splashFile = File(projectDir, "splash.bmp")
+                if (splashFile.exists() && splashFile.canRead()) {
+                    splashFileName = splashFile.path
+                }
             }
         }
     }
