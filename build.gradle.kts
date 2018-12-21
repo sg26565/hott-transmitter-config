@@ -131,15 +131,19 @@ subprojects {
             configure<Launch4jPluginExtension> {
                 copyConfigurable = shadowJar.get().outputs.files
                 jar = "lib/${shadowJar.get().archiveName}"
-                icon = "$projectDir/icon.ico"
                 version = shortVersion
                 textVersion = longVersion
                 outfile = "${project.name}-$shortVersion.exe"
                 copyright = "GPLv3"
 
-                val splashFile = File(projectDir, "splash.bmp")
-                if (splashFile.exists() && splashFile.canRead()) {
-                    splashFileName = splashFile.path
+                // add icon - if it exists
+                file("icon.ico").apply {
+                    if (exists()) icon = path
+                }
+
+                // add splashfile - if it exists
+                file("splash.bmp").apply {
+                    if (exists()) splashFileName = path
                 }
             }
         }
