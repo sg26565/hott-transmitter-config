@@ -129,8 +129,7 @@ subprojects {
 
             // configure createExe task
             configure<Launch4jPluginExtension> {
-                copyConfigurable = shadowJar.get().outputs.files
-                jar = "lib/${shadowJar.get().archiveName}"
+                jar = "${shadowJar.get().archivePath}"
                 version = shortVersion
                 textVersion = longVersion
                 outfile = "${project.name}-$shortVersion.exe"
@@ -145,6 +144,13 @@ subprojects {
                 file("splash.bmp").apply {
                     if (exists()) splashFileName = path
                 }
+            }
+
+            // copy executable to release dir
+            task<Copy>("release") {
+                group = "build"
+                from(tasks["createExe"])
+                into("$rootDir/../release")
             }
         }
     }
