@@ -152,6 +152,10 @@ subprojects {
                 from(tasks["createExe"])
                 into("$rootDir/../release")
             }
+
+            tasks.named("build") {
+                dependsOn("createExe")
+            }
         }
     }
 }
