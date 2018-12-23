@@ -148,6 +148,8 @@ subprojects {
 
             // copy executable to release dir
             task<Copy>("release") {
+                dependsOn("createExe")
+
                 group = "build"
                 from(tasks["createExe"])
                 into("$rootDir/../release")
