@@ -37,6 +37,8 @@ object Versions {
 
     const val launch4j: String = "3.12" 
 
+    const val proguard_gradle: String = "6.0.3" //available: "6.1.0beta1" 
+
     const val tornadofx: String = "1.7.17" 
 
     const val commons_lang3: String = "3.8.1" 
