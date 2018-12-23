@@ -151,7 +151,9 @@ subprojects {
                 dependsOn("createExe")
 
                 group = "build"
-                from(tasks["createExe"])
+                from(tasks["createExe"]) {
+                    exclude("lib/")
+                }
                 into("$rootDir/../release")
             }
 
