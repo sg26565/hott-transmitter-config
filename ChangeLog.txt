@@ -1,3 +1,14 @@
+2018-12-23
+==========
+    HoTT-Decoder-0.9.4.1149
+    HoTT-TTS-0.9.4.1149
+    MemoryDump-0.9.4.1149
+    mz32-Downloader-0.9.4.1149
+    VDFEditor-0.9.4.1149
+    MdlViewer-0.9.4.1149
+    MdlViewer-Plugin-for-DataExplorer-0.9.4.1149
+    - obfuscation for HoTT-Decoder
+
 2018-12-18
 ==========
     FirmwareUpgrader-0.9.4.1129
