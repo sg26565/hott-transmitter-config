@@ -1,4 +1,4 @@
 [submodule "HoTT-Decoder"]
 	path = HoTT-Decoder
-	url = ../../mdlviewer/hott-decoder.git
+	url = ../hott-decoder.git
 	branch = develop

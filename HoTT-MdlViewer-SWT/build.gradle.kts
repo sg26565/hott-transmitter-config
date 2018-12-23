@@ -1,11 +1,11 @@
 import com.diffplug.gradle.eclipse.MavenCentralExtension
 import com.diffplug.gradle.pde.EclipseRelease
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 dependencies {
     implementation(project(":HoTT-Report-HTML"))
     implementation(project(":HoTT-Report-XML"))
     implementation(project(":HoTT-Report-PDF"))
+    implementation(project(":HoTT-Serial"))
     implementation(Libs.commons_math3)
     runtimeOnly(project(":jSerialCommPort"))
 }
@@ -13,7 +13,6 @@ dependencies {
 plugins {
     eclipse
     application
-    shadow
 }
 
 application {

@@ -1,3 +1,22 @@
+2018-12-18
+==========
+    FirmwareUpgrader-0.9.4.1129
+    HoTT-TTS-0.9.4.1129
+    MemoryDump-0.9.4.1129
+    mz32-Downloader-0.9.4.1129
+    VDFEditor-0.9.4.1129
+    - Gradle based build system
+    - New versioning scheme
+    - Java 11 compatibility
+
+    MdlViewer-0.9.4.1129
+    MdlViewer-Plugin-for-DataExplorer-0.9.4.1129
+    - Gradle based build system
+    - New versioning scheme
+    - Support for Copter, Boat and Car models
+    - Fixed bug in Expo curves
+    - Java 11 compatibility
+
 2018-08-30
 ==========
     mz32-Downloader-0.9.3.49

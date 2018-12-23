@@ -1,3 +1,6 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: normal
+  
 build:
   image: gradle:5.0-jdk8
-  script: gradle --stacktrace build
+  script: gradle --stacktrace HoTT-Decoder:build build

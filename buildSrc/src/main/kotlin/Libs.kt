@@ -66,6 +66,11 @@ object Libs {
     const val launch4j: String = "net.sf.launch4j:launch4j:" + Versions.launch4j
 
     /**
+     * [proguard-gradle website](http://proguard.sourceforge.net/) */
+    const val proguard_gradle: String =
+            "net.sf.proguard:proguard-gradle:" + Versions.proguard_gradle
+
+    /**
      * [tornadofx website](https://github.com/edvin/tornadofx) */
     const val tornadofx: String = "no.tornado:tornadofx:" + Versions.tornadofx
 

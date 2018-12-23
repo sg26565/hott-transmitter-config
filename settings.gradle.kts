@@ -2,7 +2,7 @@ rootProject.name = "hott-transmitter-config"
 
 include(":ExportModels")
 include(":FirmwareUpgrader")
-include(":HoTT-Decoder:HoTT-Decoder")
+include(":HoTT-Decoder")
 include(":HoTT-Firmware")
 include(":HoTT-MdlViewer-JavaFX")
 include(":HoTT-MdlViewer-SWT")
