@@ -62,10 +62,10 @@ public class SwtCurveImageGenerator implements CurveImageGenerator {
             // -100% horizontal line
             g.drawLine(5, (int) (5 + 225 * scale), (int) (5 + 200 * scale), (int) (5 + 225 * scale));
 
-            if (!pitchCurve) {
-                // 0% horizontal line
-                g.drawLine(5, (int) (5 + 125 * scale), (int) (5 + 200 * scale), (int) (5 + 125 * scale));
+            // 0% horizontal line
+            g.drawLine(5, (int) (5 + 125 * scale), (int) (5 + 200 * scale), (int) (5 + 125 * scale));
 
+            if (!pitchCurve) {
                 // 0% vertical line
                 g.drawLine((int) (5 + 100 * scale), 5, (int) (5 + 100 * scale), (int) (5 + 250 * scale));
             }
