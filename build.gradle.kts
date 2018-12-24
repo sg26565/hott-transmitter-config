@@ -75,14 +75,14 @@ subprojects {
 
     dependencies {
         // common dependencies
-        "implementation"(Libs.kotlin_stdlib_jdk8)
-        "testCompile"(Libs.junit)
-        "testCompile"(Libs.kotlin_test_junit)
+        implementation(Libs.kotlin_stdlib_jdk8)
+        testImplementation(Libs.junit)
+        testImplementation(Libs.kotlin_test_junit)
 
         // dependency management
         @Suppress("UnstableApiUsage")
         constraints {
-            add("compile", "org.jetbrains.kotlin:kotlin-reflect:1.3.10")
+            add("compile", "org.jetbrains.kotlin:kotlin-reflect:${Versions.org_jetbrains_kotlin}")
         }
     }
 
@@ -148,8 +148,6 @@ subprojects {
 
             // copy executable to release dir
             task<Copy>("release") {
-                dependsOn("createExe")
-
                 group = "build"
                 from(tasks["createExe"]) {
                     exclude("lib/")
@@ -157,6 +155,7 @@ subprojects {
                 into("$rootDir/../release")
             }
 
+            // add createExe to default build tasks
             tasks.named("build") {
                 dependsOn("createExe")
             }
