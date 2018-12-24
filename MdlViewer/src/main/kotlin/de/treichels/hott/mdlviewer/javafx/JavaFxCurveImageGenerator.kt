@@ -61,9 +61,11 @@ class JavaFxCurveImageGenerator : CurveImageGenerator {
             strokeLine(5.0, (5 + 25 * scale), (5 + 200 * scale), (5 + 25 * scale))
             strokeLine(5.0, (5 + 225 * scale), (5 + 200 * scale), (5 + 225 * scale))
 
+            // horizontal 0% line
+            strokeLine(5.0, (5 + 125 * scale), (5 + 200 * scale), (5 + 125 * scale))
+
             if (!pitchCurve) {
-                // horizontal and vertical 0% lines
-                strokeLine(5.0, (5 + 125 * scale), (5 + 200 * scale), (5 + 125 * scale))
+                // vertical 0% line
                 strokeLine((5 + 100 * scale), 5.0, (5 + 100 * scale), (5 + 250 * scale))
             }
 

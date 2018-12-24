@@ -804,8 +804,8 @@ data class StickTrim(
         var channel: Int = 0,
         var increment: Int = 0,
         var mode: TrimMode,
-        var timeHigh: Int = 0,
-        var timeLow: Int = 0
+        var timeHigh: Double = 0.0,
+        var timeLow: Double = 0.0
 ) : AbstractBase()
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
