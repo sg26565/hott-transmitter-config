@@ -343,7 +343,8 @@ data class Clock(
 data class Control(
         @get:XmlIDREF
         var inputControl: Switch = Switch(),
-        var mode: ControlMode? = null,
+        var mode: ControlMode = ControlMode.Unknown,
+        var function: Function = Function.Unknown,
         var number: Int = 0,
         var offset: Int = 0,
         var timeHigh: Double = 0.0,

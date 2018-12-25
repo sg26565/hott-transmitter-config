@@ -22,9 +22,9 @@
 				<#if helicopterModel?? && control.number?number == 8>
 					<td align="center">Gaslimiter</td>
 				<#else>
-					<td align="center">E${control.number?number+1}</td>
+					<td align="center">E${control.number?number+1}<#if control.function.name() != "Unknown"> (${control.function})</#if></td>
 				</#if>
-				<td align="center" colspan="2"><@switch control.inputControl/></td>
+				<td algn="center" colspan="2"><@switch control.inputControl/></td>
 				<td align="center">${control.travelLow}%</td>
 				<td align="center">${control.travelHigh}%</td>
 			</tr>
