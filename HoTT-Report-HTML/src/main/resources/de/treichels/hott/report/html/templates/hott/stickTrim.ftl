@@ -4,36 +4,36 @@
 	<thead>
 		<tr>
 			<th>Phase</th>
-			<#if helicopterModel??>
-				<th align="center">Pitch/Gas</th>
-				<th align="center">Roll</th>
-				<th align="center">Nick</th>
-				<th align="center">Heckrotor</th>
-			<#else>
-				<#switch model.modelType.name()>
-					<#case "Winged">
-						<th align="center"><#if model.motorOnC1Type.name() == "Idle_Front" || model.motorOnC1Type.name() == "Idle_Rear">Gas<#else>Kanal 1</#if></th>
-						<th align="center">Querruder</th>
-						<th align="center">Höhenruder</th>
-						<th align="center">Seitenruder</th>
-						<#break>
-
-					<#case "Boat">
-					<#case "Car">
-						<th align="center"><#if model.motorOnC1Type.name() == "Idle_Front" || model.motorOnC1Type.name() == "Idle_Rear">Gas<#else>Kanal 1</#if></th>
-						<th align="center">Steuerung</th>
-						<th align="center">Kanal 3</th>
-						<th align="center">Kanal 4</th>
-						<#break>
-
-					<#case "Copter">
-						<th align="center">Schub</th>
-						<th align="center">Roll</th>
-						<th align="center">Nick</th>
-						<th align="center">Gier</th>
+			<#switch model.modelType.name()>
+				<#case "Heli">
+					<th align="center">Pitch/Gas</th>
+					<th align="center">Roll</th>
+					<th align="center">Nick</th>
+					<th align="center">Heckrotor</th>
 					<#break>
-				</#switch>
-			</#if>
+
+				<#case "Winged">
+					<th align="center"><#if model.motorOnC1Type.name() == "Idle_Front" || model.motorOnC1Type.name() == "Idle_Rear">Gas<#else>Kanal 1</#if></th>
+					<th align="center">Querruder</th>
+					<th align="center">Höhenruder</th>
+					<th align="center">Seitenruder</th>
+					<#break>
+
+				<#case "Boat">
+				<#case "Car">
+					<th align="center"><#if model.motorOnC1Type.name() == "Idle_Front" || model.motorOnC1Type.name() == "Idle_Rear">Gas<#else>Kanal 1</#if></th>
+					<th align="center">Steuerung</th>
+					<th align="center">Kanal 3</th>
+					<th align="center">Kanal 4</th>
+					<#break>
+
+				<#case "Copter">
+					<th align="center">Schub</th>
+					<th align="center">Roll</th>
+					<th align="center">Nick</th>
+					<th align="center">Gier</th>
+				<#break>
+			</#switch>
 		</tr>
 	</thead>
 	
