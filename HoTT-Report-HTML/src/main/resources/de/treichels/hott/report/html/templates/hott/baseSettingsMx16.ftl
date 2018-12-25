@@ -54,15 +54,17 @@
 		<#else>
 			<tr class="<@d/>">
 				<th align="right">Motor an K1</th>
-				<td align="left" colspan="3">${wingedModel.motorOnC1Type}</td>
+				<td align="left" colspan="3">${model.motorOnC1Type}</td>
 			</tr>
 		</#if>
-		<tr class="<@d/>">
-			<th align="right" valign="top">Motor-Stopp</th>
-			<td align="left"><i>Position:</i> ${model.throttleSettings.throttleCutOf.position}%</td>
-			<td align="left"><i>Limit:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
-			<td align="left"><i>Schalter:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>							
-		</tr>
+		<#if model.motorOnC1Type.name() == "Idle_Front" || model.motorOnC1Type.name() == "Idle_Rear">
+			<tr class="<@d/>">
+				<th align="right" valign="top">Motor-Stopp</th>
+				<td align="left"><i>Position:</i> ${model.throttleSettings.throttleCutOf.position}%</td>
+				<td align="left"><i>Limit:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
+				<td align="left"><i>Schalter:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>
+			</tr>
+		</#if>
 		<#if helicopterModel??>
 			<tr class="<@d/>">
 				<th align="right">Rotor Drehrichtung</th>
