@@ -1,14 +1,15 @@
 package de.treichels.hott.mz32
 
-import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.firmware.Firmware
 import de.treichels.hott.firmware.getFirmware
+import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.util.hash
 import de.treichels.lzma.canCompress
 import de.treichels.lzma.uncompress
 import tornadofx.*
 import java.io.File
+import java.nio.file.FileSystems
 import java.util.concurrent.CountDownLatch
 import java.util.logging.Logger
 
@@ -250,12 +251,43 @@ class Mz32(private val rootDir: File) {
         private const val GRAUPNER_DISK_CFG = "/GraupnerDisk.cfg"
         private val log = Logger.getLogger(this::class.qualifiedName)
 
-        fun find(): List<Mz32> = File.listRoots().mapNotNull {
+        fun find(): List<Mz32> {
+            // File roots
+            val canditates = File.listRoots().toMutableSet()
+
+            // FileSystem roots
             try {
-                Mz32(it).apply {
+                canditates.addAll(FileSystems.getDefault().rootDirectories.map { it.toFile() })
+            } catch (e: Exception) {
+                // ignore
+            }
+
+            // /proc/mounts
+            try {
+                val procMounts = File("/proc/mounts")
+                if (procMounts.exists())
+                    canditates.addAll(procMounts.readLines().map { File(it.split(" ")[1]) })
+            } catch (e: Exception) {
+                // ignore
+            }
+
+            // mount command
+            try {
+                Runtime.getRuntime().exec("mount").apply {
+                    waitFor()
+                    if (exitValue() == 0)
+                        canditates.addAll(inputStream.reader().readLines().map { File(it.split(" ")[2]) })
                 }
             } catch (e: Exception) {
-                null
+                // ignore
+            }
+
+            return canditates.mapNotNull {
+                try {
+                    Mz32(it)
+                } catch (e: Exception) {
+                    null
+                }
             }
         }
     }
