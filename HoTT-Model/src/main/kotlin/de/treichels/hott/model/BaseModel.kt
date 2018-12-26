@@ -130,10 +130,10 @@ abstract class BaseModel(val modelType: ModelType) : AbstractBase() {
     var phaseAssignment: PhaseAssignment? = null
     @get:XmlElementWrapper(name = "receivers")
     var receiver = emptyList<Receiver>()
-    var receiverClass: ReceiverClass? = null
+    var receiverClass: ReceiverClass = ReceiverClass.Unknown
     @get:XmlElementWrapper(name = "ringLimiters")
     var ringLimiter = emptyList<RingLimiter>()
-    var stickMode: StickMode? = null
+    var stickMode: StickMode = StickMode.Undefined
     @get:XmlElementWrapper(name = "sicktrims")
     var stickTrim = emptyList<StickTrim>()
     @get:XmlElementWrapper(name = "switches")
@@ -143,7 +143,7 @@ abstract class BaseModel(val modelType: ModelType) : AbstractBase() {
     var trainerConfig = TrainerConfig()
     var transmitterId: Long = 0L
     var transmitterType = TransmitterType.Unknown
-    var vendor: Vendor? = null
+    var vendor: Vendor = Vendor.Unknown
     var spektrumChannelNumber: Int = 0
     var spektrumMode = SpektrumMode.NONE
     var volumeTrim = emptyList<Int>()
@@ -229,14 +229,14 @@ abstract class BaseModel(val modelType: ModelType) : AbstractBase() {
         result = 31 * result + motorOnC1Type.hashCode()
         result = 31 * result + mp3Player.hashCode()
         result = 31 * result + (phaseAssignment?.hashCode() ?: 0)
-        result = 31 * result + (receiverClass?.hashCode() ?: 0)
-        result = 31 * result + (stickMode?.hashCode() ?: 0)
+        result = 31 * result + receiverClass.hashCode()
+        result = 31 * result + stickMode.hashCode()
         result = 31 * result + telemetry.hashCode()
         result = 31 * result + throttleSettings.hashCode()
         result = 31 * result + trainerConfig.hashCode()
         result = 31 * result + transmitterId.hashCode()
         result = 31 * result + transmitterType.hashCode()
-        result = 31 * result + (vendor?.hashCode() ?: 0)
+        result = 31 * result + vendor.hashCode()
         result = 31 * result + spektrumChannelNumber
         result = 31 * result + spektrumMode.hashCode()
         result = 31 * result + volumeTrim.hashCode()
@@ -256,7 +256,7 @@ data class Channel(
         var center: Int = 0,
         var failSafeMode: FailSafeMode = FailSafeMode.Undefined,
         var failSafePosition: Double = 0.0,
-        var function: Function? = null,
+        var function: Function = Function.Unknown,
         var limitHigh: Int = 150,
         var limitLow: Int = 150,
         var isMixOnly: Boolean = false,
@@ -307,7 +307,7 @@ data class ChannelSequencer(
 @XmlAccessorType(XmlAccessType.PROPERTY)
 data class Clock(
         var alarm: Int = 0,
-        var function: ClockFunction? = null,
+        var function: ClockFunction = ClockFunction.Unknown,
         var value: Int = 0,
         var number: Int,
         @get:XmlIDREF
@@ -622,7 +622,7 @@ class LinearMixer : CurveMixer(type = MixerType.Linear) {
 @XmlAccessorType(XmlAccessType.PROPERTY)
 class LogicalSwitch(
         var isEnabled: Boolean = false,
-        var mode: LogicalSwitchMode? = null,
+        var mode: LogicalSwitchMode = LogicalSwitchMode.Unknwon,
         @get:XmlElementWrapper(name = "switches")
         @get:XmlIDREF
         var switch: List<Switch> = emptyList()
@@ -670,15 +670,15 @@ data class Multichannel(
         var control: List<Control> = emptyList(),
         var isEnabled: Boolean,
         @get:XmlIDREF
-        var inputChannel: Channel? = null,
-        var mode: MultichannelMode? = null,
+        var inputChannel: Channel = Channel(),
+        var mode: MultichannelMode = MultichannelMode.Unknwon,
         @get:XmlAttribute
         var number: Int
 ) : AbstractBase()
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
 abstract class Phase : AbstractBase() {
-    var channel1Curve: Curve? = null
+    var channel1Curve: Curve = Curve()
     @get:XmlElementWrapper(name = "controls")
     var control = emptyList<Control>()
     @get:XmlElementWrapper(name = "dualRateExpos")
@@ -689,17 +689,17 @@ abstract class Phase : AbstractBase() {
     @get:XmlID
     val id: String
         get() = number.toString()
-    var phaseName: String? = null
+    var phaseName: String = ""
     @get:XmlIDREF
     var phaseSwitch: Switch = Switch()
     var phaseSwitchTime: Double = 0.0
     @get:XmlIDREF
     var phaseTimer: Clock? = null
-    var phaseType: PhaseType? = null
+    var phaseType: PhaseType = PhaseType.Unnamed
     var digitalTrimValue = emptyList<Int>()
     var digitalTrimStep = emptyList<Int>()
     var switchAnnouncements = emptyList<SwitchAnnouncement>()
-    var phaseAnnouncement: String? = null
+    var phaseAnnouncement: String = ""
 
     override fun toString(): String {
         return String.format("Phase %d: %s", number + 1, phaseName)
@@ -773,7 +773,7 @@ data class Receiver(
         var number: Int = 0,
         var rfid: Long = 0L,
         var isTelemetry: Boolean = false,
-        var firmwareType: ReceiverFirmwareType? = null
+        var firmwareType: ReceiverFirmwareType = ReceiverFirmwareType.Unknown
 ) : AbstractBase() {
     @get:XmlAttribute
     @get:XmlID
@@ -804,7 +804,7 @@ data class Sequence(
         @get:XmlAttribute
         var number: Int = 0,
         @get:XmlIDREF
-        var outputChannel: Channel? = null,
+        var outputChannel: Channel = Channel(),
         var stepPosition: List<Int> = emptyList()
 ) : AbstractBase()
 

@@ -1,4 +1,4 @@
-<#if wingedModel??>
+<#if model.modelType.name() == "Winged">
 	<table>
 		<caption><a name="phaseTrim"></a>Phasentrimm</caption>
 		

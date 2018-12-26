@@ -1,4 +1,4 @@
-<#if helicopterModel??>
+<#if model.modelType.name() == "Helicopter">
 	<#list helicopterModel.phase as phase>
 		<#if phase.number != -1 && phase.phaseType.name() != "Unused">
 			<table>

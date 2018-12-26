@@ -1,7 +1,7 @@
 <#-- @ftlvariable name="curve" type="de.treichels.hott.model.Curve" -->
 <#-- @ftlvariable name="row" type="String" -->
 <#macro switch sw>
-	<#if sw.assignment?? && sw.assignment.name() != "Unassigned">
+	<#if sw.assignment.name() != "Unassigned">
 		<#switch sw.type.name()>
 			<#case "ToggleSwitch">
 				<#if sw.direction==1>

@@ -45,7 +45,7 @@
 				<tr class="<@d/>">
 					<td align="center">${phase.toString()}</td>
 					<td align="center">${model.throttleSettings.throttleTrim}%</td>
-					<#if helicopterModel??>
+					<#if model.modelType.name() == "Helicopter">
 						<td align="center">${phase.helicopterTrim.rollStickTrim}%</td>
 						<td align="center">${phase.helicopterTrim.nickStickTrim}%</td>
 						<td align="center">${phase.helicopterTrim.tailStickTrim}%</td>

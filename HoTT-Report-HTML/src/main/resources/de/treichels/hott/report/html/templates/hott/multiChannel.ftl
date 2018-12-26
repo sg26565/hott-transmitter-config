@@ -46,9 +46,9 @@
 	
 						<td>Eingang ${control_index+1}</td>
 	
-						<#if control.controlSwitch?? && control.controlSwitch.assignment.name() != "Unassigned">
-							<td align="center" colspan="2"><@switch control.controlSwitch/></td>
-						<#elseif control.toggleLowSwitch?? && control.toggleLowSwitch.assignment.name() != "Unassigned" || control.toggleHighSwitch?? && control.toggleHighSwitch.assignment.name() != "Unassigned">
+						<#if control.inputControl.assignment.name() != "Unassigned">
+							<td align="center" colspan="2"><@switch control.inputControl/></td>
+						<#elseif control.toggleLowSwitch.assignment.name() != "Unassigned" || control.toggleHighSwitch.assignment.name() != "Unassigned">
 							<td align="center"><@switch control.toggleLowSwitch/></td>
 							<td align="center"><@switch control.toggleHighSwitch/></td>
 						<#else>

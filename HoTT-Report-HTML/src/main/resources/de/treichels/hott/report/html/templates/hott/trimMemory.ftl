@@ -56,7 +56,7 @@
 			<#if phase.phaseType.name() != "Unused">
 				<tr class="<@d/>">
 					<td align="center">${phase.toString()}</td>
-					<#if helicopterModel??>
+					<#if model.modelType.name() == "Helicopter">
 						<td align="center">${model.throttleSettings.throttleTrim}%</td>
 						<td align="center">${phase.control[0].trim}%</td>
 						<td align="center">${phase.helicopterTrim.rollStickTrim}%</td>

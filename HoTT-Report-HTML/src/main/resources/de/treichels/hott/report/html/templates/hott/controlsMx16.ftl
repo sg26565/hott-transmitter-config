@@ -14,17 +14,17 @@
 
 	<tbody>
 		<#list model.phase[0].control as control>	
-			<#if !helicopterModel?? && control.number?number &gt; 7>
+			<#if model.modelType.name() != "Helicopter" && control.number?number &gt; 7>
 				<#break>
 			</#if>
 			
 			<tr class="<@d/>">
-				<#if helicopterModel?? && control.number?number == 8>
+				<#if model.modelType.name() == "Helicopter" && control.number?number == 8>
 					<td align="center">Gaslimiter</td>
 				<#else>
 					<td align="center">E${control.number?number+1}<#if control.function.name() != "Unknown"> (${control.function})</#if></td>
 				</#if>
-				<td algn="center" colspan="2"><@switch control.inputControl/></td>
+				<td align="center" colspan="2"><@switch control.inputControl/></td>
 				<td align="center">${control.travelLow}%</td>
 				<td align="center">${control.travelHigh}%</td>
 			</tr>

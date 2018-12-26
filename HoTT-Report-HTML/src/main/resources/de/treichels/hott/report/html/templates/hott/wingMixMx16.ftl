@@ -1,4 +1,4 @@
-<#if wingedModel??>
+<#if model.modelType.name() == "Winged">
 	<table>
 		<caption><a name="wingMix0"></a>Flächenmix</caption>
 
@@ -17,7 +17,7 @@
 				<tr class="<@d/>">
 					<td align="center">${mixer.id}</td>
 					<td align="center">${mixer.value[0]}%</td>
-						<#if mixer.switch??>
+						<#if mixer.switch.assignment.name() != "Unassigned">
 							<td align="center"><@switch mixer.switch/></td>
 						<#else>
 							<td></td>
