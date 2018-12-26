@@ -1,6 +1,3 @@
-import com.diffplug.gradle.eclipse.MavenCentralExtension
-import com.diffplug.gradle.pde.EclipseRelease
-
 dependencies {
     implementation(project(":HoTT-Report-HTML"))
     implementation(project(":HoTT-Report-XML"))
