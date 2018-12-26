@@ -31,6 +31,7 @@ class MdlViewer : App() {
                     result = "v${attributes.getValue("Implementation-Version")}.${attributes.getValue("Implementation-Build")}"
                 }
 
+            System.setProperty("program.version", result)
             result
         }
 
@@ -39,9 +40,11 @@ class MdlViewer : App() {
             val programDir = sourceLocation.parentFile
 
             // if we are running inside Eclipse in the target directory, step up to the project level
-            if (programDir.name == "target") programDir.parentFile.absolutePath else programDir.absolutePath
-        }
+            val result = if (programDir.name == "target") programDir.parentFile.absolutePath else programDir.absolutePath
 
+            System.setProperty("program.dir", result)
+            result
+        }
     }
 
     init {
