@@ -29,11 +29,11 @@ import tornadofx.FX.Companion.messages
 import java.io.*
 
 
-class Model(private val info: ModelInfo, private val data: ByteArray?) {
+class Model(private val info: ModelInfo, private val data: ByteArray) {
     companion object {
-        fun loadModel(file: File?): Model {
+        fun loadModel(file: File): Model {
             // check if file exits
-            if (file == null || !file.exists()) throw HoTTException(messages["file_not_found"], file)
+            if (!file.exists()) throw HoTTException(messages["file_not_found"], file)
 
             // check that file has a .mdl extension
             val fileName = file.name
@@ -49,29 +49,33 @@ class Model(private val info: ModelInfo, private val data: ByteArray?) {
             return Model(info, data)
         }
 
-        fun loadModel(fileInfo: FileInfo, serialPort: HoTTSerialPort? = null): Model {
+        fun loadModel(fileInfo: FileInfo, serialPort: HoTTSerialPort): Model {
             val fileName = fileInfo.name
             val type = ModelType.forChar(fileName[0])
             val name = fileName.substring(1, fileName.length - 4)
             val modelInfo = ModelInfo(modelNumber = 0, modelName = name, modelInfo = "", modelType = type, receiverClass = ReceiverClass.Unknown, transmitterType = TransmitterType.Unknown)
             val data = ByteArrayOutputStream().use { stream ->
-                serialPort?.readFile(fileInfo.path, stream)
+                serialPort.readFile(fileInfo.path, stream)
                 stream.toByteArray()
             }
 
             return Model(modelInfo, data)
         }
+
+        fun loadModel(modelInfo: ModelInfo, serialPort: HoTTSerialPort) = Model(modelInfo, serialPort.getModelData(modelInfo))
     }
 
     val fileName: String = "${info.modelType.char}${info.modelName}"
     val model: BaseModel by lazy { HoTTDecoder.decodeStream(info.modelType, info.modelName, ByteArrayInputStream(data)) }
-    val html: String by lazy { HTMLReport.generateHTML(model) }
+    val html
+        get() = HTMLReport.generateHTML(model)
     @Suppress("MemberVisibilityCanBePrivate")
-    val xml: String by lazy { XMLReport.generateXML(model) }
+    val xml
+        get() = XMLReport.generateXML(model)
 
-    fun saveHtml(file: File) = HTMLReport.save(file, html)
-    fun saveMdl(file: File) = FileOutputStream(file).use { it.write(data) }
+    fun saveHtml(file: File) = file.writeText(html)
+    fun saveMdl(file: File) = file.writeBytes(data)
     fun savePdf(file: File) = PDFReport.save(file, html)
-    fun saveTxt(file: File) = FileOutputStream(file).use { it.write(Util.dumpData(data).toByteArray()) }
-    fun saveXml(file: File) = HTMLReport.save(file, xml)
+    fun saveTxt(file: File) = file.writeText(Util.dumpData(data))
+    fun saveXml(file: File) = file.writeText(xml)
 }

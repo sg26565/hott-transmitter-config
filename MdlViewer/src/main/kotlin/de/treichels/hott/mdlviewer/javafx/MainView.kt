@@ -16,10 +16,12 @@ import de.treichels.hott.voice.Announcements
 import javafx.application.Platform
 import javafx.beans.binding.Bindings
 import javafx.beans.property.ReadOnlyBooleanProperty
+import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.concurrent.Task
 import javafx.concurrent.Worker
 import javafx.scene.Cursor
+import javafx.scene.control.CheckBox
 import javafx.scene.control.ContextMenu
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
@@ -49,6 +51,7 @@ class MainView : View() {
     private var webView by singleAssign<WebView>()
 
     // Current model
+    private val showHiddenMenus = SimpleBooleanProperty(false)
     private val modelProperty = SimpleObjectProperty<Model?>(null)
     private var model
         get() = modelProperty.get()
@@ -99,6 +102,23 @@ class MainView : View() {
                     separator()
                     item(messages["exit"], "Alt+F4") {
                         action { exit() }
+                    }
+                }
+
+                menu(messages["view"]) {
+                    item(messages["show_hidden_menus"]) {
+                        checkbox {
+                            showHiddenMenus.bindBidirectional(selectedProperty())
+                            preferences {
+                                isSelected = get("showHiddenMenus", "false")!!.toBoolean()
+                            }
+                            action {
+                                preferences {
+                                    put("showHiddenMenus", isSelected.toString())
+                                }
+                                refresh()
+                            }
+                        }
                     }
                 }
             }
@@ -264,6 +284,7 @@ class MainView : View() {
     private fun refresh() {
         val model = this.model
         if (model != null) {
+            model.model.showHiddenMenus = showHiddenMenus.value
             refresh(model)
         }
     }
