@@ -38,12 +38,10 @@ class SelectFromMemory : SelectFromTransmitter() {
     override fun getResultCallable(): Callable<Model>? {
         val index = listView.selectionModel.selectedIndex
         val modelInfo = modelInfoList?.get(index)
+        val serialPort = this.serialPort
 
-        return if (modelInfo != null) {
-            Callable {
-                val modelData = serialPort?.getModelData(modelInfo)
-                Model(modelInfo, modelData)
-            }
+        return if (modelInfo != null && serialPort != null) {
+            Callable { Model.loadModel(modelInfo, serialPort) }
         } else null
     }
 

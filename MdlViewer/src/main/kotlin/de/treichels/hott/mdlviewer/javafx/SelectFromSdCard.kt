@@ -44,8 +44,9 @@ class SelectFromSdCard : SelectFromTransmitter() {
     override fun getResultCallable(): Callable<Model>? {
         val item = treeView.selectionModel.selectedItem as? TreeFileInfo
         val fileInfo = item?.fileInfo
+        val serialPort = this.serialPort
 
-        return if (fileInfo != null) Callable { loadModel(fileInfo, serialPort) } else null
+        return if (fileInfo != null && serialPort != null) Callable { loadModel(fileInfo, serialPort) } else null
     }
 
     override fun refreshUITask() = treeView.runAsyncWithOverlay {

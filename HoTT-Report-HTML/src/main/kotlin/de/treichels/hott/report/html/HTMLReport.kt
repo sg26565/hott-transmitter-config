@@ -112,9 +112,6 @@ object HTMLReport {
 
     }
 
-    @Throws(IOException::class)
-    fun save(file: File, html: String) = FileWriter(file).use { it.write(html) }
-
     fun setSuppressExceptions(suppress: Boolean) {
         CONFIGURATION.templateExceptionHandler = if (suppress) FreeMarkerExceptionHandler() else TemplateExceptionHandler.DEBUG_HANDLER
     }
