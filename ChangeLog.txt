@@ -1,10 +1,8 @@
-2018-12-27
-==========
-    MdlViewer-0.9.4.1172
-    - add option to show/hide hidden menus
-
 2018-12-26
 ==========
+    MdlViewer-0.9.4.1172
+    - add option to show/hide suppressed menus
+
     MdlViewer-0.9.4.1171
     - fixed Boat, Car and Copter models for mx-12 and mx-16
     - fixed trim type for helicopter channel 1
@@ -12,7 +10,7 @@
     - fixed version display in PDF report
     - fixed phase names for copter models
     - added phase names for boat and car models
-    - added function named to controls
+    - added function names to controls
     - hide suppressed menus
 
 2018-12-23
