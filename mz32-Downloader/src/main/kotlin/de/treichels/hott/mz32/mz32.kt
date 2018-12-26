@@ -276,7 +276,10 @@ class Mz32(private val rootDir: File) {
                 Runtime.getRuntime().exec("mount").apply {
                     waitFor()
                     if (exitValue() == 0)
-                        canditates.addAll(inputStream.reader().readLines().map { File(it.split(" ")[2]) })
+                        canditates.addAll(inputStream.reader().readLines().map {
+                            val path = it.substringAfter(" on ").substringBeforeLast(" (").trim()
+                            File(path)
+                        })
                 }
             } catch (e: Exception) {
                 // ignore
