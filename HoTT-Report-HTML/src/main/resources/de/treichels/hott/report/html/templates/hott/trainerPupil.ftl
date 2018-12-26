@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("TeacherPupil")>
 <table>
 	<caption><a name="trainerPupil"></a>Lehrer/Schüler</caption>
 			
@@ -53,3 +54,4 @@
 		</tr>
 	</tbody>
 </table>
+</#if>

@@ -5,6 +5,7 @@
 		<#break>
 	</#if>
 </#list>
+<#if show>
 <table class="<@u show/>">
 	<caption><a name="ringLimiter"></a>Ringbegrenzer</caption>
 	
@@ -46,3 +47,4 @@
 		</#list>
 	</tbody>
 </table>
+</#if>

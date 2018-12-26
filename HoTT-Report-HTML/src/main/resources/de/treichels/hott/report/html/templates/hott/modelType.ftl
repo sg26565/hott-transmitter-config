@@ -1,5 +1,6 @@
+<#if model.isMenuEnabled("ModelType")>
 <table>
-	<#if helicopterModel??>
+	<#if model.modelType.name() == "Helicopter">
 		<caption><a name="modelType"></a>Helikoptertyp</caption>
 
 		<@reset/>
@@ -42,7 +43,7 @@
 				<th align="right">Motor an K1</th>
 				<td align="left" colspan="2">${model.motorOnC1Type}</td>
 			</tr>
-		<#if wingedModel??>
+		<#if model.modelType.name() == "Winged">
 			<tr class="<@d/>">
 				<th align="right">Leitwerk</th>
 				<td align="left" colspan="2">${wingedModel.tailType}</td>
@@ -60,3 +61,4 @@
 		</tbody>
 	</#if>
 </table>
+</#if>

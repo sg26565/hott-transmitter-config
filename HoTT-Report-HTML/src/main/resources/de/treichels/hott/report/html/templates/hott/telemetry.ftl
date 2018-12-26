@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("Telemetry")>
 <table>
 	<caption><a name="telemetry"></a>Telemetrie</caption>
 	
@@ -17,7 +18,7 @@
 		</tr>
 		<tr class="<@d/>">
 			<th align="right">Varioton</th>
-			<td align="left"><#if model.varioToneSensor??>über ${model.varioToneSensor}, </#if><@switch model.telemetry.varioTone/></td>
+			<td align="left"><#if model.telemetry.varioToneSensor.name() != "Unknown">über ${model.telemetry.varioToneSensor}, </#if><@switch model.telemetry.varioTone/></td>
 		</tr>
 		<#list model.telemetry.selectedSensor as sensor>
 			<tr class="<@d/>">
@@ -43,7 +44,7 @@
 			<td align="left">${model.telemetry.telemetryDataReceiveTime}</td>
 			</#if>
 		</tr>
-		<#if model.telemetry.userAlarmList??>		
+		<#if model.telemetry.userAlarmList?size &gt; 0>
 		<#list model.telemetry.userAlarmList as alarm>
 		<tr class="<@d/>">
 			<#if alarm_index == 0>
@@ -55,3 +56,4 @@
 		</#if>						
 	</tbody>
 </table>
+</#if>

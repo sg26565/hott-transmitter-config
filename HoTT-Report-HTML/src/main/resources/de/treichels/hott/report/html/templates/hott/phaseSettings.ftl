@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("PhaseSettings")>
 <table>
 	<caption><a name="phaseSettings"></a>Phaseneinstellungen</caption>
 	
@@ -6,7 +7,7 @@
 			<th align="center">Phase</th>
 			<th align="center">Name</th>
 			<th align="center">Uhr</th>
-			<#if wingedModel??>
+			<#if model.modelType.name() == "Winged">
 				<th align="center">Motor</th>
 			</#if>
 			<th align="center">Umschaltzeit</th>
@@ -27,7 +28,7 @@
 					<#else>
 						<td align="center">---</td>
 					</#if>
-					<#if wingedModel??>
+					<#if model.modelType.name() == "Winged">
 						<td align="center">${phase.motorOn?string("ja","nein")}</td>
 					</#if>
 					<td align="center">${phase.phaseSwitchTime?string("0.0")}s</td>
@@ -37,3 +38,4 @@
 		</#list>
 	</tbody>
 </table>
+</#if>

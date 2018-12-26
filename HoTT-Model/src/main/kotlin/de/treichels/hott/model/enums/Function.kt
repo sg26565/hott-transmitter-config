@@ -18,7 +18,7 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class Function {
-    Aileron, Brake, Delta, Elevator, Flap, Nick, Pitch, Reduction, Roll, Rudder, TailRotor, Throttle, VTail, Gyro, Yaw, Steering, Power, Channel3, Channel4, Unknown;
+    Aileron, Brake, Delta, Elevator, Flap, Nick, Pitch, Reduction, Roll, Rudder, TailRotor, Throttle, VTail, Gyro, Yaw, Steering, Power, Channel3, Channel4, Limiter, Unknown;
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

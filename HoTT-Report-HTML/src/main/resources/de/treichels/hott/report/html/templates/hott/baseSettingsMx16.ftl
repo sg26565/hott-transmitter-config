@@ -44,9 +44,9 @@
 		</tr>
 		<tr class="<@d/>">
 			<th align="right">Modul</th>
-			<td align="left" colspan="3">HoTT<#if model.receiverBindType??>, Bindungstyp: ${model.receiverBindType}</#if></td>
+			<td align="left" colspan="3">HoTT<#if model.receiverBindType.name() != "Unknown">, Bindungstyp: ${model.receiverBindType}</#if></td>
 		</tr>
-		<#if helicopterModel??>
+		<#if model.modelType.name() == "Helicopter">
 			<tr class="<@d/>">
 				<th align="right">Taumelscheibe</th>
 				<td align="left" colspan="3">${helicopterModel.swashplateType}</td>
@@ -54,16 +54,18 @@
 		<#else>
 			<tr class="<@d/>">
 				<th align="right">Motor an K1</th>
-				<td align="left" colspan="3">${wingedModel.motorOnC1Type}</td>
+				<td align="left" colspan="3">${model.motorOnC1Type}</td>
 			</tr>
 		</#if>
-		<tr class="<@d/>">
-			<th align="right" valign="top">Motor-Stopp</th>
-			<td align="left"><i>Position:</i> ${model.throttleSettings.throttleCutOf.position}%</td>
-			<td align="left"><i>Limit:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
-			<td align="left"><i>Schalter:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>							
-		</tr>
-		<#if helicopterModel??>
+		<#if model.motorOnC1Type.name() == "Idle_Front" || model.motorOnC1Type.name() == "Idle_Rear">
+			<tr class="<@d/>">
+				<th align="right" valign="top">Motor-Stopp</th>
+				<td align="left"><i>Position:</i> ${model.throttleSettings.throttleCutOf.position}%</td>
+				<td align="left"><i>Limit:</i> ${model.throttleSettings.throttleCutOf.threshold}%</td>
+				<td align="left"><i>Schalter:</i> <@switch model.throttleSettings.throttleCutOf.switch/></td>
+			</tr>
+		</#if>
+		<#if model.modelType.name() == "Helicopter">
 			<tr class="<@d/>">
 				<th align="right">Rotor Drehrichtung</th>
 				<td align="left" colspan="3">${helicopterModel.rotorDirection}</td>
@@ -73,7 +75,7 @@
 				<td align="left" colspan="3">${helicopterModel.pitchMin}</td>
 			</tr>
 		</#if>
-		<#if wingedModel?? && model.transmitterType.name()="mx16">
+		<#if model.modelType.name() == "Winged" && model.transmitterType.name()="mx16">
 			<tr class="<@d/>">
 				<th align="right">Kanal 8 verzögert</th>
 				<td align="left" colspan="3">${wingedModel.channel8Delay?string("ja","nein")}</td>
@@ -87,7 +89,7 @@
 			<th align="right">letzte Leerlaufposition</th>
 			<td align="left" colspan="3">${model.throttleSettings.throttleLastIdlePosition}%</td>
 		</tr>
-		<#if wingedModel??>
+		<#if model.modelType.name() == "Winged">
 			<tr class="<@d/>">
 				<th align="right">Leitwerk</th>
 				<td align="left" colspan="3">${wingedModel.tailType}</td>
@@ -133,7 +135,7 @@
 				<tr class="<@d/>">
 					<th align="right">Phase ${phase.number?number+1}</th>
 					<td align="center">${phase.phaseName}</td>
-					<#if phase.phaseSwitch??>
+					<#if phase.phaseSwitch.assignment.name() != "Unassigned">
 							<td align="center" colspan="2"><@switch phase.phaseSwitch/></td>
 					<#else>
 						<td colspan="2"></td>
@@ -156,7 +158,7 @@
 		<#list model.channelMapping as mapping>
 			<tr class="<@d/>">
 				<th></th>
-				<td align="center">S${mapping.inputChannel+1}<#if model.channel[mapping.inputChannel].function??> (${model.channel[mapping.inputChannel].function})</#if></td>
+				<td align="center">S${mapping.inputChannel+1}<#if model.channel[mapping.inputChannel].function.name() != "Unknown"> (${model.channel[mapping.inputChannel].function})</#if></td>
 				<td align="center">&rarr;</td>
 				<td align="center">Ausgang ${mapping.outputChannel+1}</td>
 			</tr>

@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("MixOnlyChannel")>
 <table>
 	<caption><a name="mixOnlyChannel"></a>Nur MIX Kanal</caption>
 	
@@ -33,3 +34,4 @@
 		</tr>
 	</tbody>
 </table>
+</#if>

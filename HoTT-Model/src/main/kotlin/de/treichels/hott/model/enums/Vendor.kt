@@ -19,7 +19,7 @@ import de.treichels.hott.util.get
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class Vendor {
-    Graupner;
+    Graupner, Unknown;
 
-override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

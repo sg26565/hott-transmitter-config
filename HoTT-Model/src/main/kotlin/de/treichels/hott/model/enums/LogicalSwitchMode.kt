@@ -18,7 +18,7 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class LogicalSwitchMode {
-    AND, OR;
+    AND, OR, Unknwon;
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

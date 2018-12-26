@@ -1,3 +1,4 @@
+<#if model.channelSequencer?? && model.isMenuEnabled("ChannelSequencer")>
 <#assign show=false/>
 <#list model.channelSequencer.sequence as seq>
 	<#if seq.enabled>
@@ -48,3 +49,4 @@
 		</tr>
 	</tbody>
 </table>
+</#if>

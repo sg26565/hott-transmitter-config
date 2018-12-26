@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("NonDelayedChannels")>
 <table>
 	<caption><a name="nonDelayedChannels"></a>unverzögerte Kanäle</caption>
 	
@@ -29,3 +30,4 @@
 		</#list>
 	</tbody>
 </table>
+</#if>

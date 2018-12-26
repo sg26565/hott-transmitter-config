@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("Channel1Curve")>
 <#list model.phase as phase>
 	<#if phase.phaseType.name() != "Unused">
 		<table>
@@ -9,3 +10,4 @@
 		</table>
 	</#if>
 </#list>
+</#if>

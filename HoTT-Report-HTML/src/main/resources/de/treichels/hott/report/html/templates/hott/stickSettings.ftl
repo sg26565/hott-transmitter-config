@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("StickMode")>
 <table>
 	<caption><a name="stickSettings"></a>Knüppeleinstellungen</caption>
 	
@@ -18,8 +19,8 @@
 			<tr class="<@d/>">
 				<#if model.modelType.name() == "Winged">
 					<#switch i>
-						<#case 0>	
-							<td align="center">Kanal 1</td>
+						<#case 0>
+							<td align="center"><#if model.motorOnC1Type.name() == "Idle_Front" || model.motorOnC1Type.name() == "Idle_Rear">Gas<#else>Kanal 1</#if></td>
 							<#break>
 						
 						<#case 1>	
@@ -37,7 +38,7 @@
 				<#elseif model.modelType.name() == "Boat" || model.modelType.name() == "Car">
 					<#switch i>
 						<#case 0>
-							<td align="center">Gas</td>
+							<td align="center"><#if model.motorOnC1Type.name() == "Idle_Front" || model.motorOnC1Type.name() == "Idle_Rear">Gas<#else>Kanal 1</#if></td>
 							<#break>
 
 						<#case 1>
@@ -96,3 +97,4 @@
 		</#list>
 	</tbody>			
 </table>
+</#if>

@@ -1,10 +1,5 @@
-<#if helicopterModel??>
-	<#if helicopterModel.swashplateType.name() == "OneServo">
-		<#assign show=false/>
-	<#else>
-		<#assign show=true/>			
-	</#if>
-	<table class="<@u show/>">
+<#if model.modelType.name() == "Helicopter" && model.isMenuEnabled("WingMixers") && helicopterModel.swashplateType.name() != "OneServo">
+	<table>
 		<caption><a name="swashplateMixer"></a>Taumelscheibenmischer</caption>
 		
 		<@reset/>

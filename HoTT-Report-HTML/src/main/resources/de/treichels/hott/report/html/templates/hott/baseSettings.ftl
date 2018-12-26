@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("BaseSetupModel")>
 	<table>
 	<caption><a name="baseSettings"></a>Grundeinstellungen Modell</caption>
 	
@@ -42,7 +43,7 @@
 			<th align="right">Steueranordnung</th>
 			<td align="left" colspan="3">${model.stickMode}</td>
 		</tr>
-		<#if model.module.type.name() == "SP" && model.spektrumMode??>
+		<#if model.module.type.name() == "SP" && model.spektrumMode.name() != "None">
 			<tr class="<@d/>">
 				<th align="right">Modul</th>
 				<td align="left" colspan="3">${model.module.type} - ${model.spektrumMode}, ${model.spektrumChannelNumber} Kanäle</td>
@@ -50,14 +51,14 @@
 		<#else>
 			<tr class="<@d/>">
 				<th align="right">Modul</th>
-				<td align="left" colspan="3">${model.module.type}<#if model.module.type.name() == "HoTT" && model.receiverBindType??>, Bindungstyp: ${model.receiverBindType}</#if></td>
+				<td align="left" colspan="3">${model.module.type}<#if model.module.type.name() == "HoTT" && model.receiverBindType.name() != "Unknown">, Bindungstyp: ${model.receiverBindType}</#if></td>
 			</tr>
 		</#if>
 		<tr class="<@d/>">
 			<th align="right">DSC-Ausgang</th>
 			<td align="left" colspan="3">${model.dscOutputType}</td>
 		</tr>
-		<#if helicopterModel??>
+		<#if model.modelType.name() == "Helicopter">
 			<tr class="<@d/>">
 				<th align="right">Autorotation</th>
 				<td align="left" colspan="3"><@switch model.getSwitch("Autorotation")/></td>
@@ -77,7 +78,7 @@
 			</tr>
 		</#if>
 		<#if model.transmitterType.name() != "mx20">
-			<#if helicopterModel??>
+			<#if model.modelType.name() == "Helicopter">
 				<tr class="<@d/>">
 					<th align="right">Markierung</th>
 					<td align="left" colspan="3"><@switch model.getSwitch("MarkerKey")/></td>
@@ -128,7 +129,7 @@
 						<th align="right">Empfänger ID</th>
 						<td align="left" colspan="3">${hex(receiver.rfid?c)}</td>
 					</tr>
-					<#if receiver.firmwareType??>
+					<#if receiver.firmwareType.name() != "Unknown">
 					<tr class="<@d/>">
 						<th align="right">Empfänger Firmware</th>
 						<td align="left" colspan="3">${receiver.firmwareType}</td>
@@ -143,7 +144,7 @@
 					<#list receiver.channelMapping as mapping>
 					<tr class="<@d/>">
 						<th></th>
-						<td align="center">S${mapping.inputChannel+1}<#if model.channel[mapping.inputChannel]?? && model.channel[mapping.inputChannel].function??> (${model.channel[mapping.inputChannel].function})</#if></td>
+						<td align="center">S${mapping.inputChannel+1}<#if model.channel[mapping.inputChannel]?? && model.channel[mapping.inputChannel].function.name() != "Unknown"> (${model.channel[mapping.inputChannel].function})</#if></td>
 						<td align="center">&rarr;</td>
 						<td align="center">Ausgang ${mapping.outputChannel+1}</td>
 					</tr>
@@ -152,4 +153,5 @@
 			</tbody>
 		</table>
 	</#list>
+</#if>
 </#if>

@@ -1,7 +1,8 @@
+<#if model.isMenuEnabled("Announcement")>
 <#list model.phase as phase>
-	<#if phase.phaseType.name() != "Unused" && phase.switchAnnouncements??>
-		<table>
-			<caption><a name="announcements"></a>Ankünden - ${phase.toString()}</caption>
+	<#if phase.phaseType.name() != "Unused">
+		<table class="<@u phase.switchAnnouncements?size &gt; 0/>">
+			<caption><a name="announcements${phase.number}"></a>Ankünden - ${phase.toString()}</caption>
 			
 			<thead>
 				<tr>
@@ -17,7 +18,7 @@
 			
 			<tbody>
 				<#list phase.switchAnnouncements as announcement>
-					<tr class="<@d/> <@u announcement.switch.assignment?? && announcement.switch.assignment.name() != "Unassigned"/>">
+					<tr class="<@d/> <@u announcement.switch.assignment.name() != "Unassigned"/>">
 						<td align="center">${announcement_index + 1}</td>
 						<td align="center"><@switch announcement.switch/></td>
 						<td align="center">${announcement.announcementType}</td>
@@ -29,3 +30,4 @@
 		</table>
 	</#if>
 </#list>
+</#if>

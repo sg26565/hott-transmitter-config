@@ -21,7 +21,8 @@ enum class PhaseType {
     Custom10, Custom9, Custom8, Custom7, Custom6, Custom5, Custom4, Custom3, Custom2, Custom1, Unused,
     Normal, Takeoff, Takeoff2, Thermal, Thermal2, Distance, Distance2, Speed, Speed2,
     Acro, Acro2, Landing, Landing2, AirTow, Test, Test2,
-    Acro_3D, Autorotation, Global, Hover, Hover2, Unnamed;
+    Acro_3D, Autorotation, Global, Hover, Hover2, Unnamed,
+    Phase1, Phase2, Phase3, Phase4, Phase5, Phase6, Phase7, Phase8;
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

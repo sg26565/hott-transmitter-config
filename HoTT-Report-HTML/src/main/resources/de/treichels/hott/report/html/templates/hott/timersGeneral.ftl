@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("TimersGeneral")>
 <table>
 	<caption><a name="timersGeneral"></a>Uhren (allgemein)</caption>
 	
@@ -30,3 +31,4 @@
 		</#list>
 	</tbody>
 </table>
+</#if>

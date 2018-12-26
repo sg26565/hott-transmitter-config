@@ -1,6 +1,6 @@
-<#if model.transmitterType.name() != "mx20">
+<#if model.transmitterType.name() != "mx20" && (model.modelType.name() == "Winged" || model.modelType.name() == "Helicopter") && model.isMenuEnabled("ProfiTrim")>
 	<#assign show=false/>
-	<#if wingedModel??>
+	<#if model.modelType.name() == "Winged">
 		<#list wingedModel.profiTrim as trim>
 			<#if trim.enabled>
 				<#assign show=true/>
@@ -8,7 +8,7 @@
 			</#if>
 		</#list>
 	</#if>
-	<#if helicopterModel??>
+	<#if model.modelType.name() == "Helicopter">
 		<#list helicopterModel.profiTrim as trim>
 			<#if trim.inputControl.assignment.name() != "Unassigned">
 				<#assign show=true/>
@@ -19,7 +19,7 @@
 	<table class="<@u show/>">
 		<caption><a name="profiTrim"></a>Profitrimm</caption>
 	
-		<#if wingedModel??>
+		<#if model.modelType.name() == "Winged">
 			<thead>	
 				<tr>
 					<th></th>
@@ -51,7 +51,7 @@
 				</tr>
 			</tbody>
 		</#if>
-		<#if helicopterModel??>
+		<#if model.modelType.name() == "Helicopter">
 			<thead>
 				<tr>
 					<th align="center">Timmgeber</th>

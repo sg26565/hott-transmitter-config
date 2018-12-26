@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("PhaseTimers")>
 <table>
 	<caption><a name="phaseTimer"></a>Flugphasenuhren</caption>
 	
@@ -33,3 +34,4 @@
 		</tr>
 	</tbody>
 </table>
+</#if>

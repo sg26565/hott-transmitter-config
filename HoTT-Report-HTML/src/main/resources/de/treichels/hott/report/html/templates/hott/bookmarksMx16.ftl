@@ -9,11 +9,11 @@
 			</#if>
 		</#list>
 	</bookmark>
-	<#if wingedModel??>
+	<#if model.modelType.name() == "Winged">
 		<bookmark href="#phaseTrim" name="Phasentrimm"></bookmark>
 		<bookmark href="#wingMix0" name="Flächenmischer"></bookmark>
 	</#if>
-	<#if helicopterModel??>
+	<#if model.modelType.name() == "Helicopter">
 		<bookmark href="#helicopterMix0" name="Helikoptermix">
 			<#list model.phase as phase>
 				<#if phase.number != -1 && phase.phaseType.name() != "Unused">
@@ -23,7 +23,7 @@
 		</bookmark>
 	</#if>
 	<bookmark href="#linearMixer" name="Linearmischer"></bookmark>
-	<#if helicopterModel??>
+	<#if model.modelType.name() == "Helicopter">
 		<bookmark href="#swashplateMixer" name="Taumelscheibenmischer"></bookmark>
 	</#if>
 	<bookmark href="#failSafe" name="Fail Safe"></bookmark>

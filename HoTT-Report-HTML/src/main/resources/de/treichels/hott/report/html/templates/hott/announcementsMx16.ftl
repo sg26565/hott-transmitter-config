@@ -1,4 +1,4 @@
-<#if model.switchAnnouncements??>
+<#if model.switchAnnouncements?size &gt; 0>
 	<table>
 		<caption><a name="announcements"></a>Ankünden</caption>
 		
@@ -15,7 +15,7 @@
 		
 		<tbody>
 			<#list model.switchAnnouncements as announcement>
-				<tr class="<@d/> <@u announcement.switch.assignment?? && announcement.switch.assignment.name() != "Unassigned"/>">
+				<tr class="<@d/> <@u announcement.switch.assignment.name() != "Unassigned"/>">
 					<td align="center">${announcement_index + 1}</td>
 					<td align="center"><@switch announcement.switch/></td>
 					<td align="center"><@sound announcement.name[0]/></td>
