@@ -150,7 +150,7 @@ class MainView : View() {
                         restoreMenu = menu(messages["restore_menu"])
                         item(messages["save_vdf"], "Shortcut+S") {
                             enableWhen(vdfFileProperty.isNotNull.and(voiceFile.dirtyBinding))
-                            action { onSave() }
+                            action { onSaveVDF() }
                         }
                         item(messages["save_vdf_as"], "Shortcut+Shift+S") {
                             action { onSaveVDFAs() }
