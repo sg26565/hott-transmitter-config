@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("FailSafeAdjustments")>
 <table>
 	<caption><a name="failSafe"></a>Fail Safe</caption>
 
@@ -43,3 +44,4 @@
 		</tr>
 	</tbody>
 </table>
+</#if>

@@ -1,4 +1,4 @@
-<#if model.transmitterType.name() != "mx20">
+<#if model.transmitterType.name() != "mx20" && model.isMenuEnabled("MP3Player")>
 	<table>
 		<caption><a name="mp3Player"></a>MP3-Player</caption>
 		

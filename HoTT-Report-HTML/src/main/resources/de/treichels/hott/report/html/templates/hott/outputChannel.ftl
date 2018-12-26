@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("TransmitterOutputSwap")>
 <table>
 	<caption><a name="outputChannel"></a>Senderausgang</caption>
 	
@@ -21,3 +22,4 @@
 		</#list>
 	</tbody>		
 </table>
+</#if>

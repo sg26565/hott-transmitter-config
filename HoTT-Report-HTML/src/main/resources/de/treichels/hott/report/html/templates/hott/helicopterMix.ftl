@@ -1,4 +1,4 @@
-<#if helicopterModel??>
+<#if model.isMenuEnabled("WingMixers") && model.modelType.name() == "Helicopter">
 	<#list helicopterModel.phase as phase>
 		<#if phase.phaseType.name() != "Unused">
 			<table>

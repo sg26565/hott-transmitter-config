@@ -1,3 +1,4 @@
+<#if model.phaseAssignment?? && model.isMenuEnabled("PhaseAssignments")>
 <table>
 	<caption><a name="phaseAssignments"></a>Phasenzuweisung</caption>
 	
@@ -78,3 +79,4 @@
 		</#list>
 	</tbody>
 </table>
+</#if>

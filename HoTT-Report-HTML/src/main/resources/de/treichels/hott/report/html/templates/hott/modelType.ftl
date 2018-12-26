@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("ModelType")>
 <table>
 	<#if helicopterModel??>
 		<caption><a name="modelType"></a>Helikoptertyp</caption>
@@ -60,3 +61,4 @@
 		</tbody>
 	</#if>
 </table>
+</#if>

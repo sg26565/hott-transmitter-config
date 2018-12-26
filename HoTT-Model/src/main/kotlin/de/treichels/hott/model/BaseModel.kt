@@ -153,9 +153,18 @@ abstract class BaseModel(val modelType: ModelType) : AbstractBase() {
     var receiverBindType = ReceiverBindType.Unknown
     var switchAnnouncements = emptyList<SwitchAnnouncement>()
     var escVoiceAnnounceFlag: Long = 0
+    val suppressMenus: MutableMap<Menus, Boolean> = mutableMapOf()
 
     fun getSwitch(id: String): Switch? {
         return switch.firstOrNull { it.id == id }
+    }
+
+    fun isMenuEnabled(name: String): Boolean {
+        val menus = Menus.values().find { it.name == name }
+        return if (menus != null)
+            !(suppressMenus[menus] ?: false)
+        else
+            true
     }
 
     override fun equals(other: Any?): Boolean {

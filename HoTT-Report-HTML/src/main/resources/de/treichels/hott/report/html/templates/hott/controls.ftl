@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("ControlAdjustment")>
 <#list model.phase as phase>
 	<#if phase.phaseType.name() != "Unused">
 		<table>
@@ -42,3 +43,4 @@
 		</table>
 	</#if>
 </#list>
+</#if>

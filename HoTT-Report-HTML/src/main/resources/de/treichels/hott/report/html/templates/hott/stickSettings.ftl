@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("StickMode")>
 <table>
 	<caption><a name="stickSettings"></a>Knüppeleinstellungen</caption>
 	
@@ -96,3 +97,4 @@
 		</#list>
 	</tbody>			
 </table>
+</#if>

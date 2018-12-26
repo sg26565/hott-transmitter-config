@@ -1,4 +1,4 @@
-<#if model.transmitterType.name() != "mx20" && (wingedModel?? || helicopterModel??)>
+<#if model.transmitterType.name() != "mx20" && (model.modelType.name() == "Winged" || model.modelType.name() == "Helicopter") && model.isMenuEnabled("ProfiTrim")>
 	<#assign show=false/>
 	<#if wingedModel??>
 		<#list wingedModel.profiTrim as trim>

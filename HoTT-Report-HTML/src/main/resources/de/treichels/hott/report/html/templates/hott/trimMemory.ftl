@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("TimMemory")>
 <table>
 	<caption><a name="trimMemory"></a>Trimmspeicher</caption>
 	
@@ -79,3 +80,4 @@
 		</#list>
 	</tbody>
 </table>
+</#if>

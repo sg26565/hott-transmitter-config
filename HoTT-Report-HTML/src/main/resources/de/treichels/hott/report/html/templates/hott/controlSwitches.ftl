@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("ControlSwitches")>
 <#assign show=false/>
 <#list model.controlSwitch as sw>
 	<#if sw.assignment?? && sw.assignment.name() != "Unassigned">
@@ -32,3 +33,4 @@
 		</#list>
 	</tbody>
 </table>
+</#if>

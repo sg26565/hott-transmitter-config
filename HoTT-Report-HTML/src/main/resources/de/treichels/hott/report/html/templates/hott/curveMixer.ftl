@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("FreeMixers")>
 <#assign show=false/>
 <#list model.freeMixer as mixer>
 	<#if mixer.fromChannel.number != 0 && mixer.toChannel.number != 0 && mixer_index &gt;= 8>
@@ -54,3 +55,4 @@
 		</#list>
 	</tbody>		
 </table>
+</#if>

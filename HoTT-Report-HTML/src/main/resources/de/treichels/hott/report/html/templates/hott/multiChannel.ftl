@@ -1,4 +1,4 @@
-<#if model.transmitterType.name() != "mx20">
+<#if model.transmitterType.name() != "mx20" && model.isMenuEnabled("MultiChannel")>
 	<#assign show=false/>
 	<#list model.multichannel as multi>
 		<#if multi.enabled>

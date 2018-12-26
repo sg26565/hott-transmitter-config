@@ -1,4 +1,4 @@
-<#if wingedModel??>
+<#if model.isMenuEnabled("WingMixers") && model.modelType.name() == "Winged">
 	<#list model.phase as phase>
 		<#if phase.phaseType.name() != "Unused">
 			<table>

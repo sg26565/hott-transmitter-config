@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("BaseSetupModel")>
 	<table>
 	<caption><a name="baseSettings"></a>Grundeinstellungen Modell</caption>
 	
@@ -152,4 +153,5 @@
 			</tbody>
 		</table>
 	</#list>
+</#if>
 </#if>

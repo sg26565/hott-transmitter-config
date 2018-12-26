@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("Announcement")>
 <#list model.phase as phase>
 	<#if phase.phaseType.name() != "Unused" && phase.switchAnnouncements??>
 		<table>
@@ -29,3 +30,4 @@
 		</table>
 	</#if>
 </#list>
+</#if>

@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("PhaseSettings")>
 <table>
 	<caption><a name="phaseSettings"></a>Phaseneinstellungen</caption>
 	
@@ -37,3 +38,4 @@
 		</#list>
 	</tbody>
 </table>
+</#if>

@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("Telemetry")>
 <table>
 	<caption><a name="telemetry"></a>Telemetrie</caption>
 	
@@ -55,3 +56,4 @@
 		</#if>						
 	</tbody>
 </table>
+</#if>

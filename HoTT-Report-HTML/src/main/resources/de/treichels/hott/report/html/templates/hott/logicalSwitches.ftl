@@ -1,4 +1,4 @@
-<#if model.logicalSwitch??>
+<#if model.logicalSwitch?size &gt; 0 && model.isMenuEnabled("LogicalSwitches")>
 	<#assign show=false/>
 	<#list model.logicalSwitch as sw>
 		<#if sw.switch[0].assignment.name() != "Unassigned" && sw.switch[1].assignment.name() != "Unassigned">

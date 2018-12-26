@@ -1,4 +1,4 @@
-<#if model.lapStore??>
+<#if model.lapStore.laps?size &gt; 0 && model.isMenuEnabled("PhaseTimers")>
 	<table>
 		<caption><a name="lapTimer"></a>Rundenzähler</caption>
 		

@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("ServoAdjustment")>
 <table>
 	<caption><a name="servos"></a>Servoeinstellungen</caption>
 	
@@ -35,3 +36,4 @@
 		</#list>
 	</tbody>
 </table>
+</#if>

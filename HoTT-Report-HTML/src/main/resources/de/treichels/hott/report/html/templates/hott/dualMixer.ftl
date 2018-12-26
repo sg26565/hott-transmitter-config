@@ -1,3 +1,4 @@
+<#if model.isMenuEnabled("DualMixer")>
 <#assign show=false/>
 <#list model.dualMixer as mix>
 	<#if mix.channel??>
@@ -30,3 +31,4 @@
 		</#list>
 	</tbody>
 </table>
+</#if>
