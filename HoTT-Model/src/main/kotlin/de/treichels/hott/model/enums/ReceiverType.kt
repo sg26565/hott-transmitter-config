@@ -24,6 +24,7 @@ enum class ReceiverType(override val productCode: Int = 0, val orderNo: String =
     gr12(16003500, "33506"),
     gr12l(16003510, "S1012"),
     gr12l_sumd(16003540, "S1037"),
+    gr12L_sumd_div(16003550,"S1046"),
     gr12sc(0, "33566", 0x91),
     gr12sh(0, "33565", 0x91),
     gr12sh_3xg(16006000, "33575", 0x75, true),
@@ -41,7 +42,8 @@ enum class ReceiverType(override val productCode: Int = 0, val orderNo: String =
     gr24pro(16005800, "33583", 0x97, true, true),
     gr32(16004000, "33516"),
     gr32l(16004020, "S1023"),
-    falcon12(0, "S1035", 0x35, true);
+    falcon12_plus(16008700, "S1034", 0x34, true),
+    falcon12(16007900, "S1035", 0x35, true);
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 
