@@ -34,7 +34,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
         }
 
         /** get a list of files from the FTP server with sizes. Server returns a list with <name>|<size> rows*/
-        fun list(path: String): List<Pair<String, Long>> = Request.Post("http://$FTP_SERVER_ADDRESS/$FILE_LIST").bodyForm(BasicNameValuePair("path", path)).execute().handleResponse { response ->
+        private fun list(path: String): List<Pair<String, Long>> = Request.Post("http://$FTP_SERVER_ADDRESS/$FILE_LIST").bodyForm(BasicNameValuePair("path", path)).execute().handleResponse { response ->
             response.statusLine.apply { if (statusCode != 200) throw IOException(toString()) }
 
             response.entity.content.reader().readLines().map { line ->
@@ -54,7 +54,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
             }
         }
 
-        fun download(task: FXTask<*>, path: String, file: File): String {
+        fun download(task: FXTask<*>?, path: String, file: File): String {
             val md = MessageDigest.getInstance(HASH_ALGORITHM)
             val buffer = ByteArray(1024 * 1024)
             var bytesRead = 0L
@@ -62,7 +62,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
             // download from FTP server
             download(path) { inputStream, size ->
                 file.outputStream().use { outputStream ->
-                    while (!task.isCancelled) {
+                    while (task?.isCancelled != false) {
                         val len = inputStream.read(buffer)
 
                         if (len < 0) break
@@ -70,7 +70,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
                         bytesRead += len
                         outputStream.write(buffer, 0, len)
                         md.update(buffer, 0, len)
-                        task.updateProgress(bytesRead, size)
+                        task?.updateProgress(bytesRead, size)
                     }
                 }
 
@@ -78,7 +78,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
                     throw IOException("Size mismatch: expected $size, but got $bytesRead.")
             }
 
-            if (task.isCancelled)
+            if (task?.isCancelled == true)
                 throw InterruptedException()
 
             return md.getHash()
@@ -98,15 +98,9 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
     val isCached
         get() = file.exists() && file.length() == size
 
-    /** checksum of file */
-    @Suppress("unused")
-    val hash: String by lazy {
-        download().get().hash()
-    }
-
     /** download file if not already cached and report progress to FXTask object */
-    fun download(task: FXTask<*>): File {
-        if (!isCached && !task.isCancelled) {
+    fun download(task: FXTask<*>?): File {
+        if (!isCached && task?.isCancelled != true) {
             cacheDir.mkdirs()
             download(task, "$path$name", file)
         }
@@ -114,9 +108,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
         return file
     }
 
-
-    /** download file asynchronously in background */
-    fun download() = runAsync { download(this) }
+    fun download() = download(null)
 }
 
 fun ReceiverType.getFirmware(): List<Firmware<ReceiverType>> {
