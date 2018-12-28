@@ -19,11 +19,12 @@ import java.util.*
  */
 enum class TransmitterType(override val productCode: Int) : Registered<TransmitterType> {
     mc16(16004600), mc20(16004300), mc26(16007700), mc28(16007100),
-    mc32(16004100), mxs8(16004900), mx10(16004200), mx12(16003600),
-    mx16(16003300), mx20(16003700), mz10(16005000), mz12(16005100),
-    mz12Pro(16007800), mz18(16005300), mz18Pro(16008300), mz24(16005200),
-    mz24Pro(16007200), mz32(16008200), mz32beta(16008201), x4s(16005900),
-    x8n(16006200), x8e(16006500), Unknown(0);
+    mc32(16004100), mc32Expert(16008500), mc32ExpertBeta(16008501),
+    mxs8(16004900), mx10(16004200), mx12(16003600), mx16(16003300),
+    mx20(16003700), mz10(16005000), mz12(16005100), mz12Pro(16007800),
+    mz16(16008600), mz16beta(16008601), mz18(16005300), mz18Pro(16008300),
+    mz24(16005200), mz24Pro(16007200), mz32(16008200), mz32beta(16008201),
+    x4s(16005900), x8n(16006200), x8e(16006500), Unknown(0);
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 
