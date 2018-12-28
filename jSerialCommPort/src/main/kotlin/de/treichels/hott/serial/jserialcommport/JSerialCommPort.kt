@@ -42,11 +42,14 @@ class JSerialCommPort(portName: String) : SerialPortBase(portName), SerialPortDa
         if (isOpen) throw HoTTException("HoTTSerialPort.AlreadyOpen")
 
         val port = SerialPort.getCommPort(portName)
-        port.disablePortConfiguration()
-        port.openPort(0)
         port.setComPortParameters(baudRate, 8, ONE_STOP_BIT, NO_PARITY)
         port.setFlowControl(FLOW_CONTROL_DISABLED)
         port.addDataListener(this)
+        port.openPort(0)
+        if (!port.isOpen) {
+            port.disablePortConfiguration()
+            port.openPort(0)
+        }
 
         this.port = port
     }
@@ -70,12 +73,12 @@ class JSerialCommPort(portName: String) : SerialPortBase(portName), SerialPortDa
     }
 
     private val SerialPortEvent.eventName: String
-    get() = when(eventType) {
-        LISTENING_EVENT_DATA_AVAILABLE -> "Data available"
-        LISTENING_EVENT_DATA_WRITTEN -> "Data written"
-        LISTENING_EVENT_DATA_RECEIVED -> "Data received"
-        else -> "Unknown event"
-    }
+        get() = when (eventType) {
+            LISTENING_EVENT_DATA_AVAILABLE -> "Data available"
+            LISTENING_EVENT_DATA_WRITTEN -> "Data written"
+            LISTENING_EVENT_DATA_RECEIVED -> "Data received"
+            else -> "Unknown event"
+        }
 
     override fun serialEvent(event: SerialPortEvent) {
         logger.finest("serialEvent: port=$portName, event=${event.eventName}")
