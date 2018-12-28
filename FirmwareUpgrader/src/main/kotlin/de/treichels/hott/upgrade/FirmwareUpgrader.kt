@@ -1,19 +1,24 @@
 package de.treichels.hott.upgrade
 
-import de.treichels.hott.serial.SerialPort
-import de.treichels.hott.serial.SerialPortBase
+import com.fazecast.jSerialComm.SerialPort
+import de.treichels.hott.firmware.Firmware
+import de.treichels.hott.firmware.getFirmware
+import de.treichels.hott.model.enums.ReceiverType
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.ui.MessageDialog
 import de.treichels.hott.util.Util
 import javafx.beans.property.SimpleObjectProperty
 import javafx.geometry.Pos
 import javafx.scene.control.*
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
 import javafx.scene.input.DragEvent
 import javafx.scene.input.TransferMode
 import javafx.scene.layout.Priority
 import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.File
+import java.io.IOException
 import java.util.logging.LogManager
 
 fun main(vararg args: String) {
@@ -39,10 +44,11 @@ class FirmwareUpgrader : View() {
     private val iconImage = resources.image("icon.png")
 
     // controls
+    private var receiverType by singleAssign<ComboBox<ReceiverType>>()
     private var textField by singleAssign<TextField>()
     private var portCombo by singleAssign<ComboBox<String>>()
+    private var textArea by singleAssign<TextArea>()
     private var progressBar by singleAssign<ProgressBar>()
-    private var progressLabel by singleAssign<Label>()
     private var startButton by singleAssign<Button>()
 
     // properties
@@ -61,31 +67,82 @@ class FirmwareUpgrader : View() {
             alignment = Pos.CENTER_LEFT
             spacing = 5.0
 
-            label(messages["file"])
-            textField = textfield(messages["selectFile"]) {
-                hgrow = Priority.ALWAYS
-                disableWhen { service.runningProperty().or(textProperty().isEqualTo(messages["selectFile"])) }
+            vbox {
+                label(messages["receiverType"])
+                receiverType = combobox(values = ReceiverType.values().asList()) {
+                    disableWhen { service.runningProperty() }
+                    buttonCell = ReceiverListCell()
+                    setCellFactory { ReceiverListCell() }
+                    minHeight = 48.0
+                }
             }
-            button(messages["select"]) {
-                disableWhen { service.runningProperty() }
-                action { selectFile() }
-            }
-
             region {
                 hgrow = Priority.SOMETIMES
             }
 
-            label(messages["port"])
-            portCombo = combobox {
-                disableWhen { service.runningProperty() }
-                setOnAction {
-                    val portName = value
+            vbox {
+                label(messages["port"])
+                portCombo = combobox {
+                    disableWhen { service.runningProperty() }
+                    setOnAction {
+                        val portName = value
 
-                    if (portName != null) {
-                        preferences { put(PREFERRED_PORT, portName) }
-                        serialPort = SerialPortBase.getPort(portName)
+                        if (portName != null) {
+                            preferences { put(PREFERRED_PORT, portName) }
+                            serialPort = SerialPort.getCommPort(portName)
+                        }
                     }
                 }
+            }
+        }
+
+        hbox {
+            vbox {
+                hgrow = Priority.ALWAYS
+
+                label(messages["file"])
+                hbox {
+                    alignment = Pos.CENTER_LEFT
+                    spacing = 5.0
+
+                    textField = textfield {
+                        hgrow = Priority.ALWAYS
+                        isEditable = false
+                        promptText = messages["selectFile"]
+                        prefWidth = 400.0
+                        disableWhen { service.runningProperty().or(textProperty().isEqualTo(messages["selectFile"])) }
+                        textProperty().addListener { _ ->
+                            try {
+                                // read receiver type from firmware file and update combobox
+                                receiverType.value = ReceiverFirmware.load(text).receiverType
+                            } catch (e: IOException) {
+                                // ignore invalid firmware file
+                            }
+                        }
+                    }
+                    button(messages["select"]) {
+                        disableWhen { service.runningProperty() }
+                        action { selectFile() }
+                    }
+                    button(messages["download"]) {
+                        disableWhen { receiverType.valueProperty().isNull.or(service.runningProperty()) }
+                        action { download() }
+                    }
+                }
+            }
+        }
+
+        vbox {
+            vgrow = Priority.ALWAYS
+
+            label(messages["messages"])
+            textArea = textarea {
+                prefHeight = 100.0
+                isEditable = false
+                style = "-fx-font-family: monospace"
+                vgrow = Priority.ALWAYS
+                hgrow = Priority.ALWAYS
+                service.messageProperty().addListener { _, _, newValue -> appendText(newValue) }
             }
         }
 
@@ -94,17 +151,8 @@ class FirmwareUpgrader : View() {
             spacing = 5.0
 
             startButton = button(messages["start"]) {
-                disableWhen {
-                    serialPortProperty.isNull
-                            .or(textField.textProperty().isEmpty)
-                            .or(textField.textProperty().isEqualTo(messages["selectFile"]))
-                }
-                action {
-                    if (service.isRunning)
-                        doCancel()
-                    else
-                        doUpgrade()
-                }
+                disableWhen { serialPortProperty.isNull.or(textField.textProperty().isEmpty) }
+                action { if (service.isRunning) doCancel() else doUpgrade() }
             }
 
             anchorpane {
@@ -119,17 +167,37 @@ class FirmwareUpgrader : View() {
                         bottomAnchor = 0.0
                     }
                 }
+            }
+        }
+    }
 
-                progressLabel = label {
-                    alignment = Pos.CENTER
-                    anchorpaneConstraints {
-                        topAnchor = 0.0
-                        leftAnchor = 0.0
-                        rightAnchor = 0.0
-                        bottomAnchor = 0.0
-                    }
+    private fun download() {
+        lateinit var firmware: List<Firmware<ReceiverType>>
+
+        root.runAsyncWithOverlay {
+            firmware = receiverType.value.getFirmware()
+        }.ui {
+            when (firmware.size) {
+                // there is only one file available online - select it
+                1 -> textField.text = firmware[0].file.absolutePath
+
+                // no files found - do nothing
+                0 -> {
+                }
+
+                // show choice dialog and let the use choose
+                else -> {
+                    val optional = ChoiceDialog(null, firmware.map { it.file.name }.toSet().sorted()).apply {
+                        title = "Online Files"
+                        headerText = "Select firmware file for download."
+                    }.showAndWait()
+
+                    // if there is a result, download the file and use it
+                    if (optional.isPresent) textField.text = firmware.find { it.file.name == optional.get() }!!.file.absolutePath
                 }
             }
+
+            textField.selectEnd()
         }
     }
 
@@ -138,9 +206,8 @@ class FirmwareUpgrader : View() {
     }
 
     private fun doUpgrade() {
+        textArea.clear()
         progressBar.progressProperty().bind(service.progressProperty())
-        progressLabel.textProperty().bind(service.messageProperty())
-
         startButton.text = messages["cancel"]
 
         service.setOnFailed { ev ->
@@ -167,8 +234,6 @@ class FirmwareUpgrader : View() {
         service.reset()
         progressBar.progressProperty().unbind()
         progressBar.progress = 0.0
-        progressLabel.textProperty().unbind()
-        progressLabel.text = null
         startButton.text = messages["start"]
     }
 
@@ -177,21 +242,32 @@ class FirmwareUpgrader : View() {
             title = messages["selectTitle"]
             extensionFilters.add(FileChooser.ExtensionFilter(messages["firmwareFiles"], "*.bin"))
 
-            preferences {
-                val folder = File(get(LAST_DIR, System.getProperty("user.home")))
-                if (folder.exists() && folder.isDirectory)
-                    initialDirectory = folder
+            if (textField.text.isNotEmpty()) {
+                initialDirectory = File(textField.text).parentFile
+            } else {
+                preferences {
+                    val folder = File(get(LAST_DIR, System.getProperty("user.home")))
+                    if (folder.exists() && folder.isDirectory)
+                        initialDirectory = folder
+                }
             }
+
         }.showOpenDialog(primaryStage)?.apply {
             preferences { put(LAST_DIR, parentFile.absolutePath) }
             textField.text = absolutePath
+            textField.selectEnd()
         }
     }
 
     init {
-        setStageIcon(iconImage)
         title = messages["title"]
+        setStageIcon(iconImage)
+        currentStage?.apply {
+            minHeight = 300.0
+            minWidth = 400.0
+        }
 
+        // setup drag/drop
         with(root) {
             setOnDragEntered { ev ->
                 opacity = 0.3
@@ -208,10 +284,11 @@ class FirmwareUpgrader : View() {
                 ev.consume()
             }
 
-            setOnDragDropped {ev->
+            setOnDragDropped { ev ->
                 val file = getFile(ev)
                 if (file != null) {
                     textField.text = file.absolutePath
+                    textField.selectEnd()
                     preferences { put(LAST_DIR, file.parentFile.absolutePath) }
                 }
                 ev.consume()
@@ -221,7 +298,7 @@ class FirmwareUpgrader : View() {
 
         // load preferred port from preferences
         runAsync {
-            portCombo.items.addAll(SerialPortBase.getAvailablePorts())
+            portCombo.items.addAll(SerialPort.getCommPorts().map { it.systemPortName })
         } success {
             preferences {
                 val prefPort: String? = get(PREFERRED_PORT, null)
@@ -229,6 +306,37 @@ class FirmwareUpgrader : View() {
                     portCombo.value = prefPort
                 }
             }
+        }
+    }
+}
+
+/**
+ * A ListCell that show an image of the receiver and it's name
+ */
+class ReceiverListCell : ListCell<ReceiverType>() {
+    private val images = HashMap<ReceiverType, ImageView>()
+
+    init {
+        // load images for all receivers
+        ReceiverType.values().forEach { receiverType ->
+            val stream = ReceiverListCell::class.java.getResourceAsStream("images/${receiverType.orderNo}.jpg")
+                    ?: ReceiverListCell::class.java.getResourceAsStream("images/missing.png")
+
+            // scale to 40x50 pixels
+            images[receiverType] = ImageView(Image(stream, 50.0, 40.0, true, true))
+        }
+    }
+
+    override fun updateItem(item: ReceiverType?, empty: Boolean) {
+        super.updateItem(item, empty)
+
+        if (empty || item == null) {
+            graphic = null
+            text = null
+        } else {
+            graphic = images[item]
+            text = item.toString()
+
         }
     }
 }

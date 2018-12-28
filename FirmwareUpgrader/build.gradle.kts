@@ -1,8 +1,8 @@
 dependencies {
     implementation(project(":HoTT-Model"))
+    implementation(project(":HoTT-Firmware"))
     implementation(project(":HoTT-UI"))
-    implementation(project(":HoTT-Serial"))
-    runtimeOnly(project(":jSerialCommPort"))
+    implementation(Libs.jserialcomm)
 }
 
 plugins {

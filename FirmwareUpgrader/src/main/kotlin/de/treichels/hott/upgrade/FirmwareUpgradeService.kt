@@ -1,92 +1,108 @@
 package de.treichels.hott.upgrade
 
-import de.treichels.hott.model.HoTTException
-import de.treichels.hott.serial.SerialPort
+import com.fazecast.jSerialComm.SerialPort
+import de.treichels.hott.model.enums.ReceiverType
+import de.treichels.hott.util.Util
 import javafx.concurrent.Service
 import javafx.concurrent.Task
 import tornadofx.*
 import java.io.File
-import java.nio.file.Files
+import java.io.IOException
+import java.lang.IllegalArgumentException
 import java.util.*
 
-class FirmwareUpgradeService : Service<Unit>() {
-    private var messages = ResourceBundle.getBundle(javaClass.name)
+abstract class ReceiverFirmware(val receiverType: ReceiverType, val packets: Array<ByteArray>) {
+    companion object {
+        @JvmStatic
+        protected var messages = ResourceBundle.getBundle(ReceiverFirmware::class.java.name)!!
 
-    lateinit var serialPort: SerialPort
-    lateinit var fileName: String
-
-    override fun createTask(): Task<Unit> = object : Task<Unit>() {
-        override fun call() {
-            val file = File(fileName)
-
-            if (!(file.exists() && file.isFile && file.canRead()))
-                throw NoSuchFileException(file)
-
-            val size = file.length()
-            val headerSize = 8
-            val blockSize = 0x406
-            val blockCount = (size.toInt() - headerSize) / blockSize
-            val bytes = Files.readAllBytes(file.toPath())
-
-            serialPort.use { port ->
-                val fileStream = bytes.inputStream()
-                val inputStream = port.inputStream
-                val outputStream = port.outputStream
-                val block = ByteArray(blockSize)
-                val response = ByteArray(blockSize)
-
-                //header
-                val type = fileStream.read()
-                fileStream.skip(7)
-
-                // open serial port
-                port.timeout = 1000
-                port.reset()
-                port.open(if (type >= 0xf0) 115200 else 19200)
-
-                // wait for receiver
-                updateMessage(messages["waitForReceiver"])
-                while (true) {
-                    try {
-                        val byte = inputStream.read()
-                        if (byte == type) break
-                    } catch (e: HoTTException) {
-                        if (isCancelled) return
-                    }
-                }
-
-                // write data
-                port.reset()
-                for (i in 1..blockCount) {
-                    updateProgress(i.toLong(), blockCount.toLong())
-                    updateMessage("${(i.toDouble() / blockCount.toDouble() * 100.0).toInt()} %")
-
-                    // read block from file
-                    fileStream.read(block)
-                    if (isCancelled) return
-
-                    // write block to receiver
-                    outputStream.write(block)
-                    outputStream.flush()
-                    if (isCancelled) return
-
-                    // read response
-                    inputStream.read(response)
-                    if (isCancelled) return
-
-                    // read status
-                    val byte = inputStream.read()
-
-                    if (!(response contentEquals block && byte == 0xaa)) throw HoTTException(messages["transmissionError"])
-                    if (isCancelled) return
-                }
-
-                // end transfer
-                block[2] = 0xee.toByte()
-                outputStream.write(block)
-                outputStream.flush()
-                Thread.sleep(1000)
+        fun load(fileName: String) = ReceiverFirmware.load(File(fileName))
+        fun load(file: File): ReceiverFirmware = try {
+            StandardReceiverFirmware.load(file)
+        } catch (e1: IOException) {
+            try {
+                GyroReceiverFirmware.load(file)
+            } catch (e2: IOException) {
+                throw IOException("${e1.message}/${e2.message}", e2)
             }
         }
     }
+
+    fun dump(): String {
+        val result = StringBuffer()
+
+        result.append(toString()).append('\n')
+        result.append("ProductCode: ${receiverType.productCode}\n")
+        result.append("ReceiverId: ${receiverType.id}\n")
+        result.append("PacketCount: ${packets.size}\n")
+        result.append("PacketSize:  ${packets[0].size}\n")
+        packets.forEachIndexed { index, bytes ->
+            result.append("Packet $index\n")
+            result.append(Util.dumpData(bytes))
+        }
+
+        return result.toString()
+    }
+
+    abstract fun upgradeReceiver(task: FirmwareUpgradeService.FirmwareUpgradeTask, port: SerialPort)
 }
+
+class FirmwareUpgradeService : Service<Unit>() {
+    lateinit var serialPort: SerialPort
+    lateinit var fileName: String
+
+    override fun createTask() = FirmwareUpgradeTask()
+
+    inner class FirmwareUpgradeTask : Task<Unit>() {
+        override fun call() {
+            ReceiverFirmware.load(fileName).upgradeReceiver(this, serialPort)
+        }
+
+        fun print(newMessage: String) {
+            runLater {
+                updateMessage(newMessage)
+            }
+        }
+
+        fun progress(done: Int, total: Int) {
+            updateProgress(done.toLong(), total.toLong())
+        }
+    }
+}
+
+fun SerialPort.readBytes(data: ByteArray) = readBytes(data, data.size.toLong(), 0L)
+fun SerialPort.writeBytes(data: ByteArray) = writeBytes(data, data.size.toLong(), 0L)
+fun SerialPort.read(): Int {
+    val buffer = ByteArray(1)
+    val rc = readBytes(buffer)
+    if (rc != 1) throw IOException("read error")
+    return buffer[0].toInt() and 0xff
+}
+
+fun SerialPort.write(b: Int) {
+    if (b < 0 || b > 255) throw IllegalArgumentException("$b is not in range 0..255")
+    val buffer = byteArrayOf(b.toByte())
+    val rc = writeBytes(buffer)
+    if (rc != 1) throw IOException("write error")
+}
+
+fun SerialPort.readInt(): Int {
+    val buffer = ByteArray(4)
+    val rc = readBytes(buffer)
+    if (rc != 4) throw IOException("read error")
+
+    var result: Long = 0
+
+    result += buffer[0].toLong() and 0xff
+    result += (buffer[1].toLong() and 0xff) shl 8
+    result += (buffer[2].toLong() and 0xff) shl 16
+    result += (buffer[3].toLong() and 0xff) shl 24
+
+    return result.toInt()
+}
+
+fun SerialPort.expect(rc: Int) {
+    val b = read()
+    if (b != rc) throw IOException("unexpected response $b expected $rc")
+}
+
