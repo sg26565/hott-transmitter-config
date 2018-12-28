@@ -4,6 +4,7 @@ import de.treichels.hott.serial.SerialPort
 import de.treichels.hott.serial.SerialPortBase
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.ui.MessageDialog
+import de.treichels.hott.util.Util
 import javafx.beans.property.SimpleObjectProperty
 import javafx.geometry.Pos
 import javafx.scene.control.*
@@ -13,8 +14,10 @@ import javafx.scene.layout.Priority
 import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.File
+import java.util.logging.LogManager
 
 fun main(vararg args: String) {
+    if (Util.DEBUG) LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
     launch<FirmwareUpgraderApp>(*args)
 }
