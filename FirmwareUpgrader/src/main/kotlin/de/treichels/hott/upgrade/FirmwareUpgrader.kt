@@ -293,7 +293,7 @@ class FirmwareUpgrader : View() {
             title = messages["selectTitle"]
             extensionFilters.add(FileChooser.ExtensionFilter(messages["firmwareFiles"], "*.bin"))
 
-            if (textField.text.isNotEmpty()) {
+            if (textField.text != null) {
                 initialDirectory = File(textField.text).parentFile
             } else {
                 preferences {
