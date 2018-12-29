@@ -14,7 +14,9 @@ import java.util.*
 abstract class ReceiverFirmware(val receiverType: ReceiverType, val packets: Array<ByteArray>) {
     companion object {
         @JvmStatic
-        protected var messages = ResourceBundle.getBundle(ReceiverFirmware::class.java.name)!!
+        var messages = ResourceBundle.getBundle(ReceiverFirmware::class.java.name)!!
+
+        private val knownIds = ReceiverType.values().map { it.id }.filterNot { it == 0 } + 0x05 + 0x0a
 
         fun load(fileName: String) = ReceiverFirmware.load(File(fileName))
         fun load(file: File): ReceiverFirmware = try {
@@ -24,6 +26,31 @@ abstract class ReceiverFirmware(val receiverType: ReceiverType, val packets: Arr
                 GyroReceiverFirmware.load(file)
             } catch (e2: IOException) {
                 throw IOException("${e1.message}/${e2.message}", e2)
+            }
+        }
+
+        fun detectReceiver(task: Task<*>, port: SerialPort): ReceiverType? = port.use {
+            port.setComPortParameters(19200, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY)
+            port.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING + SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0)
+            var rc: Int
+
+            // wait for receiver boot
+            while (true) {
+                try {
+                    rc = it.read()
+                    if (rc in knownIds) break
+                } catch (e: IOException) {
+                    if (task.isCancelled) return@use null
+                }
+            }
+
+            if (rc == 0x05 || rc == 0x0a) {
+                // standard receiver
+                val (productCode, _, _) = StandardReceiverFirmware.getInfo(it, rc)
+                ReceiverType.forProductCode(productCode)
+            } else {
+                // gyro receiver
+                ReceiverType.forId(rc)
             }
         }
     }
@@ -70,12 +97,21 @@ class FirmwareUpgradeService : Service<Unit>() {
     }
 }
 
+fun <T> SerialPort.use(func: (port: SerialPort) -> T): T {
+    try {
+        openPort()
+        return func(this)
+    } finally {
+        closePort()
+    }
+}
+
 fun SerialPort.readBytes(data: ByteArray) = readBytes(data, data.size.toLong(), 0L)
 fun SerialPort.writeBytes(data: ByteArray) = writeBytes(data, data.size.toLong(), 0L)
 fun SerialPort.read(): Int {
     val buffer = ByteArray(1)
     val rc = readBytes(buffer)
-    if (rc != 1) throw IOException("read error")
+    if (rc != 1) throw IOException(ReceiverFirmware.messages["transmissionError"])
     return buffer[0].toInt() and 0xff
 }
 
@@ -83,13 +119,13 @@ fun SerialPort.write(b: Int) {
     if (b < 0 || b > 255) throw IllegalArgumentException("$b is not in range 0..255")
     val buffer = byteArrayOf(b.toByte())
     val rc = writeBytes(buffer)
-    if (rc != 1) throw IOException("write error")
+    if (rc != 1) throw IOException(ReceiverFirmware.messages["transmissionError"])
 }
 
 fun SerialPort.readInt(): Int {
     val buffer = ByteArray(4)
     val rc = readBytes(buffer)
-    if (rc != 4) throw IOException("read error")
+    if (rc != 4) throw IOException(ReceiverFirmware.messages["transmissionError"])
 
     var result: Long = 0
 
@@ -103,6 +139,6 @@ fun SerialPort.readInt(): Int {
 
 fun SerialPort.expect(rc: Int) {
     val b = read()
-    if (b != rc) throw IOException("unexpected response $b expected $rc")
+    if (b != rc) throw IOException(String.format(ReceiverFirmware.messages["invalidResponse"], b, rc))
 }
 

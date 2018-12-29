@@ -53,6 +53,29 @@ class StandardReceiverFirmware(receiverType: ReceiverType, val version: Int, pac
                 return StandardReceiverFirmware(receiverType, version, packets)
             }
         }
+
+        internal fun getInfo(port: SerialPort, rc: Int): Triple<Int, Int, Int> {
+            val expected = if (rc == 0x05) 0x09 else rc
+            port.write(expected)
+            port.expect(expected)
+
+            Thread.sleep(100)
+            port.write(0x09)
+            port.expect(0x09)
+            port.readBytes(ByteArray(8))
+            //val flag1 = port.readInt()
+            //val flag2 = port.readInt()
+            //println("Flag1=0x${flag1.toString(16)} ($flag1), Flag2=0x${flag2.toString(16)} ($flag2)")
+
+            Thread.sleep(100)
+            port.write(0x10)
+            port.expect(0x10)
+            val productCode = port.readInt()
+            val appVersion = port.readInt()
+            val bootVersion = port.readInt()
+
+            return Triple(productCode, appVersion, bootVersion)
+        }
     }
 
     override fun upgradeReceiver(task: FirmwareUpgradeService.FirmwareUpgradeTask, port: SerialPort) {
@@ -60,68 +83,65 @@ class StandardReceiverFirmware(receiverType: ReceiverType, val version: Int, pac
 
         port.setComPortParameters(19200, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY)
         port.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING + SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0)
-        port.openPort()
+        port.use {
+            task.print(messages["waitForReceiver"])
+            while (true) {
+                try {
+                    rc = it.read()
+                    if (rc == 0x05 || rc == 0x0a) break
+                } catch (e: IOException) {
+                    if (task.isCancelled) {
+                        task.print(messages["cancelled"])
+                        return@use
+                    }
+                }
+            }
 
-        task.print(messages["waitForReceiver"])
-        while (true) {
             try {
-                rc = port.read()
-                if (rc == 0x05 || rc == 0x0a) break
+                val (productCode, appVersion, bootVersion) = getInfo(it, rc)
+                if (productCode != receiverType.productCode) throw IOException(String.format(messages["invalidReceiverType"], ReceiverType.forProductCode(productCode), receiverType))
+
+                val latch = CountDownLatch(1)
+                var doUpdate = false
+
+                runLater {
+                    confirm(messages["currentVersion"], String.format(messages["versionInfo"], receiverType, version(appVersion), version(bootVersion), version(version))) {
+                        doUpdate = true
+                    }
+                    latch.countDown()
+                }
+
+                latch.await()
+
+                if (doUpdate) {
+                    val packetCount = packets.size
+                    packets.forEachIndexed { index, data ->
+                        task.progress(index + 1, packetCount)
+                        task.print(String.format(messages["writePacket"], index))
+
+                        if (task.isCancelled) {
+                            task.print(messages["cancelled"])
+                            return@use
+                        }
+
+                        val response = ByteArray(data.size)
+                        it.writeBytes(data)
+                        it.readBytes(response)
+                        if (!response.contentEquals(data)) throw IOException(messages["transmissionError"]) // TODO implement re-try
+
+                        it.expect(0x01)
+                    }
+
+                    task.print(messages["done"])
+                } else {
+                    task.print(messages["cancelled"])
+                    task.cancel()
+                }
             } catch (e: IOException) {
-                if (task.isCancelled) return
+                task.print(messages["transmissionError"])
+                throw e
             }
         }
-
-        if (rc == 0x05) rc = 0x09
-        port.write(rc)
-        port.expect(rc)
-
-        Thread.sleep(100)
-        port.write(0x09)
-        port.expect(0x09)
-        port.readBytes(ByteArray(8))
-        //val flag1 = port.readInt()
-        //val flag2 = port.readInt()
-        //println("Flag1=0x${flag1.toString(16)} ($flag1), Flag2=0x${flag2.toString(16)} ($flag2)")
-
-        Thread.sleep(100)
-        port.write(0x10)
-        port.expect(0x10)
-        val productCode = port.readInt()
-        val appVersion = port.readInt()
-        val bootVersion = port.readInt()
-
-        if (productCode != receiverType.productCode) throw IOException(String.format(messages["invalidReceiverType"], productCode, receiverType.productCode))
-
-        val latch = CountDownLatch(1)
-        var doUpdate = false
-
-        runLater {
-            confirm(messages["currentVersion"], String.format(messages["versionInfo"], productCode, appVersion/1000.0, bootVersion/1000.0)) {
-                doUpdate = true
-            }
-            latch.countDown()
-        }
-
-        latch.await()
-
-        if (doUpdate) {
-            val packetCount = packets.size
-            packets.forEachIndexed { index, data ->
-                task.progress(index + 1, packetCount)
-                task.print(String.format(messages["writePacket"], index))
-
-                val response = ByteArray(data.size)
-                port.writeBytes(data)
-                port.readBytes(response)
-
-                if (!response.contentEquals(data)) throw IOException(messages["transmissionError"])
-
-                port.expect(0x01)
-            }
-
-            task.print(messages["done"])
-        } else task.cancel()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -148,3 +168,5 @@ class StandardReceiverFirmware(receiverType: ReceiverType, val version: Int, pac
         return "StandardReceiverFirmware($receiverType, v${version / 1000.0})"
     }
 }
+
+private fun version(v: Int) = "v" + (v.toDouble() / 1000.0).toString().replace(",", ".").trim('0')

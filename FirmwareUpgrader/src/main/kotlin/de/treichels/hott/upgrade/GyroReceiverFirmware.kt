@@ -17,7 +17,8 @@ class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>
                 val blockCount = (size.toInt() - headerSize) / blockSize
                 val header = ByteArray(headerSize).apply { stream.read(this) }
                 val id = header[0].toInt() and 0xFF
-                val receiverType = ReceiverType.forId(id) ?: throw IOException(String.format(messages["unknownReceiver"], id))
+                val receiverType = ReceiverType.forId(id)
+                        ?: throw IOException(String.format(messages["unknownReceiver"], id))
                 val packets = Array(blockCount) {
                     ByteArray(blockSize).apply {
                         stream.read(this)
@@ -38,47 +39,52 @@ class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>
         // open serial port
         port.setComPortParameters(baudrate, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY)
         port.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING + SerialPort.TIMEOUT_WRITE_BLOCKING, 1000, 1000)
-        port.openPort()
+        port.use {
+            // wait for receiver
+            task.print(messages["waitForReceiver"])
+            task.print(String.format(messages["waitForReceiverID"], receiverType))
+            while (true) {
+                try {
+                    val rc = it.read()
+                    print("$rc ")
+                    if (rc == id) break
+                } catch (e: IOException) {
+                    if (task.isCancelled) {
+                        task.print(messages["cancelled"])
+                        return@use
+                    }
+                }
+            }
 
-        // wait for receiver
-        task.print(messages["waitForReceiver"])
-        task.print(String.format(messages["waitForReceiverID"],id))
-        while (true) {
             try {
-                val rc = port.read()
-                print("$rc ")
-                if (rc == id) break
-            } catch (e: IOException) {
-                if (task.isCancelled) return
+                // write data
+                val packetCount = packets.size
+                packets.forEachIndexed { index, bytes ->
+                    task.progress(index + 1, packetCount)
+                    task.print(String.format(messages["writePacket"], index))
+
+                    if (task.isCancelled) {
+                        task.print(messages["cancelled"])
+                        return@use
+                    }
+
+                    // write block to receiver
+                    it.writeBytes(bytes)
+                    it.readBytes(response)
+                    if (!response.contentEquals(bytes)) throw IOException(messages["transmissionError"])
+                    it.expect(0xaa)
+                }
+
+                // end transfer
+                response[2] = 0xee.toByte()
+                it.writeBytes(response)
+                Thread.sleep(1000)
+                task.print(messages["done"])
+            } catch(e:IOException) {
+                task.print(messages["transmissionError"])
+                throw e
             }
         }
-
-        // write data
-        val packetCount = packets.size
-        packets.forEachIndexed { index, bytes ->
-            task.progress(index + 1, packetCount)
-            task.print(String.format(messages["writePacket"],index))
-
-            // write block to receiver
-            port.writeBytes(bytes)
-            if (task.isCancelled) return
-
-            // read response
-            port.readBytes(response)
-            if (task.isCancelled) return
-
-            // read status
-            val byte = port.read()
-
-            if (!(response contentEquals bytes && byte == 0xaa)) throw IOException(messages["transmissionError"])
-            if (task.isCancelled) return
-        }
-
-        // end transfer
-        response[2] = 0xee.toByte()
-        port.writeBytes(response)
-        Thread.sleep(1000)
-        task.print(messages["done"])
     }
 
     override fun equals(other: Any?): Boolean {

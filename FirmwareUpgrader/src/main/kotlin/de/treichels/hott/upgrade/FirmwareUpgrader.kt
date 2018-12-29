@@ -19,6 +19,7 @@ import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.File
 import java.io.IOException
+import java.util.*
 import java.util.logging.LogManager
 
 fun main(vararg args: String) {
@@ -34,6 +35,7 @@ class FirmwareUpgrader : View() {
     companion object {
         const val PREFERRED_PORT = "preferredPort"
         const val LAST_DIR = "lastDir"
+        const val LAST_FILE = "lastFile"
 
         private fun isFirmware(file: File) = file.exists() && file.isFile && file.canRead() && file.name.endsWith(".bin")
         private fun getFile(ev: DragEvent) = ev.dragboard.files.firstOrNull(::isFirmware)
@@ -68,11 +70,20 @@ class FirmwareUpgrader : View() {
 
             vbox {
                 label(messages["receiverType"])
-                receiverType = combobox(values = ReceiverType.values().asList()) {
-                    disableWhen { service.runningProperty() }
-                    buttonCell = ReceiverListCell()
-                    setCellFactory { ReceiverListCell() }
-                    minHeight = 48.0
+                hbox {
+                    spacing = 5.0
+                    receiverType = combobox(values = ReceiverType.values().asList()) {
+                        disableWhen { service.runningProperty() }
+                        buttonCell = ReceiverListCell()
+                        setCellFactory { ReceiverListCell() }
+                        minHeight = 48.0
+                    }
+                    button(messages["detectReceiver"]) {
+                        disableWhen { service.runningProperty() }
+                        minHeight = 48.0
+                        disableWhen { serialPortProperty.isNull }
+                        action { autoDetectReceiver() }
+                    }
                 }
             }
             region {
@@ -110,14 +121,7 @@ class FirmwareUpgrader : View() {
                         promptText = messages["selectFile"]
                         prefWidth = 400.0
                         disableWhen { service.runningProperty().or(textProperty().isEqualTo(messages["selectFile"])) }
-                        textProperty().addListener { _ ->
-                            try {
-                                // read receiver type from firmware file and update combobox
-                                receiverType.value = ReceiverFirmware.load(text).receiverType
-                            } catch (e: IOException) {
-                                // ignore invalid firmware file
-                            }
-                        }
+                        textProperty().addListener { _ -> fileNameChangeListener() }
                     }
                     button(messages["select"]) {
                         disableWhen { service.runningProperty() }
@@ -170,15 +174,45 @@ class FirmwareUpgrader : View() {
         }
     }
 
-    private fun download() {
-        lateinit var firmware: List<Firmware<ReceiverType>>
-
-        root.runAsyncWithOverlay {
-            firmware = receiverType.value.getFirmware()
+    private fun autoDetectReceiver() {
+        val dialog = Alert(Alert.AlertType.INFORMATION, messages["connectReceiver"], ButtonType.CANCEL).apply {
+            headerText = messages["detectReceiver"]
+            title = messages["receiverType"]
+        }
+        val task = runAsync {
+            ReceiverFirmware.detectReceiver(this, serialPort!!)
         }.ui {
+            receiverType.value = it
+            dialog.close()
+        }.fail {
+            dialog.close()
+        }
+
+        dialog.showAndWait()
+        if (task.isRunning) task.cancel()
+    }
+
+    private fun fileNameChangeListener() {
+        val file = File(textField.text)
+        if (file.exists()) {
+            preferences { put(LAST_FILE, file.absolutePath) }
+
+            try {
+                // read receiver type from firmware file and update combobox
+                receiverType.value = ReceiverFirmware.load(file).receiverType
+            } catch (e: IOException) {
+                // ignore invalid firmware file
+            }
+        }
+    }
+
+    private fun download() {
+        root.runAsyncWithOverlay {
+            receiverType.value.getFirmware()
+        }.ui { firmware ->
             when (firmware.size) {
                 // there is only one file available online - select it
-                1 -> textField.text = firmware[0].file.absolutePath
+                1 -> download(firmware[0])
 
                 // no files found - do nothing
                 0 -> {
@@ -187,17 +221,26 @@ class FirmwareUpgrader : View() {
                 // show choice dialog and let the use choose
                 else -> {
                     val optional = ChoiceDialog(null, firmware.map { it.file.name }.toSet().sorted()).apply {
-                        title = "Online Files"
-                        headerText = "Select firmware file for download."
+                        title = messages["downloadTitle"]
+                        headerText = messages["downloadHeaderText"]
                     }.showAndWait()
 
                     // if there is a result, download the file and use it
-                    if (optional.isPresent) textField.text = firmware.find { it.file.name == optional.get() }!!.file.absolutePath
+                    if (optional.isPresent) download(firmware.find { it.file.name == optional.get() })
                 }
             }
 
             textField.selectEnd()
         }
+    }
+
+    private fun download(firmware: Firmware<ReceiverType>?) {
+        if (firmware != null)
+            root.runAsyncWithOverlay {
+                firmware.download()
+            }.ui {
+                textField.text = firmware.file.absolutePath
+            }
     }
 
     private fun doCancel() {
@@ -305,6 +348,12 @@ class FirmwareUpgrader : View() {
                 val prefPort: String? = get(PREFERRED_PORT, null)
                 if (prefPort != null && portCombo.items.contains(prefPort)) {
                     portCombo.value = prefPort
+                }
+
+                get(LAST_FILE, null)?.apply {
+                    File(this).apply {
+                        if (exists()) textField.text = absolutePath
+                    }
                 }
             }
         }
