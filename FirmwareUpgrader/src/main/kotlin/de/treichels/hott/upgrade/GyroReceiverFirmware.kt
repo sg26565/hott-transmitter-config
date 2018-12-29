@@ -34,11 +34,9 @@ class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>
     override fun upgradeReceiver(task: FirmwareUpgradeService.FirmwareUpgradeTask, port: SerialPort) {
         val response = ByteArray(GyroReceiverFirmware.blockSize)
         val id = receiverType.id
-        val baudrate = if (id >= 0xf0) 115200 else 19200
 
         // open serial port
-        port.setComPortParameters(baudrate, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY)
-        port.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING + SerialPort.TIMEOUT_WRITE_BLOCKING, 1000, 1000)
+        port.setup(if (id >= 0xf0) 115200 else 19200)
         port.use {
             // wait for receiver
             task.print(messages["waitForReceiver"])
@@ -71,7 +69,7 @@ class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>
                     // write block to receiver
                     it.writeBytes(bytes)
                     it.readBytes(response)
-                    if (!response.contentEquals(bytes)) throw IOException(messages["transmissionError"])
+                    if (!response.contentEquals(bytes)) throw IOException(messages["transmissionError"]) // TODO implement re-try
                     it.expect(0xaa)
                 }
 

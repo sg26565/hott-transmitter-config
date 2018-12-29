@@ -77,11 +77,11 @@ class FirmwareUpgrader : View() {
                         buttonCell = ReceiverListCell()
                         setCellFactory { ReceiverListCell() }
                         minHeight = 48.0
+                        setOnAction { validateFileName() }
                     }
                     button(messages["detectReceiver"]) {
-                        disableWhen { service.runningProperty() }
                         minHeight = 48.0
-                        disableWhen { serialPortProperty.isNull }
+                        disableWhen { serialPortProperty.isNull.or(service.runningProperty()) }
                         action { autoDetectReceiver() }
                     }
                 }
@@ -129,7 +129,7 @@ class FirmwareUpgrader : View() {
                     }
                     button(messages["download"]) {
                         disableWhen { receiverType.valueProperty().isNull.or(service.runningProperty()) }
-                        action { download() }
+                        action { checkOnline() }
                     }
                 }
             }
@@ -174,6 +174,18 @@ class FirmwareUpgrader : View() {
         }
     }
 
+    private fun validateFileName() {
+        if (textField.text != null) {
+            try {
+                // check that the current file matches the selected receiver type
+                val firmware = ReceiverFirmware.load(textField.text)
+                if (firmware.receiverType != receiverType.value) textField.text = null
+            } catch (e: IOException) {
+                textField.text = null
+            }
+        }
+    }
+
     private fun autoDetectReceiver() {
         val dialog = Alert(Alert.AlertType.INFORMATION, messages["connectReceiver"], ButtonType.CANCEL).apply {
             headerText = messages["detectReceiver"]
@@ -193,33 +205,31 @@ class FirmwareUpgrader : View() {
     }
 
     private fun fileNameChangeListener() {
-        val file = File(textField.text)
-        if (file.exists()) {
-            preferences { put(LAST_FILE, file.absolutePath) }
+        if (textField.text != null) {
+            val file = File(textField.text)
+            if (file.exists()) {
+                preferences { put(LAST_FILE, file.absolutePath) }
 
-            try {
-                // read receiver type from firmware file and update combobox
-                receiverType.value = ReceiverFirmware.load(file).receiverType
-            } catch (e: IOException) {
-                // ignore invalid firmware file
+                try {
+                    // read receiver type from firmware file and update combobox
+                    receiverType.value = ReceiverFirmware.load(file).receiverType
+                } catch (e: IOException) {
+                    // ignore invalid firmware file
+                }
             }
         }
     }
 
-    private fun download() {
+    private fun checkOnline() {
         root.runAsyncWithOverlay {
             receiverType.value.getFirmware()
         }.ui { firmware ->
-            when (firmware.size) {
-                // there is only one file available online - select it
-                1 -> download(firmware[0])
+            if (firmware.isNotEmpty()) {
+                val names = firmware.map { it.file.name }.toSet().sorted()
 
-                // no files found - do nothing
-                0 -> {
-                }
-
-                // show choice dialog and let the use choose
-                else -> {
+                if (names.size == 1)
+                    download(firmware[0])
+                else {
                     val optional = ChoiceDialog(null, firmware.map { it.file.name }.toSet().sorted()).apply {
                         title = messages["downloadTitle"]
                         headerText = messages["downloadHeaderText"]
@@ -229,8 +239,6 @@ class FirmwareUpgrader : View() {
                     if (optional.isPresent) download(firmware.find { it.file.name == optional.get() })
                 }
             }
-
-            textField.selectEnd()
         }
     }
 
@@ -240,6 +248,7 @@ class FirmwareUpgrader : View() {
                 firmware.download()
             }.ui {
                 textField.text = firmware.file.absolutePath
+                textField.selectEnd()
             }
     }
 

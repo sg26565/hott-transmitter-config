@@ -30,23 +30,16 @@ abstract class ReceiverFirmware(val receiverType: ReceiverType, val packets: Arr
         }
 
         fun detectReceiver(task: Task<*>, port: SerialPort): ReceiverType? = port.use {
-            port.setComPortParameters(19200, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY)
-            port.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING + SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0)
-            var rc: Int
+            it.setup()
 
             // wait for receiver boot
-            while (true) {
-                try {
-                    rc = it.read()
-                    if (rc in knownIds) break
-                } catch (e: IOException) {
-                    if (task.isCancelled) return@use null
-                }
-            }
+            val rc = it.waitForBoot(task, *knownIds.toIntArray())
 
             if (rc == 0x05 || rc == 0x0a) {
                 // standard receiver
-                val (productCode, _, _) = StandardReceiverFirmware.getInfo(it, rc)
+                StandardReceiverFirmware.upgradeMode(rc, it)
+                Thread.sleep(100)
+                val (productCode, _, _) = StandardReceiverFirmware.getInfo(it)
                 ReceiverType.forProductCode(productCode)
             } else {
                 // gyro receiver
@@ -142,3 +135,19 @@ fun SerialPort.expect(rc: Int) {
     if (b != rc) throw IOException(String.format(ReceiverFirmware.messages["invalidResponse"], b, rc))
 }
 
+fun SerialPort.setup(baudRate: Int = 19200) {
+    setComPortParameters(baudRate, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY)
+    setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING + SerialPort.TIMEOUT_WRITE_BLOCKING, 1000, 1000)
+}
+
+fun SerialPort.waitForBoot(task: Task<*>, vararg expected: Int) : Int {
+    // wait for receiver boot
+    while (true) {
+        try {
+            val rc = read()
+            if (rc in expected) return  rc
+        } catch (e: IOException) {
+            if (task.isCancelled) return 0
+        }
+    }
+}

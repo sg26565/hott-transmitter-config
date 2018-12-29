@@ -54,20 +54,14 @@ class StandardReceiverFirmware(receiverType: ReceiverType, val version: Int, pac
             }
         }
 
-        internal fun getInfo(port: SerialPort, rc: Int): Triple<Int, Int, Int> {
+        internal fun upgradeMode(rc: Int, port: SerialPort) {
+            // switch to boot mode
             val expected = if (rc == 0x05) 0x09 else rc
             port.write(expected)
             port.expect(expected)
+        }
 
-            Thread.sleep(100)
-            port.write(0x09)
-            port.expect(0x09)
-            port.readBytes(ByteArray(8))
-            //val flag1 = port.readInt()
-            //val flag2 = port.readInt()
-            //println("Flag1=0x${flag1.toString(16)} ($flag1), Flag2=0x${flag2.toString(16)} ($flag2)")
-
-            Thread.sleep(100)
+        internal fun getInfo(port: SerialPort): Triple<Int, Int, Int> {
             port.write(0x10)
             port.expect(0x10)
             val productCode = port.readInt()
@@ -79,26 +73,29 @@ class StandardReceiverFirmware(receiverType: ReceiverType, val version: Int, pac
     }
 
     override fun upgradeReceiver(task: FirmwareUpgradeService.FirmwareUpgradeTask, port: SerialPort) {
-        var rc: Int
-
-        port.setComPortParameters(19200, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY)
-        port.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING + SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0)
+        port.setup()
         port.use {
-            task.print(messages["waitForReceiver"])
-            while (true) {
-                try {
-                    rc = it.read()
-                    if (rc == 0x05 || rc == 0x0a) break
-                } catch (e: IOException) {
-                    if (task.isCancelled) {
-                        task.print(messages["cancelled"])
-                        return@use
-                    }
+            val (productCode, appVersion, bootVersion) = try {
+                // try if receiver is already in update mode
+                getInfo(it)
+            } catch (e: IOException) {
+                // wait for receiver boot
+                task.print(messages["waitForReceiver"])
+                val rc = it.waitForBoot(task, 0x05, 0x0a)
+                if (task.isCancelled) {
+                    task.print(messages["cancelled"])
+                    return@use
                 }
+
+                // switch receiver into boot mode
+                upgradeMode(rc, it)
+                Thread.sleep(100)
+
+                // read product code and versions
+                getInfo(it)
             }
 
             try {
-                val (productCode, appVersion, bootVersion) = getInfo(it, rc)
                 if (productCode != receiverType.productCode) throw IOException(String.format(messages["invalidReceiverType"], ReceiverType.forProductCode(productCode), receiverType))
 
                 val latch = CountDownLatch(1)
@@ -169,4 +166,4 @@ class StandardReceiverFirmware(receiverType: ReceiverType, val version: Int, pac
     }
 }
 
-private fun version(v: Int) = "v" + (v.toDouble() / 1000.0).toString().replace(",", ".").trim('0')
+private fun version(v: Int) = "v" + (v.toDouble() / 1000.0).toString().replace(",", ".")
