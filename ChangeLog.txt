@@ -1,5 +1,13 @@
 2018-12-26
 ==========
+    FirmwareUpgrader-0.9.4.1191
+    - support for standard receivers
+
+    VDFEditor-0.9.4.1191
+    - fixed Save VDF function
+
+2018-12-26
+==========
     MdlViewer-0.9.4.1172
     - add option to show/hide suppressed menus
 

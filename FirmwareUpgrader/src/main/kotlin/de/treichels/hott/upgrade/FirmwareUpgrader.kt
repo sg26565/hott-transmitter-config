@@ -22,7 +22,6 @@ import java.io.IOException
 import java.util.logging.LogManager
 
 fun main(vararg args: String) {
-    if (Util.DEBUG) LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
     launch<FirmwareUpgraderApp>(*args)
 }
@@ -260,7 +259,9 @@ class FirmwareUpgrader : View() {
     }
 
     init {
-        title = messages["title"]
+        Util.enableLogging()
+
+        title = messages["title"] + " " + Util.sourceVersion(FirmwareUpgrader::class)
         setStageIcon(iconImage)
         currentStage?.apply {
             minHeight = 300.0

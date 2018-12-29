@@ -13,43 +13,20 @@ package de.treichels.hott.mdlviewer.javafx
 
 import de.treichels.hott.util.Util
 import tornadofx.*
-import tornadofx.FX.Companion.messages
-import java.io.File
-import java.util.jar.JarFile
-import java.util.logging.LogManager
 
 class MdlViewer : App() {
     companion object {
-        private val sourceLocation = File(MdlViewer::class.java.protectionDomain.codeSource.location.toURI())
-
         val version: String by lazy {
-            var result = messages["Unknown"]
-
-            if (sourceLocation.name.endsWith(".jar") || sourceLocation.name.endsWith(".exe"))
-                JarFile(sourceLocation).use { jarFile ->
-                    val attributes = jarFile.manifest.mainAttributes
-                    result = "v${attributes.getValue("Implementation-Version")}.${attributes.getValue("Implementation-Build")}"
-                }
-
-            System.setProperty("program.version", result)
-            result
+            Util.sourceVersion(MdlViewer::class)
         }
 
         val programDir: String by lazy {
-            // get the parent directory containing the jar file or the classes directory
-            val programDir = sourceLocation.parentFile
-
-            // if we are running inside Eclipse in the target directory, step up to the project level
-            val result = if (programDir.name == "target") programDir.parentFile.absolutePath else programDir.absolutePath
-
-            System.setProperty("program.dir", result)
-            result
+            Util.programDir(MdlViewer::class)
         }
     }
 
     init {
-        // setup logging
-        if (Util.DEBUG) LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
+        Util.enableLogging()
     }
 
     override val primaryView = MainView::class

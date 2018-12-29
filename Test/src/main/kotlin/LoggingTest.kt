@@ -1,10 +1,10 @@
+import de.treichels.hott.util.Util
 import java.util.logging.Level
 import java.util.logging.LogManager
 import java.util.logging.Logger
 
 fun main (args: Array<String>) {
-    LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
-
+    Util.enableLogging()
     val logger = Logger.getGlobal()
 
     for (l in arrayOf(Level.FINEST, Level.FINER, Level.FINE, Level.CONFIG, Level.INFO, Level.WARNING, Level.SEVERE)) {

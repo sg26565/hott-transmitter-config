@@ -23,22 +23,12 @@ class VDFEditor : App() {
         }
 
         val version: String by lazy {
-            var result = Messages.getString("Launcher.Unknown")
-
-            val source = File(VDFEditor::class.java.protectionDomain.codeSource.location.toURI())
-            if (source.name.endsWith(".jar") || source.name.endsWith(".exe"))
-                JarFile(source).use { jarFile ->
-                    val attributes = jarFile.manifest.mainAttributes
-                    result = Messages.getString("Launcher.Version", attributes.getValue("Implementation-Version"), attributes.getValue("Implementation-Build"))
-                }
-
-            result
+            Util.sourceVersion(VDFEditor::class)
         }
     }
 
     init {
-        // setup logging
-        if (Util.DEBUG) LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
+        Util.enableLogging()
     }
 
     override val primaryView = MainView::class

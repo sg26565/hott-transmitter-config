@@ -62,16 +62,7 @@ class Mz32Downloader : View() {
         get() = language.selectedItems
 
     private val version: String by lazy {
-        val source = File(Mz32Downloader::class.java.protectionDomain.codeSource.location.toURI())
-        if (source.name.endsWith(".jar") || source.name.endsWith(".exe"))
-            JarFile(source).use { jarFile ->
-                val attributes = jarFile.manifest.mainAttributes
-                val version = attributes.getValue("Implementation-Version")
-                val build = attributes.getValue("Implementation-Build")
-
-                "v$version.$build"
-            }
-        else "Unknown"
+        Util.sourceVersion(Mz32Downloader::class)
     }
 
     // UI
@@ -222,8 +213,7 @@ class Mz32Downloader : View() {
     }
 
     init {
-        // setup logging
-        if (Util.DEBUG) LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
+        Util.enableLogging()
 
         setStageIcon(iconImage)
         title = "mz-32 Downloader ($version)"

@@ -11,10 +11,14 @@
  */
 package de.treichels.hott.util
 
+import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.URL
 import java.util.*
+import java.util.jar.JarFile
+import java.util.logging.LogManager
+import kotlin.reflect.KClass
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
@@ -87,6 +91,35 @@ object Util {
             }
 
         return latestVersions.getProperty(key, null)
+    }
+
+    fun sourceVersion(clazz: KClass<*>) = sourceLocation(clazz).let { source ->
+        if (source.name.endsWith(".jar") || source.name.endsWith(".exe"))
+            JarFile(source).use { jarFile ->
+                val attributes = jarFile.manifest.mainAttributes
+                val version = attributes.getValue("Implementation-Version")
+                val build = attributes.getValue("Implementation-Build")
+
+                "v$version.$build"
+            }
+        else "Unknown"
+    }
+
+    fun programDir(clazz: KClass<*>): String {
+        // get the parent directory containing the jar file or the classes directory
+        val programDir = sourceLocation(clazz).parentFile
+
+        // if we are running inside Eclipse in the target directory, step up to the project level
+        val result = if (programDir.name == "target") programDir.parentFile.absolutePath else programDir.absolutePath
+        System.setProperty("program.dir", result)
+
+        return result
+    }
+
+    private fun sourceLocation(clazz: KClass<*>) = File(clazz.java.protectionDomain.codeSource.location.toURI())
+
+    fun enableLogging() {
+        if (DEBUG) LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
     }
 }
 
