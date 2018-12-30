@@ -33,6 +33,8 @@ internal class Path(path: String) {
 
     val isProtected = isSystem || isUser
 
+    val isAutoDelete = autoDeletePaths.any { value.startsWith(it) }
+
     // convert String to enum
     val language by lazy { Language.valueOf(parts[2]) }
 
@@ -43,5 +45,6 @@ internal class Path(path: String) {
         private const val voicePath = "/Voice"
         private val userPaths = listOf("/Image", "/Log", "/Model", "/MP3", "/Screenshot")
         private val systemPaths = listOf("/GraupnerDisk.cfg", "/System", "/Update", "/md5sum.txt")
+        private val autoDeletePaths = listOf("/Help", "/Manual", "/System", "/Util", "/Voice")
     }
 }
