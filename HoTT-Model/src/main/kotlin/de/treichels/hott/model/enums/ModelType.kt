@@ -20,7 +20,7 @@ import java.util.stream.Stream
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class ModelType(val char: Char) {
-    Helicopter('h'), Winged('a'), Car('c'), Copter('q'), Boat('b'), Unknown('x'); // TODO add Glider(?, 'g')
+    Helicopter('h'), Winged('a'), Car('c'), Copter('q'), Boat('b'), Glider('g'), Unknown('x');
 
     val model: BaseModel
         @Throws(HoTTException::class)
@@ -34,7 +34,7 @@ enum class ModelType(val char: Char) {
 
                 Helicopter -> HelicopterModel()
 
-                Winged -> WingedModel()
+                Winged,Glider -> WingedModel()
 
                 else -> throw HoTTException(format = "InvalidModelType", args = arrayOf("Unknown"))
             }

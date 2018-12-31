@@ -1,4 +1,6 @@
 dependencies {
+    implementation(project(":HoTT-Report-XML"))
+    implementation(project(":HoTT-Decoder"))
     implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-Serial"))
     implementation(project(":HoTT-TTS"))
