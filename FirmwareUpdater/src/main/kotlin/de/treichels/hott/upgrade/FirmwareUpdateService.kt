@@ -2,6 +2,7 @@ package de.treichels.hott.upgrade
 
 import com.fazecast.jSerialComm.SerialPort
 import de.treichels.hott.model.enums.ReceiverType
+import de.treichels.hott.model.enums.Registered
 import de.treichels.hott.util.Util
 import javafx.concurrent.Service
 import javafx.concurrent.Task
@@ -11,7 +12,7 @@ import java.io.IOException
 import java.lang.IllegalArgumentException
 import java.util.*
 
-abstract class ReceiverFirmware(val receiverType: ReceiverType, val packets: Array<ByteArray>) {
+abstract class ReceiverFirmware(val receiverType: Registered<*>, val packets: Array<ByteArray>) {
     companion object {
         @JvmStatic
         var messages = ResourceBundle.getBundle(ReceiverFirmware::class.java.name)!!
@@ -53,7 +54,7 @@ abstract class ReceiverFirmware(val receiverType: ReceiverType, val packets: Arr
 
         result.append(toString()).append('\n')
         result.append("ProductCode: ${receiverType.productCode}\n")
-        result.append("ReceiverId: ${receiverType.id}\n")
+        //result.append("ReceiverId: ${receiverType.id}\n")
         result.append("PacketCount: ${packets.size}\n")
         result.append("PacketSize:  ${packets[0].size}\n")
         packets.forEachIndexed { index, bytes ->

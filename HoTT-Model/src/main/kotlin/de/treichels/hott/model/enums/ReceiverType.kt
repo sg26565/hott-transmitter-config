@@ -17,7 +17,7 @@ import java.util.*
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class ReceiverType(override val productCode: Int = 0, val orderNo: String = "", val id: Int = 0, val hasGyro: Boolean = false, val hasVario: Boolean = false) : Registered<ReceiverType> {
+enum class ReceiverType(override val productCode: Int = 0, override val orderNo: String = "", val id: Int = 0, val hasGyro: Boolean = false, val hasVario: Boolean = false, override val category: String = ReceiverType.category) : Registered<ReceiverType> {
     gr4(16005600, "33502"),
     gr8(16005700, "33504"),
     gr10c(0, "S1029", 0x3d, true),
@@ -47,19 +47,13 @@ enum class ReceiverType(override val productCode: Int = 0, val orderNo: String =
     falcon12_plus(16008700, "S1034", 0x34, true),
     falcon12(16007900, "S1035", 0x35, true);
 
-    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name] + if (orderNo.isNotEmpty()) " ($orderNo)" else ""
 
     companion object {
-        fun forProductCode(productCode: Int): ReceiverType? {
-            return values().firstOrNull { s -> s.productCode == productCode || s.productCode % 10000 == productCode }
-        }
+        fun forProductCode(productCode: Int): ReceiverType? = values().firstOrNull { s -> s.productCode == productCode }
+        fun forId(id: Int): ReceiverType? = values().firstOrNull { s -> s.id == id }
+        fun forOrderNo(orderNo: String): ReceiverType? = values().firstOrNull { s -> s.orderNo == orderNo }
 
-        fun forId(id: Int): ReceiverType? {
-            return values().firstOrNull { s -> s.id == id }
-        }
-
-        fun forOrderNo(orderNo: String): ReceiverType? {
-            return values().firstOrNull { s -> s.orderNo == orderNo }
-        }
+        const val category = "HoTT_Receiver"
     }
 }

@@ -17,7 +17,7 @@ import java.util.*
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class TransmitterType(override val productCode: Int) : Registered<TransmitterType> {
+enum class TransmitterType(override val productCode: Int, override val orderNo: String = "", override val category: String = TransmitterType.category) : Registered<TransmitterType> {
     mc16(16004600), mc20(16004300), mc26(16007700), mc28(16007100),
     mc32(16004100), mc32Expert(16008500), mc32ExpertBeta(16008501),
     mxs8(16004900), mx10(16004200), mx12(16003600), mx16(16003300),
@@ -29,10 +29,9 @@ enum class TransmitterType(override val productCode: Int) : Registered<Transmitt
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 
     companion object {
-        fun forProductCode(productCode: Int): TransmitterType {
-            return TransmitterType.values().firstOrNull { productCode == it.productCode } ?: Unknown
-        }
+        fun forProductCode(productCode: Int): TransmitterType = TransmitterType.values().firstOrNull { productCode == it.productCode }
+                ?: Unknown
 
-        val category = "Transmitter"
+        const val category = "Transmitter"
     }
 }

@@ -1,7 +1,10 @@
 package de.treichels.hott.upgrade
 
 import com.fazecast.jSerialComm.SerialPort
+import de.treichels.hott.model.enums.ModuleType
 import de.treichels.hott.model.enums.ReceiverType
+import de.treichels.hott.model.enums.Registered
+import de.treichels.hott.model.enums.SensorType
 import de.treichels.hott.util.readInt
 import de.treichels.hott.util.readUnsignedInt
 import de.treichels.hott.util.readUnsignedShort
@@ -12,7 +15,7 @@ import java.io.File
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
 
-class StandardReceiverFirmware(receiverType: ReceiverType, val version: Int, packets: Array<ByteArray>) : ReceiverFirmware(receiverType, packets) {
+class StandardReceiverFirmware(receiverType: Registered<*>, val version: Int, packets: Array<ByteArray>) : ReceiverFirmware(receiverType, packets) {
     companion object {
         fun load(file: File): StandardReceiverFirmware {
             file.inputStream().use { stream ->
@@ -29,7 +32,14 @@ class StandardReceiverFirmware(receiverType: ReceiverType, val version: Int, pac
 
                 val productCode = stream.readInt()
                 val receiverType = ReceiverType.forProductCode(productCode)
-                        ?: throw IOException(String.format(messages["unknownReceiver"], productCode))
+                val moduleType = ModuleType.forProductCode(productCode)
+                val sensorType = SensorType.forProductCode(productCode)
+                val deviceType: Registered<*> = if (receiverType != null)
+                    receiverType
+                else if (moduleType != null) moduleType
+                else if (sensorType != null) sensorType
+                else throw IOException(String.format(messages["unknownReceiver"], productCode))
+
                 val version = stream.readInt()
                 val packetCount = stream.readInt()
 
@@ -52,7 +62,7 @@ class StandardReceiverFirmware(receiverType: ReceiverType, val version: Int, pac
                     data
                 }
 
-                return StandardReceiverFirmware(receiverType, version, packets)
+                return StandardReceiverFirmware(deviceType, version, packets)
             }
         }
 

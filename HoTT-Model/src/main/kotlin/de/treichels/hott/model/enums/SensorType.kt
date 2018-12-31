@@ -17,20 +17,32 @@ import java.util.*
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class SensorType {
-    Receiver, GeneralModule, ElectricAirModule, Vario, GPS, ESC, None;
+enum class SensorType(override val productCode: Int = 0, override val orderNo: String = "", override val category: String = SensorType.category) : Registered<SensorType> {
+    Receiver,
+    GeneralModule(13015020, "33610"),
+    ElectricAirModule(13015030, "33620"),
+    Vario(13015000, "33601"),
+    GPS(13015070, "S8437"),
+    ESC,
+    GPS_OLD(13015040, "33600"),
+    GRD84SJ(13015910),
+    VM(13018600, "S8389"),
+    VM_SBEC(13019600, "S8446"),
+    VM_SBEC1(13019601, "S8446"),
+    VM_SBEC_8V(13019602, "S8446.1"),
+    PDB(130200000, "S8474"),
+    None;
 
     val map = 1 shl ordinal and 0b111111
 
-    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name] + if (orderNo.isNotEmpty()) " ($orderNo)" else ""
 
     companion object {
-        fun forMap(code: Int): List<SensorType> {
-            return SensorType.values().filter { s -> s.map and code != 0 }.toList()
-        }
+        fun forMap(map: Int): List<SensorType> = SensorType.values().filter { s -> s.map and map != 0 }.toList()
+        fun getMap(sensors: List<SensorType>): Int = sensors.stream().mapToInt { it.map }.sum()
+        fun forProductCode(productCode: Int): SensorType? = SensorType.values().firstOrNull { s -> s.productCode == productCode }
+        fun forOrderNo(orderNo: String): SensorType? = SensorType.values().firstOrNull { s -> s.orderNo == orderNo }
 
-        fun getMap(sensors: List<SensorType>): Int {
-            return sensors.stream().mapToInt { it.map }.sum()
-        }
+        const val category = "HoTT_Sensor"
     }
 }

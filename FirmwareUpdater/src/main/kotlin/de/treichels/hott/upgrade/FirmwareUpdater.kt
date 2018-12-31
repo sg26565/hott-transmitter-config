@@ -3,7 +3,10 @@ package de.treichels.hott.upgrade
 import com.fazecast.jSerialComm.SerialPort
 import de.treichels.hott.firmware.Firmware
 import de.treichels.hott.firmware.getFirmware
+import de.treichels.hott.model.enums.ModuleType
 import de.treichels.hott.model.enums.ReceiverType
+import de.treichels.hott.model.enums.Registered
+import de.treichels.hott.model.enums.SensorType
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.ui.MessageDialog
 import de.treichels.hott.util.Util
@@ -20,7 +23,6 @@ import tornadofx.*
 import java.io.File
 import java.io.IOException
 import java.util.*
-import java.util.logging.LogManager
 
 fun main(vararg args: String) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
@@ -45,7 +47,7 @@ class FirmwareUpgrader : View() {
     private val iconImage = resources.image("icon.png")
 
     // controls
-    private var receiverType by singleAssign<ComboBox<ReceiverType>>()
+    private var receiverType: ComboBox<Registered<*>> by singleAssign()
     private var textField by singleAssign<TextField>()
     private var portCombo by singleAssign<ComboBox<String>>()
     private var textArea by singleAssign<TextArea>()
@@ -77,7 +79,10 @@ class FirmwareUpgrader : View() {
                 }
                 hbox {
                     spacing = 5.0
-                    receiverType = combobox(values = ReceiverType.values().asList()) {
+                    receiverType = combobox {
+                        items.addAll(ReceiverType.values().asList())
+                        items.addAll(ModuleType.values().asList())
+                        items.addAll(SensorType.values().asList().filter { it.productCode != 0 })
                         disableWhen { service.runningProperty() }
                         buttonCell = ReceiverListCell()
                         setCellFactory { ReceiverListCell() }
@@ -259,7 +264,7 @@ class FirmwareUpgrader : View() {
         }
     }
 
-    private fun download(firmware: Firmware<ReceiverType>?) {
+    private fun download(firmware: Firmware<*>?) {
         if (firmware != null)
             root.runAsyncWithOverlay {
                 firmware.download()
@@ -389,7 +394,7 @@ class FirmwareUpgrader : View() {
 /**
  * A ListCell that show an image of the receiver and it's name
  */
-class ReceiverListCell : ListCell<ReceiverType>() {
+class ReceiverListCell : ListCell<Registered<*>>() {
     private val images = HashMap<ReceiverType, ImageView>()
 
     init {
@@ -403,7 +408,7 @@ class ReceiverListCell : ListCell<ReceiverType>() {
         }
     }
 
-    override fun updateItem(item: ReceiverType?, empty: Boolean) {
+    override fun updateItem(item: Registered<*>?, empty: Boolean) {
         super.updateItem(item, empty)
 
         if (empty || item == null) {

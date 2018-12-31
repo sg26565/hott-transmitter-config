@@ -33,7 +33,7 @@ class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>
 
     override fun upgradeReceiver(task: FirmwareUpgradeService.FirmwareUpgradeTask, port: SerialPort) {
         val response = ByteArray(GyroReceiverFirmware.blockSize)
-        val id = receiverType.id
+        val id = (receiverType as ReceiverType).id
 
         // open serial port
         port.setup(if (id >= 0xf0) 115200 else 19200)
