@@ -64,12 +64,17 @@ class FirmwareUpgrader : View() {
         spacing = 10.0
         paddingAll = 5.0
 
+        // receiver type and com port
         hbox {
-            alignment = Pos.CENTER_LEFT
-            spacing = 5.0
+            spacing = 10.0
 
             vbox {
-                label(messages["receiverType"])
+                spacing = 3.0
+                label(messages["receiverType"]) {
+                    style {
+                        underline = true
+                    }
+                }
                 hbox {
                     spacing = 5.0
                     receiverType = combobox(values = ReceiverType.values().asList()) {
@@ -91,7 +96,12 @@ class FirmwareUpgrader : View() {
             }
 
             vbox {
-                label(messages["port"])
+                spacing = 3.0
+                label(messages["port"]) {
+                    style {
+                        underline = true
+                    }
+                }
                 portCombo = combobox {
                     disableWhen { service.runningProperty() }
                     setOnAction {
@@ -106,39 +116,47 @@ class FirmwareUpgrader : View() {
             }
         }
 
-        hbox {
-            vbox {
-                hgrow = Priority.ALWAYS
+        // firmware file
+        vbox {
+            spacing = 3.0
 
-                label(messages["file"])
-                hbox {
-                    alignment = Pos.CENTER_LEFT
-                    spacing = 5.0
-
-                    textField = textfield {
-                        hgrow = Priority.ALWAYS
-                        isEditable = false
-                        promptText = messages["selectFile"]
-                        prefWidth = 400.0
-                        disableWhen { service.runningProperty().or(textProperty().isEqualTo(messages["selectFile"])) }
-                        textProperty().addListener { _ -> fileNameChangeListener() }
-                    }
-                    button(messages["select"]) {
-                        disableWhen { service.runningProperty() }
-                        action { selectFile() }
-                    }
-                    button(messages["download"]) {
-                        disableWhen { receiverType.valueProperty().isNull.or(service.runningProperty()) }
-                        action { checkOnline() }
-                    }
+            label(messages["file"]) {
+                style {
+                    underline = true
                 }
+            }
+            hbox {
+                alignment = Pos.CENTER_LEFT
+                spacing = 5.0
+
+                button(messages["select"]) {
+                    disableWhen { service.runningProperty() }
+                    action { selectFile() }
+                }
+                button(messages["download"]) {
+                    disableWhen { receiverType.valueProperty().isNull.or(service.runningProperty()) }
+                    action { checkOnline() }
+                }
+            }
+            textField = textfield {
+                hgrow = Priority.ALWAYS
+                isEditable = false
+                promptText = messages["selectFile"]
+                prefWidth = 400.0
+                disableWhen { service.runningProperty().or(textProperty().isEqualTo(messages["selectFile"])) }
+                textProperty().addListener { _ -> fileNameChangeListener() }
             }
         }
 
         vbox {
             vgrow = Priority.ALWAYS
+            spacing = 3.0
 
-            label(messages["messages"])
+            label(messages["messages"]) {
+                style {
+                    underline = true
+                }
+            }
             textArea = textarea {
                 prefHeight = 100.0
                 isEditable = false
@@ -150,7 +168,6 @@ class FirmwareUpgrader : View() {
         }
 
         hbox {
-            alignment = Pos.CENTER_LEFT
             spacing = 5.0
 
             startButton = button(messages["start"]) {
