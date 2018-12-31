@@ -125,6 +125,7 @@ class Mz32(private val rootDir: File) {
             val toBeDeleted = files.asSequence()
                     // convert to path
                     .map { Path(it) }
+                    .filter { it.isAutoDelete }
                     // keep protected entries
                     .filterNot { it.isProtected }
                     // keep help pages unless replaceHelpPages was selected

@@ -5,6 +5,8 @@ import de.treichels.hott.model.enums.ReceiverType
 import de.treichels.hott.util.readInt
 import de.treichels.hott.util.readUnsignedInt
 import de.treichels.hott.util.readUnsignedShort
+import javafx.scene.control.ButtonBar
+import javafx.scene.control.ButtonType
 import tornadofx.*
 import java.io.File
 import java.io.IOException
@@ -102,9 +104,14 @@ class StandardReceiverFirmware(receiverType: ReceiverType, val version: Int, pac
                 var doUpdate = false
 
                 runLater {
-                    confirm(messages["currentVersion"], String.format(messages["versionInfo"], receiverType, version(appVersion), version(bootVersion), version(version))) {
-                        doUpdate = true
-                    }
+                    if (version < appVersion)
+                        warning(messages["downgradeWarning"], String.format(messages["downgrageText"], version(appVersion), version(version)), ButtonType(messages["doDowngrade"], ButtonBar.ButtonData.APPLY), ButtonType.CANCEL) {
+                            doUpdate = (result == ButtonType.YES)
+                        }
+                    else
+                        confirm(messages["currentVersion"], String.format(messages["versionInfo"], receiverType, version(appVersion), version(bootVersion), version(version))) {
+                            doUpdate = true
+                        }
                     latch.countDown()
                 }
 
