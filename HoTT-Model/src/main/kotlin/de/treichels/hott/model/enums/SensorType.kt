@@ -30,7 +30,7 @@ enum class SensorType(override val productCode: Int = 0, override val orderNo: S
     VM_SBEC(13019600, "S8446"),
     VM_SBEC1(13019601, "S8446"),
     VM_SBEC_8V(13019602, "S8446.1"),
-    PDB(130200000, "S8474"),
+    PDB(13020000, "S8474"),
     None;
 
     val map = 1 shl ordinal and 0b111111
