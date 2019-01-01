@@ -26,7 +26,7 @@ import java.io.IOException
 import java.util.*
 
 @Suppress("UNCHECKED_CAST")
-val deviceList = (listOf(*ReceiverType.values(), *ModuleType.values(), *SensorType.values()) as List<Registered<*>>).filter { it.productCode != 0 }
+val deviceList = (listOf(*ReceiverType.values(), *ModuleType.values(), *SensorType.values()) as List<Registered<*>>).filter { it.orderNo.isNotEmpty() }
 
 fun main(vararg args: String) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
