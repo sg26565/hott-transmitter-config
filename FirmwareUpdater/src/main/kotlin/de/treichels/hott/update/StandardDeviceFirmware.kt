@@ -1,4 +1,4 @@
-package de.treichels.hott.upgrade
+package de.treichels.hott.update
 
 import com.fazecast.jSerialComm.SerialPort
 import de.treichels.hott.model.enums.ModuleType
@@ -15,9 +15,9 @@ import java.io.File
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
 
-class StandardReceiverFirmware(receiverType: Registered<*>, val version: Int, packets: Array<ByteArray>) : ReceiverFirmware(receiverType, packets) {
+class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, packets: Array<ByteArray>) : DeviceFirmware(deviceType, packets) {
     companion object {
-        fun load(file: File): StandardReceiverFirmware {
+        fun load(file: File): StandardDeviceFirmware {
             file.inputStream().use { stream ->
                 // read file header
                 val flag1 = stream.readUnsignedInt()
@@ -31,14 +31,8 @@ class StandardReceiverFirmware(receiverType: Registered<*>, val version: Int, pa
                 stream.skip(8)
 
                 val productCode = stream.readInt()
-                val receiverType = ReceiverType.forProductCode(productCode)
-                val moduleType = ModuleType.forProductCode(productCode)
-                val sensorType = SensorType.forProductCode(productCode)
-                val deviceType: Registered<*> = if (receiverType != null)
-                    receiverType
-                else if (moduleType != null) moduleType
-                else if (sensorType != null) sensorType
-                else throw IOException(String.format(messages["unknownReceiver"], productCode))
+                val deviceType: Registered<*> = deviceList.forProductCode(productCode)
+                        ?: throw IOException(String.format(messages["unknownDevice"], productCode))
 
                 val version = stream.readInt()
                 val packetCount = stream.readInt()
@@ -62,11 +56,11 @@ class StandardReceiverFirmware(receiverType: Registered<*>, val version: Int, pa
                     data
                 }
 
-                return StandardReceiverFirmware(deviceType, version, packets)
+                return StandardDeviceFirmware(deviceType, version, packets)
             }
         }
 
-        internal fun upgradeMode(rc: Int, port: SerialPort) {
+        internal fun updateMode(rc: Int, port: SerialPort) {
             // switch to boot mode
             val expected = if (rc == 0x05) 0x09 else rc
             port.write(expected)
@@ -84,23 +78,23 @@ class StandardReceiverFirmware(receiverType: Registered<*>, val version: Int, pa
         }
     }
 
-    override fun upgradeReceiver(task: FirmwareUpgradeService.FirmwareUpgradeTask, port: SerialPort) {
+    override fun updateDevice(task: FirmwareUpdateService.FirmwareUpdateTask, port: SerialPort) {
         port.setup()
         port.use {
             val (productCode, appVersion, bootVersion) = try {
-                // try if receiver is already in update mode
+                // try if device is already in update mode
                 getInfo(it)
             } catch (e: IOException) {
-                // wait for receiver boot
-                task.print(messages["waitForReceiver"])
+                // wait for device boot
+                task.print(messages["waitForDevice"])
                 val rc = it.waitForBoot(task, 0x05, 0x0a)
                 if (task.isCancelled) {
                     task.print(messages["cancelled"])
                     return@use
                 }
 
-                // switch receiver into boot mode
-                upgradeMode(rc, it)
+                // switch device into boot mode
+                updateMode(rc, it)
                 Thread.sleep(100)
 
                 // read product code and versions
@@ -108,7 +102,7 @@ class StandardReceiverFirmware(receiverType: Registered<*>, val version: Int, pa
             }
 
             try {
-                if (productCode != receiverType.productCode) throw IOException(String.format(messages["invalidReceiverType"], ReceiverType.forProductCode(productCode), receiverType))
+                if (productCode != deviceType.productCode) throw IOException(String.format(messages["invalidDeviceType"], ReceiverType.forProductCode(productCode), deviceType))
 
                 val latch = CountDownLatch(1)
                 var doUpdate = false
@@ -119,7 +113,7 @@ class StandardReceiverFirmware(receiverType: Registered<*>, val version: Int, pa
                             doUpdate = (result == ButtonType.YES)
                         }
                     else
-                        confirm(messages["currentVersion"], String.format(messages["versionInfo"], receiverType, version(appVersion), version(bootVersion), version(version))) {
+                        confirm(messages["currentVersion"], String.format(messages["versionInfo"], deviceType, version(appVersion), version(bootVersion), version(version))) {
                             doUpdate = true
                         }
                     latch.countDown()
@@ -130,20 +124,31 @@ class StandardReceiverFirmware(receiverType: Registered<*>, val version: Int, pa
                 if (doUpdate) {
                     val packetCount = packets.size
                     packets.forEachIndexed { index, data ->
-                        task.progress(index + 1, packetCount)
-                        task.print(String.format(messages["writePacket"], index))
+                        var retries = 0
 
-                        if (task.isCancelled) {
-                            task.print(messages["cancelled"])
-                            return@use
+                        while (true) {
+                            try {
+                                task.progress(index + 1, packetCount)
+                                task.print(String.format(messages["writePacket"], index+1, packetCount))
+
+                                if (task.isCancelled) {
+                                    task.print(messages["cancelled"])
+                                    return@use
+                                }
+
+                                // write block to device
+                                val response = ByteArray(data.size)
+                                it.writeBytes(data)
+                                it.readBytes(response)
+                                if (!response.contentEquals(data)) throw IOException(messages["transmissionError"])
+                                it.expect(0x01)
+
+                                break
+                            } catch (e: IOException) {
+                                // retry on error up to retryCount times
+                                if (retries++ >= retryCount) throw e
+                            }
                         }
-
-                        val response = ByteArray(data.size)
-                        it.writeBytes(data)
-                        it.readBytes(response)
-                        if (!response.contentEquals(data)) throw IOException(messages["transmissionError"]) // TODO implement re-try
-
-                        it.expect(0x01)
                     }
 
                     task.print(messages["done"])
@@ -162,9 +167,9 @@ class StandardReceiverFirmware(receiverType: Registered<*>, val version: Int, pa
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as StandardReceiverFirmware
+        other as StandardDeviceFirmware
 
-        if (receiverType != other.receiverType) return false
+        if (deviceType != other.deviceType) return false
         if (version != other.version) return false
         if (!packets.contentDeepEquals(other.packets)) return false
 
@@ -172,14 +177,14 @@ class StandardReceiverFirmware(receiverType: Registered<*>, val version: Int, pa
     }
 
     override fun hashCode(): Int {
-        var result = receiverType.hashCode()
+        var result = deviceType.hashCode()
         result = 31 * result + version
         result = 31 * result + packets.contentDeepHashCode()
         return result
     }
 
     override fun toString(): String {
-        return "StandardReceiverFirmware($receiverType, v${version / 1000.0})"
+        return "StandardDeviceFirmware($deviceType, v${version / 1000.0})"
     }
 }
 

@@ -1,4 +1,4 @@
-package de.treichels.hott.upgrade
+package de.treichels.hott.update
 
 import com.fazecast.jSerialComm.SerialPort
 import de.treichels.hott.firmware.Firmware
@@ -10,6 +10,7 @@ import de.treichels.hott.model.enums.SensorType
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.ui.MessageDialog
 import de.treichels.hott.util.Util
+import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.geometry.Pos
 import javafx.scene.control.*
@@ -24,16 +25,19 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
+@Suppress("UNCHECKED_CAST")
+val deviceList = (listOf(*ReceiverType.values(), *ModuleType.values(), *SensorType.values()) as List<Registered<*>>).filter { it.productCode != 0 }
+
 fun main(vararg args: String) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
-    launch<FirmwareUpgraderApp>(*args)
+    launch<FirmwareUpdaterApp>(*args)
 }
 
-class FirmwareUpgraderApp : App() {
-    override val primaryView = FirmwareUpgrader::class
+class FirmwareUpdaterApp : App() {
+    override val primaryView = FirmwareUpdater::class
 }
 
-class FirmwareUpgrader : View() {
+class FirmwareUpdater : View() {
     companion object {
         const val PREFERRED_PORT = "preferredPort"
         const val LAST_DIR = "lastDir"
@@ -47,7 +51,7 @@ class FirmwareUpgrader : View() {
     private val iconImage = resources.image("icon.png")
 
     // controls
-    private var receiverType: ComboBox<Registered<*>> by singleAssign()
+    private var deviceType: ComboBox<Registered<*>> by singleAssign()
     private var textField by singleAssign<TextField>()
     private var portCombo by singleAssign<ComboBox<String>>()
     private var textArea by singleAssign<TextArea>()
@@ -55,44 +59,53 @@ class FirmwareUpgrader : View() {
     private var startButton by singleAssign<Button>()
 
     // properties
+    private val showModules = SimpleBooleanProperty(true)
+    private val showReceivers = SimpleBooleanProperty(true)
+    private val showSensors = SimpleBooleanProperty(true)
     private val serialPortProperty = SimpleObjectProperty<SerialPort?>(null)
     private var serialPort by serialPortProperty
 
     // background activity
-    private val service = FirmwareUpgradeService()
+    private val service = FirmwareUpdateService()
 
     // UI
     override val root = vbox {
         spacing = 10.0
         paddingAll = 5.0
 
-        // receiver type and com port
+        // device type and com port
         hbox {
             spacing = 10.0
 
             vbox {
                 spacing = 3.0
-                label(messages["receiverType"]) {
-                    style {
-                        underline = true
-                    }
-                }
                 hbox {
                     spacing = 5.0
-                    receiverType = combobox {
-                        items.addAll(ReceiverType.values().asList())
-                        items.addAll(ModuleType.values().asList())
-                        items.addAll(SensorType.values().asList().filter { it.productCode != 0 })
+                    label(messages["deviceType"]) {
+                        style {
+                            underline = true
+                        }
+                    }
+
+                    checkbox("Modules", showModules) { action { updateDeviceList() } }
+                    checkbox("Receivers", showReceivers) { action { updateDeviceList() } }
+                    checkbox("Sensors", showSensors) { action { updateDeviceList() } }
+                }
+
+                hbox {
+                    spacing = 5.0
+                    deviceType = combobox {
+                        items.addAll(deviceList)
                         disableWhen { service.runningProperty() }
-                        buttonCell = ReceiverListCell()
-                        setCellFactory { ReceiverListCell() }
+                        buttonCell = HoTTDeviceListCell()
+                        setCellFactory { HoTTDeviceListCell() }
                         minHeight = 48.0
                         setOnAction { validateFileName() }
                     }
-                    button(messages["detectReceiver"]) {
+                    button(messages["detectDevice"]) {
                         minHeight = 48.0
                         disableWhen { serialPortProperty.isNull.or(service.runningProperty()) }
-                        action { autoDetectReceiver() }
+                        action { autoDetectDevice() }
                     }
                 }
             }
@@ -139,7 +152,7 @@ class FirmwareUpgrader : View() {
                     action { selectFile() }
                 }
                 button(messages["download"]) {
-                    disableWhen { receiverType.valueProperty().isNull.or(service.runningProperty()) }
+                    disableWhen { deviceType.valueProperty().isNull.or(service.runningProperty()) }
                     action { checkOnline() }
                 }
             }
@@ -177,7 +190,7 @@ class FirmwareUpgrader : View() {
 
             startButton = button(messages["start"]) {
                 disableWhen { serialPortProperty.isNull.or(textField.textProperty().isEmpty) }
-                action { if (service.isRunning) doCancel() else doUpgrade() }
+                action { if (service.isRunning) doCancel() else doUpdate() }
             }
 
             anchorpane {
@@ -196,27 +209,33 @@ class FirmwareUpgrader : View() {
         }
     }
 
+    private fun updateDeviceList() {
+        deviceType.items = deviceList.filter {
+            it is ModuleType && showModules.value || it is ReceiverType && showReceivers.value || it is SensorType && showSensors.value
+        }.observable()
+    }
+
     private fun validateFileName() {
         if (textField.text != null) {
             try {
-                // check that the current file matches the selected receiver type
-                val firmware = ReceiverFirmware.load(textField.text)
-                if (firmware.receiverType != receiverType.value) textField.text = null
+                // check that the current file matches the selected device type
+                val firmware = DeviceFirmware.load(textField.text)
+                if (firmware.deviceType != deviceType.value) textField.text = null
             } catch (e: IOException) {
                 textField.text = null
             }
         }
     }
 
-    private fun autoDetectReceiver() {
-        val dialog = Alert(Alert.AlertType.INFORMATION, messages["connectReceiver"], ButtonType.CANCEL).apply {
-            headerText = messages["detectReceiver"]
-            title = messages["receiverType"]
+    private fun autoDetectDevice() {
+        val dialog = Alert(Alert.AlertType.INFORMATION, messages["connectDevice"], ButtonType.CANCEL).apply {
+            headerText = messages["detectDevice"]
+            title = messages["deviceType"]
         }
         val task = runAsync {
-            ReceiverFirmware.detectReceiver(this, serialPort!!)
+            DeviceFirmware.detectDevice(this, serialPort!!)
         }.ui {
-            receiverType.value = it
+            deviceType.value = it
             dialog.close()
         }.fail {
             dialog.close()
@@ -233,8 +252,8 @@ class FirmwareUpgrader : View() {
                 preferences { put(LAST_FILE, file.absolutePath) }
 
                 try {
-                    // read receiver type from firmware file and update combobox
-                    receiverType.value = ReceiverFirmware.load(file).receiverType
+                    // read device type from firmware file and update combobox
+                    deviceType.value = DeviceFirmware.load(file).deviceType
                 } catch (e: IOException) {
                     // ignore invalid firmware file
                 }
@@ -244,7 +263,7 @@ class FirmwareUpgrader : View() {
 
     private fun checkOnline() {
         root.runAsyncWithOverlay {
-            receiverType.value.getFirmware()
+            deviceType.value.getFirmware()
         }.ui { firmware ->
             if (firmware.isNotEmpty()) {
                 val names = firmware.map { it.file.name }.toSet().sorted()
@@ -278,7 +297,7 @@ class FirmwareUpgrader : View() {
         service.cancel()
     }
 
-    private fun doUpgrade() {
+    private fun doUpdate() {
         textArea.clear()
         progressBar.progressProperty().bind(service.progressProperty())
         startButton.text = messages["cancel"]
@@ -289,12 +308,12 @@ class FirmwareUpgrader : View() {
         }
 
         service.setOnCancelled {
-            MessageDialog.show(Alert.AlertType.WARNING, messages["cancelled"], messages["upgradeCancelled"])
+            MessageDialog.show(Alert.AlertType.WARNING, messages["cancelled"], messages["updateCancelled"])
             reset()
         }
 
         service.setOnSucceeded {
-            MessageDialog.show(Alert.AlertType.INFORMATION, messages["success"], messages["upgradeFinished"])
+            MessageDialog.show(Alert.AlertType.INFORMATION, messages["success"], messages["updateFinished"])
             reset()
         }
 
@@ -335,7 +354,7 @@ class FirmwareUpgrader : View() {
     init {
         Util.enableLogging()
 
-        title = messages["title"] + " " + Util.sourceVersion(FirmwareUpgrader::class)
+        title = messages["title"] + " " + Util.sourceVersion(FirmwareUpdater::class)
         setStageIcon(iconImage)
         currentStage?.apply {
             minHeight = 300.0
@@ -392,19 +411,19 @@ class FirmwareUpgrader : View() {
 }
 
 /**
- * A ListCell that show an image of the receiver and it's name
+ * A ListCell that show an image of the device and it's name
  */
-class ReceiverListCell : ListCell<Registered<*>>() {
-    private val images = HashMap<ReceiverType, ImageView>()
+class HoTTDeviceListCell : ListCell<Registered<*>>() {
+    private val images = HashMap<Registered<*>, ImageView>()
 
     init {
-        // load images for all receivers
-        ReceiverType.values().forEach { receiverType ->
-            val stream = ReceiverListCell::class.java.getResourceAsStream("images/${receiverType.orderNo}.jpg")
-                    ?: ReceiverListCell::class.java.getResourceAsStream("images/missing.png")
+        // load images for all devices
+        deviceList.forEach { device ->
+            val stream = HoTTDeviceListCell::class.java.getResourceAsStream("images/${device.orderNo}.jpg")
+                    ?: HoTTDeviceListCell::class.java.getResourceAsStream("images/missing.png")
 
             // scale to 40x50 pixels
-            images[receiverType] = ImageView(Image(stream, 50.0, 40.0, true, true))
+            images[device] = ImageView(Image(stream, 50.0, 40.0, true, true))
         }
     }
 

@@ -1,4 +1,4 @@
-package de.treichels.hott.upgrade
+package de.treichels.hott.update
 
 import com.fazecast.jSerialComm.SerialPort
 import de.treichels.hott.model.enums.ReceiverType
@@ -6,7 +6,7 @@ import tornadofx.*
 import java.io.File
 import java.io.IOException
 
-class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>) : ReceiverFirmware(receiverType, packets) {
+class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>) : DeviceFirmware(receiverType, packets) {
     companion object {
         const val blockSize = 0x406
 
@@ -18,7 +18,7 @@ class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>
                 val header = ByteArray(headerSize).apply { stream.read(this) }
                 val id = header[0].toInt() and 0xFF
                 val receiverType = ReceiverType.forId(id)
-                        ?: throw IOException(String.format(messages["unknownReceiver"], id))
+                        ?: throw IOException(String.format(messages["unknownDevice"], id))
                 val packets = Array(blockCount) {
                     ByteArray(blockSize).apply {
                         stream.read(this)
@@ -31,16 +31,16 @@ class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>
         }
     }
 
-    override fun upgradeReceiver(task: FirmwareUpgradeService.FirmwareUpgradeTask, port: SerialPort) {
+    override fun updateDevice(task: FirmwareUpdateService.FirmwareUpdateTask, port: SerialPort) {
         val response = ByteArray(GyroReceiverFirmware.blockSize)
-        val id = (receiverType as ReceiverType).id
+        val id = (deviceType as ReceiverType).id
 
         // open serial port
         port.setup(if (id >= 0xf0) 115200 else 19200)
         port.use {
-            // wait for receiver
-            task.print(messages["waitForReceiver"])
-            task.print(String.format(messages["waitForReceiverID"], receiverType))
+            // wait for device
+            task.print(messages["waitForDevice"])
+            task.print(String.format(messages["waitForDeviceID"], deviceType))
             while (true) {
                 try {
                     val rc = it.read()
@@ -57,20 +57,30 @@ class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>
             try {
                 // write data
                 val packetCount = packets.size
-                packets.forEachIndexed { index, bytes ->
-                    task.progress(index + 1, packetCount)
-                    task.print(String.format(messages["writePacket"], index))
+                packets.forEachIndexed { index, data ->
+                    var retries = 0
 
-                    if (task.isCancelled) {
-                        task.print(messages["cancelled"])
-                        return@use
+                    while (true) {
+                        try {
+                            task.progress(index + 1, packetCount)
+                            task.print(String.format(messages["writePacket"], index+1, packetCount))
+
+                            if (task.isCancelled) {
+                                task.print(messages["cancelled"])
+                                return@use
+                            }
+
+                            // write block to device
+                            it.writeBytes(data)
+                            it.readBytes(response)
+                            if (!response.contentEquals(data)) throw IOException(messages["transmissionError"])
+                            it.expect(0xaa)
+                            break
+                        } catch (e: IOException) {
+                            // retry on error up to retryCount times
+                            if (retries++ >= retryCount) throw e
+                        }
                     }
-
-                    // write block to receiver
-                    it.writeBytes(bytes)
-                    it.readBytes(response)
-                    if (!response.contentEquals(bytes)) throw IOException(messages["transmissionError"]) // TODO implement re-try
-                    it.expect(0xaa)
                 }
 
                 // end transfer
@@ -78,7 +88,7 @@ class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>
                 it.writeBytes(response)
                 Thread.sleep(1000)
                 task.print(messages["done"])
-            } catch(e:IOException) {
+            } catch (e: IOException) {
                 task.print(messages["transmissionError"])
                 throw e
             }
@@ -91,19 +101,19 @@ class GyroReceiverFirmware(receiverType: ReceiverType, packets: Array<ByteArray>
 
         other as GyroReceiverFirmware
 
-        if (receiverType != other.receiverType) return false
+        if (deviceType != other.deviceType) return false
         if (!packets.contentDeepEquals(other.packets)) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = receiverType.hashCode()
+        var result = deviceType.hashCode()
         result = 31 * result + packets.contentDeepHashCode()
         return result
     }
 
     override fun toString(): String {
-        return "GyroReceiverFirmware($receiverType)"
+        return "GyroReceiverFirmware($deviceType)"
     }
 }

@@ -10,5 +10,5 @@ plugins {
 }
 
 application {
-    mainClassName = "de.treichels.hott.upgrade.FirmwareUpdaterKt"
+    mainClassName = "de.treichels.hott.update.FirmwareUpdaterKt"
 }

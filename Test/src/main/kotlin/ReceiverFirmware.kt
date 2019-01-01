@@ -1,4 +1,4 @@
-import de.treichels.hott.upgrade.ReceiverFirmware
+import de.treichels.hott.update.DeviceFirmware
 import java.io.File
 import java.io.IOException
 import kotlin.system.exitProcess
@@ -9,7 +9,7 @@ fun main(vararg args: String) {
     val fileName3 = "C:/Users/olive/.java/cache/HoTT/firmware/gr12s/gr_rx6_mini_3a57.bin"
     val fileName4 = "C:/Users/olive/.java/cache/HoTT/firmware/gr12sc/33565_33566_MicroRec_V105.bin"
     val fileName5 = "C:/Users/olive/.java/cache/HoTT/firmware/heim3d/S1029_Heli_Software_V202_210918.bin"
-    println(ReceiverFirmware.load(File(fileName5)).dump())
+    println(DeviceFirmware.load(File(fileName5)).dump())
     exitProcess(0)
 
     File("C:/Users/olive/.java/cache/HoTT/firmware")
@@ -20,7 +20,7 @@ fun main(vararg args: String) {
                     print("\t$file: ")
 
                     try {
-                        println(ReceiverFirmware.load(file).dump())
+                        println(DeviceFirmware.load(file).dump())
                     } catch (e: IOException) {
                         println(e.message)
                     }

@@ -1,5 +1,5 @@
 import com.fazecast.jSerialComm.SerialPort
-import de.treichels.hott.upgrade.*
+import de.treichels.hott.update.*
 import java.io.File
 import java.io.IOException
 
@@ -8,7 +8,7 @@ fun main(vararg args: String) {
     val port = SerialPort.getCommPort("COM3")
     val fileName1 = "C:/Users/olive/.java/cache/HoTT/firmware/gr12l/GR-12L_1a92.bin"
     val fileName2 = "C:/Users/olive/.java/cache/HoTT/firmware/gr16/FS_GR-16_7a06.bin"
-    val firmware = ReceiverFirmware.load(File(fileName1))
+    val firmware = DeviceFirmware.load(File(fileName1))
     var rc: Int
 
     port.setComPortParameters(19200, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY)
@@ -42,7 +42,7 @@ fun main(vararg args: String) {
 
     println("ProductCode=$productCode, AppVersion=$appVersion, BootVersion=$bootVersion")
 
-    if (productCode != firmware.receiverType.productCode) throw IOException("invalid receiver type")
+    if (productCode != firmware.deviceType.productCode) throw IOException("invalid receiver type")
 
     firmware.packets.forEachIndexed { index, data ->
         val buffer = ByteArray(data.size)

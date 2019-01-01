@@ -19,11 +19,13 @@ import java.util.*
  */
 enum class SensorType(override val productCode: Int = 0, override val orderNo: String = "", override val category: String = SensorType.category) : Registered<SensorType> {
     Receiver,
-    GeneralModule(13015020, "33610"),
+    GeneralModule,
     ElectricAirModule(13015030, "33620"),
     Vario(13015000, "33601"),
     GPS(13015070, "S8437"),
     ESC,
+    GeneralEngineModule(13015020, "33610"),
+    GeneralAirModule(13015020, "33611"),
     GPS_OLD(13015040, "33600"),
     GRD84SJ(13015910),
     VM(13018600, "S8389"),
@@ -38,7 +40,7 @@ enum class SensorType(override val productCode: Int = 0, override val orderNo: S
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name] + if (orderNo.isNotEmpty()) " ($orderNo)" else ""
 
     companion object {
-        fun forMap(map: Int): List<SensorType> = SensorType.values().filter { s -> s.map and map != 0 }.toList()
+        fun forMap(map: Int): List<SensorType> = SensorType.values().filter { s -> s.ordinal < 6 && s.map and map != 0 }.toList()
         fun getMap(sensors: List<SensorType>): Int = sensors.stream().mapToInt { it.map }.sum()
         fun forProductCode(productCode: Int): SensorType? = SensorType.values().firstOrNull { s -> s.productCode == productCode }
         fun forOrderNo(orderNo: String): SensorType? = SensorType.values().firstOrNull { s -> s.orderNo == orderNo }
