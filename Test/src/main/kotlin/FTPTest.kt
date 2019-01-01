@@ -15,4 +15,5 @@ fun main(vararg args: String) {
     TransmitterType.values().forEach { it.getFirmware().forEach(Firmware<*>::print) }
     ModuleType.values().forEach { it.getFirmware().forEach(Firmware<*>::print) }
     SensorType.values().forEach { it.getFirmware().forEach(Firmware<*>::print) }
+    ESCType.values().forEach { it.getFirmware().forEach(Firmware<*>::print) }
 }

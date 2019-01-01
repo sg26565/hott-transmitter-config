@@ -3,10 +3,7 @@ package de.treichels.hott.update
 import com.fazecast.jSerialComm.SerialPort
 import de.treichels.hott.firmware.Firmware
 import de.treichels.hott.firmware.getFirmware
-import de.treichels.hott.model.enums.ModuleType
-import de.treichels.hott.model.enums.ReceiverType
-import de.treichels.hott.model.enums.Registered
-import de.treichels.hott.model.enums.SensorType
+import de.treichels.hott.model.enums.*
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.ui.MessageDialog
 import de.treichels.hott.util.Util
@@ -26,7 +23,7 @@ import java.io.IOException
 import java.util.*
 
 @Suppress("UNCHECKED_CAST")
-val deviceList = (listOf(*ReceiverType.values(), *ModuleType.values(), *SensorType.values()) as List<Registered<*>>).filter { it.orderNo.isNotEmpty() }
+val deviceList = (listOf(*ReceiverType.values(), *ModuleType.values(), *SensorType.values(), *ESCType.values()) as List<Registered<*>>).filter { it.orderNo.isNotEmpty() }
 
 fun main(vararg args: String) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
@@ -62,6 +59,7 @@ class FirmwareUpdater : View() {
     private val showModules = SimpleBooleanProperty(true)
     private val showReceivers = SimpleBooleanProperty(true)
     private val showSensors = SimpleBooleanProperty(true)
+    private val showESCs = SimpleBooleanProperty(true)
     private val serialPortProperty = SimpleObjectProperty<SerialPort?>(null)
     private var serialPort by serialPortProperty
 
@@ -87,9 +85,10 @@ class FirmwareUpdater : View() {
                         }
                     }
 
-                    checkbox("Modules", showModules) { action { updateDeviceList() } }
-                    checkbox("Receivers", showReceivers) { action { updateDeviceList() } }
-                    checkbox("Sensors", showSensors) { action { updateDeviceList() } }
+                    checkbox(messages["Modules"], showModules) { action { updateDeviceList() } }
+                    checkbox(messages["Receivers"], showReceivers) { action { updateDeviceList() } }
+                    checkbox(messages["Sensors"], showSensors) { action { updateDeviceList() } }
+                    checkbox(messages["ESCs"], showESCs) { action { updateDeviceList() } }
                 }
 
                 hbox {
@@ -211,7 +210,7 @@ class FirmwareUpdater : View() {
 
     private fun updateDeviceList() {
         deviceType.items = deviceList.filter {
-            it is ModuleType && showModules.value || it is ReceiverType && showReceivers.value || it is SensorType && showSensors.value
+            it is ModuleType && showModules.value || it is ReceiverType && showReceivers.value || it is SensorType && showSensors.value || it is ESCType && showESCs.value
         }.observable()
     }
 
@@ -235,6 +234,13 @@ class FirmwareUpdater : View() {
         val task = runAsync {
             DeviceFirmware.detectDevice(this, serialPort!!)
         }.ui {
+            // enable category of detected device
+            when (it) {
+                is ModuleType -> showModules.value = true
+                is ReceiverType -> showReceivers.value = true
+                is SensorType -> showSensors.value = true
+                is ESCType -> showESCs.value = true
+            }
             deviceType.value = it
             dialog.close()
         }.fail {
@@ -423,7 +429,7 @@ class HoTTDeviceListCell : ListCell<Registered<*>>() {
                     ?: HoTTDeviceListCell::class.java.getResourceAsStream("images/missing.png")
 
             // scale to 40x50 pixels
-            images[device] = ImageView(Image(stream, 50.0, 40.0, true, true))
+            images[device] = ImageView(Image(stream, 150.0, 40.0, true, true))
         }
     }
 
@@ -436,7 +442,7 @@ class HoTTDeviceListCell : ListCell<Registered<*>>() {
         } else {
             graphic = images[item]
             text = item.toString()
-
+            minHeight = 40.0
         }
     }
 }

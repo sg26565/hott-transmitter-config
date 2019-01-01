@@ -24,7 +24,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
         private const val FILE_DOWN = "file_down.php"
 
         /** list available files for device */
-        fun <T> list(device: T): List<Firmware<*>> where T : Registered<*> = list(device, device.category, device.productCode)
+        fun <T> list(device: T): List<Firmware<T>> where T : Registered<*> = list(device, device.category, device.productCode)
 
         /** list available files for device */
         @Suppress("unused")
@@ -137,7 +137,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
 fun ReceiverType.getFirmware(): List<Firmware<ReceiverType>> {
     var result = emptyList<Firmware<ReceiverType>>()
 
-    result += Firmware.list(this, productCode, 100000000)
+    result += Firmware.list(this)
     result += Firmware.list(this, productCode, 100000)
     result += Firmware.list(this, productCode, 10000)
     if (id > 0) result += Firmware.list(this, "Server Updates", id.toString(16).toUpperCase())
@@ -148,7 +148,7 @@ fun ReceiverType.getFirmware(): List<Firmware<ReceiverType>> {
 fun <T> T.getFirmware(): List<Firmware<T>> where T : Registered<*> {
     var result = emptyList<Firmware<T>>()
 
-    result += Firmware.list(this, productCode, 100000000)
+    result += Firmware.list(this)
     result += Firmware.list(this, productCode, 100000)
     result += Firmware.list(this, productCode, 10000)
 
