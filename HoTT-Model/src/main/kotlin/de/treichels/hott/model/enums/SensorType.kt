@@ -28,10 +28,10 @@ enum class SensorType(override val productCode: Int = 0, override val orderNo: S
     GeneralAirModule(13015020, "33611"),
     GPS_OLD(13015040, "33600"),
     GRD84SJ(13015910),
-    VM(13018600, "S8389"),
-    VM_SBEC(13019600, "S8446"),
-    VM_SBEC1(13019601, "S8446"),
-    VM_SBEC_8V(13019602, "S8446.1"),
+    VM_60V(13018600, "S8389"),
+    VM_22V_SBEC(13019600, "S8446"),
+    VM_22V_SBEC1(13019601, "S8446"),
+    VM_22V_SBEC2(13019602, "S8446"),
     PDB(13020000, "S8474"),
     None;
 
