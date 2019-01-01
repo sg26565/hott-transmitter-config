@@ -1,10 +1,8 @@
 package de.treichels.hott.update
 
 import com.fazecast.jSerialComm.SerialPort
-import de.treichels.hott.model.enums.ModuleType
 import de.treichels.hott.model.enums.ReceiverType
 import de.treichels.hott.model.enums.Registered
-import de.treichels.hott.model.enums.SensorType
 import de.treichels.hott.util.readInt
 import de.treichels.hott.util.readUnsignedInt
 import de.treichels.hott.util.readUnsignedShort
@@ -17,6 +15,8 @@ import java.util.concurrent.CountDownLatch
 
 class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, packets: Array<ByteArray>) : DeviceFirmware(deviceType, packets) {
     companion object {
+        val devicesNeedButtonBoot = listOf<Registered<*>>(ReceiverType.gr12, ReceiverType.gr12s, ReceiverType.gr16, ReceiverType.gr24, ReceiverType.gr32)
+
         fun load(file: File): StandardDeviceFirmware {
             file.inputStream().use { stream ->
                 // read file header
@@ -85,8 +85,14 @@ class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, packet
                 // try if device is already in update mode
                 getInfo(it)
             } catch (e: IOException) {
-                // wait for device boot
-                task.print(messages["waitForDevice"])
+                if (deviceType in devicesNeedButtonBoot) {
+                    // hold down bind button during boot
+                    task.print(messages["waitForDeviceButton"])
+                } else {
+                    // normal boot
+                    task.print(messages["waitForDevice"])
+                }
+
                 val rc = it.waitForBoot(task, 0x05, 0x0a)
                 if (task.isCancelled) {
                     task.print(messages["cancelled"])
@@ -129,7 +135,7 @@ class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, packet
                         while (true) {
                             try {
                                 task.progress(index + 1, packetCount)
-                                task.print(String.format(messages["writePacket"], index+1, packetCount))
+                                task.print(String.format(messages["writePacket"], index + 1, packetCount))
 
                                 if (task.isCancelled) {
                                     task.print(messages["cancelled"])
