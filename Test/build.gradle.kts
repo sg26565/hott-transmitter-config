@@ -10,4 +10,5 @@ dependencies {
     implementation(project(":FirmwareUpdater"))
     implementation(Libs.jserialcomm)
     implementation(Libs.commons_math3)
+    implementation(Libs.freemarker)
 }

@@ -64,6 +64,7 @@ object HTMLReport {
         val template = when (model.transmitterType) {
             TransmitterType.mc16, TransmitterType.mc20, TransmitterType.mc26, TransmitterType.mc28, TransmitterType.mc32, TransmitterType.mx20 -> "mc-32.xhtml"
             TransmitterType.mx12, TransmitterType.mx16 -> "mx-16.xhtml"
+            TransmitterType.mz24Pro -> "mz-24.xhtml"
             else -> return "<html><head>Not Implemented</head><body><h1>${model.transmitterType} is not yet supported!</h1></body></html>"
         }
 
