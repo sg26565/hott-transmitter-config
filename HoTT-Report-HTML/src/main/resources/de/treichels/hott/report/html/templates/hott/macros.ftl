@@ -4,7 +4,7 @@
 	<#if sw.assignment.name() != "Unassigned">
 		<#switch sw.type.name()>
 			<#case "ToggleSwitch">
-				<#if sw.direction==1>
+				<#if sw.reverse>
 					<span style="text-decoration: overline;">${sw.assignment}</span>
 				<#else>
 					${sw.assignment}
@@ -12,11 +12,7 @@
 				<#break>
 							
 			<#case "InputControl">
-				${sw.assignment}
-				<#switch sw.direction>
-					<#case 0>&rarr;<#break>			
-					<#case 1>&larr;<#break>
-				</#switch>
+				${sw.assignment}<#if sw.reverse>&larr;<#else>&rarr;</#if>
 				<#break>
 			
 			<#default>

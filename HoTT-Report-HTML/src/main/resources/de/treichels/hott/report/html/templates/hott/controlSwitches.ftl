@@ -27,7 +27,7 @@
 				<td align="center">G${sw_index+1}</td>
 				<td align="center"><#if sw.assignment.name() != "Unassigned">${sw.assignment}<#else>---</#if></td>
 				<td align="center">${sw.position}%</td>
-				<td align="center"><#if sw.direction==0>&rarr;<#else>&larr;</#if></td>
+				<td align="center"><#if sw.reverse>&larr;<#else>&rarr;</#if></td>
 				<td align="center"><@switch sw.combineSwitch/></td>
 			</tr>
 		</#list>

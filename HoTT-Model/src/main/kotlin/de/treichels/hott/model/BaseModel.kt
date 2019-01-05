@@ -377,8 +377,7 @@ data class Control(
 class ControlSwitch(
         @get:XmlIDREF
         var combineSwitch: Switch = Switch(),
-        var isEnabled: Boolean = false,
-        var position: Int = 0
+        var isEnabled: Boolean = false
 ) : Switch() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -822,7 +821,12 @@ data class StickTrim(
 @XmlAccessorType(XmlAccessType.PROPERTY)
 open class Switch(
         var assignment: SwitchAssignment = SwitchAssignment.Unassigned,
-        var direction: Int = 0,
+        var reverse: Boolean = false,
+        var position: Int =0,
+        var switchMode: SwitchMode = SwitchMode.unknown,
+        var high: Boolean = false,
+        var mid: Boolean = false,
+        var low: Boolean = false,
         var function: SwitchFunction = SwitchFunction.Unassigned,
         var number: Int = 0,
         var qualifier: List<Any> = emptyList()
@@ -878,28 +882,42 @@ open class Switch(
         }
 
     val type: SwitchType = assignment.type
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is Switch) return false
+        if (javaClass != other?.javaClass) return false
+
+        other as Switch
 
         if (assignment != other.assignment) return false
-        if (direction != other.direction) return false
+        if (reverse != other.reverse) return false
+        if (position != other.position) return false
+        if (switchMode != other.switchMode) return false
+        if (high != other.high) return false
+        if (mid != other.mid) return false
+        if (low != other.low) return false
         if (function != other.function) return false
         if (number != other.number) return false
         if (qualifier != other.qualifier) return false
+        if (type != other.type) return false
 
         return true
     }
 
     override fun hashCode(): Int {
         var result = assignment.hashCode()
-        result = 31 * result + direction
-        result = 31 * result + (function.hashCode())
+        result = 31 * result + reverse.hashCode()
+        result = 31 * result + position
+        result = 31 * result + switchMode.hashCode()
+        result = 31 * result + high.hashCode()
+        result = 31 * result + mid.hashCode()
+        result = 31 * result + low.hashCode()
+        result = 31 * result + function.hashCode()
         result = 31 * result + number
         result = 31 * result + qualifier.hashCode()
+        result = 31 * result + type.hashCode()
         return result
     }
+
 }
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
