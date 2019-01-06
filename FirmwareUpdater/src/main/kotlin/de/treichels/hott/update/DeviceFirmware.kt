@@ -17,16 +17,20 @@ abstract class DeviceFirmware(val deviceType: Registered<*>, val packets: Array<
 
         const val retryCount = 5
         private val knownIds = ReceiverType.values().map { it.id }.filterNot { it == 0 } + 0x05 + 0x0a
-        internal fun List<Registered<*>>.forProductCode(productCode: Int) = find { it.productCode == productCode}
+        internal fun List<Registered<*>>.forProductCode(productCode: Int) = find { it.productCode == productCode }
 
         fun load(fileName: String) = DeviceFirmware.load(File(fileName))
         fun load(file: File): DeviceFirmware = try {
             StandardDeviceFirmware.load(file)
         } catch (e1: IOException) {
             try {
-                GyroReceiverFirmware.load(file)
+                HexDeviceFirmware.load(file)
             } catch (e2: IOException) {
-                throw IOException("${e1.message}/${e2.message}", e2)
+                try {
+                    GyroReceiverFirmware.load(file)
+                } catch (e3: IOException) {
+                    throw IOException("${e1.message}/${e2.message}/${e3.message}", e2)
+                }
             }
         }
 
