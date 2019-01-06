@@ -161,7 +161,7 @@ class FirmwareUpdater : View() {
                 promptText = messages["selectFile"]
                 prefWidth = 400.0
                 disableWhen { service.runningProperty().or(textProperty().isEqualTo(messages["selectFile"])) }
-                textProperty().addListener { _ -> fileNameChangeListener() }
+                textProperty().addListener { _ -> fileNameChanged() }
             }
         }
 
@@ -251,7 +251,7 @@ class FirmwareUpdater : View() {
         if (task.isRunning) task.cancel()
     }
 
-    private fun fileNameChangeListener() {
+    private fun fileNameChanged() {
         if (textField.text != null) {
             val file = File(textField.text)
             if (file.exists()) {
