@@ -99,7 +99,7 @@ class FirmwareUpdater : View() {
                         buttonCell = HoTTDeviceListCell()
                         setCellFactory { HoTTDeviceListCell() }
                         minHeight = 48.0
-                        setOnAction { validateFileName() }
+                        setOnAction { deviceTypeChanged() }
                     }
                     button(messages["detectDevice"]) {
                         minHeight = 48.0
@@ -214,7 +214,7 @@ class FirmwareUpdater : View() {
         }.observable()
     }
 
-    private fun validateFileName() {
+    private fun deviceTypeChanged() {
         if (textField.text != null) {
             try {
                 // check that the current file matches the selected device type
