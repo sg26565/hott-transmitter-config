@@ -4,8 +4,8 @@ import com.fazecast.jSerialComm.SerialPort
 import de.treichels.hott.model.enums.ReceiverType
 import de.treichels.hott.model.enums.Registered
 import de.treichels.hott.util.readInt
-import de.treichels.hott.util.readUnsignedInt
-import de.treichels.hott.util.readUnsignedShort
+import de.treichels.hott.util.readUInt
+import de.treichels.hott.util.readUShort
 import javafx.scene.control.ButtonBar
 import javafx.scene.control.ButtonType
 import tornadofx.*
@@ -20,11 +20,11 @@ class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, packet
         fun load(file: File): StandardDeviceFirmware {
             file.inputStream().use { stream ->
                 // read file header
-                val flag1 = stream.readUnsignedInt()
-                if (flag1 != 0x23456789L && flag1 != 0x12345678L) throw IOException(messages["invalidFileHeader"])
+                val flag1 = stream.readUInt()
+                if (flag1 != 0x23456789u && flag1 != 0x12345678u) throw IOException(messages["invalidFileHeader"])
 
-                val flag2 = stream.readUnsignedInt()
-                if (0xffffffffL - flag2 != flag1) throw IOException(messages["invalidFileHeader"])
+                val flag2 = stream.readUInt()
+                if (0xffffffffu - flag2 != flag1) throw IOException(messages["invalidFileHeader"])
 
                 //val deviceId = stream.readInt()
                 //val processId = stream.readInt()
@@ -43,14 +43,14 @@ class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, packet
                     val flag = stream.read()
                     if (flag != 0) throw IOException(messages["invalidBlock"])
 
-                    val seq1 = stream.readUnsignedShort()
-                    val seq2 = stream.readUnsignedShort()
-                    if (seq1 != 0xffff - seq2) throw IOException(messages["invalidBlock"])
+                    val seq1 = stream.readUShort()
+                    val seq2 = stream.readUShort()
+                    if (seq1.toUInt() != 0xffffu - seq2) throw IOException(messages["invalidBlock"])
 
-                    val size = stream.readUnsignedShort()
+                    val size = stream.readUShort()
                     stream.skip(9)
 
-                    val data = ByteArray(size)
+                    val data = ByteArray(size.toInt())
                     stream.read(data)
 
                     data

@@ -10,6 +10,7 @@ import java.io.IOException
 import java.util.*
 
 abstract class DeviceFirmware(val deviceType: Registered<*>, val packets: Array<ByteArray>) {
+    @ExperimentalUnsignedTypes
     companion object {
         @JvmStatic
         var messages = ResourceBundle.getBundle(DeviceFirmware::class.java.name)!!
