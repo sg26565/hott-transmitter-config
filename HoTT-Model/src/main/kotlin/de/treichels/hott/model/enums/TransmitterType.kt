@@ -26,7 +26,7 @@ enum class TransmitterType(override val productCode: Int = 0, override val order
     mz24(16005200, "S1006"), mz24Pro(16007200, "S1006.PRO"), mz32(16008200, "S1024"), mz32beta(16008201, "S1024"),
     x4s(16005900, "33400"), x8n(16006200, "S1018"), x8e(16006500, "S1008"), Unknown;
 
-    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
+    override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name] + if (orderNo.isNotEmpty()) " ($orderNo)" else ""
 
     companion object {
         fun forProductCode(productCode: Int): TransmitterType = TransmitterType.values().firstOrNull { productCode == it.productCode }
