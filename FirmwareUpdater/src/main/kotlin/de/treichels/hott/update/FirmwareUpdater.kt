@@ -219,7 +219,7 @@ class FirmwareUpdater : View() {
             try {
                 // check that the current file matches the selected device type
                 val firmware = DeviceFirmware.load(textField.text)
-                if (firmware.deviceType != deviceType.value) textField.text = null
+                if (firmware.deviceType.productCode != deviceType.value.productCode) textField.text = null
             } catch (e: IOException) {
                 textField.text = null
             }
@@ -259,7 +259,10 @@ class FirmwareUpdater : View() {
 
                 try {
                     // read device type from firmware file and update combobox
-                    deviceType.value = DeviceFirmware.load(file).deviceType
+                    DeviceFirmware.load(file).deviceType.apply {
+                        // some device types share the same product code - update only if product code is different
+                        if (deviceType.value == null || productCode != deviceType.value.productCode) deviceType.value = this
+                    }
                 } catch (e: IOException) {
                     // ignore invalid firmware file
                 }
