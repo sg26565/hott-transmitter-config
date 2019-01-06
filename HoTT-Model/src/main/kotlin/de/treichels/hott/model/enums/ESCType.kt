@@ -25,6 +25,8 @@ enum class ESCType(override val productCode: Int, override val orderNo: String =
     genius_120(24, "S3051"),
     genius_160(24, "S3078"),
     genius_180(24, "S3085"),
+    gm_genius_90(5, "97171"),
+    gm_genius_120(5, "97170"),
     programmer_box(13017000, "S8272"),
     wlan_module(13020400, "S8505");
 
