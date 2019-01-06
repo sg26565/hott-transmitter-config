@@ -217,7 +217,7 @@ class FirmwareUpdater : View() {
 
     private fun deviceTypeChanged() {
         preferences {
-            put(LAST_DEVICE, deviceType.value.name)
+            if (deviceType.value != null) put(LAST_DEVICE, deviceType.value.name)
         }
 
         if (textField.text != null) {
@@ -415,7 +415,7 @@ class FirmwareUpdater : View() {
                 }
 
                 get(LAST_DEVICE, null)?.also { name ->
-                    deviceType.value= deviceList.find { it.name == name }
+                    deviceType.value = deviceList.find { it.name == name }
                 }
 
                 get(LAST_FILE, null)?.apply {
