@@ -117,7 +117,7 @@ class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, val de
                 runLater {
                     if (version < appVersion)
                         warning(messages["downgradeWarning"], String.format(messages["downgrageText"], version(appVersion), version(version)), ButtonType(messages["doDowngrade"], ButtonBar.ButtonData.APPLY), ButtonType.CANCEL) {
-                            doUpdate = (result == ButtonType.YES)
+                            doUpdate = (result == ButtonType.APPLY)
                         }
                     else
                         confirm(messages["currentVersion"], String.format(messages["versionInfo"], deviceType, version(appVersion), version(bootVersion), version(version))) {
