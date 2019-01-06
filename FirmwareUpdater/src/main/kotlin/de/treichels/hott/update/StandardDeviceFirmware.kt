@@ -13,7 +13,9 @@ import java.io.File
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
 
-class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, packets: Array<ByteArray>) : DeviceFirmware(deviceType, packets) {
+@ExperimentalUnsignedTypes
+class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, val deviceId: Int, val processId: Int, packets: Array<ByteArray>) : DeviceFirmware(deviceType, packets) {
+    @ExperimentalUnsignedTypes
     companion object {
         val devicesNeedButtonBoot = listOf<Registered<*>>(ReceiverType.gr12, ReceiverType.gr12s, ReceiverType.gr16, ReceiverType.gr24, ReceiverType.gr32)
 
@@ -26,9 +28,8 @@ class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, packet
                 val flag2 = stream.readUInt()
                 if (0xffffffffu - flag2 != flag1) throw IOException(messages["invalidFileHeader"])
 
-                //val deviceId = stream.readInt()
-                //val processId = stream.readInt()
-                stream.skip(8)
+                val deviceId = stream.readInt() and 0x00ff
+                val processId = if (deviceId == 0x1008) stream.readInt() and 0xff else (stream.readInt() shr 4) and 0x0f
 
                 val productCode = stream.readInt()
                 val deviceType: Registered<*> = deviceList.forProductCode(productCode)
@@ -56,7 +57,7 @@ class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, packet
                     data
                 }
 
-                return StandardDeviceFirmware(deviceType, version, packets)
+                return StandardDeviceFirmware(deviceType, version, deviceId, processId, packets)
             }
         }
 
@@ -190,7 +191,7 @@ class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, packet
     }
 
     override fun toString(): String {
-        return "StandardDeviceFirmware($deviceType, v${version / 1000.0})"
+        return "StandardDeviceFirmware($deviceType, v${version / 1000.0}, productCode=${deviceType.productCode}, deviceID=$deviceId, processId=$processId)"
     }
 }
 
