@@ -39,6 +39,7 @@ class FirmwareUpdater : View() {
         const val PREFERRED_PORT = "preferredPort"
         const val LAST_DIR = "lastDir"
         const val LAST_FILE = "lastFile"
+        const val LAST_DEVICE = "lastDevice"
 
         private fun isFirmware(file: File) = file.exists() && file.isFile && file.canRead() && file.name.endsWith(".bin")
         private fun getFile(ev: DragEvent) = ev.dragboard.files.firstOrNull(::isFirmware)
@@ -215,6 +216,10 @@ class FirmwareUpdater : View() {
     }
 
     private fun deviceTypeChanged() {
+        preferences {
+            put(LAST_DEVICE, deviceType.value.name)
+        }
+
         if (textField.text != null) {
             try {
                 // check that the current file matches the selected device type
@@ -407,6 +412,10 @@ class FirmwareUpdater : View() {
                 val prefPort: String? = get(PREFERRED_PORT, null)
                 if (prefPort != null && portCombo.items.contains(prefPort)) {
                     portCombo.value = prefPort
+                }
+
+                get(LAST_DEVICE, null)?.also { name ->
+                    deviceType.value= deviceList.find { it.name == name }
                 }
 
                 get(LAST_FILE, null)?.apply {
