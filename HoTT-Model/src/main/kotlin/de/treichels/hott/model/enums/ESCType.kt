@@ -33,8 +33,8 @@ enum class ESCType(override val productCode: Int, override val orderNo: String =
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name] + " ($orderNo)"
 
     companion object {
-        fun forProductCode(productCode: Int): ModuleType? = ModuleType.values().firstOrNull { s -> s.productCode == productCode }
-        fun forOrderNo(orderNo: String): ModuleType? = ModuleType.values().firstOrNull { s -> s.orderNo == orderNo }
+        fun forProductCode(productCode: Int) = ESCType.values().firstOrNull { s -> s.productCode == productCode }
+        fun forOrderNo(orderNo: String) = ESCType.values().firstOrNull { s -> s.orderNo == orderNo }
 
         val category = "Speed_Controller"
     }
