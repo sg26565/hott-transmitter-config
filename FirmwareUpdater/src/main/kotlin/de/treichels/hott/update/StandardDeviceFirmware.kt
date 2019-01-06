@@ -158,6 +158,10 @@ class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, val de
                         }
                     }
 
+                    // end transfer
+                    it.write(8)
+                    it.expect(8)
+
                     task.print(messages["done"])
                 } else {
                     task.print(messages["cancelled"])
