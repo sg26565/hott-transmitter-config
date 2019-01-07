@@ -432,7 +432,8 @@ class FirmwareUpdater : View() {
  * A ListCell that show an image of the device and it's name
  */
 class HoTTDeviceListCell : ListCell<Registered<*>>() {
-    private val images = HashMap<Registered<*>, ImageView>()
+    companion object {
+        private val images = HashMap<Registered<*>, Image>()
 
     init {
         // load images for all devices
@@ -441,7 +442,8 @@ class HoTTDeviceListCell : ListCell<Registered<*>>() {
                     ?: HoTTDeviceListCell::class.java.getResourceAsStream("images/missing.png")
 
             // scale to 40x50 pixels
-            images[device] = ImageView(Image(stream, 150.0, 40.0, true, true))
+                images[device] = Image(stream, 150.0, 40.0, true, true)
+            }
         }
     }
 
@@ -452,7 +454,7 @@ class HoTTDeviceListCell : ListCell<Registered<*>>() {
             graphic = null
             text = null
         } else {
-            graphic = images[item]
+            graphic = ImageView(images[item])
             text = item.toString()
             minHeight = 40.0
         }
