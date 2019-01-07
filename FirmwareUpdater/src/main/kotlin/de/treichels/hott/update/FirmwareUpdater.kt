@@ -216,8 +216,9 @@ class FirmwareUpdater : View() {
     }
 
     private fun deviceTypeChanged() {
+        if (deviceType.value != null) {
         preferences {
-            if (deviceType.value != null) put(LAST_DEVICE, deviceType.value.name)
+                put(LAST_DEVICE, deviceType.value.name)
         }
 
         if (textField.text != null) {
@@ -229,6 +230,7 @@ class FirmwareUpdater : View() {
                 textField.text = null
             }
         }
+    }
     }
 
     private fun autoDetectDevice() {
