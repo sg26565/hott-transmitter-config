@@ -6,7 +6,6 @@ import org.junit.Assert.*
 import java.io.ByteArrayOutputStream
 import java.lang.IllegalArgumentException
 
-@ExperimentalUnsignedTypes
 class StreamSupportKtTest {
     val data = ByteArray(256) {
         it.toByte()

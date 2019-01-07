@@ -5,7 +5,6 @@ import de.treichels.hott.util.Util
 import de.treichels.hott.util.readUShort
 import java.io.File
 
-@ExperimentalUnsignedTypes
 fun main(vararg args: String) {
     val rootDir = File("C:/Users/olive/.java/cache/HoTT/firmware")
 

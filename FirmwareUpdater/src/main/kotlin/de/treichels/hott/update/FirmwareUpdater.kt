@@ -217,20 +217,20 @@ class FirmwareUpdater : View() {
 
     private fun deviceTypeChanged() {
         if (deviceType.value != null) {
-        preferences {
+            preferences {
                 put(LAST_DEVICE, deviceType.value.name)
-        }
+            }
 
-        if (textField.text != null) {
-            try {
-                // check that the current file matches the selected device type
-                val firmware = DeviceFirmware.load(textField.text)
-                if (firmware.deviceType.productCode != deviceType.value.productCode) textField.text = null
-            } catch (e: IOException) {
-                textField.text = null
+            if (textField.text != null) {
+                try {
+                    // check that the current file matches the selected device type
+                    val firmware = DeviceFirmware.load(textField.text)
+                    if (firmware.deviceType.productCode != deviceType.value.productCode) textField.text = null
+                } catch (e: IOException) {
+                    textField.text = null
+                }
             }
         }
-    }
     }
 
     private fun autoDetectDevice() {
@@ -437,13 +437,13 @@ class HoTTDeviceListCell : ListCell<Registered<*>>() {
     companion object {
         private val images = HashMap<Registered<*>, Image>()
 
-    init {
-        // load images for all devices
-        deviceList.forEach { device ->
-            val stream = HoTTDeviceListCell::class.java.getResourceAsStream("images/${device.orderNo}.jpg")
-                    ?: HoTTDeviceListCell::class.java.getResourceAsStream("images/missing.png")
+        init {
+            // load images for all devices
+            deviceList.forEach { device ->
+                val stream = HoTTDeviceListCell::class.java.getResourceAsStream("images/${device.orderNo}.jpg")
+                        ?: HoTTDeviceListCell::class.java.getResourceAsStream("images/missing.png")
 
-            // scale to 40x50 pixels
+                // scale to 40x50 pixels
                 images[device] = Image(stream, 150.0, 40.0, true, true)
             }
         }

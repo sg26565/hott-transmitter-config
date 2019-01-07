@@ -10,8 +10,7 @@ import java.io.File
 import java.io.IOException
 
 class HexDeviceFirmware(deviceType: Registered<*>, val version: Int, packets: Array<ByteArray>) : DeviceFirmware(deviceType, packets) {
-    @ExperimentalUnsignedTypes
-    companion object {
+        companion object {
         fun load(file: File): HexDeviceFirmware {
             val hex = try {
                 // first try encodes hex file

@@ -13,10 +13,8 @@ import java.io.File
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
 
-@ExperimentalUnsignedTypes
 class StandardDeviceFirmware(deviceType: Registered<*>, val version: Int, val deviceId: Int, val processId: Int, packets: Array<ByteArray>) : DeviceFirmware(deviceType, packets) {
-    @ExperimentalUnsignedTypes
-    companion object {
+        companion object {
         val devicesNeedButtonBoot = listOf<Registered<*>>(ReceiverType.gr12, ReceiverType.gr12s, ReceiverType.gr16, ReceiverType.gr24, ReceiverType.gr32)
 
         fun load(file: File): StandardDeviceFirmware {

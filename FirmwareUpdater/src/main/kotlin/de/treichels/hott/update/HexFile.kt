@@ -19,7 +19,6 @@ private class Decoder {
 fun ByteArray.decode() = Decoder().let { d -> map { d.decode(it) }.toByteArray() }
 fun File.decode(target: File) = target.writeBytes(readBytes().decode())
 
-@ExperimentalUnsignedTypes
 class Hex(val size: Int, val address: Int, val recordType: Int, val data: ByteArray) {
     companion object {
         internal fun parseLine(line: String): Hex {
@@ -54,7 +53,6 @@ class Hex(val size: Int, val address: Int, val recordType: Int, val data: ByteAr
     }
 }
 
-@ExperimentalUnsignedTypes
 class HexFile(private val lines: List<Hex>) : List<Hex> by lines {
     companion object {
         fun parse(file: File, decode: Boolean = true) = if (decode) parse(String(file.readBytes().decode())) else parse(file.readLines())
