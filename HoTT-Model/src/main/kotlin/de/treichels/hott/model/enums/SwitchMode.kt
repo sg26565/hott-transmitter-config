@@ -4,7 +4,7 @@ import de.treichels.hott.util.get
 import java.util.*
 
 enum class SwitchMode {
-    single, dual, unknown;
+    single, dual, Unknown;
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 }

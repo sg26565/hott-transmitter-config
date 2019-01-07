@@ -622,7 +622,7 @@ class LinearMixer : CurveMixer(type = MixerType.Linear) {
 @XmlAccessorType(XmlAccessType.PROPERTY)
 class LogicalSwitch(
         var isEnabled: Boolean = false,
-        var mode: LogicalSwitchMode = LogicalSwitchMode.Unknwon,
+        var mode: LogicalSwitchMode = LogicalSwitchMode.Unknown,
         @get:XmlElementWrapper(name = "switches")
         @get:XmlIDREF
         var switch: List<Switch> = emptyList()
@@ -671,7 +671,7 @@ data class Multichannel(
         var isEnabled: Boolean,
         @get:XmlIDREF
         var inputChannel: Channel = Channel(),
-        var mode: MultichannelMode = MultichannelMode.Unknwon,
+        var mode: MultichannelMode = MultichannelMode.Unknown,
         @get:XmlAttribute
         var number: Int
 ) : AbstractBase()
@@ -823,7 +823,7 @@ open class Switch(
         var assignment: SwitchAssignment = SwitchAssignment.Unassigned,
         var reverse: Boolean = false,
         var position: Int =0,
-        var switchMode: SwitchMode = SwitchMode.unknown,
+        var switchMode: SwitchMode = SwitchMode.Unknown,
         var high: Boolean = false,
         var mid: Boolean = false,
         var low: Boolean = false,
