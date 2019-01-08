@@ -30,7 +30,7 @@ enum class SensorType(override val productCode: Int = 0, override val orderNo: S
     VM_60V(13018600, "S8389"),
     VM_22V_SBEC_GER(13019600, "S8446"),
     VM_22V_SBEC_USA(13019601, "S8446"),
-    VM_8V(13019602, "S8446.1"),
+    VM_10V(13019602, "S8446.1"),
     PDB(13020000, "S8474"),
     None;
 
