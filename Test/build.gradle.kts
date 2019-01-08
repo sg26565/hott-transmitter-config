@@ -9,7 +9,7 @@ dependencies {
     implementation(project(":HoTT-Firmware"))
     implementation(project(":HoTT-UI"))
     implementation(project(":FirmwareUpdater"))
-    implementation(Libs.jserialcomm)
+    runtimeOnly(Libs.jserialcomm)
     implementation(Libs.commons_math3)
-    implementation(Libs.freemarker)
+    runtimeOnly(Libs.freemarker)
 }

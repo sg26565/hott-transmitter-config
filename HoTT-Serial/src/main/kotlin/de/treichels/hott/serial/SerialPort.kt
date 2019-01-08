@@ -12,7 +12,12 @@
 package de.treichels.hott.serial
 
 import de.treichels.hott.model.HoTTException
+import de.treichels.hott.util.ByteOrder
+import de.treichels.hott.util.readInt
+import de.treichels.hott.util.readLong
+import de.treichels.hott.util.readShort
 import java.io.Closeable
+import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -24,15 +29,39 @@ interface SerialPort : Closeable {
     val outputStream: OutputStream
 
     val portName: String
+    var baudRate: Int
     val isOpen: Boolean
-    var timeout: Int
+    var readTimeout: Int
+    var writeTimeout: Int
 
     @Throws(HoTTException::class)
     override fun close()
 
     @Throws(HoTTException::class)
-    fun open(baudRate: Int = 115200)
+    fun open()
+
 
     @Throws(HoTTException::class)
     fun reset()
+
+    fun readBytes(data: ByteArray, length: Long = data.size.toLong(), offset: Long = 0L): Int
+    fun writeBytes(data: ByteArray, length: Long = data.size.toLong(), offset: Long = 0L): Int
+
+    fun write(b: Int) = writeBytes(byteArrayOf(b.toByte()))
+    fun read() = readIntoBuffer(1)[0].toInt() and 0xff
+    fun readShort(byteOrder: ByteOrder = ByteOrder.LittleEndian) = readIntoBuffer(Short.SIZE_BYTES).readShort(byteOrder = byteOrder)
+    fun readInt(byteOrder: ByteOrder = ByteOrder.LittleEndian) = readIntoBuffer(Int.SIZE_BYTES).readInt(byteOrder = byteOrder)
+    fun readLong(byteOrder: ByteOrder = ByteOrder.LittleEndian) = readIntoBuffer(Long.SIZE_BYTES).readLong(byteOrder = byteOrder)
+
+    private fun readIntoBuffer(size: Int): ByteArray {
+        val buffer = ByteArray(size)
+        val rc = readBytes(buffer)
+        return if (rc == size) buffer else throw IOException()
+    }
+
+    fun expect(rc: Int) {
+        val b = read()
+        if (b != rc) throw IOException("Invalid response: expected $rc but got $b")
+    }
 }
+

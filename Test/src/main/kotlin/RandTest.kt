@@ -1,9 +1,7 @@
-import de.treichels.hott.update.HexFile
-import de.treichels.hott.update.decode
-import de.treichels.hott.util.ByteOrder
-import de.treichels.hott.util.Util
-import de.treichels.hott.util.readUShort
+import de.treichels.hott.decoder.internal.firmware.HexFile
+import de.treichels.hott.decoder.internal.firmware.decode
 import java.io.File
+import java.io.IOException
 
 fun main(vararg args: String) {
     val rootDir = File("C:/Users/olive/.java/cache/HoTT/firmware")
@@ -21,7 +19,7 @@ fun main(vararg args: String) {
             try {
                 val hex = HexFile.parse(hexFile, false)
                 datFile.writeBytes(hex.data())
-            } catch (e: IllegalArgumentException) {
+            } catch (e: IOException) {
                 hexFile.delete()
             }
         }

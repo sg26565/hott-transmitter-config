@@ -1,4 +1,5 @@
-import de.treichels.hott.update.DeviceFirmware
+import de.treichels.hott.decoder.internal.firmware.DeviceFirmware
+import de.treichels.hott.util.Util
 import java.io.File
 import java.io.IOException
 import kotlin.system.exitProcess
@@ -28,5 +29,17 @@ fun main(vararg args: String) {
             }
 }
 
+fun DeviceFirmware.dump(): String {
+    val result = StringBuffer()
 
+    result.append(toString()).append('\n')
+    result.append("ProductCode: ${deviceType.productCode}\n")
+    result.append("PacketCount: ${packets.size}\n")
+    result.append("PacketSize:  ${packets[0].size}\n")
+    packets.forEachIndexed { index, bytes ->
+        result.append("Packet $index\n")
+        result.append(Util.dumpData(bytes))
+    }
 
+    return result.toString()
+}

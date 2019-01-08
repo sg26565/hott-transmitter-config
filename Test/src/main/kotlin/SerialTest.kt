@@ -14,8 +14,9 @@ fun main(args: Array<String>) {
 
     serialPort = SerialPortBase.getPort("COM3")
     serialPort.use { port ->
-        port.open(19200)
-        port.timeout = 1000
+        port.open()
+        port.baudRate = 19200
+        port.readTimeout = 1000
         inputStream = port.inputStream
         outputStream = port.outputStream
 

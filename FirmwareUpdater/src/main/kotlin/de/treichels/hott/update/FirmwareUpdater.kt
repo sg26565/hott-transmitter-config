@@ -1,9 +1,11 @@
 package de.treichels.hott.update
 
-import com.fazecast.jSerialComm.SerialPort
+import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.firmware.Firmware
 import de.treichels.hott.firmware.getFirmware
 import de.treichels.hott.model.enums.*
+import de.treichels.hott.serial.SerialPortBase
+import de.treichels.hott.ui.CallbackAdapter
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.ui.MessageDialog
 import de.treichels.hott.util.Util
@@ -23,7 +25,7 @@ import java.io.IOException
 import java.util.*
 
 @Suppress("UNCHECKED_CAST")
-val deviceList = (listOf(*ReceiverType.values(), *ModuleType.values(), *SensorType.values(), *ESCType.values()) as List<Registered<*>>).filter { it.orderNo.isNotEmpty() }
+private val deviceList = (listOf(*ReceiverType.values(), *ModuleType.values(), *SensorType.values(), *ESCType.values()) as List<Registered<*>>).filter { it.orderNo.isNotEmpty() }
 
 fun main(vararg args: String) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }
@@ -61,7 +63,7 @@ class FirmwareUpdater : View() {
     private val showReceivers = SimpleBooleanProperty(true)
     private val showSensors = SimpleBooleanProperty(true)
     private val showESCs = SimpleBooleanProperty(true)
-    private val serialPortProperty = SimpleObjectProperty<SerialPort?>(null)
+    private val serialPortProperty = SimpleObjectProperty<HoTTSerialPort?>(null)
     private var serialPort by serialPortProperty
 
     // background activity
@@ -127,7 +129,7 @@ class FirmwareUpdater : View() {
 
                         if (portName != null) {
                             preferences { put(PREFERRED_PORT, portName) }
-                            serialPort = SerialPort.getCommPort(portName)
+                            serialPort = HoTTSerialPort(SerialPortBase.getPort(portName))
                         }
                     }
                 }
@@ -224,8 +226,8 @@ class FirmwareUpdater : View() {
             if (textField.text != null) {
                 try {
                     // check that the current file matches the selected device type
-                    val firmware = DeviceFirmware.load(textField.text)
-                    if (firmware.deviceType.productCode != deviceType.value.productCode) textField.text = null
+                    val type= serialPort?.getDeviceType(File(textField.text))
+                    if (type?.productCode != deviceType.value.productCode) textField.text = null
                 } catch (e: IOException) {
                     textField.text = null
                 }
@@ -239,7 +241,7 @@ class FirmwareUpdater : View() {
             title = messages["deviceType"]
         }
         val task = runAsync {
-            DeviceFirmware.detectDevice(this, serialPort!!)
+            serialPort?.detectDevice(CallbackAdapter(this))
         }.ui {
             // enable category of detected device
             when (it) {
@@ -266,7 +268,7 @@ class FirmwareUpdater : View() {
 
                 try {
                     // read device type from firmware file and update combobox
-                    DeviceFirmware.load(file).deviceType.apply {
+                    serialPort?.getDeviceType(file)?.apply {
                         // some device types share the same product code - update only if product code is different
                         if (deviceType.value == null || productCode != deviceType.value.productCode) deviceType.value = this
                     }
@@ -333,7 +335,7 @@ class FirmwareUpdater : View() {
             reset()
         }
 
-        service.fileName = textField.text
+        service.file = File(textField.text)
         service.serialPort = serialPort!!
         service.start()
     }
@@ -408,7 +410,7 @@ class FirmwareUpdater : View() {
 
         // load preferred port from preferences
         runAsync {
-            portCombo.items.addAll(SerialPort.getCommPorts().map { it.systemPortName })
+            portCombo.items.addAll(SerialPortBase.getAvailablePorts())
         } success {
             preferences {
                 val prefPort: String? = get(PREFERRED_PORT, null)

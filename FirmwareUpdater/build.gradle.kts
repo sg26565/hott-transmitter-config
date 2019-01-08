@@ -2,7 +2,9 @@ dependencies {
     implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-Firmware"))
     implementation(project(":HoTT-UI"))
-    implementation(Libs.jserialcomm)
+    implementation(project(":HoTT-Serial"))
+    implementation(project(":HoTT-Decoder", configuration="obfuscated"))
+    runtimeOnly(project(":jSerialCommPort"))
 }
 
 plugins {

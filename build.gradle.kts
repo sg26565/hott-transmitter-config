@@ -70,6 +70,7 @@ subprojects {
         // set jvmTarget for Kotlin (covers compileKotlin and compileTestKotlin tasks)
         withType(KotlinCompile::class) {
             kotlinOptions.jvmTarget = "1.8"
+            kotlinOptions.freeCompilerArgs = listOf("-Xuse-experimental=kotlin.ExperimentalUnsignedTypes")
         }
     }
 

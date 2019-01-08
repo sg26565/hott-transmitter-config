@@ -5,4 +5,5 @@ dependencies {
     compile(Libs.javafx_web)
     compile(Libs.javafx_media)
     compile(Libs.tornadofx)
+    compile(project(":HoTT-Util"))
 }

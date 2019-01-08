@@ -54,6 +54,7 @@ class MemoryDumpView : View() {
                     message.append(messages["startMessage"]).append('\n')
 
                     HoTTSerialPort(SerialPortBase.getPort(portName)).use { port ->
+                        port.open()
                         port.turnRfOutOff()
 
                         var i = 0
