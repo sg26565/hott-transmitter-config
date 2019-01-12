@@ -13,16 +13,14 @@ package de.treichels.hott.serial.jserialcommport
 
 import com.fazecast.jSerialComm.SerialPort
 import com.fazecast.jSerialComm.SerialPort.*
-import com.fazecast.jSerialComm.SerialPortDataListener
-import com.fazecast.jSerialComm.SerialPortEvent
 import de.treichels.hott.model.HoTTException
-import de.treichels.hott.serial.SerialPortBase
-import de.treichels.hott.util.Util
+import java.io.InputStream
+import java.io.OutputStream
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-class JSerialCommPort(portName: String) : SerialPortBase(portName), SerialPortDataListener {
+class JSerialCommPort(override  val portName: String) : de.treichels.hott.serial.SerialPort {
     private var port: SerialPort = SerialPort.getCommPort(portName)
 
     override var baudRate
@@ -31,34 +29,32 @@ class JSerialCommPort(portName: String) : SerialPortBase(portName), SerialPortDa
             port.setComPortParameters(baudRate, 8, ONE_STOP_BIT, NO_PARITY)
         }
 
+    override val inputStream: InputStream
+        get() = port.inputStream
+
+    override val outputStream: OutputStream
+        get() = port.outputStream
+
     override var timeout
         get() = port.readTimeout
         set(timeout) {
-            setTimeouts(timeout, timeout)
+            val mode = if (timeout < 0) TIMEOUT_NONBLOCKING else TIMEOUT_READ_BLOCKING + TIMEOUT_WRITE_BLOCKING
+            port.setComPortTimeouts(mode, timeout, timeout)
         }
 
     init {
         port.setFlowControl(FLOW_CONTROL_DISABLED)
 
         // default to blocking read and write with 1 second timeout
-        setTimeouts(1000, 1000)
+        timeout = 1000
 
         // default 115200 baud, 8 data bits, one stop bit, no parity
         baudRate = 115200
     }
 
-    private fun setTimeouts(readTimeout: Int, writeTimeout: Int) {
-        val mode = if (readTimeout < 0) TIMEOUT_NONBLOCKING else TIMEOUT_READ_BLOCKING +
-                if (writeTimeout < 0) TIMEOUT_NONBLOCKING else TIMEOUT_WRITE_BLOCKING
-
-        port.setComPortTimeouts(mode, readTimeout, writeTimeout)
-    }
-
     override fun readBytes(data: ByteArray, length: Long, offset: Long) = port.readBytes(data, length, offset)
 
     override fun writeBytes(data: ByteArray, length: Long, offset: Long) = port.writeBytes(data, length, offset)
-
-    override fun getListeningEvents(): Int = LISTENING_EVENT_DATA_AVAILABLE or LISTENING_EVENT_DATA_WRITTEN
 
     override val isOpen: Boolean
         get() = port.isOpen
@@ -70,61 +66,15 @@ class JSerialCommPort(portName: String) : SerialPortBase(portName), SerialPortDa
     override fun open() {
         if (isOpen) throw HoTTException("HoTTSerialPort.AlreadyOpen")
 
-        //port.addDataListener(this)
         port.openPort(0)
         if (!port.isOpen) {
+            // open failed, retry without configuration (e.g. for STM virtual COM ports)
             port.disablePortConfiguration()
             port.openPort(0)
         }
     }
 
-    @Synchronized
-    override fun readFromPort() {
-        val available = port.bytesAvailable()
-        if (available > 0) {
-            val bytes = ByteArray(available)
-            port.readBytes(bytes, available.toLong())
-            logger.finer("readFromPort: ${bytes.size} bytes available\n${Util.dumpData(bytes)}")
-            bytes.forEach { readQueue.put(it) }
-        } else {
-            logger.finest("readFromPort: no more data available")
-        }
-    }
-
     override fun reset() {
-        readQueue.clear()
-        writeQueue.clear()
-    }
-
-    private val SerialPortEvent.eventName: String
-        get() = when (eventType) {
-            LISTENING_EVENT_DATA_AVAILABLE -> "Data available"
-            LISTENING_EVENT_DATA_WRITTEN -> "Data written"
-            LISTENING_EVENT_DATA_RECEIVED -> "Data received"
-            else -> "Unknown event"
-        }
-
-    override fun serialEvent(event: SerialPortEvent) {
-        logger.finest("serialEvent: port=$portName, event=${event.eventName}")
-
-        when (event.eventType) {
-            LISTENING_EVENT_DATA_WRITTEN -> writeToPort()
-            LISTENING_EVENT_DATA_AVAILABLE -> readFromPort()
-        }
-    }
-
-    @Synchronized
-    override fun writeToPort() {
-        val available = writeQueue.size
-
-        if (available > 0) {
-            val bytes = ByteArray(available) {
-                writeQueue.take()
-            }
-            logger.finer("writeToPort: $available bytes to write\n${Util.dumpData(bytes)}")
-            port.writeBytes(bytes, available.toLong())
-        } else {
-            logger.finest("writeToPort: write buffer is empty")
-        }
+        // do nothing
     }
 }
