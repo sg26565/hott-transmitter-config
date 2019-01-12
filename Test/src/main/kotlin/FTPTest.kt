@@ -1,5 +1,5 @@
-import de.treichels.hott.firmware.Firmware
-import de.treichels.hott.firmware.getFirmware
+import de.treichels.hott.decoder.Firmware
+import de.treichels.hott.decoder.getFirmware
 import de.treichels.hott.model.enums.*
 
 fun Firmware<*>.print() {
