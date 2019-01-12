@@ -3,6 +3,7 @@ package de.treichels.hott.mz32
 import de.treichels.hott.firmware.Firmware
 import de.treichels.hott.firmware.getFirmware
 import de.treichels.hott.model.enums.TransmitterType
+import de.treichels.hott.ui.CallbackAdapter
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.util.hash
 import de.treichels.lzma.canCompress
@@ -198,7 +199,7 @@ class Mz32(private val rootDir: File) {
                 if (canCompress(file.extension))
                     Firmware.download("$root$filePath.lzma") { inputStream, _ -> uncompress(inputStream, file.outputStream()) }
                 else
-                    Firmware.download(task, "$root$filePath", file)
+                    Firmware.download(CallbackAdapter(task), "$root$filePath", file)
 
                 md5[filePath] = remoteHash
                 task.print("ok\n")
@@ -235,7 +236,7 @@ class Mz32(private val rootDir: File) {
 
         if (!file.exists() || fileSize != firmwareSize) {
             task.print("\tDownloading $file from server ... ")
-            val hash = Firmware.download(task, "$remotePath/$fileName", file)
+            val hash = Firmware.download(CallbackAdapter(task), "$remotePath/$fileName", file)
             md5[filePath] = Hash(firmwareSize, hash)
             task.print("ok\n")
         } else {

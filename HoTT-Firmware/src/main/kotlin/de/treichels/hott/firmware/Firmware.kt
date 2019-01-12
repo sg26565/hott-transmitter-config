@@ -2,11 +2,11 @@ package de.treichels.hott.firmware
 
 import de.treichels.hott.model.enums.ReceiverType
 import de.treichels.hott.model.enums.Registered
+import de.treichels.hott.util.Callback
 import de.treichels.hott.util.HASH_ALGORITHM
 import de.treichels.hott.util.getHash
 import org.apache.http.client.fluent.Request
 import org.apache.http.message.BasicNameValuePair
-import tornadofx.*
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -18,7 +18,7 @@ import java.util.logging.Logger
  */
 class Firmware<T>(val device: T, val path: String, val name: String, val size: Long) where T : Registered<*> {
     companion object {
-        private val LOG = Logger.getLogger(Firmware::class.qualifiedName)
+        private val LOG = Logger.getLogger(Firmware<*>::javaClass.name)
         private const val FTP_SERVER_ADDRESS = "data.graupnersj.com"
         private const val FILE_LIST = "file_list.php"
         private const val FILE_DOWN = "file_down.php"
@@ -76,7 +76,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
             }
         }
 
-        fun download(task: FXTask<*>?, path: String, file: File): String {
+        fun download(task: Callback?, path: String, file: File): String {
             val md = MessageDigest.getInstance(HASH_ALGORITHM)
             val buffer = ByteArray(1024 * 1024)
             var bytesRead = 0L
@@ -84,7 +84,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
             // download from FTP server
             download(path) { inputStream, size ->
                 file.outputStream().use { outputStream ->
-                    while (task?.isCancelled != false) {
+                    while (task?.isCancelled() != false) {
                         val len = inputStream.read(buffer)
 
                         if (len < 0) break
@@ -100,7 +100,7 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
                     throw IOException("Size mismatch: expected $size, but got $bytesRead.")
             }
 
-            if (task?.isCancelled == true)
+            if (task?.isCancelled() == true)
                 throw InterruptedException()
 
             return md.getHash()
@@ -122,8 +122,8 @@ class Firmware<T>(val device: T, val path: String, val name: String, val size: L
 
     /** download file if not already cached and report progress to FXTask object */
     @Suppress("MemberVisibilityCanBePrivate")
-    fun download(task: FXTask<*>?): File {
-        if (!isCached && task?.isCancelled != true) {
+    fun download(task: Callback?): File {
+        if (!isCached && task?.isCancelled() != true) {
             cacheDir.mkdirs()
             download(task, "$path$name", file)
         }
