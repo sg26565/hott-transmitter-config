@@ -88,10 +88,22 @@ class FirmwareUpdater : View() {
                         }
                     }
 
-                    checkbox(messages["Modules"], showModules) { action { updateDeviceList() } }
-                    checkbox(messages["Receivers"], showReceivers) { action { updateDeviceList() } }
-                    checkbox(messages["Sensors"], showSensors) { action { updateDeviceList() } }
-                    checkbox(messages["ESCs"], showESCs) { action { updateDeviceList() } }
+                    checkbox(messages["Modules"], showModules) {
+                        disableWhen { service.runningProperty() }
+                        action { updateDeviceList() }
+                    }
+                    checkbox(messages["Receivers"], showReceivers) {
+                        disableWhen { service.runningProperty() }
+                        action { updateDeviceList() }
+                    }
+                    checkbox(messages["Sensors"], showSensors) {
+                        disableWhen { service.runningProperty() }
+                        action { updateDeviceList() }
+                    }
+                    checkbox(messages["ESCs"], showESCs) {
+                        disableWhen { service.runningProperty() }
+                        action { updateDeviceList() }
+                    }
                 }
 
                 hbox {
@@ -226,7 +238,7 @@ class FirmwareUpdater : View() {
             if (textField.text != null) {
                 try {
                     // check that the current file matches the selected device type
-                    val type= serialPort?.getDeviceType(File(textField.text))
+                    val type = serialPort?.getDeviceType(File(textField.text))
                     if (type?.productCode != deviceType.value.productCode) textField.text = null
                 } catch (e: IOException) {
                     textField.text = null
