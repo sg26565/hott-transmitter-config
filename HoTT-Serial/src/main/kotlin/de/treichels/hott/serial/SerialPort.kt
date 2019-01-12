@@ -31,8 +31,7 @@ interface SerialPort : Closeable {
     val portName: String
     var baudRate: Int
     val isOpen: Boolean
-    var readTimeout: Int
-    var writeTimeout: Int
+    var timeout: Int
 
     @Throws(HoTTException::class)
     override fun close()
