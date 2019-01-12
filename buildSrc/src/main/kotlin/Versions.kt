@@ -7,9 +7,9 @@ import kotlin.String
  *
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
-    const val aws_java_sdk_polly: String = "1.11.474" 
+    const val aws_java_sdk_polly: String = "1.11.482" 
 
-    const val com_diffplug_gradle_eclipse_mavencentral_gradle_plugin: String = "3.17.0" 
+    const val com_diffplug_gradle_eclipse_mavencentral_gradle_plugin: String = "3.17.1" 
 
     const val jackson_databind: String = "2.9.8" 
 
@@ -37,9 +37,9 @@ object Versions {
 
     const val launch4j: String = "3.12" 
 
-    const val proguard_gradle: String = "6.0.3" //available: "6.1.0beta1" 
+    const val proguard_gradle: String = "6.0.3" //available: "6.1.0beta2" 
 
-    const val tornadofx: String = "1.7.17" 
+    const val tornadofx: String = "1.7.18" 
 
     const val commons_lang3: String = "3.8.1" 
 
@@ -51,15 +51,13 @@ object Versions {
 
     const val freemarker: String = "2.3.28" 
 
-    const val jaxb_runtime: String = "2.4.0-b180830.0438" 
+    const val jaxb_runtime: String = "2.3.2" 
 
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.11" 
 
     const val org_jetbrains_kotlin: String = "1.3.11" 
 
-    const val org_openjfx: String = "11.0.1" //available: "12-ea+6" 
-
-    const val jssc: String = "2.8.0" 
+    const val org_openjfx: String = "11.0.1" //available: "12-ea+8" 
 
     const val flying_saucer_pdf_itext5: String = "9.1.16" 
 
@@ -69,12 +67,12 @@ object Versions {
      *      ./gradle/wrapper/gradle-wrapper.properties
      */
     object Gradle {
-        const val runningVersion: String = "5.0"
+        const val runningVersion: String = "5.1.1"
 
-        const val currentVersion: String = "5.0"
+        const val currentVersion: String = "5.1.1"
 
-        const val nightlyVersion: String = "5.2-20181221000038+0000"
+        const val nightlyVersion: String = "5.2-20190111000036+0000"
 
-        const val releaseCandidate: String = "5.1-rc-2"
+        const val releaseCandidate: String = ""
     }
 }

@@ -38,8 +38,6 @@ object Libs {
      * [vorbisspi website](https://code.google.com/p/soundlibs/) */
     const val vorbisspi: String = "com.googlecode.soundlibs:vorbisspi:" + Versions.vorbisspi
 
-    /**
-     * [gitversioner website](https://github.com/passsy/gradle-gitVersioner-plugin) */
     const val gitversioner: String =
             "com.pascalwelsch.gitversioner:gitversioner:" + Versions.gitversioner
 
@@ -96,7 +94,7 @@ object Libs {
     const val freemarker: String = "org.freemarker:freemarker:" + Versions.freemarker
 
     /**
-     * [jaxb-runtime website](http://jaxb.java.net) */
+     * [jaxb-runtime website](https://javaee.github.io/jaxb-v2/) */
     const val jaxb_runtime: String = "org.glassfish.jaxb:jaxb-runtime:" + Versions.jaxb_runtime
 
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String =
@@ -140,10 +138,6 @@ object Libs {
     /**
      * [javafx-web website](https://openjdk.java.net/projects/openjfx/) */
     const val javafx_web: String = "org.openjfx:javafx-web:" + Versions.org_openjfx
-
-    /**
-     * [jssc website](http://jssc.scream3r.org) */
-    const val jssc: String = "org.scream3r:jssc:" + Versions.jssc
 
     /**
      * [flying-saucer-pdf-itext5 website](http://code.google.com/p/flying-saucer/) */
