@@ -56,7 +56,7 @@ subprojects {
             // store version numbers in jar
             manifest {
                 attributes(
-                        "Implementation-Version" to version,
+                        "Implementation-Version" to archiveVersion.orNull,
                         "Implementation-Build" to versionName
                 )
             }
@@ -64,7 +64,7 @@ subprojects {
             // enable reproducible builds
             isPreserveFileTimestamps = false
             isReproducibleFileOrder = true
-            version = shortVersion
+            archiveVersion.set(shortVersion)
         }
 
         // set jvmTarget for Kotlin (covers compileKotlin and compileTestKotlin tasks)
