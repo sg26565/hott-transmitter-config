@@ -23,7 +23,7 @@ import de.treichels.hott.util.Util
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 class JSerialCommPort(portName: String) : SerialPortBase(portName), SerialPortDataListener {
-    private var port: SerialPort
+    private var port: SerialPort = SerialPort.getCommPort(portName)
 
     override var baudRate
         get() = port.baudRate
@@ -31,20 +31,13 @@ class JSerialCommPort(portName: String) : SerialPortBase(portName), SerialPortDa
             port.setComPortParameters(baudRate, 8, ONE_STOP_BIT, NO_PARITY)
         }
 
-    override var readTimeout
+    override var timeout
         get() = port.readTimeout
-        set(readTimeout) {
-            setTimeouts(readTimeout, writeTimeout)
-        }
-
-    override var writeTimeout
-        get() = port.writeTimeout
-        set(writeTimeout) {
-            setTimeouts(readTimeout, writeTimeout)
+        set(timeout) {
+            setTimeouts(timeout, timeout)
         }
 
     init {
-        port = SerialPort.getCommPort(portName)
         port.setFlowControl(FLOW_CONTROL_DISABLED)
 
         // default to blocking read and write with 1 second timeout

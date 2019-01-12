@@ -13,8 +13,7 @@ fun main() {
     val firmware = DeviceFirmware.load(File(fileName1))
 
     port.baudRate=19200
-    port.readTimeout=1000
-    port.writeTimeout=1000
+    port.timeout=1000
     port.use {
         it.open()
 

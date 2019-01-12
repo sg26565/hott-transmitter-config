@@ -16,7 +16,7 @@ fun main(args: Array<String>) {
     serialPort.use { port ->
         port.open()
         port.baudRate = 19200
-        port.readTimeout = 1000
+        port.timeout = 1000
         inputStream = port.inputStream
         outputStream = port.outputStream
 
