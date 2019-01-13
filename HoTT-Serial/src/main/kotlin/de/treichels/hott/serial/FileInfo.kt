@@ -96,9 +96,20 @@ class FileInfo : Serializable, Comparable<String> {
         return result
     }
 
+    // helper
+    val isRoot
+        get() = this == root
+
+    val isDir
+        get() = type == FileType.Dir
+
+    val isFile
+        get() = type == FileType.File
+
     companion object {
         private val EMPTY_STRING = ""
         private val FORWARD_SLASH = "/"
         private const val serialVersionUID = 1L
+        val root = FileInfo("", "", "", 0, Date(0), FileType.Dir)
     }
 }

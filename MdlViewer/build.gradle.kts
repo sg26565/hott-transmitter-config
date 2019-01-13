@@ -13,5 +13,5 @@ plugins {
 }
 
 application {
-    mainClassName = "de.treichels.hott.mdlviewer.javafx.MainKt"
+    mainClassName = "de.treichels.hott.mdlviewer.javafx.MdlViewerKt"
 }
