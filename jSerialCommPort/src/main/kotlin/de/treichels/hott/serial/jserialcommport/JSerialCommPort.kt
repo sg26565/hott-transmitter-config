@@ -14,13 +14,14 @@ package de.treichels.hott.serial.jserialcommport
 import com.fazecast.jSerialComm.SerialPort
 import com.fazecast.jSerialComm.SerialPort.*
 import de.treichels.hott.model.HoTTException
+import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-class JSerialCommPort(override  val portName: String) : de.treichels.hott.serial.SerialPort {
+class JSerialCommPort(override val portName: String) : de.treichels.hott.serial.SerialPort {
     private var port: SerialPort = SerialPort.getCommPort(portName)
 
     override var baudRate
@@ -29,8 +30,26 @@ class JSerialCommPort(override  val portName: String) : de.treichels.hott.serial
             port.setComPortParameters(baudRate, 8, ONE_STOP_BIT, NO_PARITY)
         }
 
-    override val inputStream: InputStream
-        get() = port.inputStream
+    override val inputStream = object : InputStream() {
+        val buffer = ByteArray(1)
+        override fun read(): Int {
+            if (port.readBytes(buffer, 1L, 0) != 1) throw IOException("timeout")
+
+            return buffer[0].toInt() and 0xff
+        }
+
+        override fun available(): Int {
+            return port.bytesAvailable()
+        }
+
+        override fun read(bytes: ByteArray?, off: Int, len: Int): Int {
+            if (len == 0) return 0
+
+            return port.readBytes(bytes, len.toLong(), off.toLong()).apply {
+                if (this < 1) throw IOException("timeout")
+            }
+        }
+    }
 
     override val outputStream: OutputStream
         get() = port.outputStream
@@ -75,6 +94,7 @@ class JSerialCommPort(override  val portName: String) : de.treichels.hott.serial
     }
 
     override fun reset() {
-        // do nothing
+        close()
+        open()
     }
 }
