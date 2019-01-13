@@ -93,6 +93,7 @@ class TransmitterDialogView : View() {
             if (it == ButtonType.OK) {
                 if (serialPort?.isOpen == true) serialPort?.close()
                 serialPort = HoTTSerialPort(SerialPort.getPort(portCombo.value))
+                serialPort?.timeout = 200
                 task?.serialPort = serialPort
                 bgTask = runAsync {
                     task?.run()
