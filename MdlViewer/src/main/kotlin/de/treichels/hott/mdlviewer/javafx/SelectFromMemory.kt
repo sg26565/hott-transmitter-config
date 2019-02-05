@@ -16,32 +16,28 @@ import de.treichels.hott.model.enums.ModelType
 import de.treichels.hott.serial.ModelInfo
 import javafx.beans.binding.BooleanBinding
 import javafx.concurrent.Task
+import javafx.scene.control.ListCell
 import javafx.scene.control.ListView
 import javafx.scene.control.SelectionMode
+import javafx.util.Callback
 import tornadofx.*
-import java.util.concurrent.Callable
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 class SelectFromMemory : SelectFromTransmitter() {
-    private var listView by singleAssign<ListView<String>>()
-    private var modelInfoList: List<ModelInfo>? = null
+    private var listView by singleAssign<ListView<ModelInfo>>()
 
     // dialog is ready when the user selects an item from the list
     override fun isReady(): BooleanBinding = listView.selectionModel.selectedItemProperty().isNotNull
 
-    // refresh listView from Transmitter memory
-    override fun refreshUITask() = listView.loadFromMemory()
-
     // load the selected item as Model
-    override fun getResultCallable(): Callable<Model>? {
-        val index = listView.selectionModel.selectedIndex
-        val modelInfo = modelInfoList?.get(index)
+    override fun getResult(): Task<Model>? {
+        val modelInfo = listView.selectionModel.selectedItem
         val serialPort = this.serialPort
 
         return if (modelInfo != null && serialPort != null) {
-            Callable { Model.loadModel(modelInfo, serialPort) }
+            runAsync { Model.loadModel(modelInfo, serialPort) }
         } else null
     }
 
@@ -53,7 +49,7 @@ class SelectFromMemory : SelectFromTransmitter() {
             listView = listview {
                 selectionModel.selectionMode = SelectionMode.SINGLE
                 setOnMouseClicked { handleDoubleClick(it) }
-                items.add(messages["loading"])
+                cellFactory = Callback { ModelInfoListCell() }
             }
         }
     }
@@ -61,25 +57,31 @@ class SelectFromMemory : SelectFromTransmitter() {
     /**
      * Refresh a [ListView] with a list of all models from the transmitter memory using the [HoTTSerialPort] from parent.
      */
-    private fun ListView<String>.loadFromMemory(): Task<*> {
-        items.clear()
-
+    override fun refreshUITask(): Task<*> {
         // add temporary placeholder
-        items.add(messages["loading"])
+        listView.items = observableList(null)
 
         // fill list in background
         return listView.runAsyncWithOverlay {
             serialPort?.allModelInfos?.filter { it.modelType != ModelType.Unknown } ?: listOf()
         }.success { list ->
-            // save result
-            modelInfoList = list
+            listView.items = list.observable()
+        }
+    }
 
-            // remove temporary placeholder
-            items.clear()
+    private inner class ModelInfoListCell : ListCell<ModelInfo>() {
+        override fun updateItem(item: ModelInfo?, empty: Boolean) {
+            super.updateItem(item, empty)
 
-            // translate list of ModelInfo to list of String
-            items.addAll(list.map { info -> String.format("%02d: %c%s.mdl", info.modelNumber + 1, info.modelType.char, info.modelName) })
+            if (!empty) {
+                text = if (item == null) {
+                    messages["loading"]
+                } else {
+                    String.format("%02d: %c%s.mdl", item.modelNumber + 1, item.modelType.char, item.modelName)
+                }
+            }
         }
     }
 }
+
 

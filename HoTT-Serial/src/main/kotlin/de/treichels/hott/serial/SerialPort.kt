@@ -12,6 +12,7 @@
 package de.treichels.hott.serial
 
 import de.treichels.hott.model.HoTTException
+import de.treichels.hott.serial.spi.SerialPortProvider
 import de.treichels.hott.util.ByteOrder
 import de.treichels.hott.util.readInt
 import de.treichels.hott.util.readLong
@@ -20,6 +21,7 @@ import java.io.Closeable
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.util.*
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
@@ -31,8 +33,7 @@ interface SerialPort : Closeable {
     val portName: String
     var baudRate: Int
     val isOpen: Boolean
-    var readTimeout: Int
-    var writeTimeout: Int
+    var timeout: Int
 
     @Throws(HoTTException::class)
     override fun close()
@@ -62,6 +63,15 @@ interface SerialPort : Closeable {
     fun expect(rc: Int) {
         val b = read()
         if (b != rc) throw IOException("Invalid response: expected $rc but got $b")
+    }
+
+    companion object {
+        private val provider: SerialPortProvider by lazy {
+            ServiceLoader.load(SerialPortProvider::class.java).first()
+        }
+
+        fun getAvailablePorts(): List<String> = provider.getAvailablePorts()
+        fun getPort(name: String): SerialPort = provider.getPort(name)
     }
 }
 

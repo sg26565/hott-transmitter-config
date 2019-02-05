@@ -4,7 +4,7 @@ import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.model.enums.ModelType
 import de.treichels.hott.serial.ModelInfo
-import de.treichels.hott.serial.SerialPortBase
+import de.treichels.hott.serial.SerialPort
 import java.awt.BorderLayout
 import java.awt.Component
 import java.awt.Cursor
@@ -226,7 +226,7 @@ class ExportModels {
     }
 
     internal fun showDialog() {
-        for (s in SerialPortBase.getAvailablePorts()) {
+        for (s in SerialPort.getAvailablePorts()) {
             comboBox.addItem(s)
         }
 
@@ -257,7 +257,7 @@ class ExportModels {
     }
 
     private fun updateTableData(portName: String) {
-        port = HoTTSerialPort(SerialPortBase.getPort(portName))
+        port = HoTTSerialPort(SerialPort.getPort(portName))
         tableModel.setModelInfos(port!!.allModelInfos)
     }
 

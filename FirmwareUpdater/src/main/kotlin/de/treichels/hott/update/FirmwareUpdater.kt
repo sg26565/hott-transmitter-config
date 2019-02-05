@@ -4,7 +4,7 @@ import de.treichels.hott.decoder.Firmware
 import de.treichels.hott.decoder.HoTTSerialPort
 import de.treichels.hott.decoder.getFirmware
 import de.treichels.hott.model.enums.*
-import de.treichels.hott.serial.SerialPortBase
+import de.treichels.hott.serial.SerialPort
 import de.treichels.hott.ui.CallbackAdapter
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.ui.MessageDialog
@@ -141,7 +141,7 @@ class FirmwareUpdater : View() {
 
                         if (portName != null) {
                             preferences { put(PREFERRED_PORT, portName) }
-                            serialPort = HoTTSerialPort(SerialPortBase.getPort(portName))
+                            serialPort = HoTTSerialPort(SerialPort.getPort(portName))
                         }
                     }
                 }
@@ -422,7 +422,7 @@ class FirmwareUpdater : View() {
 
         // load preferred port from preferences
         runAsync {
-            portCombo.items.addAll(SerialPortBase.getAvailablePorts())
+            portCombo.items.addAll(SerialPort.getAvailablePorts())
         } success {
             preferences {
                 val prefPort: String? = get(PREFERRED_PORT, null)

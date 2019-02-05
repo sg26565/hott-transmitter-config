@@ -12,7 +12,7 @@
 package de.treichels.hott.mdlviewer.javafx
 
 import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.serial.SerialPortBase
+import de.treichels.hott.serial.SerialPort
 import de.treichels.hott.ui.ExceptionDialog
 import javafx.beans.binding.BooleanBinding
 import javafx.concurrent.Task
@@ -39,8 +39,8 @@ abstract class SelectFromTransmitter : View() {
     private var portCombo by singleAssign<ComboBox<String>>()
     private var startButton by singleAssign<Button>()
 
-    // asynchronous result - updated when the start button was pressed
-    private var result: Callable<Model>? = null
+    // running refresh task
+    private var refreshTask: Task<*>? = null
 
     // the current serial port - updated when the com port changes
     protected var serialPort: HoTTSerialPort? = null
@@ -72,7 +72,7 @@ abstract class SelectFromTransmitter : View() {
                 }
 
                 button(messages["cancel"], ButtonData.CANCEL_CLOSE) {
-                    action { close() }
+                    action { abort() }
                 }
             }
         }
@@ -86,7 +86,7 @@ abstract class SelectFromTransmitter : View() {
     /**
      * Subclass contract: A [Callable] that computes the [Model] result of the dialog in background
      */
-    protected abstract fun getResultCallable(): Callable<Model>?
+    protected abstract fun getResult(): Task<Model>?
 
     /**
      * Subclass contract: A [Boolean] that tells whether the user has selected something that cam be computed as [Model]
@@ -102,8 +102,10 @@ abstract class SelectFromTransmitter : View() {
             if (!serialPort?.portName.equals(name)) {
                 preferences { put("comPort", name) }
 
-                serialPort = HoTTSerialPort(SerialPortBase.getPort(name))
-                refreshUITask().apply {
+                serialPort?.close()
+                serialPort = HoTTSerialPort(SerialPort.getPort(name))
+
+                refreshTask = refreshUITask().apply {
                     portCombo.disableWhen(runningProperty())
                     startButton.disableWhen(runningProperty().or(isReady().not()))
                 }.fail {
@@ -122,7 +124,14 @@ abstract class SelectFromTransmitter : View() {
      * Start result computation in background and close dialog.
      */
     private fun start() {
-        result = getResultCallable()
+        close()
+    }
+
+    /**
+     * Abort running task and close dialog.
+     */
+    private fun abort() {
+        if (refreshTask?.isRunning == true) refreshTask?.cancel()
         close()
     }
 
@@ -136,9 +145,7 @@ abstract class SelectFromTransmitter : View() {
     /**
      * Open a new dialog and return it's [Stage].
      */
-    fun openDialog(): Callable<Model>? {
-        result = null
-
+    fun openDialog(): Task<Model>? {
         // disable start button - will be re-enabled in portChanged()
         startButton.disableProperty().unbind()
         startButton.isDisable = true
@@ -150,7 +157,7 @@ abstract class SelectFromTransmitter : View() {
 
             // (re-) load available com ports
             runAsync {
-                SerialPortBase.getAvailablePorts()
+                SerialPort.getAvailablePorts()
             }.success { portNames ->
                 items.addAll(portNames)
                 preferences {
@@ -168,6 +175,6 @@ abstract class SelectFromTransmitter : View() {
             setOnCloseRequest { close() }
         }
 
-        return result
+        return getResult()
     }
 }

@@ -1,6 +1,5 @@
 import de.treichels.hott.model.HoTTException
 import de.treichels.hott.serial.SerialPort
-import de.treichels.hott.serial.SerialPortBase
 import de.treichels.hott.util.Util
 import java.io.InputStream
 import java.io.OutputStream
@@ -12,11 +11,11 @@ private lateinit var outputStream: OutputStream
 fun main(args: Array<String>) {
     //val availablePorts = JSSCSerialPort.availablePorts
 
-    serialPort = SerialPortBase.getPort("COM3")
+    serialPort = SerialPort.getPort("COM3")
     serialPort.use { port ->
         port.open()
         port.baudRate = 19200
-        port.readTimeout = 1000
+        port.timeout = 1000
         inputStream = port.inputStream
         outputStream = port.outputStream
 

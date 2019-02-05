@@ -1,20 +1,19 @@
 import de.treichels.hott.decoder.internal.firmware.DeviceFirmware
 import de.treichels.hott.decoder.internal.firmware.StandardDeviceFirmware
 import de.treichels.hott.decoder.internal.firmware.waitForBoot
-import de.treichels.hott.serial.SerialPortBase
+import de.treichels.hott.serial.SerialPort
 import java.io.File
 import java.io.IOException
 
 fun main() {
     //LogManager.getLogManager().readConfiguration(ClassLoader.getSystemResourceAsStream("logging.properties"))
-    val port = SerialPortBase.getPort("COM3")
+    val port = SerialPort.getPort("COM3")
     val fileName1 = "C:/Users/olive/.java/cache/HoTT/firmware/gr12l/GR-12L_1a92.bin"
     //val fileName2 = "C:/Users/olive/.java/cache/HoTT/firmware/gr16/FS_GR-16_7a06.bin"
     val firmware = DeviceFirmware.load(File(fileName1))
 
     port.baudRate=19200
-    port.readTimeout=1000
-    port.writeTimeout=1000
+    port.timeout=1000
     port.use {
         it.open()
 
