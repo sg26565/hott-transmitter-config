@@ -94,7 +94,7 @@ object Libs {
     const val freemarker: String = "org.freemarker:freemarker:" + Versions.freemarker
 
     /**
-     * [jaxb-runtime website](https://javaee.github.io/jaxb-v2/) */
+     * [jaxb-runtime website](http://jaxb.java.net) */
     const val jaxb_runtime: String = "org.glassfish.jaxb:jaxb-runtime:" + Versions.jaxb_runtime
 
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String =
