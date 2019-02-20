@@ -28,6 +28,7 @@ enum class ReceiverType(override val productCode: Int = 0, override val orderNo:
     gr12l_sumd(16003540, "S1037"),
     gr12L_sumd_div_pcb(16003550, "S1045"),
     gr12L_sumd_div(16003550, "S1046"),
+    gr12L_sumd_div_2(16003550, "S1051"),
     gr12sc(0, "33566", 0x91),
     gr12sh(0, "33565", 0x91),
     gr12sh_3xg(16006000, "33575", 0x75, true),
