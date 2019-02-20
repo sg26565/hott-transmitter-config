@@ -1,5 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import com.google.gradle.osdetector.OsDetector
 import com.pascalwelsch.gitversioner.GitVersioner
 import edu.sc.seis.launch4j.Launch4jPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -14,7 +13,6 @@ plugins {
     java
     kotlin("jvm") version Versions.org_jetbrains_kotlin apply false
     mavenPublish
-    osDetector
     syncLibs
     shadow apply false
     launch4j apply false
@@ -25,13 +23,6 @@ apply(plugin = "com.pascalwelsch.gitversioner")
 val gitVersioner = the<GitVersioner>().apply {
     yearFactor = 0
     addLocalChangesDetails = false
-}
-
-val os = OsDetector().os
-val platform = when (os) {
-    "osx" -> "mac"
-    "windows" -> "win"
-    else -> os
 }
 
 val versionCode by extra(gitVersioner.versionCode)
@@ -87,15 +78,6 @@ subprojects {
         }
     }
 
-    // add platform dependencies for JavaFX
-    configurations.all {
-        dependencies.all {
-            if (group == "org.openjfx") {
-                dependencies.add(project.dependencies.create(group = group!!, name = name, version = version, classifier = platform))
-            }
-        }
-    }
-
     // publish to Bintray
     publishing {
         publications {
@@ -125,12 +107,12 @@ subprojects {
 
             // configure shadowJar Task
             val shadowJar by tasks.existing(ShadowJar::class) {
-                version = shortVersion
+                archiveVersion.set(shortVersion)
             }
 
             // configure createExe task
             configure<Launch4jPluginExtension> {
-                jar = "${shadowJar.get().archivePath}"
+                jar = shadowJar.get().archiveFile.get().asFile.path
                 version = shortVersion
                 textVersion = longVersion
                 outfile = "${project.name}-$shortVersion.exe"
