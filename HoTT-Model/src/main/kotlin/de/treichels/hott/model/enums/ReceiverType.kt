@@ -18,6 +18,8 @@ import java.util.*
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
 enum class ReceiverType(override val productCode: Int = 0, override val orderNo: String = "", val id: Int = 0, val hasGyro: Boolean = false, val hasVario: Boolean = false, override val category: String = ReceiverType.category) : Registered<ReceiverType> {
+    falcon12(16007900, "S1035", 0x35, true),
+    falcon12_plus(16008700, "S1034", 0x34, true),
     gr4(16005600, "33502"),
     gr8(16005700, "33504"),
     gr10c(0, "S1029", 0x3d, true),
@@ -36,16 +38,14 @@ enum class ReceiverType(override val productCode: Int = 0, override val orderNo:
     gr16l(16003112, "S1021"),
     gr18(16006100, "33579", 0x79, true, true),
     gr18c(16006160, "S1019", 0x19, true),
-    gr18_alpha(19000710, "16520", 0x79, true, true),
-    gr18c_alpha(19001000, "16530", 0x19, true),
-    heim3d(16006900, "16100.86", 0x3d, true),
     gr24(16003200, "33512"),
     gr24l(16003201, "S1022"),
     gr24pro(16005800, "33583", 0x97, true, true),
     gr32(16004000, "33516"),
     gr32l(16004020, "S1023"),
-    falcon12_plus(16008700, "S1034", 0x34, true),
-    falcon12(16007900, "S1035", 0x35, true);
+    gr18_alpha(19000710, "16520", 0x79, true, true),
+    gr18c_alpha(19001000, "16530", 0x19, true),
+    heim3d(16006900, "16100.86", 0x3d, true),
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name] + if (orderNo.isNotEmpty()) " ($orderNo)" else ""
 
