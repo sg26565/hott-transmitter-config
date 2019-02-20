@@ -22,7 +22,7 @@ enum class SensorType(override val productCode: Int = 0, override val orderNo: S
     GeneralModule,
     ElectricAirModule(13015030, "33620"),
     Vario(13015000, "33601"),
-    GPS(13015070, "S8437"),
+    //GPS(13015070, "S8437"), // TODO: this sensor needs 115200 Baud
     ESC,
     GeneralEngineModule(13015020, "33610"),
     GeneralAirModule(13015020, "33611"),
