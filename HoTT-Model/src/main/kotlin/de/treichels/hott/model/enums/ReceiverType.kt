@@ -46,6 +46,7 @@ enum class ReceiverType(override val productCode: Int = 0, override val orderNo:
     gr18_alpha(19000710, "16520", 0x79, true, true),
     gr18c_alpha(19001000, "16530", 0x19, true),
     heim3d(16006900, "16100.86", 0x3d, true),
+    aiocopterfc(0,"S1038", 0x38, true);
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name] + if (orderNo.isNotEmpty()) " ($orderNo)" else ""
 
