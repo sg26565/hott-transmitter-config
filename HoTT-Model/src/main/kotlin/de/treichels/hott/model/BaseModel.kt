@@ -829,7 +829,8 @@ open class Switch(
         var low: Boolean = false,
         var function: SwitchFunction = SwitchFunction.Unassigned,
         var number: Int = 0,
-        var qualifier: List<Any> = emptyList()
+        var qualifier: List<Any> = emptyList(),
+        var active: SwitchActive = SwitchActive.Unknown
 ) : AbstractBase() {
     val id: String
         @XmlID
@@ -972,5 +973,7 @@ data class ThrottleCutOf(
 data class ThrottleSettings(
         var throttleCutOf: ThrottleCutOf = ThrottleCutOf(),
         var throttleLastIdlePosition: Int = 0,
-        var throttleTrim: Int = 0
+        var throttleTrim: Int = 0,
+        var throttleIdleSwitch: Switch = Switch(),
+        var throttleIdleLow: Int = 0
 ) : AbstractBase()

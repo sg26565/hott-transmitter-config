@@ -81,7 +81,14 @@ data class HelicopterMixer(
         var swashplateRotation: Int = 0,
         var tail2ThrottleMix: Int = 0,
         var tailCurve: Curve = Curve(),
-        var throttleCurve: Curve = Curve()
+        var throttleCurve: Curve = Curve(),
+        var roll2NickSwitch: Switch = Switch(), // TODO for nick2Roll, pitch2Roll, pitch2Nick
+        var roll2NickLeft: Int = 0,
+        var roll2NickRight: Int = 0,
+        var roll2NickExpLow: Int = 0,
+        var roll2NickExpHigh: Int = 0,
+        var pitch2TailCurve: Curve = Curve()
+
 ) : AbstractBase()
 
 class HelicopterPhase(
