@@ -67,7 +67,7 @@ class Mz32Downloader : View() {
 
     // UI
     override val root: VBox = vbox {
-        prefWidth = 600.0
+        prefWidth = 800.0
         spacing = 5.0
         paddingAll = 5.0
 
