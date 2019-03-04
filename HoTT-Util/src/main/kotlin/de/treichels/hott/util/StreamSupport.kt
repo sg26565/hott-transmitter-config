@@ -1,6 +1,5 @@
 package de.treichels.hott.util
 
-import sun.reflect.annotation.AnnotationParser.toArray
 import java.io.InputStream
 import java.io.OutputStream
 
