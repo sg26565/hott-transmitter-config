@@ -574,7 +574,12 @@ data class LapStore(
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
 class LinearMixer : CurveMixer(type = MixerType.Linear) {
-    var offset: Int = 0
+    var xOffset: Int = 0
+        set(offset) {
+            field = offset
+            updateCurve()
+        }
+    var yOffset: Int = 0
         set(offset) {
             field = offset
             updateCurve()
@@ -592,9 +597,9 @@ class LinearMixer : CurveMixer(type = MixerType.Linear) {
 
     private fun updateCurve() {
         this.curve = Curve(point = listOf(
-                CurvePoint(number = 1, isEnabled = true, position = -100, value = (-travelLow * (1.0f + offset / 100.0f)).toInt()),
-                CurvePoint(number = 1, isEnabled = true, position = offset, value = 0),
-                CurvePoint(number = 1, isEnabled = true, position = 100, value = (travelHigh * (1.0f - offset / 100.0f)).toInt())
+                CurvePoint(number = 1, isEnabled = true, position = -100, value = (-travelLow * (1.0f + yOffset / 100.0f)).toInt()),
+                CurvePoint(number = 2, isEnabled = true, position = yOffset, value = xOffset),
+                CurvePoint(number = 3, isEnabled = true, position = 100, value = (travelHigh * (1.0f - yOffset / 100.0f)).toInt())
         ))
     }
 
@@ -603,7 +608,7 @@ class LinearMixer : CurveMixer(type = MixerType.Linear) {
         if (other !is LinearMixer) return false
         if (!super.equals(other)) return false
 
-        if (offset != other.offset) return false
+        if (yOffset != other.yOffset) return false
         if (travelHigh != other.travelHigh) return false
         if (travelLow != other.travelLow) return false
 
@@ -612,7 +617,7 @@ class LinearMixer : CurveMixer(type = MixerType.Linear) {
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + offset
+        result = 31 * result + yOffset
         result = 31 * result + travelHigh
         result = 31 * result + travelLow
         return result
