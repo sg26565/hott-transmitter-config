@@ -189,8 +189,12 @@ class Mz32(private val rootDir: File) {
 
 
         // re-calculate missing or invalid hash if file exists and has same size as remote
-        if (fileExists && fileSize == remoteSize && (localHash == null || localSize != fileSize)) {
-            task.print("\tCalculating checksum for $file ... ")
+        if (fileExists && fileSize == remoteSize && (localHash == null || localSize != fileSize || localHash != remoteHash)) {
+            if (localHash == null)
+                task.print("\t$file\tMissing checksum ... ")
+            else
+                task.print("\t$file\tStale checksum ... ")
+
             localHash = Hash(fileSize, file.hash())
             md5[filePath] = localHash
             task.print("ok\n")
@@ -200,7 +204,12 @@ class Mz32(private val rootDir: File) {
 
         // if target file does not exist or has different size as remote or has different remoteHash
         if (!fileExists || (fileSize != remoteSize || remoteHash != localHash) && !path.isUser && !path.isLangUser) {
-            task.print("\tDownloading $file from server ... ")
+            when {
+                !fileExists -> task.print("\t$file\tNew file ... ")
+                fileSize != remoteSize -> task.print("\t$file\tSize mismatch ... ")
+                remoteHash != localHash -> task.print("\t$file\tChecksum mismatch ... ")
+            }
+
             try {
                 if (canCompress(file.extension))
                     Firmware.download("$root$filePath.lzma") { inputStream, _ -> uncompress(inputStream, file.outputStream()) }
