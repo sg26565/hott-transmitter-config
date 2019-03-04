@@ -13,6 +13,7 @@ import java.io.File
 import java.nio.file.FileSystems
 import java.util.concurrent.CountDownLatch
 import java.util.logging.Logger
+import java.util.regex.Pattern
 
 class Mz32(private val rootDir: File) {
     private val cfgFile = CfgFile.load(File(rootDir, GRAUPNER_DISK_CFG))
@@ -134,9 +135,14 @@ class Mz32(private val rootDir: File) {
                     // keep voice files unless replaceVoiceFiles was selected
                     .filterNot { it.isVoice && !replaceVoiceFiles }
                     // convert to string
-                    .map { it.value }.toList().sorted()
+                    .map { it.value }.toMutableList()
 
-            toBeDeleted.forEach {
+            // special handling of /System/Revision_rXXXX.txt
+            toBeDeleted += files.asSequence()
+                    .filter { revisions.matcher(it).matches() }
+                    .filterNot { remoteMd5.containsKey(it) }
+
+            toBeDeleted.sorted().forEach {
                 // delete remaining entries
                 task.print("\tRemoving obsolete file $it\n")
 
@@ -251,6 +257,7 @@ class Mz32(private val rootDir: File) {
 
     companion object {
         private const val GRAUPNER_DISK_CFG = "/GraupnerDisk.cfg"
+        private val revisions = Pattern.compile("/System/Revision_r[0-9]*\\.txt")
         private val log = Logger.getLogger(this::class.qualifiedName)
 
         fun find(): List<Mz32> {
