@@ -77,6 +77,58 @@ object Util {
         return sb.toString()
     }
 
+    fun dumpData(data: ShortArray?, baseAddress: Int = 0): String {
+        val sb = StringBuilder()
+
+        if (data != null) {
+            val len = data.size
+            var addr = 0
+
+            while (addr < len) {
+                sb.append(String.format("0x%04x: ", baseAddress + addr * 2))
+
+                for (i in 0..7)
+                    if (addr + i < len) {
+                        when (i) {
+                            2, 6 -> sb.append(':')
+
+                            0, 4 -> sb.append('|')
+
+                            else -> sb.append(' ')
+                        }
+
+                        sb.append(String.format("%04x", data[addr + i]))
+                    } else
+                        sb.append("     ")
+
+                sb.append("| ")
+
+                (0..7).asSequence()
+                        .filter { addr + it < len }
+                        .map { (data[addr + it].toInt() and 0xffff) }
+                        .forEach {
+                            val lb = (it ushr 8) and 0xff
+                            val hb = it and 0xff
+
+                            if (lb in 0x20..0x7e)
+                                sb.append(lb.toChar())
+                            else
+                                sb.append('.')
+
+                            if (hb in 0x20..0x7e)
+                                sb.append(hb.toChar())
+                            else
+                                sb.append('.')
+                        }
+
+                sb.append('\n')
+                addr += 8
+            }
+        }
+
+        return sb.toString()
+    }
+
     fun getLatestVersion(key: String): String? {
         if (latestVersions.isEmpty)
             try {
