@@ -17,16 +17,16 @@ import java.util.*
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class SensorType(override val productCode: Int = 0, override val orderNo: String = "", override val category: String = SensorType.category) : Registered<SensorType> {
+enum class SensorType(override val productCode: Int = 0, override val orderNo: String = "", override val category: String = SensorType.category, override val baudRate: Int = 19200) : Registered<SensorType> {
     Receiver,
     GeneralModule,
     ElectricAirModule(13015030, "33620"),
     Vario(13015000, "33601"),
     GPS(13015040, "33600"),
-    //GPS(13015070, "S8437"), // TODO: this sensor needs 115200 Baud
     ESC,
     GeneralEngineModule(13015020, "33610"),
     GeneralAirModule(13015020, "33611"),
+    GPS_NEW(13015070, "S8437", baudRate = 115200),
     VM_60V_EU(13018600, "S8389"),
     VM_80V_USA(13018600, "S8361"),
     VM_22V_SBEC_EU(13019600, "S8446"),

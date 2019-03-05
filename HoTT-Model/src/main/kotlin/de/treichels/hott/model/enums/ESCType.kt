@@ -3,7 +3,7 @@ package de.treichels.hott.model.enums
 import de.treichels.hott.util.get
 import java.util.*
 
-enum class ESCType(override val productCode: Int, override val orderNo: String = "", override val category: String = ESCType.category) : Registered<ESCType> {
+enum class ESCType(override val productCode: Int, override val orderNo: String = "", override val category: String = ESCType.category, override val baudRate: Int = 19200) : Registered<ESCType> {
     bl_control_18(15, "33718"),
     bl_control_35(12, "33735"),
     bl_control_45(12, "33745"),

@@ -3,7 +3,7 @@ package de.treichels.hott.model.enums
 import de.treichels.hott.util.get
 import java.util.*
 
-enum class ModuleType(override val productCode: Int, override val orderNo: String = "", override val category: String = ModuleType.category) : Registered<ModuleType> {
+enum class ModuleType(override val productCode: Int, override val orderNo: String = "", override val category: String = ModuleType.category, override val baudRate: Int = 19200) : Registered<ModuleType> {
     smartbox(16400, "33700"),
     mxs8(16004900, "33200"),
     x4s(16005900, "33400"),

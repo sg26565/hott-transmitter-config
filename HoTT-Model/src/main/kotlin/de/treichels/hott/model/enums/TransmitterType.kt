@@ -17,7 +17,7 @@ import java.util.*
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class TransmitterType(override val productCode: Int = 0, override val orderNo: String = "", override val category: String = TransmitterType.category) : Registered<TransmitterType> {
+enum class TransmitterType(override val productCode: Int = 0, override val orderNo: String = "", override val category: String = TransmitterType.category, override val baudRate: Int = 115200) : Registered<TransmitterType> {
     mc16(16004600, "33016"), mc20(16004300, "33020"), mc26(16007700, "S1036"), mc28(16007100, "33028"),
     mc32(16004100, "33032"), mc32Expert(16008500), mc32ExpertBeta(16008501),
     mxs8(16004900,"33200"), mx10(16004200, "33110"), mx12(16003600, "33112"), mx16(16003300, "33116"),

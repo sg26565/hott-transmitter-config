@@ -17,7 +17,7 @@ import java.util.*
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
  */
-enum class ReceiverType(override val productCode: Int = 0, override val orderNo: String = "", val id: Int = 0, val hasGyro: Boolean = false, val hasVario: Boolean = false, override val category: String = ReceiverType.category) : Registered<ReceiverType> {
+enum class ReceiverType(override val productCode: Int = 0, override val orderNo: String = "", val id: Int = 0, val hasGyro: Boolean = false, val hasVario: Boolean = false, override val category: String = ReceiverType.category, override val baudRate: Int = 19200) : Registered<ReceiverType> {
     falcon12(16007900, "S1035", 0x35, true),
     falcon12_plus(16008700, "S1034", 0x34, true),
     gr4(16005600, "33502"),
@@ -47,7 +47,7 @@ enum class ReceiverType(override val productCode: Int = 0, override val orderNo:
     gr18_alpha(19000710, "16520", 0x79, true, true),
     gr18c_alpha(19001000, "16530", 0x19, true),
     heim3d(16006900, "16100.86", 0x3d, true),
-    aiocopterfc(0,"S1038", 0x38, true);
+    aiocopterfc(0, "S1038", 0x38, true);
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name] + if (orderNo.isNotEmpty()) " ($orderNo)" else ""
 

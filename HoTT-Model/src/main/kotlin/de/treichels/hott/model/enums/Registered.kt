@@ -5,5 +5,6 @@ interface Registered<T> where T : Registered<T>, T : Enum<T> {
     val orderNo: String
     val category: String
     val name: String
+    val baudRate: Int
 }
 
