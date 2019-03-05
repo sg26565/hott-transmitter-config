@@ -597,9 +597,9 @@ class LinearMixer : CurveMixer(type = MixerType.Linear) {
 
     private fun updateCurve() {
         this.curve = Curve(point = listOf(
-                CurvePoint(number = 1, isEnabled = true, position = -100, value = (-travelLow * (1.0f + yOffset / 100.0f)).toInt()),
-                CurvePoint(number = 2, isEnabled = true, position = yOffset, value = xOffset),
-                CurvePoint(number = 3, isEnabled = true, position = 100, value = (travelHigh * (1.0f - yOffset / 100.0f)).toInt())
+                CurvePoint(number = 1, isEnabled = true, position = -100, value = (-travelLow * (1.0f + xOffset / 100.0f)).toInt()),
+                CurvePoint(number = 2, isEnabled = true, position = xOffset, value = yOffset),
+                CurvePoint(number = 3, isEnabled = true, position = 100, value = (travelHigh * (1.0f - xOffset / 100.0f)).toInt())
         ))
     }
 
@@ -608,6 +608,7 @@ class LinearMixer : CurveMixer(type = MixerType.Linear) {
         if (other !is LinearMixer) return false
         if (!super.equals(other)) return false
 
+        if (xOffset != other.xOffset) return false
         if (yOffset != other.yOffset) return false
         if (travelHigh != other.travelHigh) return false
         if (travelLow != other.travelLow) return false
@@ -617,6 +618,7 @@ class LinearMixer : CurveMixer(type = MixerType.Linear) {
 
     override fun hashCode(): Int {
         var result = super.hashCode()
+        result = 31 * result + xOffset
         result = 31 * result + yOffset
         result = 31 * result + travelHigh
         result = 31 * result + travelLow

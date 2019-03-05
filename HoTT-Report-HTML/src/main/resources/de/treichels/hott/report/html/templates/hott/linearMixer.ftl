@@ -34,7 +34,7 @@
 					<td align="center"><@switch mixer.switch/></td>
 					<td align="center">${mixer.travelLow}%</td>
 					<td align="center">${mixer.travelHigh}%</td>
-					<td align="center">${mixer.offset}%</td>
+					<td align="center">${mixer.XOffset}%</td>
 					<td align="center"><img src="${png.getImageSource(mixer.curve,0.25,false)}" alt="curve"/></td>
 				</tr>
 			</#if>
