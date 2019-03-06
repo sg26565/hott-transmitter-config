@@ -11,8 +11,7 @@ import javax.sound.sampled.AudioSystem
 class VoiceRSSTTSProvider : Text2SpeechProvider() {
     companion object {
         private val PREFS = Preferences.userNodeForPackage(VoiceRSSTTSProvider::class.java)
-        //private const val VOICE_RSS_DEFAULT_API_KEY = "1def8e9c6ebf4a2eb02fc7b510b04387"
-        private const val VOICE_RSS_DEFAULT_API_KEY = "bb123703dfc1486893ce391ab241ec54"
+        private const val VOICE_RSS_DEFAULT_API_KEY = "46209359f9804adb8616c76d18de928a"
         private const val API_KEY = "apiKey"
 
         internal var apiKey: String?

@@ -1,3 +1,17 @@
+2019-03-06
+==========
+    FirmwareUpgrader-0.9.4.1286
+    - support HoTT sensors and modules
+    - support for ESC (work in progress)
+    - add support for multicopter receivers
+
+    mz32-Downloader-0.9.4.1286
+    - remove obsolete /System/Revision_rXXXX.txt files
+
+    VDFEditor-0.9.4.1286
+    HoTT-TTS-0.9.4.1286
+    - fixed VoiceRSS provider
+
 2018-12-26
 ==========
     FirmwareUpgrader-0.9.4.1191
