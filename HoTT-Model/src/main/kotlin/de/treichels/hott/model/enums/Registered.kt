@@ -8,3 +8,4 @@ interface Registered<T> where T : Registered<T>, T : Enum<T> {
     val baudRate: Int
 }
 
+fun List<Registered<*>>.forProductCode(productCode: Int) = find { it.productCode == productCode }

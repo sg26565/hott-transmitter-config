@@ -11,7 +11,6 @@
  */
 package de.treichels.hott.report.html
 
-import com.sun.org.apache.xml.internal.serializer.utils.Utils
 import de.treichels.hott.decoder.HoTTDecoder
 import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.util.Util.dumpData
@@ -20,7 +19,6 @@ import org.junit.Assert.assertFalse
 import org.junit.Test
 import java.io.File
 import java.net.URL
-import kotlin.test.assertTrue
 
 class ReportTest {
     private val path = javaClass.`package`.name.replace(".", "/") + "/models/"

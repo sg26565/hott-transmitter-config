@@ -7,3 +7,23 @@ interface Callback {
     fun isCancelled(): Boolean
     fun cancel(): Boolean
 }
+
+class SimpleCallback : Callback {
+    private var cancelled = false
+
+    override fun updateMessage(message: String) {
+        println(message)
+    }
+
+    override fun updateProgress(workDone: Long, max: Long) {
+        val percent = workDone * 100 / max
+        println("progress: $workDone of $max ($percent %)")
+    }
+
+    override fun isCancelled(): Boolean = cancelled
+
+    override fun cancel(): Boolean {
+        cancelled = true
+        return true
+    }
+}
