@@ -11,6 +11,7 @@
  */
 package de.treichels.hott.serial
 
+import de.treichels.hott.model.enums.LCDType
 import de.treichels.hott.model.enums.TransmitterType
 import java.io.Serializable
 
@@ -22,15 +23,15 @@ data class TxInfo(
         val transmitterType: TransmitterType,
         val appVersion: Int,
         val memoryVersion: Int,
-        val year: Int,
+        val bootProductCode: Int,
+        val bootVersion: Int,
+        val lcdType: LCDType,
         val transmitterName: String,
         val vendorName: String,
         val ownerName: String,
         val customPhaseNames: List<String>) : Serializable {
     override fun toString(): String {
-        return String.format(
-                "TxInfo [transmitterType=%s, appVersion=%s, memoryVersion=%s, year=%s, transmitterName=%s, vendorName=%s, ownerName=%s, customPhaseNames=%s]",
-                transmitterType, appVersion, memoryVersion, year, transmitterName, vendorName, ownerName, customPhaseNames)
+        return "TxInfo [transmitterType=$transmitterType, appVersion=$appVersion, memoryVersion=$memoryVersion, bootProductCode=$bootProductCode, bootVersion=$bootVersion, lcdType=$lcdType transmitterName=$transmitterName, vendorName=$vendorName, ownerName=$ownerName, customPhaseNames=$customPhaseNames]"
     }
 
 }
