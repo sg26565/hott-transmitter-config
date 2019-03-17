@@ -1,12 +1,12 @@
 package de.treichels.hott.vdfeditor.ui.transmitter
 
-import de.treichels.hott.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.serial.UpdateHandler
 import de.treichels.hott.voice.VoiceFile
 import javafx.concurrent.Task
 
 abstract class TransmitterTask<T>(title: String) : Task<T>(), UpdateHandler<T> {
-    var serialPort: HoTTSerialPort? = null
+    var transmitter: HoTTTransmitter? = null
 
     init {
         @Suppress("LeakingThis")
@@ -21,14 +21,14 @@ abstract class TransmitterTask<T>(title: String) : Task<T>(), UpdateHandler<T> {
 
 class LoadVoiceFileTask(title: String, private val user: Boolean) : TransmitterTask<VoiceFile?>(title) {
     override fun call(): VoiceFile? {
-        serialPort?.turnRfOutOff()
-        return serialPort?.loadVoiceFile(user, this)
+        transmitter?.turnRfOutOff()
+        return transmitter?.loadVoiceFile(user, this)
     }
 }
 
 internal class SendVoiceFileTask(title: String, private val voiceFile: VoiceFile) : TransmitterTask<Unit>(title) {
     override fun call() {
-        serialPort?.turnRfOutOff()
-        serialPort?.sendVoiceFile(voiceFile, this)
+        transmitter?.turnRfOutOff()
+        transmitter?.sendVoiceFile(voiceFile, this)
     }
 }

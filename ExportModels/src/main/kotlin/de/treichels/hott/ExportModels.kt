@@ -1,6 +1,6 @@
 package de.treichels.hott
 
-import de.treichels.hott.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.model.enums.ModelType
 import de.treichels.hott.serial.ModelInfo
@@ -52,7 +52,7 @@ class ExportModels {
     private val tableModel = ModelInfoTableModel()
     private val models = JTable(tableModel)
     private val scrollPane = JScrollPane(models)
-    private var port: HoTTSerialPort? = null
+    private var port: HoTTTransmitter? = null
 
     private inner class ButtonCellRenderer : AbstractCellEditor(), TableCellEditor, TableCellRenderer {
         override fun getCellEditorValue(): Any? {
@@ -257,7 +257,7 @@ class ExportModels {
     }
 
     private fun updateTableData(portName: String) {
-        port = HoTTSerialPort(SerialPort.getPort(portName))
+        port = HoTTTransmitter(SerialPort.getPort(portName))
         tableModel.setModelInfos(port!!.allModelInfos)
     }
 

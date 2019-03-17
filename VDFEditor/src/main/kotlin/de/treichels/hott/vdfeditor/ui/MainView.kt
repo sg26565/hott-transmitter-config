@@ -1,7 +1,7 @@
 package de.treichels.hott.vdfeditor.ui
 
 import de.treichels.hott.decoder.HoTTDecoder
-import de.treichels.hott.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.model.HoTTException
 import de.treichels.hott.model.enums.TransmitterType
@@ -95,7 +95,7 @@ class MainView : View() {
     private val transmitterDialogView by inject<TransmitterDialogView>()
 
     // properties
-    private val serialPortProperty = SimpleObjectProperty<HoTTSerialPort>(null)
+    private val serialPortProperty = SimpleObjectProperty<HoTTTransmitter>(null)
     private var serialPort by serialPortProperty
     private val vdfFileProperty = SimpleObjectProperty<File>(null)
     private var vdfFile by vdfFileProperty
@@ -814,7 +814,7 @@ class MainView : View() {
             LoadVoiceFileTask(messages["load_system_voicefiles"], false).apply {
                 transmitterDialogView.openDialog(this)
                 success { voiceFile ->
-                    this@MainView.serialPort = serialPort
+                    this@MainView.serialPort = transmitter
                     if (voiceFile != null) open(voiceFile)
                 }
             }
@@ -829,7 +829,7 @@ class MainView : View() {
             LoadVoiceFileTask(messages["load_user_voicefiles"], true).apply {
                 transmitterDialogView.openDialog(this)
                 success { voiceFile ->
-                    this@MainView.serialPort = serialPort
+                    this@MainView.serialPort = transmitter
                     if (voiceFile != null) open(voiceFile)
                 }
             }
@@ -1109,7 +1109,7 @@ class MainView : View() {
         SendVoiceFileTask(messages["write_to_transmitter"], voiceFile).apply {
             transmitterDialogView.openDialog(this)
             success {
-                this@MainView.serialPort = serialPort
+                this@MainView.serialPort = transmitter
             }
         }
     }

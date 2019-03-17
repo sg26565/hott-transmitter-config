@@ -11,7 +11,7 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.hott.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.serial.FileInfo
 import de.treichels.hott.serial.FileType
 import javafx.scene.control.TreeItem
@@ -21,7 +21,7 @@ import tornadofx.*
 import tornadofx.FX.Companion.messages
 
 
-class TreeFileInfo(name: String, private val treeView: TreeView<String>, private val serialPort: HoTTSerialPort, internal val fileInfo: FileInfo? = null) : TreeItem<String>(name) {
+class TreeFileInfo(name: String, private val treeView: TreeView<String>, private val transmitter: HoTTTransmitter, internal val fileInfo: FileInfo? = null) : TreeItem<String>(name) {
     companion object {
         private val resources = ResourceLookup(TreeFileInfo)
 
@@ -93,10 +93,10 @@ class TreeFileInfo(name: String, private val treeView: TreeView<String>, private
 
     private fun loadFromSdCard(path: String) {
         treeView.runAsyncWithOverlay {
-            serialPort.listDir(path).map { name ->
-                serialPort.getFileInfo(name)
+            transmitter.listDir(path).map { name ->
+                transmitter.getFileInfo(name)
             }.map { info ->
-                TreeFileInfo(info.name, treeView, serialPort, info).apply {
+                TreeFileInfo(info.name, treeView, transmitter, info).apply {
                     if (isDir) loading()
                 }
             }

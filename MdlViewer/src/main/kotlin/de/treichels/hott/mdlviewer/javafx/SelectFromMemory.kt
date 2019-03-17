@@ -11,7 +11,7 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.hott.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.model.enums.ModelType
 import de.treichels.hott.serial.ModelInfo
 import javafx.beans.binding.BooleanBinding
@@ -34,7 +34,7 @@ class SelectFromMemory : SelectFromTransmitter() {
     // load the selected item as Model
     override fun getResult(): Task<Model>? {
         val modelInfo = listView.selectionModel.selectedItem
-        val serialPort = this.serialPort
+        val serialPort = this.transmitter
 
         return if (modelInfo != null && serialPort != null) {
             runAsync { Model.loadModel(modelInfo, serialPort) }
@@ -55,7 +55,7 @@ class SelectFromMemory : SelectFromTransmitter() {
     }
 
     /**
-     * Refresh a [ListView] with a list of all models from the transmitter memory using the [HoTTSerialPort] from parent.
+     * Refresh a [ListView] with a list of all models from the transmitter memory using the [HoTTTransmitter] from parent.
      */
     override fun refreshUITask(): Task<*> {
         // add temporary placeholder
@@ -63,7 +63,7 @@ class SelectFromMemory : SelectFromTransmitter() {
 
         // fill list in background
         return listView.runAsyncWithOverlay {
-            serialPort?.allModelInfos?.filter { it.modelType != ModelType.Unknown } ?: listOf()
+            transmitter?.allModelInfos?.filter { it.modelType != ModelType.Unknown } ?: listOf()
         }.success { list ->
             listView.items = list.observable()
         }

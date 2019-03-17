@@ -1,8 +1,6 @@
 package de.treichels.hott.update
 
-import de.treichels.hott.decoder.Firmware
-import de.treichels.hott.decoder.HoTTSerialPort
-import de.treichels.hott.decoder.getFirmware
+import de.treichels.hott.decoder.*
 import de.treichels.hott.model.enums.*
 import de.treichels.hott.serial.SerialPort
 import de.treichels.hott.ui.CallbackAdapter
@@ -63,7 +61,7 @@ class FirmwareUpdater : View() {
     private val showReceivers = SimpleBooleanProperty(true)
     private val showSensors = SimpleBooleanProperty(true)
     private val showESCs = SimpleBooleanProperty(true)
-    private val serialPortProperty = SimpleObjectProperty<HoTTSerialPort?>(null)
+    private val serialPortProperty = SimpleObjectProperty<HoTTTransmitter?>(null)
     private var serialPort by serialPortProperty
 
     // background activity
@@ -141,7 +139,7 @@ class FirmwareUpdater : View() {
 
                         if (portName != null) {
                             preferences { put(PREFERRED_PORT, portName) }
-                            serialPort = HoTTSerialPort(SerialPort.getPort(portName))
+                            serialPort = HoTTTransmitter(SerialPort.getPort(portName))
                         }
                     }
                 }
@@ -348,7 +346,7 @@ class FirmwareUpdater : View() {
         }
 
         service.file = File(textField.text)
-        service.serialPort = serialPort!!
+        service.transmitter = serialPort!!
         service.start()
     }
 

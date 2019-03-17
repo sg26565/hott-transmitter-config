@@ -40,8 +40,8 @@ class SelectFromSdCard : SelectFromTransmitter() {
         addEventHandler(branchExpandedEvent) { event ->
             runLater {
                 treeView.runAsyncWithOverlay {
-                    serialPort!!.listDir(event.treeItem.value.path).map {
-                        TreeItem(serialPort!!.getFileInfo(it))
+                    transmitter!!.listDir(event.treeItem.value.path).map {
+                        TreeItem(transmitter!!.getFileInfo(it))
                     }
                 }.success { list ->
                     event.treeItem.children.clear()
@@ -85,7 +85,7 @@ class SelectFromSdCard : SelectFromTransmitter() {
      */
     override fun getResult(): Task<Model>? {
         val fileInfo = treeView.selectionModel.selectedItem?.value
-        val serialPort = this.serialPort
+        val serialPort = this.transmitter
 
         return if (isReady().value && fileInfo != null && serialPort != null) runAsync { loadModel(fileInfo, serialPort) } else null
     }

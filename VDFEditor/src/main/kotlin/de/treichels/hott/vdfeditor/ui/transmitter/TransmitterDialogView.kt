@@ -1,6 +1,6 @@
 package de.treichels.hott.vdfeditor.ui.transmitter
 
-import de.treichels.hott.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.serial.SerialPort
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.ui.MessageDialog
@@ -21,7 +21,7 @@ class TransmitterDialogView : View() {
     // variables
     private var task: TransmitterTask<*>? = null
     private var bgTask: Task<Unit?>? = null
-    private var serialPort: HoTTSerialPort? = null
+    private var transmitter: HoTTTransmitter? = null
 
     // controls
     private var portCombo: ComboBox<String> by singleAssign()
@@ -91,10 +91,10 @@ class TransmitterDialogView : View() {
         preferences { put("comPort", portCombo.value) }
         dialog.showAndWait().ifPresent {
             if (it == ButtonType.OK) {
-                if (serialPort?.isOpen == true) serialPort?.close()
-                serialPort = HoTTSerialPort(SerialPort.getPort(portCombo.value))
-                serialPort?.timeout = 200
-                task?.serialPort = serialPort
+                if (transmitter?.isOpen == true) transmitter?.close()
+                transmitter = HoTTTransmitter(SerialPort.getPort(portCombo.value))
+                transmitter?.timeout = 200
+                task?.transmitter = transmitter
                 bgTask = runAsync {
                     task?.run()
                 }.success {
@@ -120,7 +120,7 @@ class TransmitterDialogView : View() {
 
         // cleanup
         bgTask = null
-        serialPort = null
+        transmitter = null
 
         // bind task properties
         portCombo.disableWhen(task.runningProperty())
@@ -140,7 +140,7 @@ class TransmitterDialogView : View() {
                 items.clear()
                 items.addAll(ports)
 
-                // restore last used com serialPort
+                // restore last used com port
                 preferences {
                     val prefPort: String? = get("comPort", null)
                     value = if (prefPort != null && items.contains(prefPort)) prefPort else null

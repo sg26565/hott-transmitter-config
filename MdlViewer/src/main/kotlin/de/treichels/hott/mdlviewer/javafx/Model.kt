@@ -12,7 +12,7 @@
 package de.treichels.hott.mdlviewer.javafx
 
 import de.treichels.hott.decoder.HoTTDecoder
-import de.treichels.hott.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.model.BaseModel
 import de.treichels.hott.model.HoTTException
 import de.treichels.hott.model.enums.ModelType
@@ -49,20 +49,20 @@ class Model(private val info: ModelInfo, private val data: ByteArray) {
             return Model(info, data)
         }
 
-        fun loadModel(fileInfo: FileInfo, serialPort: HoTTSerialPort): Model {
+        fun loadModel(fileInfo: FileInfo, transmitter: HoTTTransmitter): Model {
             val fileName = fileInfo.name
             val type = ModelType.forChar(fileName[0])
             val name = fileName.substring(1, fileName.length - 4)
             val modelInfo = ModelInfo(modelNumber = 0, modelName = name, modelInfo = "", modelType = type, receiverClass = ReceiverClass.Unknown, transmitterType = TransmitterType.Unknown)
             val data = ByteArrayOutputStream().use { stream ->
-                serialPort.readFile(fileInfo.path, stream)
+                transmitter.readFile(fileInfo.path, stream)
                 stream.toByteArray()
             }
 
             return Model(modelInfo, data)
         }
 
-        fun loadModel(modelInfo: ModelInfo, serialPort: HoTTSerialPort) = Model(modelInfo, serialPort.getModelData(modelInfo))
+        fun loadModel(modelInfo: ModelInfo, transmitter: HoTTTransmitter) = Model(modelInfo, transmitter.getModelData(modelInfo))
     }
 
     val fileName: String = "${info.modelType.char}${info.modelName}"

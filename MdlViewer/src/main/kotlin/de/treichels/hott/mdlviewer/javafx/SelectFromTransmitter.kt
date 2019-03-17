@@ -11,7 +11,7 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.hott.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.serial.SerialPort
 import de.treichels.hott.ui.ExceptionDialog
 import javafx.beans.binding.BooleanBinding
@@ -43,7 +43,7 @@ abstract class SelectFromTransmitter : View() {
     private var refreshTask: Task<*>? = null
 
     // the current serial port - updated when the com port changes
-    protected var serialPort: HoTTSerialPort? = null
+    protected var transmitter: HoTTTransmitter? = null
 
     // UI
     override val root = borderpane {
@@ -99,11 +99,11 @@ abstract class SelectFromTransmitter : View() {
     private fun portChanged() {
         val name = portCombo.value
         if (name != null) {
-            if (!serialPort?.portName.equals(name)) {
+            if (!transmitter?.portName.equals(name)) {
                 preferences { put("comPort", name) }
 
-                serialPort?.close()
-                serialPort = HoTTSerialPort(SerialPort.getPort(name))
+                transmitter?.close()
+                transmitter = HoTTTransmitter(SerialPort.getPort(name))
 
                 refreshTask = refreshUITask().apply {
                     portCombo.disableWhen(runningProperty())

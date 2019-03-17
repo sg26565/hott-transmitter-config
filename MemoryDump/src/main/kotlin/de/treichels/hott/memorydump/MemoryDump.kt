@@ -11,7 +11,7 @@
  */
 package de.treichels.hott.memorydump
 
-import de.treichels.hott.decoder.HoTTSerialPort
+import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.serial.ResponseCode.*
 import de.treichels.hott.serial.SerialPort
 import de.treichels.hott.ui.ExceptionDialog
@@ -53,7 +53,7 @@ class MemoryDumpView : View() {
                 if (portName?.isEmpty() == false) {
                     message.append(messages["startMessage"]).append('\n')
 
-                    HoTTSerialPort(SerialPort.getPort(portName)).use { port ->
+                    HoTTTransmitter(SerialPort.getPort(portName)).use { port ->
                         port.open()
                         port.turnRfOutOff()
 
