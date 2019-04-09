@@ -19,7 +19,7 @@ abstract class TransmitterTask<T>(title: String) : Task<T>(), UpdateHandler<T> {
     }
 }
 
-class LoadVoiceFileTask(title: String, private val user: Boolean) : TransmitterTask<VoiceFile?>(title) {
+internal class LoadVoiceFileTask(title: String, private val user: Boolean) : TransmitterTask<VoiceFile?>(title) {
     override fun call(): VoiceFile? {
         transmitter?.turnRfOutOff()
         return transmitter?.loadVoiceFile(user, this)
