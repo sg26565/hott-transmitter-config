@@ -1,3 +1,13 @@
+2019-04-09
+==========
+    VDFEditor-0.9.4.1295
+    - fixed timeouts during upload of system VDFs to mz-24 PRO
+    
+2019-03-17
+==========
+    FirmwareUpdater-0.9.4.1293
+    - support for ESC
+
 2019-03-06
 ==========
     FirmwareUpdater-0.9.4.1288
