@@ -65,6 +65,10 @@ interface SerialPort : Closeable {
         if (b != rc) throw IOException("Invalid response: expected $rc but got $b")
     }
 
+    fun wait4Data() {
+        while (inputStream.available() == 0) Thread.sleep(10)
+    }
+
     companion object {
         private val provider: SerialPortProvider by lazy {
             ServiceLoader.load(SerialPortProvider::class.java).first()
