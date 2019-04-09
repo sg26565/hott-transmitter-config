@@ -66,7 +66,12 @@ interface SerialPort : Closeable {
     }
 
     fun wait4Data() {
-        while (inputStream.available() == 0) Thread.sleep(10)
+        for (i in 1..100) {
+            if (inputStream.available() > 0) return
+            Thread.sleep(10)
+        }
+
+        throw IOException("timeout")
     }
 
     companion object {
