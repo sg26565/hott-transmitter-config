@@ -708,6 +708,8 @@ abstract class Phase : AbstractBase() {
     var digitalTrimStep = emptyList<Int>()
     var switchAnnouncements = emptyList<SwitchAnnouncement>()
     var phaseAnnouncement: String = ""
+    @get:XmlElementWrapper(name = "freeMixers")
+    var freeMixer = emptyList<FreeMixer>()
 
     override fun toString(): String {
         return String.format("Phase %d: %s", number + 1, phaseName)
