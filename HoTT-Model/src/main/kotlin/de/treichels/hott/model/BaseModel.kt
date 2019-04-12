@@ -155,6 +155,7 @@ abstract class BaseModel(val modelType: ModelType) : AbstractBase() {
     var escVoiceAnnounceFlag: Long = 0
     val suppressMenus: MutableMap<Menus, Boolean> = mutableMapOf()
     var showHiddenMenus = false
+    var powerType = PowerType.noselect
 
     fun getSwitch(id: String): Switch? {
         return switch.firstOrNull { it.id == id }
