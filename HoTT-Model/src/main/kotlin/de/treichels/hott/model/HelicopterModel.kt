@@ -74,7 +74,10 @@ open class HelicopterModel(
 data class HelicopterMixer(
         var nick2TailMix: Int = 0,
         var nick2ThrottleMix: Int = 0,
+        var nick2Roll: Int = 0,
         var pitchCurve: Curve = Curve(),
+        var pitch2Roll: Int = 0,
+        var pitch2Nick: Int = 0,
         var roll2TailMix: Int = 0,
         var roll2ThrottleMix: Int = 0,
         var swashplateLimit: Int = 0,
