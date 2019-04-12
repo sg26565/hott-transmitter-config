@@ -30,6 +30,8 @@ class WingedModel : BaseModel(ModelType.Winged) {
     @get:XmlIDREF
     var profiTrimSwitch: Switch = Switch()
     var tailType: TailType = TailType.Unknown
+    var rudderType: RudderType = RudderType.Unknown
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
