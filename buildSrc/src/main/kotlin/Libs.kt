@@ -64,7 +64,7 @@ object Libs {
     const val launch4j: String = "net.sf.launch4j:launch4j:" + Versions.launch4j
 
     /**
-     * [proguard-gradle website](http://proguard.sourceforge.net/) */
+     * [proguard-gradle website](https://www.guardsquare.com/proguard) */
     const val proguard_gradle: String =
             "net.sf.proguard:proguard-gradle:" + Versions.proguard_gradle
 

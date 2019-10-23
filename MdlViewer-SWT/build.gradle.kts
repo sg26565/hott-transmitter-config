@@ -17,7 +17,7 @@ application {
 }
 
 eclipseMavenCentral {
-    release("4.10.0") {
+    release("4.13.0") {
         implementation("org.eclipse.swt")
         useNativesForRunningPlatform()
     }
