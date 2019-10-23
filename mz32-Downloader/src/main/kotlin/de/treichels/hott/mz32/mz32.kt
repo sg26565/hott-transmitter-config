@@ -10,7 +10,10 @@ import de.treichels.lzma.canCompress
 import de.treichels.lzma.uncompress
 import tornadofx.*
 import java.io.File
+import java.nio.file.CopyOption
 import java.nio.file.FileSystems
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 import java.util.concurrent.CountDownLatch
 import java.util.logging.Logger
 import java.util.regex.Pattern
@@ -189,7 +192,7 @@ class Mz32(private val rootDir: File) {
 
 
         // re-calculate missing or invalid hash if file exists and has same size as remote
-        if (fileExists && fileSize == remoteSize && (localHash == null || localSize != fileSize || localHash != remoteHash)) {
+        if (fileExists && fileSize == remoteSize && (localHash == null || localSize != fileSize )) {
             if (localHash == null)
                 task.print("\t$file\tMissing checksum ... ")
             else
@@ -210,21 +213,27 @@ class Mz32(private val rootDir: File) {
                 remoteHash != localHash -> task.print("\t$file\tChecksum mismatch ... ")
             }
 
+            // download into temporary file
+            val tempFile = File(file.parent, "${file.name}.tmp")
+
             try {
                 if (canCompress(file.extension))
-                    Firmware.download("$root$filePath.lzma") { inputStream, _ -> uncompress(inputStream, file.outputStream()) }
+                    Firmware.download("$root$filePath.lzma") { inputStream, _ -> uncompress(inputStream, tempFile.outputStream()) }
                 else
-                    Firmware.download(CallbackAdapter(task), "$root$filePath", file)
+                    Firmware.download(CallbackAdapter(task), "$root$filePath", tempFile)
+
+                // replace target file only after successfull download
+                Files.move(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
 
                 md5[filePath] = remoteHash
                 task.print("ok\n")
             } catch (e: Exception) {
                 task.print("failed: $e\n")
                 showError(e)
+            } finally {
+                if (tempFile.exists()) tempFile.delete()
             }
         }
-
-        if (task.isCancelled) return
     }
 
     private fun showError(e: Exception) {
@@ -250,8 +259,15 @@ class Mz32(private val rootDir: File) {
         task.print("\nFound firmware $fileName ...\n")
 
         if (!file.exists() || fileSize != firmwareSize) {
+            // download into temporary file
+            val tempFile = File(file.parent, "${file.name}.tmp")
+
             task.print("\tDownloading $file from server ... ")
-            val hash = Firmware.download(CallbackAdapter(task), "$remotePath/$fileName", file)
+            val hash = Firmware.download(CallbackAdapter(task), "$remotePath/$fileName", tempFile)
+
+            // replace target file only after successfull download
+            Files.move(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
+
             md5[filePath] = Hash(firmwareSize, hash)
             task.print("ok\n")
         } else {
