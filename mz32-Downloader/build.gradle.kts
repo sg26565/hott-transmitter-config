@@ -3,7 +3,7 @@ dependencies {
     compile(project(":HoTT-UI"))
     implementation(project(":HoTT-Decoder"))
     compile(project(":lzma-sdk"))
-    runtimeOnly(project(":Java8ComboBoxListViewSkin"))
+    if (isJava8) runtimeOnly(project(":Java8ComboBoxListViewSkin"))
 }
 
 plugins {

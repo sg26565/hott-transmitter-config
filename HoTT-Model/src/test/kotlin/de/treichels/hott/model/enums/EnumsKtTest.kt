@@ -1,6 +1,5 @@
 package de.treichels.hott.model.enums
 
-import com.sun.xml.internal.ws.developer.UsesJAXBContext
 import org.junit.Assert.*
 import kotlin.test.Test
 
