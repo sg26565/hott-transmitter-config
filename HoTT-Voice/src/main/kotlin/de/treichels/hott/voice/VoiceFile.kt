@@ -35,7 +35,7 @@ open class VoiceFileBase(vdfType: VDFType, transmitterType: TransmitterType, vdf
     val transmitterTypeProperty = SimpleObjectProperty<TransmitterType>(transmitterType)
     val vdfVersionProperty = SimpleIntegerProperty(vdfVersion)
     val countryProperty = SimpleObjectProperty<CountryCode>(country)
-    val voiceList = list.observable()
+    val voiceList = list.asObservable()
     val sizeProperty = voiceList.sizeProperty
     val systemVDFProperty: BooleanBinding = vdfTypeProperty.isEqualTo(VDFType.System)
 

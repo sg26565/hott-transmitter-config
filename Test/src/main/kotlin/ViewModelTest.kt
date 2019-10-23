@@ -10,7 +10,7 @@ class Person(name: String, title: String) {
     var title: String by titleProperty
 }
 
-private val persons = mutableListOf(Person("John", "Manager"), Person("Jay", "Worker bee")).observable()
+private val persons = mutableListOf(Person("John", "Manager"), Person("Jay", "Worker bee")).asObservable()
 
 class PersonModel : ItemViewModel<Person>() {
     val name = bind(Person::nameProperty)

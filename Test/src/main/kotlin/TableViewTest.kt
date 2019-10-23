@@ -26,7 +26,7 @@ class Announcement(number: Int, directory: String, fileName: String, text: Strin
 }
 
 class TableViewTest : View("TableView with Map") {
-    private val types = listOf("Text", "Sound", "SSML").observable()
+    private val types = listOf("Text", "Sound", "SSML").asObservable()
 
     private val map = resources.stream("Deutsch.csv").reader().readLines()
             .map { it.split(';').map { it.trim() } }
@@ -40,7 +40,7 @@ class TableViewTest : View("TableView with Map") {
                 isExpanded = false
                 val items = map[it]
                 if (items != null) {
-                    tableview(items.toList().observable()) {
+                    tableview(items.toList().asObservable()) {
                         prefWidth = 800.0
                         smartResize()
 

@@ -17,7 +17,7 @@ class CheckComboBox<T> : ComboBox<T>() {
     private val selections = mutableMapOf<T, SimpleBooleanProperty>()
 
     /** an ObservableList containing all selected items. */
-    val selectedItems: ObservableList<T> = mutableListOf<T>().observable()
+    val selectedItems: ObservableList<T> = mutableListOf<T>().asObservable()
 
     init {
         // disable standard rendering of combo box value

@@ -224,7 +224,7 @@ class FirmwareUpdater : View() {
     private fun updateDeviceList() {
         deviceType.items = deviceList.filter {
             it is ModuleType && showModules.value || it is ReceiverType && showReceivers.value || it is SensorType && showSensors.value || it is ESCType && showESCs.value
-        }.observable()
+        }.asObservable()
     }
 
     private fun deviceTypeChanged() {

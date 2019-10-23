@@ -59,13 +59,13 @@ class SelectFromMemory : SelectFromTransmitter() {
      */
     override fun refreshUITask(): Task<*> {
         // add temporary placeholder
-        listView.items = observableList(null)
+        listView.items = observableListOf()
 
         // fill list in background
         return listView.runAsyncWithOverlay {
             transmitter?.allModelInfos?.filter { it.modelType != ModelType.Unknown } ?: listOf()
         }.success { list ->
-            listView.items = list.observable()
+            listView.items = list.asObservable()
         }
     }
 

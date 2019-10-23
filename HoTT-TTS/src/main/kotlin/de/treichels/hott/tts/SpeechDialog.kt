@@ -250,7 +250,7 @@ class SpeechDialog : View() {
     }
 
     private fun ComboBox<Text2SpeechProvider>.initProvider() {
-        items = providers.filter { it.enabled }.observable()
+        items = providers.filter { it.enabled }.asObservable()
 
         setOnAction {
             preferences { put(PREFERRED_PROVIDER, provider.name) }
@@ -269,7 +269,7 @@ class SpeechDialog : View() {
     }
 
     private fun ComboBox<Quality>.initQuality() {
-        items = provider.qualities.observable()
+        items = provider.qualities.asObservable()
 
         setOnAction {
             preferences { put(PREFERRED_FORMAT, quality.toString()) }
@@ -285,7 +285,7 @@ class SpeechDialog : View() {
 
     private fun ComboBox<Voice>.initVoices() {
         try {
-            items = provider.installedVoices().observable()
+            items = provider.installedVoices().asObservable()
 
             setOnAction {
                 preferences { put(PREFERRED_VOICE, voice.id) }
