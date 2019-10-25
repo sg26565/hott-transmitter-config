@@ -5,15 +5,16 @@ import de.treichels.hott.decoder.getFirmware
 import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.ui.CallbackAdapter
 import de.treichels.hott.ui.ExceptionDialog
+import de.treichels.hott.util.CallbackInputStream
 import de.treichels.hott.util.hash
 import de.treichels.lzma.canCompress
 import de.treichels.lzma.uncompress
 import tornadofx.*
 import java.io.File
-import java.nio.file.CopyOption
 import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
+import java.util.concurrent.CancellationException
 import java.util.concurrent.CountDownLatch
 import java.util.logging.Logger
 import java.util.regex.Pattern
@@ -47,28 +48,35 @@ class Mz32(private val rootDir: File) {
     fun update(task: FXTask<*>, languages: List<Language>, updateResources: Boolean = true, replaceHelpPages: Boolean = true, replaceVoiceFiles: Boolean = true, updateFirmware: Boolean = true) {
         if (task.isCancelled) return
 
-        task.updateProgress(0.0, 1.0)
+        try {
+            task.updateProgress(0.0, 1.0)
 
-        val (latestFirmware, latestResources) = findLatest(task)
+            val (latestFirmware, latestResources) = findLatest(task)
 
-        md5.load()
-        task.updateProgress(0.0, 1.0)
-        if (updateResources) updateResources(task, languages, latestResources, replaceHelpPages, replaceVoiceFiles)
+            md5.load()
+            task.updateProgress(0.0, 1.0)
+            if (updateResources) updateResources(task, languages, latestResources, replaceHelpPages, replaceVoiceFiles)
 
-        task.updateProgress(0.0, 1.0)
-        if (updateFirmware) TransmitterType.forProductCode(productCode).getFirmware().firstOrNull { it.name == latestFirmware }?.apply {
-            updateFirmware(task, this)
+            task.updateProgress(0.0, 1.0)
+            if (updateFirmware) TransmitterType.forProductCode(productCode).getFirmware().firstOrNull { it.name == latestFirmware }?.apply {
+                updateFirmware(task, this)
+            }
+
+            md5.save()
+        } catch (e: CancellationException) {
+            task.print("cancelled.\n")
+        } catch (e: Exception) {
+            task.print("failed: $e\n")
+            showError(e)
         }
 
-        md5.save()
-
         if (task.isCancelled)
-            task.print("\ncancelled\n")
+            task.print("\nDownload was cancelled\n")
         else
             task.print("\nall done\n")
     }
 
-    private fun findLatest(task: FXTask<*>) = Firmware.download("$remotePath/latest.txt") { inputStream, _ ->
+    private fun findLatest(task: FXTask<*>) = Firmware.download(CallbackAdapter(task), "$remotePath/latest.txt") { inputStream, _ ->
         task.print("Checking for latest online versions ... ")
         val cfg = CfgFile.load(inputStream)
         task.print("ok\n")
@@ -83,84 +91,81 @@ class Mz32(private val rootDir: File) {
 
         val remoteRoot = "$remotePath/$firmware"
 
-        try {
-            // process remote md5sum.txt
-            val remoteMd5 = MD5Sum().apply {
-                task.print("\tDownloading remote md5sum.txt from server ... ")
-                Firmware.download("$remoteRoot//md5sum.txt") { inputStream, _ -> load(inputStream) }
-                task.print("ok\n")
-
-                if (task.isCancelled) return
-                task.print("\tChecking for new or updated resource files ...\n")
-
-                entries.forEachIndexed { index, entry ->
-                    if (task.isCancelled) return
-
-                    val path = Path(entry.key)
-                    val hash = entry.value
-
-                    when {
-                        path.isHelp -> if (replaceHelpPages && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
-                        path.isVoice -> if (replaceVoiceFiles && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
-                        else -> updateFileOnline(task, remoteRoot, path, hash)
-                    }
-                    task.updateProgress(index.toLong(), size.toLong())
-                }
+        // process remote md5sum.txt
+        val remoteMd5 = MD5Sum().apply {
+            task.print("\tDownloading remote md5sum.txt from server ... ")
+            Firmware.download(CallbackAdapter(task), "$remoteRoot//md5sum.txt") { inputStream, _ ->
+                load(inputStream)
             }
+            task.print("ok\n")
 
             if (task.isCancelled) return
+            task.print("\tChecking for new or updated resource files ...\n")
 
-            // check for obsolete local md5 entries and files
-            val files = rootDir.walk().iterator().asSequence()
-                    // ignore directories
-                    .filter { it.isFile }
-                    // get the relative path
-                    .map { "/${it.relativeTo(rootDir).path}" }
-                    // convert path separators on Windows
-                    .map { it.replace(File.separatorChar, '/') }
-                    // collect to a mutable set
-                    .toMutableSet()
+            entries.forEachIndexed { index, entry ->
+                if (task.isCancelled) return
 
-            // add keys from md5sum.txt
-            files.addAll(md5.keys)
+                val path = Path(entry.key)
+                val hash = entry.value
 
-            // keep entries in remote md5sum.txt
-            files.removeAll(remoteMd5.keys)
-
-            val toBeDeleted = files.asSequence()
-                    // convert to path
-                    .map { Path(it) }
-                    .filter { it.isAutoDelete }
-                    // keep protected entries
-                    .filterNot { it.isProtected }
-                    // keep help pages unless replaceHelpPages was selected
-                    .filterNot { it.isHelp && !replaceHelpPages }
-                    // keep voice files unless replaceVoiceFiles was selected
-                    .filterNot { it.isVoice && !replaceVoiceFiles }
-                    // convert to string
-                    .map { it.value }.toMutableList()
-
-            // special handling of /System/Revision_rXXXX.txt
-            toBeDeleted += files.asSequence()
-                    .filter { revisions.matcher(it).matches() }
-                    .filterNot { remoteMd5.containsKey(it) }
-
-            toBeDeleted.sorted().forEach {
-                // delete remaining entries
-                task.print("\tRemoving obsolete file $it\n")
-
-                File(rootDir, it).apply {
-                    if (exists()) delete()
+                when {
+                    path.isHelp -> if (replaceHelpPages && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
+                    path.isVoice -> if (replaceVoiceFiles && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
+                    else -> updateFileOnline(task, remoteRoot, path, hash)
                 }
+                task.updateProgress(index.toLong(), size.toLong())
+            }
+        }
 
-                md5.remove(it)
+        if (task.isCancelled) return
+
+        // check for obsolete local md5 entries and files
+        val files = rootDir.walk().iterator().asSequence()
+                // ignore directories
+                .filter { it.isFile }
+                // get the relative path
+                .map { "/${it.relativeTo(rootDir).path}" }
+                // convert path separators on Windows
+                .map { it.replace(File.separatorChar, '/') }
+                // collect to a mutable set
+                .toMutableSet()
+
+        // add keys from md5sum.txt
+        files.addAll(md5.keys)
+
+        // keep entries in remote md5sum.txt
+        files.removeAll(remoteMd5.keys)
+
+        val toBeDeleted = files.asSequence()
+                // convert to path
+                .map { Path(it) }
+                .filter { it.isAutoDelete }
+                // keep protected entries
+                .filterNot { it.isProtected }
+                // keep help pages unless replaceHelpPages was selected
+                .filterNot { it.isHelp && !replaceHelpPages }
+                // keep voice files unless replaceVoiceFiles was selected
+                .filterNot { it.isVoice && !replaceVoiceFiles }
+                // convert to string
+                .map { it.value }.toMutableList()
+
+        // special handling of /System/Revision_rXXXX.txt
+        toBeDeleted += files.asSequence()
+                .filter { revisions.matcher(it).matches() }
+                .filterNot { remoteMd5.containsKey(it) }
+
+        toBeDeleted.sorted().forEach {
+            // delete remaining entries
+            task.print("\tRemoving obsolete file $it\n")
+
+            File(rootDir, it).apply {
+                if (exists()) delete()
             }
 
-            task.print("done\n")
-        } catch (e: Exception) {
-            task.print("failed: $e\n")
-            showError(e)
+            md5.remove(it)
         }
+
+        task.print("done\n")
 
         // delete VoiceList.lst in each language folder
         if (replaceVoiceFiles) languages.map { "/Voice/${it.name}/VoiceList.lst" }.forEach {
@@ -192,7 +197,7 @@ class Mz32(private val rootDir: File) {
 
 
         // re-calculate missing or invalid hash if file exists and has same size as remote
-        if (fileExists && fileSize == remoteSize && (localHash == null || localSize != fileSize )) {
+        if (fileExists && fileSize == remoteSize && (localHash == null || localSize != fileSize)) {
             if (localHash == null)
                 task.print("\t$file\tMissing checksum ... ")
             else
@@ -215,21 +220,19 @@ class Mz32(private val rootDir: File) {
 
             // download into temporary file
             val tempFile = File(file.parent, "${file.name}.tmp")
+            val callback = CallbackAdapter(task)
 
             try {
                 if (canCompress(file.extension))
-                    Firmware.download("$root$filePath.lzma") { inputStream, _ -> uncompress(inputStream, tempFile.outputStream()) }
+                    Firmware.download(callback, "$root$filePath.lzma") { inputStream, _ -> uncompress(inputStream, tempFile.outputStream()) }
                 else
-                    Firmware.download(CallbackAdapter(task), "$root$filePath", tempFile)
+                    Firmware.download(callback, "$root$filePath", tempFile)
 
                 // replace target file only after successfull download
                 Files.move(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
 
                 md5[filePath] = remoteHash
                 task.print("ok\n")
-            } catch (e: Exception) {
-                task.print("failed: $e\n")
-                showError(e)
             } finally {
                 if (tempFile.exists()) tempFile.delete()
             }
