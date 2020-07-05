@@ -1,12 +1,8 @@
 package de.treichels.hott.vdfeditor.ui
 
-import de.treichels.hott.messages.Messages
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.util.Util
 import tornadofx.*
-import java.io.File
-import java.util.jar.JarFile
-import java.util.logging.LogManager
 
 fun main(args: Array<String>) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }

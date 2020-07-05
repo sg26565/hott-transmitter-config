@@ -17,22 +17,20 @@
  */
 package de.treichels.binding.android;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-
 import com.madrobot.beans.BeanInfo;
 import com.madrobot.beans.IntrospectionException;
 import com.madrobot.beans.Introspector;
 import com.madrobot.beans.PropertyDescriptor;
-
 import de.treichels.binding.BindingManager;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;

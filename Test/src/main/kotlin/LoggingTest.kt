@@ -1,6 +1,5 @@
 import de.treichels.hott.util.Util
 import java.util.logging.Level
-import java.util.logging.LogManager
 import java.util.logging.Logger
 
 fun main (args: Array<String>) {

@@ -1,6 +1,6 @@
 package de.treichels.hott.model.enums
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import kotlin.test.Test
 
 class EnumsKtTest {

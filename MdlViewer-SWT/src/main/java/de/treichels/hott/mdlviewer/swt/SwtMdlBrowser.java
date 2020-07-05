@@ -1,5 +1,6 @@
 package de.treichels.hott.mdlviewer.swt;
 
+import de.treichels.hott.util.Util;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -7,8 +8,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-
-import de.treichels.hott.util.Util;
 
 class SwtMdlBrowser extends Composite {
     private static final boolean IS_WINDOWS = System.getProperty("os.name").toLowerCase().startsWith("windows");

@@ -17,14 +17,13 @@
  */
 package de.treichels.hott.android.background.serial.bluetooth;
 
+import android.bluetooth.BluetoothSocket;
 import de.treichels.hott.model.HoTTException;
 import de.treichels.hott.serial.SerialPort;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import android.bluetooth.BluetoothSocket;
 
 /**
  * An adapter that turns a UsbSerialPort into a SerialPort for the HoTTDecoder.

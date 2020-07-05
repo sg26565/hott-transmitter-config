@@ -18,15 +18,18 @@ import de.treichels.hott.model.HoTTException
 import de.treichels.hott.model.enums.ModelType
 import de.treichels.hott.model.enums.ReceiverClass
 import de.treichels.hott.model.enums.TransmitterType
-import de.treichels.hott.serial.FileInfo
-import de.treichels.hott.serial.ModelInfo
 import de.treichels.hott.report.html.HTMLReport
 import de.treichels.hott.report.pdf.PDFReport
 import de.treichels.hott.report.xml.XMLReport
+import de.treichels.hott.serial.FileInfo
+import de.treichels.hott.serial.ModelInfo
 import de.treichels.hott.util.Util
 import tornadofx.*
 import tornadofx.FX.Companion.messages
-import java.io.*
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
 
 
 class Model(private val info: ModelInfo, private val data: ByteArray) {

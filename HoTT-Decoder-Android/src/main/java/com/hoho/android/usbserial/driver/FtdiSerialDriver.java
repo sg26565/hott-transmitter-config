@@ -21,21 +21,16 @@
 
 package com.hoho.android.usbserial.driver;
 
+import android.hardware.usb.*;
+import android.util.Log;
+import com.hoho.android.usbserial.util.HexDump;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import android.hardware.usb.UsbConstants;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbDeviceConnection;
-import android.hardware.usb.UsbEndpoint;
-import android.hardware.usb.UsbRequest;
-import android.util.Log;
-
-import com.hoho.android.usbserial.util.HexDump;
 
 /**
  * A {@link CommonUsbSerialPort} implementation for a variety of FTDI devices

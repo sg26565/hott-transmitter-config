@@ -1,6 +1,6 @@
 package de.treichels.hott.vdfeditor.ui
 
-import java.util.ResourceBundle
+import java.util.*
 
 enum class Language {
     DE, EN, FR, IT, ES, NL, CZ, RU, CN, KR, JP;

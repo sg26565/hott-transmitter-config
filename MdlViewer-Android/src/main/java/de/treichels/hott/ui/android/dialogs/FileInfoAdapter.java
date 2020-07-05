@@ -17,8 +17,6 @@
  */
 package de.treichels.hott.ui.android.dialogs;
 
-import de.treichels.hott.serial.FileInfo;
-import de.treichels.hott.serial.FileType;
 import android.content.Context;
 import android.os.AsyncTask.Status;
 import android.view.LayoutInflater;
@@ -28,6 +26,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import de.treichels.hott.android.background.serial.DeviceHandler;
 import de.treichels.hott.android.background.serial.tasks.ListDirectoryTask;
+import de.treichels.hott.serial.FileInfo;
+import de.treichels.hott.serial.FileType;
 
 /**
  * This class provides an adapter for {@link FileInfo} objects. It will list files and directories from the transmitter sd card and generate {@link View}

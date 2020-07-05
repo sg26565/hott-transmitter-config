@@ -17,13 +17,6 @@
  */
 package de.treichels.hott.ui.android.html;
 
-import de.treichels.hott.model.enums.ModelType;
-import de.treichels.hott.model.enums.Section;
-import de.treichels.hott.model.enums.TransmitterType;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +24,13 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import de.treichels.hott.model.enums.ModelType;
+import de.treichels.hott.model.enums.Section;
+import de.treichels.hott.model.enums.TransmitterType;
 import de.treichels.hott.ui.android.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An {@link Adapter} for navigation items on a drawer.

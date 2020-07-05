@@ -17,11 +17,6 @@
  */
 package de.treichels.hott.ui.android.html;
 
-import de.treichels.hott.model.BaseModel;
-import de.treichels.hott.model.enums.ModelType;
-
-import java.io.InputStream;
-
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -31,7 +26,11 @@ import android.os.AsyncTask;
 import android.provider.OpenableColumns;
 import de.treichels.hott.HoTTDecoder;
 import de.treichels.hott.android.background.FailSafeAsyncTask;
+import de.treichels.hott.model.BaseModel;
+import de.treichels.hott.model.enums.ModelType;
 import de.treichels.hott.ui.android.R;
+
+import java.io.InputStream;
 
 /**
  * An {@link AsyncTask} that load data from an {@link Uri} and converts it into a {@link BaseModel}.

@@ -17,15 +17,14 @@
  */
 package de.treichels.hott.android.background.serial.tasks;
 
+import de.treichels.hott.android.background.serial.DeviceHandler;
+import de.treichels.hott.android.background.serial.TxTask;
 import de.treichels.hott.model.enums.ModelType;
 import de.treichels.hott.serial.ModelInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import de.treichels.hott.android.background.serial.DeviceHandler;
-import de.treichels.hott.android.background.serial.TxTask;
 
 /**
  * Retrieve a list of all model names from the transmitter.

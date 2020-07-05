@@ -1,6 +1,5 @@
 import de.treichels.hott.decoder.HoTTDecoder
 import de.treichels.hott.model.BaseModel
-import de.treichels.hott.report.html.HTMLReport
 import de.treichels.hott.report.xml.XMLReport
 import java.io.File
 

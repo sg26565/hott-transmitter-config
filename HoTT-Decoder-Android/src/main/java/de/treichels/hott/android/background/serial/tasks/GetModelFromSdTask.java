@@ -17,17 +17,16 @@
  */
 package de.treichels.hott.android.background.serial.tasks;
 
+import de.treichels.hott.HoTTDecoder;
+import de.treichels.hott.android.background.serial.DeviceHandler;
+import de.treichels.hott.android.background.serial.TxTask;
+import de.treichels.hott.android.decoder.R;
 import de.treichels.hott.model.BaseModel;
 import de.treichels.hott.model.enums.ModelType;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
-import de.treichels.hott.HoTTDecoder;
-import de.treichels.hott.android.background.serial.DeviceHandler;
-import de.treichels.hott.android.background.serial.TxTask;
-import de.treichels.hott.android.decoder.R;
 
 /**
  * Load the specified model from transmitter sd card.

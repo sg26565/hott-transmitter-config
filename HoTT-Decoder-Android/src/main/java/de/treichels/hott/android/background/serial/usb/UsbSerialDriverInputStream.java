@@ -17,12 +17,11 @@
  */
 package de.treichels.hott.android.background.serial.usb;
 
+import android.util.Log;
+import com.hoho.android.usbserial.driver.UsbSerialPort;
+
 import java.io.IOException;
 import java.io.InputStream;
-
-import android.util.Log;
-
-import com.hoho.android.usbserial.driver.UsbSerialPort;
 
 /**
  * An {@link InputStream} that reads from a supplied {@link UsbSerialPort}.

@@ -17,14 +17,13 @@
  */
 package de.treichels.hott.android.background.serial.tasks;
 
+import de.treichels.hott.android.background.serial.DeviceHandler;
+import de.treichels.hott.android.background.serial.TxTask;
 import de.treichels.hott.serial.FileInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import de.treichels.hott.android.background.serial.DeviceHandler;
-import de.treichels.hott.android.background.serial.TxTask;
 
 /**
  * List a directory on the sd card of the transmitter and return a list of {@link FileInfo} objects for each entry.

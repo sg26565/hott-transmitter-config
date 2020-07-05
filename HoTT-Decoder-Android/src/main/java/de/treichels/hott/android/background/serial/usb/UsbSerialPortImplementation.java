@@ -17,16 +17,14 @@
  */
 package de.treichels.hott.android.background.serial.usb;
 
+import android.hardware.usb.UsbDeviceConnection;
+import com.hoho.android.usbserial.driver.UsbSerialPort;
 import de.treichels.hott.model.HoTTException;
 import de.treichels.hott.serial.SerialPort;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import android.hardware.usb.UsbDeviceConnection;
-
-import com.hoho.android.usbserial.driver.UsbSerialPort;
 
 /**
  * An adapter that turns a UsbSerialPort into a SerialPort for the HoTTDecoder.

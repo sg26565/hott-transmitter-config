@@ -4,11 +4,10 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.collections.ObservableList
 import javafx.scene.control.ComboBox
 import javafx.scene.control.ListCell
-import javafx.scene.control.Skin
 import javafx.scene.control.cell.CheckBoxListCell
+import javafx.scene.control.skin.ComboBoxListViewSkin
 import javafx.util.Callback
 import tornadofx.*
-import javafx.scene.control.skin.ComboBoxListViewSkin
 
 /**
  * A combo box that displays a list of check boxes which can be selected individually.

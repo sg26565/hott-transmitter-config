@@ -21,13 +21,12 @@
 
 package com.hoho.android.usbserial.util;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-
 import android.hardware.usb.UsbRequest;
 import android.util.Log;
-
 import com.hoho.android.usbserial.driver.UsbSerialPort;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
 /**
  * Utility class which services a {@link UsbSerialPort} in its {@link #run()}

@@ -21,12 +21,12 @@
 
 package com.hoho.android.usbserial.driver;
 
+import android.util.Pair;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import android.util.Pair;
 
 /**
  * Maps (vendor id, product id) pairs to the corresponding serial driver.

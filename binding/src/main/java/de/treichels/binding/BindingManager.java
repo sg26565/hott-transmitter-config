@@ -17,16 +17,16 @@
  */
 package de.treichels.binding;
 
+import com.madrobot.beans.BeanInfo;
+import com.madrobot.beans.IntrospectionException;
+import com.madrobot.beans.Introspector;
+import com.madrobot.beans.PropertyDescriptor;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.madrobot.beans.BeanInfo;
-import com.madrobot.beans.IntrospectionException;
-import com.madrobot.beans.Introspector;
-import com.madrobot.beans.PropertyDescriptor;
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;

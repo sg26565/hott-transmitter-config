@@ -17,17 +17,16 @@
  */
 package de.treichels.hott.ui.android.html;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import de.treichels.hott.android.background.FailSafeAsyncTask;
 import de.treichels.hott.model.BaseModel;
 import de.treichels.hott.report.html.HTMLReport;
+import de.treichels.hott.ui.android.MdlViewerActivity;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-
-import android.content.Context;
-import android.os.AsyncTask;
-import de.treichels.hott.android.background.FailSafeAsyncTask;
-import de.treichels.hott.ui.android.MdlViewerActivity;
 
 /**
  * An {@link AsyncTask} that generates an HTML report for a model configuration.

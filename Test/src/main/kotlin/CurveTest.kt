@@ -11,7 +11,6 @@ import javafx.scene.shape.StrokeLineJoin
 import javafx.scene.text.Font
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator
 import tornadofx.*
-import java.util.concurrent.CountDownLatch
 
 fun main(args: Array<String>) = launch<CurveTest>(args)
 

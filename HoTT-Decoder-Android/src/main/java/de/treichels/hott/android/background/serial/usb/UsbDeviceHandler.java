@@ -1,11 +1,5 @@
 package de.treichels.hott.android.background.serial.usb;
 
-import de.treichels.hott.serial.SerialPort;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,15 +8,18 @@ import android.content.IntentFilter;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
-
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
-
 import de.treichels.hott.android.background.serial.DeviceAdapter;
 import de.treichels.hott.android.background.serial.DeviceHandler;
 import de.treichels.hott.android.background.serial.DeviceInfo;
 import de.treichels.hott.android.background.serial.TxTask;
+import de.treichels.hott.serial.SerialPort;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A {@link DeviceHandler} for {@link UsbDevice} objects.

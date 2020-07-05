@@ -17,13 +17,12 @@
  */
 package de.treichels.hott.android.background.serial.tasks;
 
-import de.treichels.hott.model.BaseModel;
-
-import java.io.IOException;
-
 import de.treichels.hott.HoTTDecoder;
 import de.treichels.hott.android.background.serial.DeviceHandler;
 import de.treichels.hott.android.background.serial.TxTask;
+import de.treichels.hott.model.BaseModel;
+
+import java.io.IOException;
 
 /**
  * Load the specified model from transmitter memory.

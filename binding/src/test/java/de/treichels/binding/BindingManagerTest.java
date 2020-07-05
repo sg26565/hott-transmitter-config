@@ -17,14 +17,13 @@
  */
 package de.treichels.binding;
 
-import static org.junit.Assert.assertEquals;
-
-import java.lang.reflect.InvocationTargetException;
-
+import com.madrobot.beans.IntrospectionException;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.madrobot.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;

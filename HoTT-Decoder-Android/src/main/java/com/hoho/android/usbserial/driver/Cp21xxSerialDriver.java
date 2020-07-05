@@ -21,18 +21,14 @@
 
 package com.hoho.android.usbserial.driver;
 
+import android.hardware.usb.*;
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import android.hardware.usb.UsbConstants;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbDeviceConnection;
-import android.hardware.usb.UsbEndpoint;
-import android.hardware.usb.UsbInterface;
-import android.util.Log;
 
 public class Cp21xxSerialDriver implements UsbSerialDriver {
 

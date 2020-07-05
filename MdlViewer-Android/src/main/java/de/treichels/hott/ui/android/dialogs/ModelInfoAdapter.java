@@ -17,7 +17,6 @@
  */
 package de.treichels.hott.ui.android.dialogs;
 
-import de.treichels.hott.serial.ModelInfo;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -27,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import de.treichels.hott.android.background.serial.DeviceHandler;
 import de.treichels.hott.android.background.serial.tasks.GetAllModelsTask;
+import de.treichels.hott.serial.ModelInfo;
 
 /**
  * This class provides an adapter for {@link ModelInfo} instances. It will load all defined models from the transmitter memory and generate {@link View} objects

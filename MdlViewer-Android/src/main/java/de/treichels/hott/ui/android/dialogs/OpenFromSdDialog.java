@@ -17,11 +17,11 @@
  */
 package de.treichels.hott.ui.android.dialogs;
 
-import de.treichels.hott.serial.FileInfo;
-import de.treichels.hott.serial.FileType;
 import android.app.DialogFragment;
 import android.view.View;
 import android.widget.AdapterView;
+import de.treichels.hott.serial.FileInfo;
+import de.treichels.hott.serial.FileType;
 
 /**
  * A {@link DialogFragment} that shows a list of files from the transmitter sd card and allows the user to select one of them.

@@ -1,11 +1,5 @@
 package de.treichels.hott.android.background.serial.bluetooth;
 
-import de.treichels.hott.serial.SerialPort;
-
-import java.io.IOException;
-import java.util.Set;
-import java.util.UUID;
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -13,6 +7,11 @@ import android.content.Context;
 import de.treichels.hott.android.background.serial.DeviceAdapter;
 import de.treichels.hott.android.background.serial.DeviceHandler;
 import de.treichels.hott.android.background.serial.DeviceInfo;
+import de.treichels.hott.serial.SerialPort;
+
+import java.io.IOException;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * A {@link DeviceHandler} for {@link BluetoothDevice} objects.

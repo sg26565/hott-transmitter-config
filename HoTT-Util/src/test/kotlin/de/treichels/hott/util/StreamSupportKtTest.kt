@@ -1,10 +1,9 @@
 package de.treichels.hott.util
 
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import java.io.ByteArrayOutputStream
-import java.lang.IllegalArgumentException
 
 class StreamSupportKtTest {
     val data = ByteArray(256) {

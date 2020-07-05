@@ -21,10 +21,10 @@
 
 package com.hoho.android.usbserial.driver;
 
-import java.io.IOException;
-
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
+
+import java.io.IOException;
 
 /**
  * Interface for a single serial port.

@@ -31,7 +31,6 @@ import org.apache.commons.io.FilenameUtils
 import tornadofx.*
 import java.io.File
 import java.io.FileWriter
-import java.util.concurrent.Callable
 
 fun main(args: Array<String>) {
     Thread.setDefaultUncaughtExceptionHandler { _, e -> ExceptionDialog.show(e) }

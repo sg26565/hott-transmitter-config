@@ -2,7 +2,6 @@ package de.treichels.hott.ui
 
 import tornadofx.*
 import java.io.File
-import java.util.*
 
 fun File.copyTo(task: FXTask<*>, target: File, overwrite: Boolean = false, bufferSize: Int = DEFAULT_BUFFER_SIZE): File {
     if (!this.exists()) {

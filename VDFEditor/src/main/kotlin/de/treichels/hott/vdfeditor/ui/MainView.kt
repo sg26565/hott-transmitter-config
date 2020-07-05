@@ -5,10 +5,6 @@ import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.model.HoTTException
 import de.treichels.hott.model.enums.TransmitterType
-import de.treichels.hott.voice.CountryCode
-import de.treichels.hott.voice.VDFType
-import de.treichels.hott.voice.VoiceData
-import de.treichels.hott.voice.VoiceFile
 import de.treichels.hott.report.html.HTMLReport
 import de.treichels.hott.report.pdf.PDFReport
 import de.treichels.hott.tts.SpeechDialog
@@ -19,6 +15,10 @@ import de.treichels.hott.vdfeditor.actions.*
 import de.treichels.hott.vdfeditor.ui.transmitter.LoadVoiceFileTask
 import de.treichels.hott.vdfeditor.ui.transmitter.SendVoiceFileTask
 import de.treichels.hott.vdfeditor.ui.transmitter.TransmitterDialogView
+import de.treichels.hott.voice.CountryCode
+import de.treichels.hott.voice.VDFType
+import de.treichels.hott.voice.VoiceData
+import de.treichels.hott.voice.VoiceFile
 import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.ListChangeListener
@@ -39,7 +39,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
-import java.lang.IllegalStateException
 import java.util.regex.Pattern
 import javax.sound.sampled.AudioInputStream
 

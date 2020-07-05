@@ -17,10 +17,10 @@
  */
 package de.treichels.hott.ui.android.dialogs;
 
-import de.treichels.hott.serial.ModelInfo;
 import android.app.DialogFragment;
 import android.view.View;
 import android.widget.AdapterView;
+import de.treichels.hott.serial.ModelInfo;
 import de.treichels.hott.ui.android.R;
 
 /**

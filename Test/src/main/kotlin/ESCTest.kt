@@ -1,12 +1,4 @@
-import de.treichels.hott.decoder.internal.firmware.*
-import de.treichels.hott.decoder.internal.firmware.DeviceFirmware.Companion.COMMAND_START
-import de.treichels.hott.decoder.internal.firmware.DeviceFirmware.Companion.COMMAND_START_BOOT5
-import de.treichels.hott.decoder.internal.firmware.DeviceFirmware.Companion.COMMAND_START_TELEMETRY
-import de.treichels.hott.decoder.internal.firmware.DeviceFirmware.Companion.waitForBoot
-import de.treichels.hott.decoder.internal.firmware.StandardDeviceFirmware.Companion.getDeviceId
-import de.treichels.hott.decoder.internal.firmware.StandardDeviceFirmware.Companion.getVersionInfo
-import de.treichels.hott.decoder.internal.firmware.StandardDeviceFirmware.Companion.getVersionInfoAddr
-import de.treichels.hott.decoder.internal.firmware.StandardDeviceFirmware.Companion.updateMode
+import de.treichels.hott.decoder.internal.firmware.DeviceFirmware
 import de.treichels.hott.serial.SerialPort
 import de.treichels.hott.util.SimpleCallback
 import javafx.application.Application

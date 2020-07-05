@@ -1,8 +1,8 @@
-import de.treichels.hott.voice.Player
 import de.treichels.hott.tts.Gender
 import de.treichels.hott.tts.polly.PollyTTSProvider
 import de.treichels.hott.tts.voicerss.VoiceRSSTTSProvider
 import de.treichels.hott.tts.win10.Win10TTSProvider
+import de.treichels.hott.voice.Player
 
 fun main(vararg args: String) {
     val providers = listOf(VoiceRSSTTSProvider(), Win10TTSProvider(), PollyTTSProvider())

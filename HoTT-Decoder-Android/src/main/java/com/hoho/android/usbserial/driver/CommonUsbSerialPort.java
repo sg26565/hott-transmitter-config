@@ -21,10 +21,10 @@
 
 package com.hoho.android.usbserial.driver;
 
-import java.io.IOException;
-
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
+
+import java.io.IOException;
 
 /**
  * A base class shared by several driver implementations.

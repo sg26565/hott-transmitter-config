@@ -17,11 +17,10 @@
  */
 package de.treichels.hott.android.background.serial;
 
+import android.content.Context;
 import de.treichels.hott.serial.SerialPort;
 
 import java.io.IOException;
-
-import android.content.Context;
 
 /**
  * A generic handler for communication devices. This allows to use the same code base for comminucation with the transmitter regardless of communication channel

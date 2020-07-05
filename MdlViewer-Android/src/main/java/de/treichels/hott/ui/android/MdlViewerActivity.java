@@ -17,14 +17,6 @@
  */
 package de.treichels.hott.ui.android;
 
-import de.treichels.hott.model.BaseModel;
-import de.treichels.hott.model.enums.ModelType;
-import de.treichels.hott.model.enums.Section;
-import de.treichels.hott.model.enums.TransmitterType;
-import de.treichels.hott.serial.ModelInfo;
-
-import java.net.MalformedURLException;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -51,6 +43,11 @@ import de.treichels.hott.android.background.serial.bluetooth.BluetoothDeviceHand
 import de.treichels.hott.android.background.serial.tasks.GetModelFromMemoryTask;
 import de.treichels.hott.android.background.serial.tasks.GetModelFromSdTask;
 import de.treichels.hott.android.background.serial.usb.UsbDeviceHandler;
+import de.treichels.hott.model.BaseModel;
+import de.treichels.hott.model.enums.ModelType;
+import de.treichels.hott.model.enums.Section;
+import de.treichels.hott.model.enums.TransmitterType;
+import de.treichels.hott.serial.ModelInfo;
 import de.treichels.hott.ui.android.dialogs.AbstractTxDialog;
 import de.treichels.hott.ui.android.dialogs.DialogClosedListener;
 import de.treichels.hott.ui.android.dialogs.bluetooth.OpenFromMemoryDialogBluetooth;
@@ -60,6 +57,8 @@ import de.treichels.hott.ui.android.dialogs.usb.OpenFromSdDialogUsb;
 import de.treichels.hott.ui.android.html.GenerateHtmlTask;
 import de.treichels.hott.ui.android.html.GetModelFromUriTask;
 import de.treichels.hott.ui.android.html.SectionAdapter;
+
+import java.net.MalformedURLException;
 
 /**
  * The main activity for the MdlViewer.

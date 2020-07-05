@@ -1,8 +1,8 @@
 package de.treichels.hott.vdfeditor.ui
 
+import de.treichels.hott.vdfeditor.actions.RenameAction
 import de.treichels.hott.voice.VDFType
 import de.treichels.hott.voice.VoiceData
-import de.treichels.hott.vdfeditor.actions.RenameAction
 import javafx.geometry.Pos
 import javafx.scene.control.Button
 import javafx.scene.control.Label

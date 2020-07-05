@@ -21,13 +21,13 @@
 
 package com.hoho.android.usbserial.driver;
 
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
 
 /**
  *

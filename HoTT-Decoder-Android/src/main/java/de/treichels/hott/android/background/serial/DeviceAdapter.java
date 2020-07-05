@@ -17,9 +17,6 @@
  */
 package de.treichels.hott.android.background.serial;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +24,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An {@link BaseAdapter} that supports the display of a list of communication devices in a {@link Spinner}.

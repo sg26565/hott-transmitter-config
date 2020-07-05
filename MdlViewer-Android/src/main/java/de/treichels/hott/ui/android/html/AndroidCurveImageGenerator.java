@@ -17,27 +17,20 @@
  */
 package de.treichels.hott.ui.android.html;
 
-import de.treichels.hott.model.Curve;
-import de.treichels.hott.model.CurvePoint;
-import de.treichels.hott.report.CurveImageGenerator;
-
-import java.io.ByteArrayOutputStream;
-
-import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
-import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
-
-import android.graphics.Bitmap;
+import android.graphics.*;
 import android.graphics.Bitmap.CompressFormat;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Cap;
 import android.graphics.Paint.Join;
 import android.graphics.Paint.Style;
-import android.graphics.Typeface;
 import android.util.Base64;
+import de.treichels.hott.model.Curve;
+import de.treichels.hott.model.CurvePoint;
+import de.treichels.hott.report.CurveImageGenerator;
+import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
+import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Android implementation of a {@link CurveImageGenerator}.

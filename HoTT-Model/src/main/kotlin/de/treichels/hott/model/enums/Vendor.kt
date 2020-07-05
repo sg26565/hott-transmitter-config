@@ -11,9 +11,8 @@
  */
 package de.treichels.hott.model.enums
 
-import java.util.*
-import de.treichels.hott.util.Util
 import de.treichels.hott.util.get
+import java.util.*
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;
