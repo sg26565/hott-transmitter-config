@@ -130,7 +130,10 @@ subprojects {
             task<Copy>("release") {
                 group = "build"
                 from(tasks["createExe"]) {
-                    exclude("lib/")
+                    include("*.exe")
+                }
+                from(tasks["shadowJar"]) {
+                    include("*.jar")
                 }
                 into("$rootDir/../release")
             }
