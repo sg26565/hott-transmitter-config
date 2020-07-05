@@ -8,6 +8,7 @@ import javafx.scene.control.Skin
 import javafx.scene.control.cell.CheckBoxListCell
 import javafx.util.Callback
 import tornadofx.*
+import javafx.scene.control.skin.ComboBoxListViewSkin
 
 /**
  * A combo box that displays a list of check boxes which can be selected individually.
@@ -23,24 +24,8 @@ class CheckComboBox<T> : ComboBox<T>() {
         // disable standard rendering of combo box value
         buttonCell = ListCell<T>()
 
-        // Java version quirks - load skin class via reflection
-        // The Java 8 class inherits from a parent class that does not exist in later versions
-        // The Java 10 class does not exist in Java 8
-        val isJava8 = System.getProperty("java.version").startsWith("1.8")
-        val skinClass = Class.forName(if (isJava8) "de.treichels.hott.Java8ComboBoxListViewSkin" else "javafx.scene.control.skin.ComboBoxListViewSkin")
-        val constructor = skinClass.getConstructor(ComboBox::class.java)
-
         // re-use default skin
-        skin = constructor.newInstance(this) as Skin<*>?
-
-        // disable auto close
-        if (isJava8) {
-            // overwritten method skin.isHideOnClickEnabled() returns false on Java 8
-        } else {
-            // call skin.setHideOnClick(false) through reflection
-            val method = skinClass.getMethod("setHideOnClick", Boolean::class.java)
-            method.invoke(skin, false)
-        }
+        skin = ComboBoxListViewSkin(this).apply { isHideOnClick = false }
 
         // custom cell factory
         cellFactory = Callback { CheckBoxListCell<T>(Callback(::getSelection)) }
