@@ -8,9 +8,6 @@ import javafx.scene.control.*
 import javafx.scene.layout.Priority
 import javafx.scene.layout.VBox
 import tornadofx.*
-import java.io.File
-import java.util.jar.JarFile
-import java.util.logging.LogManager
 import kotlin.reflect.KClass
 
 fun main(vararg args: String) {
@@ -33,7 +30,8 @@ class Mz32Downloader : View() {
     private var updateFirmware by singleAssign<CheckBox>()
     private var comboBox by singleAssign<ComboBox<Mz32>>()
     private var textArea by singleAssign<TextArea>()
-    private var progressBar by singleAssign<ProgressBar>()
+    private var progressBarTotal by singleAssign<ProgressBar>()
+    private var progressBarStep by singleAssign<ProgressBar>()
     private var updateButton by singleAssign<Button>()
 
     // Properties
@@ -163,7 +161,12 @@ class Mz32Downloader : View() {
             vgrow = Priority.SOMETIMES
         }
 
-        progressBar = progressbar {
+        progressBarTotal = progressbar {
+            prefWidthProperty().bind(textArea.widthProperty())
+            visibleWhen(disableUI)
+        }
+
+        progressBarStep = progressbar {
             prefWidthProperty().bind(textArea.widthProperty())
             visibleWhen(disableUI)
         }
@@ -191,7 +194,8 @@ class Mz32Downloader : View() {
             updateButton.text = "Cancel"
             updateButton.action { stopTask() }
             disableUI.value = true
-            progressBar.progressProperty().bind(progressProperty())
+            progressBarTotal.progressProperty().bind(progressProperty())
+            progressBarStep.progressProperty().bind(progressProperty().divide(1000))
             messageProperty().addListener { _, _, newValue -> textArea.appendText(newValue) }
             root.layout()
         }
