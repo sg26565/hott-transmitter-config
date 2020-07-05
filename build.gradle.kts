@@ -2,6 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.pascalwelsch.gitversioner.GitVersioner
 import edu.sc.seis.launch4j.Launch4jPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.google.gradle.osdetector.OsDetector
 
 buildscript {
     dependencies.classpath("com.pascalwelsch.gitversioner:gitversioner:0.5.0")
@@ -13,6 +14,7 @@ plugins {
     id("maven-publish")
     id("com.github.johnrengelman.shadow") version "5.1.0" apply false
     id("edu.sc.seis.launch4j") version "2.4.6" apply false
+    id("com.google.osdetector") version "1.6.2"
 }
 
 apply(plugin = "com.pascalwelsch.gitversioner")
@@ -114,6 +116,7 @@ subprojects {
                 textVersion = longVersion
                 outfile = "${project.name}-$shortVersion.exe"
                 copyright = "GPLv3"
+                bundledJrePath = if (OsDetector().os == "windows") "%JAVA_HOME%" else "\${JAVA_HOME}"
 
                 // add icon - if it exists
                 file("icon.ico").apply {

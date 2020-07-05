@@ -2,7 +2,6 @@ import com.google.gradle.osdetector.OsDetector
 
 plugins {
     application
-    id("com.google.osdetector") version "1.6.2"
 }
 
 val os = OsDetector().os

@@ -1,9 +1,5 @@
 import com.google.gradle.osdetector.OsDetector
 
-plugins {
-    id("com.google.osdetector") version "1.6.2"
-}
-
 val os = OsDetector().os
 val os_platform = when (os) {
     "osx" -> "mac"
