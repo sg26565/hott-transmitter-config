@@ -1,4 +1,4 @@
 dependencies {
     compile(project(":HoTT-Serial"))
-    implementation(Libs.jserialcomm)
+    implementation("com.fazecast:jSerialComm:_")
 }

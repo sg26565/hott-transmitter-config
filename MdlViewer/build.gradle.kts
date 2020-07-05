@@ -2,7 +2,7 @@ import com.google.gradle.osdetector.OsDetector
 
 plugins {
     application
-    osDetector
+    id("com.google.osdetector") version "1.6.2"
 }
 
 val os = OsDetector().os
@@ -17,9 +17,9 @@ dependencies {
     implementation(project(":HoTT-Report-XML"))
     implementation(project(":HoTT-Report-PDF"))
     implementation(project(":HoTT-Serial"))
-    implementation(Libs.commons_math3)
-    implementation(Libs.javafx_swing)
-    implementation(Libs.javafx_swing + ":" + os_platform)
+    implementation("org.apache.commons:commons-math3:_")
+    implementation("org.openjfx:javafx-swing:_")
+    implementation("org.openjfx:javafx-swing:_:" + os_platform)
     runtimeOnly(project(":jSerialCommPort"))
 }
 

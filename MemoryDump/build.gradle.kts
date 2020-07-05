@@ -2,7 +2,7 @@ dependencies {
     implementation(project(":HoTT-Decoder", configuration="obfuscated"))
     implementation(project(":HoTT-UI"))
     implementation(project(":HoTT-Serial"))
-    implementation(Libs.commons_lang3)
+    implementation("org.apache.commons:commons-lang3:_")
     runtimeOnly(project(":jSerialCommPort"))
 }
 

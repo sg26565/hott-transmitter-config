@@ -1,10 +1,10 @@
 dependencies {
     compile(project(":HoTT-Model"))
     compile(project(":HoTT-Voice"))
-    implementation(Libs.aws_java_sdk_polly)
-    implementation(Libs.jackson_databind)
-    runtimeOnly(Libs.mp3spi)
-    runtimeOnly(Libs.vorbisspi)
+    implementation("com.amazonaws:aws-java-sdk-polly:_")
+    implementation("com.fasterxml.jackson.core:jackson-databind:_")
+    runtimeOnly("com.googlecode.soundlibs:mp3spi:_")
+    runtimeOnly("com.googlecode.soundlibs:vorbisspi:_")
 }
 
 plugins {

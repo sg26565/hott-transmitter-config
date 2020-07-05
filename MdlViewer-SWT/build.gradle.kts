@@ -3,12 +3,12 @@ dependencies {
     implementation(project(":HoTT-Report-XML"))
     implementation(project(":HoTT-Report-PDF"))
     implementation(project(":HoTT-Serial"))
-    implementation(Libs.commons_math3)
+    implementation("org.apache.commons:commons-math3:_")
     runtimeOnly(project(":jSerialCommPort"))
 }
 
 plugins {
-    eclipse
+    id("com.diffplug.gradle.eclipse.mavencentral") version "3.18.1"
     application
 }
 

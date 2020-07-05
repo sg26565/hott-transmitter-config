@@ -1,4 +1,4 @@
 dependencies {
     compile(project(":HoTT-Model"))
-    implementation(Libs.flying_saucer_pdf_itext5)
+    implementation("org.xhtmlrenderer:flying-saucer-pdf-itext5:_")
 }

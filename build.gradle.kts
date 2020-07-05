@@ -4,18 +4,15 @@ import edu.sc.seis.launch4j.Launch4jPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
-    dependencies {
-        classpath(Libs.gitversioner)
-    }
+    dependencies.classpath("com.pascalwelsch.gitversioner:gitversioner:0.5.0")
 }
 
 plugins {
     java
-    kotlin("jvm") version Versions.org_jetbrains_kotlin apply false
-    mavenPublish
-    syncLibs
-    shadow apply false
-    launch4j apply false
+    kotlin("jvm") apply false
+    id("maven-publish")
+    id("com.github.johnrengelman.shadow") version "5.1.0" apply false
+    id("edu.sc.seis.launch4j") version "2.4.6" apply false
 }
 
 apply(plugin = "com.pascalwelsch.gitversioner")
@@ -67,14 +64,14 @@ subprojects {
 
     dependencies {
         // common dependencies
-        implementation(Libs.kotlin_stdlib_jdk8)
-        testImplementation(Libs.junit)
-        testImplementation(Libs.kotlin_test_junit)
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:_")
+        testImplementation("junit:junit:_")
+        testImplementation("org.jetbrains.kotlin:kotlin-test-junit:_")
 
         // dependency management
         @Suppress("UnstableApiUsage")
         constraints {
-            add("compile", "org.jetbrains.kotlin:kotlin-reflect:${Versions.org_jetbrains_kotlin}")
+            add("compile", "org.jetbrains.kotlin:kotlin-reflect:_")
         }
     }
 

@@ -1,4 +1,4 @@
 dependencies {
-    compile(Libs.jaxb_api)
+    compile("javax.xml.bind:jaxb-api:_")
     compile(project(":HoTT-Util"))
 }

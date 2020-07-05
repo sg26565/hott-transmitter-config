@@ -1,7 +1,7 @@
 import com.google.gradle.osdetector.OsDetector
 
 plugins {
-    osDetector
+    id("com.google.osdetector") version "1.6.2"
 }
 
 val os = OsDetector().os
@@ -12,16 +12,16 @@ val os_platform = when (os) {
 }
 
 dependencies {
-    compile(Libs.javafx_base)
-    compile(Libs.javafx_base + ":" + os_platform)
-    compile(Libs.javafx_graphics)
-    compile(Libs.javafx_graphics + ":" + os_platform)
-    compile(Libs.javafx_controls)
-    compile(Libs.javafx_controls + ":" + os_platform)
-    compile(Libs.javafx_web)
-    compile(Libs.javafx_web + ":" + os_platform)
-    compile(Libs.javafx_media)
-    compile(Libs.javafx_media + ":" + os_platform)
-    compile(Libs.tornadofx)
+    compile("org.openjfx:javafx-base:_")
+    compile("org.openjfx:javafx-base:_:" + os_platform)
+    compile("org.openjfx:javafx-graphics:_")
+    compile("org.openjfx:javafx-graphics:_:" + os_platform)
+    compile("org.openjfx:javafx-controls:_")
+    compile("org.openjfx:javafx-controls:_:" + os_platform)
+    compile("org.openjfx:javafx-web:_")
+    compile("org.openjfx:javafx-web:_:" + os_platform)
+    compile("org.openjfx:javafx-media:_")
+    compile("org.openjfx:javafx-media:_:" + os_platform)
+    compile("no.tornado:tornadofx:_")
     compile(project(":HoTT-Util"))
 }

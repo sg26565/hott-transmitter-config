@@ -10,7 +10,8 @@ dependencies {
     implementation(project(":HoTT-UI"))
     implementation(project(":HoTT-Util"))
     implementation(project(":FirmwareUpdater"))
-    runtimeOnly(Libs.jserialcomm)
-    implementation(Libs.commons_math3)
-    runtimeOnly(Libs.freemarker)
+    runtimeOnly("com.fazecast:jSerialComm:_")
+    implementation("org.apache.commons:commons-math3:_")
+    runtimeOnly("org.freemarker:freemarker:_")
+    implementation("commons-net:commons-net:_")
 }
