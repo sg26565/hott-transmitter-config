@@ -12,16 +12,16 @@ val os_platform = when (os) {
 }
 
 dependencies {
-    compile("org.openjfx:javafx-base:_")
-    compile("org.openjfx:javafx-base:_:" + os_platform)
-    compile("org.openjfx:javafx-graphics:_")
-    compile("org.openjfx:javafx-graphics:_:" + os_platform)
-    compile("org.openjfx:javafx-controls:_")
-    compile("org.openjfx:javafx-controls:_:" + os_platform)
-    compile("org.openjfx:javafx-web:_")
-    compile("org.openjfx:javafx-web:_:" + os_platform)
-    compile("org.openjfx:javafx-media:_")
-    compile("org.openjfx:javafx-media:_:" + os_platform)
-    compile("no.tornado:tornadofx:_")
-    compile(project(":HoTT-Util"))
+    api("org.openjfx:javafx-base:_")
+    api("org.openjfx:javafx-base:_:" + os_platform)
+    api("org.openjfx:javafx-graphics:_")
+    api("org.openjfx:javafx-graphics:_:" + os_platform)
+    api("org.openjfx:javafx-controls:_")
+    api("org.openjfx:javafx-controls:_:" + os_platform)
+    api("org.openjfx:javafx-web:_")
+    api("org.openjfx:javafx-web:_:" + os_platform)
+    api("org.openjfx:javafx-media:_")
+    api("org.openjfx:javafx-media:_:" + os_platform)
+    api("no.tornado:tornadofx:_")
+    api(project(":HoTT-Util"))
 }

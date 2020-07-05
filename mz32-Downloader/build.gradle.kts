@@ -1,8 +1,8 @@
 dependencies {
-    compile(project(":HoTT-Model"))
-    compile(project(":HoTT-UI"))
-    implementation(project(":HoTT-Decoder"))
-    compile(project(":lzma-sdk"))
+    implementation(project(":HoTT-Model"))
+    implementation(project(":HoTT-UI"))
+    implementation(project(":HoTT-Decoder", configuration="obfuscated"))
+    implementation(project(":lzma-sdk"))
 }
 
 plugins {

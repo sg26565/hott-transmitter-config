@@ -1,3 +1,3 @@
 dependencies {
-    compile(project(":HoTT-Model"))
+    implementation(project(":HoTT-Model"))
 }

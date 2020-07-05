@@ -6,6 +6,7 @@ dependencies {
     implementation(project(":HoTT-Report-PDF"))
     implementation(project(":HoTT-Report-XML"))
     implementation(project(":HoTT-Serial"))
+    implementation("commons-io:commons-io:_")
     runtimeOnly(project(":jSerialCommPort"))
 }
 

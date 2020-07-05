@@ -1,4 +1,5 @@
 dependencies {
-    compile(project(":HoTT-Model"))
-    implementation("org.glassfish.jaxb:jaxb-runtime:_")
+    implementation(project(":HoTT-Model"))
+    implementation("javax.xml.bind:jaxb-api:_")
+    testRuntimeOnly("org.glassfish.jaxb:jaxb-runtime:_")
 }

@@ -71,7 +71,7 @@ subprojects {
         // dependency management
         @Suppress("UnstableApiUsage")
         constraints {
-            add("compile", "org.jetbrains.kotlin:kotlin-reflect:_")
+            add("implementation", "org.jetbrains.kotlin:kotlin-reflect:_")
         }
     }
 

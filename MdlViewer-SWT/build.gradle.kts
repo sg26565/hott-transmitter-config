@@ -3,7 +3,12 @@ dependencies {
     implementation(project(":HoTT-Report-XML"))
     implementation(project(":HoTT-Report-PDF"))
     implementation(project(":HoTT-Serial"))
+    implementation(project(":HoTT-Model"))
+    implementation(project(":HoTT-Util"))
+    implementation(project(":HoTT-Decoder", configuration="obfuscated"))
     implementation("org.apache.commons:commons-math3:_")
+    implementation("javax.xml.bind:jaxb-api:_")
+    runtimeOnly("org.glassfish.jaxb:jaxb-runtime:_")
     runtimeOnly(project(":jSerialCommPort"))
 }
 

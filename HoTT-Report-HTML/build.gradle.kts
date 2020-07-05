@@ -1,6 +1,7 @@
 dependencies {
-    compile(project(":HoTT-Model"))
-    compile(project(":HoTT-Decoder", configuration="obfuscated"))
-    compile(project(":HoTT-Voice"))
+    implementation(project(":HoTT-Model"))
+    implementation(project(":HoTT-Decoder", configuration="obfuscated"))
+    implementation(project(":HoTT-Voice"))
     implementation("org.freemarker:freemarker:_")
+    implementation("commons-io:commons-io:_")
 }

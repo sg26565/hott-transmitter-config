@@ -5,23 +5,44 @@ import java.io.OutputStream
 import java.util.concurrent.CancellationException
 
 interface Callback {
+    val workDone: Long
+    val totalWork: Long
+    val progress: Double
+    val subWorkDone: Long
+    val subTotalWork: Long
+    val subProgress: Double
+
     fun updateMessage(message: String)
-    fun updateProgress(workDone: Long, max: Long)
-    fun updateProgress(workDone: Int, max: Int) = updateProgress(workDone.toLong(), max.toLong())
+
+    fun updateProgress(workDone: Long, totalWork: Long)
+    fun updateProgress(workDone: Int, totalWork: Int) = updateProgress(workDone.toLong(), totalWork.toLong())
+
+    fun updateSubProgress(subWorkDone: Long, subTotalWork: Long)
+    fun updateSubProgress(subWorkDone: Int, subTotalWork: Int) = updateProgress(subWorkDone.toLong(), subTotalWork.toLong())
+
     fun isCancelled(): Boolean
     fun cancel(): Boolean
 }
 
-class SimpleCallback: Callback {
+abstract class AbstractCallback : Callback {
     private var cancelled = false
+    override var workDone = 0L
+    override var totalWork = 1L
+    override var progress = 0.0
+    override var subWorkDone = 0L
+    override var subTotalWork = 1L
+    override var subProgress = 0.0
 
-    override fun updateMessage(message: String) {
-        println(message)
+    override fun updateProgress(workDone: Long, totalWork: Long) {
+        this.workDone = workDone
+        this.totalWork = totalWork
+        this.progress = workDone.toDouble() / totalWork.toDouble()
     }
 
-    override fun updateProgress(workDone: Long, max: Long) {
-        val percent = workDone * 100 / max
-        println("progress: $workDone of $max ($percent %)")
+    override fun updateSubProgress(subWorkDone: Long, subTotalWork: Long) {
+        this.subWorkDone = subWorkDone
+        this.subTotalWork = subTotalWork
+        this.subProgress = subWorkDone.toDouble() / subTotalWork.toDouble()
     }
 
     override fun isCancelled(): Boolean = cancelled
@@ -29,6 +50,26 @@ class SimpleCallback: Callback {
     override fun cancel(): Boolean {
         cancelled = true
         return true
+    }
+}
+
+class SimpleCallback : AbstractCallback() {
+    override fun updateMessage(message: String) {
+        println(message)
+    }
+
+    override fun updateProgress(workDone: Long, totalWork: Long) {
+        super.updateProgress(workDone, totalWork)
+        val percent = (progress * 100).toInt()
+
+        println("progress: $workDone of $totalWork ($percent %)")
+    }
+
+    override fun updateSubProgress(subWorkDone: Long, subTotalWork: Long) {
+        super.updateSubProgress(subWorkDone, subTotalWork)
+        val percent = subWorkDone * 100 / subTotalWork
+
+        println("sub progress: $subWorkDone of $subTotalWork ($percent %)")
     }
 }
 

@@ -1,5 +1,5 @@
 dependencies {
-    compile("commons-io:commons-io:_")
-    compile(project(":HoTT-Model"))
-    compile(project(":HoTT-UI"))
+    implementation("commons-io:commons-io:_")
+    implementation(project(":HoTT-Model"))
+    implementation(project(":HoTT-UI"))
 }
