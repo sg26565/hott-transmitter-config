@@ -5,17 +5,20 @@ internal class Path(path: String) {
     val value = if (path.startsWith("/")) path else "/$path"
 
     // /Help
-    val isHelp = value.startsWith(helpPath)
+    val isHelp = value.startsWith(helpPath, ignoreCase = true)
 
     // /Voice
-    val isVoice = value.startsWith(voicePath)
+    val isVoice = value.startsWith(voicePath, ignoreCase = true)
+
+    // /Manual
+    val isManual = value.startsWith(manualPath, ignoreCase = true)
 
     // Paths with language (i.e. /Help or /Voice)
     val isLang = isHelp || isVoice
 
     // System paths
     @Suppress("MemberVisibilityCanBePrivate")
-    val isSystem = systemPaths.any { value.startsWith(it) }
+    val isSystem = systemPaths.any { value.startsWith(it, ignoreCase = true) }
 
 
     // split path into directories
@@ -29,14 +32,14 @@ internal class Path(path: String) {
     val isLangUser = isVoice && parts.size > 3 && parts[3].startsWith("10_")
 
     // Any user path
-    val isUser = userPaths.any { value.startsWith(it) } || isLangUser
+    val isUser = userPaths.any { value.startsWith(it, ignoreCase = true) } || isLangUser
 
     val isProtected = isSystem || isUser
 
-    val isAutoDelete = autoDeletePaths.any { value.startsWith(it) }
+    val isAutoDelete = autoDeletePaths.any { value.startsWith(it, ignoreCase = true) }
 
     // convert String to enum
-    val language by lazy { Language.valueOf(parts[2]) }
+    val language by lazy { Language.valueOf(parts[2].toLowerCase()) }
 
     override fun toString(): String = "Path {value=\"$value\", isHelp=$isHelp, isVoice=$isVoice, isLang=$isLang, isLangUser=$isLangUser, isProtected=$isProtected, isSystem=$isSystem, isUser=$isUser, parts=$parts"
 

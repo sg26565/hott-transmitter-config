@@ -10,7 +10,7 @@ import java.util.*
 /**
  * A map that stores a hash value for each file path.
  */
-class MD5Sum(private val root: File?) : TreeMap<String, Hash>() {
+class MD5Sum(private val root: File?) : TreeMap<String, Hash>(String.CASE_INSENSITIVE_ORDER) {
     constructor() : this(null)
 
     /** the default file were data will be loaded from or saved to */

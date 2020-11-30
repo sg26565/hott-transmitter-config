@@ -133,7 +133,7 @@ class Mz32(private val rootDir: File) {
         files.addAll(md5.keys)
 
         // keep entries in remote md5sum.txt
-        files.removeAll(remoteMd5.keys)
+        files.removeIf { remoteMd5.keys.contains(it.toLowerCase()) }
 
         val toBeDeleted = files.asSequence()
                 // convert to path
