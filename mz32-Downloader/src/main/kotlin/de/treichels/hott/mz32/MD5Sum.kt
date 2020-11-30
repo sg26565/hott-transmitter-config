@@ -33,7 +33,7 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>(String.CASE_INSENS
             val path = "/${file.relativeTo(root).path.replace(File.separatorChar, '/')}"
 
             Path(path).apply {
-                if (!isProtected && (!isLang || languages.contains(language))) {
+                if ((!isLang || languages.contains(language))) {
                     val hash = file.hash()
                     val size = file.length()
                     this@MD5Sum[path] = Hash(size, hash)
