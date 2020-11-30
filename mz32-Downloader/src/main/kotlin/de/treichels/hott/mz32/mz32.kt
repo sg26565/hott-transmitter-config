@@ -110,6 +110,7 @@ class Mz32(private val rootDir: File) {
                 when {
                     path.isHelp -> if (replaceHelpPages && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
                     path.isVoice -> if (replaceVoiceFiles && languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
+                    path.isManual -> if (languages.contains(path.language)) updateFileOnline(task, remoteRoot, path, hash)
                     else -> updateFileOnline(task, remoteRoot, path, hash)
                 }
                 task.updateProgress(index.toLong(), size.toLong())

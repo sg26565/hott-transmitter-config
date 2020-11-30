@@ -14,7 +14,7 @@ internal class Path(path: String) {
     val isManual = value.startsWith(manualPath, ignoreCase = true)
 
     // Paths with language (i.e. /Help or /Voice)
-    val isLang = isHelp || isVoice
+    val isLang = isHelp || isVoice || isManual
 
     // System paths
     @Suppress("MemberVisibilityCanBePrivate")
@@ -46,8 +46,9 @@ internal class Path(path: String) {
     companion object {
         private const val helpPath = "/Help"
         private const val voicePath = "/Voice"
+        private const val manualPath = "/Manual"
         private val userPaths = listOf("/Image", "/Log", "/Model", "/MP3", "/Screenshot")
         private val systemPaths = listOf("/GraupnerDisk.cfg", "/System", "/Update", "/md5sum.txt")
-        private val autoDeletePaths = listOf("/Help", "/Manual", "/System", "/Util", "/Voice")
+        private val autoDeletePaths = listOf("/Help", "/Manual", "/Util", "/Voice")
     }
 }
