@@ -19,7 +19,7 @@ import java.beans.PropertyChangeListener
 import java.beans.PropertyChangeSupport
 import java.io.IOException
 import java.io.Serializable
-import javax.xml.bind.annotation.*
+import jakarta.xml.bind.annotation.*
 
 abstract class AbstractBase : Serializable {
     private val support = PropertyChangeSupport(this)

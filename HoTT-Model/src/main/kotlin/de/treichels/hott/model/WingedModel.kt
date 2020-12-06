@@ -12,7 +12,7 @@
 package de.treichels.hott.model
 
 import de.treichels.hott.model.enums.*
-import javax.xml.bind.annotation.*
+import jakarta.xml.bind.annotation.*
 
 /**
  * @author Oliver Treichel &lt;oli@treichels.de&gt;

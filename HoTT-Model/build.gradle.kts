@@ -1,4 +1,4 @@
 dependencies {
-    implementation("javax.xml.bind:jaxb-api:_")
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:_")
     api(project(":HoTT-Util"))
 }

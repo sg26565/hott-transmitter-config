@@ -7,8 +7,8 @@ dependencies {
     implementation(project(":HoTT-Util"))
     implementation(project(":HoTT-Decoder", configuration="obfuscated"))
     implementation("org.apache.commons:commons-math3:_")
-    implementation("javax.xml.bind:jaxb-api:_")
-    runtimeOnly("org.glassfish.jaxb:jaxb-runtime:_")
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:_")
+    runtimeOnly("com.sun.xml.bind:jaxb-impl:_")
     runtimeOnly(project(":jSerialCommPort"))
 }
 

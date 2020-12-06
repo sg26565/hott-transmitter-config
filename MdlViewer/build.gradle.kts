@@ -25,7 +25,7 @@ dependencies {
     implementation("org.openjfx:javafx-swing:_")
     implementation("org.openjfx:javafx-swing:_:$os_platform")
     runtimeOnly(project(":jSerialCommPort"))
-    runtimeOnly("org.glassfish.jaxb:jaxb-runtime:_")
+    runtimeOnly("com.sun.xml.bind:jaxb-impl:_")
 }
 
 application {
