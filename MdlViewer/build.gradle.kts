@@ -23,7 +23,7 @@ dependencies {
     implementation("commons-io:commons-io:_")
     implementation("org.apache.commons:commons-math3:_")
     implementation("org.openjfx:javafx-swing:_")
-    implementation("org.openjfx:javafx-swing:_:" + os_platform)
+    implementation("org.openjfx:javafx-swing:_:$os_platform")
     runtimeOnly(project(":jSerialCommPort"))
     runtimeOnly("org.glassfish.jaxb:jaxb-runtime:_")
 }
