@@ -4,4 +4,5 @@ dependencies {
     implementation(project(":HoTT-Voice"))
     implementation("org.freemarker:freemarker:_")
     implementation("commons-io:commons-io:_")
+    implementation("no.tornado:tornadofx:_")
 }
