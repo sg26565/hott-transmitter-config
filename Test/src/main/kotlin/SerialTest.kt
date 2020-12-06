@@ -48,14 +48,14 @@ fun main() {
     }
 }
 
-fun read() : Int = inputStream.read()
+fun read(): Int = inputStream.read()
 
 fun write(byte: Int) {
     outputStream.write(byte)
     outputStream.flush()
 }
 
-fun waitFor(byte: Int=-1) {
+fun waitFor(byte: Int = -1) {
     while (true) {
         try {
             val b = read()

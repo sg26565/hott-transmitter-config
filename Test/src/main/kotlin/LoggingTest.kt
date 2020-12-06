@@ -2,7 +2,7 @@ import de.treichels.hott.util.Util
 import java.util.logging.Level
 import java.util.logging.Logger
 
-fun main () {
+fun main() {
     Util.enableLogging()
     val logger = Logger.getGlobal()
 

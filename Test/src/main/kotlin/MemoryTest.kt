@@ -102,7 +102,11 @@ class MemoryPic(val flashType: FlashType, val family: Family, baseAddress: Int, 
     }
 
     override fun toString(): String {
-        return "MemoryPic(flashType=$flashType, family=$family, rowNumber=$rowNumber, empty=$empty, rowSize=0x${rowSize.toString(16)}, address=0x${address.toString(16)})"
+        return "MemoryPic(flashType=$flashType, family=$family, rowNumber=$rowNumber, empty=$empty, rowSize=0x${
+            rowSize.toString(
+                16
+            )
+        }, address=0x${address.toString(16)})"
     }
 
     fun dump() {

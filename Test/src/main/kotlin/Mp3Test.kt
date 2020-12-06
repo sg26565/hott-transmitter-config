@@ -1,4 +1,3 @@
-
 import de.treichels.hott.voice.Player
 import de.treichels.hott.voice.VolumeControlAudioInputStream
 import java.io.File
@@ -17,7 +16,15 @@ private fun play(path: String) {
 
     // convert to PCM
     if (format.encoding != AudioFormat.Encoding.PCM_SIGNED) {
-        format = AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.sampleRate, 16, format.channels, 2 * format.channels, format.sampleRate, false)
+        format = AudioFormat(
+            AudioFormat.Encoding.PCM_SIGNED,
+            format.sampleRate,
+            16,
+            format.channels,
+            2 * format.channels,
+            format.sampleRate,
+            false
+        )
         audioInputStream = AudioSystem.getAudioInputStream(format, audioInputStream)
     }
 

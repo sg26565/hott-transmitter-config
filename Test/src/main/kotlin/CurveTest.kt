@@ -105,13 +105,15 @@ class CurveTestView : View("Curve Test") {
         val x = 50 + xSlider.value.toInt() * 28 / 100
         val y = 50
 
-        val curve = Curve(point = listOf(
+        val curve = Curve(
+            point = listOf(
                 CurvePoint(number = 0, isEnabled = true, position = -100, value = -dr),
                 CurvePoint(number = 1, isEnabled = true, position = -x, value = -y * dr / 100),
                 CurvePoint(number = 2, isEnabled = true, position = 0, value = 0),
                 CurvePoint(number = 3, isEnabled = true, position = x, value = y * dr / 100),
                 CurvePoint(number = 4, isEnabled = true, position = 100, value = dr)
-        ), isSmoothing = true)
+            ), isSmoothing = true
+        )
 
         val pitchCurve = curve.point[0].position == 0
         val canvas = Canvas((10 + 200 * scale), (10 + 250 * scale))

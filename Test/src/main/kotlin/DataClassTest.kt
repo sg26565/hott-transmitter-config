@@ -3,7 +3,7 @@ fun main() {
 }
 
 open class OpenFoo(
-        var bar: String? = null
+    var bar: String? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

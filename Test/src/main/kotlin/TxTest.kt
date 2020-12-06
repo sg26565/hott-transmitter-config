@@ -9,15 +9,19 @@ fun main() {
     println(info)
 
     when (info.lcdType) {
-        LCDType.LCD_G128X64 -> port.writeScreen("""---------------------
+        LCDType.LCD_G128X64 -> port.writeScreen(
+            """---------------------
 * Wireless Download *
 * Process Start     *
 * Please Wait....   *
----------------------""")
+---------------------"""
+        )
 
-        LCDType.LCD_G256X48 -> port.writeScreen("""----------------------------------------
+        LCDType.LCD_G256X48 -> port.writeScreen(
+            """----------------------------------------
 * Wireless Download Process Start      *
 * Please Wait....                      *
-----------------------------------------""")
+----------------------------------------"""
+        )
     }
 }

@@ -19,7 +19,7 @@ fun main(vararg args: String) {
     log.info("info")
     log.warning("warning")
     log.severe("severe")
-    log.exiting(className,methodName,null)
+    log.exiting(className, methodName, null)
 
     log.log(Level.INFO, "message with parameter {0}", "foo")
 

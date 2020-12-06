@@ -10,7 +10,10 @@ fun main() {
     providers.forEach { provider ->
         if (provider.enabled) {
             provider.installedVoices().filter { it.locale.language == "en" }.forEach { voice ->
-                val text = "This is a test using the ${provider.name} text-to-speech engine using the ${voice.gender} ${voice.name} voice for ${voice.locale.getDisplayLanguage(voice.locale)} in ${voice.locale.getDisplayCountry(voice.locale)}."
+                val text =
+                    "This is a test using the ${provider.name} text-to-speech engine using the ${voice.gender} ${voice.name} voice for ${
+                        voice.locale.getDisplayLanguage(voice.locale)
+                    } in ${voice.locale.getDisplayCountry(voice.locale)}."
                 println(text)
                 Player.play(provider.speak(text, voice))
             }
@@ -25,7 +28,10 @@ fun main() {
                     Gender.Female -> "weiblichen"
                     Gender.Unknown -> ""
                 }
-                val text = "Dies ist ein Test der ${provider.name} Sprachsynthese mit der $gender ${voice.name} Stimme für ${voice.locale.getDisplayLanguage(voice.locale)} in ${voice.locale.getDisplayCountry(voice.locale)}."
+                val text =
+                    "Dies ist ein Test der ${provider.name} Sprachsynthese mit der $gender ${voice.name} Stimme für ${
+                        voice.locale.getDisplayLanguage(voice.locale)
+                    } in ${voice.locale.getDisplayCountry(voice.locale)}."
                 println(text)
                 Player.play(provider.speak(text, voice))
             }

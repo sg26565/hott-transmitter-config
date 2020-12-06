@@ -44,8 +44,8 @@ subprojects {
             // store version numbers in jar
             manifest {
                 attributes(
-                        "Implementation-Version" to archiveVersion.orNull,
-                        "Implementation-Build" to versionName
+                    "Implementation-Version" to archiveVersion.orNull,
+                    "Implementation-Build" to versionName
                 )
             }
 

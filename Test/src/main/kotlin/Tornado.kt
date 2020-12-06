@@ -3,19 +3,19 @@ import tornadofx.*
 fun main(args: Array<String>) = launch<MyApp>(args)
 
 class MyApp : App() {
-	override val primaryView = MyView::class
+    override val primaryView = MyView::class
 }
 
 class MyView : View() {
-	override val root = vbox {
-		button("Press Me") {
-			action {
-				openInternalWindow(MyFragment::class)
-			}
-		}
-	}
+    override val root = vbox {
+        button("Press Me") {
+            action {
+                openInternalWindow(MyFragment::class)
+            }
+        }
+    }
 }
 
-class MyFragment: Fragment() {
-	override val root = label("This is a popup")
+class MyFragment : Fragment() {
+    override val root = label("This is a popup")
 }

@@ -27,7 +27,7 @@ class TreeViewTestView : View() {
             }
         }
 
-        rootNode.addEventHandler(eventType) {evt ->
+        rootNode.addEventHandler(eventType) { evt ->
             val item = evt.treeItem
             println("${item.value} was expanded")
         }

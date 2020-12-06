@@ -30,16 +30,16 @@ fun main() {
             val dir = "/Transmitter/16008200"
             listFiles(dir).filter { it.isFile }.forEach {
                 val fileSize = it.size
-                val localFileName ="C:/Temp/${it.name}"
+                val localFileName = "C:/Temp/${it.name}"
                 val remoteFileName = "$dir/${it.name}"
                 val start = System.currentTimeMillis()
                 val outputStream = FileOutputStream(localFileName)
 
                 print("Downloading $remoteFileName:$fileSize ... ")
-                if (!retrieveFile(remoteFileName,outputStream)) throw IOException("")
+                if (!retrieveFile(remoteFileName, outputStream)) throw IOException("")
                 val duration = System.currentTimeMillis() - start
-                val rate = fileSize / 1024.0  * 1000.0 / duration
-                println ("took $duration ms (${rate.toInt()} kb/s)")
+                val rate = fileSize / 1024.0 * 1000.0 / duration
+                println("took $duration ms (${rate.toInt()} kb/s)")
             }
         } finally {
             if (isConnected) disconnect()

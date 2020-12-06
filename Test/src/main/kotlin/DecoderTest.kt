@@ -5,11 +5,11 @@ import java.io.File
 
 fun main() {
     val path = "V:/Dropbox/MDL-Viewer_Daten/Models/mz-24pro"
-     val filename = "gAHI"
-     // val filename = "hTEST HELI"
+    val filename = "gAHI"
+    // val filename = "hTEST HELI"
     // val path = "V:/MDL-Viewer_Daten/Models/mc-28"
     // val filename = "aB4 YUKI"
-    val file = File(path,"$filename.mdl")
+    val file = File(path, "$filename.mdl")
     val model: BaseModel = HoTTDecoder.decodeFile(file)
     val xmlOutput = XMLReport.generateXML(model)
     // val hex = Util.dumpData(file.readBytes())
@@ -17,7 +17,7 @@ fun main() {
     println(xmlOutput)
 
     // write xml-file
-    val xmlFile = File(path,"$filename.xml")
+    val xmlFile = File(path, "$filename.xml")
     xmlFile.writeText(xmlOutput)
 
     // crate and write html-file

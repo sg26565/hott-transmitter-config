@@ -29,8 +29,8 @@ class TableViewTest : View("TableView with Map") {
     private val types = listOf("Text", "Sound", "SSML").asObservable()
 
     private val map = resources.stream("Deutsch.csv").reader().readLines()
-            .map { it.split(';').map { it.trim() } }
-            .groupBy({ it[0] }, { Announcement(number = 0, directory = it[0], fileName = it[1], text = it[2]) })
+        .map { it.split(';').map { it.trim() } }
+        .groupBy({ it[0] }, { Announcement(number = 0, directory = it[0], fileName = it[1], text = it[2]) })
 
     private val service = Text2SpeechService()
 
@@ -45,43 +45,43 @@ class TableViewTest : View("TableView with Map") {
                         smartResize()
 
                         column("Number", Announcement::numberProperty)
-                                .contentWidth(useAsMin = true, useAsMax = true)
-                                .cellFormat {
-                                    text = String.format("%03d", it)
-                                    style {
-                                        alignment = Pos.TOP_RIGHT
-                                        fontWeight = FontWeight.BOLD
-                                    }
+                            .contentWidth(useAsMin = true, useAsMax = true)
+                            .cellFormat {
+                                text = String.format("%03d", it)
+                                style {
+                                    alignment = Pos.TOP_RIGHT
+                                    fontWeight = FontWeight.BOLD
                                 }
+                            }
 
                         column("File Name", Announcement::fileNameProperty)
-                                .makeEditable()
-                                .contentWidth(useAsMin = true, useAsMax = true)
+                            .makeEditable()
+                            .contentWidth(useAsMin = true, useAsMax = true)
 
                         column("Type", Announcement::typeProperty)
-                                .makeEditable()
-                                .useChoiceBox(types)
-                                .contentWidth(useAsMin = true, useAsMax = true)
+                            .makeEditable()
+                            .useChoiceBox(types)
+                            .contentWidth(useAsMin = true, useAsMax = true)
 
                         column<Announcement, String>("Play") { ReadOnlyStringWrapper("") }
-                                .contentWidth(useAsMin = true, useAsMax = true)
-                                .cellFormat {
-                                    graphic = button {
-                                        style {
-                                            backgroundColor += Color.TRANSPARENT
-                                            graphic = resources.url("play-button-icon_16.png").toURI()
-                                        }
+                            .contentWidth(useAsMin = true, useAsMax = true)
+                            .cellFormat {
+                                graphic = button {
+                                    style {
+                                        backgroundColor += Color.TRANSPARENT
+                                        graphic = resources.url("play-button-icon_16.png").toURI()
+                                    }
 
-                                        action {
-                                            val announcement = items[index]
-                                            println("${announcement.directory}/${announcement.number}_${announcement.fileName}.wav: ${announcement.text}")
-                                        }
+                                    action {
+                                        val announcement = items[index]
+                                        println("${announcement.directory}/${announcement.number}_${announcement.fileName}.wav: ${announcement.text}")
                                     }
                                 }
+                            }
 
                         column("Text", Announcement::textProperty)
-                                .makeEditable()
-                                .remainingWidth()
+                            .makeEditable()
+                            .remainingWidth()
                     }
                 }
             })
