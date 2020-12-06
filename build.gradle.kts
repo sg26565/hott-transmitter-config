@@ -12,9 +12,9 @@ plugins {
     java
     kotlin("jvm") apply false
     id("maven-publish")
-    id("com.github.johnrengelman.shadow") version "5.1.0" apply false
-    id("edu.sc.seis.launch4j") version "2.4.6" apply false
-    id("com.google.osdetector") version "1.6.2"
+    id("com.github.johnrengelman.shadow") apply false
+    id("edu.sc.seis.launch4j") apply false
+    id("com.google.osdetector")
 }
 
 apply(plugin = "com.pascalwelsch.gitversioner")

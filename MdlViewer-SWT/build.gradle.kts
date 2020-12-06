@@ -13,7 +13,7 @@ dependencies {
 }
 
 plugins {
-    id("com.diffplug.gradle.eclipse.mavencentral") version "3.18.1"
+    id("com.diffplug.eclipse.mavencentral")
     application
 }
 

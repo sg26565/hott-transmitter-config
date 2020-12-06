@@ -1,11 +1,11 @@
-import de.fayard.dependencies.bootstrapRefreshVersionsAndDependencies
+import de.fayard.refreshVersions.bootstrapRefreshVersions
 
 buildscript {
     repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard:dependencies:0.5.7")
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
 }
 
-bootstrapRefreshVersionsAndDependencies()
+bootstrapRefreshVersions()
 
 rootProject.name = "hott-transmitter-config"
 
