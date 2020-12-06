@@ -137,8 +137,8 @@ class ExportModels {
 
     private inner class PortSelectionListener : ActionListener {
         override fun actionPerformed(arg0: ActionEvent?) {
-            val portName = comboBox.selectedItem as String
-            if (portName.isNotEmpty()) {
+            val portName = comboBox.selectedItem
+            if (portName is String && portName.isNotEmpty()) {
                 updateTableData(portName)
             }
         }
