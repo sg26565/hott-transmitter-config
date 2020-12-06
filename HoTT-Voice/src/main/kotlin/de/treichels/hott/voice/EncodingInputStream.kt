@@ -34,7 +34,7 @@ internal class EncodingInputStream(private val inputStream: InputStream, private
 
         if (pcm != -1) {
             // convert to signed 16-bit and reduce to 12-bit
-            var signed = (pcm.toShort() / 16 * volume).toShort()
+            var signed = (pcm.toShort() / 16 * volume).toInt().toShort()
 
             // convert to low nibble
             adpcm = codec.encode(signed).toInt()
@@ -43,7 +43,7 @@ internal class EncodingInputStream(private val inputStream: InputStream, private
             pcm = readShort()
             if (pcm != -1) {
                 // convert to signed 16-bit and reduce to 12-bit
-                signed = (pcm.toShort() / 16 * volume).toShort()
+                signed = (pcm.toShort() / 16 * volume).toInt().toShort()
 
                 // convert to high nibble
                 adpcm = adpcm or (codec.encode(signed).toInt() shl 4)
