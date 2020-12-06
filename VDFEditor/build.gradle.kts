@@ -2,6 +2,8 @@ dependencies {
     implementation(project(":HoTT-Decoder", configuration="obfuscated"))
     implementation(project(":HoTT-UI"))
     implementation(project(":HoTT-TTS"))
+    implementation(project(":HoTT-Voice"))
+    implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-Report-HTML"))
     implementation(project(":HoTT-Report-PDF"))
     implementation(project(":HoTT-Report-XML"))
