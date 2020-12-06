@@ -65,6 +65,7 @@ subprojects {
     dependencies {
         // common dependencies
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:_")
+        implementation("org.jetbrains.kotlin:kotlin-reflect:_")
         testImplementation("junit:junit:_")
         testImplementation("org.jetbrains.kotlin:kotlin-test-junit:_")
     }
