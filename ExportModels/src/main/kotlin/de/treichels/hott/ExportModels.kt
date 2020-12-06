@@ -78,7 +78,7 @@ class ExportModels {
     }
 
     private class ModelInfoTableModel : AbstractTableModel() {
-        internal var modelInfos: Array<ModelInfo>? = null
+        var modelInfos: Array<ModelInfo>? = null
             private set
 
         override fun getColumnCount(): Int {
@@ -89,7 +89,7 @@ class ExportModels {
             return COLUMNS[column]
         }
 
-        internal fun getModelInfo(row: Int): ModelInfo {
+        fun getModelInfo(row: Int): ModelInfo {
             return modelInfos!![row]
         }
 
@@ -125,7 +125,7 @@ class ExportModels {
             return columnIndex == 6
         }
 
-        internal fun setModelInfos(modelInfos: List<ModelInfo>) {
+        fun setModelInfos(modelInfos: List<ModelInfo>) {
             this.modelInfos = modelInfos.toTypedArray()
             fireTableDataChanged()
         }
