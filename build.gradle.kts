@@ -11,7 +11,6 @@ buildscript {
 plugins {
     java
     kotlin("jvm") apply false
-    id("maven-publish")
     id("com.github.johnrengelman.shadow") apply false
     id("edu.sc.seis.launch4j") apply false
     id("com.google.osdetector")
@@ -35,7 +34,6 @@ subprojects {
     version = baseVersion
 
     apply(plugin = "kotlin")
-    apply(plugin = "maven-publish")
 
     repositories {
         mavenCentral()
@@ -69,32 +67,6 @@ subprojects {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:_")
         testImplementation("junit:junit:_")
         testImplementation("org.jetbrains.kotlin:kotlin-test-junit:_")
-
-        // dependency management
-        @Suppress("UnstableApiUsage")
-        constraints {
-            add("implementation", "org.jetbrains.kotlin:kotlin-reflect:_")
-        }
-    }
-
-    // publish to Bintray
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                from(components["java"])
-            }
-        }
-
-        repositories {
-            maven {
-                name = "Bintray"
-                url = uri("https://api.bintray.com/maven/sg26565/maven/mdlviewer/;publish=1")
-                credentials {
-                    username = properties["bintray.user.name"] as String?
-                    password = properties["bintray.user.key"] as String?
-                }
-            }
-        }
     }
 
     // add shadow and launch4j to any application project
