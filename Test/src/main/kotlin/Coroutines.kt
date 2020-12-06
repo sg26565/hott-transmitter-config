@@ -1,6 +1,6 @@
 import kotlin.concurrent.thread
 
-fun main(args: Array<String>) {
+fun main() {
     val lock = Object()
 
     println("start")

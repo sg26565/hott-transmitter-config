@@ -1,4 +1,4 @@
-fun main(vararg args: String) {
+fun main() {
     val regex = Regex("^([0-9]+)_?(.*)\\.(.*)$")
 
     listOf("10.bmp", "010.bmp", "10_bla.bmp", "010_bla.bmp").forEach {

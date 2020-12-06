@@ -1,4 +1,4 @@
-fun main(vararg args: String) {
+fun main() {
     read( "foo|123|path.exe")
     read( "foo|path.exe")
 }

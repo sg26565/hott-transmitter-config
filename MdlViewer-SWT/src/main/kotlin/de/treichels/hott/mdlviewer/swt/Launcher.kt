@@ -13,7 +13,7 @@ private const val PROGRAM_DIR = "program.dir"
 private const val PROGRAM_VERSION = "program.version"
 private const val MAIN_CLASS_NAME = "de.treichels.hott.mdlviewer.swt.SwtMdlBrowser"
 
-fun main(vararg args: String) {
+fun main() {
     Launcher.instance.launch()
 }
 

@@ -1,4 +1,4 @@
-fun main(args: Array<String>) {
+fun main() {
     assert(OpenFoo() != OpenFoo("bar"))
 }
 

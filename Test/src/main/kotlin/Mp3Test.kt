@@ -5,7 +5,7 @@ import java.io.File
 import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioSystem
 
-fun main(vararg args: String) {
+fun main() {
     play("G:\\Meine Ablage\\Weatronic\\Sounds\\Sprache_BAT60_Anna\\Vollgas.wav")
     play("G:\\Meine Ablage\\Weatronic\\Sounds\\Sprache_BAT60_Anna\\Vollgas.mp3")
     play("G:\\Meine Ablage\\Weatronic\\Sounds\\Sprache_BAT60_Anna\\Vollgas.ogg")

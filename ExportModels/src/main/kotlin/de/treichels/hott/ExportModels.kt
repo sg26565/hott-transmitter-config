@@ -20,7 +20,7 @@ import javax.swing.table.AbstractTableModel
 import javax.swing.table.TableCellEditor
 import javax.swing.table.TableCellRenderer
 
-fun main(args: Array<String>) {
+fun main() {
     SwingUtilities.invokeLater { ExportModels().showDialog() }
 }
 

@@ -3,7 +3,7 @@ import de.treichels.hott.model.BaseModel
 import de.treichels.hott.report.xml.XMLReport
 import java.io.File
 
-fun main(vararg arg:String) {
+fun main() {
     val path = "V:/Dropbox/MDL-Viewer_Daten/Models/mz-24pro"
      val filename = "gAHI"
      // val filename = "hTEST HELI"
@@ -24,5 +24,4 @@ fun main(vararg arg:String) {
     // val htmlFile = File(path,"$filename.html")
     // val htmlOutput = HTMLReport.generateHTML(model)
     // htmlFile.writeText(htmlOutput)
-
 }

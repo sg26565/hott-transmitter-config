@@ -8,7 +8,7 @@ private lateinit var serialPort: SerialPort
 private lateinit var inputStream: InputStream
 private lateinit var outputStream: OutputStream
 
-fun main(args: Array<String>) {
+fun main() {
     //val availablePorts = JSSCSerialPort.availablePorts
 
     serialPort = SerialPort.getPort("COM3")
