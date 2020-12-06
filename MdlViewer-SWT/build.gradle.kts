@@ -18,6 +18,7 @@ plugins {
 }
 
 application {
+    @Suppress("DEPRECATION")
     mainClassName = "de.treichels.hott.mdlviewer.swt.LauncherKt"
 }
 

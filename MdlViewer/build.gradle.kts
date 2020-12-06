@@ -29,5 +29,6 @@ dependencies {
 }
 
 application {
+    @Suppress("DEPRECATION")
     mainClassName = "de.treichels.hott.mdlviewer.javafx.MdlViewerKt"
 }
