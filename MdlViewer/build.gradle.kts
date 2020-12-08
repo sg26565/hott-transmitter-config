@@ -19,7 +19,7 @@ dependencies {
     implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-UI"))
     implementation(project(":HoTT-Voice"))
-    implementation(project(":HoTT-Decoder", configuration="obfuscated"))
+    implementation(project(":HoTT-Decoder"))
     implementation("commons-io:commons-io:_")
     implementation("org.apache.commons:commons-math3:_")
     implementation("org.openjfx:javafx-swing:_")
