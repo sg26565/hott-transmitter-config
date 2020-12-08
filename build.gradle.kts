@@ -1,8 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import com.pascalwelsch.gitversioner.GitVersioner
-import edu.sc.seis.launch4j.Launch4jPluginExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.google.gradle.osdetector.OsDetector
+import com.pascalwelsch.gitversioner.GitVersioner
+import edu.sc.seis.launch4j.tasks.Launch4jLibraryTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     dependencies.classpath("com.pascalwelsch.gitversioner:gitversioner:0.5.0")
@@ -77,46 +77,52 @@ subprojects {
             apply(plugin = "com.github.johnrengelman.shadow")
             apply(plugin = "edu.sc.seis.launch4j")
 
-            // configure shadowJar Task
-            val shadowJar by tasks.existing(ShadowJar::class) {
-                archiveVersion.set(shortVersion)
-            }
-
-            // configure createExe task
-            configure<Launch4jPluginExtension> {
-                jar = shadowJar.get().archiveFile.get().asFile.path
-                version = shortVersion
-                textVersion = longVersion
-                outfile = "${project.name}-$shortVersion.exe"
-                copyright = "GPLv3"
-                bundledJrePath = if (OsDetector().os == "windows") "%JAVA_HOME%" else "\${JAVA_HOME}"
-
-                // add icon - if it exists
-                file("icon.ico").apply {
-                    if (exists()) icon = path
+            tasks {
+                // configure the shadowJar tasks with the same archive version as the jar task
+                val shadowJar = named<ShadowJar>("shadowJar") {
+                    archiveVersion.set(jar.get().archiveVersion.get())
                 }
 
-                // add splashfile - if it exists
-                file("splash.bmp").apply {
-                    if (exists()) splashFileName = path
-                }
-            }
+                // configure createExe task
+                val createExe = named<Launch4jLibraryTask>("createExe") {
+                    dependsOn(shadowJar)
 
-            // copy executable to release dir
-            task<Copy>("release") {
-                group = "build"
-                from(tasks["createExe"]) {
-                    include("*.exe")
-                }
-                from(tasks["shadowJar"]) {
-                    include("*.jar")
-                }
-                into("$rootDir/../release")
-            }
+                    jar = shadowJar.get().archiveFile.get().asFile.path
+                    version = shortVersion
+                    textVersion = longVersion
+                    outfile = "${project.name}-$shortVersion.exe"
+                    copyright = "GPLv3"
+                    bundledJrePath = if (OsDetector().os == "windows") "%JAVA_HOME%" else "\${JAVA_HOME}"
 
-            // add createExe to default build tasks
-            tasks.named("build") {
-                dependsOn("createExe")
+                    // add icon - if it exists
+                    file("icon.ico").apply {
+                        if (exists()) icon = path
+                    }
+
+                    // add splashfile - if it exists
+                    file("splash.bmp").apply {
+                        if (exists()) splashFileName = path
+                    }
+                }
+
+                // copy executable to release dir
+                create<Copy>("release") {
+                    dependsOn(createExe)
+
+                    group = "build"
+                    from(createExe) {
+                        include("*.exe")
+                    }
+                    from(shadowJar) {
+                        include("*.jar")
+                    }
+                    into("$rootDir/../release")
+                }
+
+                // add createExe to default build tasks
+                named("build") {
+                    dependsOn(createExe)
+                }
             }
         }
     }
