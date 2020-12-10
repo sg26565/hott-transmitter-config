@@ -1,3 +1,11 @@
+2020-12-10
+==========
+    mz32-Downloader-0.9.4.1360
+    - German translation
+    - fix bug with upper/lower case paths on Windows
+    - add support for language specific manuals
+    - add support for Portuguese language
+
 2019-10-25
 ==========
     mz32-Downloader-0.9.4.1318
