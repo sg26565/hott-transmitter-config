@@ -24,9 +24,10 @@ class Mz32Downloader : View() {
     private var options by singleAssign<VBox>()
     private var reindex by singleAssign<CheckBox>()
     private var updateResources by singleAssign<CheckBox>()
-    private var replaceHelpPages by singleAssign<CheckBox>()
+    private var updateHelpPages by singleAssign<CheckBox>()
+    private var updateVoiceFiles by singleAssign<CheckBox>()
+    private var updateManuals by singleAssign<CheckBox>()
     private var language by singleAssign<CheckComboBox<Language>>()
-    private var replaceVoiceFiles by singleAssign<CheckBox>()
     private var updateFirmware by singleAssign<CheckBox>()
     private var comboBox by singleAssign<ComboBox<Mz32>>()
     private var textArea by singleAssign<TextArea>()
@@ -48,10 +49,12 @@ class Mz32Downloader : View() {
         get() = reindex.isSelected
     private val doUpdateResources
         get() = updateResources.isSelected
-    private val doReplaceHelpPages
-        get() = replaceHelpPages.isSelected
-    private val doReplaceVoiceFiles
-        get() = replaceVoiceFiles.isSelected
+    private val doupdateHelpPages
+        get() = updateHelpPages.isSelected
+    private val doupdateVoiceFiles
+        get() = updateVoiceFiles.isSelected
+    private val doupdateManulals
+        get() = updateManuals.isSelected
     private val doUpdateFirware
         get() = updateFirmware.isSelected
     private val mz32
@@ -78,13 +81,13 @@ class Mz32Downloader : View() {
                 disableProperty().bind(disableUI)
 
                 reindex = checkbox(messages["reindex"]) {
-                    tooltip = tooltip("Re-calculate the MD5 checksums of all files on the internal SD-card of the radio. This process will take a long time.")
+                    tooltip = tooltip(messages["reindex_tooltip"])
                 }
 
                 vbox {
-                    updateResources = checkbox("Update resource files") {
+                    updateResources = checkbox(messages["update_resources"]) {
                         isSelected = true
-                        tooltip = tooltip("Update auxilary resource files like help pages, voice files and utilities.")
+                        tooltip = tooltip(messages["update_resources_tooltip"])
 
                     }
 
@@ -92,25 +95,32 @@ class Mz32Downloader : View() {
                         enableWhen { updateResources.selectedProperty() }
                         padding = insets(left = 20.0)
 
-                        replaceHelpPages = checkbox("Update help pages.") {
-                            preferences { isSelected = get("replaceHelpPages", "true")!!.toBoolean() }
-                            action { preferences { put("replaceHelpPages", isSelected.toString()) } }
+                        updateHelpPages = checkbox(messages["update_help"]) {
+                            preferences { isSelected = get("updateHelpPages", "true")!!.toBoolean() }
+                            action { preferences { put("updateHelpPages", isSelected.toString()) } }
 
-                            tooltip = tooltip("Updates help pages with the latest online version. WARNING! This will replace all custom help pages.")
+                            tooltip = tooltip(messages["update_help_tooltip"])
                         }
 
-                        replaceVoiceFiles = checkbox("Update voice files.") {
-                            preferences { isSelected = get("replaceVoiceFiles", "true")!!.toBoolean() }
-                            action { preferences { put("replaceVoiceFiles", isSelected.toString()) } }
+                        updateVoiceFiles = checkbox(messages["update_voice"]) {
+                            preferences { isSelected = get("updateVoiceFiles", "true")!!.toBoolean() }
+                            action { preferences { put("updateVoiceFiles", isSelected.toString()) } }
 
-                            tooltip = tooltip("Updates voice files with the latest online version. WARNING! This will replace all custom voice files.")
+                            tooltip = tooltip(messages["update_voice_tooltip"])
+                        }
+
+                        updateManuals = checkbox(messages["update_manuals"]) {
+                            preferences { isSelected = get("updateManuals", "true")!!.toBoolean() }
+                            action { preferences { put("updateManuals", isSelected.toString()) } }
+
+                            tooltip = tooltip(messages["update_manuals_tooltip"])
                         }
                     }
                 }
 
-                updateFirmware = checkbox("Update firmware") {
+                updateFirmware = checkbox(messages["update_firmware"]) {
                     isSelected = true
-                    tooltip = tooltip("Copies the latest firmware file to the internal SD-card. Installation has to be performed afterwards on the radio in the \"Info & Update\" menu via \"SD Card update\".")
+                    tooltip = tooltip(messages.getString("update_firmware_tooltip"))
                 }
             }
 
@@ -123,7 +133,7 @@ class Mz32Downloader : View() {
                 disableProperty().bind(disableUI)
 
                 vbox {
-                    label("Drive:")
+                    label(messages["drive"])
                     comboBox = combobox {
                         prefWidth = 275.0
                         setOnMousePressed { load() }
@@ -133,7 +143,7 @@ class Mz32Downloader : View() {
                 vbox {
                     enableWhen { updateResources.selectedProperty() }
 
-                    label("Select Languages:")
+                    label(messages["select_languages"])
                     language = opcr(this, CheckComboBox()) {
                         items.addAll(Language.values())
 
@@ -152,7 +162,7 @@ class Mz32Downloader : View() {
             }
         }
 
-        label("Messages:")
+        label(messages["messages"])
 
         textArea = textarea {
             isEditable = false
@@ -172,12 +182,12 @@ class Mz32Downloader : View() {
         }
 
         buttonbar {
-            updateButton = button("Download")
+            updateButton = button(messages["download"])
         }
     }
 
     private fun armTask() {
-        updateButton.text = "Download"
+        updateButton.text = messages["download"]
         updateButton.action { startTask() }
         updateButton.disableWhen { comboBox.valueProperty().isNull }
         disableUI.value = false
@@ -188,10 +198,18 @@ class Mz32Downloader : View() {
             if (doReindex) {
                 mz32.scan(this, selectedLanguages)
             }
-            mz32.update(this, selectedLanguages, doUpdateResources, doReplaceHelpPages, doReplaceVoiceFiles, doUpdateFirware)
+            mz32.update(
+                this,
+                selectedLanguages,
+                doUpdateResources,
+                doupdateHelpPages,
+                doupdateVoiceFiles,
+                doupdateManulals,
+                doUpdateFirware
+            )
             runLater { armTask() }
         }.apply {
-            updateButton.text = "Cancel"
+            updateButton.text = messages["cancel"]
             updateButton.action { stopTask() }
             disableUI.value = true
             progressBarTotal.progressProperty().bind(progressProperty())
