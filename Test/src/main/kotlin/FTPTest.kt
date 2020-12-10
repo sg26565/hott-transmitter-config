@@ -1,4 +1,4 @@
-import de.treichels.hott.decoder.Firmware
+import de.treichels.hott.model.firmware.Firmware
 import org.apache.commons.net.ftp.FTPClient
 import org.apache.commons.net.ftp.FTPReply
 import java.io.FileOutputStream

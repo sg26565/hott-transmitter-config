@@ -1,7 +1,6 @@
 dependencies {
     implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-UI"))
-    implementation(project(":HoTT-Decoder"))
     implementation(project(":lzma-sdk"))
 }
 

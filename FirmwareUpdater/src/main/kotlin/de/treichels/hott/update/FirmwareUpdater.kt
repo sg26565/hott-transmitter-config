@@ -2,6 +2,8 @@ package de.treichels.hott.update
 
 import de.treichels.hott.decoder.*
 import de.treichels.hott.model.enums.*
+import de.treichels.hott.model.firmware.Firmware
+import de.treichels.hott.model.firmware.getFirmware
 import de.treichels.hott.serial.SerialPort
 import de.treichels.hott.ui.CallbackAdapter
 import de.treichels.hott.ui.ExceptionDialog
