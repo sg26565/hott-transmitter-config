@@ -69,15 +69,17 @@ class MD5Sum(private val root: File?) : TreeMap<String, Hash>(String.CASE_INSENS
      * Load hashes from input stream.
      */
     fun load(inputStream: InputStream) {
-        inputStream.reader().use { reader ->
-            reader.forEachLine { line ->
-                try {
-                    if (!line.isBlank() && !line.startsWith("#") && line.count { it == '|' } == 2) {
-                        val (hash, size, path) = line.split('|')
-                        this[path.trim()] = Hash(size.toLong(), hash.trim())
+        inputStream.use {
+            it.reader().use { reader ->
+                reader.forEachLine { line ->
+                    try {
+                        if (!line.isBlank() && !line.startsWith("#") && line.count { it == '|' } == 2) {
+                            val (hash, size, path) = line.split('|')
+                            this[path.trim()] = Hash(size.toLong(), hash.trim())
+                        }
+                    } catch (e: Exception) {
+                        // ignore malformed lines
                     }
-                } catch (e: Exception) {
-                    // ignore malformed lines
                 }
             }
         }
