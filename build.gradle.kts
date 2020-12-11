@@ -4,10 +4,6 @@ import com.pascalwelsch.gitversioner.GitVersioner
 import edu.sc.seis.launch4j.tasks.Launch4jLibraryTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-buildscript {
-    dependencies.classpath("com.pascalwelsch.gitversioner:gitversioner:0.5.0")
-}
-
 plugins {
     java
     kotlin("jvm") apply false

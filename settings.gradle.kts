@@ -3,6 +3,7 @@ import de.fayard.refreshVersions.bootstrapRefreshVersions
 buildscript {
     repositories { gradlePluginPortal() }
     dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
+    dependencies.classpath("com.pascalwelsch.gitversioner:gitversioner:0.5.0")
 }
 
 bootstrapRefreshVersions()
