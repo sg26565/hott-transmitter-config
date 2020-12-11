@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":FirmwareUpdater"))
     implementation("commons-net:commons-net:_")
     implementation("org.apache.commons:commons-math3:_")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
     runtimeOnly("com.fazecast:jSerialComm:_")
     runtimeOnly("org.freemarker:freemarker:_")
     runtimeOnly(project(":jSerialCommPort"))

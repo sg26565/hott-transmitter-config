@@ -24,6 +24,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import kotlin.reflect.KProperty
 import kotlin.streams.toList
+import kotlinx.coroutines.*
 
 private class LzmaCompressTask(private val source: File, private val target: File) : Task<Unit>() {
     private val md5Sum = MD5Sum(target)
@@ -72,7 +73,7 @@ private class LzmaCompressTask(private val source: File, private val target: Fil
 
         val files = mutableListOf<File>()
 
-        dir.listFiles { file -> !file.isSystem }.forEach { file ->
+        dir.listFiles { file -> !file.isSystem }?.forEach { file ->
             if (!isCancelled) {
                 if (file.isDirectory)
                     files.addAll(getFiles(file))
@@ -94,19 +95,21 @@ private class LzmaCompressTask(private val source: File, private val target: Fil
 
             startTime = System.currentTimeMillis()
 
-            if (source.isDirectory) {
-                val files = getFiles(source)
-                totalFileCount = files.size.toLong()
-                files.parallelStream().forEach { file ->
-                    processFile(file)
-                }
-            } else if (source.isFile && source.name.endsWith(".zip")) {
-                val zipFile = ZipFile(source, Charsets.US_ASCII)
-                val entries = zipFile.stream().filter { !it.isDirectory }.toList()
-                totalFileCount = entries.size.toLong()
+            runBlocking {
+                if (source.isDirectory) {
+                    val files = getFiles(source)
+                    totalFileCount = files.size.toLong()
+                    files.forEach { file ->
+                        launch(Dispatchers.Default) { processFile(file) }
+                    }
+                } else if (source.isFile && source.name.endsWith(".zip")) {
+                    val zipFile = ZipFile(source, Charsets.US_ASCII)
+                    val entries = zipFile.stream().filter { !it.isDirectory }.toList()
+                    totalFileCount = entries.size.toLong()
 
-                entries.parallelStream().forEach { zipEntry ->
-                    processZipEntry(zipEntry, zipFile)
+                    entries.forEach { zipEntry ->
+                        launch(Dispatchers.Default) { processZipEntry(zipEntry, zipFile) }
+                    }
                 }
             }
         } catch (e: Exception) {
