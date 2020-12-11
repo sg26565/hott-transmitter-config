@@ -1,6 +1,5 @@
 package de.treichels.hott.mdlviewer.swt;
 
-import de.treichels.hott.decoder.HoTTDecoder;
 import de.treichels.hott.mdlviewer.swt.dialogs.SelectFromMemoryDialog;
 import de.treichels.hott.mdlviewer.swt.dialogs.SelectFromSdCardDialog;
 import de.treichels.hott.mdlviewer.swt.dialogs.SelectFromTransmitterDialog;
@@ -27,6 +26,8 @@ import org.jetbrains.annotations.NonNls;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.prefs.Preferences;
+
+import static de.treichels.hott.decoder.HoTTDecoderKt.decodeFile;
 
 class MdlTabItemComposite extends Composite {
     @NonNls
@@ -210,7 +211,7 @@ class MdlTabItemComposite extends Composite {
 
                 BusyIndicator.showWhile(getDisplay(), () -> {
                     try {
-                        model = HoTTDecoder.INSTANCE.decodeFile(file);
+                        model = decodeFile(file);
                     } catch (final Throwable t) {
                         showError(t);
                     }

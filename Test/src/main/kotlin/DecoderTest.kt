@@ -1,4 +1,4 @@
-import de.treichels.hott.decoder.HoTTDecoder
+import de.treichels.hott.decoder.HoTTDecoderKt.decodeFile
 import de.treichels.hott.model.BaseModel
 import de.treichels.hott.report.xml.XMLReport
 import java.io.File
@@ -10,7 +10,7 @@ fun main() {
     // val path = "V:/MDL-Viewer_Daten/Models/mc-28"
     // val filename = "aB4 YUKI"
     val file = File(path, "$filename.mdl")
-    val model: BaseModel = HoTTDecoder.decodeFile(file)
+    val model: BaseModel = decodeFile(file)
     val xmlOutput = XMLReport.generateXML(model)
     // val hex = Util.dumpData(file.readBytes())
     // println(hex)

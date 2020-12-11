@@ -11,7 +11,7 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
-import de.treichels.hott.decoder.HoTTDecoder
+import de.treichels.hott.decoder.HoTTDecoderKt.decodeStream
 import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.model.BaseModel
 import de.treichels.hott.model.HoTTException
@@ -69,7 +69,7 @@ class Model(private val info: ModelInfo, private val data: ByteArray) {
     }
 
     val fileName: String = "${info.modelType.char}${info.modelName}"
-    val model: BaseModel by lazy { HoTTDecoder.decodeStream(info.modelType, info.modelName, ByteArrayInputStream(data)) }
+    val model: BaseModel by lazy { decodeStream(info.modelType, info.modelName, ByteArrayInputStream(data)) }
     val html
         get() = HTMLReport.generateHTML(model)
     @Suppress("MemberVisibilityCanBePrivate")

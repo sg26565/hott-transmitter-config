@@ -11,7 +11,7 @@
  */
 package de.treichels.hott.report.html
 
-import de.treichels.hott.decoder.HoTTDecoder
+import de.treichels.hott.decoder.HoTTDecoderKt.decodeFile
 import de.treichels.hott.model.enums.TransmitterType
 import de.treichels.hott.util.Util.dumpData
 import org.junit.Assert.assertEquals
@@ -46,7 +46,7 @@ class ReportTest {
 //                    assertEquals(txtFile.readText(), dump)
 
                     try {
-                        val model = HoTTDecoder.decodeFile(mdlFile)
+                        val model = decodeFile(mdlFile)
                         assertEquals(transmitterType, model.transmitterType)
 
                         val html = HTMLReport.generateHTML(model)

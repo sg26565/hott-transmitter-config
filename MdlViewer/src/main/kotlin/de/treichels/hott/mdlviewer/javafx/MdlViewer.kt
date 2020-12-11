@@ -11,6 +11,7 @@
  */
 package de.treichels.hott.mdlviewer.javafx
 
+import de.treichels.hott.decoder.HoTTDecoderKt.decodeVDF
 import de.treichels.hott.ui.ExceptionDialog
 import de.treichels.hott.util.Util
 import de.treichels.hott.voice.Announcements
@@ -264,7 +265,7 @@ class MainView : View() {
             extensionFilters.add(FileChooser.ExtensionFilter(messages["vdf_file"], "*.vdf"))
         }.showOpenDialog(primaryStage)?.apply {
             preferences { put(LAST_VDF_DIR, parentFile.absolutePath) }
-            val vdfFile = de.treichels.hott.decoder.HoTTDecoder.decodeVDF(this)
+            val vdfFile = decodeVDF(this)
             val names = vdfFile.voiceList.map { it.name }.toList()
             Announcements.saveSystemPrefs(model!!.model.transmitterType, names)
             refresh()
@@ -284,7 +285,7 @@ class MainView : View() {
             extensionFilters.add(FileChooser.ExtensionFilter(messages["vdf_file"], "*.vdf"))
         }.showOpenDialog(primaryStage)?.apply {
             preferences { put(LAST_VDF_DIR, parentFile.absolutePath) }
-            val vdfFile = de.treichels.hott.decoder.HoTTDecoder.decodeVDF(this)
+            val vdfFile = decodeVDF(this)
             val names = vdfFile.voiceList.map { it.name }.toList()
             Announcements.saveUserPrefs(model!!.model.transmitterType, names)
             refresh()

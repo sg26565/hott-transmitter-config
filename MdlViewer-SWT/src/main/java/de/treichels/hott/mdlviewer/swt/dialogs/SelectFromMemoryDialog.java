@@ -1,6 +1,5 @@
 package de.treichels.hott.mdlviewer.swt.dialogs;
 
-import de.treichels.hott.decoder.HoTTDecoder;
 import de.treichels.hott.model.enums.ModelType;
 import de.treichels.hott.serial.ModelInfo;
 import org.eclipse.swt.SWT;
@@ -9,6 +8,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.*;
 
 import java.util.ArrayList;
+
+import static de.treichels.hott.decoder.HoTTDecoderKt.decodeMemory;
 
 public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
     // handle double click
@@ -28,7 +29,7 @@ public class SelectFromMemoryDialog extends SelectFromTransmitterDialog {
                 final int index = list.getSelectionIndex();
                 final int modelNumber = infos.get(index).getModelNumber();
 
-                model = HoTTDecoder.INSTANCE.decodeMemory(port, modelNumber);
+                model = decodeMemory(port, modelNumber);
             } catch (final Throwable t) {
                 showError(t);
             }

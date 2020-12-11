@@ -1,6 +1,5 @@
 package de.treichels.hott.mdlviewer.swt.dialogs;
 
-import de.treichels.hott.decoder.HoTTDecoder;
 import de.treichels.hott.model.enums.ModelType;
 import de.treichels.hott.serial.FileInfo;
 import de.treichels.hott.serial.FileType;
@@ -11,6 +10,8 @@ import org.eclipse.swt.widgets.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+
+import static de.treichels.hott.decoder.HoTTDecoderKt.decodeStream;
 
 public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
     // handle double click
@@ -78,7 +79,7 @@ public class SelectFromSdCardDialog extends SelectFromTransmitterDialog {
                         port.readFile(fileInfo.getPath(), os);
 
                         final ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
-                        model = HoTTDecoder.INSTANCE.decodeStream(type, name, is);
+                        model = decodeStream(type, name, is);
                     }
                 }
             } catch (final Throwable t) {

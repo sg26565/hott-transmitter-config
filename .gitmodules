@@ -1,4 +1,0 @@
-[submodule "HoTT-Decoder"]
-	path = HoTT-Decoder
-	url = ../hott-decoder.git
-	branch = develop

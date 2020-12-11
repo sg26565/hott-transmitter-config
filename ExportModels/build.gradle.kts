@@ -1,5 +1,6 @@
 dependencies {
-    implementation(project(":HoTT-Decoder"))
+    val libs = File(rootProject.projectDir, "libs").listFiles { file -> file.isFile && file.extension == "jar" }
+    implementation(files(libs))
     implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-Serial"))
     runtimeOnly(project(":jSerialCommPort"))

@@ -1,6 +1,6 @@
 package de.treichels.hott.vdfeditor.ui
 
-import de.treichels.hott.decoder.HoTTDecoder
+import de.treichels.hott.decoder.HoTTDecoderKt.*
 import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.model.HoTTException
@@ -322,7 +322,7 @@ class MainView : View() {
                                     try {
                                         resources.stream(path).use {
                                             if (askSave()) {
-                                                HoTTDecoder.decodeVDF(IOUtils.toByteArray(it)).apply {
+                                                decodeVDF(IOUtils.toByteArray(it)).apply {
                                                     this.transmitterType = transmitterType
                                                     open(this)
                                                 }
@@ -396,7 +396,7 @@ class MainView : View() {
      */
     private fun checkSizeBeforeSave(): Boolean {
         try {
-            HoTTDecoder.verityVDF(voiceFile)
+            verityVDF(voiceFile)
 
             // display a disclaimer when saving a system vdf
             if (isSystemVDF) {
@@ -527,7 +527,7 @@ class MainView : View() {
                 while (true)
                     try {
                         // validate VDF
-                        HoTTDecoder.verityVDF(voiceFile)
+                        verityVDF(voiceFile)
 
                         // validation succeeded - no exception was thrown
                         break
@@ -916,7 +916,7 @@ class MainView : View() {
         if (!isSystemVDF) {
             // temporarily switch to system vdf
             voiceFile.vdfType = VDFType.System
-            offset = HoTTDecoder.getMaxVoiceCount(voiceFile)
+            offset = getMaxVoiceCount(voiceFile)
             voiceFile.vdfType = VDFType.User
         }
 
@@ -1119,7 +1119,7 @@ class MainView : View() {
     private fun open(vdf: File) {
         if (askSave())
             try {
-                open(HoTTDecoder.decodeVDF(vdf))
+                open(decodeVDF(vdf))
                 vdfFileProperty.set(vdf)
             } catch (e: IOException) {
                 ExceptionDialog.show(e)
@@ -1170,7 +1170,7 @@ class MainView : View() {
             preferences { put(LAST_SAVE_VDF_DIR, vdf.parentFile.absolutePath) }
 
             try {
-                HoTTDecoder.encodeVDF(voiceFile, vdf)
+                encodeVDF(voiceFile, vdf)
                 vdfFileProperty.set(vdf)
                 voiceFile.clean()
                 setStageTitle()
@@ -1233,7 +1233,7 @@ class MainView : View() {
             sb.append(vdfFile.name)
 
         try {
-            val maxDataSize = HoTTDecoder.getMaxDataSize(voiceFile)
+            val maxDataSize = getMaxDataSize(voiceFile)
             val dataSize = voiceFile.rawDataSize
 
             sb.append(String.format(" - %d kb / %d kb (%d%%) - %s VDF V%s", dataSize / 1024, maxDataSize / 1024, dataSize * 100 / maxDataSize,
@@ -1338,7 +1338,7 @@ class MainView : View() {
      * @param showDialog Show a confirmation dialog if entries are to be deleted.
      */
     private fun verify(showDialog: Boolean = true) {
-        val maxVoiceCount = HoTTDecoder.getMaxVoiceCount(voiceFile)
+        val maxVoiceCount = getMaxVoiceCount(voiceFile)
         var voiceCount = voiceFile.size
         val voiceData = listView.items
 
@@ -1359,7 +1359,7 @@ class MainView : View() {
                     voiceData.add(VoiceData(String.format("%02d.%s", voiceCount + 1, messages["empty"]), ByteArray(0)))
         }
 
-        HoTTDecoder.verityVDF(voiceFile)
+        verityVDF(voiceFile)
     }
 
     // run some code while muted (i.e. suppress consistency checks)

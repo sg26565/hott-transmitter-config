@@ -1,6 +1,8 @@
 package de.treichels.hott.update
 
 import de.treichels.hott.decoder.*
+import de.treichels.hott.decoder.HoTTFirmwareKt.detectDevice
+import de.treichels.hott.decoder.HoTTFirmwareKt.getDeviceType
 import de.treichels.hott.model.enums.*
 import de.treichels.hott.model.firmware.Firmware
 import de.treichels.hott.model.firmware.getFirmware
@@ -238,7 +240,7 @@ class FirmwareUpdater : View() {
             if (textField.text != null) {
                 try {
                     // check that the current file matches the selected device type
-                    val type = serialPort?.getDeviceType(File(textField.text))
+                    val type = getDeviceType(serialPort,File(textField.text))
                     if (type?.productCode != deviceType.value.productCode) textField.text = null
                 } catch (e: IOException) {
                     textField.text = null
@@ -253,7 +255,7 @@ class FirmwareUpdater : View() {
             title = messages["deviceType"]
         }
         val task = runAsync {
-            serialPort?.detectDevice(CallbackAdapter(this))
+            detectDevice(serialPort,CallbackAdapter(this))
         }.ui {
             // enable category of detected device
             when (it) {
@@ -280,7 +282,7 @@ class FirmwareUpdater : View() {
 
                 try {
                     // read device type from firmware file and update combobox
-                    serialPort?.getDeviceType(file)?.apply {
+                    getDeviceType(serialPort,file)?.apply {
                         // some device types share the same product code - update only if product code is different
                         if (deviceType.value == null || productCode != deviceType.value.productCode) deviceType.value = this
                     }
