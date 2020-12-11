@@ -2,7 +2,7 @@
 ==========
     all
     - dropped support for Java 8
-    
+
     mz32-Downloader-0.9.4.1360
     - German translation
     - fix bug with upper/lower case paths on Windows
