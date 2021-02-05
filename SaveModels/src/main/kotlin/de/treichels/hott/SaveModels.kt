@@ -10,8 +10,6 @@ import javafx.scene.paint.Color
 import java.time.LocalDate
 import java.time.Period
 
-class SaveModels : App(MyView::class)
-
 fun main(args: Array<String>) {
     launch<SaveModels>(args)
 }
@@ -20,29 +18,31 @@ fun main(args: Array<String>) {
 // https://edvin.gitbooks.io/tornadofx-guide/content/part1/1_Why_TornadoFX.html
 // https://stackoverflow.com/questions/50976849/invoke-function-when-item-in-combobox-is-selected-tornadofx
 
-
-class Person(id: Int, name: String, birthday: LocalDate) {
-    private var id: Int by property<Int>()
-    fun idProperty() = getProperty(Person::id)
-
-    private var name: String by property<String>()
-    fun nameProperty() = getProperty(Person::name)
-
-    private var birthday: LocalDate by property<LocalDate>()
-    fun birthdayProperty() = getProperty(Person::birthday)
-
-    val age: Int get() = Period.between(birthday, LocalDate.now()).years
-
-    init {
-        this.id = id
-        this.name = name
-        this.birthday = birthday
-    }
-}
-
+class SaveModels : App(MyView::class)
 
 class MyView : View() {
     override val root = VBox()
+
+
+    class Person(id: Int, name: String, birthday: LocalDate) {
+        private var id: Int by property<Int>()
+        fun idProperty() = getProperty(Person::id)
+
+        private var name: String by property<String>()
+        fun nameProperty() = getProperty(Person::name)
+
+        private var birthday: LocalDate by property<LocalDate>()
+        fun birthdayProperty() = getProperty(Person::birthday)
+
+        val age: Int get() = Period.between(birthday, LocalDate.now()).years
+
+        init {
+            this.id = id
+            this.name = name
+            this.birthday = birthday
+        }
+    }
+
 
     private val texasCities = FXCollections.observableArrayList(
         "Austin",
