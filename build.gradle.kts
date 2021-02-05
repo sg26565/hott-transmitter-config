@@ -6,10 +6,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    kotlin("jvm") apply false
-    id("com.github.johnrengelman.shadow") apply false
-    id("edu.sc.seis.launch4j") apply false
-    id("com.google.osdetector")
+    kotlin("jvm") version "1.4.30" apply false
+    id("com.github.johnrengelman.shadow") version "6.1.0" apply false
+    id("edu.sc.seis.launch4j") version "3.12" apply false
+    id("com.google.osdetector") version "1.6.2"
 }
 
 apply(plugin = "com.pascalwelsch.gitversioner")
