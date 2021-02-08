@@ -1,5 +1,6 @@
 package de.treichels.hott
 
+import de.treichels.hott.decoder.HoTTTransmitter
 import tornadofx.launch
 import tornadofx.App
 import tornadofx.*
@@ -9,6 +10,7 @@ import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import java.time.LocalDate
 import java.time.Period
+import de.treichels.hott.serial.SerialPort
 
 fun main(args: Array<String>) {
     launch<SaveModels>(args)
@@ -58,6 +60,11 @@ class MyView : View() {
         Person(4, "Nicole Williams", LocalDate.of(1998, 8, 11))
     )
 
+    private var port: HoTTTransmitter? = null
+    private var portName: String = ""
+
+
+
     init {
         with(root) {
             borderpane {
@@ -86,6 +93,10 @@ class MyView : View() {
                     combobox(selectedCity, texasCities)
                     selectedCity.onChange {
                         println("City changed to: $it")
+                    }
+
+                    for (s in SerialPort.getAvailablePorts()) {
+                        println("port: $s")
                     }
                 }
                 center = tableview(persons) {
