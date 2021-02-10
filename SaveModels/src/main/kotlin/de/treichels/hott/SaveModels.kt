@@ -19,12 +19,12 @@ fun main(args: Array<String>) {
 // Example from https://github.com/edvin/tornadofx/wiki/Type-Safe-Builders
 // https://edvin.gitbooks.io/tornadofx-guide/content/part1/1_Why_TornadoFX.html
 // https://stackoverflow.com/questions/50976849/invoke-function-when-item-in-combobox-is-selected-tornadofx
+// https://github.com/edvin/tornadofx/issues/355
 
 class SaveModels : App(MyView::class)
 
 class MyView : View() {
     override val root = VBox()
-
 
     class Person(id: Int, name: String, birthday: LocalDate) {
         private var id: Int by property<Int>()
@@ -45,13 +45,7 @@ class MyView : View() {
         }
     }
 
-
-    private val texasCities = FXCollections.observableArrayList(
-        "Austin",
-        "Dallas", "Midland", "San Antonio", "Fort Worth"
-    )
-
-    private val selectedCity = SimpleStringProperty("Hugo")
+    private val selectedPort = SimpleStringProperty()
 
     private val persons = FXCollections.observableArrayList(
         Person(1, "Samantha Stuart", LocalDate.of(1981, 12, 4)),
@@ -61,11 +55,14 @@ class MyView : View() {
     )
 
     private var port: HoTTTransmitter? = null
-    private var portName: String = ""
-
-
 
     init {
+
+        var portList = SerialPort.getAvailablePorts()
+        for (s in portList) {
+            println("port: $s")
+        }
+
         with(root) {
             borderpane {
                 top = hbox {
@@ -89,16 +86,15 @@ class MyView : View() {
                     }
                     button("Button 2").setOnAction {
                         println("Button 2 Pressed")
-                    }
-                    combobox(selectedCity, texasCities)
-                    selectedCity.onChange {
-                        println("City changed to: $it")
-                    }
 
-                    for (s in SerialPort.getAvailablePorts()) {
-                        println("port: $s")
+                    }
+                    label ( " Port " )
+                    combobox(selectedPort, portList.sorted())
+                    selectedPort.onChange {
+                        println("Port changed to: $it")
                     }
                 }
+
                 center = tableview(persons) {
                     column("ID", Person::idProperty)
                     column("Name", Person::nameProperty)
