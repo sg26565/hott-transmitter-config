@@ -1,16 +1,7 @@
 package de.treichels.hott
 
-import de.treichels.hott.decoder.HoTTTransmitter
 import tornadofx.launch
 import tornadofx.App
-import tornadofx.*
-import javafx.beans.property.SimpleStringProperty
-import javafx.collections.FXCollections
-import javafx.scene.layout.VBox
-import javafx.scene.paint.Color
-import java.time.LocalDate
-import java.time.Period
-import de.treichels.hott.serial.SerialPort
 
 fun main(args: Array<String>) {
     launch<SaveModels>(args)
@@ -22,94 +13,3 @@ fun main(args: Array<String>) {
 // https://github.com/edvin/tornadofx/issues/355
 
 class SaveModels : App(MyView::class)
-
-class MyView : View() {
-    override val root = VBox()
-
-    class Person(id: Int, name: String, birthday: LocalDate) {
-        private var id: Int by property<Int>()
-        fun idProperty() = getProperty(Person::id)
-
-        private var name: String by property<String>()
-        fun nameProperty() = getProperty(Person::name)
-
-        private var birthday: LocalDate by property<LocalDate>()
-        fun birthdayProperty() = getProperty(Person::birthday)
-
-        val age: Int get() = Period.between(birthday, LocalDate.now()).years
-
-        init {
-            this.id = id
-            this.name = name
-            this.birthday = birthday
-        }
-    }
-
-    private val selectedPort = SimpleStringProperty()
-
-    private val persons = FXCollections.observableArrayList(
-        Person(1, "Samantha Stuart", LocalDate.of(1981, 12, 4)),
-        Person(2, "Tom Marks", LocalDate.of(2011, 1, 23)),
-        Person(3, "Stuart Gilles", LocalDate.of(1989, 5, 23)),
-        Person(4, "Nicole Williams", LocalDate.of(1998, 8, 11))
-    )
-
-    private var port: HoTTTransmitter? = null
-
-    init {
-
-        var portList = SerialPort.getAvailablePorts()
-        for (s in portList) {
-            println("port: $s")
-        }
-
-        with(root) {
-            borderpane {
-                top = hbox {
-                    togglebutton {
-                        val stateText = selectedProperty().stringBinding {
-                            if (it == true) "ON" else "OFF"
-                        }
-                        textProperty().bind(stateText)
-                        setOnAction {
-                            println("Button 0 Pressed")
-                        }
-                    }
-                    button("Button 1") {
-                        setOnAction {
-                            println("Button 1 Pressed")
-                        }
-                        hboxConstraints {
-                            marginRight = 10.0
-                            marginLeft = 10.0
-                        }
-                    }
-                    button("Button 2").setOnAction {
-                        println("Button 2 Pressed")
-
-                    }
-                    label ( " Port " )
-                    combobox(selectedPort, portList.sorted())
-                    selectedPort.onChange {
-                        println("Port changed to: $it")
-                    }
-                }
-
-                center = tableview(persons) {
-                    column("ID", Person::idProperty)
-                    column("Name", Person::nameProperty)
-                    column("Birthday", Person::birthdayProperty)
-                    readonlyColumn("Age", Person::age).cellFormat {
-                        text = it.toString()
-                        style {
-                            if (it < 18) {
-                                backgroundColor += c("#8b0000")
-                                textFill = Color.WHITE
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
