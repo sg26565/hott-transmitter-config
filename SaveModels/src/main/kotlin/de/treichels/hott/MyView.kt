@@ -6,15 +6,11 @@ import de.treichels.hott.serial.SerialPort
 import de.treichels.hott.serial.ModelInfo
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
-import javafx.scene.paint.Color
 import tornadofx.*
-import java.time.LocalDate
-import java.time.Period
 import javax.swing.table.AbstractTableModel
 
 class MyView : View() {
 
-    private val cities = FXCollections.observableArrayList("Dallas", "New York", "Sacramento")
     private val dummyPort : String = "COM?"
     private val selectedPort = SimpleStringProperty(dummyPort)
     private val portList = FXCollections.observableArrayList(dummyPort)
@@ -26,21 +22,16 @@ class MyView : View() {
                     combobox(selectedPort, portList)
                     button("Add").setOnAction {
                         println("Add Togo")
-                        cities.add("Togo")
+
                     }
                     button("Remove Last").setOnAction {
-                        println("Remove " + cities.elementAt(cities.size - 1))
-                        cities.removeLast()
+                        println("Remove ")
                     }
                 }
             }
         }
 
-//        center = tableview(ModelInfoTableModel) {
-//            column(AbstractTableModel.)
-//
-//
-//        }
+
 
         bottom = hbox {
             button("Button 1") {
@@ -71,32 +62,6 @@ class MyView : View() {
         }
     }
 }
-
-class Person(id: Int, name: String, birthday: LocalDate) {
-    private var id: Int by property<Int>()
-    fun idProperty() = getProperty(Person::id)
-
-    private var name: String by property<String>()
-    fun nameProperty() = getProperty(Person::name)
-
-    private var birthday: LocalDate by property<LocalDate>()
-    fun birthdayProperty() = getProperty(Person::birthday)
-
-    val age: Int get() = Period.between(birthday, LocalDate.now()).years
-
-    init {
-        this.id = id
-        this.name = name
-        this.birthday = birthday
-    }
-}
-
-private val persons = FXCollections.observableArrayList(
-    Person(1, "Samantha Stuart", LocalDate.of(1981, 12, 4)),
-    Person(2, "Tom Marks", LocalDate.of(2011, 1, 23)),
-    Person(3, "Stuart Gilles", LocalDate.of(1989, 5, 23)),
-    Person(4, "Nicole Williams", LocalDate.of(1998, 8, 11))
-)
 
 private var port: HoTTTransmitter? = null
 private val tableModel =  ModelInfoTableModel()
