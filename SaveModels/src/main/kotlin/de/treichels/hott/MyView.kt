@@ -20,7 +20,7 @@ class MyView : View() {
 
     private val warriorModel: WarriorModel by inject()
     private val persons = FXCollections.observableArrayList(
-        Warrior(1,"Hugo1","rakete","hfh","tdt",1,1)
+        Warrior(0,"","","","",0,0)
     )
 
     override val root = borderpane {
@@ -97,8 +97,9 @@ class MyView : View() {
                 val usehr = tableModel.getModelInfo(i).usedHours
                 val usemin = tableModel.getModelInfo(i).usedMinutes
 
-                persons.add(Warrior(  mnbr, mname, mtype.toString(), rclass.toString(), txtype.toString(), usehr, usemin))
+                persons.add(Warrior(  mnbr+1, mname, mtype.toString(), rclass.toString(), txtype.toString(), usehr, usemin))
             }
+            persons.removeFirst()
         }
     }
 }
