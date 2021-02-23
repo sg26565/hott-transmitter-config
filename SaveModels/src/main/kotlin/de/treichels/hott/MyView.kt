@@ -14,34 +14,30 @@ import javax.swing.table.AbstractTableModel
 
 class MyView : View() {
 
-    private val dummyPort : String = "COM?"
+    private val dummyPort: String = "COM?"
     private val selectedPort = SimpleStringProperty(dummyPort)
     private val portList = FXCollections.observableArrayList(dummyPort)
 
-    private val warriorModel : WarriorModel by inject()
+    private val warriorModel: WarriorModel by inject()
     private val persons = FXCollections.observableArrayList(
-        Warrior(1,"Tyrion Lannister", "M"),
-        Warrior(2,"Ned Stark", "M"),
-        Warrior(3,"Daenerys Targaryen", "F"),
-        Warrior(4,"Arya Stark", "F")
+        Warrior(1, "Tyrion Lannister", "M",1,"Hugo1","rakete","hfh","tdt",1,1)
     )
 
     override val root = borderpane {
         top {
             form {
-            fieldset {
-                field("Select Port") {
-                    combobox(selectedPort, portList)
-                    button("Add").setOnAction {
-                        println("Add Togo")
-
-                    }
-                    button("Remove Last").setOnAction {
-                        println("Remove ")
+                fieldset {
+                    field("Select Port") {
+                        combobox(selectedPort, portList)
+                        button("Add").setOnAction {
+                            println("Add Togo")
+                        }
+                        button("Remove Last").setOnAction {
+                            println("Remove ")
+                        }
                     }
                 }
             }
-        }
         }
 
         center {
@@ -50,24 +46,33 @@ class MyView : View() {
                 column("ID", Warrior::idProperty)
                 column("Name", Warrior::nameProperty).makeEditable()
                 column("Gender", Warrior::genderProperty).useComboBox(FXCollections.observableArrayList("M", "F"))
-                column("Action", Warrior::dummyProperty).setCellFactory {DeleteButton<Warrior>()}
-                column("Action", Warrior::dummyProperty).setCellFactory {AddButton<Warrior>()}
+                column( "modelNumber", Warrior::modelNumberProperty)
+                column( "modelName", Warrior::modelNameProperty).makeEditable()
+                column("modelType", Warrior::modelTypeProperty)
+                column("receiverClass", Warrior::receiverClassProperty)
+                column("transmitterType", Warrior::transmitterTypeProperty)
+                column( "usedHours", Warrior::usedHoursProperty)
+                column("usedMinutes", Warrior::usedMinutesProperty)
+                column("Action", Warrior::dummyProperty).setCellFactory { DeleteButton<Warrior>() }
+                column("Action", Warrior::dummyProperty).setCellFactory { AddButton<Warrior>() }
                 bindSelected(warriorModel)
                 subscribe<DeleteEvent> { event ->
                     items.removeAt(event.index)
                 }
                 subscribe<AddEvent> {
-                    items.add(Warrior(persons.size+1,"hugo","F"))
+                    for (l in 0..7) {
+                     //   items.add(Warrior(persons.size + 1, tableModel.getValueAt(1, l).toString(), "F"))
+                    }
                 }
             }
         }
+
 
         bottom {
             hbox {
                 button("Button 1") {
                     hboxConstraints {
                         marginRight = 20.0
-
                     }
                 }
                 button("Button 2")
@@ -76,26 +81,35 @@ class MyView : View() {
     }
 
     init {
-        for ( s in SerialPort.getAvailablePorts()) {
+        for (s in SerialPort.getAvailablePorts()) {
             println("port: $s")
             portList.add(s)
-            portList.removeIf {portList -> portList == dummyPort}
+            portList.removeIf { portList -> portList == dummyPort }
         }
 
         selectedPort.onChange {
-            println("Port changed to: $it" )
+            println("Port changed to: $it")
             updateTableData(it.toString())
 
-            for (i in 0 until tableModel.rowCount){
-                val line = tableModel.getModelInfo(i)
-                println("$line")
+            for (i in 0 until tableModel.rowCount) {
+                //val line = tableModel.getModelInfo(i)
+                //val minfo = tableModel.getModelInfo(i).modelInfo
+                val mname = tableModel.getModelInfo(i).modelName
+                val mnbr = tableModel.getModelInfo(i).modelNumber
+                val mtype = tableModel.getModelInfo(i).modelType
+                val rclass = tableModel.getModelInfo(i).receiverClass
+                val txtype = tableModel.getModelInfo(i).transmitterType
+                val usehr = tableModel.getModelInfo(i).usedHours
+                val usemin = tableModel.getModelInfo(i).usedMinutes
+
+                persons.add(Warrior(persons.size + 1, "hugo", "M", mnbr, mname, mtype.toString(), rclass.toString(), txtype.toString(), usehr, usemin))
             }
         }
     }
 }
 
 private var port: HoTTTransmitter? = null
-private val tableModel =  ModelInfoTableModel()
+private val tableModel = ModelInfoTableModel()
 
 private class ModelInfoTableModel : AbstractTableModel() {
     var modelInfos: Array<ModelInfo>? = null
@@ -151,7 +165,15 @@ private class ModelInfoTableModel : AbstractTableModel() {
     }
 
     companion object {
-        private val COLUMNS = arrayOf(Messages.getString("ModelNumber"), Messages.getString("ModelType"), Messages.getString("ModelName"), Messages.getString("ModelInfo"), Messages.getString("ReceiverType"), Messages.getString("Usage"), Messages.getString("Actions"))
+        private val COLUMNS = arrayOf(
+            Messages.getString("ModelNumber"),
+            Messages.getString("ModelType"),
+            Messages.getString("ModelName"),
+            Messages.getString("ModelInfo"),
+            Messages.getString("ReceiverType"),
+            Messages.getString("Usage"),
+            Messages.getString("Actions")
+        )
     }
 }
 
@@ -177,14 +199,15 @@ class DeleteButton<Warrior> : TableCell<Warrior, String?>() {
         }
     }
 }
-class AddButton<Warrior> : TableCell<Warrior, String?>(){
+
+class AddButton<Warrior> : TableCell<Warrior, String?>() {
     private val btn = Button("Add")
     override fun updateItem(item: String?, empty: Boolean) {
         super.updateItem(item, empty)
-        if (empty){
+        if (empty) {
             graphic = null
             text = null
-        } else{
+        } else {
             btn.setOnAction {
                 FX.eventbus.fire(AddEvent(index))
             }
@@ -193,13 +216,33 @@ class AddButton<Warrior> : TableCell<Warrior, String?>(){
         }
     }
 }
-class Warrior(id: Int, name: String, gender: String) {
+
+class Warrior(
+    id: Int,
+    name: String,
+    gender: String,
+    modelNumber: Int,
+    modelName: String,
+    modelType: String,
+    receiverClass: String,
+    transmitterType: String,
+    usedHours: Int,
+    usedMinutes: Int
+) {
 
     val idProperty = SimpleIntegerProperty(id)
     val nameProperty = SimpleStringProperty(name)
+    val modelNumberProperty = SimpleIntegerProperty(modelNumber)
+    val modelNameProperty = SimpleStringProperty(modelName)
+    val modelTypeProperty = SimpleStringProperty(modelType)
+    val receiverClassProperty = SimpleStringProperty(receiverClass)
+    val transmitterTypeProperty = SimpleStringProperty(transmitterType)
+    val usedHoursProperty = SimpleIntegerProperty(usedHours)
+    val usedMinutesProperty = SimpleIntegerProperty(usedMinutes)
     val genderProperty = SimpleStringProperty(gender)
     val dummyProperty = SimpleStringProperty("")
 }
+
 class WarriorModel : ItemViewModel<Warrior>()
-class AddEvent(val index:Int) : FXEvent()
+class AddEvent(val index: Int) : FXEvent()
 class DeleteEvent(val index: Int) : FXEvent()
