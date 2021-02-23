@@ -20,7 +20,7 @@ class MyView : View() {
 
     private val warriorModel: WarriorModel by inject()
     private val persons = FXCollections.observableArrayList(
-        Warrior(1, "Tyrion Lannister", "M",1,"Hugo1","rakete","hfh","tdt",1,1)
+        Warrior(1,"Hugo1","rakete","hfh","tdt",1,1)
     )
 
     override val root = borderpane {
@@ -43,9 +43,6 @@ class MyView : View() {
         center {
             tableview(persons) {
                 isEditable = true
-                column("ID", Warrior::idProperty)
-                column("Name", Warrior::nameProperty).makeEditable()
-                column("Gender", Warrior::genderProperty).useComboBox(FXCollections.observableArrayList("M", "F"))
                 column( "modelNumber", Warrior::modelNumberProperty)
                 column( "modelName", Warrior::modelNameProperty).makeEditable()
                 column("modelType", Warrior::modelTypeProperty)
@@ -92,8 +89,6 @@ class MyView : View() {
             updateTableData(it.toString())
 
             for (i in 0 until tableModel.rowCount) {
-                //val line = tableModel.getModelInfo(i)
-                //val minfo = tableModel.getModelInfo(i).modelInfo
                 val mname = tableModel.getModelInfo(i).modelName
                 val mnbr = tableModel.getModelInfo(i).modelNumber
                 val mtype = tableModel.getModelInfo(i).modelType
@@ -102,7 +97,7 @@ class MyView : View() {
                 val usehr = tableModel.getModelInfo(i).usedHours
                 val usemin = tableModel.getModelInfo(i).usedMinutes
 
-                persons.add(Warrior(persons.size + 1, "hugo", "M", mnbr, mname, mtype.toString(), rclass.toString(), txtype.toString(), usehr, usemin))
+                persons.add(Warrior(  mnbr, mname, mtype.toString(), rclass.toString(), txtype.toString(), usehr, usemin))
             }
         }
     }
@@ -218,9 +213,6 @@ class AddButton<Warrior> : TableCell<Warrior, String?>() {
 }
 
 class Warrior(
-    id: Int,
-    name: String,
-    gender: String,
     modelNumber: Int,
     modelName: String,
     modelType: String,
@@ -230,8 +222,6 @@ class Warrior(
     usedMinutes: Int
 ) {
 
-    val idProperty = SimpleIntegerProperty(id)
-    val nameProperty = SimpleStringProperty(name)
     val modelNumberProperty = SimpleIntegerProperty(modelNumber)
     val modelNameProperty = SimpleStringProperty(modelName)
     val modelTypeProperty = SimpleStringProperty(modelType)
@@ -239,7 +229,6 @@ class Warrior(
     val transmitterTypeProperty = SimpleStringProperty(transmitterType)
     val usedHoursProperty = SimpleIntegerProperty(usedHours)
     val usedMinutesProperty = SimpleIntegerProperty(usedMinutes)
-    val genderProperty = SimpleStringProperty(gender)
     val dummyProperty = SimpleStringProperty("")
 }
 
