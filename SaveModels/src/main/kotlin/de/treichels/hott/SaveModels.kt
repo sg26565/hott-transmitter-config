@@ -1,15 +1,20 @@
 package de.treichels.hott
 
-import tornadofx.launch
-import tornadofx.App
+import javafx.application.Application
+import javafx.fxml.FXMLLoader
+import javafx.scene.Scene
+import javafx.stage.Stage
 
-fun main(args: Array<String>) {
-    launch<SaveModels>(args)
+class SaveModels : Application() {
+    override fun start(stage: Stage) {
+        val fxmlLoader = FXMLLoader(SaveModels::class.java.getResource("hello-view.fxml"))
+        val scene = Scene(fxmlLoader.load(), 320.0, 240.0)
+        stage.title = "Hello!"
+        stage.scene = scene
+        stage.show()
+    }
 }
 
-// Example from https://github.com/edvin/tornadofx/wiki/Type-Safe-Builders
-// https://edvin.gitbooks.io/tornadofx-guide/content/part1/1_Why_TornadoFX.html
-// https://stackoverflow.com/questions/50976849/invoke-function-when-item-in-combobox-is-selected-tornadofx
-// https://github.com/edvin/tornadofx/issues/355
-
-class SaveModels : App(MyView::class)
+fun main() {
+    Application.launch(SaveModels::class.java)
+}

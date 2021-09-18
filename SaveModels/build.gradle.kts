@@ -12,7 +12,7 @@ plugins {
 }
 
 javafx {
-    version = "11.0.2"
+    version = "16"
     modules = listOf("javafx.controls","javafx.fxml","javafx.web")
 }
 
