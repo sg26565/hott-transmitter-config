@@ -8,7 +8,7 @@ import javafx.stage.Stage
 class SaveModels : Application() {
     override fun start(stage: Stage) {
         val fxmlLoader = FXMLLoader(SaveModels::class.java.getResource("hello-view.fxml"))
-        val scene = Scene(fxmlLoader.load(), 320.0, 240.0)
+        val scene = Scene(fxmlLoader.load())
         stage.title = "Hello!"
         stage.scene = scene
         stage.show()
