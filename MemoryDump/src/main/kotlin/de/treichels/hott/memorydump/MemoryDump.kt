@@ -87,6 +87,8 @@ class MemoryDumpView : View() {
                                 }
 
                                 Unknown -> message.append("U")
+
+                                null -> message.append("null")
                             }
 
                             updateMessage(message.toString())
