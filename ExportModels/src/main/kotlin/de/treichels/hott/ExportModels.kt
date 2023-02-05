@@ -1,6 +1,5 @@
 package de.treichels.hott
 
-import de.treichels.hott.decoder.HoTTTransmitter
 import de.treichels.hott.messages.Messages
 import de.treichels.hott.model.enums.ModelType
 import de.treichels.hott.serial.ModelInfo
@@ -19,6 +18,9 @@ import javax.swing.filechooser.FileNameExtensionFilter
 import javax.swing.table.AbstractTableModel
 import javax.swing.table.TableCellEditor
 import javax.swing.table.TableCellRenderer
+import de.treichels.hott.decoder.HoTTTransmitter
+import javax.swing.event.PopupMenuEvent
+import javax.swing.event.PopupMenuListener
 
 fun main() {
     SwingUtilities.invokeLater { ExportModels().showDialog() }
@@ -59,7 +61,7 @@ class ExportModels {
             return null
         }
 
-        override fun getTableCellEditorComponent(table: JTable, value: Any, isSelected: Boolean, row: Int, column: Int): Component {
+        override fun getTableCellEditorComponent(table: JTable, value: Any?, isSelected: Boolean, row: Int, column: Int): Component {
             val button = JButton(Messages.getString("Save"))
             button.addActionListener {
                 try {
@@ -71,7 +73,7 @@ class ExportModels {
             return button
         }
 
-        override fun getTableCellRendererComponent(table: JTable, value: Any, isSelected: Boolean, hasFocus: Boolean, row: Int,
+        override fun getTableCellRendererComponent(table: JTable, value: Any?, isSelected: Boolean, hasFocus: Boolean, row: Int,
                                                    column: Int): Component {
             return getTableCellEditorComponent(table, value, isSelected, row, column)
         }
@@ -132,6 +134,21 @@ class ExportModels {
 
         companion object {
             private val COLUMNS = arrayOf(Messages.getString("ModelNumber"), Messages.getString("ModelType"), Messages.getString("ModelName"), Messages.getString("ModelInfo"), Messages.getString("ReceiverType"), Messages.getString("Usage"), Messages.getString("Actions"))
+        }
+    }
+
+    private inner class PortPopupListener: PopupMenuListener {
+        override fun popupMenuWillBecomeVisible(e: PopupMenuEvent?) {
+            for (s in SerialPort.getAvailablePorts()) {
+                comboBox.removeAllItems()
+                comboBox.addItem(s)
+            }
+        }
+
+        override fun popupMenuWillBecomeInvisible(e: PopupMenuEvent?) {
+        }
+
+        override fun popupMenuCanceled(e: PopupMenuEvent?) {
         }
     }
 
@@ -226,12 +243,9 @@ class ExportModels {
     }
 
     internal fun showDialog() {
-        for (s in SerialPort.getAvailablePorts()) {
-            comboBox.addItem(s)
-        }
-
         val listener = PortSelectionListener()
         comboBox.addActionListener(listener)
+        comboBox.addPopupMenuListener(PortPopupListener())
         listener.actionPerformed(null)
 
         panel.add(JLabel(Messages.getString("SerialPort")))
