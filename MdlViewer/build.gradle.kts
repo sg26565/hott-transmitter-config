@@ -2,13 +2,15 @@ import com.google.gradle.osdetector.OsDetector
 
 plugins {
     application
+    id("com.google.osdetector")
 }
 
 val os = OsDetector().os
 val os_platform = when (os) {
     "osx" -> "mac"
     "windows" -> "win"
-    else -> os
+    "linux" -> "linux"
+    else -> throw UnsupportedOperationException("os $os is not supported")
 }
 
 dependencies {
