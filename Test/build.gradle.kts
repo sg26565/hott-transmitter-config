@@ -1,8 +1,7 @@
 dependencies {
     implementation(project(":HoTT-Report-XML"))
     implementation(project(":HoTT-Report-HTML"))
-    val libs = File(rootProject.projectDir, "libs").listFiles { file -> file.isFile && file.extension == "jar" }
-    implementation(files(libs))
+    implementation(fileTree(File(rootProject.projectDir, "libs")) { include("*.jar") })
     implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-Serial"))
     implementation(project(":HoTT-TTS"))

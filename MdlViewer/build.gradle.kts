@@ -19,8 +19,7 @@ dependencies {
     implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-UI"))
     implementation(project(":HoTT-Voice"))
-    val libs = File(rootProject.projectDir, "libs").listFiles { file -> file.isFile && file.extension == "jar" }
-    implementation(files(libs))
+    implementation(fileTree(File(rootProject.projectDir, "libs")) { include("*.jar") })
     implementation("commons-io:commons-io:_")
     implementation("org.apache.commons:commons-math3:_")
     implementation("org.openjfx:javafx-swing:_")

@@ -5,8 +5,7 @@ dependencies {
     implementation(project(":HoTT-Serial"))
     implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-Util"))
-    val libs = File(rootProject.projectDir, "libs").listFiles { file -> file.isFile && file.extension == "jar" }
-    implementation(files(libs))
+    implementation(fileTree(File(rootProject.projectDir, "libs")) { include("*.jar") })
     implementation("org.apache.commons:commons-math3:_")
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:_")
     runtimeOnly("com.sun.xml.bind:jaxb-impl:_")
