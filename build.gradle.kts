@@ -1,5 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import com.google.gradle.osdetector.OsDetector
 import com.pascalwelsch.gitversioner.GitVersioner
 import edu.sc.seis.launch4j.tasks.Launch4jLibraryTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -11,8 +10,6 @@ plugins {
     id("edu.sc.seis.launch4j") version "3.12" apply false
     id("com.google.osdetector") version "1.6.2"
 }
-
-apply(plugin = "com.pascalwelsch.gitversioner")
 
 val gitVersioner = the<GitVersioner>().apply {
     yearFactor = 0
@@ -73,6 +70,12 @@ subprojects {
             apply(plugin = "com.github.johnrengelman.shadow")
             apply(plugin = "edu.sc.seis.launch4j")
 
+            configurations {
+                val foo = create("HoTT-Decoder")
+
+                (fileTree(File(rootProject.projectDir, "libs")) { include("*.jar") })
+            }
+
             tasks {
                 // configure the shadowJar tasks with the same archive version as the jar task
                 val shadowJar = named<ShadowJar>("shadowJar") {
@@ -88,7 +91,7 @@ subprojects {
                     textVersion = longVersion
                     outfile = "${project.name}-$shortVersion.exe"
                     copyright = "GPLv3"
-                    bundledJrePath = if (OsDetector().os == "windows") "%JAVA_HOME%" else "\${JAVA_HOME}"
+                    bundledJrePath = "%JAVA_HOME%"
 
                     // add icon - if it exists
                     file("icon.ico").apply {
