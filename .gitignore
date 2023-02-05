@@ -5,7 +5,9 @@ buildNumber.properties
 target/
 MdlViewer.log*
 *.iml
+*.jar
 .idea/
 .gradle/
 build/
 out/
+bin/
