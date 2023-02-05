@@ -22,6 +22,9 @@ interface Callback {
 
     fun isCancelled(): Boolean
     fun cancel(): Boolean
+
+    fun warning(title: String, message: String, buttonTexts: Array<String>? = null, defaultButton: Int = 0): Boolean
+    fun confirm(title: String, message: String, buttonTexts: Array<String>? = null, defaultButton: Int = 0): Boolean
 }
 
 abstract class AbstractCallback : Callback {
@@ -56,6 +59,16 @@ abstract class AbstractCallback : Callback {
 class SimpleCallback : AbstractCallback() {
     override fun updateMessage(message: String) {
         println(message)
+    }
+
+    override fun warning(title: String, message: String, buttonTexts: Array<String>?, defaultButton: Int): Boolean {
+        println("Warning: $title\n$message")
+        return true
+    }
+
+    override fun confirm(title: String, message: String, buttonTexts: Array<String>?, defaultButton: Int): Boolean {
+        println("Confirm: $title\n$message")
+        return true
     }
 
     override fun updateProgress(workDone: Long, totalWork: Long) {
