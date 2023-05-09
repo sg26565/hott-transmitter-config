@@ -1,3 +1,8 @@
+2023-05-09
+==========
+    FirmwareUpdater
+    - add receiver models GR-12D, Hawk 12, Hawk 18
+
 2020-12-10
 ==========
     all

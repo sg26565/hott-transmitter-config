@@ -11,6 +11,8 @@ plugins {
     id("com.google.osdetector") version "1.6.2"
 }
 
+apply(plugin = "com.pascalwelsch.gitversioner")
+
 val gitVersioner = the<GitVersioner>().apply {
     yearFactor = 0
     addLocalChangesDetails = false
@@ -91,7 +93,8 @@ subprojects {
                     textVersion = longVersion
                     outfile = "${project.name}-$shortVersion.exe"
                     copyright = "GPLv3"
-                    bundledJrePath = "%JAVA_HOME%"
+                    //https://stackoverflow.com/questions/52150565/bundling-a-jre-with-a-launch4j-application-in-gradle
+                    //bundledJrePath = "%JAVA_HOME%"
 
                     // add icon - if it exists
                     file("icon.ico").apply {
