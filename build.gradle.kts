@@ -11,6 +11,8 @@ plugins {
     id("com.google.osdetector") version "1.6.2"
 }
 
+val osName = if (com.google.gradle.osdetector.OsDetector().os == "windows") "win" else "mac"
+
 apply(plugin = "com.pascalwelsch.gitversioner")
 
 val gitVersioner = the<GitVersioner>().apply {
@@ -74,7 +76,6 @@ subprojects {
 
             configurations {
                 val foo = create("HoTT-Decoder")
-
                 (fileTree(File(rootProject.projectDir, "libs")) { include("*.jar") })
             }
 
@@ -82,6 +83,7 @@ subprojects {
                 // configure the shadowJar tasks with the same archive version as the jar task
                 val shadowJar = named<ShadowJar>("shadowJar") {
                     archiveVersion.set(jar.get().archiveVersion.get())
+                    archiveClassifier.set(osName)
                 }
 
                 // configure createExe task
@@ -91,7 +93,7 @@ subprojects {
                     jar = shadowJar.get().archiveFile.get().asFile.path
                     version = shortVersion
                     textVersion = longVersion
-                    outfile = "${project.name}-$shortVersion.exe"
+                    outfile = "${project.name}-${shortVersion}-$osName.exe"
                     copyright = "GPLv3"
                     //https://stackoverflow.com/questions/52150565/bundling-a-jre-with-a-launch4j-application-in-gradle
                     //bundledJrePath = "%JAVA_HOME%"
