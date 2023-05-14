@@ -1,6 +1,12 @@
+2023-05-14
+==========
+    mz-16_mz-32_mc-32ex_Downloader 0.9.4.1392
+    - rename "mz-32 Downloader" to "mz-16 mz-32 mc-32ex Downloader"
+    - rename directory and module name to get in sync with title
+
 2023-05-09
 ==========
-    FirmwareUpdater
+    FirmwareUpdater 0.9.4.1391
     - add receiver models GR-12D, Hawk 12, Hawk 18
 
 2020-12-10

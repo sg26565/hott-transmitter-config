@@ -1,5 +1,5 @@
 dependencies {
-    implementation(project(":mz32-Downloader"))
+    implementation(project(":mz-16_mz-32_mc-32ex_Downloader"))
     implementation(project(":HoTT-UI"))
     implementation(project(":lzma-sdk"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
