@@ -29,7 +29,9 @@ internal class Path(path: String) {
     private val parts = value.split("/")
 
     // e.g. /Voice/en/10_User or /Voice/ge/10_Benutzer
-    val isLangUser = isVoice && parts.size > 3 && parts[3].startsWith("10_")
+    // extend exclude list with Voice/dv, 1*_* language user extensions
+    val isLangUser = isVoice && parts.size > 3 && parts[2].startsWith("dv")
+            || isVoice && parts.size > 3 && (parts[3].startsWith("1") && parts[3].contains("_"))
 
     // Any user path
     val isUser = userPaths.any { value.startsWith(it, ignoreCase = true) } || isLangUser

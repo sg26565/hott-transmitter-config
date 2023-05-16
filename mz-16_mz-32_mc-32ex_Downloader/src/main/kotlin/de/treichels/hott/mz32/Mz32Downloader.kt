@@ -238,7 +238,7 @@ class Mz32Downloader : View() {
         Util.enableLogging()
 
         setStageIcon(iconImage)
-        title = "mz-16 mz-32 mc-32ex Downloaderr ($version)"
+        title = "mz-16 mz-32 mc-32ex Downloader ($version)"
 
         runLater {
             comboBox.load()

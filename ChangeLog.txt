@@ -1,3 +1,9 @@
+2023-05-16
+==========
+    mz-16_mz-32_mc-32ex_Downloader 0.9.4.1393
+    - add some path detail to exclude during processing (Voice/dv, Voice/*/1?_)
+    - create Update directory if required
+
 2023-05-14
 ==========
     mz-16_mz-32_mc-32ex_Downloader 0.9.4.1392

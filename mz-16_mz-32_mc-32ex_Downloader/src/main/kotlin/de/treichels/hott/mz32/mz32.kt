@@ -332,6 +332,13 @@ class Mz32(private val rootDir: File) {
 
         task.print(MessageFormat.format(messages["found_firmware"], fileName))
 
+        //Update directory will be created by radio, if update firmware runs against empty SD card create it
+        val updatePath = File("$rootDir/$updatePath")
+        if (!updatePath.exists()) {
+            updatePath.mkdir()
+            task.print(MessageFormat.format(messages["update_dir_created"]))
+        }
+
         if (!file.exists() || fileSize != firmwareSize) {
             // download into temporary file
             val tempFile = File(file.parent, "${file.name}.tmp")
