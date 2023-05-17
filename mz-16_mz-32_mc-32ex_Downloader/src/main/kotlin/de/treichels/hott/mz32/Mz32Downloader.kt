@@ -145,7 +145,7 @@ class Mz32Downloader : View() {
 
                     label(messages["select_languages"])
                     language = opcr(this, CheckComboBox()) {
-                        items.addAll(Language.values())
+                        items.addAll(Language.getValues())
 
                         preferences {
                             get("languages", "en").split(',').forEach { lang ->
