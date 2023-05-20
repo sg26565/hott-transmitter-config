@@ -8,7 +8,7 @@ import java.io.InputStream
 import java.io.OutputStream
 
 fun canCompress(fileName: String) = when (fileName.substringAfterLast('.')) {
-    "zip", "7z", "mp3", "exe" -> false
+    "pdf", "jar", "zip", "7z", "mp3", "exe" -> false
     else -> true
 }
 
