@@ -3,6 +3,7 @@ package de.treichels.hott.lzma
 import de.treichels.hott.mz32.Hash
 import de.treichels.hott.mz32.MD5Sum
 import de.treichels.hott.ui.ExceptionDialog
+import de.treichels.hott.util.Util
 import de.treichels.hott.util.extract
 import de.treichels.hott.util.hash
 import de.treichels.lzma.canCompress
@@ -89,8 +90,12 @@ private class LzmaCompressTask(private val source: File, private val target: Fil
     override fun call() {
         try {
             md5Sum.clear()
-            updateMessage("Deleting target directory ...")
-            target.deleteRecursively()
+            if (target.list()?.isNotEmpty() == true) {
+                updateMessage("\n>>>> Target directory \"" + target.absolutePath + "\" not empty, please clean up <<<<\n")
+                cancel()
+                updateProgress(0, 0)
+                return
+            }
             target.mkdirs()
 
             startTime = System.currentTimeMillis()
@@ -119,7 +124,10 @@ private class LzmaCompressTask(private val source: File, private val target: Fil
         updateMessage("Generating md5sum.txt")
         md5Sum.save()
 
-        updateMessage("done")
+        if (md5Sum.size.toLong() != totalFileCount) //md5sum processed files
+            updateMessage("\n>>>>>> check for skipped files!\n")
+        else
+            updateMessage("\ndone\n")
     }
 
     fun processZipEntry(zipEntry: ZipEntry, zipFile: ZipFile) {
@@ -194,7 +202,7 @@ class Preference(private val defaultValue: String = "") {
     }
 }
 
-class LzmaCompress : View("Compress Zip File to Directory") {
+class LzmaCompress : View("Compress Zip File to Directory (" + Util.sourceVersion(LzmaCompress::class) + ")") {
     // Controls
     private var source by singleAssign<TextField>()
     private var target by singleAssign<TextField>()
@@ -255,7 +263,7 @@ class LzmaCompress : View("Compress Zip File to Directory") {
                 }
             }
 
-            field("Target Directory (WARNING: Existing content will be deleted!)") {
+            field("Target Directory (check for empty directory)") {
                 target = textfield {
                     isEditable = false
                     File(lastTargetDir).apply {
@@ -310,7 +318,11 @@ class LzmaCompress : View("Compress Zip File to Directory") {
                         service.source = File(source.text)
                         service.target = File(target.text)
                         service.restart()
-                        text = "Cancel"
+                        text = if (File(target.text).list()?.isNotEmpty() == false) {
+                            "Cancel"
+                        } else {
+                            "Start"
+                        }
                     }
                 }
             }

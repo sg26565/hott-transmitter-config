@@ -1,3 +1,12 @@
+2023-05-19
+==========
+    lzma-compress 0.9.4.1395
+    - avoid removing files recursively
+    - do not start compression while target directory is not empty
+    - add jar and pdf to list of canCompress false
+    - add done message if compression completed and md5sum saved
+    - add check md5sum entries vs total file count
+
 2023-05-17
 ==========
     mz-16_mz-32_mc-32ex_Downloader 0.9.4.1394
