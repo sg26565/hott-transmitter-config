@@ -1,6 +1,6 @@
-2023-05-19
+2023-05-20
 ==========
-    lzma-compress 0.9.4.1395
+    lzma-compress 0.9.4.1398
     - avoid removing files recursively
     - do not start compression while target directory is not empty
     - add jar and pdf to list of canCompress false
