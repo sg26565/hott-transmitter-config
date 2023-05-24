@@ -52,7 +52,12 @@ private class LzmaCompressTask(private val source: File, private val target: Fil
         if (isCancelled) return
 
         val name = sourceFile.relativeTo(source).path.replace('\\', '/')
-        md5Sum["/$name"] = Hash(sourceFile)
+        val hashInst = Hash(sourceFile)
+        try {
+            md5Sum["/$name"] = hashInst
+        } catch (e: Exception) {
+            updateMessage(e.message + "\nError updating md5sum " + "/$name" + " - " + hashInst.toString())
+        }
 
         val targetFile = if (canCompress(sourceFile)) {
             File(target, "$name.lzma").apply {
@@ -65,7 +70,6 @@ private class LzmaCompressTask(private val source: File, private val target: Fil
                 sourceFile.copyTo(this, true)
             }
         }
-
         updateStatistics(name, sourceFile.length(), targetFile.length())
     }
 
@@ -125,7 +129,7 @@ private class LzmaCompressTask(private val source: File, private val target: Fil
         md5Sum.save()
 
         if (md5Sum.size.toLong() != totalFileCount) //md5sum processed files
-            updateMessage("\n>>>>>> check for skipped files!\n")
+            updateMessage("\n>>>>>> check for skipped " + (totalFileCount - md5Sum.size.toLong()) + " files!\n")
         else
             updateMessage("\ndone\n")
     }
@@ -138,15 +142,25 @@ private class LzmaCompressTask(private val source: File, private val target: Fil
                 File(target, "${zipEntry.name}.lzma").apply {
                     parentFile.mkdirs()
                     val hash = zipFile.hash(zipEntry)
-                    md5Sum["/${zipEntry.name}"] = Hash(size, hash)
+                    val hashInst = Hash(size, hash)
+                    try {
+                        md5Sum["/${zipEntry.name}"] = hashInst
+                    } catch (e: Exception) {
+                        updateMessage(e.message + "\nError updating md5sum " + "/${zipEntry.name}" + " - " + hashInst.toString())
+                    }
                     compress(zipFile.getInputStream(zipEntry), outputStream())
-                }
+                 }
             } else {
                 // extract files that cannot be compressed further
                 File(target, zipEntry.name).apply {
                     parentFile.mkdirs()
                     val hash = zipFile.extract(zipEntry, this)
-                    md5Sum["/${zipEntry.name}"] = Hash(size, hash)
+                    val hashInst = Hash(size, hash)
+                    try {
+                        md5Sum["/${zipEntry.name}"] = hashInst
+                    } catch (e: Exception) {
+                        updateMessage(e.message + "\nError updating md5sum " + "/${zipEntry.name}" + " - " + hashInst.toString())
+                    }
                 }
             }
 

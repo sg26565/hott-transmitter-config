@@ -1,6 +1,12 @@
+2023-05-24
+==========
+    lzma-compress 0.9.4.1399
+    - add error handling Md5Sum put operation
+    - change TreeMap to ConcurrentSkipListMap
+
 2023-05-20
 ==========
-    lzma-compress 0.9.4.1398
+    lzma-compress 0.9.4.1397
     - avoid removing files recursively
     - do not start compression while target directory is not empty
     - add jar and pdf to list of canCompress false

@@ -5,12 +5,12 @@ import tornadofx.*
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
-import java.util.*
+import java.util.concurrent.ConcurrentSkipListMap
 
 /**
  * A map that stores a hash value for each file path.
  */
-class MD5Sum(private val root: File?) : TreeMap<String, Hash>(String.CASE_INSENSITIVE_ORDER) {
+class MD5Sum(private val root: File?) : ConcurrentSkipListMap<String, Hash>(String.CASE_INSENSITIVE_ORDER) {
     constructor() : this(null)
 
     /** the default file were data will be loaded from or saved to */
