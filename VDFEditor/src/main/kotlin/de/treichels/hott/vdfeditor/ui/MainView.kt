@@ -122,7 +122,7 @@ class MainView : View() {
             listView = listview {
                 items = voiceFile.voiceList
                 editableProperty().value = true
-                prefHeight = 800.0
+                prefHeight = 700.0
                 prefWidth = 500.0
                 borderpaneConstraints { alignment = Pos.CENTER }
 

@@ -95,8 +95,9 @@ subprojects {
                     textVersion = longVersion
                     outfile = "${project.name}-${shortVersion}-$osName.exe"
                     copyright = "GPLv3"
-                    //https://stackoverflow.com/questions/52150565/bundling-a-jre-with-a-launch4j-application-in-gradle
-                    //bundledJrePath = "%JAVA_HOME%"
+                    bundledJrePath = "runtime"
+                    jreMinVersion = "11"
+                    jreMaxVersion = "17"
 
                     // add icon - if it exists
                     file("icon.ico").apply {
