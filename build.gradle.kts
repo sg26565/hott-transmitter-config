@@ -82,8 +82,8 @@ subprojects {
             tasks {
                 // configure the shadowJar tasks with the same archive version as the jar task
                 val shadowJar = named<ShadowJar>("shadowJar") {
-                    archiveVersion.set(jar.get().archiveVersion.get())
-                    archiveClassifier.set(osName)
+                    archiveVersion.set("")
+                    archiveClassifier.set("")
                 }
 
                 // configure createExe task
@@ -93,11 +93,11 @@ subprojects {
                     jar = shadowJar.get().archiveFile.get().asFile.path
                     version = shortVersion
                     textVersion = longVersion
-                    outfile = "${project.name}-${shortVersion}-$osName.exe"
+                    outfile = "${project.name}.exe"
                     copyright = "GPLv3"
                     bundledJrePath = "runtime"
-                    jreMinVersion = "11"
-                    jreMaxVersion = "17"
+                    jreMinVersion = "17.0.0"
+                    jreMaxVersion = "17.0.7"
 
                     // add icon - if it exists
                     file("icon.ico").apply {
