@@ -1,9 +1,10 @@
 2023-06-11
 ==========
-    0.9.4.1402
+    0.9.4.1403
     - remove version and os from shadowJar and launch4j created files to make it exchangeable by update
     - launch4j exe correct min/max Java runtime version
     - cleanup before building installer
+    - fix CreateInstallerDMG.sh
 
 2023-06-06
 ==========
