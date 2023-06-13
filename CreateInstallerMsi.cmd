@@ -1,6 +1,6 @@
 @REM Script to build Windows install packages using jpackage of Java 17
 @IF "%~1"=="" (
-	@echo usage: CreateInstallerMsi "0.9.4.1401"
+	@echo usage: CreateInstallerMsi 1.0.1404
 	@GOTO end 
 )
 SET VERSION=%~1
@@ -28,5 +28,8 @@ ren ..\release\MDLViewer-%VERSION%.msi MDLViewer.msi
 del lzma-compress\build\libs\lzma-compress-%VERSION%.jar
 jpackage --input lzma-compress\build\libs --dest ..\release --name "lzma-compress" --main-jar lzma-compress.jar --main-class "de.treichels.hott.lzma.LzmaCompressKt" --icon lzma-compress\icon.ico --app-version %VERSION% --type msi --win-menu --win-menu-group "Graupner HoTT Tools" --win-shortcut --win-shortcut-prompt --vendor "Graupner" --win-dir-chooser
 ren ..\release\lzma-compress-%VERSION%.msi lzma-compress.msi
+
+cd ..\release
+7z a -sdel "Graupner HoTT Tools MSI "%VERSION%.zip  *.msi
 
 :end

@@ -22,7 +22,7 @@ val gitVersioner = the<GitVersioner>().apply {
 
 val versionCode by extra(gitVersioner.versionCode)
 val versionName by extra(gitVersioner.versionName)
-val baseVersion = "0.9.4"
+val baseVersion = "1.0"
 val shortVersion = "$baseVersion.$versionCode"
 val longVersion = "$baseVersion.$versionName"
 
