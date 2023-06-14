@@ -244,6 +244,8 @@ class FirmwareUpdater : View() {
                     if (type?.productCode != deviceType.value.productCode) textField.text = null
                 } catch (e: IOException) {
                     textField.text = null
+                } catch (e: NullPointerException) {
+                    textField.text = null
                 }
             }
         }
