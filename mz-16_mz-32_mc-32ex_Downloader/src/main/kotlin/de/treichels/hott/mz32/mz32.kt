@@ -60,6 +60,7 @@ class Mz32(private val rootDir: File) {
         updateManuals: Boolean = true,
         updateWidgets: Boolean = true,
         updateImages: Boolean = true,
+        updateMaps: Boolean = true,
         updateUtils: Boolean = true,
         updateFirmware: Boolean = true
     ) {
@@ -81,6 +82,7 @@ class Mz32(private val rootDir: File) {
                 updateManuals,
                 updateWidgets,
                 updateImages,
+                updateMaps,
                 updateUtils
             )
 
@@ -122,6 +124,7 @@ class Mz32(private val rootDir: File) {
         updateManuals: Boolean = true,
         updateWidgets: Boolean = true,
         updateImages: Boolean = true,
+        updateMaps: Boolean = true,
         updateUtils: Boolean = true
     ) {
         if (task.isCancelled) return
@@ -174,6 +177,12 @@ class Mz32(private val rootDir: File) {
                         hash
                     )
                     path.isImage -> if (updateImages) updateFileOnline(
+                        task,
+                        remoteRoot,
+                        path,
+                        hash
+                    )
+                    path.isMaps -> if (updateMaps) updateFileOnline(
                         task,
                         remoteRoot,
                         path,

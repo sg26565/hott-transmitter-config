@@ -19,6 +19,9 @@ internal class Path(path: String) {
     // /Image
     val isImage = value.startsWith(imagePath, ignoreCase = true)
 
+    // /Maps
+    val isMaps = value.startsWith(mapsPath, ignoreCase = true)
+
     // /Util
     val isUtils = value.startsWith(utilsPath, ignoreCase = true)
 
@@ -60,6 +63,7 @@ internal class Path(path: String) {
         private const val manualPath = "/Manual"
         private const val widgetsPath = "/Widgets"
         private const val imagePath = "/Image"
+        private const val mapsPath = "/Maps"
         private const val utilsPath = "/Util"
         private val userPaths = listOf("/Maps", "/Widgets", "/Image", "/Log", "/Model", "/MP3", "/Screenshot")
         private val systemPaths = listOf("/GraupnerDisk.cfg", "/System", "/Update", "/md5sum.txt")

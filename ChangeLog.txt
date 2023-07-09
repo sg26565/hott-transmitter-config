@@ -1,8 +1,8 @@
-2023-06-14
+2023-07-09
 ==========
-    1.0.1406
+    1.0.1407
     - remove copying shadow jar files while release target
-    - separate utility update, as well as widgets and images update
+    - separate utility, maps, widgets and images update
 
 2023-06-14
 ==========

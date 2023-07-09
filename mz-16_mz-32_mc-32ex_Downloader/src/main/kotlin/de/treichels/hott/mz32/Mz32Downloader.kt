@@ -29,6 +29,7 @@ class Mz32Downloader : View() {
     private var updateManuals by singleAssign<CheckBox>()
     private var updateWidgets by singleAssign<CheckBox>()
     private var updateImages by singleAssign<CheckBox>()
+    private var updateMaps by singleAssign<CheckBox>()
     private var updateUtils by singleAssign<CheckBox>()
     private var language by singleAssign<CheckComboBox<Language>>()
     private var updateFirmware by singleAssign<CheckBox>()
@@ -61,7 +62,9 @@ class Mz32Downloader : View() {
     private val doUpdateWidgets
         get() = updateWidgets.isSelected
     private val doUpdateImages
-    get() = updateImages.isSelected
+        get() = updateImages.isSelected
+    private val doUpdateMaps
+        get() = updateMaps.isSelected
     private val doUpdateUtils
         get() = updateUtils.isSelected
 
@@ -139,6 +142,13 @@ class Mz32Downloader : View() {
                             action { preferences { put("updateImages", isSelected.toString()) } }
 
                             tooltip = tooltip(messages["update_images_tooltip"])
+                        }
+
+                        updateMaps = checkbox(messages["update_maps"]) {
+                            preferences { isSelected = get("updateMaps", "false")!!.toBoolean() }
+                            action { preferences { put("updateMaps", isSelected.toString()) } }
+
+                            tooltip = tooltip(messages["update_maps_tooltip"])
                         }
 
                         updateUtils = checkbox(messages["update_utils"]) {
@@ -239,6 +249,7 @@ class Mz32Downloader : View() {
                 doupdateManuals,
                 doUpdateWidgets,
                 doUpdateImages,
+                doUpdateMaps,
                 doUpdateUtils,
                 doUpdateFirware
             )
