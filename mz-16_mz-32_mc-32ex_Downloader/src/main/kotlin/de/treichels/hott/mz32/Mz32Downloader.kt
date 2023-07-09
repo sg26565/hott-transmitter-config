@@ -27,6 +27,9 @@ class Mz32Downloader : View() {
     private var updateHelpPages by singleAssign<CheckBox>()
     private var updateVoiceFiles by singleAssign<CheckBox>()
     private var updateManuals by singleAssign<CheckBox>()
+    private var updateWidgets by singleAssign<CheckBox>()
+    private var updateImages by singleAssign<CheckBox>()
+    private var updateUtils by singleAssign<CheckBox>()
     private var language by singleAssign<CheckComboBox<Language>>()
     private var updateFirmware by singleAssign<CheckBox>()
     private var comboBox by singleAssign<ComboBox<Mz32>>()
@@ -53,8 +56,16 @@ class Mz32Downloader : View() {
         get() = updateHelpPages.isSelected
     private val doupdateVoiceFiles
         get() = updateVoiceFiles.isSelected
-    private val doupdateManulals
+    private val doupdateManuals
         get() = updateManuals.isSelected
+    private val doUpdateWidgets
+        get() = updateWidgets.isSelected
+    private val doUpdateImages
+    get() = updateImages.isSelected
+    private val doUpdateUtils
+        get() = updateUtils.isSelected
+
+
     private val doUpdateFirware
         get() = updateFirmware.isSelected
     private val mz32
@@ -114,6 +125,27 @@ class Mz32Downloader : View() {
                             action { preferences { put("updateManuals", isSelected.toString()) } }
 
                             tooltip = tooltip(messages["update_manuals_tooltip"])
+                        }
+
+                        updateWidgets = checkbox(messages["update_widgets"]) {
+                            preferences { isSelected = get("updateWidgets", "false")!!.toBoolean() }
+                            action { preferences { put("updateWidgets", isSelected.toString()) } }
+
+                            tooltip = tooltip(messages["update_widgets_tooltip"])
+                        }
+
+                        updateImages = checkbox(messages["update_images"]) {
+                            preferences { isSelected = get("updateImages", "false")!!.toBoolean() }
+                            action { preferences { put("updateImages", isSelected.toString()) } }
+
+                            tooltip = tooltip(messages["update_images_tooltip"])
+                        }
+
+                        updateUtils = checkbox(messages["update_utils"]) {
+                            preferences { isSelected = get("updateUtils", "false")!!.toBoolean() }
+                            action { preferences { put("updateUtils", isSelected.toString()) } }
+
+                            tooltip = tooltip(messages.getString("update_utils_tooltip"))
                         }
                     }
                 }
@@ -204,7 +236,10 @@ class Mz32Downloader : View() {
                 doUpdateResources,
                 doupdateHelpPages,
                 doupdateVoiceFiles,
-                doupdateManulals,
+                doupdateManuals,
+                doUpdateWidgets,
+                doUpdateImages,
+                doUpdateUtils,
                 doUpdateFirware
             )
             runLater { armTask() }

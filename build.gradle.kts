@@ -118,9 +118,9 @@ subprojects {
                     from(createExe) {
                         include("*.exe")
                     }
-                    from(shadowJar) {
-                        include("*.jar")
-                    }
+//                    from(shadowJar) {
+//                        include("*.jar")
+//                    }
                     into("$rootDir/../release")
                 }
 

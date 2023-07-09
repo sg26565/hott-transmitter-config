@@ -1,5 +1,11 @@
 2023-06-14
 ==========
+    1.0.1406
+    - remove copying shadow jar files while release target
+    - separate utility update, as well as widgets and images update
+
+2023-06-14
+==========
     1.0.1405
     - add exception handler if previous selected serial interfaced does not exist anymore
 

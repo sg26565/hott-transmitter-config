@@ -58,6 +58,9 @@ class Mz32(private val rootDir: File) {
         updateHelpPages: Boolean = true,
         updateVoiceFiles: Boolean = true,
         updateManuals: Boolean = true,
+        updateWidgets: Boolean = true,
+        updateImages: Boolean = true,
+        updateUtils: Boolean = true,
         updateFirmware: Boolean = true
     ) {
         if (task.isCancelled) return
@@ -75,7 +78,10 @@ class Mz32(private val rootDir: File) {
                 latestResources,
                 updateHelpPages,
                 updateVoiceFiles,
-                updateManuals
+                updateManuals,
+                updateWidgets,
+                updateImages,
+                updateUtils
             )
 
             task.updateProgress(0.0, 1.0)
@@ -113,7 +119,10 @@ class Mz32(private val rootDir: File) {
         firmware: String,
         updateHelpPages: Boolean = true,
         updateVoiceFiles: Boolean = true,
-        updateManuals: Boolean = true
+        updateManuals: Boolean = true,
+        updateWidgets: Boolean = true,
+        updateImages: Boolean = true,
+        updateUtils: Boolean = true
     ) {
         if (task.isCancelled) return
 
@@ -153,6 +162,24 @@ class Mz32(private val rootDir: File) {
                         hash
                     )
                     path.isManual -> if (updateManuals && languages.contains(path.language)) updateFileOnline(
+                        task,
+                        remoteRoot,
+                        path,
+                        hash
+                    )
+                    path.isWidgets -> if (updateWidgets) updateFileOnline(
+                        task,
+                        remoteRoot,
+                        path,
+                        hash
+                    )
+                    path.isImage -> if (updateImages) updateFileOnline(
+                        task,
+                        remoteRoot,
+                        path,
+                        hash
+                    )
+                    path.isUtils -> if (updateUtils) updateFileOnline(
                         task,
                         remoteRoot,
                         path,
@@ -292,7 +319,7 @@ class Mz32(private val rootDir: File) {
                 else
                     Firmware.download(callback, "$root$filePath", tempFile)
 
-                // replace target file only after successfull download
+                // replace target file only after successfully download
                 Files.move(
                     tempFile.toPath(),
                     file.toPath(),

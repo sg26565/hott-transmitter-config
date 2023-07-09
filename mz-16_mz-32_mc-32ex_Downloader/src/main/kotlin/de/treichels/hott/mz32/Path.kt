@@ -13,6 +13,15 @@ internal class Path(path: String) {
     // /Manual
     val isManual = value.startsWith(manualPath, ignoreCase = true)
 
+    // /Widgets
+    val isWidgets = value.startsWith(widgetsPath, ignoreCase = true)
+
+    // /Image
+    val isImage = value.startsWith(imagePath, ignoreCase = true)
+
+    // /Util
+    val isUtils = value.startsWith(utilsPath, ignoreCase = true)
+
     // Paths with language (i.e. /Help or /Voice)
     val isLang = isHelp || isVoice || isManual
 
@@ -49,8 +58,11 @@ internal class Path(path: String) {
         private const val helpPath = "/Help"
         private const val voicePath = "/Voice"
         private const val manualPath = "/Manual"
-        private val userPaths = listOf("/Image", "/Log", "/Model", "/MP3", "/Screenshot")
+        private const val widgetsPath = "/Widgets"
+        private const val imagePath = "/Image"
+        private const val utilsPath = "/Util"
+        private val userPaths = listOf("/Maps", "/Widgets", "/Image", "/Log", "/Model", "/MP3", "/Screenshot")
         private val systemPaths = listOf("/GraupnerDisk.cfg", "/System", "/Update", "/md5sum.txt")
-        private val autoDeletePaths = listOf("/Help", "/Manual", "/Util", "/Voice")
+        private val autoDeletePaths = listOf("/Help", "/Manual", "/Voice")
     }
 }
