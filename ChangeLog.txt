@@ -1,3 +1,10 @@
+2023-09-13
+==========
+    1.0.1408
+    - add script to create self extracting archieve Graupner HoTT Tools
+    - update message for size_mismatch to signal update
+    - fix ESCType category initialization
+
 2023-07-09
 ==========
     1.0.1407

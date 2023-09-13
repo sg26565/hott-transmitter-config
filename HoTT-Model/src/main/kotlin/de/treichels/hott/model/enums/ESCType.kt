@@ -36,6 +36,6 @@ enum class ESCType(override val productCode: Int, override val orderNo: String =
         fun forProductCode(productCode: Int) = ESCType.values().firstOrNull { s -> s.productCode == productCode }
         fun forOrderNo(orderNo: String) = ESCType.values().firstOrNull { s -> s.orderNo == orderNo }
 
-        val category = "Speed_Controller"
+        const val category = "Speed_Controller"
     }
 }
