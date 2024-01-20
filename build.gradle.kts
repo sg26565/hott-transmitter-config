@@ -4,14 +4,11 @@ import edu.sc.seis.launch4j.tasks.Launch4jLibraryTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    java
-    kotlin("jvm") version "1.4.30" apply false
-    id("com.github.johnrengelman.shadow") version "6.1.0" apply false
-    id("edu.sc.seis.launch4j") version "3.12" apply false
-    id("com.google.osdetector") version "1.6.2"
+    kotlin("jvm")
+    id("com.github.johnrengelman.shadow")
+    id("edu.sc.seis.launch4j")
+    id("com.google.osdetector")
 }
-
-val osName = if (com.google.gradle.osdetector.OsDetector().os == "windows") "win" else "mac"
 
 apply(plugin = "com.pascalwelsch.gitversioner")
 

@@ -8,16 +8,15 @@ dependencies {
 
 plugins {
     application
-    id("org.openjfx.javafxplugin") version "0.0.9"
+    id("org.openjfx.javafxplugin")
 }
 
 javafx {
-    version = "11.0.2"
     modules = listOf("javafx.controls","javafx.fxml","javafx.web")
 }
 
 dependencies {
-    implementation("no.tornado:tornadofx:1.7.20")
+    implementation("no.tornado:tornadofx:_")
 }
 
 application {
