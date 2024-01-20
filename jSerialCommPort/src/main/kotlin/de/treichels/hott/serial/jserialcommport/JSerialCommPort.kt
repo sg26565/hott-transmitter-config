@@ -33,7 +33,7 @@ class JSerialCommPort(override val portName: String) : de.treichels.hott.serial.
     override val inputStream = object : InputStream() {
         val buffer = ByteArray(1)
         override fun read(): Int {
-            if (port.readBytes(buffer, 1L, 0) != 1) throw IOException("timeout")
+            if (port.readBytes(buffer, 1, 0) != 1) throw IOException("timeout")
 
             return buffer[0].toInt() and 0xff
         }
@@ -45,7 +45,7 @@ class JSerialCommPort(override val portName: String) : de.treichels.hott.serial.
         override fun read(bytes: ByteArray?, off: Int, len: Int): Int {
             if (len == 0) return 0
 
-            return port.readBytes(bytes, len.toLong(), off.toLong()).apply {
+            return port.readBytes(bytes, len, off).apply {
                 if (this < 1) throw IOException("timeout")
             }
         }
@@ -71,9 +71,9 @@ class JSerialCommPort(override val portName: String) : de.treichels.hott.serial.
         baudRate = 115200
     }
 
-    override fun readBytes(data: ByteArray, length: Long, offset: Long) = port.readBytes(data, length, offset)
+    override fun readBytes(data: ByteArray, length: Int, offset: Int) = port.readBytes(data, length, offset)
 
-    override fun writeBytes(data: ByteArray, length: Long, offset: Long) = port.writeBytes(data, length, offset)
+    override fun writeBytes(data: ByteArray, length: Int, offset: Int) = port.writeBytes(data, length, offset)
 
     override val isOpen: Boolean
         get() = port.isOpen

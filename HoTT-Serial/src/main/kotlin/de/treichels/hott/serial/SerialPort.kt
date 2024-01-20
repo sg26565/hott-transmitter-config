@@ -45,8 +45,8 @@ interface SerialPort : Closeable {
     @Throws(HoTTException::class)
     fun reset()
 
-    fun readBytes(data: ByteArray, length: Long = data.size.toLong(), offset: Long = 0L): Int
-    fun writeBytes(data: ByteArray, length: Long = data.size.toLong(), offset: Long = 0L): Int
+    fun readBytes(data: ByteArray, length: Int = data.size, offset: Int = 0): Int
+    fun writeBytes(data: ByteArray, length: Int = data.size, offset: Int = 0): Int
 
     fun write(b: Int) = writeBytes(byteArrayOf(b.toByte()))
     fun read() = readIntoBuffer(1)[0].toInt() and 0xff
