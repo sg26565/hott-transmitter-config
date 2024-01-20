@@ -7,10 +7,10 @@ import tornadofx.*
 
 class CallbackAdapter<T>(val task: FXTask<T>) : AbstractCallback() {
     override fun updateMessage(message: String) = runLater { task.updateMessage(message) }
-    override fun warning(title: String, message: String, buttonTexts: Array<String>?, defaultButton: Int): Boolean =alert(Alert.AlertType.WARNING, title,message,buttonTexts,defaultButton)
-    override fun confirm(title: String, message: String, buttonTexts: Array<String>?, defaultButton: Int): Boolean = alert(Alert.AlertType.CONFIRMATION, title,message,buttonTexts,defaultButton)
+    override fun warning(title: String, message: String, buttonTexts: Array<String>?, defaultButton: Int): Boolean =alert(Alert.AlertType.WARNING, title,message,buttonTexts)
+    override fun confirm(title: String, message: String, buttonTexts: Array<String>?, defaultButton: Int): Boolean = alert(Alert.AlertType.CONFIRMATION, title,message,buttonTexts)
 
-    private fun alert(alertType: Alert.AlertType, title: String, message: String, buttonTexts: Array<String>?, defaultButton: Int): Boolean {
+    private fun alert(alertType: Alert.AlertType, title: String, message: String, buttonTexts: Array<String>?): Boolean {
         val buttons = buttonTexts?.map { ButtonType(it) }?.toTypedArray()
         val dialog =  if (buttons!=null) {
             Alert(alertType, message, *buttons)
