@@ -19,6 +19,7 @@ import java.util.concurrent.CancellationException
 import java.util.concurrent.CountDownLatch
 import java.util.logging.Logger
 import java.util.regex.Pattern
+import java.io.IOException
 
 class Mz32(private val rootDir: File) {
     private val cfgFile = CfgFile.load(File(rootDir, GRAUPNER_DISK_CFG))
@@ -319,11 +320,16 @@ class Mz32(private val rootDir: File) {
 
             try {
                 if (canCompress(file.extension))
-                    Firmware.download(callback, "$root$filePath.lzma") { inputStream, _ ->
-                        uncompress(
-                            inputStream,
-                            tempFile.outputStream()
-                        )
+                    try {
+                        Firmware.download(callback, "$root$filePath.lzma") { inputStream, _ ->
+                            uncompress(
+                                inputStream,
+                                tempFile.outputStream()
+                            )
+                        }
+                    } catch (e: IOException) {
+                        // fall back to noraml download if compressed download fails
+                        Firmware.download(callback, "$root$filePath", tempFile)
                     }
                 else
                     Firmware.download(callback, "$root$filePath", tempFile)
