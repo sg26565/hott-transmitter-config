@@ -151,7 +151,7 @@ object Util {
             JarFile(source).use { jarFile ->
                 val attributes = jarFile.manifest.mainAttributes
                 val version = attributes.getValue("Implementation-Version")
-                val build = attributes.getValue("Implementation-Build")
+                //val build = attributes.getValue("Implementation-Build")
 
                 "v$version"
             }
