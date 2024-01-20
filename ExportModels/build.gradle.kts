@@ -10,6 +10,5 @@ plugins {
 }
 
 application {
-    @Suppress("DEPRECATION")
-    mainClassName = "de.treichels.hott.ExportModelsKt"
+    mainClass.set("de.treichels.hott.ExportModelsKt")
 }

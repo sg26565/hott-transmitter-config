@@ -157,7 +157,7 @@ fun <T> T.getFirmware(): List<Firmware<T>> where T : Registered<*> {
     result += Firmware.list(this, productCode, 10000)
 
     if (id > 0) {
-        val idString = id.toString(16).toUpperCase()
+        val idString = id.toString(16).uppercase()
         result += Firmware.list(this, "Server Updates", idString)
         result += Firmware.list(this, "Multicopter", idString)
     }

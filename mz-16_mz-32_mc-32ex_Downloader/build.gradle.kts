@@ -9,6 +9,5 @@ plugins {
 }
 
 application {
-    @Suppress("DEPRECATION")
-    mainClassName = "de.treichels.hott.mz32.Mz32DownloaderKt"
+    mainClass.set("de.treichels.hott.mz32.Mz32DownloaderKt")
 }

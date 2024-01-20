@@ -58,7 +58,7 @@ internal class FreeMarkerHtmlSafeDirective : TemplateDirectiveModel {
 
                             '€' -> w.write("&euro;")
 
-                            else -> w.write(it.toInt())
+                            else -> w.write(it.code)
                         }
                     }
 

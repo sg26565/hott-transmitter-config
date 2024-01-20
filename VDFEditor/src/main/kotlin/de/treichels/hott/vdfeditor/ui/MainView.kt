@@ -1066,7 +1066,7 @@ class MainView : View() {
     private fun onUserManual() {
         val inputStream: InputStream = try {
             // try translated manual first
-            resources.stream("VDFEditor_${System.getProperty("user.language").toUpperCase()}.pdf")
+            resources.stream("VDFEditor_${System.getProperty("user.language").uppercase()}.pdf")
         } catch (e: IllegalStateException) {
             // fall-back to English
             resources.stream("VDFEditor_EN.pdf")

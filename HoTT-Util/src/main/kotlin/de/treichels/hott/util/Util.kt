@@ -14,6 +14,7 @@ package de.treichels.hott.util
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
+import java.net.URI
 import java.net.URL
 import java.util.*
 import java.util.jar.JarFile
@@ -63,7 +64,7 @@ object Util {
                         .filter { addr + it < len }
                         .map { (data[addr + it].toInt() and 0xff).toChar() }
                         .forEach {
-                            if (it.toInt() in 0x20..0x7e)
+                            if (it.code in 0x20..0x7e)
                                 sb.append(it)
                             else
                                 sb.append('.')
@@ -132,7 +133,7 @@ object Util {
     fun getLatestVersion(key: String): String? {
         if (latestVersions.isEmpty)
             try {
-                URL(LATEST_VERSIONS_URL).openStream().use { `is` ->
+                URI(LATEST_VERSIONS_URL).toURL().openStream().use { `is` ->
                     InputStreamReader(`is`).use { reader ->
                         latestVersions.load(reader)
                         latestVersions.setProperty(PARAM_OFFLINE, java.lang.Boolean.FALSE.toString())

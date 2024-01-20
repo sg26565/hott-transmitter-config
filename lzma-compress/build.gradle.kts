@@ -10,6 +10,5 @@ plugins {
 }
 
 application {
-    @Suppress("DEPRECATION")
-    mainClassName = "de.treichels.hott.lzma.LzmaCompressKt"
+    mainClass.set("de.treichels.hott.lzma.LzmaCompressKt")
 }

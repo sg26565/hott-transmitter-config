@@ -11,6 +11,5 @@ plugins {
 }
 
 application {
-    @Suppress("DEPRECATION")
-    mainClassName = "de.treichels.hott.update.FirmwareUpdaterKt"
+    mainClass.set("de.treichels.hott.update.FirmwareUpdaterKt")
 }

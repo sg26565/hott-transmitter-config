@@ -53,7 +53,7 @@ internal class Path(path: String) {
     val isAutoDelete = autoDeletePaths.any { value.startsWith(it, ignoreCase = true) }
 
     // convert String to enum
-    val language by lazy { Language.valueOf(parts[2].toLowerCase()) }
+    val language by lazy { Language.valueOf(parts[2].lowercase()) }
 
     override fun toString(): String = "Path {value=\"$value\", isHelp=$isHelp, isVoice=$isVoice, isLang=$isLang, isLangUser=$isLangUser, isProtected=$isProtected, isSystem=$isSystem, isUser=$isUser, parts=$parts"
 

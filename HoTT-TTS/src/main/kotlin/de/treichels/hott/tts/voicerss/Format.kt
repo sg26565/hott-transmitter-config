@@ -58,7 +58,7 @@ enum class Format(internal val voiceRSSEncoding: VoiceRSSEncoding, internal val 
 
             sb.append('_').append(channels.name)
 
-            return sb.toString().toLowerCase()
+            return sb.toString().lowercase()
         }
 
     override fun toString(): String {

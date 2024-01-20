@@ -67,7 +67,7 @@ class Win10TTSProvider : Text2SpeechProvider() {
 
     override fun installedVoices(): List<Voice> {
         // start PowerShell runtime
-        val process = Runtime.getRuntime().exec("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -EncodedCommand $installedVoices")
+        val process = Runtime.getRuntime().exec(arrayOf("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", "-EncodedCommand", "$installedVoices"))
         process.waitFor(1, TimeUnit.MILLISECONDS)
 
         // ignore errors
@@ -104,7 +104,7 @@ exit
             val encoded = String(Base64.getEncoder().encode(cmd.toByteArray(Charsets.UTF_16LE)))
 
             // start PowerShell runtime
-            process = Runtime.getRuntime().exec("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -EncodedCommand $encoded")
+            process = Runtime.getRuntime().exec(arrayOf("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", "-EncodedCommand", "$encoded"))
 
             // wait for completion
             process.waitFor(10, TimeUnit.SECONDS)

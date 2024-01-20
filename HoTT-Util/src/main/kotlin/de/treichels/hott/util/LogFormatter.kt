@@ -7,7 +7,7 @@ import java.text.MessageFormat
 import java.util.logging.Formatter
 import java.util.logging.LogRecord
 
-fun getThreadById(id: Int): Thread = Thread.getAllStackTraces().keys.first { it.id.toInt() == id }
+fun getThreadById(id: Long): Thread = Thread.getAllStackTraces().keys.first { it.threadId() == id }
 
 class LogFormatter : Formatter() {
     companion object {
@@ -27,7 +27,7 @@ class LogFormatter : Formatter() {
         val now: Long = record.millis - start
         val parameters: Array<out Any>? = record.parameters;
         val message: String = if (parameters == null || parameters.isEmpty()) record.message else MessageFormat.format(record.message, *parameters)
-        val threadName: String = getThreadById(record.threadID).name
+        val threadName: String = getThreadById(record.getLongThreadID()).name
         val className: String = record.sourceClassName
         val methodName: String = record.sourceMethodName
         val result: String = String.format("----------------------------------------------------------%n%d [%s] %s.%s%n%s%n", now, threadName, className , methodName, message)

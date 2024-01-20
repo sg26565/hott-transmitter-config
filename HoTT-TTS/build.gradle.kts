@@ -13,6 +13,5 @@ plugins {
 }
 
 application {
-    @Suppress("DEPRECATION")
-    mainClassName = "de.treichels.hott.tts.SpeechDialogKt"
+    mainClass.set("de.treichels.hott.tts.SpeechDialogKt")
 }

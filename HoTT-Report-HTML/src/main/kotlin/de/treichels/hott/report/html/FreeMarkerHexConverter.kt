@@ -22,6 +22,6 @@ internal class FreeMarkerHexConverter : TemplateMethodModelEx {
         if (args == null || args.size != 1) throw TemplateModelException(Messages.getString("InvalidNumberOfArguments"))
 
         val number = java.lang.Long.parseLong(args[0].toString())
-        return java.lang.Long.toHexString(number).toUpperCase()
+        return java.lang.Long.toHexString(number).uppercase()
     }
 }

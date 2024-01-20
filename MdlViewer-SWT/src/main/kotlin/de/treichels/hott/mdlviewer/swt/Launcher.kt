@@ -38,8 +38,8 @@ class Launcher {
             // nope - we need to add it
 
             // determine correct swt jar
-            val osName = System.getProperty("os.name").toLowerCase()
-            val arch = System.getProperty("os.arch").toLowerCase()
+            val osName = System.getProperty("os.name").lowercase()
+            val arch = System.getProperty("os.arch").lowercase()
 
             val name = when {
                 osName.startsWith("linux") -> "linux"

@@ -217,7 +217,7 @@ class Mz32(private val rootDir: File) {
         files.addAll(md5.keys)
 
         // keep entries in remote md5sum.txt
-        files.removeIf { remoteMd5.keys.contains(it.toLowerCase()) }
+        files.removeIf { remoteMd5.keys.contains(it.lowercase()) }
 
         val toBeDeleted = files.asSequence()
             // convert to path
@@ -429,7 +429,7 @@ class Mz32(private val rootDir: File) {
 
             // mount command
             try {
-                Runtime.getRuntime().exec("mount").apply {
+                Runtime.getRuntime().exec(arrayOf("mount")).apply {
                     waitFor()
                     if (exitValue() == 0)
                         canditates.addAll(inputStream.reader().readLines().map {

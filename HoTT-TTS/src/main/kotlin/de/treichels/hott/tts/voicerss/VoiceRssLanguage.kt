@@ -8,17 +8,17 @@ enum class VoiceRssLanguage {
     ru_ru, es_mx, es_es, sv_se;
 
     val key: String
-        get() = name.toLowerCase().replace("_", "-")
+        get() = name.lowercase().replace("_", "-")
 
     override fun toString(): String = ResourceBundle.getBundle(javaClass.name)[name]
 
     companion object {
         fun forString(language: String): VoiceRssLanguage {
-            return VoiceRssLanguage.valueOf(language.toLowerCase().replace("-", "_"))
+            return VoiceRssLanguage.valueOf(language.lowercase().replace("-", "_"))
         }
 
         fun forString(language: String, variant: String): VoiceRssLanguage {
-            return VoiceRssLanguage.valueOf("${language}_$variant".toLowerCase())
+            return VoiceRssLanguage.valueOf("${language}_$variant".lowercase())
         }
 
         val all: List<String>

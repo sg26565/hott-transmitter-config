@@ -21,6 +21,5 @@ dependencies {
 }
 
 application {
-    @Suppress("DEPRECATION")
-    mainClassName = "de.treichels.hott.SaveModels"
+    mainClass.set("de.treichels.hott.SaveModels")
 }

@@ -17,6 +17,5 @@ plugins {
 }
 
 application {
-    @Suppress("DEPRECATION")
-    mainClassName = "de.treichels.hott.vdfeditor.ui.VDFEditorKt"
+    mainClass.set("de.treichels.hott.vdfeditor.ui.VDFEditorKt")
 }

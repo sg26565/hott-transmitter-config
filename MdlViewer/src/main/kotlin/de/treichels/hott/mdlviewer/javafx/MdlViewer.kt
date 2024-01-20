@@ -362,7 +362,7 @@ class MainView : View() {
             extensionFilters.add(FileChooser.ExtensionFilter(messages["txt_file"], "*.txt"))
         }.showSaveDialog(primaryStage)?.apply {
             preferences { put(LAST_SAVE_DIR, parentFile.absolutePath) }
-            val extension = FilenameUtils.getExtension(name).toLowerCase()
+            val extension = FilenameUtils.getExtension(name).lowercase()
 
             runAsync {
                 when (extension) {

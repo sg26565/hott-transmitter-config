@@ -5,7 +5,7 @@ plugins {
     id("com.google.osdetector")
 }
 
-val os = OsDetector().os
+val os = osdetector.os
 val os_platform = when (os) {
     "osx" -> "mac"
     "windows" -> "win"
@@ -31,6 +31,5 @@ dependencies {
 }
 
 application {
-    @Suppress("DEPRECATION")
-    mainClassName = "de.treichels.hott.mdlviewer.javafx.MdlViewerKt"
+    mainClass.set("de.treichels.hott.mdlviewer.javafx.MdlViewerKt")
 }
