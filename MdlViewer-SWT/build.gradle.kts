@@ -18,12 +18,12 @@ plugins {
 }
 
 application {
-    @Suppress("DEPRECATION")
-    mainClassName = "de.treichels.hott.mdlviewer.swt.LauncherKt"
+    mainClass.set("de.treichels.hott.mdlviewer.swt.LauncherKt")
 }
 
 eclipseMavenCentral {
-    release("4.13.0") {
+    silenceEquoIDE()
+    release("4.30.0") {
         implementation("org.eclipse.swt")
         useNativesForRunningPlatform()
     }
