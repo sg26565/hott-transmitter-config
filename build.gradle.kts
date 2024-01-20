@@ -2,6 +2,11 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.pascalwelsch.gitversioner.GitVersioner
 import edu.sc.seis.launch4j.tasks.Launch4jLibraryTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.api.file.DuplicatesStrategy
+
+buildscript {
+    dependencies.classpath("com.pascalwelsch.gitversioner:gitversioner:0.5.0") // cannot be loaded from plugin store
+}
 
 plugins {
     kotlin("jvm")
@@ -25,7 +30,7 @@ val longVersion = "$baseVersion.$versionName"
 
 subprojects {
     group = "de.treichels.hott"
-    version = baseVersion
+    version = shortVersion
 
     apply(plugin = "kotlin")
 
@@ -51,14 +56,12 @@ subprojects {
 
         // set jvmTarget for Kotlin (covers compileKotlin and compileTestKotlin tasks)
         withType(KotlinCompile::class) {
-            kotlinOptions.jvmTarget = "11"
-            kotlinOptions.freeCompilerArgs = listOf("-Xuse-experimental=kotlin.ExperimentalUnsignedTypes")
+            kotlinOptions.freeCompilerArgs = listOf("-opt-in=kotlin.ExperimentalUnsignedTypes")
         }
     }
 
     dependencies {
         // common dependencies
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:_")
         implementation("org.jetbrains.kotlin:kotlin-reflect:_")
         testImplementation("junit:junit:_")
         testImplementation("org.jetbrains.kotlin:kotlin-test-junit:_")
@@ -71,30 +74,14 @@ subprojects {
             apply(plugin = "com.github.johnrengelman.shadow")
             apply(plugin = "edu.sc.seis.launch4j")
 
-            configurations {
-                val foo = create("HoTT-Decoder")
-                (fileTree(File(rootProject.projectDir, "libs")) { include("*.jar") })
-            }
-
             tasks {
-                // configure the shadowJar tasks with the same archive version as the jar task
-                val shadowJar = named<ShadowJar>("shadowJar") {
-                    archiveVersion.set("")
-                    archiveClassifier.set("")
-                }
-
-                // configure createExe task
-                val createExe = named<Launch4jLibraryTask>("createExe") {
-                    dependsOn(shadowJar)
-
-                    jar = shadowJar.get().archiveFile.get().asFile.path
+                named<Launch4jLibraryTask>("createExe") {
                     version = shortVersion
                     textVersion = longVersion
-                    outfile = "${project.name}.exe"
+                    outfile = "${project.name}-${shortVersion}.exe"
                     copyright = "GPLv3"
-                    bundledJrePath = "runtime"
-                    jreMinVersion = "17.0.0"
-                    jreMaxVersion = "17.0.7"
+                    jarTask = project.tasks.shadowJar
+                    jreMinVersion = "21.0.1"
 
                     // add icon - if it exists
                     file("icon.ico").apply {
@@ -115,10 +102,11 @@ subprojects {
                     from(createExe) {
                         include("*.exe")
                     }
-//                    from(shadowJar) {
-//                        include("*.jar")
-//                    }
+                    from(shadowJar) {
+                        include("*.jar")
+                    }
                     into("$rootDir/../release")
+                    duplicatesStrategy = DuplicatesStrategy.INCLUDE
                 }
 
                 // add createExe to default build tasks
