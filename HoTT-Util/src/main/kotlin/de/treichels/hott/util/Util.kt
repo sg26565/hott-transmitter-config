@@ -153,7 +153,7 @@ object Util {
                 val version = attributes.getValue("Implementation-Version")
                 val build = attributes.getValue("Implementation-Build")
 
-                "v$version.$build"
+                "v$version"
             }
         else "Unknown"
     }
