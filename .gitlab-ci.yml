@@ -1,7 +1,0 @@
-variables:
-  GIT_SUBMODULE_STRATEGY: normal
-  
-build:
-  stage: build
-  image: gradle:8.5.0-jdk21
-  script: gradle --stacktrace build
