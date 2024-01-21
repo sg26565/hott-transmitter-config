@@ -39,7 +39,7 @@ subprojects {
         mavenCentral()
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/sg26565/hott-decoder")
+            url = uri("https://maven.pkg.github.com/sg26565/hott-transmitter-config")
             credentials {
                 username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
                 password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
