@@ -3,5 +3,5 @@ variables:
   
 build:
   stage: build
-  image: gradle:6.7.1-jdk11
+  image: gradle:8.5.0-jdk21
   script: gradle --stacktrace build
