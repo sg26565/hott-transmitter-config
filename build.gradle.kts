@@ -33,9 +33,18 @@ subprojects {
     version = shortVersion
 
     apply(plugin = "kotlin")
+    apply(plugin = "maven-publish")
 
     repositories {
         mavenCentral()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/sg26565/hott-decoder")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 
     tasks {
@@ -57,6 +66,25 @@ subprojects {
         // set jvmTarget for Kotlin (covers compileKotlin and compileTestKotlin tasks)
         withType(KotlinCompile::class) {
             kotlinOptions.freeCompilerArgs = listOf("-opt-in=kotlin.ExperimentalUnsignedTypes")
+        }
+    }
+
+    configure<PublishingExtension> {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/sg26565/hott-transmitter-config")
+                credentials {
+                    username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                    password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+                }
+            }
+        }
+        publications {
+            register<MavenPublication>("gpr") {
+                artifactId = project.name.lowercase()
+                from(components["java"])
+            }          
         }
     }
 
