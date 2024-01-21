@@ -1,6 +1,6 @@
 dependencies {
     implementation(project(":HoTT-Model"))
-    implementation(fileTree(File(rootProject.projectDir, "libs")) { include("*.jar") })
+    implementation("de.treichels.hott:hott-decoder:_")
     implementation(project(":HoTT-Voice"))
     implementation("org.freemarker:freemarker:_")
     implementation("commons-io:commons-io:_")

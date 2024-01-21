@@ -1,5 +1,5 @@
 dependencies {
-    implementation(fileTree(File(rootProject.projectDir, "libs")) { include("*.jar") })
+    implementation("de.treichels.hott:hott-decoder:_")
     implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-Serial"))
     runtimeOnly(project(":jSerialCommPort"))

@@ -21,7 +21,7 @@ dependencies {
     implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-UI"))
     implementation(project(":HoTT-Voice"))
-    implementation(fileTree(File(rootProject.projectDir, "libs")) { include("*.jar") })
+    implementation("de.treichels.hott:hott-decoder:_")
     implementation("commons-io:commons-io:_")
     implementation("org.apache.commons:commons-math3:_")
     implementation("org.openjfx:javafx-swing:_")

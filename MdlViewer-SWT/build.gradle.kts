@@ -5,7 +5,7 @@ dependencies {
     implementation(project(":HoTT-Serial"))
     implementation(project(":HoTT-Model"))
     implementation(project(":HoTT-Util"))
-    implementation(fileTree(File(rootProject.projectDir, "libs")) { include("*.jar") })
+    implementation("de.treichels.hott:hott-decoder:_")
     implementation("org.apache.commons:commons-math3:_")
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:_")
     runtimeOnly("com.sun.xml.bind:jaxb-impl:_")
