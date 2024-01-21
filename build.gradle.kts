@@ -41,8 +41,8 @@ subprojects {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/sg26565/hott-decoder")
             credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
             }
         }
     }
@@ -75,8 +75,8 @@ subprojects {
                 name = "GitHubPackages"
                 url = uri("https://maven.pkg.github.com/sg26565/hott-transmitter-config")
                 credentials {
-                    username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
-                    password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+                    username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                    password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
                 }
             }
         }
