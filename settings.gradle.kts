@@ -1,18 +1,14 @@
-pluginManagement {
-    plugins {
-        id("de.fayard.refreshVersions") version "0.60.3"
-        kotlin("jvm") version "1.9.22"
-        id("com.github.johnrengelman.shadow") version "8.1.1"
-        id("edu.sc.seis.launch4j") version "3.0.1" // versions 3.0.2 through 3.0.5 do not work
-        id("com.google.osdetector") version "1.7.3"
-        id("org.openjfx.javafxplugin") version "0.1.0"
-        id("com.diffplug.eclipse.mavencentral") version "3.44.0"
-    }
-}
+import de.fayard.refreshVersions.core.StabilityLevel
 
 plugins {
     // See https://jmfayard.github.io/refreshVersions
-    id("de.fayard.refreshVersions")
+    id("de.fayard.refreshVersions") version "0.60.3"
+}
+
+refreshVersions {
+    rejectVersionIf {
+        candidate.stabilityLevel != StabilityLevel.Stable
+    }
 }
 
 rootProject.name = "hott-transmitter-config"

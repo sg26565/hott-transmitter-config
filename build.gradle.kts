@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.api.file.DuplicatesStrategy
 
 buildscript {
-    dependencies.classpath("com.pascalwelsch.gitversioner:gitversioner:0.5.0") // cannot be loaded from plugin store
+    dependencies.classpath("com.pascalwelsch.gitversioner:gitversioner:_") // cannot be loaded from plugin store
 }
 
 plugins {
