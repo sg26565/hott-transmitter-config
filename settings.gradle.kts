@@ -2,7 +2,7 @@ import de.fayard.refreshVersions.core.StabilityLevel
 
 plugins {
     // See https://jmfayard.github.io/refreshVersions
-    id("de.fayard.refreshVersions") version "0.60.3"
+    id("de.fayard.refreshVersions") version "0.60.6"
 }
 
 refreshVersions {
